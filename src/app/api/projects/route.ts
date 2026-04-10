@@ -114,6 +114,22 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const serviceSupabase = getServiceClient();
 
+  // Check monthly project cap (50 per month)
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const { count: monthlyCount } = await serviceSupabase
+    .from("daily_projects")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", monthStart);
+
+  if ((monthlyCount || 0) >= 50) {
+    return NextResponse.json(
+      { error: "Monthly project limit reached (50 projects). Limit resets on the 1st of each month." },
+      { status: 429 }
+    );
+  }
+
   const { data, error } = await serviceSupabase
     .from("daily_projects")
     .insert({
