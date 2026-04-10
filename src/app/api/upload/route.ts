@@ -10,6 +10,54 @@ import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import Anthropic from "@anthropic-ai/sdk";
 
+const MPP_CONVERTER_URL = process.env.MPP_CONVERTER_URL || "https://mpp-converter-production.up.railway.app";
+
+// Convert MPP via MPXJ microservice on Railway
+async function convertMppViaService(buffer: Buffer, filename: string): Promise<RawRow[]> {
+  // Build multipart form data manually for Node.js compatibility
+  const boundary = "----FormBoundary" + Math.random().toString(36).slice(2);
+  const header = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${filename}"\r\nContent-Type: application/octet-stream\r\n\r\n`;
+  const footer = `\r\n--${boundary}--\r\n`;
+  
+  const headerBuf = Buffer.from(header);
+  const footerBuf = Buffer.from(footer);
+  const body = Buffer.concat([headerBuf, buffer, footerBuf]);
+
+  const response = await fetch(`${MPP_CONVERTER_URL}/convert`, {
+    method: "POST",
+    headers: {
+      "Content-Type": `multipart/form-data; boundary=${boundary}`,
+    },
+    body: body,
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: "MPP conversion failed" }));
+    throw new Error((err as { error?: string }).error || "MPP conversion service error");
+  }
+
+  const data = await response.json() as { tasks: Array<Record<string, unknown>> };
+  if (!data.tasks || data.tasks.length === 0) {
+    throw new Error("No tasks found in MPP file");
+  }
+
+  // Convert to RawRow format
+  return data.tasks.map((task: Record<string, unknown>) => ({
+    "Activity ID": String(task.activity_id || ""),
+    "Activity Name": String(task.activity_name || ""),
+    "Start Date": String(task.start_date || ""),
+    "Finish Date": String(task.finish_date || ""),
+    "Actual Start": String(task.actual_start || ""),
+    "Actual Finish": String(task.actual_finish || ""),
+    "% Complete": String(task.percent_complete ?? 0),
+    "Duration": String(task.duration_days || ""),
+    "Milestone": task.milestone ? "yes" : "no",
+    "WBS": String(task.wbs || ""),
+    "Resources": String(task.resources || ""),
+    "Predecessors": String(task.predecessors || ""),
+  }));
+}
+
 interface RawRow {
   [key: string]: string | number | null | undefined;
 }
@@ -352,17 +400,43 @@ export async function POST(req: NextRequest) {
     const wb = XLSX.read(buffer, { type: "buffer", cellDates: false });
     const ws = wb.Sheets[wb.SheetNames[0]];
     rows = XLSX.utils.sheet_to_json<RawRow>(ws, { defval: null });
-  } else if (ext === "xml" || ext === "xer" || ext === "pdf" || ext === "mpp") {
-    // Check if an .mpp file is actually XML (MS Project sometimes exports XML with .mpp extension)
-    let effectiveType = ext;
+  } else if (ext === "mpp") {
+    // Check if .mpp is actually XML
     const header = buffer.toString("utf-8", 0, Math.min(20, buffer.length)).trim();
-    if (ext === "mpp" && header.startsWith("<?xml")) {
-      effectiveType = "xml";
+    if (header.startsWith("<?xml")) {
+      // It's XML masquerading as MPP — use AI
+      try {
+        rows = await aiParseSchedule(buffer, filename, "xml");
+        usedAI = true;
+      } catch (aiError) {
+        const msg = aiError instanceof Error ? aiError.message : "AI parsing failed";
+        return NextResponse.json({ error: msg }, { status: 400 });
+      }
+    } else {
+      // Real binary MPP — use MPXJ microservice
+      try {
+        rows = await convertMppViaService(buffer, filename);
+      } catch (mppError) {
+        const msg = mppError instanceof Error ? mppError.message : "MPP conversion failed";
+        return NextResponse.json({ error: msg }, { status: 400 });
+      }
     }
-    
-    // AI-powered parsing for XML, XER, PDF, and MPP files
+    usedAI = false;
+    mapping.activity_name = "Activity Name";
+    mapping.start_date = "Start Date";
+    mapping.finish_date = "Finish Date";
+    mapping.percent_complete = "% Complete";
+    mapping.original_duration = "Duration";
+    mapping.activity_id = "Activity ID";
+    mapping.milestone = "Milestone";
+    mapping.actual_start = "Actual Start";
+    mapping.actual_finish = "Actual Finish";
+    mapping.wbs = "WBS";
+    mapping.predecessor_ids = "Predecessors";
+  } else if (ext === "xml" || ext === "xer" || ext === "pdf") {
+    // AI-powered parsing for XML, XER, and PDF files
     try {
-      rows = await aiParseSchedule(buffer, filename, effectiveType);
+      rows = await aiParseSchedule(buffer, filename, ext);
       usedAI = true;
       mapping.activity_name = "Activity Name";
       mapping.start_date = "Start Date";
