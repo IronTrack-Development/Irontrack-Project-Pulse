@@ -44,7 +44,14 @@ function UploadContent() {
   const handleFileDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const f = e.dataTransfer.files[0];
-    if (f) setFile(f);
+    if (f) {
+      if (f.size > 10 * 1024 * 1024) {
+        setError("File too large. Maximum file size is 10MB.");
+        return;
+      }
+      setFile(f);
+      setError("");
+    }
   };
 
   const autoDetectMapping = async (f: File) => {
@@ -255,7 +262,17 @@ function UploadContent() {
                 type="file"
                 accept=".xlsx,.xls,.csv,.mpp,.xml,.xer"
                 className="hidden"
-                onChange={(e) => { if (e.target.files?.[0]) setFile(e.target.files[0]); }}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) {
+                    if (f.size > 10 * 1024 * 1024) {
+                      setError("File too large. Maximum file size is 10MB.");
+                      return;
+                    }
+                    setFile(f);
+                    setError("");
+                  }
+                }}
               />
             </div>
 

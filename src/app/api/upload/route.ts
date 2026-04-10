@@ -27,6 +27,7 @@ async function convertMppViaService(buffer: Buffer, filename: string): Promise<R
     method: "POST",
     headers: {
       "Content-Type": `multipart/form-data; boundary=${boundary}`,
+      "Authorization": `Bearer ${process.env.MPP_CONVERTER_API_KEY}`,
     },
     body: body,
   });
@@ -362,17 +363,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing file or project_id" }, { status: 400 });
   }
 
+  // File size limit: 10MB max
+  if (file.size > 10 * 1024 * 1024) {
+    return NextResponse.json({ error: "File too large. Maximum file size is 10MB." }, { status: 413 });
+  }
+
   const mapping: ColumnMapping = mappingStr ? JSON.parse(mappingStr) : {};
   const filename = file.name;
   const ext = filename.split(".").pop()?.toLowerCase() || "";
 
-  // Verify project exists
+  // Verify project exists and get user_id
   const { data: project } = await supabase
     .from("daily_projects")
-    .select("id")
+    .select("id, user_id")
     .eq("id", projectId)
     .single();
   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
+
+  // Rate limiting: max 10 uploads per hour per user
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const { count } = await supabase
+    .from("schedule_uploads")
+    .select("id", { count: "exact", head: true })
+    .eq("project_id", projectId)
+    .gte("created_at", oneHourAgo);
+  
+  if (count !== null && count >= 10) {
+    return NextResponse.json({ error: "Upload limit reached (10 per hour). Please try again later." }, { status: 429 });
+  }
 
   // Create upload record
   const { data: upload, error: uploadError } = await supabase
