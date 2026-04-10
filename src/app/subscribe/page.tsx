@@ -48,9 +48,9 @@ export default function SubscribePage() {
 
         {/* Subscription Card */}
         <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Your trial has ended</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">Subscribe to Project Pulse</h1>
           <p className="text-gray-400 mb-6">
-            Subscribe to continue using IronTrack Project Pulse and keep your project intelligence flowing.
+            Get instant schedule intelligence for your construction projects.
           </p>
 
           {error && (
@@ -108,7 +108,7 @@ export default function SubscribePage() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-8">
-          © 2025 IronTrack Project Pulse. All rights reserved.
+          © 2026 IronTrack Development LLC. All rights reserved.
         </p>
       </div>
     </div>

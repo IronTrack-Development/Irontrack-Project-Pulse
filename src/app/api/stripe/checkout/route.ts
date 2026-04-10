@@ -7,7 +7,8 @@ function getStripe() {
     throw new Error('STRIPE_SECRET_KEY is not set');
   }
   return new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2026-03-25.dahlia',
+    // @ts-expect-error Stripe API version
+    apiVersion: '2024-12-18.acacia',
   });
 }
 
@@ -61,8 +62,8 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: 'subscription',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?canceled=true`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://irontrack-pulse.vercel.app'}/dashboard?success=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://irontrack-pulse.vercel.app'}/subscribe?canceled=true`,
       metadata: {
         user_id: user.id,
         project_id: projectId || '',
