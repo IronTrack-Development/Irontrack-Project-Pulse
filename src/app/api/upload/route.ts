@@ -75,36 +75,50 @@ async function aiParseSchedule(buffer: Buffer, filename: string, fileType: strin
 
   const anthropic = new Anthropic({ apiKey });
 
-  let content: Anthropic.MessageCreateParams["messages"][0]["content"];
-
-  if (fileType === "pdf") {
-    // Send PDF directly to Claude with vision
-    const base64 = buffer.toString("base64");
-    content = [
-      {
-        type: "document",
-        source: {
-          type: "base64",
-          media_type: "application/pdf",
-          data: base64,
-        },
-      },
-      {
-        type: "text",
-        text: `You are a construction schedule parser. Extract ALL activities/tasks from this construction schedule PDF.
+  const SCHEDULE_PROMPT = `You are a construction schedule parser. Extract ALL activities/tasks from this construction schedule data.
 
 For EACH activity, extract:
 - activity_name (required)
 - start_date (YYYY-MM-DD format)
-- finish_date (YYYY-MM-DD format)  
+- finish_date (YYYY-MM-DD format)
 - percent_complete (number 0-100, default 0 if not shown)
 - duration (number of days if shown)
 - milestone (true/false — true if duration is 0 or it says "milestone")
 
-Return ONLY a JSON array. No explanation. No markdown. Just the raw JSON array.
+Return ONLY a JSON array. No explanation. No markdown. No code fences. Just the raw JSON array.
 Example: [{"activity_name":"Pour Foundation","start_date":"2026-04-15","finish_date":"2026-04-22","percent_complete":0,"duration":5,"milestone":false}]
 
-Extract every single line item. Do not skip any activities. If dates are ambiguous, use your best judgment on the format.`,
+Extract every single line item. Do not skip any activities. If dates are ambiguous, use your best judgment on the format.`;
+
+  let content: Anthropic.MessageCreateParams["messages"][0]["content"];
+
+  if (fileType === "pdf") {
+    // Extract text from PDF using pdf-parse
+    let pdfText = "";
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pdfParse = require("pdf-parse");
+      const pdfData = await pdfParse(buffer);
+      pdfText = pdfData.text;
+    } catch {
+      // Fallback: try raw text extraction
+      pdfText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000))
+        .replace(/[^\x20-\x7E\n\r\t]/g, " ")
+        .replace(/\s{3,}/g, "\n")
+        .trim();
+    }
+
+    if (!pdfText || pdfText.trim().length < 50) {
+      throw new Error("Could not extract readable text from this PDF");
+    }
+
+    // Truncate to fit context window
+    const truncated = pdfText.slice(0, 80000);
+
+    content = [
+      {
+        type: "text" as const,
+        text: `${SCHEDULE_PROMPT}\n\nSCHEDULE DATA FROM PDF "${filename}":\n\n${truncated}`,
       },
     ];
   } else {
