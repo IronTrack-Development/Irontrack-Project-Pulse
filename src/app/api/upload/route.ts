@@ -139,7 +139,7 @@ Be aggressive — extract every task you can identify even if you only have the 
   }
 
   const response = await anthropic.messages.create({
-    model: "claude-3-5-sonnet-20241022",
+    model: "claude-sonnet-4-6",
     max_tokens: 16000,
     messages: [{ role: "user", content }],
   });
