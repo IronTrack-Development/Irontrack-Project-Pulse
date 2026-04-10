@@ -2,32 +2,36 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FolderOpen, Upload, Settings } from "lucide-react";
+import { LayoutDashboard, FolderOpen, Upload } from "lucide-react";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
   { href: "/projects", label: "Projects", icon: FolderOpen },
   { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function MobileNav() {
   const pathname = usePathname();
 
+  // Don't show on public pages
+  if (pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/subscribe") {
+    return null;
+  }
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[#121217] border-t border-[#1F1F25] z-50">
+    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[#121217] border-t border-[#1F1F25] z-50 safe-area-bottom">
       <div className="flex items-center justify-around h-16 px-2">
         {navItems.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+          const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-                active ? "text-[#F97316]" : "text-gray-500"
+              className={`flex flex-col items-center gap-1 px-6 py-2 rounded-lg transition-colors ${
+                active ? "text-[#F97316]" : "text-gray-500 hover:text-gray-300"
               }`}
             >
-              <Icon size={20} />
+              <Icon size={22} />
               <span className="text-[10px] font-medium">{label}</span>
             </Link>
           );

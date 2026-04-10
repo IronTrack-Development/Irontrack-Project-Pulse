@@ -77,7 +77,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
     return (
       <div className="p-8 text-center text-gray-500">
         Project not found.{" "}
-        <Link href="/" className="text-[#F97316]">Go back</Link>
+        <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
       </div>
     );
   }
@@ -92,11 +92,11 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
           <div className="flex items-start justify-between mb-4">
             <div>
               <Link
-                href="/"
+                href="/dashboard"
                 className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm mb-2 transition-colors"
               >
                 <ArrowLeft size={14} />
-                Dashboard
+                Back
               </Link>
               <div className="flex items-center gap-3">
                 <div

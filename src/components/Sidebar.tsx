@@ -12,10 +12,9 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/projects", label: "Projects", icon: FolderOpen },
   { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -36,7 +35,7 @@ export default function Sidebar() {
         </div>
         <div>
           <div className="font-bold text-white text-sm leading-none">IronTrack</div>
-          <div className="text-[10px] text-[#F97316] font-semibold tracking-widest uppercase mt-0.5">Daily</div>
+          <div className="text-[10px] text-[#F97316] font-semibold tracking-widest uppercase mt-0.5">Project Pulse</div>
         </div>
       </div>
 
@@ -53,7 +52,7 @@ export default function Sidebar() {
       <nav className="flex-1 px-3 py-2">
         <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-2 mb-2">Navigation</div>
         {navItems.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+          const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
               key={href}
@@ -73,7 +72,7 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div className="px-4 py-4 border-t border-[#1F1F25]">
-        <div className="text-xs text-gray-600">v1.0.0 · Phase 1</div>
+        <div className="text-xs text-gray-600">v1.0.0</div>
       </div>
     </aside>
   );
