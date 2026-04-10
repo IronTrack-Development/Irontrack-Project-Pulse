@@ -11,7 +11,7 @@ export async function GET(
 
     // Get all milestone activities
     const { data: activities, error } = await supabase
-      .from("activities")
+      .from("parsed_activities")
       .select("*")
       .eq("project_id", projectId)
       .or("milestone.eq.true,original_duration.eq.0")
@@ -21,7 +21,7 @@ export async function GET(
 
     // Also include activities with "milestone" in the name
     const { data: nameBasedMilestones, error: nameError } = await supabase
-      .from("activities")
+      .from("parsed_activities")
       .select("*")
       .eq("project_id", projectId)
       .ilike("activity_name", "%milestone%")

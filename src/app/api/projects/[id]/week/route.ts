@@ -1,26 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase-server";
+import { getServiceClient } from "@/lib/supabase";
 
-function getWeekRange(weekNumber: number): { start: Date; end: Date } {
+function getWeekRange(weekNumber: number): { start: string; end: string } {
   const now = new Date();
   const currentDay = now.getDay();
   const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
   
-  // Get Monday of current week
   const currentMonday = new Date(now);
   currentMonday.setDate(now.getDate() - daysFromMonday);
   currentMonday.setHours(0, 0, 0, 0);
   
-  // Calculate target Monday based on week number
   const targetMonday = new Date(currentMonday);
   targetMonday.setDate(currentMonday.getDate() + (weekNumber - 1) * 7);
   
-  // Sunday is 6 days after Monday
   const targetSunday = new Date(targetMonday);
   targetSunday.setDate(targetMonday.getDate() + 6);
-  targetSunday.setHours(23, 59, 59, 999);
   
-  return { start: targetMonday, end: targetSunday };
+  return { 
+    start: targetMonday.toISOString().split("T")[0], 
+    end: targetSunday.toISOString().split("T")[0] 
+  };
 }
 
 export async function GET(
@@ -37,34 +36,36 @@ export async function GET(
       return NextResponse.json({ error: "Week must be 1, 2, or 3" }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    const supabase = getServiceClient();
     const { start, end } = getWeekRange(week);
 
-    // Get activities where start_date OR finish_date falls within the week
+    // Get activities that overlap with this week window
+    // An activity overlaps if: start_date <= end AND finish_date >= start
     const { data: activities, error } = await supabase
-      .from("activities")
+      .from("parsed_activities")
       .select("*")
       .eq("project_id", projectId)
-      .or(`start_date.gte.${start.toISOString()},start_date.lte.${end.toISOString()},finish_date.gte.${start.toISOString()},finish_date.lte.${end.toISOString()}`)
+      .lte("start_date", end)
+      .gte("finish_date", start)
       .order("start_date", { ascending: true });
 
     if (error) throw error;
 
-    // Group activities by day
+    // Group activities by day (use start_date as the grouping key)
     const grouped: Record<string, typeof activities> = {};
     activities?.forEach((activity) => {
-      const activityDate = new Date(activity.start_date || activity.finish_date);
-      if (activityDate >= start && activityDate <= end) {
-        const dayKey = activityDate.toISOString().split("T")[0];
-        if (!grouped[dayKey]) grouped[dayKey] = [];
-        grouped[dayKey].push(activity);
+      const dayKey = activity.start_date || activity.finish_date;
+      if (dayKey) {
+        const key = dayKey.split("T")[0];
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(activity);
       }
     });
 
     return NextResponse.json({
       week,
-      weekStart: start.toISOString(),
-      weekEnd: end.toISOString(),
+      weekStart: start,
+      weekEnd: end,
       activities: activities || [],
       groupedByDay: grouped,
     });

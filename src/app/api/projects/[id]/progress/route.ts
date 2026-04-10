@@ -11,7 +11,7 @@ export async function GET(
 
     // Get project details
     const { data: project, error: projectError } = await supabase
-      .from("projects")
+      .from("daily_projects")
       .select("target_finish_date")
       .eq("id", projectId)
       .single();
@@ -20,7 +20,7 @@ export async function GET(
 
     // Get all activities for this project
     const { data: activities, error: activitiesError } = await supabase
-      .from("activities")
+      .from("parsed_activities")
       .select("percent_complete")
       .eq("project_id", projectId);
 
