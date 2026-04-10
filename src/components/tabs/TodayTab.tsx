@@ -1,0 +1,187 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw } from "lucide-react";
+import type { ParsedActivity, DailyRisk } from "@/types";
+
+interface TodayData {
+  date: string;
+  happeningToday: ParsedActivity[];
+  recentStarts: ParsedActivity[];
+  finishingSoon: ParsedActivity[];
+  atRisk: ParsedActivity[];
+  actionItems: string[];
+  risks: DailyRisk[];
+}
+
+function statusColor(status: string) {
+  switch (status) {
+    case "complete": return "text-[#22C55E] bg-[#22C55E]/10";
+    case "in_progress": return "text-[#3B82F6] bg-[#3B82F6]/10";
+    case "late": return "text-[#EF4444] bg-[#EF4444]/10";
+    default: return "text-gray-400 bg-gray-800";
+  }
+}
+
+function statusLabel(status: string) {
+  switch (status) {
+    case "in_progress": return "In Progress";
+    case "complete": return "Complete";
+    case "late": return "Overdue";
+    case "not_started": return "Scheduled";
+    default: return status;
+  }
+}
+
+function ActivityCard({ activity }: { activity: ParsedActivity }) {
+  return (
+    <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center gap-3">
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-medium text-white truncate">{activity.activity_name}</div>
+        <div className="flex items-center gap-3 mt-1">
+          {activity.trade && (
+            <span className="text-xs text-[#F97316]">{activity.trade}</span>
+          )}
+          {activity.area && (
+            <span className="text-xs text-gray-500">{activity.area}</span>
+          )}
+          {activity.percent_complete > 0 && (
+            <span className="text-xs text-gray-400">{activity.percent_complete}% done</span>
+          )}
+        </div>
+      </div>
+      <span className={`text-xs px-2 py-0.5 rounded font-medium ${statusColor(activity.status)}`}>
+        {statusLabel(activity.status)}
+      </span>
+    </div>
+  );
+}
+
+export default function TodayTab({ projectId }: { projectId: string }) {
+  const [data, setData] = useState<TodayData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const res = await fetch(`/api/projects/${projectId}/today`);
+    if (res.ok) setData(await res.json());
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchData(); }, [projectId]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-16">
+        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!data) return <div className="text-gray-500 text-center py-12">No data available.</div>;
+
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+
+  return (
+    <div className="space-y-6">
+      {/* Date header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-xs text-gray-500 uppercase tracking-widest mb-0.5">Today is</div>
+          <div className="text-lg font-bold text-white">{today}</div>
+        </div>
+        <button onClick={fetchData} className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors">
+          <RefreshCw size={14} />
+        </button>
+      </div>
+
+      {/* Action items */}
+      {data.actionItems.length > 0 && (
+        <div className="bg-[#F97316]/10 border border-[#F97316]/20 rounded-2xl p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap size={16} className="text-[#F97316]" />
+            <h3 className="font-bold text-white">Action Items</h3>
+            <span className="bg-[#F97316] text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {data.actionItems.length}
+            </span>
+          </div>
+          <ul className="space-y-2">
+            {data.actionItems.slice(0, 5).map((action, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                <ChevronRight size={14} className="text-[#F97316] shrink-0 mt-0.5" />
+                {action}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* What's happening today */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <Zap size={15} className="text-[#3B82F6]" />
+          <h3 className="font-semibold text-white">Happening Today</h3>
+          <span className="text-xs text-gray-500">({data.happeningToday.length})</span>
+        </div>
+        {data.happeningToday.length === 0 ? (
+          <p className="text-gray-600 text-sm bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+            No activities scheduled for today.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {data.happeningToday.map((a) => <ActivityCard key={a.id} activity={a} />)}
+          </div>
+        )}
+      </div>
+
+      {/* At risk */}
+      {data.atRisk.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle size={15} className="text-[#EF4444]" />
+            <h3 className="font-semibold text-white">At Risk</h3>
+            <span className="text-xs text-gray-500">({data.atRisk.length})</span>
+          </div>
+          <div className="space-y-2">
+            {data.atRisk.map((a) => <ActivityCard key={a.id} activity={a} />)}
+          </div>
+        </div>
+      )}
+
+      {/* Started recently */}
+      {data.recentStarts.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <CheckCircle2 size={15} className="text-[#22C55E]" />
+            <h3 className="font-semibold text-white">Started Recently</h3>
+            <span className="text-xs text-gray-500">(last 3 days)</span>
+          </div>
+          <div className="space-y-2">
+            {data.recentStarts.map((a) => <ActivityCard key={a.id} activity={a} />)}
+          </div>
+        </div>
+      )}
+
+      {/* Finishing soon */}
+      {data.finishingSoon.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Clock size={15} className="text-[#EAB308]" />
+            <h3 className="font-semibold text-white">Should Finish Soon</h3>
+            <span className="text-xs text-gray-500">(next 3 days)</span>
+          </div>
+          <div className="space-y-2">
+            {data.finishingSoon.map((a) => <ActivityCard key={a.id} activity={a} />)}
+          </div>
+        </div>
+      )}
+
+      {data.happeningToday.length === 0 && data.atRisk.length === 0 && data.recentStarts.length === 0 && data.finishingSoon.length === 0 && (
+        <div className="text-center py-12 text-gray-600">
+          <Zap size={32} className="mx-auto mb-3 opacity-30" />
+          <p>No field activity data for today. Upload a schedule to get started.</p>
+        </div>
+      )}
+    </div>
+  );
+}
