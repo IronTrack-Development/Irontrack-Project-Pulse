@@ -138,28 +138,79 @@ Extract every single line item. Do not skip any activities. If dates are ambiguo
         },
       ];
     }
-  } else {
-    // MPP or XML — extract readable text and send to AI
-    const rawText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000));
-    let textForAI: string;
-    
-    if (fileType === "xml") {
-      // XML is already readable — just truncate
-      textForAI = rawText.slice(0, 80000);
-    } else {
-      // MPP binary — extract readable strings
-      const readable = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s{3,}/g, "\n").trim();
-      textForAI = readable.slice(0, 50000);
-    }
-
+  } else if (fileType === "xer") {
+    // Primavera P6 XER file — plain text, tab-delimited
+    const xerText = buffer.toString("utf-8").slice(0, 80000);
     content = [
       {
-        type: "text",
+        type: "text" as const,
         text: `${SCHEDULE_PROMPT}
 
-This is a ${fileType === "xml" ? "Microsoft Project XML export" : "Microsoft Project .mpp binary file"} called "${filename}". Extract ALL tasks/activities with their names, dates, and completion percentages.
+This is a Primavera P6 XER export file called "${filename}". XER files are tab-delimited with table headers starting with %T and field definitions starting with %F. The TASK table contains the schedule activities. Extract ALL tasks with their activity names, start dates, finish dates, percent complete, and durations.
 
-FILE CONTENT:
+XER FILE CONTENT:
+${xerText}`,
+      },
+    ];
+  } else if (fileType === "xml") {
+    // Microsoft Project XML export — fully readable
+    const xmlText = buffer.toString("utf-8").slice(0, 80000);
+    content = [
+      {
+        type: "text" as const,
+        text: `${SCHEDULE_PROMPT}
+
+This is a Microsoft Project XML export file called "${filename}". It contains Task elements with Name, Start, Finish, PercentComplete, Duration, and Milestone fields. Extract ALL tasks.
+
+XML FILE CONTENT:
+${xmlText}`,
+      },
+    ];
+  } else {
+    // MPP binary — extract all readable strings including dates
+    const rawBytes = buffer;
+    const strings: string[] = [];
+    let current = "";
+    
+    // Extract readable ASCII strings (min length 3)
+    for (let i = 0; i < Math.min(rawBytes.length, 2000000); i++) {
+      const byte = rawBytes[i];
+      if (byte >= 32 && byte <= 126) {
+        current += String.fromCharCode(byte);
+      } else {
+        if (current.length >= 3) strings.push(current);
+        current = "";
+      }
+    }
+    if (current.length >= 3) strings.push(current);
+    
+    // Also try UTF-16LE extraction (MS Project often uses UTF-16)
+    const utf16Strings: string[] = [];
+    for (let i = 0; i < Math.min(rawBytes.length, 2000000) - 1; i += 2) {
+      const char = rawBytes[i] | (rawBytes[i + 1] << 8);
+      if (char >= 32 && char <= 126) {
+        current += String.fromCharCode(char);
+      } else {
+        if (current.length >= 3) utf16Strings.push(current);
+        current = "";
+      }
+    }
+    if (current.length >= 3) utf16Strings.push(current);
+    
+    // Combine and deduplicate, prefer longer extraction
+    const allStrings = utf16Strings.length > strings.length ? utf16Strings : strings;
+    const textForAI = allStrings.join("\n").slice(0, 60000);
+    
+    content = [
+      {
+        type: "text" as const,
+        text: `${SCHEDULE_PROMPT}
+
+This is extracted text from a Microsoft Project .mpp binary file called "${filename}". The text contains task names, dates, durations, and percentages mixed together. Your job is to identify construction activities and their associated dates. Look for patterns like task names followed by dates. Dates may be in various formats (MM/DD/YYYY, YYYY-MM-DD, etc).
+
+Be aggressive — extract every task you can identify. Common construction tasks include: mobilization, excavation, foundation, framing, rough-in, drywall, roofing, MEP, HVAC, electrical, plumbing, fire protection, inspections, substantial completion, punchlist, closeout.
+
+EXTRACTED TEXT:
 ${textForAI}`,
       },
     ];
@@ -251,28 +302,11 @@ export async function POST(req: NextRequest) {
     const wb = XLSX.read(buffer, { type: "buffer", cellDates: false });
     const ws = wb.Sheets[wb.SheetNames[0]];
     rows = XLSX.utils.sheet_to_json<RawRow>(ws, { defval: null });
-  } else if (ext === "xml") {
-    // Microsoft Project XML export — send to AI
-    try {
-      rows = await aiParseSchedule(buffer, filename, "xml");
-      usedAI = true;
-      mapping.activity_name = "Activity Name";
-      mapping.start_date = "Start Date";
-      mapping.finish_date = "Finish Date";
-      mapping.percent_complete = "% Complete";
-      mapping.original_duration = "Duration";
-      mapping.activity_id = "Activity ID";
-      mapping.milestone = "Milestone";
-    } catch (aiError) {
-      const msg = aiError instanceof Error ? aiError.message : "AI parsing failed";
-      return NextResponse.json({ error: msg }, { status: 400 });
-    }
-  } else if (ext === "pdf" || ext === "mpp") {
-    // Use AI to parse PDF and MPP files
+  } else if (ext === "xml" || ext === "xer" || ext === "pdf" || ext === "mpp") {
+    // AI-powered parsing for XML, XER, PDF, and MPP files
     try {
       rows = await aiParseSchedule(buffer, filename, ext);
       usedAI = true;
-      // Set mapping for AI-parsed data (standardized column names)
       mapping.activity_name = "Activity Name";
       mapping.start_date = "Start Date";
       mapping.finish_date = "Finish Date";
@@ -287,7 +321,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
   } else {
-    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp, .xml" }, { status: 400 });
+    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp, .xml, .xer" }, { status: 400 });
   }
 
   if (rows.length === 0) {
