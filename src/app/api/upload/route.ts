@@ -239,19 +239,28 @@ ${xmlText}`,
     }
     
     if (!textForAI || textForAI.length < 100) {
-      throw new Error("Could not extract readable data from this MPP file");
+      throw new Error("Could not extract readable data from this MPP file. Try exporting from Microsoft Project as XML: File → Save As → XML Format.");
     }
     
     content = [
       {
         type: "text" as const,
-        text: `${SCHEDULE_PROMPT}
+        text: `You are a construction schedule parser extracting data from a Microsoft Project .mpp file called "${filename}".
 
-This is extracted data from a Microsoft Project .mpp file called "${filename}". The data comes from the internal OLE compound document streams. It contains task names, dates (in various formats), durations, and completion percentages. Your job is to identify ALL construction activities and extract their data.
+Below is text extracted from the MPP binary. It contains task names and subcontractor names. The dates are stored as binary data and could not be extracted as text.
 
-Be thorough — extract every task you find. Look for task names near dates. Dates may appear as timestamps, serial numbers, or formatted strings.
+Your job:
+1. Extract EVERY task/activity name you can find
+2. For dates: since the binary dates couldn't be extracted, leave start_date and finish_date as empty strings
+3. Group related items — if a line looks like a subcontractor name (short company name) following a task, it's the assigned resource, not a task
+4. Filter out non-task items like column headers, settings, file paths, and metadata
 
-EXTRACTED DATA:
+Return ONLY a JSON array. No explanation. No markdown. No code fences.
+Format: [{"activity_name":"Task Name Here","start_date":"","finish_date":"","percent_complete":0,"duration":0,"milestone":false}]
+
+Mark as milestone=true if the name contains words like: milestone, NTP, notice to proceed, certificate of occupancy, substantial completion, final inspection, turnover, closeout, punch.
+
+EXTRACTED MPP DATA:
 ${textForAI}`,
       },
     ];
