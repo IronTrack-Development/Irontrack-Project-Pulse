@@ -167,50 +167,91 @@ ${xmlText}`,
       },
     ];
   } else {
-    // MPP binary — extract all readable strings including dates
-    const rawBytes = buffer;
-    const strings: string[] = [];
-    let current = "";
+    // MPP binary — use CFB to read OLE compound document structure
+    let textForAI = "";
     
-    // Extract readable ASCII strings (min length 3)
-    for (let i = 0; i < Math.min(rawBytes.length, 2000000); i++) {
-      const byte = rawBytes[i];
-      if (byte >= 32 && byte <= 126) {
-        current += String.fromCharCode(byte);
-      } else {
-        if (current.length >= 3) strings.push(current);
-        current = "";
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const CFB = require("cfb");
+      const cfb = CFB.read(buffer, { type: "buffer" });
+      
+      // Extract all text from all streams in the OLE container
+      const allText: string[] = [];
+      if (cfb.FileIndex) {
+        for (const entry of cfb.FileIndex) {
+          if (entry.size > 0 && entry.content) {
+            // Try UTF-16LE decode (MS Project internal encoding)
+            const utf16: string[] = [];
+            let current = "";
+            const bytes = entry.content;
+            for (let i = 0; i < bytes.length - 1; i += 2) {
+              const char = bytes[i] | (bytes[i + 1] << 8);
+              if (char >= 32 && char <= 126) {
+                current += String.fromCharCode(char);
+              } else if (char === 0 && current.length > 0) {
+                // null terminator in UTF-16
+                continue;
+              } else {
+                if (current.length >= 2) utf16.push(current);
+                current = "";
+              }
+            }
+            if (current.length >= 2) utf16.push(current);
+            
+            // Also try ASCII
+            const ascii: string[] = [];
+            current = "";
+            for (let i = 0; i < bytes.length; i++) {
+              const byte = bytes[i];
+              if (byte >= 32 && byte <= 126) {
+                current += String.fromCharCode(byte);
+              } else {
+                if (current.length >= 2) ascii.push(current);
+                current = "";
+              }
+            }
+            if (current.length >= 2) ascii.push(current);
+            
+            const streamText = utf16.length > ascii.length ? utf16.join("\n") : ascii.join("\n");
+            if (streamText.length > 10) {
+              allText.push(`--- Stream: ${entry.name} ---\n${streamText}`);
+            }
+          }
+        }
       }
-    }
-    if (current.length >= 3) strings.push(current);
-    
-    // Also try UTF-16LE extraction (MS Project often uses UTF-16)
-    const utf16Strings: string[] = [];
-    for (let i = 0; i < Math.min(rawBytes.length, 2000000) - 1; i += 2) {
-      const char = rawBytes[i] | (rawBytes[i + 1] << 8);
-      if (char >= 32 && char <= 126) {
-        current += String.fromCharCode(char);
-      } else {
-        if (current.length >= 3) utf16Strings.push(current);
-        current = "";
+      textForAI = allText.join("\n\n").slice(0, 70000);
+    } catch {
+      // CFB failed — fallback to raw string extraction
+      const rawBytes = buffer;
+      const strings: string[] = [];
+      let current = "";
+      for (let i = 0; i < Math.min(rawBytes.length, 2000000) - 1; i += 2) {
+        const char = rawBytes[i] | (rawBytes[i + 1] << 8);
+        if (char >= 32 && char <= 126) {
+          current += String.fromCharCode(char);
+        } else {
+          if (current.length >= 3) strings.push(current);
+          current = "";
+        }
       }
+      if (current.length >= 3) strings.push(current);
+      textForAI = strings.join("\n").slice(0, 60000);
     }
-    if (current.length >= 3) utf16Strings.push(current);
     
-    // Combine and deduplicate, prefer longer extraction
-    const allStrings = utf16Strings.length > strings.length ? utf16Strings : strings;
-    const textForAI = allStrings.join("\n").slice(0, 60000);
+    if (!textForAI || textForAI.length < 100) {
+      throw new Error("Could not extract readable data from this MPP file");
+    }
     
     content = [
       {
         type: "text" as const,
         text: `${SCHEDULE_PROMPT}
 
-This is extracted text from a Microsoft Project .mpp binary file called "${filename}". The text contains task names, dates, durations, and percentages mixed together. Your job is to identify construction activities and their associated dates. Look for patterns like task names followed by dates. Dates may be in various formats (MM/DD/YYYY, YYYY-MM-DD, etc).
+This is extracted data from a Microsoft Project .mpp file called "${filename}". The data comes from the internal OLE compound document streams. It contains task names, dates (in various formats), durations, and completion percentages. Your job is to identify ALL construction activities and extract their data.
 
-Be aggressive — extract every task you can identify. Common construction tasks include: mobilization, excavation, foundation, framing, rough-in, drywall, roofing, MEP, HVAC, electrical, plumbing, fire protection, inspections, substantial completion, punchlist, closeout.
+Be thorough — extract every task you find. Look for task names near dates. Dates may appear as timestamps, serial numbers, or formatted strings.
 
-EXTRACTED TEXT:
+EXTRACTED DATA:
 ${textForAI}`,
       },
     ];
