@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+
+// Allow up to 60 seconds for AI-powered PDF/MPP parsing
+export const maxDuration = 60;
 import { getServiceClient } from "@/lib/supabase";
 import { inferTrade } from "@/lib/trade-inference";
 import { runRiskDetection } from "@/lib/risk-engine";
