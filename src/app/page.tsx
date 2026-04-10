@@ -9,7 +9,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Building2 className="w-6 h-6 text-[#F97316]" />
-            <span className="text-xl font-bold text-white">IronTrack Daily</span>
+            <span className="text-xl font-bold text-white">IronTrack Project Pulse</span>
           </div>
           <div className="flex items-center gap-4">
             <Link
@@ -42,7 +42,7 @@ export default function LandingPage() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed">
-            IronTrack Daily turns your project schedule into daily field intelligence — 
+            IronTrack Project Pulse turns your project schedule into daily field intelligence — 
             risks, lookahead, health scores — in seconds.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -204,7 +204,7 @@ export default function LandingPage() {
             Ready to See What Your Schedule is Saying?
           </h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Join construction teams using IronTrack Daily to stay ahead of risks and finish on time.
+            Join construction teams using IronTrack Project Pulse to stay ahead of risks and finish on time.
           </p>
           <Link
             href="/signup"
@@ -219,7 +219,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-[#1F1F25] py-8">
         <div className="max-w-7xl mx-auto px-6 text-center text-gray-500 text-sm">
-          © 2025 IronTrack Daily. All rights reserved.
+          © 2025 IronTrack Project Pulse. All rights reserved.
         </div>
       </footer>
     </div>

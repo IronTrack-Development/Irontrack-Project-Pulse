@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "IronTrack Daily — Field Intelligence Platform",
+  title: "IronTrack Project Pulse — Field Intelligence Platform",
   description: "Real-time schedule intelligence for construction field teams.",
   manifest: "/manifest.json",
   appleWebApp: {

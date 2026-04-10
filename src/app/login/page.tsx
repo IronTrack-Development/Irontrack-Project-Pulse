@@ -65,7 +65,7 @@ function LoginForm() {
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
           <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
-          <span className="text-2xl font-bold text-white">IronTrack Daily</span>
+          <span className="text-2xl font-bold text-white">IronTrack Project Pulse</span>
         </div>
 
         {/* Login Card */}

@@ -43,14 +43,14 @@ export default function SubscribePage() {
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
           <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
-          <span className="text-2xl font-bold text-white">IronTrack Daily</span>
+          <span className="text-2xl font-bold text-white">IronTrack Project Pulse</span>
         </div>
 
         {/* Subscription Card */}
         <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
           <h1 className="text-2xl font-bold text-white mb-2">Your trial has ended</h1>
           <p className="text-gray-400 mb-6">
-            Subscribe to continue using IronTrack Daily and keep your project intelligence flowing.
+            Subscribe to continue using IronTrack Project Pulse and keep your project intelligence flowing.
           </p>
 
           {error && (
@@ -108,7 +108,7 @@ export default function SubscribePage() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-8">
-          © 2025 IronTrack Daily. All rights reserved.
+          © 2025 IronTrack Project Pulse. All rights reserved.
         </p>
       </div>
     </div>

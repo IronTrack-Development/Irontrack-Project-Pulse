@@ -28,7 +28,7 @@ export default function Sidebar() {
         <div className="relative w-8 h-8">
           <Image
             src="/irontrack-logo.png"
-            alt="IronTrack Daily"
+            alt="IronTrack Project Pulse"
             fill
             className="object-contain"
             onError={() => {}}
