@@ -187,9 +187,19 @@ export default function LandingPage() {
             <Building2 className="w-4 h-4 text-[#F97316]" />
             <span className="text-sm text-gray-500">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
-          <a href="mailto:irontrackdevelopment@outlook.com" className="text-sm text-gray-500 hover:text-[#F97316] transition-colors">
-            irontrackdevelopment@outlook.com
-          </a>
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="/terms" className="text-gray-500 hover:text-[#F97316] transition-colors">
+              Terms of Service
+            </Link>
+            <span className="text-gray-700">•</span>
+            <Link href="/privacy" className="text-gray-500 hover:text-[#F97316] transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-gray-700">•</span>
+            <a href="mailto:irontrackdevelopment@outlook.com" className="text-gray-500 hover:text-[#F97316] transition-colors">
+              irontrackdevelopment@outlook.com
+            </a>
+          </div>
         </div>
       </footer>
     </div>
