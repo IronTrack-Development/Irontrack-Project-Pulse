@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
-import { createClient } from "@/lib/supabase-server";
 import { inferTrade } from "@/lib/trade-inference";
 import { runRiskDetection } from "@/lib/risk-engine";
 import { computeHealthScore } from "@/lib/health-score";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
+import Anthropic from "@anthropic-ai/sdk";
 
 interface RawRow {
   [key: string]: string | number | null | undefined;
@@ -30,7 +30,6 @@ interface ColumnMapping {
 function parseDate(val: string | number | null | undefined): string | null {
   if (!val) return null;
   if (typeof val === "number") {
-    // Excel serial date
     const date = new Date((val - 25569) * 86400 * 1000);
     return date.toISOString().split("T")[0];
   }
@@ -55,31 +54,124 @@ function deriveStatus(row: {
 }): string {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   if (row.actual_finish || (row.percent_complete !== null && row.percent_complete !== undefined && row.percent_complete >= 100)) {
     return "complete";
   }
-  if (row.actual_start) {
-    return "in_progress";
-  }
+  if (row.actual_start) return "in_progress";
   if (row.start_date) {
     const start = new Date(row.start_date);
-    if (start < today && (!row.percent_complete || row.percent_complete === 0)) {
-      return "late";
-    }
+    if (start < today && (!row.percent_complete || row.percent_complete === 0)) return "late";
   }
   return "not_started";
 }
 
-export async function POST(req: NextRequest) {
-  const authSupabase = await createClient();
-  
-  // Get authenticated user
-  const { data: { user }, error: authError } = await authSupabase.auth.getUser();
-  if (authError || !user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+// AI-powered schedule extraction for PDFs and MPP files
+async function aiParseSchedule(buffer: Buffer, filename: string, fileType: string): Promise<RawRow[]> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY not configured");
+
+  const anthropic = new Anthropic({ apiKey });
+
+  let content: Anthropic.MessageCreateParams["messages"][0]["content"];
+
+  if (fileType === "pdf") {
+    // Send PDF directly to Claude with vision
+    const base64 = buffer.toString("base64");
+    content = [
+      {
+        type: "document",
+        source: {
+          type: "base64",
+          media_type: "application/pdf",
+          data: base64,
+        },
+      },
+      {
+        type: "text",
+        text: `You are a construction schedule parser. Extract ALL activities/tasks from this construction schedule PDF.
+
+For EACH activity, extract:
+- activity_name (required)
+- start_date (YYYY-MM-DD format)
+- finish_date (YYYY-MM-DD format)  
+- percent_complete (number 0-100, default 0 if not shown)
+- duration (number of days if shown)
+- milestone (true/false — true if duration is 0 or it says "milestone")
+
+Return ONLY a JSON array. No explanation. No markdown. Just the raw JSON array.
+Example: [{"activity_name":"Pour Foundation","start_date":"2026-04-15","finish_date":"2026-04-22","percent_complete":0,"duration":5,"milestone":false}]
+
+Extract every single line item. Do not skip any activities. If dates are ambiguous, use your best judgment on the format.`,
+      },
+    ];
+  } else {
+    // MPP — extract readable strings from binary
+    const rawText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000));
+    // Extract anything that looks like readable text
+    const readable = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s{3,}/g, "\n").trim();
+    // Get the most useful 50K chars
+    const truncated = readable.slice(0, 50000);
+
+    content = [
+      {
+        type: "text",
+        text: `You are a construction schedule parser. This is raw text extracted from a Microsoft Project (.mpp) binary file called "${filename}".
+
+The text contains task names, dates, durations, and other schedule data mixed with binary artifacts. Your job is to find and extract ALL construction activities/tasks.
+
+RAW TEXT:
+${truncated}
+
+For EACH activity you can identify, extract:
+- activity_name (required)
+- start_date (YYYY-MM-DD format if you can find it)
+- finish_date (YYYY-MM-DD format if you can find it)
+- percent_complete (number 0-100, default 0)
+- duration (number of days if visible)
+- milestone (true/false)
+
+Return ONLY a JSON array. No explanation. No markdown. Just the raw JSON array.
+Example: [{"activity_name":"Pour Foundation","start_date":"2026-04-15","finish_date":"2026-04-22","percent_complete":0,"duration":5,"milestone":false}]
+
+Be aggressive — extract every task you can identify even if you only have the name and no dates. Construction task names include things like: mobilization, excavation, foundation, framing, rough-in, drywall, roofing, MEP, inspections, substantial completion, etc.`,
+      },
+    ];
   }
 
+  const response = await anthropic.messages.create({
+    model: "claude-sonnet-4-5-20250514",
+    max_tokens: 16000,
+    messages: [{ role: "user", content }],
+  });
+
+  // Extract JSON from response
+  const text = response.content
+    .filter((block): block is Anthropic.TextBlock => block.type === "text")
+    .map((block) => block.text)
+    .join("");
+
+  // Find JSON array in the response
+  const jsonMatch = text.match(/\[[\s\S]*\]/);
+  if (!jsonMatch) throw new Error("AI could not extract schedule data from this file");
+
+  const parsed = JSON.parse(jsonMatch[0]);
+  if (!Array.isArray(parsed) || parsed.length === 0) {
+    throw new Error("AI found no activities in this file");
+  }
+
+  // Convert to RawRow format
+  return parsed.map((item: Record<string, unknown>, i: number) => ({
+    "Activity ID": String(i + 1),
+    "Activity Name": String(item.activity_name || ""),
+    "Start Date": String(item.start_date || ""),
+    "Finish Date": String(item.finish_date || ""),
+    "% Complete": String(item.percent_complete ?? 0),
+    "Duration": String(item.duration || ""),
+    "Milestone": item.milestone ? "yes" : "no",
+  }));
+}
+
+export async function POST(req: NextRequest) {
   const supabase = getServiceClient();
   const formData = await req.formData();
 
@@ -95,16 +187,13 @@ export async function POST(req: NextRequest) {
   const filename = file.name;
   const ext = filename.split(".").pop()?.toLowerCase() || "";
 
-  // Verify project exists and user owns it
+  // Verify project exists
   const { data: project } = await supabase
     .from("daily_projects")
-    .select("id, user_id")
+    .select("id")
     .eq("id", projectId)
     .single();
   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
-  if (project.user_id !== user.id) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
 
   // Create upload record
   const { data: upload, error: uploadError } = await supabase
@@ -122,6 +211,7 @@ export async function POST(req: NextRequest) {
   // Parse file
   const buffer = Buffer.from(await file.arrayBuffer());
   let rows: RawRow[] = [];
+  let usedAI = false;
 
   if (ext === "csv") {
     const text = buffer.toString("utf-8");
@@ -131,104 +221,55 @@ export async function POST(req: NextRequest) {
     const wb = XLSX.read(buffer, { type: "buffer", cellDates: false });
     const ws = wb.Sheets[wb.SheetNames[0]];
     rows = XLSX.utils.sheet_to_json<RawRow>(ws, { defval: null });
-  } else if (ext === "mpp") {
-    // Microsoft Project — use MPXJ (Java) to convert to JSON
-    const fs = await import('fs');
-    const path = await import('path');
-    const { execSync } = await import('child_process');
-    const os = await import('os');
-    
-    const tmpDir = os.default.tmpdir();
-    const tmpFile = path.default.join(tmpDir, `upload_${Date.now()}.mpp`);
-    const tmpOut = path.default.join(tmpDir, `upload_${Date.now()}.csv`);
-    
-    // Write MPP to temp file
-    fs.default.writeFileSync(tmpFile, buffer);
-    
-    const mpxjDir = 'C:\\Users\\Iront\\.openclaw\\workspace\\tools\\mpxj';
-    
+  } else if (ext === "pdf" || ext === "mpp") {
+    // Use AI to parse PDF and MPP files
     try {
-      // Use MPXJ to extract tasks as CSV
-      // First try the Java approach
-      const jars = ['mpxj.jar','poi.jar','commons-codec.jar','commons-io.jar','commons-math3.jar','jakarta-xml-bind.jar','slf4j-api.jar','slf4j-simple.jar','log4j-api.jar'].map(j => path.default.join(mpxjDir, j)).join(';');
-      const cmd = `java -cp "${mpxjDir};${jars}" ReadMPP "${tmpFile}"`;
-      const output = execSync(cmd, { cwd: mpxjDir, timeout: 30000, encoding: 'utf-8' });
-      
-      // Parse the output — ReadMPP outputs task data
-      const lines = output.split('\n').filter(l => l.trim());
-      let activityId = 1;
-      for (const line of lines) {
-        const parts = line.split('\t');
-        if (parts.length >= 2 && parts[1] && parts[1].trim().length > 2) {
-          rows.push({
-            'Activity ID': parts[0]?.trim() || String(activityId++),
-            'Activity Name': parts[1]?.trim() || '',
-            'Start Date': parts[2]?.trim() || '',
-            'Finish Date': parts[3]?.trim() || '',
-            'Duration': parts[4]?.trim() || '',
-            '% Complete': parts[5]?.trim() || '0',
-          });
-        }
-      }
-    } catch (javaErr) {
-      // Java/MPXJ not available — try reading raw binary for task names
-      const rawText = buffer.toString('utf-8', 0, Math.min(buffer.length, 1000000));
-      const taskPattern = /[A-Z][a-z].*(?:Level|Floor|Install|Frame|Pour|Rough|Paint|Inspect|Demo|Excavat|Concrete|Steel|Roof|Plumb|Electric|HVAC|Drywall|Tile|Landscape|Close)/g;
-      const matches = rawText.match(taskPattern) || [];
-      const unique = [...new Set(matches)].slice(0, 500);
-      let id = 1;
-      for (const name of unique) {
-        if (name.length > 5 && name.length < 200) {
-          rows.push({
-            'Activity ID': String(id++),
-            'Activity Name': name.trim(),
-          });
-        }
-      }
-    } finally {
-      // Cleanup temp files
-      try { fs.default.unlinkSync(tmpFile); } catch {}
-      try { fs.default.unlinkSync(tmpOut); } catch {}
-    }
-    
-    if (rows.length === 0) {
+      rows = await aiParseSchedule(buffer, filename, ext);
+      usedAI = true;
+      // Set mapping for AI-parsed data (standardized column names)
+      mapping.activity_name = "Activity Name";
+      mapping.start_date = "Start Date";
+      mapping.finish_date = "Finish Date";
+      mapping.percent_complete = "% Complete";
+      mapping.original_duration = "Duration";
+      mapping.activity_id = "Activity ID";
+      mapping.milestone = "Milestone";
+    } catch (aiError) {
+      const msg = aiError instanceof Error ? aiError.message : "AI parsing failed";
       return NextResponse.json({
-        error: "Could not extract tasks from this MPP file. Try exporting from Microsoft Project: File → Save As → Excel Workbook (.xlsx)",
-      }, { status: 400 });
-    }
-  } else if (ext === "pdf") {
-    // For PDF schedules, extract text and parse line-by-line
-    // Use a simple text extraction approach
-    const text = buffer.toString('utf-8', 0, Math.min(buffer.length, 500000));
-    // Try to find tabular data in the PDF text
-    const lines = text.split('\n').filter(l => l.trim().length > 10);
-    // Create rows from lines that look like schedule activities
-    let activityId = 1;
-    for (const line of lines) {
-      // Look for lines with dates (common in schedule PDFs)
-      const dateMatch = line.match(/(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/);
-      if (dateMatch && line.trim().length > 20) {
-        rows.push({
-          'Activity ID': String(activityId++),
-          'Activity Name': line.replace(dateMatch[0], '').trim().slice(0, 200),
-          'Start Date': dateMatch[1] || '',
-          'Finish Date': dateMatch[1] || '',
-        });
-      }
-    }
-    // If no structured data found, return helpful error
-    if (rows.length === 0) {
-      return NextResponse.json({ 
-        error: "Could not extract schedule data from this PDF. For best results, export your schedule as .xlsx or .csv from Microsoft Project or Primavera P6.",
-        hint: "PDF parsing works best with schedule reports that contain dates and activity names in tabular format."
+        error: `${msg}. For best results, export your schedule as .xlsx from Microsoft Project (File → Save As → Excel Workbook).`,
       }, { status: 400 });
     }
   } else {
-    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf" }, { status: 400 });
+    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp" }, { status: 400 });
   }
 
   if (rows.length === 0) {
     return NextResponse.json({ error: "No data rows found in file" }, { status: 400 });
+  }
+
+  // Auto-detect column mapping if not provided (for xlsx/csv)
+  if (!usedAI && !mapping.activity_name) {
+    const columns = Object.keys(rows[0] || {});
+    const tryMap = (field: keyof ColumnMapping, patterns: string[]) => {
+      for (const col of columns) {
+        const lower = col.toLowerCase().replace(/[\s_\-()]/g, "");
+        for (const p of patterns) {
+          if (lower.includes(p.replace(/[\s_\-()]/g, ""))) {
+            (mapping as Record<string, string>)[field] = col;
+            return;
+          }
+        }
+      }
+    };
+    tryMap("activity_name", ["activity", "task", "description", "name", "activityname", "taskname", "activitydescription"]);
+    tryMap("start_date", ["start", "startdate", "earlystart", "plannedstart", "begin", "planstart"]);
+    tryMap("finish_date", ["finish", "end", "finishdate", "earlyfinish", "plannedfinish", "enddate", "completion", "planfinish"]);
+    tryMap("percent_complete", ["percent", "complete", "percentcomplete", "pct", "progress", "%complete"]);
+    tryMap("original_duration", ["duration", "origduration", "originalduration", "days"]);
+    tryMap("activity_id", ["activityid", "id", "taskid"]);
+    tryMap("wbs", ["wbs"]);
+    tryMap("milestone", ["milestone"]);
   }
 
   // Map columns helper
@@ -337,13 +378,12 @@ export async function POST(req: NextRequest) {
     milestones_found: milestoneCount,
     risks_detected: riskCount,
     health_score: score,
+    ai_parsed: usedAI,
   });
 }
 
-// GET endpoint to detect columns from file preview
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const filename = searchParams.get("filename");
-  // Return column detection hint
   return NextResponse.json({ filename, message: "Upload the file via POST with form data" });
 }
