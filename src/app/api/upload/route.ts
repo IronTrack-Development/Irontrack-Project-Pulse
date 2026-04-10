@@ -344,9 +344,16 @@ export async function POST(req: NextRequest) {
     const ws = wb.Sheets[wb.SheetNames[0]];
     rows = XLSX.utils.sheet_to_json<RawRow>(ws, { defval: null });
   } else if (ext === "xml" || ext === "xer" || ext === "pdf" || ext === "mpp") {
+    // Check if an .mpp file is actually XML (MS Project sometimes exports XML with .mpp extension)
+    let effectiveType = ext;
+    const header = buffer.toString("utf-8", 0, Math.min(20, buffer.length)).trim();
+    if (ext === "mpp" && header.startsWith("<?xml")) {
+      effectiveType = "xml";
+    }
+    
     // AI-powered parsing for XML, XER, PDF, and MPP files
     try {
-      rows = await aiParseSchedule(buffer, filename, ext);
+      rows = await aiParseSchedule(buffer, filename, effectiveType);
       usedAI = true;
       mapping.activity_name = "Activity Name";
       mapping.start_date = "Start Date";
