@@ -119,17 +119,32 @@ function UploadContent() {
     fd.append("project_id", selectedProjectId);
     fd.append("mapping", JSON.stringify(mapping));
 
-    const res = await fetch("/api/upload", { method: "POST", body: fd });
-    const data = await res.json();
-    setUploading(false);
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 120000); // 2 min client timeout
+      
+      const res = await fetch("/api/upload", { method: "POST", body: fd, signal: controller.signal });
+      clearTimeout(timeout);
+      const data = await res.json();
+      setUploading(false);
 
-    if (!res.ok) {
-      setError(data.error || "Upload failed. Try exporting your schedule as .xlsx for best results.");
+      if (!res.ok) {
+        setError(data.error || "Upload failed. Try exporting your schedule as .xlsx for best results.");
+        setStep("select");
+        return;
+      }
+      setResult(data);
+      setStep("done");
+    } catch (err) {
+      setUploading(false);
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      if (msg.includes("abort")) {
+        setError("Upload timed out. The file may be too large for AI processing. Try exporting as .xlsx instead.");
+      } else {
+        setError(`Upload failed: ${msg}`);
+      }
       setStep("select");
-      return;
     }
-    setResult(data);
-    setStep("done");
   };
 
   return (
