@@ -35,24 +35,8 @@ function LoginForm() {
     }
 
     if (data.user) {
-      // Check if user has a subscription record, create if not
-      const { data: subscription } = await supabase
-        .from("user_subscriptions")
-        .select("id")
-        .eq("user_id", data.user.id)
-        .single();
-
-      if (!subscription) {
-        // Create trial subscription
-        const trialEndsAt = new Date();
-        trialEndsAt.setDate(trialEndsAt.getDate() + 14);
-
-        await supabase.from("user_subscriptions").insert({
-          user_id: data.user.id,
-          status: "trialing",
-          trial_ends_at: trialEndsAt.toISOString(),
-        });
-      }
+      // Sign out all other sessions — single session enforcement
+      await supabase.auth.signOut({ scope: "others" });
 
       router.push(redirect);
       router.refresh();

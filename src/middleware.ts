@@ -53,23 +53,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // Allow subscribe page for authenticated users
+  const isSubscribePage = request.nextUrl.pathname === '/subscribe';
+
   // Check subscription status for protected routes
-  if (user && !isPublicRoute && !isAuthApiRoute && !isStripeApiRoute) {
+  if (user && !isPublicRoute && !isAuthApiRoute && !isStripeApiRoute && !isSubscribePage) {
     const { data: subscription } = await supabase
       .from('user_subscriptions')
-      .select('status, trial_ends_at')
+      .select('status')
       .eq('user_id', user.id)
       .single();
 
-    // Allow if no subscription record (will be created on first login)
-    // Or if status is active or trialing
-    // Or if trial hasn't ended yet
-    const now = new Date();
-    const trialEndsAt = subscription?.trial_ends_at ? new Date(subscription.trial_ends_at) : null;
-    const isTrialValid = trialEndsAt && trialEndsAt > now;
-
-    if (subscription && subscription.status !== 'active' && subscription.status !== 'trialing' && !isTrialValid) {
-      // Redirect to upgrade/payment page
+    // Only allow access if subscription is active
+    if (!subscription || subscription.status !== 'active') {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = '/subscribe';
       return NextResponse.redirect(redirectUrl);

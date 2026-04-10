@@ -50,23 +50,19 @@ export default function SignupPage() {
     }
 
     if (data.user) {
-      // Create trial subscription
-      const trialEndsAt = new Date();
-      trialEndsAt.setDate(trialEndsAt.getDate() + 14);
-
+      // Create subscription record — redirect to Stripe for payment
       await supabase.from("user_subscriptions").insert({
         user_id: data.user.id,
-        status: "trialing",
-        trial_ends_at: trialEndsAt.toISOString(),
+        status: "pending",
       });
 
       setSuccess(true);
       setLoading(false);
 
-      // If email confirmation is disabled, redirect immediately
+      // If email confirmation is disabled, redirect to subscribe page
       if (data.session) {
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/subscribe");
           router.refresh();
         }, 2000);
       }
