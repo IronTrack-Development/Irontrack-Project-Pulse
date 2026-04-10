@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import MobileNav from "@/components/MobileNav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#0B0B0D] text-gray-100 min-h-screen">
         {children}
+        <MobileNav />
       </body>
     </html>
   );
