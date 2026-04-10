@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Allow up to 60 seconds for AI-powered PDF/MPP parsing
-export const maxDuration = 60;
+// Allow up to 300 seconds for AI-powered PDF/MPP parsing (Vercel Pro)
+export const maxDuration = 300;
 import { getServiceClient } from "@/lib/supabase";
 import { inferTrade } from "@/lib/trade-inference";
 import { runRiskDetection } from "@/lib/risk-engine";
@@ -173,9 +173,12 @@ Be aggressive — extract every task you can identify even if you only have the 
   }
 
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-6",
+    model: "claude-haiku-4-5",
     max_tokens: 16000,
     messages: [{ role: "user", content }],
+  }).catch((err) => {
+    console.error("Claude API error:", err?.message || err);
+    throw new Error(`AI processing failed: ${err?.message || "Unknown error"}`);
   });
 
   // Extract JSON from response
