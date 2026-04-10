@@ -130,7 +130,7 @@ function LoginForm() {
             <p className="text-gray-400 text-sm">
               Don't have an account?{" "}
               <Link href="/signup" className="text-[#F97316] hover:text-[#EA580C] font-medium">
-                Start free trial
+                Sign up
               </Link>
             </p>
           </div>

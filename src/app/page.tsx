@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Upload, Brain, AlertTriangle, Activity, CheckCircle, ArrowRight, Smartphone } from "lucide-react";
+import { Building2, Upload, Calendar, Target, ArrowRight, CheckCircle } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -22,7 +22,7 @@ export default function LandingPage() {
               href="/signup"
               className="text-sm px-4 py-2 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg font-semibold transition-colors"
             >
-              Start Free Trial
+              Get Started
             </Link>
           </div>
         </div>
@@ -31,195 +31,165 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F97316]/10 border border-[#F97316]/20 rounded-full text-[#F97316] text-sm font-semibold mb-8">
-            <Activity className="w-4 h-4" />
-            Schedule Intelligence for the Field
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Your Construction Schedule is{" "}
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Stop digging through schedules.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EA580C]">
-              Trying to Tell You Something
+              Start knowing what matters this week.
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed">
-            IronTrack Project Pulse turns your project schedule into daily field intelligence — 
-            risks, lookahead, health scores — in seconds.
+          <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
+            Upload your project schedule. Get a 3-week lookahead, milestone tracking, and progress — instantly. No training. No setup. Just answers.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/signup"
-              className="flex items-center gap-2 px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg text-lg font-bold transition-colors shadow-lg shadow-[#F97316]/20"
-            >
-              Start Free Trial
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <div className="text-sm text-gray-500">
-              14 days free • No credit card required
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl text-lg font-bold transition-colors shadow-lg shadow-[#F97316]/20"
+          >
+            Get Started — $19.99/month
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+
+        {/* App Screenshot Placeholder */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 shadow-2xl">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-3 h-3 rounded-full bg-[#EF4444]" />
+              <div className="w-3 h-3 rounded-full bg-[#EAB308]" />
+              <div className="w-3 h-3 rounded-full bg-[#22C55E]" />
+              <span className="ml-3 text-sm text-gray-500">IronTrack Project Pulse</span>
+            </div>
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="bg-[#0B0B0D] rounded-xl p-4 border border-[#1F1F25]">
+                <div className="text-xs text-gray-500 mb-1">Week 1</div>
+                <div className="text-2xl font-bold text-white">12</div>
+                <div className="text-xs text-gray-500">activities</div>
+              </div>
+              <div className="bg-[#0B0B0D] rounded-xl p-4 border border-[#1F1F25]">
+                <div className="text-xs text-gray-500 mb-1">Milestones</div>
+                <div className="text-2xl font-bold text-[#F97316]">3</div>
+                <div className="text-xs text-gray-500">this month</div>
+              </div>
+              <div className="bg-[#0B0B0D] rounded-xl p-4 border border-[#1F1F25]">
+                <div className="text-xs text-gray-500 mb-1">Progress</div>
+                <div className="text-2xl font-bold text-[#22C55E]">64%</div>
+                <div className="text-xs text-gray-500">complete</div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {["Install Structural Steel — Buildtek", "Rough-In Electrical — ATS Electric", "Pour Foundation North Side — Rouser", "Fire Sprinkler Rough-In — AMS", "Exterior Framing Bldg B — Buildtek"].map((task, i) => (
+                <div key={i} className="flex items-center gap-3 bg-[#0B0B0D] rounded-lg px-4 py-2.5 border border-[#1F1F25]">
+                  <div className={`w-2 h-2 rounded-full ${i < 2 ? "bg-[#22C55E]" : i === 2 ? "bg-[#EAB308]" : "bg-[#3B82F6]"}`} />
+                  <span className="text-sm text-gray-300 flex-1">{task}</span>
+                  <span className="text-xs text-gray-600">{["100%", "85%", "60%", "0%", "0%"][i]}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Field Intelligence, Not Spreadsheets
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Built for superintendents and project managers who need answers, not data dumps.
+      {/* Social Proof */}
+      <section className="border-t border-[#1F1F25] py-12">
+        <div className="max-w-4xl mx-auto px-6">
+          <p className="text-center text-lg text-gray-400 mb-8">
+            Built by industry leaders in commercial construction.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            {["Microsoft Project (.mpp)", "Primavera P6 (.xer)", "Excel (.xlsx)", "XML", "CSV"].map((fmt) => (
+              <div key={fmt} className="flex items-center gap-2 bg-[#121217] border border-[#1F1F25] rounded-lg px-4 py-2">
+                <CheckCircle className="w-4 h-4 text-[#22C55E]" />
+                <span className="text-sm text-gray-300">{fmt}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Works with Microsoft Project and Primavera P6
           </p>
         </div>
+      </section>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Feature 1 */}
+      {/* 3 Features */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
             <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
               <Upload className="w-6 h-6 text-[#F97316]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Upload Schedules</h3>
+            <h3 className="text-xl font-bold text-white mb-3">Upload Once</h3>
             <p className="text-gray-400 leading-relaxed">
-              Drop in P6, Excel, or CSV schedules. Auto-maps columns, parses activities, and builds your intelligence layer.
+              Drop your .mpp or .xlsx schedule. We handle the rest. No column mapping. No configuration. Just data.
             </p>
           </div>
 
-          {/* Feature 2 */}
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
             <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
-              <Brain className="w-6 h-6 text-[#F97316]" />
+              <Calendar className="w-6 h-6 text-[#F97316]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Daily Intelligence</h3>
+            <h3 className="text-xl font-bold text-white mb-3">3-Week Lookahead</h3>
             <p className="text-gray-400 leading-relaxed">
-              See what's happening today, what's coming in the next 2 weeks, and where your critical path is at risk.
+              Always know what&apos;s coming. This week, next week, two weeks out. Updated automatically as dates shift.
             </p>
           </div>
 
-          {/* Feature 3 */}
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
             <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
-              <AlertTriangle className="w-6 h-6 text-[#F97316]" />
+              <Target className="w-6 h-6 text-[#F97316]" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Risk Detection</h3>
+            <h3 className="text-xl font-bold text-white mb-3">Milestones & Progress</h3>
             <p className="text-gray-400 leading-relaxed">
-              Auto-flags late activities, float erosion, milestone delays, and trade congestion before they become problems.
-            </p>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
-            <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
-              <Activity className="w-6 h-6 text-[#F97316]" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Health Scores</h3>
-            <p className="text-gray-400 leading-relaxed">
-              One number that tells you how your project is really doing. Updated in real-time as schedules change.
-            </p>
-          </div>
-
-          {/* Feature 5 */}
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
-            <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
-              <Smartphone className="w-6 h-6 text-[#F97316]" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Mobile Ready</h3>
-            <p className="text-gray-400 leading-relaxed">
-              Progressive web app that works on phone, tablet, or desktop. Field teams get the same view as the office.
-            </p>
-          </div>
-
-          {/* Feature 6 */}
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
-            <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
-              <CheckCircle className="w-6 h-6 text-[#F97316]" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">No Training Required</h3>
-            <p className="text-gray-400 leading-relaxed">
-              Clean interface built for people who live on job sites, not in Excel. If you can read a schedule, you can use this.
+              Track what matters. Milestone dates, completion percentage, days to finish. No spreadsheets required.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Pricing */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-lg text-gray-400">
-            No hidden fees. No per-user costs. No contracts.
-          </p>
-        </div>
-
         <div className="max-w-md mx-auto">
-          <div className="bg-[#121217] border-2 border-[#F97316] rounded-2xl p-10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#F97316] text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-              BEST VALUE
-            </div>
+          <div className="bg-[#121217] border-2 border-[#F97316] rounded-2xl p-10">
             <div className="text-center mb-8">
               <div className="text-5xl font-bold text-white mb-2">
                 $19.99<span className="text-2xl text-gray-500">/mo</span>
               </div>
-              <p className="text-gray-400">per project</p>
             </div>
             <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300">Unlimited schedule uploads</span>
+              <li className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0" />
+                <span className="text-gray-300">All file formats — MPP, XLSX, CSV, XML, XER</span>
               </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300">Daily risk detection & health scores</span>
+              <li className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0" />
+                <span className="text-gray-300">3-week lookahead + milestones + progress</span>
               </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300">Lookahead intelligence & briefs</span>
+              <li className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0" />
+                <span className="text-gray-300">Up to 50 projects per month</span>
               </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300">Mobile app access</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300">14-day free trial</span>
+              <li className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0" />
+                <span className="text-gray-300">Works on desktop and mobile</span>
               </li>
             </ul>
             <Link
               href="/signup"
               className="block w-full text-center px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg text-lg font-bold transition-colors"
             >
-              Start Free Trial
+              Get Started
             </Link>
-            <p className="text-center text-sm text-gray-500 mt-4">
-              No credit card required for trial
-            </p>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="bg-gradient-to-br from-[#F97316]/20 to-[#EA580C]/10 border border-[#F97316]/30 rounded-3xl p-12 md:p-16 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Ready to See What Your Schedule is Saying?
-          </h2>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Join construction teams using IronTrack Project Pulse to stay ahead of risks and finish on time.
-          </p>
-          <Link
-            href="/signup"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg text-lg font-bold transition-colors shadow-lg shadow-[#F97316]/20"
-          >
-            Start Your Free Trial
-            <ArrowRight className="w-5 h-5" />
-          </Link>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-[#1F1F25] py-8">
-        <div className="max-w-7xl mx-auto px-6 text-center text-gray-500 text-sm">
-          © 2025 IronTrack Project Pulse. All rights reserved.
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-[#F97316]" />
+            <span className="text-sm text-gray-500">© 2026 IronTrack Development LLC. All rights reserved.</span>
+          </div>
+          <a href="mailto:irontrackdevelopment@outlook.com" className="text-sm text-gray-500 hover:text-[#F97316] transition-colors">
+            irontrackdevelopment@outlook.com
+          </a>
         </div>
       </footer>
     </div>

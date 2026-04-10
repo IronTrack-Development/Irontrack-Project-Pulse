@@ -83,7 +83,7 @@ export default function SignupPage() {
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">Account created!</h1>
             <p className="text-gray-400 mb-6">
-              Check your email to confirm your account, then sign in to start your free trial.
+              Check your email to confirm your account, then sign in.
             </p>
             <Link
               href="/login"
@@ -108,8 +108,8 @@ export default function SignupPage() {
 
         {/* Signup Card */}
         <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Start your free trial</h1>
-          <p className="text-gray-400 mb-6">14 days free. No credit card required.</p>
+          <h1 className="text-2xl font-bold text-white mb-2">Create your account</h1>
+          <p className="text-gray-400 mb-6">$19.99/month — schedule intelligence for the field.</p>
 
           <form onSubmit={handleSignup} className="space-y-4">
             {error && (
