@@ -8,16 +8,8 @@ import {
 } from "lucide-react";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
-import type { ColumnMapping } from "@/types";
 
 interface Project { id: string; name: string; }
-
-const MAPPING_FIELDS: { key: keyof ColumnMapping; label: string; required?: boolean }[] = [
-  { key: "activity_name", label: "Activity Name", required: true },
-  { key: "start_date", label: "Start Date", required: true },
-  { key: "finish_date", label: "Finish Date", required: true },
-  { key: "percent_complete", label: "% Complete" },
-];
 
 function UploadContent() {
   const searchParams = useSearchParams();
@@ -30,10 +22,6 @@ function UploadContent() {
   const [newProjectName, setNewProjectName] = useState("");
 
   const [file, setFile] = useState<File | null>(null);
-  const [detectedColumns, setDetectedColumns] = useState<string[]>([]);
-  const [mapping, setMapping] = useState<ColumnMapping>({});
-  const [autoDetected, setAutoDetected] = useState(false);
-  const [step, setStep] = useState<"select" | "map" | "done">("select");
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<{
     activities_parsed: number;
@@ -43,24 +31,23 @@ function UploadContent() {
     project_id: string;
   } | null>(null);
   const [error, setError] = useState("");
+  const [step, setStep] = useState<"select" | "uploading" | "done">("select");
 
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/projects")
       .then((r) => r.json())
-      .then(setProjects);
+      .then((data) => { if (Array.isArray(data)) setProjects(data); });
   }, []);
 
   const handleFileDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const f = e.dataTransfer.files[0];
-    if (f) processFile(f);
+    if (f) setFile(f);
   };
 
-  const processFile = async (f: File) => {
-    setFile(f);
-    setError("");
+  const autoDetectMapping = async (f: File) => {
     const ext = f.name.split(".").pop()?.toLowerCase();
     const buf = await f.arrayBuffer();
     let columns: string[] = [];
@@ -76,34 +63,30 @@ function UploadContent() {
       if (rows.length > 0) columns = (rows[0] as unknown[]).map(String);
     }
 
-    setDetectedColumns(columns);
+    // For PDFs and MPPs, return empty mapping — server handles parsing
+    if (columns.length === 0) return {};
 
-    // Auto-detect common column names
-    const autoMap: ColumnMapping = {};
-    const tryMap = (field: keyof ColumnMapping, patterns: string[]) => {
+    const mapping: Record<string, string> = {};
+    const tryMap = (field: string, patterns: string[]) => {
       for (const col of columns) {
-        const lower = col.toLowerCase().replace(/[\s_-]/g, "");
+        const lower = col.toLowerCase().replace(/[\s_\-()]/g, "");
         for (const p of patterns) {
-          if (lower.includes(p.replace(/[\s_-]/g, ""))) { 
-            autoMap[field] = col; 
-            return; 
+          if (lower.includes(p.replace(/[\s_\-()]/g, ""))) {
+            mapping[field] = col;
+            return;
           }
         }
       }
     };
-    
-    tryMap("activity_name", ["activity", "task", "description", "name", "activityname", "taskname"]);
-    tryMap("start_date", ["start", "startdate", "earlystart", "plannedstart", "begin"]);
-    tryMap("finish_date", ["finish", "end", "finishdate", "earlyfinish", "plannedfinish", "enddate", "completion"]);
-    tryMap("percent_complete", ["percent", "complete", "percentcomplete", "pct", "progress"]);
-    
-    setMapping(autoMap);
-    
-    // Check if all required fields are auto-detected
-    const allRequiredDetected = autoMap.activity_name && autoMap.start_date && autoMap.finish_date;
-    setAutoDetected(!!allRequiredDetected);
-    
-    setStep("map");
+
+    tryMap("activity_name", ["activity", "task", "description", "name", "activityname", "taskname", "activitydescription"]);
+    tryMap("start_date", ["start", "startdate", "earlystart", "plannedstart", "begin", "planstart"]);
+    tryMap("finish_date", ["finish", "end", "finishdate", "earlyfinish", "plannedfinish", "enddate", "completion", "planfinish"]);
+    tryMap("percent_complete", ["percent", "complete", "percentcomplete", "pct", "progress", "%complete"]);
+    tryMap("original_duration", ["duration", "origduration", "originalduration", "days"]);
+    tryMap("activity_id", ["activityid", "id", "taskid", "wbs"]);
+
+    return mapping;
   };
 
   const createProject = async () => {
@@ -124,11 +107,12 @@ function UploadContent() {
 
   const handleUpload = async () => {
     if (!file || !selectedProjectId) return setError("Select a project and file.");
-    if (!mapping.activity_name || !mapping.start_date || !mapping.finish_date) {
-      return setError("Activity Name, Start Date, and Finish Date mappings are required.");
-    }
     setUploading(true);
+    setStep("uploading");
     setError("");
+
+    // Auto-detect columns — no user input needed
+    const mapping = await autoDetectMapping(file);
 
     const fd = new FormData();
     fd.append("file", file);
@@ -140,7 +124,8 @@ function UploadContent() {
     setUploading(false);
 
     if (!res.ok) {
-      setError(data.error || "Upload failed.");
+      setError(data.error || "Upload failed. Try exporting your schedule as .xlsx for best results.");
+      setStep("select");
       return;
     }
     setResult(data);
@@ -152,12 +137,12 @@ function UploadContent() {
       <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-xl font-bold text-white">Upload Schedule</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Import .xlsx, .xls, .csv, .pdf, or .mpp schedule files</p>
+          <p className="text-sm text-gray-500 mt-0.5">Drop your schedule file and we'll handle the rest</p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-6">
-        {/* Step 1: Select project + file */}
+        {/* Step 1: Select project + file + upload */}
         {step === "select" && (
           <>
             {/* Project selector */}
@@ -207,110 +192,37 @@ function UploadContent() {
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleFileDrop}
               onClick={() => fileRef.current?.click()}
-              className="border-2 border-dashed border-[#1F1F25] hover:border-[#F97316]/40 rounded-2xl p-12 text-center cursor-pointer transition-colors group"
+              className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-colors group ${
+                file ? "border-[#22C55E]/40 bg-[#22C55E]/5" : "border-[#1F1F25] hover:border-[#F97316]/40"
+              }`}
             >
-              <FileSpreadsheet size={40} className="mx-auto text-gray-700 group-hover:text-[#F97316]/60 mb-4 transition-colors" />
-              <div className="text-white font-semibold mb-1">Drop your schedule file here</div>
-              <div className="text-sm text-gray-500 mb-4">or click to browse</div>
-              <div className="flex items-center justify-center gap-2">
-                {[".xlsx", ".xls", ".csv", ".pdf", ".mpp"].map((ext) => (
-                  <span key={ext} className="text-xs bg-[#1F1F25] text-gray-500 px-2 py-1 rounded font-mono">
-                    {ext}
-                  </span>
-                ))}
-              </div>
+              {file ? (
+                <>
+                  <CheckCircle size={40} className="mx-auto text-[#22C55E] mb-4" />
+                  <div className="text-white font-semibold mb-1">{file.name}</div>
+                  <div className="text-sm text-gray-500">Click to change file</div>
+                </>
+              ) : (
+                <>
+                  <FileSpreadsheet size={40} className="mx-auto text-gray-700 group-hover:text-[#F97316]/60 mb-4 transition-colors" />
+                  <div className="text-white font-semibold mb-1">Drop your schedule file here</div>
+                  <div className="text-sm text-gray-500 mb-4">or click to browse</div>
+                  <div className="flex items-center justify-center gap-2">
+                    {[".xlsx", ".xls", ".csv", ".pdf", ".mpp"].map((ext) => (
+                      <span key={ext} className="text-xs bg-[#1F1F25] text-gray-500 px-2 py-1 rounded font-mono">
+                        {ext}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
               <input
                 ref={fileRef}
                 type="file"
                 accept=".xlsx,.xls,.csv,.pdf,.mpp"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0])}
+                onChange={(e) => { if (e.target.files?.[0]) setFile(e.target.files[0]); }}
               />
-            </div>
-          </>
-        )}
-
-        {/* Step 2: Column mapping */}
-        {step === "map" && file && (
-          <>
-            {/* File info */}
-            <div className="flex items-center gap-3 bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3">
-              <FileSpreadsheet size={18} className="text-[#22C55E]" />
-              <div className="flex-1">
-                <div className="text-sm font-medium text-white">{file.name}</div>
-                <div className="text-xs text-gray-500">{detectedColumns.length} columns detected</div>
-              </div>
-              <button onClick={() => { setFile(null); setStep("select"); setMapping({}); }} className="text-gray-500 hover:text-white">
-                <X size={16} />
-              </button>
-            </div>
-
-            {/* Project */}
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3">
-              <div className="text-xs text-gray-500 mb-1">Project</div>
-              <div className="text-sm font-medium text-white">
-                {projects.find((p) => p.id === selectedProjectId)?.name || selectedProjectId}
-              </div>
-            </div>
-
-            {/* Mapping wizard */}
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
-              <h2 className="font-semibold text-white mb-1">2. Map Columns</h2>
-              
-              {autoDetected ? (
-                <>
-                  <p className="text-xs text-gray-500 mb-5">
-                    We automatically detected the following columns:
-                  </p>
-                  <div className="space-y-3 mb-5">
-                    {MAPPING_FIELDS.map(({ key, label, required }) => (
-                      mapping[key] && (
-                        <div key={key} className="flex items-center gap-3">
-                          <div className="w-44 text-sm text-gray-400 shrink-0">
-                            {label}
-                            {required && <span className="text-[#EF4444] ml-1">*</span>}
-                          </div>
-                          <div className="flex-1 bg-[#0B0B0D] border border-[#22C55E]/30 rounded-lg px-3 py-2 text-sm text-white">
-                            {mapping[key]}
-                          </div>
-                        </div>
-                      )
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => setAutoDetected(false)}
-                    className="text-xs text-gray-500 hover:text-[#F97316] transition-colors"
-                  >
-                    Not right? Click to map manually
-                  </button>
-                </>
-              ) : (
-                <>
-                  <p className="text-xs text-gray-500 mb-5">
-                    Tell IronTrack which column in your file maps to each field.
-                  </p>
-                  <div className="space-y-3">
-                    {MAPPING_FIELDS.map(({ key, label, required }) => (
-                      <div key={key} className="flex items-center gap-3">
-                        <div className="w-44 text-sm text-gray-400 shrink-0">
-                          {label}
-                          {required && <span className="text-[#EF4444] ml-1">*</span>}
-                        </div>
-                        <select
-                          value={mapping[key] || ""}
-                          onChange={(e) => setMapping({ ...mapping, [key]: e.target.value || undefined })}
-                          className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-[#F97316]/50"
-                        >
-                          <option value="">— Not mapped —</option>
-                          {detectedColumns.map((col) => (
-                            <option key={col} value={col}>{col}</option>
-                          ))}
-                        </select>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
             </div>
 
             {error && (
@@ -319,37 +231,25 @@ function UploadContent() {
               </div>
             )}
 
-            <div className="flex gap-3">
-              <button
-                onClick={() => { setStep("select"); setFile(null); }}
-                className="px-5 py-2.5 border border-[#1F1F25] text-gray-400 rounded-lg text-sm font-medium"
-              >
-                Back
-              </button>
-              <button
-                onClick={handleUpload}
-                disabled={uploading || !selectedProjectId || !mapping.activity_name || !mapping.start_date || !mapping.finish_date}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" />
-                    Parsing Schedule...
-                  </>
-                ) : autoDetected ? (
-                  <>
-                    <Upload size={16} />
-                    Looks good — Upload
-                  </>
-                ) : (
-                  <>
-                    <Upload size={16} />
-                    Parse Schedule
-                  </>
-                )}
-              </button>
-            </div>
+            {/* Upload button */}
+            <button
+              onClick={handleUpload}
+              disabled={!file || !selectedProjectId}
+              className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl text-sm font-semibold transition-colors"
+            >
+              <Upload size={16} />
+              Parse Schedule
+            </button>
           </>
+        )}
+
+        {/* Uploading state */}
+        {step === "uploading" && (
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
+            <Loader2 size={48} className="mx-auto text-[#F97316] animate-spin mb-4" />
+            <h2 className="text-xl font-bold text-white mb-2">Analyzing Schedule...</h2>
+            <p className="text-gray-500 text-sm">Auto-detecting columns and parsing activities</p>
+          </div>
         )}
 
         {/* Step 3: Done */}
@@ -359,7 +259,7 @@ function UploadContent() {
             <h2 className="text-xl font-bold text-white mb-1">Schedule Imported!</h2>
             <p className="text-gray-500 text-sm mb-6">Your project intelligence is ready.</p>
 
-            <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4">
                 <div className="text-2xl font-bold text-white">{result.activities_parsed}</div>
                 <div className="text-xs text-gray-500">Activities</div>
@@ -368,19 +268,7 @@ function UploadContent() {
                 <div className="text-2xl font-bold text-[#F97316]">{result.milestones_found}</div>
                 <div className="text-xs text-gray-500">Milestones</div>
               </div>
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4">
-                <div className="text-2xl font-bold text-[#EF4444]">{result.risks_detected}</div>
-                <div className="text-xs text-gray-500">Risks Found</div>
-              </div>
             </div>
-
-            {result.risks_detected > 0 && (
-              <div className="bg-[#EF4444]/10 border border-[#EF4444]/20 rounded-xl px-4 py-3 mb-6 text-sm text-left">
-                <AlertTriangle size={14} className="text-[#EF4444] inline mr-2" />
-                <span className="text-[#EF4444] font-semibold">{result.risks_detected} risks detected</span>
-                <span className="text-gray-400"> — review the Risks tab before your next site visit.</span>
-              </div>
-            )}
 
             <button
               onClick={() => router.push(`/projects/${result.project_id}`)}
