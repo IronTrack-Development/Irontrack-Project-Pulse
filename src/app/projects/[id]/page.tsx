@@ -3,23 +3,19 @@
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
-  ArrowLeft, Activity, CalendarDays, List, AlertTriangle, Flag,
-  RefreshCw, Zap
+  ArrowLeft, CalendarDays, Flag, TrendingUp,
+  RefreshCw
 } from "lucide-react";
-import OverviewTab from "@/components/tabs/OverviewTab";
-import TodayTab from "@/components/tabs/TodayTab";
-import LookaheadTab from "@/components/tabs/LookaheadTab";
-import ActivitiesTab from "@/components/tabs/ActivitiesTab";
-import RisksTab from "@/components/tabs/RisksTab";
+import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
+import ProgressTab from "@/components/tabs/ProgressTab";
 
 const TABS = [
-  { id: "overview", label: "Overview", icon: Activity },
-  { id: "today", label: "Today", icon: Zap },
-  { id: "lookahead", label: "Lookahead", icon: CalendarDays },
-  { id: "activities", label: "Activities", icon: List },
-  { id: "risks", label: "Risks", icon: AlertTriangle },
+  { id: "week1", label: "Week 1", icon: CalendarDays },
+  { id: "week2", label: "Week 2", icon: CalendarDays },
+  { id: "week3", label: "Week 3", icon: CalendarDays },
   { id: "milestones", label: "Milestones", icon: Flag },
+  { id: "progress", label: "Progress", icon: TrendingUp },
 ];
 
 interface Project {
@@ -54,7 +50,7 @@ function healthColor(score: number): string {
 
 export default function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("week1");
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -144,11 +140,6 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               >
                 <Icon size={14} />
                 {label}
-                {tabId === "risks" && project.stats.highRisks > 0 && (
-                  <span className="bg-[#EF4444] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">
-                    {project.stats.highRisks}
-                  </span>
-                )}
               </button>
             ))}
           </div>
@@ -157,12 +148,11 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
 
       {/* Tab content */}
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {activeTab === "overview" && <OverviewTab project={project} />}
-        {activeTab === "today" && <TodayTab projectId={id} />}
-        {activeTab === "lookahead" && <LookaheadTab projectId={id} />}
-        {activeTab === "activities" && <ActivitiesTab projectId={id} />}
-        {activeTab === "risks" && <RisksTab projectId={id} onUpdate={fetchProject} />}
+        {activeTab === "week1" && <WeekTab projectId={id} weekNumber={1} />}
+        {activeTab === "week2" && <WeekTab projectId={id} weekNumber={2} />}
+        {activeTab === "week3" && <WeekTab projectId={id} weekNumber={3} />}
         {activeTab === "milestones" && <MilestonesTab projectId={id} />}
+        {activeTab === "progress" && <ProgressTab projectId={id} />}
       </div>
     </div>
   );

@@ -14,18 +14,9 @@ interface Project { id: string; name: string; }
 
 const MAPPING_FIELDS: { key: keyof ColumnMapping; label: string; required?: boolean }[] = [
   { key: "activity_name", label: "Activity Name", required: true },
-  { key: "activity_id", label: "Activity ID" },
-  { key: "start_date", label: "Start Date" },
-  { key: "finish_date", label: "Finish Date" },
-  { key: "original_duration", label: "Duration (days)" },
+  { key: "start_date", label: "Start Date", required: true },
+  { key: "finish_date", label: "Finish Date", required: true },
   { key: "percent_complete", label: "% Complete" },
-  { key: "actual_start", label: "Actual Start" },
-  { key: "actual_finish", label: "Actual Finish" },
-  { key: "predecessor_ids", label: "Predecessors" },
-  { key: "wbs", label: "WBS Code" },
-  { key: "area", label: "Area / Zone" },
-  { key: "trade", label: "Trade (optional override)" },
-  { key: "milestone", label: "Milestone Flag" },
 ];
 
 function UploadContent() {
@@ -41,6 +32,7 @@ function UploadContent() {
   const [file, setFile] = useState<File | null>(null);
   const [detectedColumns, setDetectedColumns] = useState<string[]>([]);
   const [mapping, setMapping] = useState<ColumnMapping>({});
+  const [autoDetected, setAutoDetected] = useState(false);
   const [step, setStep] = useState<"select" | "map" | "done">("select");
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<{
@@ -86,29 +78,31 @@ function UploadContent() {
 
     setDetectedColumns(columns);
 
-    // Auto-map common column names
+    // Auto-detect common column names
     const autoMap: ColumnMapping = {};
     const tryMap = (field: keyof ColumnMapping, patterns: string[]) => {
       for (const col of columns) {
         const lower = col.toLowerCase().replace(/[\s_-]/g, "");
         for (const p of patterns) {
-          if (lower.includes(p)) { autoMap[field] = col; return; }
+          if (lower.includes(p.replace(/[\s_-]/g, ""))) { 
+            autoMap[field] = col; 
+            return; 
+          }
         }
       }
     };
-    tryMap("activity_name", ["activityname", "taskname", "description", "name"]);
-    tryMap("activity_id", ["activityid", "taskid", "id", "code"]);
-    tryMap("start_date", ["startdate", "start", "earlystart", "baselinestart"]);
-    tryMap("finish_date", ["finishdate", "finish", "earlyfinish", "baselinefinish", "end"]);
-    tryMap("original_duration", ["duration", "originalduration", "planedduration"]);
-    tryMap("percent_complete", ["percentcomplete", "percentdone", "complete", "pct"]);
-    tryMap("actual_start", ["actualstart", "actstart"]);
-    tryMap("actual_finish", ["actualfinish", "actfinish"]);
-    tryMap("predecessor_ids", ["predecessor", "predecessors", "pred"]);
-    tryMap("wbs", ["wbs", "workbreakdown"]);
-    tryMap("area", ["area", "zone", "location", "level"]);
-    tryMap("milestone", ["milestone", "ismilestone", "flag"]);
+    
+    tryMap("activity_name", ["activity", "task", "description", "name", "activityname", "taskname"]);
+    tryMap("start_date", ["start", "startdate", "earlystart", "plannedstart", "begin"]);
+    tryMap("finish_date", ["finish", "end", "finishdate", "earlyfinish", "plannedfinish", "enddate", "completion"]);
+    tryMap("percent_complete", ["percent", "complete", "percentcomplete", "pct", "progress"]);
+    
     setMapping(autoMap);
+    
+    // Check if all required fields are auto-detected
+    const allRequiredDetected = autoMap.activity_name && autoMap.start_date && autoMap.finish_date;
+    setAutoDetected(!!allRequiredDetected);
+    
     setStep("map");
   };
 
@@ -130,7 +124,9 @@ function UploadContent() {
 
   const handleUpload = async () => {
     if (!file || !selectedProjectId) return setError("Select a project and file.");
-    if (!mapping.activity_name) return setError("Activity Name column mapping is required.");
+    if (!mapping.activity_name || !mapping.start_date || !mapping.finish_date) {
+      return setError("Activity Name, Start Date, and Finish Date mappings are required.");
+    }
     setUploading(true);
     setError("");
 
@@ -260,29 +256,61 @@ function UploadContent() {
             {/* Mapping wizard */}
             <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
               <h2 className="font-semibold text-white mb-1">2. Map Columns</h2>
-              <p className="text-xs text-gray-500 mb-5">
-                Tell IronTrack which column in your file maps to each field.
-              </p>
-              <div className="space-y-3">
-                {MAPPING_FIELDS.map(({ key, label, required }) => (
-                  <div key={key} className="flex items-center gap-3">
-                    <div className="w-44 text-sm text-gray-400 shrink-0">
-                      {label}
-                      {required && <span className="text-[#EF4444] ml-1">*</span>}
-                    </div>
-                    <select
-                      value={mapping[key] || ""}
-                      onChange={(e) => setMapping({ ...mapping, [key]: e.target.value || undefined })}
-                      className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-[#F97316]/50"
-                    >
-                      <option value="">— Not mapped —</option>
-                      {detectedColumns.map((col) => (
-                        <option key={col} value={col}>{col}</option>
-                      ))}
-                    </select>
+              
+              {autoDetected ? (
+                <>
+                  <p className="text-xs text-gray-500 mb-5">
+                    We automatically detected the following columns:
+                  </p>
+                  <div className="space-y-3 mb-5">
+                    {MAPPING_FIELDS.map(({ key, label, required }) => (
+                      mapping[key] && (
+                        <div key={key} className="flex items-center gap-3">
+                          <div className="w-44 text-sm text-gray-400 shrink-0">
+                            {label}
+                            {required && <span className="text-[#EF4444] ml-1">*</span>}
+                          </div>
+                          <div className="flex-1 bg-[#0B0B0D] border border-[#22C55E]/30 rounded-lg px-3 py-2 text-sm text-white">
+                            {mapping[key]}
+                          </div>
+                        </div>
+                      )
+                    ))}
                   </div>
-                ))}
-              </div>
+                  <button
+                    onClick={() => setAutoDetected(false)}
+                    className="text-xs text-gray-500 hover:text-[#F97316] transition-colors"
+                  >
+                    Not right? Click to map manually
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs text-gray-500 mb-5">
+                    Tell IronTrack which column in your file maps to each field.
+                  </p>
+                  <div className="space-y-3">
+                    {MAPPING_FIELDS.map(({ key, label, required }) => (
+                      <div key={key} className="flex items-center gap-3">
+                        <div className="w-44 text-sm text-gray-400 shrink-0">
+                          {label}
+                          {required && <span className="text-[#EF4444] ml-1">*</span>}
+                        </div>
+                        <select
+                          value={mapping[key] || ""}
+                          onChange={(e) => setMapping({ ...mapping, [key]: e.target.value || undefined })}
+                          className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-[#F97316]/50"
+                        >
+                          <option value="">— Not mapped —</option>
+                          {detectedColumns.map((col) => (
+                            <option key={col} value={col}>{col}</option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
 
             {error && (
@@ -300,13 +328,18 @@ function UploadContent() {
               </button>
               <button
                 onClick={handleUpload}
-                disabled={uploading || !selectedProjectId || !mapping.activity_name}
+                disabled={uploading || !selectedProjectId || !mapping.activity_name || !mapping.start_date || !mapping.finish_date}
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors"
               >
                 {uploading ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
                     Parsing Schedule...
+                  </>
+                ) : autoDetected ? (
+                  <>
+                    <Upload size={16} />
+                    Looks good — Upload
                   </>
                 ) : (
                   <>
