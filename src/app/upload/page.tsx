@@ -242,7 +242,7 @@ function UploadContent() {
                   <div className="text-white font-semibold mb-1">Drop your schedule file here</div>
                   <div className="text-sm text-gray-500 mb-4">or click to browse</div>
                   <div className="flex items-center justify-center gap-2">
-                    {[".xlsx", ".csv", ".pdf", ".mpp", ".xml", ".xer"].map((ext) => (
+                    {[".xlsx", ".csv", ".mpp", ".xml", ".xer"].map((ext) => (
                       <span key={ext} className="text-xs bg-[#1F1F25] text-gray-500 px-2 py-1 rounded font-mono">
                         {ext}
                       </span>
@@ -253,7 +253,7 @@ function UploadContent() {
               <input
                 ref={fileRef}
                 type="file"
-                accept=".xlsx,.xls,.csv,.pdf,.mpp,.xml,.xer"
+                accept=".xlsx,.xls,.csv,.mpp,.xml,.xer"
                 className="hidden"
                 onChange={(e) => { if (e.target.files?.[0]) setFile(e.target.files[0]); }}
               />
