@@ -139,35 +139,28 @@ Extract every single line item. Do not skip any activities. If dates are ambiguo
       ];
     }
   } else {
-    // MPP — extract readable strings from binary
+    // MPP or XML — extract readable text and send to AI
     const rawText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000));
-    // Extract anything that looks like readable text
-    const readable = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s{3,}/g, "\n").trim();
-    // Get the most useful 50K chars
-    const truncated = readable.slice(0, 50000);
+    let textForAI: string;
+    
+    if (fileType === "xml") {
+      // XML is already readable — just truncate
+      textForAI = rawText.slice(0, 80000);
+    } else {
+      // MPP binary — extract readable strings
+      const readable = rawText.replace(/[^\x20-\x7E\n\r\t]/g, " ").replace(/\s{3,}/g, "\n").trim();
+      textForAI = readable.slice(0, 50000);
+    }
 
     content = [
       {
         type: "text",
-        text: `You are a construction schedule parser. This is raw text extracted from a Microsoft Project (.mpp) binary file called "${filename}".
+        text: `${SCHEDULE_PROMPT}
 
-The text contains task names, dates, durations, and other schedule data mixed with binary artifacts. Your job is to find and extract ALL construction activities/tasks.
+This is a ${fileType === "xml" ? "Microsoft Project XML export" : "Microsoft Project .mpp binary file"} called "${filename}". Extract ALL tasks/activities with their names, dates, and completion percentages.
 
-RAW TEXT:
-${truncated}
-
-For EACH activity you can identify, extract:
-- activity_name (required)
-- start_date (YYYY-MM-DD format if you can find it)
-- finish_date (YYYY-MM-DD format if you can find it)
-- percent_complete (number 0-100, default 0)
-- duration (number of days if visible)
-- milestone (true/false)
-
-Return ONLY a JSON array. No explanation. No markdown. Just the raw JSON array.
-Example: [{"activity_name":"Pour Foundation","start_date":"2026-04-15","finish_date":"2026-04-22","percent_complete":0,"duration":5,"milestone":false}]
-
-Be aggressive — extract every task you can identify even if you only have the name and no dates. Construction task names include things like: mobilization, excavation, foundation, framing, rough-in, drywall, roofing, MEP, inspections, substantial completion, etc.`,
+FILE CONTENT:
+${textForAI}`,
       },
     ];
   }
@@ -258,6 +251,22 @@ export async function POST(req: NextRequest) {
     const wb = XLSX.read(buffer, { type: "buffer", cellDates: false });
     const ws = wb.Sheets[wb.SheetNames[0]];
     rows = XLSX.utils.sheet_to_json<RawRow>(ws, { defval: null });
+  } else if (ext === "xml") {
+    // Microsoft Project XML export — send to AI
+    try {
+      rows = await aiParseSchedule(buffer, filename, "xml");
+      usedAI = true;
+      mapping.activity_name = "Activity Name";
+      mapping.start_date = "Start Date";
+      mapping.finish_date = "Finish Date";
+      mapping.percent_complete = "% Complete";
+      mapping.original_duration = "Duration";
+      mapping.activity_id = "Activity ID";
+      mapping.milestone = "Milestone";
+    } catch (aiError) {
+      const msg = aiError instanceof Error ? aiError.message : "AI parsing failed";
+      return NextResponse.json({ error: msg }, { status: 400 });
+    }
   } else if (ext === "pdf" || ext === "mpp") {
     // Use AI to parse PDF and MPP files
     try {
@@ -278,7 +287,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
   } else {
-    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp" }, { status: 400 });
+    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp, .xml" }, { status: 400 });
   }
 
   if (rows.length === 0) {
@@ -288,7 +297,29 @@ export async function POST(req: NextRequest) {
   // Auto-detect column mapping if not provided (for xlsx/csv)
   if (!usedAI && !mapping.activity_name) {
     const columns = Object.keys(rows[0] || {});
+    // Exact match first to avoid "Task Mode" matching before "Task Name"
+    const exactMap = (field: keyof ColumnMapping, exactPatterns: string[]) => {
+      for (const col of columns) {
+        const lower = col.toLowerCase().replace(/[\s_\-()]/g, "");
+        for (const p of exactPatterns) {
+          if (lower === p.replace(/[\s_\-()]/g, "")) {
+            (mapping as Record<string, string>)[field] = col;
+            return;
+          }
+        }
+      }
+    };
+    exactMap("activity_name", ["task name", "taskname", "activity name", "activityname", "activity description", "description", "name"]);
+    exactMap("start_date", ["start", "start date", "early start", "planned start"]);
+    exactMap("finish_date", ["finish", "finish date", "early finish", "planned finish", "end date"]);
+    exactMap("percent_complete", ["% complete", "percent complete", "pct complete", "progress"]);
+    exactMap("original_duration", ["duration", "original duration"]);
+    exactMap("activity_id", ["activity id", "task id", "id", "wbs"]);
+    exactMap("milestone", ["milestone"]);
+
+    // Fallback: partial match for anything still unmapped
     const tryMap = (field: keyof ColumnMapping, patterns: string[]) => {
+      if ((mapping as Record<string, string>)[field]) return; // already mapped
       for (const col of columns) {
         const lower = col.toLowerCase().replace(/[\s_\-()]/g, "");
         for (const p of patterns) {

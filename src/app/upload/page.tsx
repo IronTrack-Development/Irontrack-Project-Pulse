@@ -79,12 +79,31 @@ function UploadContent() {
       }
     };
 
-    tryMap("activity_name", ["activity", "task", "description", "name", "activityname", "taskname", "activitydescription"]);
-    tryMap("start_date", ["start", "startdate", "earlystart", "plannedstart", "begin", "planstart"]);
-    tryMap("finish_date", ["finish", "end", "finishdate", "earlyfinish", "plannedfinish", "enddate", "completion", "planfinish"]);
-    tryMap("percent_complete", ["percent", "complete", "percentcomplete", "pct", "progress", "%complete"]);
-    tryMap("original_duration", ["duration", "origduration", "originalduration", "days"]);
-    tryMap("activity_id", ["activityid", "id", "taskid", "wbs"]);
+    // Exact match first (normalized), then partial — avoids "Task Mode" matching before "Task Name"
+    const exactMap = (field: string, exactPatterns: string[]) => {
+      for (const col of columns) {
+        const lower = col.toLowerCase().replace(/[\s_\-()]/g, "");
+        for (const p of exactPatterns) {
+          if (lower === p.replace(/[\s_\-()]/g, "")) {
+            mapping[field] = col;
+            return;
+          }
+        }
+      }
+    };
+
+    // Priority: exact matches first
+    exactMap("activity_name", ["task name", "taskname", "activity name", "activityname", "activity description", "description", "name"]);
+    exactMap("start_date", ["start", "start date", "early start", "planned start", "plan start"]);
+    exactMap("finish_date", ["finish", "finish date", "early finish", "planned finish", "end date", "plan finish"]);
+    exactMap("percent_complete", ["% complete", "percent complete", "pct complete", "complete %", "progress"]);
+    exactMap("original_duration", ["duration", "original duration"]);
+    exactMap("activity_id", ["activity id", "task id", "id", "wbs"]);
+
+    // Fallback: partial matches for anything not yet mapped
+    if (!mapping.activity_name) tryMap("activity_name", ["taskname", "activityname", "activitydescription", "description"]);
+    if (!mapping.start_date) tryMap("start_date", ["start", "begin"]);
+    if (!mapping.finish_date) tryMap("finish_date", ["finish", "end", "completion"]);
 
     return mapping;
   };
@@ -223,7 +242,7 @@ function UploadContent() {
                   <div className="text-white font-semibold mb-1">Drop your schedule file here</div>
                   <div className="text-sm text-gray-500 mb-4">or click to browse</div>
                   <div className="flex items-center justify-center gap-2">
-                    {[".xlsx", ".xls", ".csv", ".pdf", ".mpp"].map((ext) => (
+                    {[".xlsx", ".xls", ".csv", ".pdf", ".mpp", ".xml"].map((ext) => (
                       <span key={ext} className="text-xs bg-[#1F1F25] text-gray-500 px-2 py-1 rounded font-mono">
                         {ext}
                       </span>
@@ -234,7 +253,7 @@ function UploadContent() {
               <input
                 ref={fileRef}
                 type="file"
-                accept=".xlsx,.xls,.csv,.pdf,.mpp"
+                accept=".xlsx,.xls,.csv,.pdf,.mpp,.xml"
                 className="hidden"
                 onChange={(e) => { if (e.target.files?.[0]) setFile(e.target.files[0]); }}
               />
