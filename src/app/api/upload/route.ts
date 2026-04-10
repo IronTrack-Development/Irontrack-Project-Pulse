@@ -93,34 +93,51 @@ Extract every single line item. Do not skip any activities. If dates are ambiguo
   let content: Anthropic.MessageCreateParams["messages"][0]["content"];
 
   if (fileType === "pdf") {
-    // Extract text from PDF using pdf-parse
+    // Try text extraction first
     let pdfText = "";
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const pdfParse = require("pdf-parse");
       const pdfData = await pdfParse(buffer);
-      pdfText = pdfData.text;
+      pdfText = pdfData.text || "";
     } catch {
-      // Fallback: try raw text extraction
-      pdfText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000))
-        .replace(/[^\x20-\x7E\n\r\t]/g, " ")
-        .replace(/\s{3,}/g, "\n")
-        .trim();
+      pdfText = "";
     }
 
-    if (!pdfText || pdfText.trim().length < 50) {
-      throw new Error("Could not extract readable text from this PDF");
+    // If text extraction got meaningful content, use text mode
+    if (pdfText && pdfText.trim().length > 200) {
+      const truncated = pdfText.slice(0, 80000);
+      content = [
+        {
+          type: "text" as const,
+          text: `${SCHEDULE_PROMPT}\n\nSCHEDULE DATA FROM PDF "${filename}":\n\n${truncated}`,
+        },
+      ];
+    } else {
+      // PDF text extraction failed — send PDF natively to Claude
+      const base64 = buffer.toString("base64");
+      
+      if (base64.length > 20_000_000) {
+        throw new Error("PDF file is too large for AI processing. Try a smaller file or export as .xlsx.");
+      }
+
+      // Use document type for native PDF support
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      content = [
+        {
+          type: "document",
+          source: {
+            type: "base64",
+            media_type: "application/pdf",
+            data: base64,
+          },
+        } as any,
+        {
+          type: "text" as const,
+          text: SCHEDULE_PROMPT,
+        },
+      ];
     }
-
-    // Truncate to fit context window
-    const truncated = pdfText.slice(0, 80000);
-
-    content = [
-      {
-        type: "text" as const,
-        text: `${SCHEDULE_PROMPT}\n\nSCHEDULE DATA FROM PDF "${filename}":\n\n${truncated}`,
-      },
-    ];
   } else {
     // MPP — extract readable strings from binary
     const rawText = buffer.toString("utf-8", 0, Math.min(buffer.length, 500000));
