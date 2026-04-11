@@ -31,20 +31,13 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         <div className="text-center max-w-4xl mx-auto">
-          <div className="mb-4">
-            <p className="text-xl text-gray-400 mb-2">
-              Run Your Job. Don&apos;t Chase It.
-            </p>
-            <p className="text-lg text-gray-500 mb-8">
-              Your Pulse Check For Every Jobsite
-            </p>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Stop digging through schedules.{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EA580C]">
-              Start knowing what matters this week.
-            </span>
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
+            Run Your Job. Don&apos;t Chase It.
           </h1>
+          <p className="text-2xl md:text-3xl font-semibold mb-10">
+            <span className="text-[#F97316]">Your Pulse Check</span>{" "}
+            <span className="text-white">For Every Jobsite</span>
+          </p>
           <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
             Upload your project schedule. Get a 3-week lookahead, milestone tracking, and progress — instantly. No training. No setup. Just answers.
           </p>
