@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "IronTrack Project Pulse — Field Intelligence Platform",
-  description: "Run Your Job. Don't Chase It. Schedule intelligence for commercial construction teams.",
+  description: "Run Your Job. Don't Chase It. Your Pulse Check For Every Jobsite. Schedule intelligence for commercial construction teams.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

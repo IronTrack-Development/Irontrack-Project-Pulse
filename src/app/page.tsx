@@ -32,7 +32,12 @@ export default function LandingPage() {
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         <div className="text-center max-w-4xl mx-auto">
           <div className="mb-4">
-            <span className="text-lg md:text-xl font-semibold text-gray-400">Run Your Job. Don&apos;t Chase It.</span>
+            <p className="text-xl text-gray-400 mb-2">
+              Run Your Job. Don&apos;t Chase It.
+            </p>
+            <p className="text-lg text-gray-500 mb-8">
+              Your Pulse Check For Every Jobsite
+            </p>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
             Stop digging through schedules.{" "}
