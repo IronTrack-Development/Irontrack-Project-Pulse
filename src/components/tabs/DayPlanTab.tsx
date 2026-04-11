@@ -32,6 +32,8 @@ interface DayPlanTabProps {
 export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [data, setData] = useState<DayPlanData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [shareStatus, setShareStatus] = useState<string | null>(null);
 
   useEffect(() => {
@@ -53,42 +55,41 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     fetchDayPlan();
   }, [projectId, day]);
 
-  const handleShare = async () => {
-    if (!data) return;
+  const handleShareClick = () => {
+    setIsSelecting(true);
+    setSelectedIds(new Set());
+  };
 
-    const dateObj = new Date(data.date);
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+  const handleCancel = () => {
+    setIsSelecting(false);
+    setSelectedIds(new Set());
+  };
+
+  const toggleActivity = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleShare = async () => {
+    if (!data || selectedIds.size === 0) return;
+
+    const allActivities = [...data.inspections, ...data.activeTasks];
+    const selected = allActivities.filter((a) => selectedIds.has(a.id));
+
+    let text = "IronTrack Project Pulse\n\n";
+
+    selected.forEach((activity) => {
+      const tradeSuffix = activity.trade ? ` — ${activity.trade}` : "";
+      text += `• ${activity.activity_name}${tradeSuffix}\n`;
     });
 
-    const dayLabel = day === "today" ? "Today's Plan" : "Tomorrow's Plan";
-    let text = `IronTrack Project Pulse — ${dayLabel}\n${formattedDate}\n\n`;
-
-    if (data.inspections.length > 0) {
-      text += "⚠️ INSPECTIONS:\n";
-      data.inspections.forEach((inspection) => {
-        const tradeSuffix = inspection.trade ? ` — ${inspection.trade}` : "";
-        text += `• ${inspection.activity_name}${tradeSuffix}\n`;
-      });
-      text += "\n";
-    }
-
-    if (data.activeTasks.length > 0) {
-      text += "TASKS:\n";
-      data.activeTasks.forEach((task) => {
-        const tradeSuffix = task.trade ? ` — ${task.trade}` : "";
-        text += `• ${task.activity_name}${tradeSuffix}\n`;
-      });
-      text += "\n";
-    }
-
-    text += `${data.totalActivities} task${data.totalActivities !== 1 ? "s" : ""}`;
-    if (data.inspections.length > 0) {
-      text += `, ${data.inspections.length} inspection${data.inspections.length !== 1 ? "s" : ""}`;
-    }
+    const dayLabel = day === "today" ? "Today" : "Tomorrow";
+    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"} shared from ${dayLabel}`;
 
     // Try native share first
     if (navigator.share) {
@@ -109,6 +110,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     }
 
     setTimeout(() => setShareStatus(null), 2000);
+    setIsSelecting(false);
+    setSelectedIds(new Set());
   };
 
   if (loading) {
@@ -144,19 +147,43 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
   return (
     <div className="space-y-4">
-      {/* Header with Share button */}
+      {/* Header with Share button / Selection mode */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center justify-between">
-        <div>
-          <div className="text-xs text-gray-500">{day === "today" ? "Today" : "Tomorrow"}</div>
-          <div className="text-sm font-medium text-white">{formattedDate}</div>
-        </div>
-        <button
-          onClick={handleShare}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
-        >
-          <Share2 size={13} />
-          {shareStatus || "Share"}
-        </button>
+        {isSelecting ? (
+          <>
+            <div className="text-sm text-gray-300">Select activities to share</div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleCancel}
+                className="px-3 py-1.5 text-gray-400 hover:text-white text-xs font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleShare}
+                disabled={selectedIds.size === 0}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[#1F1F25] disabled:text-gray-600 text-white rounded-lg text-xs font-medium transition-colors"
+              >
+                <Share2 size={13} />
+                Share ({selectedIds.size})
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <div className="text-xs text-gray-500">{day === "today" ? "Today" : "Tomorrow"}</div>
+              <div className="text-sm font-medium text-white">{formattedDate}</div>
+            </div>
+            <button
+              onClick={handleShareClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+            >
+              <Share2 size={13} />
+              {shareStatus || "Share"}
+            </button>
+          </>
+        )}
       </div>
 
       {/* Inspections section */}
@@ -167,14 +194,39 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
             <div className="text-sm font-semibold text-[#F97316]">Inspections</div>
           </div>
           <div className="divide-y divide-[#1F1F25]">
-            {data.inspections.map((inspection) => (
-              <div key={inspection.id} className="px-4 py-3 hover:bg-[#1F1F25]/30 transition-colors">
-                <div className="text-sm text-white">{inspection.activity_name}</div>
-                {inspection.trade && (
-                  <div className="text-xs text-gray-500 mt-0.5">{inspection.trade}</div>
-                )}
-              </div>
-            ))}
+            {data.inspections.map((inspection) => {
+              const isSelected = selectedIds.has(inspection.id);
+              return (
+                <div
+                  key={inspection.id}
+                  onClick={() => isSelecting && toggleActivity(inspection.id)}
+                  className={`px-4 py-3 transition-colors ${
+                    isSelecting
+                      ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                      : "hover:bg-[#1F1F25]/30"
+                  } ${
+                    isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    {isSelecting && (
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleActivity(inspection.id)}
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <div className="text-sm text-white">{inspection.activity_name}</div>
+                      {inspection.trade && (
+                        <div className="text-xs text-gray-500 mt-0.5">{inspection.trade}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
@@ -188,33 +240,56 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
           <div className="divide-y divide-[#1F1F25]">
             {data.activeTasks.map((task) => {
               const pct = task.percent_complete || 0;
+              const isSelected = selectedIds.has(task.id);
               return (
-                <div key={task.id} className="px-4 py-3 hover:bg-[#1F1F25]/30 transition-colors">
-                  <div className="flex items-start justify-between gap-3 mb-2">
+                <div
+                  key={task.id}
+                  onClick={() => isSelecting && toggleActivity(task.id)}
+                  className={`px-4 py-3 transition-colors ${
+                    isSelecting
+                      ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                      : "hover:bg-[#1F1F25]/30"
+                  } ${
+                    isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
+                  }`}
+                >
+                  <div className="flex items-start gap-3 mb-2">
+                    {isSelecting && (
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleActivity(task.id)}
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                      />
+                    )}
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-white mb-0.5">{task.activity_name}</div>
-                      {task.trade && (
-                        <div className="text-xs text-gray-500">{task.trade}</div>
-                      )}
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm text-white mb-0.5">{task.activity_name}</div>
+                          {task.trade && (
+                            <div className="text-xs text-gray-500">{task.trade}</div>
+                          )}
+                        </div>
+                        <div className={`text-sm font-semibold shrink-0 ${
+                          pct >= 100 
+                            ? "text-[#22C55E]" 
+                            : pct > 0 
+                            ? "text-[#F97316]" 
+                            : "text-gray-500"
+                        }`}>
+                          {pct}%
+                        </div>
+                      </div>
+                      {/* Progress bar */}
+                      <div className="w-full bg-[#1F1F25] rounded-full h-1.5 overflow-hidden">
+                        <div
+                          className={`h-full transition-all ${
+                            pct >= 100 ? "bg-[#22C55E]" : "bg-[#F97316]"
+                          }`}
+                          style={{ width: `${Math.min(pct, 100)}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className={`text-sm font-semibold shrink-0 ${
-                      pct >= 100 
-                        ? "text-[#22C55E]" 
-                        : pct > 0 
-                        ? "text-[#F97316]" 
-                        : "text-gray-500"
-                    }`}>
-                      {pct}%
-                    </div>
-                  </div>
-                  {/* Progress bar */}
-                  <div className="w-full bg-[#1F1F25] rounded-full h-1.5 overflow-hidden">
-                    <div
-                      className={`h-full transition-all ${
-                        pct >= 100 ? "bg-[#22C55E]" : "bg-[#F97316]"
-                      }`}
-                      style={{ width: `${Math.min(pct, 100)}%` }}
-                    />
                   </div>
                 </div>
               );
