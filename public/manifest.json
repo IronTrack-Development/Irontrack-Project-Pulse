@@ -1,11 +1,11 @@
 {
-  "name": "IronTrack Project Pulse",
-  "short_name": "IronTrack",
-  "description": "Construction schedule intelligence platform",
+  "name": "IronTrack Pulse",
+  "short_name": "IronTrack Pulse",
+  "description": "Run Your Job. Don't Chase It. Schedule intelligence for commercial construction teams.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0B0B0D",
-  "theme_color": "#F97316",
+  "theme_color": "#0B0B0D",
   "icons": [
     {
       "src": "/icon-192.png",

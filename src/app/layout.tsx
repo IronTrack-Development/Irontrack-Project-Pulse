@@ -9,17 +9,17 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#F97316",
+  themeColor: "#0B0B0D", // Dark background to match new branding
 };
 
 export const metadata: Metadata = {
   title: "IronTrack Project Pulse — Field Intelligence Platform",
-  description: "Real-time schedule intelligence for construction field teams.",
+  description: "Run Your Job. Don't Chase It. Schedule intelligence for commercial construction teams.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "IronTrack",
+    title: "IronTrack Pulse",
   },
 };
 

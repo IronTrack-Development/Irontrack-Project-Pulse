@@ -26,16 +26,16 @@ export default function Sidebar() {
       <div className="flex items-center gap-3 px-5 py-5 border-b border-[#1F1F25]">
         <div className="relative w-8 h-8">
           <Image
-            src="/irontrack-logo.png"
-            alt="IronTrack Project Pulse"
+            src="/icon-192.png"
+            alt="IronTrack Pulse Logo"
             fill
             className="object-contain"
             onError={() => {}}
           />
         </div>
         <div>
-          <div className="font-bold text-white text-sm leading-none">IronTrack</div>
-          <div className="text-[10px] text-[#F97316] font-semibold tracking-widest uppercase mt-0.5">Project Pulse</div>
+          <div className="font-bold text-white text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
+          <div className="text-[10px] text-gray-500 font-medium mt-0.5">Run Your Job. Don&apos;t Chase It.</div>
         </div>
       </div>
 

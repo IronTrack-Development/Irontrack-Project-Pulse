@@ -31,6 +31,9 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         <div className="text-center max-w-4xl mx-auto">
+          <div className="mb-4">
+            <span className="text-lg md:text-xl font-semibold text-gray-400">Run Your Job. Don&apos;t Chase It.</span>
+          </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
             Stop digging through schedules.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EA580C]">
