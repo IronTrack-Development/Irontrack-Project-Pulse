@@ -1,0 +1,17 @@
+const fs = require('fs')
+const path = require('path')
+
+const sql = fs.readFileSync(path.join(__dirname, 'src', 'migrations', '004_upload_limits.sql'), 'utf8')
+
+console.log('='.repeat(80))
+console.log('UPLOAD LIMITS MIGRATION SQL')
+console.log('Paste this into: https://supabase.com/dashboard/project/YOUR_PROJECT/sql')
+console.log('='.repeat(80))
+console.log()
+console.log(sql)
+console.log()
+console.log('='.repeat(80))
+console.log('After running the SQL, verify with:')
+console.log('  SELECT * FROM user_uploads LIMIT 1;')
+console.log('  SELECT * FROM user_storage LIMIT 1;')
+console.log('='.repeat(80))

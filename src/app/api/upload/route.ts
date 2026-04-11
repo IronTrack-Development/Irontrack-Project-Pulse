@@ -363,9 +363,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing file or project_id" }, { status: 400 });
   }
 
-  // File size limit: 10MB max
-  if (file.size > 10 * 1024 * 1024) {
-    return NextResponse.json({ error: "File too large. Maximum file size is 10MB." }, { status: 413 });
+  // File size limit: 100MB max
+  const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+  if (file.size > MAX_FILE_SIZE) {
+    return NextResponse.json(
+      { error: 'File too large. Maximum size is 100MB.' },
+      { status: 413 }
+    );
   }
 
   const mapping: ColumnMapping = mappingStr ? JSON.parse(mappingStr) : {};
@@ -379,6 +383,63 @@ export async function POST(req: NextRequest) {
     .eq("id", projectId)
     .single();
   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
+
+  // Get user_id from project for quota checks
+  const userId = project.user_id;
+
+  // Daily upload limit check — 50 uploads per day
+  const today = new Date().toISOString().split('T')[0];
+  const { data: uploadStats } = await supabase
+    .from('user_uploads')
+    .select('upload_count')
+    .eq('user_id', userId)
+    .eq('upload_date', today)
+    .single();
+
+  const dailyCount = uploadStats?.upload_count || 0;
+  if (dailyCount >= 50) {
+    return NextResponse.json(
+      { error: 'Daily upload limit reached (50 files per day). Try again tomorrow.' },
+      { status: 429 }
+    );
+  }
+
+  // Monthly upload limit check — 50 uploads per month
+  const monthStart = new Date();
+  monthStart.setDate(1);
+  const monthStartStr = monthStart.toISOString().split('T')[0];
+
+  const { data: monthlyStats } = await supabase
+    .from('user_uploads')
+    .select('upload_count')
+    .eq('user_id', userId)
+    .gte('upload_date', monthStartStr);
+
+  const monthlyCount = monthlyStats?.reduce((sum, row) => sum + row.upload_count, 0) || 0;
+  if (monthlyCount >= 50) {
+    return NextResponse.json(
+      { error: 'Monthly upload limit reached (50 files per month).' },
+      { status: 429 }
+    );
+  }
+
+  // Storage quota check — 500MB total per user
+  const { data: storageData } = await supabase
+    .from('user_storage')
+    .select('total_bytes')
+    .eq('user_id', userId)
+    .single();
+
+  const currentStorage = storageData?.total_bytes || 0;
+  const MAX_STORAGE = 500 * 1024 * 1024; // 500MB
+
+  if (currentStorage + file.size > MAX_STORAGE) {
+    const usedMB = (currentStorage / (1024 * 1024)).toFixed(1);
+    return NextResponse.json(
+      { error: `Storage quota exceeded. You've used ${usedMB}MB of 500MB. Delete old projects to free up space.` },
+      { status: 507 }
+    );
+  }
 
   // Rate limiting: max 10 uploads per hour per user
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
@@ -644,6 +705,17 @@ export async function POST(req: NextRequest) {
     .eq("status", "open");
   const { score } = computeHealthScore(risks || [], allActivities || []);
   await supabase.from("daily_projects").update({ health_score: score }).eq("id", projectId);
+
+  // Update upload tracking and storage quota
+  await supabase.rpc('increment_daily_uploads', {
+    p_user_id: userId,
+    p_file_size: file.size
+  });
+
+  await supabase.rpc('increment_user_storage', {
+    p_user_id: userId,
+    p_file_size: file.size
+  });
 
   return NextResponse.json({
     upload_id: upload.id,
