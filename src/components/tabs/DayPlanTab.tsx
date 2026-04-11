@@ -75,21 +75,47 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     setSelectedIds(newSelected);
   };
 
+  const formatDateRange = (startDate: string, finishDate: string) => {
+    if (!startDate || !finishDate) return "TBD";
+    
+    const start = new Date(startDate);
+    const finish = new Date(finishDate);
+    
+    const monthDay = (date: Date) => 
+      date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    const day = (date: Date) => 
+      date.toLocaleDateString("en-US", { day: "numeric" });
+    
+    if (startDate === finishDate) {
+      return monthDay(start);
+    }
+    
+    // Same month
+    if (start.getMonth() === finish.getMonth() && start.getFullYear() === finish.getFullYear()) {
+      const month = start.toLocaleDateString("en-US", { month: "short" });
+      return `${month} ${day(start)}-${day(finish)}`;
+    }
+    
+    // Different months
+    return `${monthDay(start)}-${monthDay(finish)}`;
+  };
+
   const handleShare = async () => {
     if (!data || selectedIds.size === 0) return;
 
     const allActivities = [...data.inspections, ...data.activeTasks];
     const selected = allActivities.filter((a) => selectedIds.has(a.id));
 
-    let text = "IronTrack Project Pulse\n\n";
+    const dayLabel = day === "today" ? "Today" : "Tomorrow";
+    let text = `IronTrack Project Pulse — ${dayLabel}\n\n`;
 
     selected.forEach((activity) => {
+      const dateRange = formatDateRange(activity.start_date, activity.finish_date);
       const tradeSuffix = activity.trade ? ` — ${activity.trade}` : "";
-      text += `• ${activity.activity_name}${tradeSuffix}\n`;
+      text += `• ${activity.activity_name} (${dateRange})${tradeSuffix}\n`;
     });
 
-    const dayLabel = day === "today" ? "Today" : "Tomorrow";
-    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"} shared from ${dayLabel}`;
+    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"}`;
 
     // Try native share first
     if (navigator.share) {

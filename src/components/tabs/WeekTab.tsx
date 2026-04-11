@@ -94,18 +94,44 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     setSelectedIds(newSelected);
   };
 
+  const formatActivityDateRange = (startDate: string, finishDate: string) => {
+    if (!startDate || !finishDate) return "TBD";
+    
+    const start = new Date(startDate);
+    const finish = new Date(finishDate);
+    
+    const monthDay = (date: Date) => 
+      date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    const day = (date: Date) => 
+      date.toLocaleDateString("en-US", { day: "numeric" });
+    
+    if (startDate === finishDate) {
+      return monthDay(start);
+    }
+    
+    // Same month
+    if (start.getMonth() === finish.getMonth() && start.getFullYear() === finish.getFullYear()) {
+      const month = start.toLocaleDateString("en-US", { month: "short" });
+      return `${month} ${day(start)}-${day(finish)}`;
+    }
+    
+    // Different months
+    return `${monthDay(start)}-${monthDay(finish)}`;
+  };
+
   const handleShare = async () => {
     if (!data || selectedIds.size === 0) return;
 
     const selected = data.activities.filter((a) => selectedIds.has(a.id));
 
-    let text = "IronTrack Project Pulse\n\n";
+    let text = `IronTrack Project Pulse — Week ${weekNumber}\n\n`;
 
     selected.forEach((activity) => {
-      text += `• ${activity.activity_name}\n`;
+      const dateRange = formatActivityDateRange(activity.start_date, activity.finish_date);
+      text += `• ${activity.activity_name} (${dateRange})\n`;
     });
 
-    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"} shared from Week ${weekNumber}`;
+    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"}`;
 
     // Try native share first
     if (navigator.share) {
