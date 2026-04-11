@@ -117,7 +117,8 @@ function deriveStatus(row: {
   return "not_started";
 }
 
-// AI-powered schedule extraction for PDFs and MPP files
+// AI-powered schedule extraction for XML and PDF files
+// Note: XER files now use direct parsing (zero cost)
 async function aiParseSchedule(buffer: Buffer, filename: string, fileType: string): Promise<RawRow[]> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY not configured");
@@ -512,8 +513,40 @@ export async function POST(req: NextRequest) {
     mapping.actual_finish = "Actual Finish";
     mapping.wbs = "WBS";
     mapping.predecessor_ids = "Predecessors";
-  } else if (ext === "xml" || ext === "xer" || ext === "pdf") {
-    // AI-powered parsing for XML, XER, and PDF files
+  } else if (ext === "xer") {
+    // Direct XER parsing (zero cost)
+    const { parseXER } = await import("@/lib/xer-parser");
+    const xerText = buffer.toString("utf-8");
+    const xerTasks = parseXER(xerText);
+    
+    // Convert to RawRow format
+    rows = xerTasks.map(task => ({
+      "Activity ID": task.task_id,
+      "Activity Name": task.task_name,
+      "Start Date": task.start_date || "",
+      "Finish Date": task.end_date || "",
+      "% Complete": String(task.percent_complete),
+      "Duration": task.duration ? String(task.duration) : "",
+      "Milestone": task.milestone ? "yes" : "no",
+      "WBS": task.wbs_id || "",
+      "Resources": task.rsrc_names || "",
+      "Predecessors": task.pred_task_ids || "",
+    }));
+    
+    if (rows.length === 0) {
+      return NextResponse.json({ error: "No tasks found in XER file. Verify this is a valid Primavera P6 export." }, { status: 400 });
+    }
+    
+    usedAI = false;
+    mapping.activity_name = "Activity Name";
+    mapping.start_date = "Start Date";
+    mapping.finish_date = "Finish Date";
+    mapping.percent_complete = "% Complete";
+    mapping.original_duration = "Duration";
+    mapping.activity_id = "Activity ID";
+    mapping.milestone = "Milestone";
+  } else if (ext === "xml" || ext === "pdf") {
+    // AI-powered parsing for XML and PDF files
     try {
       rows = await aiParseSchedule(buffer, filename, ext);
       usedAI = true;
