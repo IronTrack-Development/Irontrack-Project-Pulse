@@ -14,6 +14,7 @@ import {
   Calendar,
 } from "lucide-react";
 import AddProjectModal from "@/components/AddProjectModal";
+import { HelpIcon } from "@/components/help-icon";
 
 interface ProjectWithStats {
   id: string;
@@ -92,6 +93,7 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex items-center gap-3">
+            <HelpIcon context="Dashboard" />
             <button
               onClick={fetchProjects}
               className="p-2 rounded-lg bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-400 hover:text-white transition-colors"

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, HardDrive, FileText } from "lucide-react";
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
+import { SupportButton } from "@/components/support-button";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -99,9 +100,18 @@ export default async function SettingsPage() {
         </div>
 
         {/* Account section placeholder */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6">
+        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-white mb-2">Account</h2>
           <p className="text-sm text-gray-400">Additional account settings coming soon.</p>
+        </div>
+
+        {/* Support Section */}
+        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-white mb-2">Need Help?</h2>
+          <p className="text-gray-400 text-sm mb-4">
+            Having trouble or found a bug? Send us an email and we'll help you out.
+          </p>
+          <SupportButton context="Settings page" />
         </div>
       </div>
     </div>

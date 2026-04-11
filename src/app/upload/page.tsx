@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
+import { SupportButton } from "@/components/support-button";
 
 interface Project { id: string; name: string; }
 
@@ -278,7 +279,8 @@ function UploadContent() {
 
             {error && (
               <div className="bg-red-900/20 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3">
-                {error}
+                <p className="mb-3">{error}</p>
+                <SupportButton context={`Upload error: ${error}`} variant="inline" />
               </div>
             )}
 

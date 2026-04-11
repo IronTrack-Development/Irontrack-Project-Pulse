@@ -1,0 +1,32 @@
+'use client';
+
+import { Mail } from 'lucide-react';
+import { openSupportEmail } from '@/lib/support-email';
+
+interface SupportButtonProps {
+  context?: string;
+  variant?: 'default' | 'inline';
+}
+
+export function SupportButton({ context, variant = 'default' }: SupportButtonProps) {
+  if (variant === 'inline') {
+    return (
+      <button
+        onClick={() => openSupportEmail(context)}
+        className="text-sm text-gray-400 hover:text-gray-300 underline"
+      >
+        Report this error →
+      </button>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => openSupportEmail(context)}
+      className="flex items-center gap-2 px-4 py-2 bg-[#121217] border border-[#1F1F25] rounded-lg text-gray-300 hover:bg-[#1A1A20] hover:border-[#2A2A30] transition-colors"
+    >
+      <Mail className="w-4 h-4" />
+      Report a Problem
+    </button>
+  );
+}

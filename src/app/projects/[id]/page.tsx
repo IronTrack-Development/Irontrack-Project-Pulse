@@ -10,6 +10,7 @@ import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
 import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
+import { SupportButton } from "@/components/support-button";
 
 const TABS = [
   { id: "today", label: "Today", icon: CalendarCheck },
@@ -78,9 +79,12 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
 
   if (!project) {
     return (
-      <div className="p-8 text-center text-gray-500">
-        Project not found.{" "}
-        <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
+      <div className="p-8 text-center">
+        <p className="text-gray-500 mb-4">
+          Project not found.{" "}
+          <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
+        </p>
+        <SupportButton context="Project not found error" variant="inline" />
       </div>
     );
   }
