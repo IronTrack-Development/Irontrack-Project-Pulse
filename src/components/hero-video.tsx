@@ -6,9 +6,9 @@ export default function HeroVideo() {
       autoPlay
       muted
       playsInline
-      className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-20"
+      className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-50"
       onEnded={(e) => { 
-        e.currentTarget.style.opacity = '0.1';
+        e.currentTarget.style.opacity = '0.3';
       }}
     >
       <source src="/crane.mp4" type="video/mp4" />
