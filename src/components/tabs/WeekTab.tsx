@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarDays, Loader2 } from "lucide-react";
+import { CalendarDays, Loader2, Share2 } from "lucide-react";
 
 interface Activity {
   id: string;
@@ -27,6 +27,7 @@ interface WeekTabProps {
 export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [data, setData] = useState<WeekData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [shareStatus, setShareStatus] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWeekData = async () => {
@@ -71,6 +72,40 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     return `${weekStart.toLocaleDateString("en-US", options)} - ${weekEnd.toLocaleDateString("en-US", options)}`;
   };
 
+  const handleShare = async () => {
+    if (!data) return;
+
+    const dateRangeStr = formatDateRange();
+    const year = weekStart.getFullYear();
+    let text = `IronTrack Project Pulse — Week ${weekNumber} Lookahead\nWeek of ${dateRangeStr}, ${year}\n\n`;
+
+    data.activities.forEach((activity) => {
+      text += `• ${activity.activity_name}\n`;
+    });
+
+    text += `\n${data.activities.length} activit${data.activities.length !== 1 ? "ies" : "y"} this week`;
+
+    // Try native share first
+    if (navigator.share) {
+      try {
+        await navigator.share({ text });
+        setShareStatus("Shared!");
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") {
+          // Fall back to clipboard
+          await navigator.clipboard.writeText(text);
+          setShareStatus("Copied!");
+        }
+      }
+    } else {
+      // Fall back to clipboard
+      await navigator.clipboard.writeText(text);
+      setShareStatus("Copied!");
+    }
+
+    setTimeout(() => setShareStatus(null), 2000);
+  };
+
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInWeek = Array.from({ length: 7 }, (_, i) => {
     const day = new Date(weekStart);
@@ -80,9 +115,18 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3">
-        <div className="text-xs text-gray-500">Week {weekNumber}</div>
-        <div className="text-sm font-medium text-white">{formatDateRange()}</div>
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center justify-between">
+        <div>
+          <div className="text-xs text-gray-500">Week {weekNumber}</div>
+          <div className="text-sm font-medium text-white">{formatDateRange()}</div>
+        </div>
+        <button
+          onClick={handleShare}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+        >
+          <Share2 size={13} />
+          {shareStatus || "Share"}
+        </button>
       </div>
 
       {/* Group by day */}

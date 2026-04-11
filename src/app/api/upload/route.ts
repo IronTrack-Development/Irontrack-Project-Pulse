@@ -610,6 +610,29 @@ export async function POST(req: NextRequest) {
     .select("*")
     .eq("project_id", projectId);
 
+  // Auto-set project start and finish dates from schedule
+  if (allActivities && allActivities.length > 0) {
+    const validStartDates = allActivities
+      .map((a) => a.start_date)
+      .filter((d): d is string => d !== null && d !== undefined);
+    const validFinishDates = allActivities
+      .map((a) => a.finish_date)
+      .filter((d): d is string => d !== null && d !== undefined);
+
+    if (validStartDates.length > 0 && validFinishDates.length > 0) {
+      const minStart = validStartDates.sort()[0];
+      const maxFinish = validFinishDates.sort().reverse()[0];
+
+      await supabase
+        .from("daily_projects")
+        .update({
+          start_date: minStart,
+          target_finish_date: maxFinish,
+        })
+        .eq("id", projectId);
+    }
+  }
+
   // Run risk detection
   const riskCount = await runRiskDetection(projectId, allActivities || []);
 
