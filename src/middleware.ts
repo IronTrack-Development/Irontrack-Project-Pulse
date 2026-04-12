@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
   const isSubscribePage = request.nextUrl.pathname === '/subscribe';
 
   // Check subscription status for protected routes
-  if (user && !isPublicRoute && !isAuthApiRoute && !isStripeApiRoute && !isSubscribePage) {
+  if (user && !isPublicRoute && !isApiRoute && !isSubscribePage) {
     const { data: subscription } = await supabase
       .from('user_subscriptions')
       .select('status')
