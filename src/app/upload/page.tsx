@@ -160,22 +160,33 @@ function UploadContent() {
       const USE_TWO_STEP = file.size > 4 * 1024 * 1024;
 
       if (USE_TWO_STEP) {
-        // Step 1: Upload to Supabase Storage
-        const timestamp = Date.now();
-        const storagePath = `${user.id}/${timestamp}-${file.name}`;
-        
-        setUploadProgress(25); // Starting upload
-        
-        const { error: uploadError } = await supabase.storage
-          .from('uploads')
-          .upload(storagePath, file, {
-            cacheControl: '3600',
-            upsert: false,
-          });
+        // Step 1a: Get signed upload URL from server (bypasses RLS)
+        const signedRes = await fetch('/api/storage-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: file.name, user_id: user.id }),
+        });
+        const signedData = await signedRes.json();
+        if (!signedRes.ok || !signedData.signed_url) {
+          setError(`Failed to prepare upload: ${signedData.error || 'Unknown error'}`);
+          setUploading(false);
+          setStep("select");
+          return;
+        }
 
-        if (uploadError) {
-          console.error('Storage upload error:', uploadError);
-          setError(`Storage upload failed: ${uploadError.message}`);
+        setUploadProgress(10); // Got signed URL
+
+        // Step 1b: Upload directly to Supabase Storage using signed URL
+        const storagePath = signedData.storage_path;
+        const uploadRes = await fetch(signedData.signed_url, {
+          method: 'PUT',
+          headers: { 'Content-Type': file.type || 'application/octet-stream' },
+          body: file,
+        });
+
+        if (!uploadRes.ok) {
+          console.error('Storage upload error:', uploadRes.status, await uploadRes.text());
+          setError('Storage upload failed. Please try again.');
           setUploading(false);
           setStep("select");
           return;
