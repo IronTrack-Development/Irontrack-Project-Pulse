@@ -31,14 +31,11 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Video background - desktop only */}
+        {/* Hero video — the star of the show */}
         <HeroVideo />
         
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0B0D]/80 via-[#0B0B0D]/60 to-[#0B0B0D]" />
-        
-        {/* Hero content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-32">
+        {/* Hero content — below video */}
+        <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
             Run Your Job. Don&apos;t Chase It.
