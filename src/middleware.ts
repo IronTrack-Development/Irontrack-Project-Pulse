@@ -32,8 +32,7 @@ export async function middleware(request: NextRequest) {
   // Public routes that don't require auth
   const publicRoutes = ['/', '/login', '/signup'];
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
-  const isAuthApiRoute = request.nextUrl.pathname.startsWith('/api/auth');
-  const isStripeApiRoute = request.nextUrl.pathname.startsWith('/api/stripe');
+  const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
   const isStaticAsset =
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/favicon') ||
@@ -41,7 +40,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/manifest');
 
   // Allow public routes and API routes
-  if (isPublicRoute || isAuthApiRoute || isStripeApiRoute || isStaticAsset) {
+  if (isPublicRoute || isApiRoute || isStaticAsset) {
     return supabaseResponse;
   }
 
