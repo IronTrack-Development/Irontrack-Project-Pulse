@@ -13,9 +13,21 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "IronTrack Project Pulse — Field Intelligence Platform",
-  description: "Run Your Job. Don't Chase It. Your Pulse Check For Every Jobsite. Schedule intelligence for commercial construction teams.",
+  title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+  description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
   manifest: "/manifest.json",
+  openGraph: {
+    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
+    images: ["/hero-pulse.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
+    images: ["/hero-pulse.png"],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
