@@ -12,6 +12,7 @@ import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
 import PriorityTab from "@/components/tabs/PriorityTab";
 import { SupportButton } from "@/components/support-button";
+import ShareSnapshot from "@/components/ShareSnapshot";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
@@ -126,6 +127,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               >
                 <RefreshCw size={15} />
               </button>
+              <ShareSnapshot projectId={id} />
               <Link
                 href={`/upload?project=${id}`}
                 className="px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
