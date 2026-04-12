@@ -9,6 +9,7 @@ import {
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import { SupportButton } from "@/components/support-button";
+import { createClient } from "@/lib/supabase-browser";
 
 interface Project { id: string; name: string; }
 
@@ -24,6 +25,7 @@ function UploadContent() {
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [result, setResult] = useState<{
     activities_parsed: number;
     milestones_found: number;
@@ -137,31 +139,100 @@ function UploadContent() {
     setUploading(true);
     setStep("uploading");
     setError("");
+    setUploadProgress(0);
 
     // Auto-detect columns — no user input needed
     const mapping = await autoDetectMapping(file);
 
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("project_id", selectedProjectId);
-    fd.append("mapping", JSON.stringify(mapping));
-
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 120000); // 2 min client timeout
+      const supabase = createClient();
       
-      const res = await fetch("/api/upload", { method: "POST", body: fd, signal: controller.signal });
-      clearTimeout(timeout);
-      const data = await res.json();
-      setUploading(false);
-
-      if (!res.ok) {
-        setError(data.error || "Upload failed. Try exporting your schedule as .xlsx for best results.");
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setError("Please log in to upload files.");
+        setUploading(false);
         setStep("select");
         return;
       }
-      setResult(data);
-      setStep("done");
+
+      // For files larger than 4MB, use two-step flow (Supabase Storage → API)
+      const USE_TWO_STEP = file.size > 4 * 1024 * 1024;
+
+      if (USE_TWO_STEP) {
+        // Step 1: Upload to Supabase Storage
+        const timestamp = Date.now();
+        const storagePath = `${user.id}/${timestamp}-${file.name}`;
+        
+        setUploadProgress(25); // Starting upload
+        
+        const { error: uploadError } = await supabase.storage
+          .from('uploads')
+          .upload(storagePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('Storage upload error:', uploadError);
+          setError(`Storage upload failed: ${uploadError.message}`);
+          setUploading(false);
+          setStep("select");
+          return;
+        }
+
+        setUploadProgress(50); // Upload complete, now processing
+
+        // Step 2: Call API with storage path
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 120000); // 2 min timeout
+        
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            storage_path: storagePath,
+            project_id: selectedProjectId,
+            mapping: mapping,
+          }),
+          signal: controller.signal,
+        });
+        
+        clearTimeout(timeout);
+        const data = await res.json();
+        setUploading(false);
+        setUploadProgress(100);
+
+        if (!res.ok) {
+          setError(data.error || "Processing failed. Try exporting your schedule as .xlsx for best results.");
+          setStep("select");
+          return;
+        }
+        setResult(data);
+        setStep("done");
+      } else {
+        // Small file: use original FormData flow (backwards compat)
+        const fd = new FormData();
+        fd.append("file", file);
+        fd.append("project_id", selectedProjectId);
+        fd.append("mapping", JSON.stringify(mapping));
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 120000);
+        
+        const res = await fetch("/api/upload", { method: "POST", body: fd, signal: controller.signal });
+        clearTimeout(timeout);
+        const data = await res.json();
+        setUploading(false);
+
+        if (!res.ok) {
+          setError(data.error || "Upload failed. Try exporting your schedule as .xlsx for best results.");
+          setStep("select");
+          return;
+        }
+        setResult(data);
+        setStep("done");
+      }
     } catch (err) {
       setUploading(false);
       const msg = err instanceof Error ? err.message : "Unknown error";
@@ -302,6 +373,17 @@ function UploadContent() {
             <Loader2 size={48} className="mx-auto text-[#F97316] animate-spin mb-4" />
             <h2 className="text-xl font-bold text-white mb-2">Analyzing Schedule...</h2>
             <p className="text-gray-500 text-sm">Auto-detecting columns and parsing activities</p>
+            {uploadProgress > 0 && (
+              <div className="mt-4">
+                <div className="w-full bg-[#1F1F25] rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="bg-[#F97316] h-2 transition-all duration-300"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">{uploadProgress}%</p>
+              </div>
+            )}
           </div>
         )}
 

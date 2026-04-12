@@ -354,28 +354,77 @@ ${textForAI}`,
 
 export async function POST(req: NextRequest) {
   const supabase = getServiceClient();
-  const formData = await req.formData();
+  const contentType = req.headers.get("content-type") || "";
 
-  const file = formData.get("file") as File | null;
-  const projectId = formData.get("project_id") as string | null;
-  const mappingStr = formData.get("mapping") as string | null;
+  let file: File | null = null;
+  let projectId: string | null = null;
+  let mapping: ColumnMapping = {};
+  let filename = "";
+  let ext = "";
+  let storagePath: string | null = null;
+  let fileBuffer: Buffer | null = null;
+  let fileSize = 0;
 
-  if (!file || !projectId) {
-    return NextResponse.json({ error: "Missing file or project_id" }, { status: 400 });
+  // Support both FormData (old flow) and JSON (new two-step flow)
+  if (contentType.includes("application/json")) {
+    // New flow: JSON with storage_path
+    const body = await req.json();
+    storagePath = body.storage_path;
+    projectId = body.project_id;
+    mapping = body.mapping || {};
+
+    if (!storagePath || !projectId) {
+      return NextResponse.json({ error: "Missing storage_path or project_id" }, { status: 400 });
+    }
+
+    // Download file from Supabase Storage
+    const { data: fileData, error: downloadError } = await supabase.storage
+      .from('uploads')
+      .download(storagePath);
+
+    if (downloadError || !fileData) {
+      console.error('Storage download error:', downloadError);
+      return NextResponse.json({ error: "Failed to retrieve file from storage" }, { status: 500 });
+    }
+
+    // Convert Blob to Buffer
+    const arrayBuffer = await fileData.arrayBuffer();
+    fileBuffer = Buffer.from(arrayBuffer);
+    fileSize = fileBuffer.length;
+
+    // Extract filename from storage path: {user_id}/{timestamp}-{filename}
+    const pathParts = storagePath.split('/');
+    filename = pathParts[pathParts.length - 1].replace(/^\d+-/, ''); // Remove timestamp prefix
+    ext = filename.split(".").pop()?.toLowerCase() || "";
+  } else {
+    // Old flow: FormData with file
+    const formData = await req.formData();
+    file = formData.get("file") as File | null;
+    projectId = formData.get("project_id") as string | null;
+    const mappingStr = formData.get("mapping") as string | null;
+
+    if (!file || !projectId) {
+      return NextResponse.json({ error: "Missing file or project_id" }, { status: 400 });
+    }
+
+    mapping = mappingStr ? JSON.parse(mappingStr) : {};
+    filename = file.name;
+    ext = filename.split(".").pop()?.toLowerCase() || "";
+    fileSize = file.size;
   }
 
   // File size limit: 100MB max
   const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
-  if (file.size > MAX_FILE_SIZE) {
+  if (fileSize > MAX_FILE_SIZE) {
+    // Clean up storage file if it exists
+    if (storagePath) {
+      await supabase.storage.from('uploads').remove([storagePath]);
+    }
     return NextResponse.json(
       { error: 'File too large. Maximum size is 100MB.' },
       { status: 413 }
     );
   }
-
-  const mapping: ColumnMapping = mappingStr ? JSON.parse(mappingStr) : {};
-  const filename = file.name;
-  const ext = filename.split(".").pop()?.toLowerCase() || "";
 
   // Verify project exists and get user_id
   const { data: project } = await supabase
@@ -434,8 +483,12 @@ export async function POST(req: NextRequest) {
   const currentStorage = storageData?.total_bytes || 0;
   const MAX_STORAGE = 500 * 1024 * 1024; // 500MB
 
-  if (currentStorage + file.size > MAX_STORAGE) {
+  if (currentStorage + fileSize > MAX_STORAGE) {
     const usedMB = (currentStorage / (1024 * 1024)).toFixed(1);
+    // Clean up storage file if it exists
+    if (storagePath) {
+      await supabase.storage.from('uploads').remove([storagePath]);
+    }
     return NextResponse.json(
       { error: `Storage quota exceeded. You've used ${usedMB}MB of 500MB. Delete old projects to free up space.` },
       { status: 507 }
@@ -467,8 +520,8 @@ export async function POST(req: NextRequest) {
     .single();
   if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 500 });
 
-  // Parse file
-  const buffer = Buffer.from(await file.arrayBuffer());
+  // Parse file (use buffer from storage or convert from File)
+  const buffer = fileBuffer || Buffer.from(await file!.arrayBuffer());
   let rows: RawRow[] = [];
   let usedAI = false;
 
@@ -742,13 +795,18 @@ export async function POST(req: NextRequest) {
   // Update upload tracking and storage quota
   await supabase.rpc('increment_daily_uploads', {
     p_user_id: userId,
-    p_file_size: file.size
+    p_file_size: fileSize
   });
 
   await supabase.rpc('increment_user_storage', {
     p_user_id: userId,
-    p_file_size: file.size
+    p_file_size: fileSize
   });
+
+  // Clean up storage file if it was uploaded via two-step flow
+  if (storagePath) {
+    await supabase.storage.from('uploads').remove([storagePath]);
+  }
 
   return NextResponse.json({
     upload_id: upload.id,
