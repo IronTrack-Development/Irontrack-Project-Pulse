@@ -185,6 +185,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           activity={selected}
           projectId={projectId}
           onClose={() => setSelected(null)}
+          onActivityChange={(a) => setSelected(a)}
         />
       )}
     </div>

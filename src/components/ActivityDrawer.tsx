@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Calendar, Clock, Hash, MapPin, Users, AlertTriangle, ChevronRight } from "lucide-react";
+import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2 } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
 
 function fmt(d?: string) {
   if (!d) return "—";
   return new Date(d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+}
+
+function fmtShort(d?: string) {
+  if (!d) return "—";
+  return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 function statusStyle(status: string) {
@@ -28,14 +33,29 @@ function statusLabel(status: string) {
   }
 }
 
+function statusBorderColor(status: string): string {
+  switch (status) {
+    case "complete": return "#22C55E";
+    case "in_progress": return "#3B82F6";
+    case "late": return "#EF4444";
+    default: return "#374151"; // gray-700
+  }
+}
+
+interface RelationshipActivity extends ParsedActivity {}
+
 interface Props {
   activity: ParsedActivity;
   projectId: string;
   onClose: () => void;
+  onActivityChange?: (activity: ParsedActivity) => void;
 }
 
-export default function ActivityDrawer({ activity, projectId, onClose }: Props) {
+export default function ActivityDrawer({ activity, projectId, onClose, onActivityChange }: Props) {
   const [risks, setRisks] = useState<DailyRisk[]>([]);
+  const [predecessors, setPredecessors] = useState<RelationshipActivity[]>([]);
+  const [successors, setSuccessors] = useState<RelationshipActivity[]>([]);
+  const [relLoading, setRelLoading] = useState(true);
 
   useEffect(() => {
     const fetchRisks = async () => {
@@ -46,6 +66,27 @@ export default function ActivityDrawer({ activity, projectId, onClose }: Props) 
       }
     };
     fetchRisks();
+  }, [activity.id, projectId]);
+
+  useEffect(() => {
+    const fetchRelationships = async () => {
+      setRelLoading(true);
+      setPredecessors([]);
+      setSuccessors([]);
+      try {
+        const res = await fetch(
+          `/api/projects/${projectId}/relationships?activityId=${activity.id}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setPredecessors(data.predecessors || []);
+          setSuccessors(data.successors || []);
+        }
+      } finally {
+        setRelLoading(false);
+      }
+    };
+    fetchRelationships();
   }, [activity.id, projectId]);
 
   useEffect(() => {
@@ -61,6 +102,12 @@ export default function ActivityDrawer({ activity, projectId, onClose }: Props) 
       (new Date(activity.finish_date).getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
   }
+
+  const handleRelatedClick = (related: ParsedActivity) => {
+    if (onActivityChange) {
+      onActivityChange(related);
+    }
+  };
 
   return (
     <>
@@ -190,30 +237,142 @@ export default function ActivityDrawer({ activity, projectId, onClose }: Props) 
             </div>
           )}
 
-          {/* Predecessors */}
-          {activity.predecessor_ids && activity.predecessor_ids.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Predecessors</div>
-              <div className="flex flex-wrap gap-2">
-                {activity.predecessor_ids.map((id) => (
-                  <span key={id} className="text-xs bg-[#0B0B0D] border border-[#1F1F25] text-gray-400 px-2 py-1 rounded font-mono">
-                    {id}
-                  </span>
-                ))}
-              </div>
+          {/* ── RELATIONSHIPS ── */}
+          {relLoading ? (
+            <div className="flex items-center gap-2 text-xs text-gray-600">
+              <div className="w-3 h-3 border border-gray-600 border-t-[#F97316] rounded-full animate-spin" />
+              Loading relationships…
             </div>
-          )}
+          ) : (
+            <div className="space-y-4">
+              {/* Flow summary */}
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <Link2 size={12} className="text-gray-600 shrink-0" />
+                <span className="text-gray-500">
+                  {predecessors.length} predecessor{predecessors.length !== 1 ? "s" : ""}
+                </span>
+                <span className="text-gray-700">→</span>
+                <span className="text-[#F97316] font-semibold truncate max-w-[140px]">
+                  {activity.activity_name}
+                </span>
+                <span className="text-gray-700">→</span>
+                <span className="text-gray-500">
+                  {successors.length} successor{successors.length !== 1 ? "s" : ""}
+                </span>
+              </div>
 
-          {/* Successor IDs */}
-          {activity.successor_ids && activity.successor_ids.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Successors</div>
-              <div className="flex flex-wrap gap-2">
-                {activity.successor_ids.map((id) => (
-                  <span key={id} className="text-xs bg-[#0B0B0D] border border-[#1F1F25] text-gray-400 px-2 py-1 rounded font-mono">
-                    {id}
-                  </span>
-                ))}
+              {/* Predecessors */}
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  <ArrowLeft size={12} />
+                  Predecessors ({predecessors.length})
+                </div>
+                {predecessors.length === 0 ? (
+                  <p className="text-xs text-gray-700 italic">No predecessors</p>
+                ) : (
+                  <div className="space-y-2">
+                    {predecessors.map((pred) => (
+                      <button
+                        key={pred.id}
+                        onClick={() => handleRelatedClick(pred)}
+                        className="w-full text-left bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 hover:border-gray-600 hover:bg-[#1F1F25]/60 transition-colors"
+                        style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(pred.status) }}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <span className="text-sm font-semibold text-white leading-tight line-clamp-2">
+                            {pred.activity_name}
+                          </span>
+                          <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(pred.status)}`}>
+                            {statusLabel(pred.status)}
+                          </span>
+                        </div>
+                        <div className="text-[11px] text-gray-500 mb-2">
+                          {pred.trade && <span>{pred.trade}</span>}
+                          {pred.trade && pred.finish_date && <span className="mx-1">•</span>}
+                          {pred.finish_date && (
+                            <span>Planned Finish: {fmtShort(pred.finish_date)}</span>
+                          )}
+                        </div>
+                        <div className="mb-1.5">
+                          <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
+                              style={{ width: `${pred.percent_complete}%` }}
+                            />
+                          </div>
+                          <div className="text-[10px] text-gray-600 mt-0.5">
+                            Progress: {pred.percent_complete}%
+                          </div>
+                        </div>
+                        {pred.float_days !== null && pred.float_days !== undefined && (
+                          <div className="text-[10px] text-gray-600">
+                            Float:{" "}
+                            <span className={`font-semibold ${pred.float_days <= 0 ? "text-[#EF4444]" : pred.float_days <= 5 ? "text-[#EAB308]" : "text-[#22C55E]"}`}>
+                              {pred.float_days} days
+                            </span>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Successors */}
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  <ArrowRight size={12} />
+                  Successors ({successors.length})
+                </div>
+                {successors.length === 0 ? (
+                  <p className="text-xs text-gray-700 italic">No successors</p>
+                ) : (
+                  <div className="space-y-2">
+                    {successors.map((succ) => (
+                      <button
+                        key={succ.id}
+                        onClick={() => handleRelatedClick(succ)}
+                        className="w-full text-left bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 hover:border-gray-600 hover:bg-[#1F1F25]/60 transition-colors"
+                        style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(succ.status) }}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <span className="text-sm font-semibold text-white leading-tight line-clamp-2">
+                            {succ.activity_name}
+                          </span>
+                          <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(succ.status)}`}>
+                            {statusLabel(succ.status)}
+                          </span>
+                        </div>
+                        <div className="text-[11px] text-gray-500 mb-2">
+                          {succ.trade && <span>{succ.trade}</span>}
+                          {succ.trade && succ.start_date && <span className="mx-1">•</span>}
+                          {succ.start_date && (
+                            <span>Planned Start: {fmtShort(succ.start_date)}</span>
+                          )}
+                        </div>
+                        <div className="mb-1.5">
+                          <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
+                              style={{ width: `${succ.percent_complete}%` }}
+                            />
+                          </div>
+                          <div className="text-[10px] text-gray-600 mt-0.5">
+                            Progress: {succ.percent_complete}%
+                          </div>
+                        </div>
+                        {succ.float_days !== null && succ.float_days !== undefined && (
+                          <div className="text-[10px] text-gray-600">
+                            Float:{" "}
+                            <span className={`font-semibold ${succ.float_days <= 0 ? "text-[#EF4444]" : succ.float_days <= 5 ? "text-[#EAB308]" : "text-[#22C55E]"}`}>
+                              {succ.float_days} days
+                            </span>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}
