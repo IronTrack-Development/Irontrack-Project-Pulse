@@ -4,15 +4,17 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw
+  RefreshCw, Zap
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
 import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
+import PriorityTab from "@/components/tabs/PriorityTab";
 import { SupportButton } from "@/components/support-button";
 
 const TABS = [
+  { id: "priority", label: "Priority", icon: Zap },
   { id: "today", label: "Today", icon: CalendarCheck },
   { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
   { id: "week1", label: "Week 1", icon: CalendarDays },
@@ -54,7 +56,7 @@ function healthColor(score: number): string {
 
 export default function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [activeTab, setActiveTab] = useState("today");
+  const [activeTab, setActiveTab] = useState("priority");
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -155,6 +157,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
 
       {/* Tab content */}
       <div className="max-w-7xl mx-auto px-6 py-6">
+        {activeTab === "priority" && <PriorityTab projectId={id} />}
         {activeTab === "today" && <DayPlanTab projectId={id} day="today" />}
         {activeTab === "tomorrow" && <DayPlanTab projectId={id} day="tomorrow" />}
         {activeTab === "week1" && <WeekTab projectId={id} weekNumber={1} />}
