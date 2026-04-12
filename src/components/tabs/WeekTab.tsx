@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays, Loader2, Share2 } from "lucide-react";
+import ActivityDrawer from "@/components/ActivityDrawer";
+import type { ParsedActivity } from "@/types";
 
 interface Activity {
   id: string;
@@ -30,6 +32,8 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [shareStatus, setShareStatus] = useState<string | null>(null);
+  const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
+  const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
 
   useEffect(() => {
     const fetchWeekData = async () => {
@@ -49,6 +53,18 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
     fetchWeekData();
   }, [projectId, weekNumber]);
+
+  useEffect(() => {
+    fetch(`/api/projects/${projectId}/activities`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setAllActivities(data))
+      .catch(() => {});
+  }, [projectId]);
+
+  const openDrawer = (activityId: string) => {
+    const full = allActivities.find((a) => a.id === activityId);
+    if (full) setDrawerActivity(full);
+  };
 
   if (loading) {
     return (
@@ -225,10 +241,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                   return (
                     <div
                       key={activity.id}
-                      onClick={() => isSelecting && toggleActivity(activity.id)}
-                      className={`px-4 py-3 transition-colors ${
+                      onClick={() => isSelecting ? toggleActivity(activity.id) : openDrawer(activity.id)}
+                      className={`px-4 py-3 transition-colors cursor-pointer ${
                         isSelecting
-                          ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                          ? "hover:bg-[#1F1F25]/50"
                           : "hover:bg-[#1F1F25]/30"
                       } ${
                         isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
@@ -274,6 +290,15 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
         })}
       </div>
 
+      {drawerActivity && (
+        <ActivityDrawer
+          activity={drawerActivity}
+          projectId={projectId}
+          onClose={() => setDrawerActivity(null)}
+          onActivityChange={(a) => setDrawerActivity(a)}
+        />
+      )}
+
       {/* Summary table fallback if no grouping */}
       {Object.keys(data.groupedByDay).length === 0 && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
@@ -295,10 +320,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 return (
                   <tr
                     key={activity.id}
-                    onClick={() => isSelecting && toggleActivity(activity.id)}
-                    className={`transition-colors ${
+                    onClick={() => isSelecting ? toggleActivity(activity.id) : openDrawer(activity.id)}
+                    className={`transition-colors cursor-pointer ${
                       isSelecting
-                        ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                        ? "hover:bg-[#1F1F25]/50"
                         : "hover:bg-[#1F1F25]/30"
                     } ${
                       isSelected ? "bg-[#F97316]/20" : ""

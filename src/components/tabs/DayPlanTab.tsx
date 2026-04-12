@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AlertTriangle, CalendarCheck, Loader2, Share2 } from "lucide-react";
+import ActivityDrawer from "@/components/ActivityDrawer";
+import type { ParsedActivity } from "@/types";
 
 interface Activity {
   id: string;
@@ -35,6 +37,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [shareStatus, setShareStatus] = useState<string | null>(null);
+  const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
+  const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
 
   useEffect(() => {
     const fetchDayPlan = async () => {
@@ -54,6 +58,18 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
     fetchDayPlan();
   }, [projectId, day]);
+
+  useEffect(() => {
+    fetch(`/api/projects/${projectId}/activities`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setAllActivities(data))
+      .catch(() => {});
+  }, [projectId]);
+
+  const openDrawer = (activityId: string) => {
+    const full = allActivities.find((a) => a.id === activityId);
+    if (full) setDrawerActivity(full);
+  };
 
   const handleShareClick = () => {
     setIsSelecting(true);
@@ -225,10 +241,10 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
               return (
                 <div
                   key={inspection.id}
-                  onClick={() => isSelecting && toggleActivity(inspection.id)}
-                  className={`px-4 py-3 transition-colors ${
+                  onClick={() => isSelecting ? toggleActivity(inspection.id) : openDrawer(inspection.id)}
+                  className={`px-4 py-3 transition-colors cursor-pointer ${
                     isSelecting
-                      ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                      ? "hover:bg-[#1F1F25]/50"
                       : "hover:bg-[#1F1F25]/30"
                   } ${
                     isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
@@ -270,10 +286,10 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
               return (
                 <div
                   key={task.id}
-                  onClick={() => isSelecting && toggleActivity(task.id)}
-                  className={`px-4 py-3 transition-colors ${
+                  onClick={() => isSelecting ? toggleActivity(task.id) : openDrawer(task.id)}
+                  className={`px-4 py-3 transition-colors cursor-pointer ${
                     isSelecting
-                      ? "cursor-pointer hover:bg-[#1F1F25]/50"
+                      ? "hover:bg-[#1F1F25]/50"
                       : "hover:bg-[#1F1F25]/30"
                   } ${
                     isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
@@ -327,6 +343,15 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
             </div>
           )}
         </div>
+      )}
+
+      {drawerActivity && (
+        <ActivityDrawer
+          activity={drawerActivity}
+          projectId={projectId}
+          onClose={() => setDrawerActivity(null)}
+          onActivityChange={(a) => setDrawerActivity(a)}
+        />
       )}
 
       {/* Preview next day */}

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Zap, AlertTriangle, Shield, Clock, RefreshCw, CheckCircle } from "lucide-react";
+import ActivityDrawer from "@/components/ActivityDrawer";
+import type { ParsedActivity } from "@/types";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -77,7 +79,7 @@ function formatDate(dateStr: string | null | undefined): string {
 
 // ── Section: Critical Path ────────────────────────────────────────────────────
 
-function CriticalPathSection({ data }: { data: CriticalPathData | null }) {
+function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | null; onOpenDrawer: (id: string) => void }) {
   if (!data) {
     return (
       <div className="text-center py-10">
@@ -93,11 +95,14 @@ function CriticalPathSection({ data }: { data: CriticalPathData | null }) {
   return (
     <div className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#F97316] rounded-xl p-5 space-y-4">
       {/* Current critical activity */}
-      <div>
+      <div
+        className="cursor-pointer"
+        onClick={() => onOpenDrawer(data.currentActivity.id)}
+      >
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
           Current Critical Activity
         </div>
-        <div className="text-white font-bold text-sm">{data.currentActivity.activity_name}</div>
+        <div className="text-white font-bold text-sm hover:text-[#F97316] transition-colors">{data.currentActivity.activity_name}</div>
         <div className="flex items-center gap-3 mt-1">
           <span className="text-xs text-gray-500">
             {formatDate(data.currentActivity.start_date)} → {formatDate(data.currentActivity.finish_date)}
@@ -160,7 +165,7 @@ function CriticalPathSection({ data }: { data: CriticalPathData | null }) {
 
 // ── Section: Inspections ──────────────────────────────────────────────────────
 
-function InspectionsSection({ items }: { items: Inspection[] }) {
+function InspectionsSection({ items, onOpenDrawer }: { items: Inspection[]; onOpenDrawer: (id: string) => void }) {
   if (items.length === 0) {
     return (
       <div className="text-center py-10">
@@ -176,7 +181,8 @@ function InspectionsSection({ items }: { items: Inspection[] }) {
       {items.map((insp) => (
         <div
           key={insp.id}
-          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#3B82F6] rounded-xl p-5"
+          onClick={() => onOpenDrawer(insp.id)}
+          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#3B82F6] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex-1 min-w-0">
@@ -213,7 +219,7 @@ function InspectionsSection({ items }: { items: Inspection[] }) {
 
 // ── Section: Late Tasks ───────────────────────────────────────────────────────
 
-function LateTasksSection({ items }: { items: LateTask[] }) {
+function LateTasksSection({ items, onOpenDrawer }: { items: LateTask[]; onOpenDrawer: (id: string) => void }) {
   if (items.length === 0) {
     return (
       <div className="text-center py-10">
@@ -229,7 +235,8 @@ function LateTasksSection({ items }: { items: LateTask[] }) {
       {items.map((task) => (
         <div
           key={task.id}
-          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#EF4444] rounded-xl p-5"
+          onClick={() => onOpenDrawer(task.id)}
+          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#EF4444] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex-1 min-w-0">
@@ -263,6 +270,8 @@ function LateTasksSection({ items }: { items: LateTask[] }) {
 export default function PriorityTab({ projectId }: { projectId: string }) {
   const [data, setData] = useState<PriorityData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
+  const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -274,6 +283,18 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
   useEffect(() => {
     fetchData();
   }, [projectId]);
+
+  useEffect(() => {
+    fetch(`/api/projects/${projectId}/activities`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setAllActivities(data))
+      .catch(() => {});
+  }, [projectId]);
+
+  const openDrawer = (activityId: string) => {
+    const full = allActivities.find((a) => a.id === activityId);
+    if (full) setDrawerActivity(full);
+  };
 
   if (loading) {
     return (
@@ -335,7 +356,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
           <AlertTriangle size={16} className="text-[#F97316]" />
           <h3 className="text-white font-bold text-sm uppercase tracking-wide">Critical Path Ahead</h3>
         </div>
-        <CriticalPathSection data={criticalPath} />
+        <CriticalPathSection data={criticalPath} onOpenDrawer={openDrawer} />
       </section>
 
       {/* Section 2: Upcoming Inspections */}
@@ -351,7 +372,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <InspectionsSection items={inspections} />
+        <InspectionsSection items={inspections} onOpenDrawer={openDrawer} />
       </section>
 
       {/* Section 3: Behind Schedule */}
@@ -367,8 +388,17 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <LateTasksSection items={lateTasks} />
+        <LateTasksSection items={lateTasks} onOpenDrawer={openDrawer} />
       </section>
+
+      {drawerActivity && (
+        <ActivityDrawer
+          activity={drawerActivity}
+          projectId={projectId}
+          onClose={() => setDrawerActivity(null)}
+          onActivityChange={(a) => setDrawerActivity(a)}
+        />
+      )}
     </div>
   );
 }
