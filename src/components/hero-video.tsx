@@ -4,7 +4,8 @@ export default function HeroVideo() {
       <img
         src="/hero-pulse.png"
         alt="IronTrack Project Pulse — construction superintendent viewing real-time project intelligence on tablet at jobsite"
-        className="w-full h-full object-contain block"
+        className="w-full h-full object-cover block"
+        style={{ objectPosition: 'center 85%' }}
       />
     </div>
   );
