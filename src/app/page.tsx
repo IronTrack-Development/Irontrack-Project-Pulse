@@ -16,7 +16,7 @@ export default function LandingPage() {
                 src="/logo-irontrack.png"
                 alt="IronTrack Logo"
                 className="h-16 md:h-24 w-auto object-contain"
-                style={{ mixBlendMode: 'lighten', filter: 'drop-shadow(0 0 15px rgba(249,115,22,0.5))' }}
+                style={{ mixBlendMode: 'screen', filter: 'drop-shadow(0 0 15px rgba(249,115,22,0.5))' }}
               />
             </div>
             <span className="text-lg md:text-xl font-bold text-white">
