@@ -9,14 +9,14 @@ export default function LandingPage() {
       {/* Header */}
       <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          {/* Logo — oversized, encroaches into page, blend mode hides gray bg */}
+          {/* Logo */}
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="relative" style={{ marginTop: '10px', marginBottom: '-30px' }}>
+            <div className="relative" style={{ marginTop: '4px', marginBottom: '-12px' }}>
               <img
                 src="/logo-irontrack.png"
                 alt="IronTrack Logo"
-                className="h-16 md:h-24 w-auto object-contain"
-                style={{ filter: 'drop-shadow(0 0 15px rgba(249,115,22,0.5))' }}
+                className="h-10 md:h-20 w-auto object-contain"
+                style={{ filter: 'drop-shadow(0 0 12px rgba(249,115,22,0.4))' }}
               />
             </div>
             <span className="text-lg md:text-xl font-bold text-white">
