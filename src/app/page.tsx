@@ -11,12 +11,11 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Image
+            <img
               src="/logo-irontrack.png"
               alt="IronTrack Logo"
-              height={36}
-              width={36}
-              className="object-contain"
+              style={{ height: '36px', width: '36px' }}
+              className="object-contain rounded-lg"
             />
             <span className="text-xl font-bold text-white">IronTrack Project Pulse</span>
           </div>
