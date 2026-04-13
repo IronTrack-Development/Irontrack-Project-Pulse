@@ -41,6 +41,8 @@ export default function LandingPage() {
             <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
               Pricing
             </a>
+            <Link href="/status" className="text-sm text-gray-400 hover:text-white transition-colors">Status</Link>
+            <Link href="/release-notes" className="text-sm text-gray-400 hover:text-white transition-colors">Release Notes</Link>
           </nav>
 
           {/* Right Side */}

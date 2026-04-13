@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 export default function MobileMenu() {
@@ -15,6 +16,8 @@ export default function MobileMenu() {
           <a href="#who-we-serve" onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">Who We Serve</a>
           <a href="#features" onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">Features</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">Pricing</a>
+          <Link href="/status" onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">Status</Link>
+          <Link href="/release-notes" onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">Release Notes</Link>
         </div>
       )}
     </div>

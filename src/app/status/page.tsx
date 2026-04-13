@@ -1,0 +1,155 @@
+import { CheckCircle, AlertTriangle, XCircle, Clock } from "lucide-react";
+import Link from "next/link";
+import { Building2 } from "lucide-react";
+
+const services = [
+  { name: "Web Application", status: "operational", description: "irontrackpulse.com" },
+  { name: "Schedule Upload & Processing", status: "operational", description: "File parsing, column mapping, data import" },
+  { name: "Risk Detection Engine", status: "operational", description: "Automated risk scanning and alerts" },
+  { name: "Database (Supabase)", status: "operational", description: "Data storage and real-time sync" },
+  { name: "Authentication", status: "operational", description: "Sign up, sign in, session management" },
+  { name: "iOS App", status: "coming_soon", description: "Native iOS application" },
+  { name: "Android App", status: "coming_soon", description: "Native Android application" },
+];
+
+type ServiceStatus = "operational" | "degraded" | "offline" | "coming_soon";
+
+function StatusBadge({ status }: { status: ServiceStatus }) {
+  if (status === "operational") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20"
+        style={{ boxShadow: "0 0 8px rgba(34,197,94,0.15)" }}>
+        <span className="w-1.5 h-1.5 rounded-full bg-green-400" style={{ boxShadow: "0 0 4px rgba(34,197,94,0.8)" }} />
+        Operational
+      </span>
+    );
+  }
+  if (status === "degraded") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+        style={{ boxShadow: "0 0 8px rgba(234,179,8,0.15)" }}>
+        <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" style={{ boxShadow: "0 0 4px rgba(234,179,8,0.8)" }} />
+        Degraded
+      </span>
+    );
+  }
+  if (status === "offline") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+        <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+        Offline
+      </span>
+    );
+  }
+  // coming_soon
+  return (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
+      <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+      Coming Soon
+    </span>
+  );
+}
+
+function OverallStatusIcon({ allOperational }: { allOperational: boolean }) {
+  if (allOperational) return <CheckCircle className="w-6 h-6 text-green-400" />;
+  return <AlertTriangle className="w-6 h-6 text-yellow-400" />;
+}
+
+export default function StatusPage() {
+  const activeServices = services.filter(s => s.status !== "coming_soon");
+  const allOperational = activeServices.every(s => s.status === "operational");
+
+  // Static "last checked" — in production this would be dynamic
+  const lastChecked = "April 13, 2026 at 2:00 AM MST";
+
+  return (
+    <div className="min-h-screen bg-[#0B0B0D]">
+      {/* Header */}
+      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 md:gap-3">
+            <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
+              <img
+                src="/logo-irontrack.png"
+                alt="IronTrack Logo"
+                className="h-10 md:h-20 w-auto object-contain"
+                style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
+              />
+            </div>
+            <span className="text-lg md:text-xl font-bold text-white">
+              IronTrack<span className="hidden md:inline"> Project Pulse</span>
+            </span>
+          </Link>
+          <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+            ← Back to home
+          </Link>
+        </div>
+      </header>
+
+      <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
+        {/* Page Title */}
+        <div className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">System Status</h1>
+          <p className="text-gray-400">Current health of IronTrack Project Pulse services</p>
+        </div>
+
+        {/* Overall Status Banner */}
+        <div className={`rounded-xl border px-6 py-4 mb-10 flex items-center gap-3 ${
+          allOperational
+            ? "bg-green-500/10 border-green-500/20"
+            : "bg-yellow-500/10 border-yellow-500/20"
+        }`}
+          style={allOperational ? { boxShadow: "0 0 24px rgba(34,197,94,0.08)" } : {}}>
+          <OverallStatusIcon allOperational={allOperational} />
+          <div>
+            <p className={`font-semibold text-lg ${allOperational ? "text-green-400" : "text-yellow-400"}`}>
+              {allOperational ? "All Systems Operational" : "Some Systems Degraded"}
+            </p>
+            <p className="text-sm text-gray-400">99.9% uptime last 30 days</p>
+          </div>
+        </div>
+
+        {/* Service List */}
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden mb-8">
+          <div className="px-6 py-4 border-b border-[#1F1F25]">
+            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Services</h2>
+          </div>
+          <div className="divide-y divide-[#1F1F25]">
+            {services.map((service) => (
+              <div key={service.name} className="flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors">
+                <div>
+                  <p className="text-white font-medium">{service.name}</p>
+                  <p className="text-sm text-gray-500 mt-0.5">{service.description}</p>
+                </div>
+                <StatusBadge status={service.status as ServiceStatus} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Last Checked */}
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Clock className="w-4 h-4" />
+          <span>Last checked: {lastChecked}</span>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-[#1F1F25] py-6 mt-12">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-[#F97316]" />
+            <span className="text-sm text-gray-500">© 2026 IronTrack Development LLC. All rights reserved.</span>
+          </div>
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="/terms" className="text-gray-500 hover:text-[#F97316] transition-colors">Terms</Link>
+            <span className="text-gray-700">•</span>
+            <Link href="/privacy" className="text-gray-500 hover:text-[#F97316] transition-colors">Privacy</Link>
+            <span className="text-gray-700">•</span>
+            <Link href="/release-notes" className="text-gray-500 hover:text-[#F97316] transition-colors">Release Notes</Link>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
