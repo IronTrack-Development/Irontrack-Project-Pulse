@@ -6,8 +6,7 @@ export default function HeroVideo() {
         loop
         muted
         playsInline
-        className="w-full h-full object-cover block"
-        style={{ objectPosition: 'center 85%' }}
+        className="w-full h-full object-contain block"
       >
         <source src="/hero-pulse.mp4" type="video/mp4" />
       </video>
