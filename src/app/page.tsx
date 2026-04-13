@@ -12,10 +12,10 @@ export default function LandingPage() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <img
-              src="/logo-irontrack.png"
+              src="/icon-512.png"
               alt="IronTrack Logo"
-              style={{ height: '36px', width: '36px' }}
-              className="object-contain rounded-lg"
+              style={{ height: '32px', width: '32px' }}
+              className="object-contain rounded-md"
             />
             <span className="text-xl font-bold text-white">IronTrack Project Pulse</span>
           </div>
