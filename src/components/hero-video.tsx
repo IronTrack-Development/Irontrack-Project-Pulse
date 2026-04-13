@@ -5,7 +5,7 @@ export default function HeroVideo() {
         autoPlay
         muted
         playsInline
-        className="w-full h-full object-contain block"
+        className="w-full h-full object-cover block"
       >
         <source src="/hero-pulse.mp4" type="video/mp4" />
       </video>
