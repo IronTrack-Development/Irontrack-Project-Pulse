@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FolderOpen, Upload } from "lucide-react";
+import { LayoutDashboard, FolderOpen, Upload, Home } from "lucide-react";
 
 const navItems = [
-  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/projects", label: "Projects", icon: FolderOpen },
   { href: "/upload", label: "Upload", icon: Upload },
+  { href: "/", label: "Home", icon: Home },
 ];
 
 export default function MobileNav() {

@@ -48,6 +48,12 @@ export default function LandingPage() {
           {/* Right Side */}
           <div className="flex items-center gap-4">
             <Link
+              href="/dashboard"
+              className="hidden sm:block text-sm text-gray-400 hover:text-[#F97316] transition-colors"
+            >
+              My Dashboard
+            </Link>
+            <Link
               href="/login"
               className="hidden sm:block text-sm text-gray-400 hover:text-white transition-colors"
             >

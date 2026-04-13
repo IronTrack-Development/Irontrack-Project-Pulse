@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   FolderOpen,
   Upload,
+  Home,
   Settings,
   Zap,
 } from "lucide-react";
@@ -71,8 +72,15 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-[#1F1F25]">
-        <div className="text-xs text-gray-600">v1.0.0</div>
+      <div className="px-4 py-4 border-t border-[#1F1F25] space-y-3">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#F97316] transition-colors"
+        >
+          <Home size={14} />
+          Landing Page
+        </Link>
+        <div className="text-xs text-gray-600">v1.4.0</div>
       </div>
     </aside>
   );
