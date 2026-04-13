@@ -7,7 +7,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0B0B0D]">
       {/* Header */}
-      <header className="border-b border-[#1F1F25] bg-[#0B0B0D]/95 backdrop-blur sticky top-0 z-50 relative">
+      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50 relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           {/* Logo — oversized, encroaches into page, blend mode hides gray bg */}
           <div className="flex items-center gap-2 md:gap-3">
