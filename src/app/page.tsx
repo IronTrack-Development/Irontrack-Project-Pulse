@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Building2, Upload, Calendar, Target, ArrowRight, CheckCircle } from "lucide-react";
+import Image from "next/image";
+import { Building2, Upload, Calendar, Target, ArrowRight, CheckCircle, HardHat, Briefcase } from "lucide-react";
 import HeroVideo from "@/components/hero-video";
 
 export default function LandingPage() {
@@ -8,10 +9,35 @@ export default function LandingPage() {
       {/* Header */}
       <header className="border-b border-[#1F1F25] bg-[#0B0B0D]/95 backdrop-blur sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-[#F97316]" />
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo-irontrack.png"
+              alt="IronTrack Logo"
+              height={36}
+              width={36}
+              className="object-contain"
+            />
             <span className="text-xl font-bold text-white">IronTrack Project Pulse</span>
           </div>
+
+          {/* Nav Links */}
+          <nav className="hidden md:flex items-center gap-8">
+            <a href="#about" className="text-sm text-gray-400 hover:text-white transition-colors">
+              About Us
+            </a>
+            <a href="#who-we-serve" className="text-sm text-gray-400 hover:text-white transition-colors">
+              Who We Serve
+            </a>
+            <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors">
+              Features
+            </a>
+            <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors">
+              Pricing
+            </a>
+          </nav>
+
+          {/* Right Side */}
           <div className="flex items-center gap-4">
             <Link
               href="/login"
@@ -96,6 +122,75 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* About Us */}
+      <section id="about" className="py-20 border-t border-[#1F1F25]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Built by <span className="text-[#F97316]">Experts</span>. For <span className="text-[#F97316]">Experts</span>.
+            </h2>
+            <p className="text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto">
+              We&apos;re not consultants guessing about construction. We&apos;re field operators who lived it — 12+ years of superintending healthcare, education, industrial, and ground-up commercial projects across Arizona.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8">
+              <p className="text-gray-400 leading-relaxed text-lg">
+                IronTrack was born from a simple frustration: the tools we had in the field never matched the speed we needed to operate. So we built our own.
+              </p>
+            </div>
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8">
+              <p className="text-gray-400 leading-relaxed text-lg">
+                Every feature in Project Pulse was designed by someone who&apos;s actually stood on a slab at 5 AM reading a schedule on their phone. We built this for the way superintendents and PMs actually work — not the way software companies think they work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who We Serve */}
+      <section id="who-we-serve" className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Who We Serve</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Superintendents */}
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
+              <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
+                <HardHat className="w-6 h-6 text-[#F97316]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Superintendents</h3>
+              <p className="text-gray-400 leading-relaxed">
+                You run the job. You need to know what&apos;s happening today, what&apos;s at risk, and what&apos;s about to blow up — before it does. Pulse gives you that in 30 seconds.
+              </p>
+            </div>
+
+            {/* Project Managers */}
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
+              <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
+                <Briefcase className="w-6 h-6 text-[#F97316]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Project Managers</h3>
+              <p className="text-gray-400 leading-relaxed">
+                You own the schedule, the budget, and the client relationship. Pulse gives you executive snapshots, risk detection, and milestone tracking without digging through spreadsheets.
+              </p>
+            </div>
+
+            {/* General Contractors */}
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
+              <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
+                <Building2 className="w-6 h-6 text-[#F97316]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">General Contractors</h3>
+              <p className="text-gray-400 leading-relaxed">
+                You need every project visible and every risk flagged. Pulse gives your entire team a shared operating picture — upload once, everyone&apos;s aligned.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof */}
       <section className="border-t border-[#1F1F25] py-12">
         <div className="max-w-4xl mx-auto px-6">
@@ -117,7 +212,7 @@ export default function LandingPage() {
       </section>
 
       {/* 3 Features */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      <section id="features" className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 hover:border-[#F97316]/30 transition-all">
             <div className="w-12 h-12 bg-[#F97316]/10 rounded-xl flex items-center justify-center mb-6">
@@ -152,7 +247,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      <section id="pricing" className="max-w-7xl mx-auto px-6 py-20">
         <div className="max-w-md mx-auto">
           <div className="bg-[#121217] border-2 border-[#F97316] rounded-2xl p-10">
             <div className="text-center mb-8">

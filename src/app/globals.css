@@ -19,6 +19,7 @@ html {
   background-color: #0B0B0D;
   color: #e5e7eb;
   font-family: 'Inter', system-ui, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
