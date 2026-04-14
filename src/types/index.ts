@@ -124,6 +124,49 @@ export interface ColumnMapping {
   milestone?: string;
 }
 
+export interface ReadyCheckContact {
+  id: string;
+  project_id: string;
+  user_id?: string;
+  trade: string;
+  contact_name: string;
+  phone?: string;
+  email?: string;
+  company?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReadyCheck {
+  id: string;
+  project_id: string;
+  activity_id?: string;
+  user_id?: string;
+  contact_id?: string;
+  contact_name: string;
+  contact_company?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  activity_name: string;
+  trade?: string;
+  start_date?: string;
+  normalized_building?: string;
+  check_type: 'standard' | 'critical_path' | 'friendly_reminder';
+  message_text: string;
+  send_method?: 'sms' | 'email' | 'copy';
+  status: 'draft' | 'sent' | 'awaiting_response' | 'confirmed' | 'no_response' | 'issue_flagged';
+  sent_at?: string;
+  responded_at?: string;
+  response_notes?: string;
+  follow_up_count: number;
+  last_follow_up_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type ReadyCheckType = 'standard' | 'critical_path' | 'friendly_reminder';
+export type ReadyCheckStatus = 'draft' | 'sent' | 'awaiting_response' | 'confirmed' | 'no_response' | 'issue_flagged';
+
 export interface LookaheadGroup {
   weekLabel: string;
   weekStart: string;

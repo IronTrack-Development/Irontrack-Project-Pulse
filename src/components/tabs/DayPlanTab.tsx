@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlertTriangle, CalendarCheck, Loader2, Share2 } from "lucide-react";
+import { AlertTriangle, CalendarCheck, Loader2, Share2, Send } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
-import type { ParsedActivity } from "@/types";
+import ReadyCheckModal from "@/components/ReadyCheckModal";
+import ReadyCheckBadge from "@/components/ReadyCheckBadge";
+import type { ParsedActivity, ReadyCheck } from "@/types";
 
 interface Activity {
   id: string;
@@ -39,6 +41,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
+  const [readyChecks, setReadyChecks] = useState<ReadyCheck[]>([]);
+  const [readyCheckActivity, setReadyCheckActivity] = useState<ParsedActivity | null>(null);
 
   useEffect(() => {
     const fetchDayPlan = async () => {
@@ -65,6 +69,29 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
       .then((data) => setAllActivities(data))
       .catch(() => {});
   }, [projectId]);
+
+  useEffect(() => {
+    fetch(`/api/projects/${projectId}/ready-checks`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data: ReadyCheck[]) => setReadyChecks(data))
+      .catch(() => {});
+  }, [projectId]);
+
+  const getReadyCheck = (activityId: string) =>
+    readyChecks.find((rc) => rc.activity_id === activityId) ?? null;
+
+  const handleReadyCheckSent = (check: ReadyCheck) => {
+    setReadyChecks((prev) => {
+      const exists = prev.findIndex((rc) => rc.id === check.id);
+      if (exists >= 0) {
+        const updated = [...prev];
+        updated[exists] = check;
+        return updated;
+      }
+      return [check, ...prev];
+    });
+    setReadyCheckActivity(null);
+  };
 
   const openDrawer = (activityId: string) => {
     const full = allActivities.find((a) => a.id === activityId);
@@ -242,7 +269,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                 <div
                   key={inspection.id}
                   onClick={() => isSelecting ? toggleActivity(inspection.id) : openDrawer(inspection.id)}
-                  className={`px-4 py-3 transition-colors cursor-pointer ${
+                  className={`px-4 py-3 transition-colors cursor-pointer group ${
                     isSelecting
                       ? "hover:bg-[#1F1F25]/50"
                       : "hover:bg-[#1F1F25]/30"
@@ -264,6 +291,20 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       {inspection.trade && (
                         <div className="text-xs text-gray-500 mt-0.5">{inspection.trade}</div>
                       )}
+                      {(() => {
+                        const rc = getReadyCheck(inspection.id);
+                        if (rc) return <div className="mt-1.5"><ReadyCheckBadge status={rc.status} followUpCount={rc.follow_up_count} /></div>;
+                        if (!isSelecting) return (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === inspection.id); if (full) setReadyCheckActivity(full); }}
+                            className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                          >
+                            <Send size={10} />
+                            Ready Check
+                          </button>
+                        );
+                        return null;
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -311,6 +352,20 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                           {task.trade && (
                             <div className="text-xs text-gray-500">{task.trade}</div>
                           )}
+                          {(() => {
+                            const rc = getReadyCheck(task.id);
+                            if (rc) return <div className="mt-1.5"><ReadyCheckBadge status={rc.status} followUpCount={rc.follow_up_count} /></div>;
+                            if (!isSelecting) return (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === task.id); if (full) setReadyCheckActivity(full); }}
+                                className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                              >
+                                <Send size={10} />
+                                Ready Check
+                              </button>
+                            );
+                            return null;
+                          })()}
                         </div>
                         <div className={`text-sm font-semibold shrink-0 ${
                           pct >= 100 
@@ -351,6 +406,15 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
           projectId={projectId}
           onClose={() => setDrawerActivity(null)}
           onActivityChange={(a) => setDrawerActivity(a)}
+        />
+      )}
+
+      {readyCheckActivity && (
+        <ReadyCheckModal
+          activity={readyCheckActivity}
+          projectId={projectId}
+          onClose={() => setReadyCheckActivity(null)}
+          onSent={handleReadyCheckSent}
         />
       )}
 

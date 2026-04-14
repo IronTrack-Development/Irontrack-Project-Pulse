@@ -28,6 +28,8 @@ export default {
       animation: {
         "slide-in": "slideIn 0.25s ease-out",
         "fade-in": "fadeIn 0.2s ease-out",
+        "slide-up": "slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
+        "scale-in": "scaleIn 0.3s ease-out",
       },
       keyframes: {
         slideIn: {
@@ -37,6 +39,14 @@ export default {
         fadeIn: {
           from: { opacity: "0" },
           to: { opacity: "1" },
+        },
+        slideUp: {
+          from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0)" },
+        },
+        scaleIn: {
+          from: { transform: "scale(0.5)", opacity: "0" },
+          to: { transform: "scale(1)", opacity: "1" },
         },
       },
     },

@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Zap, AlertTriangle, Shield, Clock, RefreshCw, CheckCircle } from "lucide-react";
+import { AlertTriangle, Shield, Clock, RefreshCw, CheckCircle, Send } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
-import type { ParsedActivity } from "@/types";
+import ReadyCheckModal from "@/components/ReadyCheckModal";
+import ReadyCheckBadge from "@/components/ReadyCheckBadge";
+import type { ParsedActivity, ReadyCheck } from "@/types";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -165,7 +167,17 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
 
 // ── Section: Inspections ──────────────────────────────────────────────────────
 
-function InspectionsSection({ items, onOpenDrawer }: { items: Inspection[]; onOpenDrawer: (id: string) => void }) {
+function InspectionsSection({
+  items,
+  onOpenDrawer,
+  readyChecks,
+  onReadyCheck,
+}: {
+  items: Inspection[];
+  onOpenDrawer: (id: string) => void;
+  readyChecks: ReadyCheck[];
+  onReadyCheck: (id: string) => void;
+}) {
   if (items.length === 0) {
     return (
       <div className="text-center py-10">
@@ -203,7 +215,7 @@ function InspectionsSection({ items, onOpenDrawer }: { items: Inspection[]; onOp
             <Shield size={15} className="text-[#3B82F6] shrink-0 mt-0.5" />
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">
             {insp.linkedTask && (
               <span>
                 Linked to: <span className="text-gray-300">{insp.linkedTask}</span>
@@ -211,6 +223,19 @@ function InspectionsSection({ items, onOpenDrawer }: { items: Inspection[]; onOp
             )}
             <span>Due: <span className="text-gray-300">{formatDate(insp.dueDate)}</span></span>
           </div>
+          {(() => {
+            const rc = readyChecks.find((r) => r.activity_id === insp.id);
+            if (rc) return <ReadyCheckBadge status={rc.status} followUpCount={rc.follow_up_count} />;
+            return (
+              <button
+                onClick={(e) => { e.stopPropagation(); onReadyCheck(insp.id); }}
+                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+              >
+                <Send size={10} />
+                Ready Check
+              </button>
+            );
+          })()}
         </div>
       ))}
     </div>
@@ -219,7 +244,17 @@ function InspectionsSection({ items, onOpenDrawer }: { items: Inspection[]; onOp
 
 // ── Section: Late Tasks ───────────────────────────────────────────────────────
 
-function LateTasksSection({ items, onOpenDrawer }: { items: LateTask[]; onOpenDrawer: (id: string) => void }) {
+function LateTasksSection({
+  items,
+  onOpenDrawer,
+  readyChecks,
+  onReadyCheck,
+}: {
+  items: LateTask[];
+  onOpenDrawer: (id: string) => void;
+  readyChecks: ReadyCheck[];
+  onReadyCheck: (id: string) => void;
+}) {
   if (items.length === 0) {
     return (
       <div className="text-center py-10">
@@ -255,10 +290,23 @@ function LateTasksSection({ items, onOpenDrawer }: { items: LateTask[]; onOpenDr
             Planned finish: <span className="text-gray-300">{formatDate(task.plannedFinish)}</span>
           </div>
 
-          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
+          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-2">
             <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Impact</div>
             <div className="text-xs text-gray-300">{task.impactStatement}</div>
           </div>
+          {(() => {
+            const rc = readyChecks.find((r) => r.activity_id === task.id);
+            if (rc) return <ReadyCheckBadge status={rc.status} followUpCount={rc.follow_up_count} />;
+            return (
+              <button
+                onClick={(e) => { e.stopPropagation(); onReadyCheck(task.id); }}
+                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+              >
+                <Send size={10} />
+                Ready Check
+              </button>
+            );
+          })()}
         </div>
       ))}
     </div>
@@ -272,6 +320,8 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
   const [loading, setLoading] = useState(true);
   const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
+  const [readyChecks, setReadyChecks] = useState<ReadyCheck[]>([]);
+  const [readyCheckActivity, setReadyCheckActivity] = useState<ParsedActivity | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -290,6 +340,31 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
       .then((data) => setAllActivities(data))
       .catch(() => {});
   }, [projectId]);
+
+  useEffect(() => {
+    fetch(`/api/projects/${projectId}/ready-checks`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((d: ReadyCheck[]) => setReadyChecks(d))
+      .catch(() => {});
+  }, [projectId]);
+
+  const openReadyCheck = (activityId: string) => {
+    const full = allActivities.find((a) => a.id === activityId);
+    if (full) setReadyCheckActivity(full);
+  };
+
+  const handleReadyCheckSent = (check: ReadyCheck) => {
+    setReadyChecks((prev) => {
+      const exists = prev.findIndex((rc) => rc.id === check.id);
+      if (exists >= 0) {
+        const updated = [...prev];
+        updated[exists] = check;
+        return updated;
+      }
+      return [check, ...prev];
+    });
+    setReadyCheckActivity(null);
+  };
 
   const openDrawer = (activityId: string) => {
     const full = allActivities.find((a) => a.id === activityId);
@@ -372,7 +447,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <InspectionsSection items={inspections} onOpenDrawer={openDrawer} />
+        <InspectionsSection items={inspections} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} />
       </section>
 
       {/* Section 3: Behind Schedule */}
@@ -388,7 +463,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <LateTasksSection items={lateTasks} onOpenDrawer={openDrawer} />
+        <LateTasksSection items={lateTasks} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} />
       </section>
 
       {drawerActivity && (
@@ -397,6 +472,15 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
           projectId={projectId}
           onClose={() => setDrawerActivity(null)}
           onActivityChange={(a) => setDrawerActivity(a)}
+        />
+      )}
+
+      {readyCheckActivity && (
+        <ReadyCheckModal
+          activity={readyCheckActivity}
+          projectId={projectId}
+          onClose={() => setReadyCheckActivity(null)}
+          onSent={handleReadyCheckSent}
         />
       )}
     </div>

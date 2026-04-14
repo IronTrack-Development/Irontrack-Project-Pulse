@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2, Building2, Layers, Tag, Users, FileText } from "lucide-react";
-import type { ParsedActivity, DailyRisk } from "@/types";
+import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2, Building2, Layers, Tag, Users, FileText, Send, RefreshCw } from "lucide-react";
+import type { ParsedActivity, DailyRisk, ReadyCheck } from "@/types";
+import ReadyCheckModal from "@/components/ReadyCheckModal";
+import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 
 function fmt(d?: string) {
   if (!d) return "—";
@@ -65,6 +67,10 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
   const [predecessors, setPredecessors] = useState<RelationshipActivity[]>([]);
   const [successors, setSuccessors] = useState<RelationshipActivity[]>([]);
   const [relLoading, setRelLoading] = useState(true);
+  const [readyCheck, setReadyCheck] = useState<ReadyCheck | null>(null);
+  const [rcLoading, setRcLoading] = useState(true);
+  const [showReadyCheckModal, setShowReadyCheckModal] = useState(false);
+  const [isFollowUp, setIsFollowUp] = useState(false);
 
   useEffect(() => {
     const fetchRisks = async () => {
@@ -75,6 +81,18 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
       }
     };
     fetchRisks();
+  }, [activity.id, projectId]);
+
+  useEffect(() => {
+    setRcLoading(true);
+    setReadyCheck(null);
+    fetch(`/api/projects/${projectId}/ready-checks?activity_id=${activity.id}`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((checks: ReadyCheck[]) => {
+        setReadyCheck(checks.length > 0 ? checks[0] : null);
+      })
+      .catch(() => {})
+      .finally(() => setRcLoading(false));
   }, [activity.id, projectId]);
 
   useEffect(() => {
@@ -456,6 +474,59 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             </div>
           )}
 
+          {/* Ready Check Section */}
+          <div>
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <Send size={12} className="inline mr-1.5 text-[#F97316]" />
+              Ready Check
+            </div>
+            {rcLoading ? (
+              <div className="flex items-center gap-2 text-xs text-gray-600">
+                <RefreshCw size={12} className="animate-spin" />
+                Loading…
+              </div>
+            ) : readyCheck ? (
+              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <ReadyCheckBadge status={readyCheck.status} followUpCount={readyCheck.follow_up_count} />
+                    <div className="text-xs text-gray-500 mt-1.5">
+                      Sent to {readyCheck.contact_name}
+                      {readyCheck.contact_company ? ` · ${readyCheck.contact_company}` : ""}
+                    </div>
+                    {readyCheck.sent_at && (
+                      <div className="text-[10px] text-gray-600 mt-0.5">
+                        {new Date(readyCheck.sent_at).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}
+                      </div>
+                    )}
+                    {readyCheck.follow_up_count > 0 && (
+                      <div className="text-[10px] text-gray-600 mt-0.5">
+                        {readyCheck.follow_up_count} follow-up{readyCheck.follow_up_count !== 1 ? "s" : ""} sent
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {readyCheck.status === "awaiting_response" && (
+                  <button
+                    onClick={() => { setIsFollowUp(true); setShowReadyCheckModal(true); }}
+                    className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-lg py-2.5 text-xs font-semibold transition-colors"
+                  >
+                    <RefreshCw size={12} />
+                    Send Follow-Up
+                  </button>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => { setIsFollowUp(false); setShowReadyCheckModal(true); }}
+                className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+              >
+                <Send size={14} className="text-[#F97316]" />
+                Send Ready Check
+              </button>
+            )}
+          </div>
+
           {/* Risks for this activity */}
           {risks.length > 0 && (
             <div>
@@ -481,6 +552,19 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           )}
         </div>
       </div>
+
+      {showReadyCheckModal && (
+        <ReadyCheckModal
+          activity={activity}
+          projectId={projectId}
+          onClose={() => setShowReadyCheckModal(false)}
+          existingCheck={isFollowUp && readyCheck ? readyCheck : undefined}
+          onSent={(check) => {
+            setReadyCheck(check);
+            setShowReadyCheckModal(false);
+          }}
+        />
+      )}
     </>
   );
 }
