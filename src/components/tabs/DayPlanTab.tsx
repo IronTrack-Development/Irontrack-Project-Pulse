@@ -150,15 +150,13 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     const selected = allActivities.filter((a) => selectedIds.has(a.id));
 
     const dayLabel = day === "today" ? "Today" : "Tomorrow";
-    let text = `IronTrack Project Pulse — ${dayLabel}\n\n`;
+    let text = ``;
 
     selected.forEach((activity) => {
       const dateRange = formatDateRange(activity.start_date, activity.finish_date);
       const tradeSuffix = activity.trade ? ` — ${activity.trade}` : "";
       text += `• ${activity.activity_name} (${dateRange})${tradeSuffix}\n`;
     });
-
-    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"}`;
 
     // Try native share first
     if (navigator.share) {

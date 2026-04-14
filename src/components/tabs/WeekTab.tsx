@@ -140,14 +140,12 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
     const selected = data.activities.filter((a) => selectedIds.has(a.id));
 
-    let text = `IronTrack Project Pulse — Week ${weekNumber}\n\n`;
+    let text = ``;
 
     selected.forEach((activity) => {
       const dateRange = formatActivityDateRange(activity.start_date, activity.finish_date);
       text += `• ${activity.activity_name} (${dateRange})\n`;
     });
-
-    text += `\n${selected.length} activit${selected.length !== 1 ? "ies" : "y"}`;
 
     // Try native share first
     if (navigator.share) {
