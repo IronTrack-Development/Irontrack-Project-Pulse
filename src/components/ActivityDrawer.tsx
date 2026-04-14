@@ -169,7 +169,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom)+80px)] md:pb-6 space-y-6">
           {/* Trade + Area */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
