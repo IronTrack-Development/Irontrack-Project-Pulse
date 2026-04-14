@@ -167,6 +167,50 @@ export interface ReadyCheck {
 export type ReadyCheckType = 'standard' | 'critical_path' | 'friendly_reminder';
 export type ReadyCheckStatus = 'draft' | 'sent' | 'awaiting_response' | 'confirmed' | 'no_response' | 'issue_flagged';
 
+export type IssuePriority = 'high' | 'medium' | 'low';
+export type IssueCategory = 'qa_qc' | 'safety' | 'schedule';
+export type IssueStatus = 'open' | 'in_progress' | 'resolved';
+export type ReportStatus = 'draft' | 'generated' | 'shared';
+
+export interface IssueReport {
+  id: string;
+  project_id: string;
+  activity_id?: string;
+  user_id?: string;
+  report_number?: string;
+  activity_name: string;
+  project_name?: string;
+  trade?: string;
+  normalized_building?: string;
+  prepared_by?: string;
+  report_date: string;
+  issue_count: number;
+  overall_assessment?: string;
+  status: ReportStatus;
+  pdf_path?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReportIssue {
+  id: string;
+  report_id: string;
+  issue_number: number;
+  title: string;
+  note?: string;
+  location?: string;
+  priority: IssuePriority;
+  category: IssueCategory;
+  status: IssueStatus;
+  photo_paths: string[];
+  photo_captions: string[];
+  trade?: string;
+  potential_impact?: string;
+  action_needed?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface LookaheadGroup {
   weekLabel: string;
   weekStart: string;

@@ -4,13 +4,14 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap
+  RefreshCw, Zap, ClipboardList
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
 import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
 import PriorityTab from "@/components/tabs/PriorityTab";
+import ReportsTab from "@/components/tabs/ReportsTab";
 import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
 
@@ -23,6 +24,7 @@ const TABS = [
   { id: "week3", label: "Week 3", icon: CalendarDays },
   { id: "milestones", label: "Milestones", icon: Flag },
   { id: "progress", label: "Progress", icon: TrendingUp },
+  { id: "reports", label: "Reports", icon: ClipboardList },
 ];
 
 interface Project {
@@ -129,6 +131,13 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               </button>
               <ShareSnapshot projectId={id} />
               <Link
+                href={`/projects/${id}/report`}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+              >
+                <ClipboardList size={13} />
+                Report
+              </Link>
+              <Link
                 href={`/upload?project=${id}`}
                 className="px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
               >
@@ -167,6 +176,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "week3" && <WeekTab projectId={id} weekNumber={3} />}
         {activeTab === "milestones" && <MilestonesTab projectId={id} />}
         {activeTab === "progress" && <ProgressTab projectId={id} />}
+        {activeTab === "reports" && <ReportsTab projectId={id} />}
       </div>
     </div>
   );

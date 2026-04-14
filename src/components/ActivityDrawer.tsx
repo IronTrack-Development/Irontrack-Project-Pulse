@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2, Building2, Layers, Tag, Users, FileText, Send, RefreshCw } from "lucide-react";
+import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2, Building2, Layers, Tag, Users, FileText, Send, RefreshCw, ClipboardList } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type { ParsedActivity, DailyRisk, ReadyCheck } from "@/types";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
@@ -63,6 +64,7 @@ interface Props {
 }
 
 export default function ActivityDrawer({ activity, projectId, onClose, onActivityChange }: Props) {
+  const router = useRouter();
   const [risks, setRisks] = useState<DailyRisk[]>([]);
   const [predecessors, setPredecessors] = useState<RelationshipActivity[]>([]);
   const [successors, setSuccessors] = useState<RelationshipActivity[]>([]);
@@ -473,6 +475,24 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               </div>
             </div>
           )}
+
+          {/* Generate Report */}
+          <div>
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <ClipboardList size={12} className="inline mr-1.5 text-[#F97316]" />
+              Issue Report
+            </div>
+            <button
+              onClick={() => {
+                onClose();
+                router.push(`/projects/${projectId}/report?activity=${activity.id}`);
+              }}
+              className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+            >
+              <ClipboardList size={14} className="text-[#F97316]" />
+              Generate Report
+            </button>
+          </div>
 
           {/* Ready Check Section */}
           <div>
