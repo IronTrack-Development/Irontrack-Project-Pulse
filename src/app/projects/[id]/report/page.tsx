@@ -686,7 +686,7 @@ export default function GenerateReportPage({
             className="absolute inset-0 bg-black/70"
             onClick={() => setShowModal(false)}
           />
-          <div className="relative bg-[#121217] rounded-t-2xl border-t border-[#1F1F25] max-h-[92vh] flex flex-col">
+          <div className="relative bg-[#121217] rounded-t-2xl border-t border-[#1F1F25] max-h-[92vh] sm:max-h-[85vh] flex flex-col">
             {/* Modal header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] shrink-0">
               <h3 className="text-white font-bold text-base">
@@ -886,14 +886,14 @@ export default function GenerateReportPage({
               </div>
             </div>
 
-            {/* Modal footer */}
-            <div className="px-5 py-4 border-t border-[#1F1F25] shrink-0">
+            {/* Modal footer — sticky save button */}
+            <div className="px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t border-[#1F1F25] shrink-0 bg-[#121217]">
               <button
                 onClick={saveIssue}
                 disabled={!modalIssue.title.trim()}
-                className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-white rounded-xl py-3.5 text-sm font-bold transition-all"
+                className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-white rounded-xl py-4 text-base font-bold transition-all"
               >
-                {editingIssue ? "Update Issue" : "Save Issue"}
+                ✓ {editingIssue ? "Update Issue" : "Save Issue"}
               </button>
             </div>
           </div>
