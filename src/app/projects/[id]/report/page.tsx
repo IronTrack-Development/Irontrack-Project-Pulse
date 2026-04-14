@@ -352,7 +352,8 @@ export default function GenerateReportPage({
       setStep("done");
     } catch (err) {
       console.error("Generate report error:", err);
-      alert("Failed to generate report. Please try again.");
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      alert(`Failed to generate report: ${msg}`);
     } finally {
       setSubmitting(false);
     }
