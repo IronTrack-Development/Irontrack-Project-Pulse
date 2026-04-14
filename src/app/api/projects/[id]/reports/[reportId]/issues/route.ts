@@ -74,17 +74,7 @@ export async function POST(
 
   if (issueError) return NextResponse.json({ error: issueError.message }, { status: 500 });
 
-  // Increment issue_count on the report
-  await supabase.rpc("increment_issue_count", { report_id: reportId }).catch(() => {
-    // Fallback: manual increment
-    return supabase
-      .from("issue_reports")
-      .update({ issue_count: issueNumber })
-      .eq("id", reportId)
-      .eq("project_id", id);
-  });
-
-  // Manual update to ensure count is always correct
+  // Update issue_count on the report
   await supabase
     .from("issue_reports")
     .update({ issue_count: issueNumber })
