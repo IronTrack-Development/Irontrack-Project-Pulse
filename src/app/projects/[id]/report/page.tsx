@@ -899,7 +899,7 @@ export default function GenerateReportPage({
             </div>
 
             {/* Modal footer — sticky save button */}
-            <div className="px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t border-[#1F1F25] shrink-0 bg-[#121217]">
+            <div className="px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom)+64px)] sm:pb-4 border-t border-[#1F1F25] shrink-0 bg-[#121217]">
               <button
                 onClick={saveIssue}
                 disabled={!modalIssue.title.trim()}

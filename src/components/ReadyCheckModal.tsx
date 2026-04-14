@@ -339,7 +339,7 @@ export default function ReadyCheckModal({
       </div>
 
       {/* Sticky send button */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom)+64px)] sm:pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
         <button
           onClick={() => setStep("send_method")}
           className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold rounded-xl py-3.5 text-sm transition-colors"
