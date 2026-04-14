@@ -63,6 +63,10 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         .print-controls { display: none !important; }
         .print-page-break { page-break-before: always; }
         .print-avoid-break { page-break-inside: avoid; }
+        .print-doc { padding: 0 !important; }
+      }
+      @media screen and (max-width: 640px) {
+        .print-doc { padding: 12px !important; }
       }
     `;
     document.head.appendChild(style);
@@ -94,44 +98,45 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         style={{
           background: "#1e3a5f",
           color: "white",
-          padding: "12px 24px",
+          padding: "10px 16px",
           display: "flex",
           alignItems: "center",
-          gap: "12px",
+          gap: "8px",
           position: "sticky",
           top: 0,
           zIndex: 100,
+          flexWrap: "wrap",
         }}
       >
-        <span style={{ flex: 1, fontWeight: 600, fontSize: "14px" }}>
-          {report.report_number} — {report.activity_name}
+        <span style={{ flex: 1, fontWeight: 600, fontSize: "13px", minWidth: "100px" }}>
+          {report.report_number}
         </span>
         <Link
           href={`/projects/${projectId}`}
           style={{
-            display: "inline-flex", alignItems: "center", gap: "6px",
-            padding: "8px 16px", borderRadius: "6px", fontSize: "13px",
+            display: "inline-flex", alignItems: "center", gap: "4px",
+            padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
             fontWeight: 600, color: "white", textDecoration: "none",
             background: "rgba(255,255,255,0.15)",
           }}
         >
-          ← Back to Project
+          ← Back
         </Link>
         <button
           onClick={() => window.print()}
           style={{
-            display: "inline-flex", alignItems: "center", gap: "6px",
-            padding: "8px 16px", borderRadius: "6px", fontSize: "13px",
+            display: "inline-flex", alignItems: "center", gap: "4px",
+            padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
             fontWeight: 600, color: "white", cursor: "pointer",
             background: "#F97316", border: "none",
           }}
         >
-          🖨 Print / Save as PDF
+          🖨 Print PDF
         </button>
       </div>
 
       {/* Document */}
-      <div style={{ maxWidth: "8.5in", margin: "0 auto", padding: "0.5in" }}>
+      <div style={{ maxWidth: "8.5in", margin: "0 auto", padding: "16px" }}>
         {/* Header bar */}
         <div
           style={{
@@ -145,10 +150,10 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             borderRadius: "2px",
           }}
         >
-          <h1 style={{ fontSize: "22pt", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: 0 }}>
+          <h1 style={{ fontSize: "16pt", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: 0 }}>
             Issue Report
           </h1>
-          <span style={{ fontSize: "11pt", color: "#93c5fd", fontWeight: 600 }}>
+          <span style={{ fontSize: "10pt", color: "#93c5fd", fontWeight: 600 }}>
             {report.report_number}
           </span>
         </div>
@@ -163,11 +168,11 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           style={{
             border: "1.5px solid #1e3a5f",
             borderRadius: "4px",
-            padding: "16px 20px",
-            marginBottom: "28px",
+            padding: "12px 16px",
+            marginBottom: "24px",
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "8px 24px",
+            gridTemplateColumns: "1fr",
+            gap: "6px",
           }}
         >
           {[
@@ -179,8 +184,8 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             report.normalized_building ? ["Location", fmtNorm(report.normalized_building)] : null,
             ["Summary", `${report.issue_count} Issue${report.issue_count !== 1 ? "s" : ""} Identified`],
           ].filter(Boolean).map((row, i) => (
-            <div key={i} style={{ display: "flex", gap: "8px", alignItems: "baseline", fontSize: "10.5pt" }}>
-              <span style={{ color: "#4b5563", fontWeight: 600, minWidth: "110px", whiteSpace: "nowrap" }}>
+            <div key={i} style={{ display: "flex", gap: "8px", alignItems: "baseline", fontSize: "10pt" }}>
+              <span style={{ color: "#4b5563", fontWeight: 600, minWidth: "90px", whiteSpace: "nowrap" }}>
                 {row![0]}:
               </span>
               <span
@@ -211,16 +216,16 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             >
               <thead>
                 <tr>
-                  {["#", "Issue Title", "Location", "Category", "Priority", "Status"].map((h) => (
+                  {["#", "Issue", "Location", "Priority"].map((h) => (
                     <th
                       key={h}
                       style={{
                         background: "#1e3a5f",
                         color: "white",
-                        padding: "8px 12px",
+                        padding: "6px 8px",
                         textAlign: "left",
                         fontWeight: 600,
-                        fontSize: "9.5pt",
+                        fontSize: "8.5pt",
                         textTransform: "uppercase",
                         letterSpacing: "0.5px",
                       }}
@@ -233,25 +238,22 @@ export default function PrintClient({ report, issues, projectId }: Props) {
               <tbody>
                 {issues.map((issue, rowIdx) => (
                   <tr key={issue.id} style={{ background: rowIdx % 2 === 1 ? "#f9fafb" : "white" }}>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb", fontWeight: 700, color: "#1e3a5f" }}>
+                    <td style={{ padding: "5px 8px", borderBottom: "1px solid #e5e7eb", fontWeight: 700, color: "#1e3a5f", fontSize: "9pt" }}>
                       {String(issue.issue_number).padStart(2, "0")}
                     </td>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb", fontWeight: 600 }}>
+                    <td style={{ padding: "5px 8px", borderBottom: "1px solid #e5e7eb", fontWeight: 600, fontSize: "9pt" }}>
                       {issue.title}
                     </td>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb", color: "#4b5563" }}>
+                    <td style={{ padding: "5px 8px", borderBottom: "1px solid #e5e7eb", color: "#4b5563", fontSize: "9pt" }}>
                       {issue.location || "—"}
                     </td>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb", color: "#4b5563" }}>
-                      {categoryLabel(issue.category)}
-                    </td>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb" }}>
+                    <td style={{ padding: "5px 8px", borderBottom: "1px solid #e5e7eb" }}>
                       <span
                         style={{
                           display: "inline-block",
-                          padding: "2px 8px",
+                          padding: "2px 6px",
                           borderRadius: "3px",
-                          fontSize: "9pt",
+                          fontSize: "8pt",
                           fontWeight: 700,
                           color: "white",
                           background: priorityColor(issue.priority),
@@ -259,9 +261,6 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                       >
                         {issue.priority.charAt(0).toUpperCase() + issue.priority.slice(1)}
                       </span>
-                    </td>
-                    <td style={{ padding: "7px 12px", borderBottom: "1px solid #e5e7eb", color: "#4b5563", textTransform: "capitalize" }}>
-                      {issue.status.replace("_", " ")}
                     </td>
                   </tr>
                 ))}
@@ -304,7 +303,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                 </div>
 
                 {/* Card body */}
-                <div style={{ padding: "16px", display: "grid", gridTemplateColumns: issue.photoUrls?.length > 0 ? "1fr 240px" : "1fr", gap: "20px", alignItems: "start" }}>
+                <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: "16px" }}>
                   {/* Details */}
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 20px", marginBottom: "12px" }}>
@@ -361,7 +360,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
 
                   {/* Photos */}
                   {issue.photoUrls && issue.photoUrls.length > 0 && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                       {issue.photoUrls.filter(Boolean).map((url: string, idx: number) => (
                         <div key={idx} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -369,8 +368,8 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                             src={url}
                             alt={`Issue photo ${idx + 1}`}
                             style={{
-                              width: "220px",
-                              maxWidth: "220px",
+                              width: "100%",
+                              maxWidth: "280px",
                               height: "auto",
                               border: "1.5px solid #d1d5db",
                               borderRadius: "4px",
@@ -378,7 +377,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                             }}
                           />
                           {issue.photo_captions?.[idx] && (
-                            <span style={{ fontSize: "8.5pt", color: "#6b7280", fontStyle: "italic", textAlign: "center" }}>
+                            <span style={{ fontSize: "8.5pt", color: "#6b7280", fontStyle: "italic" }}>
                               {issue.photo_captions[idx]}
                             </span>
                           )}
