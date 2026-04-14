@@ -291,24 +291,32 @@ export default function GenerateReportPage({
           prepared_by: preparedBy,
         }),
       });
-      if (!reportRes.ok) throw new Error("Failed to create report");
+      if (!reportRes.ok) {
+        const errData = await reportRes.json().catch(() => ({}));
+        throw new Error((errData as Record<string, string>).error || "Failed to create report");
+      }
       const report = await reportRes.json();
 
       // Step 2: Upload photos + create issues
       for (const issue of issues) {
-        // Upload photos
+        // Upload photos (non-blocking — report still works without photos)
         const photoPaths: string[] = [];
         const captions: string[] = [];
         for (const photo of issue.photos) {
-          const path = await uploadPhoto(photo, id, report.id);
-          if (path) {
-            photoPaths.push(path);
-            captions.push(photo.caption);
+          try {
+            const path = await uploadPhoto(photo, id, report.id);
+            if (path) {
+              photoPaths.push(path);
+              captions.push(photo.caption);
+            }
+          } catch {
+            // Photo upload failed — continue without this photo
+            console.warn("Photo upload failed, skipping");
           }
         }
 
         // Create issue
-        await fetch(`/api/projects/${id}/reports/${report.id}/issues`, {
+        const issueRes = await fetch(`/api/projects/${id}/reports/${report.id}/issues`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -324,6 +332,9 @@ export default function GenerateReportPage({
             photo_captions: captions,
           }),
         });
+        if (!issueRes.ok) {
+          console.warn("Issue creation failed:", await issueRes.text().catch(() => ""));
+        }
       }
 
       // Step 3: Mark report as generated
