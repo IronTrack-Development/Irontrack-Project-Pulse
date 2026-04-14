@@ -81,10 +81,10 @@ export default function ReadyCheckModal({
   // ── State ──────────────────────────────────────────────────────────────────
   const [step, setStep] = useState<Step>("setup");
   const [checkType, setCheckType] = useState<ReadyCheckType>("standard");
-  const [contactName, setContactName] = useState(existingCheck?.contact_name ?? "");
-  const [contactPhone, setContactPhone] = useState(existingCheck?.contact_phone ?? "");
-  const [contactEmail, setContactEmail] = useState(existingCheck?.contact_email ?? "");
-  const [contactCompany, setContactCompany] = useState(existingCheck?.contact_company ?? "");
+  const contactName = existingCheck?.contact_name ?? "";
+  const contactPhone = existingCheck?.contact_phone ?? "";
+  const contactEmail = existingCheck?.contact_email ?? "";
+  const contactCompany = existingCheck?.contact_company ?? "";
   const [isEditingMessage, setIsEditingMessage] = useState(false);
   const [customMessage, setCustomMessage] = useState("");
   const [sending, setSending] = useState(false);
@@ -123,26 +123,7 @@ export default function ReadyCheckModal({
     }
   }, [generatedMessage, isEditingMessage]);
 
-  // ── Load saved contact for this trade ─────────────────────────────────────
-  useEffect(() => {
-    if (!trade || isFollowUp) return;
-    setLoadingContact(true);
-    fetch(`/api/projects/${projectId}/contacts?trade=${encodeURIComponent(trade)}`)
-      .then((r) => (r.ok ? r.json() : []))
-      .then((contacts: ReadyCheckContact[]) => {
-        if (contacts.length > 0) {
-          const c = contacts[0];
-          setSavedContact(c);
-          if (!contactName) setContactName(c.contact_name);
-          if (!contactPhone && c.phone) setContactPhone(c.phone);
-          if (!contactEmail && c.email) setContactEmail(c.email);
-          if (!contactCompany && c.company) setContactCompany(c.company);
-        }
-      })
-      .catch(() => {})
-      .finally(() => setLoadingContact(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trade, projectId]);
+  // Contact auto-load removed for V1 — contact fields not shown
 
   // ── Keyboard close ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -179,10 +160,10 @@ export default function ReadyCheckModal({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             activity_id: activity.id,
-            contact_name: contactName,
-            contact_company: contactCompany || undefined,
-            contact_phone: contactPhone || undefined,
-            contact_email: contactEmail || undefined,
+            contact_name: trade || "Subcontractor",
+            contact_company: undefined,
+            contact_phone: undefined,
+            contact_email: undefined,
             activity_name: activity.activity_name,
             trade,
             start_date: activity.start_date,
@@ -281,50 +262,7 @@ export default function ReadyCheckModal({
           </div>
         )}
 
-        {/* Contact section */}
-        <div className="space-y-3">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            {trade ? `${trade} Contact` : "Contact"}
-            {loadingContact && (
-              <span className="ml-2 text-gray-700 normal-case text-[10px]">Loading saved…</span>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <div className="relative">
-              <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-              <input
-                type="text"
-                value={contactName}
-                onChange={(e) => setContactName(e.target.value)}
-                placeholder="Contact name"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-white text-sm px-3 py-2.5 pl-8 placeholder:text-gray-700 focus:outline-none focus:border-[#F97316]/50 transition-colors"
-              />
-            </div>
-
-            <div className="relative">
-              <Phone size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-              <input
-                type="tel"
-                value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
-                placeholder="Phone number (for SMS)"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-white text-sm px-3 py-2.5 pl-8 placeholder:text-gray-700 focus:outline-none focus:border-[#F97316]/50 transition-colors"
-              />
-            </div>
-
-            <div className="relative">
-              <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
-              <input
-                type="email"
-                value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value)}
-                placeholder="Email address"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-white text-sm px-3 py-2.5 pl-8 placeholder:text-gray-700 focus:outline-none focus:border-[#F97316]/50 transition-colors"
-              />
-            </div>
-          </div>
-        </div>
+        {/* Contact section removed for V1 — users share via copy/native share */}
 
         {/* Check type selector (hidden for follow-ups) */}
         {!isFollowUp && (
@@ -404,15 +342,11 @@ export default function ReadyCheckModal({
       <div className="absolute bottom-0 left-0 right-0 px-4 pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
         <button
           onClick={() => setStep("send_method")}
-          disabled={!contactName.trim()}
-          className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#1F1F25] disabled:text-gray-600 text-white font-bold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold rounded-xl py-3.5 text-sm transition-colors"
         >
           <Send size={16} />
           {isFollowUp ? "Send Follow-Up" : "Send Ready Check"}
         </button>
-        {!contactName.trim() && (
-          <div className="text-center text-[11px] text-gray-600 mt-2">Enter a contact name to continue</div>
-        )}
       </div>
     </div>
   );
@@ -423,10 +357,9 @@ export default function ReadyCheckModal({
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4 space-y-4">
         <div className="text-center">
-          <div className="text-base font-bold text-white mb-1">How do you want to send it?</div>
+          <div className="text-base font-bold text-white mb-1">How do you want to share it?</div>
           <div className="text-xs text-gray-500">
-            To {contactName}
-            {contactCompany ? ` · ${contactCompany}` : ""}
+            {activity.activity_name}
           </div>
         </div>
 
@@ -436,40 +369,6 @@ export default function ReadyCheckModal({
         </div>
 
         <div className="space-y-3">
-          {/* SMS */}
-          {contactPhone && (
-            <button
-              onClick={() => handleSend("sms")}
-              disabled={sending}
-              className="w-full flex items-center gap-4 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#22C55E]/15 flex items-center justify-center shrink-0">
-                <MessageSquare size={20} className="text-[#22C55E]" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-white">Text Message</div>
-                <div className="text-xs text-gray-500">{contactPhone}</div>
-              </div>
-            </button>
-          )}
-
-          {/* Email */}
-          {contactEmail && (
-            <button
-              onClick={() => handleSend("email")}
-              disabled={sending}
-              className="w-full flex items-center gap-4 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/15 flex items-center justify-center shrink-0">
-                <Mail size={20} className="text-[#3B82F6]" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-white">Email</div>
-                <div className="text-xs text-gray-500">{contactEmail}</div>
-              </div>
-            </button>
-          )}
-
           {/* Copy */}
           <button
             onClick={() => handleSend("copy")}
@@ -490,6 +389,28 @@ export default function ReadyCheckModal({
               <div className="text-xs text-gray-500">Paste into any app</div>
             </div>
           </button>
+
+          {/* Native Share */}
+          {typeof navigator !== "undefined" && !!navigator.share && (
+            <button
+              onClick={async () => {
+                try {
+                  await navigator.share({ title: `Ready Check: ${activity.activity_name}`, text: finalMessage });
+                  await handleSend("copy");
+                } catch { /* user cancelled */ }
+              }}
+              disabled={sending}
+              className="w-full flex items-center gap-4 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/15 flex items-center justify-center shrink-0">
+                <Send size={20} className="text-[#3B82F6]" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-white">Share</div>
+                <div className="text-xs text-gray-500">Text, email, or any app</div>
+              </div>
+            </button>
+          )}
         </div>
       </div>
 
@@ -519,8 +440,7 @@ export default function ReadyCheckModal({
           {isFollowUp ? "Follow-Up Sent" : "Ready Check Sent"}
         </div>
         <div className="text-sm text-gray-400">
-          {contactName}
-          {contactCompany ? ` · ${contactCompany}` : ""}
+          {activity.activity_name}
         </div>
         <div className="text-xs text-gray-600 mt-1">
           {new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
