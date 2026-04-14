@@ -62,6 +62,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
       await navigator.share({
         title: `IronTrack Pulse — ${projectName}`,
         text: snapshotText,
+        url: typeof window !== "undefined" ? window.location.href : undefined,
       });
     } catch {
       // User cancelled or share failed — silently ignore

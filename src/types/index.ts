@@ -46,6 +46,21 @@ export interface ParsedActivity {
   status: string;
   float_days?: number;
   created_at: string;
+
+  // WBS hierarchy (005_add_wbs_hierarchy)
+  constraint_type?: string | null;
+  constraint_date?: string | null;
+  resource_names?: string | null;
+  notes?: string | null;
+  external_task_id?: string | null;
+  external_unique_id?: string | null;
+  outline_level?: number | null;
+  parent_activity_name?: string | null;
+  normalized_building?: string | null;
+  normalized_phase?: string | null;
+  normalized_area?: string | null;
+  normalized_work_type?: string | null;
+  normalized_trade?: string | null;
 }
 
 export interface DailyRisk {

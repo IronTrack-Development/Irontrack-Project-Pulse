@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2 } from "lucide-react";
+import { X, Calendar, Clock, Hash, MapPin, AlertTriangle, ChevronRight, ArrowLeft, ArrowRight, Link2, Building2, Layers, Tag, Users, FileText } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
 
 function fmt(d?: string) {
   if (!d) return "—";
   return new Date(d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+}
+
+/** Format a snake_case normalized value: "building_f" → "Building F" */
+function fmtNormalized(val?: string | null): string {
+  if (!val) return "—";
+  return val
+    .split("_")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }
 
 function fmtShort(d?: string) {
@@ -156,6 +165,76 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               </div>
             )}
           </div>
+
+          {/* Location / WBS Hierarchy */}
+          {(activity.normalized_building || activity.normalized_phase || activity.normalized_area || activity.normalized_work_type) && (
+            <div>
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                <MapPin size={12} className="inline mr-1.5" />
+                Location
+              </div>
+              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-2">
+                {activity.normalized_building && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 text-gray-500">
+                      <Building2 size={12} /> Building
+                    </span>
+                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_building)}</span>
+                  </div>
+                )}
+                {activity.normalized_phase && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 text-gray-500">
+                      <Layers size={12} /> Phase
+                    </span>
+                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_phase)}</span>
+                  </div>
+                )}
+                {activity.normalized_area && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 text-gray-500">
+                      <MapPin size={12} /> Area
+                    </span>
+                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_area)}</span>
+                  </div>
+                )}
+                {activity.normalized_work_type && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 text-gray-500">
+                      <Tag size={12} /> Work Type
+                    </span>
+                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_work_type)}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Resources */}
+          {activity.resource_names && (
+            <div>
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                <Users size={12} className="inline mr-1.5" />
+                Resources
+              </div>
+              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
+                <div className="text-sm text-gray-300">{activity.resource_names}</div>
+              </div>
+            </div>
+          )}
+
+          {/* Notes */}
+          {activity.notes && (
+            <div>
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                <FileText size={12} className="inline mr-1.5" />
+                Notes
+              </div>
+              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
+                <div className="text-xs text-gray-400 whitespace-pre-wrap leading-relaxed">{activity.notes}</div>
+              </div>
+            </div>
+          )}
 
           {/* Dates */}
           <div>

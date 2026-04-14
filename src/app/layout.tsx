@@ -19,14 +19,29 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
     description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
-    images: ["/hero-pulse.png"],
+    images: [
+      {
+        url: "/og-share-card.png",
+        width: 1536,
+        height: 1024,
+        alt: "IronTrack Project Pulse",
+      },
+    ],
     type: "website",
+    siteName: "IronTrack Project Pulse",
   },
   twitter: {
     card: "summary_large_image",
     title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
     description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
-    images: ["/hero-pulse.png"],
+    images: [
+      {
+        url: "/og-share-card.png",
+        width: 1536,
+        height: 1024,
+        alt: "IronTrack Project Pulse",
+      },
+    ],
   },
   appleWebApp: {
     capable: true,

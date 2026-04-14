@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const maxDuration = 300;
 import { getServiceClient } from "@/lib/supabase";
 import { inferTrade } from "@/lib/trade-inference";
+import { normalizeWBS, buildMPPWBSPath, type FlatHierarchyRow } from "@/lib/wbs-normalizer";
 import { runRiskDetection } from "@/lib/risk-engine";
 import { computeHealthScore } from "@/lib/health-score";
 import * as XLSX from "xlsx";
@@ -56,6 +57,12 @@ async function convertMppViaService(buffer: Buffer, filename: string): Promise<R
     "WBS": String(task.wbs || ""),
     "Resources": String(task.resources || ""),
     "Predecessors": String(task.predecessors || ""),
+    // WBS hierarchy fields
+    "Outline Level": String(task.outline_level || ""),
+    "Parent Task": String(task.parent_task_name || ""),
+    "Constraint Type": String(task.constraint_type || ""),
+    "Constraint Date": String(task.constraint_date || ""),
+    "Notes": String(task.notes || ""),
   }));
 }
 
@@ -566,38 +573,106 @@ export async function POST(req: NextRequest) {
     mapping.actual_finish = "Actual Finish";
     mapping.wbs = "WBS";
     mapping.predecessor_ids = "Predecessors";
+    // MPP hierarchy fields (will be used in activitiesToInsert)
+    (mapping as Record<string, string>)["outline_level"] = "Outline Level";
+    (mapping as Record<string, string>)["parent_task"] = "Parent Task";
+    (mapping as Record<string, string>)["constraint_type"] = "Constraint Type";
+    (mapping as Record<string, string>)["constraint_date"] = "Constraint Date";
+    (mapping as Record<string, string>)["notes"] = "Notes";
   } else if (ext === "xer") {
-    // Direct XER parsing (zero cost)
+    // Direct XER parsing (zero cost) — includes WBS hierarchy
     const { parseXER } = await import("@/lib/xer-parser");
     const xerText = buffer.toString("utf-8");
     const xerTasks = parseXER(xerText);
-    
-    // Convert to RawRow format
-    rows = xerTasks.map(task => ({
-      "Activity ID": task.task_id,
-      "Activity Name": task.task_name,
-      "Start Date": task.start_date || "",
-      "Finish Date": task.end_date || "",
-      "% Complete": String(task.percent_complete),
-      "Duration": task.duration ? String(task.duration) : "",
-      "Milestone": task.milestone ? "yes" : "no",
-      "WBS": task.wbs_id || "",
-      "Resources": task.rsrc_names || "",
-      "Predecessors": task.pred_task_ids || "",
-    }));
-    
-    if (rows.length === 0) {
+
+    if (xerTasks.length === 0) {
       return NextResponse.json({ error: "No tasks found in XER file. Verify this is a valid Primavera P6 export." }, { status: 400 });
     }
-    
-    usedAI = false;
-    mapping.activity_name = "Activity Name";
-    mapping.start_date = "Start Date";
-    mapping.finish_date = "Finish Date";
-    mapping.percent_complete = "% Complete";
-    mapping.original_duration = "Duration";
-    mapping.activity_id = "Activity ID";
-    mapping.milestone = "Milestone";
+
+    // Build activities directly (bypass generic RawRow pipeline to preserve WBS path)
+    const xerActivities = xerTasks.map((task) => {
+      const activityName = task.task_name.trim();
+      if (!activityName) return null;
+
+      const startDate = task.start_date || null;
+      const finishDate = task.end_date || null;
+      const pct = task.percent_complete ?? 0;
+      const duration = task.duration;
+      const inferredTrade = inferTrade(activityName);
+      const isMilestone = task.milestone;
+      const status = deriveStatus({ actual_finish: null, actual_start: null, percent_complete: pct, start_date: startDate });
+      const wbsNorm = normalizeWBS(task.wbs_path, activityName);
+
+      return {
+        project_id: projectId,
+        upload_id: upload.id,
+        activity_id: task.task_id || null,
+        activity_name: activityName,
+        wbs: task.wbs_id || null,
+        area: null,
+        trade: inferredTrade,
+        original_duration: duration,
+        remaining_duration: duration && pct !== null ? Math.round(duration * (1 - pct / 100)) : duration,
+        start_date: startDate,
+        finish_date: finishDate,
+        actual_start: null,
+        actual_finish: null,
+        percent_complete: pct,
+        predecessor_ids: task.pred_task_ids ? task.pred_task_ids.split(/[,;|]/).map((s) => s.trim()).filter(Boolean) : null,
+        successor_ids: null,
+        milestone: isMilestone,
+        status,
+        // Metadata
+        constraint_type: task.constraint_type,
+        constraint_date: task.constraint_date,
+        resource_names: task.resource_names,
+        notes: task.notes,
+        external_task_id: task.external_task_id,
+        external_unique_id: task.external_unique_id,
+        outline_level: task.outline_level,
+        parent_activity_name: task.parent_wbs_name,
+        // Normalized hierarchy
+        ...wbsNorm,
+        normalized_trade: inferredTrade,
+      };
+    }).filter(Boolean);
+
+    // Insert in batches and return early
+    const insertedXer: { id: string }[] = [];
+    for (let i = 0; i < xerActivities.length; i += 100) {
+      const batch = xerActivities.slice(i, i + 100);
+      const { data } = await supabase.from("parsed_activities").insert(batch).select("id");
+      if (data) insertedXer.push(...data);
+    }
+
+    const xMilestoneCount = xerActivities.filter((a) => a?.milestone).length;
+    await supabase.from("schedule_uploads").update({ parse_status: "complete", activity_count: insertedXer.length }).eq("id", upload.id);
+
+    const { data: xerAllActivities } = await supabase.from("parsed_activities").select("*").eq("project_id", projectId);
+    if (xerAllActivities && xerAllActivities.length > 0) {
+      const validStarts = xerAllActivities.map((a) => a.start_date).filter((d): d is string => !!d);
+      const validFinishes = xerAllActivities.map((a) => a.finish_date).filter((d): d is string => !!d);
+      if (validStarts.length > 0 && validFinishes.length > 0) {
+        await supabase.from("daily_projects").update({ start_date: validStarts.sort()[0], target_finish_date: validFinishes.sort().reverse()[0] }).eq("id", projectId);
+      }
+    }
+    const xRiskCount = await runRiskDetection(projectId, xerAllActivities || []);
+    const { data: xRisks } = await supabase.from("daily_risks").select("*").eq("project_id", projectId).eq("status", "open");
+    const { score: xScore } = computeHealthScore(xRisks || [], xerAllActivities || []);
+    await supabase.from("daily_projects").update({ health_score: xScore }).eq("id", projectId);
+    await supabase.rpc("increment_daily_uploads", { p_user_id: userId, p_file_size: fileSize });
+    await supabase.rpc("increment_user_storage", { p_user_id: userId, p_file_size: fileSize });
+    if (storagePath) await supabase.storage.from("uploads").remove([storagePath]);
+
+    return NextResponse.json({
+      upload_id: upload.id,
+      project_id: projectId,
+      activities_parsed: insertedXer.length,
+      milestones_found: xMilestoneCount,
+      risks_detected: xRiskCount,
+      health_score: xScore,
+      ai_parsed: false,
+    });
   } else if (ext === "xml" || ext === "pdf") {
     // AI-powered parsing for XML and PDF files
     try {
@@ -680,8 +755,22 @@ export async function POST(req: NextRequest) {
   // Delete existing activities for this project (re-upload flow)
   await supabase.from("parsed_activities").delete().eq("project_id", projectId);
 
+  // Build flat hierarchy rows for MPP/XLSX outline-level WBS path resolution
+  const outlineColName = (mapping as Record<string, string>)["outline_level"] || "Outline Level";
+  const parentTaskColName = (mapping as Record<string, string>)["parent_task"] || "Parent Task";
+  const constraintTypeColName = (mapping as Record<string, string>)["constraint_type"] || "Constraint Type";
+  const constraintDateColName = (mapping as Record<string, string>)["constraint_date"] || "Constraint Date";
+  const notesColName = (mapping as Record<string, string>)["notes"] || "Notes";
+  const hasOutlineLevel = rows.some((r) => !!r[outlineColName]);
+
+  const flatRows: FlatHierarchyRow[] = rows.map((row) => ({
+    name: String((row["Activity Name"] || row[(mapping as Record<string, string>)["activity_name"]] || "")).trim(),
+    outline_level: parseInt(String(row[outlineColName] || "0")) || 0,
+    parent_task_name: String(row[parentTaskColName] || "").trim() || undefined,
+  }));
+
   // Process rows into activities
-  const activitiesToInsert = rows.map((row) => {
+  const activitiesToInsert = rows.map((row, rowIndex) => {
     const activityName = String(col(row, "activity_name") || "").trim();
     if (!activityName) return null;
 
@@ -710,6 +799,25 @@ export async function POST(req: NextRequest) {
 
     const status = deriveStatus({ actual_finish: actualFinish, actual_start: actualStart, percent_complete: pct, start_date: startDate });
 
+    // WBS hierarchy for MPP/XLSX/CSV: use outline level + parent traversal
+    const outlineLevelRaw = parseInt(String(row[outlineColName] || "0")) || 0;
+    const parentTaskName = String(row[parentTaskColName] || "").trim() || null;
+    const constraintTypeRaw = String(row[constraintTypeColName] || "").trim() || null;
+    const constraintDateRaw = parseDate(String(row[constraintDateColName] || ""));
+    const notesRaw = String(row[notesColName] || "").trim() || null;
+    const resourceNamesRaw = String(row["Resources"] || "").trim() || null;
+
+    // Build wbs_path from flat hierarchy for MPP/XLSX
+    let wbsPath: string[] = [];
+    if (outlineLevelRaw > 0 && hasOutlineLevel) {
+      wbsPath = buildMPPWBSPath(flatRows, rowIndex);
+    } else if (parentTaskName) {
+      wbsPath = [parentTaskName];
+    }
+
+    const wbsNorm = normalizeWBS(wbsPath, activityName);
+    const effectiveOutlineLevel = outlineLevelRaw > 0 ? outlineLevelRaw : null;
+
     return {
       project_id: projectId,
       upload_id: upload.id,
@@ -729,6 +837,18 @@ export async function POST(req: NextRequest) {
       successor_ids: null,
       milestone: isMilestone,
       status,
+      // WBS hierarchy metadata
+      constraint_type: constraintTypeRaw,
+      constraint_date: constraintDateRaw,
+      resource_names: resourceNamesRaw,
+      notes: notesRaw,
+      external_task_id: String(col(row, "activity_id") || "").trim() || null,
+      external_unique_id: null,
+      outline_level: effectiveOutlineLevel,
+      parent_activity_name: parentTaskName,
+      // Normalized hierarchy
+      ...wbsNorm,
+      normalized_trade: inferredTrade,
     };
   }).filter(Boolean);
 

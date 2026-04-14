@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, SlidersHorizontal, RefreshCw, ChevronUp, ChevronDown } from "lucide-react";
+import { Search, SlidersHorizontal, RefreshCw, ChevronUp, ChevronDown, Building2 } from "lucide-react";
 import type { ParsedActivity } from "@/types";
 import ActivityDrawer from "@/components/ActivityDrawer";
 
@@ -29,16 +29,29 @@ function fmt(d?: string) {
   return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+/** Format a snake_case normalized value for display: "building_f" → "Building F" */
+function fmtNormalized(val?: string | null): string {
+  if (!val) return "—";
+  return val
+    .split("_")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 export default function ActivitiesTab({ projectId }: { projectId: string }) {
   const [activities, setActivities] = useState<ParsedActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [tradeFilter, setTradeFilter] = useState("");
+  const [buildingFilter, setBuildingFilter] = useState("");
+  const [phaseFilter, setPhaseFilter] = useState("");
   const [sort, setSort] = useState("start_date");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [selected, setSelected] = useState<ParsedActivity | null>(null);
   const [trades, setTrades] = useState<string[]>([]);
+  const [buildings, setBuildings] = useState<string[]>([]);
+  const [phases, setPhases] = useState<string[]>([]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -46,6 +59,8 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
     if (search) params.set("search", search);
     if (statusFilter) params.set("status", statusFilter);
     if (tradeFilter) params.set("trade", tradeFilter);
+    if (buildingFilter) params.set("building", buildingFilter);
+    if (phaseFilter) params.set("phase", phaseFilter);
     params.set("sort", sort);
     params.set("dir", sortDir);
 
@@ -53,13 +68,43 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
     if (res.ok) {
       const data: ParsedActivity[] = await res.json();
       setActivities(data);
+
+      // Derive filter options from full (unfiltered) dataset when no filter is active
+      // Always pull unique values from all returned data
       const uniqueTrades = [...new Set(data.map((a) => a.trade || "").filter(Boolean))].sort();
       setTrades(uniqueTrades);
+
+      const uniqueBuildings = [
+        ...new Set(data.map((a) => a.normalized_building || "").filter(Boolean)),
+      ].sort();
+      setBuildings(uniqueBuildings);
+
+      const uniquePhases = [
+        ...new Set(data.map((a) => a.normalized_phase || "").filter(Boolean)),
+      ].sort();
+      setPhases(uniquePhases);
     }
     setLoading(false);
   };
 
-  useEffect(() => { fetchData(); }, [projectId, search, statusFilter, tradeFilter, sort, sortDir]);
+  // Fetch all activities once on mount to populate filter options (unfiltered)
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      const res = await fetch(`/api/projects/${projectId}/activities?sort=start_date&dir=asc`);
+      if (res.ok) {
+        const data: ParsedActivity[] = await res.json();
+        setTrades([...new Set(data.map((a) => a.trade || "").filter(Boolean))].sort());
+        setBuildings([...new Set(data.map((a) => a.normalized_building || "").filter(Boolean))].sort());
+        setPhases([...new Set(data.map((a) => a.normalized_phase || "").filter(Boolean))].sort());
+      }
+    };
+    fetchFilterOptions();
+  }, [projectId]);
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId, search, statusFilter, tradeFilter, buildingFilter, phaseFilter, sort, sortDir]);
 
   const handleSort = (col: string) => {
     if (sort === col) setSortDir(sortDir === "asc" ? "desc" : "asc");
@@ -70,6 +115,8 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
     if (sort !== col) return <ChevronUp size={12} className="text-gray-700" />;
     return sortDir === "asc" ? <ChevronUp size={12} className="text-[#F97316]" /> : <ChevronDown size={12} className="text-[#F97316]" />;
   };
+
+  const hasHierarchy = buildings.length > 0 || phases.length > 0;
 
   return (
     <div className="space-y-4">
@@ -103,6 +150,35 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <option value="">All Trades</option>
           {trades.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
+
+        {/* Building filter — only shown when hierarchy data is present */}
+        {buildings.length > 0 && (
+          <select
+            value={buildingFilter}
+            onChange={(e) => setBuildingFilter(e.target.value)}
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          >
+            <option value="">All Buildings</option>
+            {buildings.map((b) => (
+              <option key={b} value={b}>{fmtNormalized(b)}</option>
+            ))}
+          </select>
+        )}
+
+        {/* Phase filter — only shown when hierarchy data is present */}
+        {phases.length > 0 && (
+          <select
+            value={phaseFilter}
+            onChange={(e) => setPhaseFilter(e.target.value)}
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          >
+            <option value="">All Phases</option>
+            {phases.map((p) => (
+              <option key={p} value={p}>{fmtNormalized(p)}</option>
+            ))}
+          </select>
+        )}
+
         <div className="text-xs text-gray-500">
           {activities.length} activit{activities.length !== 1 ? "ies" : "y"}
         </div>
@@ -127,6 +203,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                   {[
                     { label: "ID", col: "activity_id" },
                     { label: "Activity", col: "activity_name" },
+                    ...(hasHierarchy ? [{ label: "Building", col: "normalized_building" }] : []),
                     { label: "Trade", col: "trade" },
                     { label: "Start", col: "start_date" },
                     { label: "Finish", col: "finish_date" },
@@ -161,6 +238,21 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                       <div className="font-medium text-white max-w-xs truncate">{a.activity_name}</div>
                       {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">MILESTONE</span>}
                     </td>
+                    {/* Building column — only rendered when hierarchy data exists */}
+                    {hasHierarchy && (
+                      <td className="px-4 py-3">
+                        {a.normalized_building ? (
+                          <div className="flex items-center gap-1">
+                            <Building2 size={11} className="text-gray-600 shrink-0" />
+                            <span className="text-xs text-gray-300 truncate max-w-[100px]">
+                              {fmtNormalized(a.normalized_building)}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-gray-700">—</span>
+                        )}
+                      </td>
+                    )}
                     <td className="px-4 py-3 text-xs text-gray-400">{a.trade || "—"}</td>
                     <td className="px-4 py-3 text-xs text-gray-400">{fmt(a.start_date)}</td>
                     <td className="px-4 py-3 text-xs text-gray-400">{fmt(a.finish_date)}</td>

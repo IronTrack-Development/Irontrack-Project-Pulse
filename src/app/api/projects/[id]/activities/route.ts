@@ -11,6 +11,8 @@ export async function GET(
 
   const status = searchParams.get("status");
   const trade = searchParams.get("trade");
+  const building = searchParams.get("building");
+  const phase = searchParams.get("phase");
   const search = searchParams.get("search");
   const startAfter = searchParams.get("start_after");
   const finishBefore = searchParams.get("finish_before");
@@ -25,6 +27,8 @@ export async function GET(
 
   if (status) query = query.eq("status", status);
   if (trade) query = query.eq("trade", trade);
+  if (building) query = query.eq("normalized_building", building);
+  if (phase) query = query.eq("normalized_phase", phase);
   if (startAfter) query = query.gte("start_date", startAfter);
   if (finishBefore) query = query.lte("finish_date", finishBefore);
   if (search) query = query.ilike("activity_name", `%${search}%`);
