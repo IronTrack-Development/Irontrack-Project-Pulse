@@ -758,7 +758,6 @@ export default function GenerateReportPage({
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   multiple
                   className="hidden"
                   onChange={handlePhotoCapture}
