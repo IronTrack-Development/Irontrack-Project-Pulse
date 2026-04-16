@@ -21,7 +21,9 @@ export async function GET(
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const all: ParsedActivity[] = activities || [];
-  const today = new Date();
+  const { searchParams } = new URL(_req.url);
+  const clientDate = searchParams.get("clientDate");
+  const today = clientDate ? new Date(clientDate + "T12:00:00") : new Date();
   today.setHours(0, 0, 0, 0);
 
   // ── Build id→activity map ────────────────────────────────────────────────

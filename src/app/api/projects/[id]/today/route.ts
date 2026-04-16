@@ -8,9 +8,12 @@ export async function GET(
   const { id } = await params;
   const supabase = getServiceClient();
 
-  const today = new Date();
+  const { searchParams } = new URL(_req.url);
+  const clientDate = searchParams.get("clientDate"); // YYYY-MM-DD from client's timezone
+
+  const today = clientDate ? new Date(clientDate + "T12:00:00") : new Date();
   today.setHours(0, 0, 0, 0);
-  const todayStr = today.toISOString().split("T")[0];
+  const todayStr = clientDate || today.toISOString().split("T")[0];
 
   const threeDaysAgo = new Date(today);
   threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);

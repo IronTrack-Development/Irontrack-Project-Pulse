@@ -39,14 +39,22 @@ export async function GET(
   const { id: projectId } = await params;
   const { searchParams } = new URL(req.url);
   const day = searchParams.get("day") || "today";
+  const clientDate = searchParams.get("clientDate"); // YYYY-MM-DD from client's timezone
 
   const supabase = getServiceClient();
 
-  // Calculate target date
-  const now = new Date();
-  const targetDate = new Date(now);
-  if (day === "tomorrow") {
-    targetDate.setDate(now.getDate() + 1);
+  // Use client's date if provided, otherwise fall back to server time
+  let targetDate: Date;
+  if (clientDate) {
+    targetDate = new Date(clientDate + "T12:00:00"); // noon to avoid timezone edge cases
+    if (day === "tomorrow") {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
+  } else {
+    targetDate = new Date();
+    if (day === "tomorrow") {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
   }
   const targetDateStr = targetDate.toISOString().split("T")[0];
 

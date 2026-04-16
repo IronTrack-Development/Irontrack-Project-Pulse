@@ -48,7 +48,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     const fetchDayPlan = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/projects/${projectId}/today-plan?day=${day}`);
+        const clientDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
+    const res = await fetch(`/api/projects/${projectId}/today-plan?day=${day}&clientDate=${clientDate}`);
         if (res.ok) {
           const json = await res.json();
           setData(json);

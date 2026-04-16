@@ -63,7 +63,8 @@ export default function TodayTab({ projectId }: { projectId: string }) {
 
   const fetchData = async () => {
     setLoading(true);
-    const res = await fetch(`/api/projects/${projectId}/today`);
+    const clientDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
+    const res = await fetch(`/api/projects/${projectId}/today?clientDate=${clientDate}`);
     if (res.ok) setData(await res.json());
     setLoading(false);
   };
