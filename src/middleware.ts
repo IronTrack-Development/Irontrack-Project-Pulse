@@ -30,17 +30,18 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Public routes that don't require auth
-  const publicRoutes = ['/', '/login', '/signup'];
+  const publicRoutes = ['/', '/login', '/signup', '/terms', '/privacy'];
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
+  const isSubView = request.nextUrl.pathname.startsWith('/view/');
   const isStaticAsset =
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/favicon') ||
     request.nextUrl.pathname.startsWith('/icon') ||
     request.nextUrl.pathname.startsWith('/manifest');
 
-  // Allow public routes and API routes
-  if (isPublicRoute || isApiRoute || isStaticAsset) {
+  // Allow public routes, API routes, sub view pages, and static assets
+  if (isPublicRoute || isApiRoute || isStaticAsset || isSubView) {
     return supabaseResponse;
   }
 
@@ -52,23 +53,33 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Allow subscribe page for authenticated users
+  // Allow subscribe page and setup page for authenticated users
   const isSubscribePage = request.nextUrl.pathname === '/subscribe';
+  const isSetupPage = request.nextUrl.pathname === '/setup';
+
+  if (isSubscribePage || isSetupPage) {
+    return supabaseResponse;
+  }
 
   // Check subscription status for protected routes
-  if (user && !isPublicRoute && !isApiRoute && !isSubscribePage) {
+  // Use a try/catch so a DB hiccup doesn't lock users out
+  try {
     const { data: subscription } = await supabase
       .from('user_subscriptions')
       .select('status')
       .eq('user_id', user.id)
       .single();
 
-    // Only allow access if subscription is active
-    if (!subscription || subscription.status !== 'active') {
+    // Only redirect to subscribe if we got a definitive "not active" answer
+    if (subscription && subscription.status !== 'active') {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = '/subscribe';
       return NextResponse.redirect(redirectUrl);
     }
+    // If no subscription row exists, allow through (new user flow / free beta)
+  } catch {
+    // DB error — let the user through rather than locking them out
+    // The dashboard/API will handle auth properly
   }
 
   return supabaseResponse;

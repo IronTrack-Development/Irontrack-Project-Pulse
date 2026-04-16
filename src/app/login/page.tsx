@@ -39,8 +39,14 @@ function LoginForm() {
       // Sign out all other sessions — single session enforcement
       await supabase.auth.signOut({ scope: "others" });
 
-      router.push(redirect);
-      router.refresh();
+      // Wait briefly for the auth cookie to propagate before navigating
+      // This prevents the middleware race condition where the session
+      // isn't visible yet on the next request
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Use window.location for a full page navigation instead of client-side routing
+      // This ensures the middleware sees the fresh auth cookies on the new request
+      window.location.href = redirect;
     }
   };
 
