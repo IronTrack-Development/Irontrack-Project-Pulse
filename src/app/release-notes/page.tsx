@@ -16,6 +16,39 @@ interface ReleaseNote {
 
 const releases: ReleaseNote[] = [
   {
+    version: "v1.6.0",
+    date: "April 16, 2026",
+    platform: "Web",
+    title: "Subcontractor Schedule Views",
+    changes: [
+      "New Sub Management — add subcontractors to projects and assign their trades",
+      "Shareable Sub Schedule Links — generate unique URLs for each sub with one click",
+      "Filtered sub views show only tasks relevant to that sub's trades",
+      "Schedule Receipt Verification — track when subs open their link with timestamps",
+      "Acknowledge button — subs confirm receipt with their name and timestamp (CYA documentation)",
+      "Ack Status Dashboard — see at a glance which subs have viewed and acknowledged their schedule",
+      "Dependency visibility — subs see which other trades must finish before they can start",
+      "Mobile-first sub view — designed for field use on phones, no login required",
+    ],
+  },
+  {
+    version: "v1.5.0",
+    date: "April 16, 2026",
+    platform: "Web",
+    title: "Mobile Upload & Login Reliability",
+    changes: [
+      "Fixed mobile file upload — iOS and Android users can now select and upload schedule files",
+      "Fixed .mpp file selection on iOS — Microsoft Project files no longer greyed out in file picker",
+      "Mobile-optimized upload UI — \"Tap to Select Schedule\" with device-appropriate layout",
+      "Upload file size limit raised to 100MB (was 10MB on client)",
+      "Added automatic retry on upload failures — recovers from flaky mobile connections",
+      "Better upload progress — shows stage-by-stage status (Preparing → Uploading → Parsing)",
+      "Fixed login refresh issue — users no longer need to refresh page after signing in",
+      "Improved auth reliability — graceful handling of subscription check failures",
+      "Added .pdf to accepted upload formats",
+    ],
+  },
+  {
     version: "v1.4.0",
     date: "April 13, 2026",
     platform: "Web",
