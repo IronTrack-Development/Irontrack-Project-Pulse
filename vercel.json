@@ -4,5 +4,11 @@
       "maxDuration": 300,
       "memory": 1024
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/notifications/check",
+      "schedule": "0 12 * * *"
+    }
+  ]
 }

@@ -14,6 +14,7 @@ import PriorityTab from "@/components/tabs/PriorityTab";
 import ReportsTab from "@/components/tabs/ReportsTab";
 import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
+import NotificationBell from "@/components/NotificationBell";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
@@ -129,6 +130,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               >
                 <RefreshCw size={15} />
               </button>
+              <NotificationBell projectId={id} />
               <ShareSnapshot projectId={id} />
               <Link
                 href={`/projects/${id}/report`}

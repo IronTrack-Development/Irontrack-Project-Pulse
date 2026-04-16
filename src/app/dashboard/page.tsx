@@ -55,6 +55,17 @@ export default function Dashboard() {
   const [showAdd, setShowAdd] = useState(false);
   const [dbError, setDbError] = useState(false);
 
+  const triggerNotificationCheck = async () => {
+    try {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      const today = new Date().toISOString().split('T')[0];
+      // Non-blocking: we don't await or handle the response
+      fetch(`/api/notifications/check?clientDate=${today}`).catch(() => {});
+    } catch {
+      // Silently ignore — notifications are best-effort
+    }
+  };
+
   const fetchProjects = async () => {
     setLoading(true);
     try {
@@ -79,6 +90,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchProjects();
+    // Fire-and-forget notification check on dashboard load.
+    // Triggers push notifications for inspections and overdue activities.
+    void triggerNotificationCheck();
   }, []);
 
   return (

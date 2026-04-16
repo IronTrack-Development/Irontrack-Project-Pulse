@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowLeft, HardDrive, FileText } from "lucide-react";
+import { ArrowLeft, HardDrive, FileText, Bell } from "lucide-react";
+import NotificationToggle from "@/components/NotificationToggle";
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { SupportButton } from "@/components/support-button";
@@ -97,6 +98,15 @@ export default async function SettingsPage() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Push Notifications Section */}
+        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <Bell size={20} className="text-[#F97316]" />
+            Notifications
+          </h2>
+          <NotificationToggle />
         </div>
 
         {/* Account section placeholder */}
