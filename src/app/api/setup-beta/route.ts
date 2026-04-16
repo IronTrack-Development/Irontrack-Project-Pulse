@@ -5,38 +5,45 @@ export async function GET() {
   const supabase = getServiceClient();
   const results: { email: string; status: string; error?: string }[] = [];
 
-  const accounts = [];
-  for (let i = 6; i <= 15; i++) {
-    accounts.push({ email: `beta${i}@irontrackpulse.com`, name: `Beta Tester ${i}` });
-  }
+  // Get all beta users 6-15
+  const { data: allUsers } = await supabase.auth.admin.listUsers();
+  const betaUsers = allUsers?.users?.filter(u => {
+    if (!u.email) return false;
+    const match = u.email.match(/^beta(\d+)@irontrackpulse\.com$/);
+    if (!match) return false;
+    const num = parseInt(match[1]);
+    return num >= 6 && num <= 15;
+  }) || [];
 
-  for (const account of accounts) {
-    const { data, error } = await supabase.auth.admin.createUser({
-      email: account.email,
+  for (const user of betaUsers) {
+    // Reset password
+    const { error: updateError } = await supabase.auth.admin.updateUserById(user.id, {
       password: 'IronTrack2026!',
       email_confirm: true,
-      user_metadata: { name: account.name },
     });
 
-    if (error) {
-      results.push({ email: account.email, status: 'failed', error: error.message });
+    if (updateError) {
+      results.push({ email: user.email!, status: 'password reset failed', error: updateError.message });
       continue;
     }
 
-    if (data.user) {
-      const { error: subError } = await supabase.from('user_subscriptions').upsert({
-        user_id: data.user.id,
-        status: 'active',
-        trial_ends_at: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
-        current_period_end: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
-      }, { onConflict: 'user_id' });
+    // Ensure subscription exists
+    const { error: subError } = await supabase.from('user_subscriptions').upsert({
+      user_id: user.id,
+      status: 'active',
+      trial_ends_at: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+      current_period_end: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+    }, { onConflict: 'user_id' });
 
-      results.push({
-        email: account.email,
-        status: subError ? 'user created, subscription failed' : 'success',
-        error: subError?.message,
-      });
-    }
+    results.push({
+      email: user.email!,
+      status: subError ? 'password reset, subscription failed' : 'success - password reset + subscription active',
+      error: subError?.message,
+    });
+  }
+
+  if (betaUsers.length === 0) {
+    return NextResponse.json({ message: 'No beta6-15 users found', results: [] });
   }
 
   return NextResponse.json({ results });
