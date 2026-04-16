@@ -31,17 +31,50 @@ export async function GET(
     if (a.activity_id) byId.set(a.activity_id, a);
   }
 
-  // ── Section 1: Critical Path ─────────────────────────────────────────────
-  // Critical = float_days === 0 or float_days === null, AND has both predecessors and successors
-  const criticalActivities = all.filter(
-    (a) =>
-      (a.float_days === 0 || a.float_days == null) &&
-      a.predecessor_ids &&
-      a.predecessor_ids.length > 0 &&
-      a.successor_ids &&
-      a.successor_ids.length > 0 &&
-      a.status !== "complete"
-  );
+  // ── Section 1: Critical Path (next 4 weeks) ─────────────────────────────
+  // Critical = activities starting within 4 weeks that are:
+  //   - float_days === 0 (true critical path), OR
+  //   - float_days <= 3 (near-critical), OR
+  //   - have predecessors (part of a logic chain), OR
+  //   - milestones within 4 weeks
+  // Broadened criteria so schedules without float data still show results
+  const in4Weeks = new Date(today);
+  in4Weeks.setDate(in4Weeks.getDate() + 28);
+
+  const criticalActivities = all.filter((a) => {
+    if (a.status === "complete") return false;
+    if (!a.start_date && !a.finish_date) return false;
+
+    const start = a.start_date ? new Date(a.start_date) : null;
+    const finish = a.finish_date ? new Date(a.finish_date) : null;
+
+    // Must be within 4-week window (starting or finishing)
+    const inWindow =
+      (start && start >= today && start <= in4Weeks) ||
+      (finish && finish >= today && finish <= in4Weeks) ||
+      (start && start <= today && finish && finish >= today); // currently active
+
+    if (!inWindow) return false;
+
+    // True critical path: zero float
+    if (a.float_days === 0) return true;
+
+    // Near-critical: low float
+    if (a.float_days !== null && a.float_days !== undefined && a.float_days <= 3) return true;
+
+    // Has predecessors (part of a logic chain — likely critical or near-critical)
+    if (a.predecessor_ids && a.predecessor_ids.length > 0) return true;
+
+    // Milestones in the window
+    if (a.milestone) return true;
+
+    // If no float data at all, include activities starting within 2 weeks (tighter)
+    const in2Weeks = new Date(today);
+    in2Weeks.setDate(in2Weeks.getDate() + 14);
+    if (a.float_days == null && start && start <= in2Weeks) return true;
+
+    return false;
+  });
 
   // Sort by start_date ascending — pick the one closest to today (in progress or soonest upcoming)
   const sortedCritical = [...criticalActivities].sort((a, b) => {
@@ -87,6 +120,8 @@ export async function GET(
     const impactStatement =
       impactedNames.length > 0
         ? `Delay to "${currentCritical.activity_name}" will push ${impactedNames.join(" and ")}`
+        : currentCritical.milestone
+        ? `"${currentCritical.activity_name}" is a key milestone — track closely`
         : `"${currentCritical.activity_name}" is on the critical path — any delay will compress the schedule`;
 
     criticalPathData = {
