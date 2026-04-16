@@ -395,7 +395,7 @@ function UploadContent() {
               <input
                 ref={fileRef}
                 type="file"
-                accept=".xlsx,.xls,.csv,.mpp,.xml,.xer,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv,application/xml,application/pdf"
+                accept={isMobile ? "*/*" : ".xlsx,.xls,.csv,.mpp,.xml,.xer,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv,application/xml,application/pdf,application/octet-stream"}
                 className="hidden"
                 onChange={(e) => {
                   const f = e.target.files?.[0];
