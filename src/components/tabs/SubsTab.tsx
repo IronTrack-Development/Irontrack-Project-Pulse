@@ -28,15 +28,21 @@ interface Sub {
 }
 
 interface SubStatus {
-  sub_id: string;
+  id: string;
   sub_name: string;
   trades: string[];
   status: "not_sent" | "sent" | "viewed" | "acknowledged";
-  link_created_at: string | null;
+  latest_active_link: {
+    id: string;
+    token: string;
+    label: string | null;
+    created_at: string;
+    expires_at: string | null;
+    share_url: string;
+  } | null;
   last_viewed_at: string | null;
   acknowledged_at: string | null;
   acknowledged_by: string | null;
-  link_token: string | null;
 }
 
 interface Props {
@@ -72,7 +78,11 @@ export default function SubsTab({ projectId }: Props) {
       if (subsRes.ok) setSubs(await subsRes.json());
       if (statusRes.ok) {
         const data = await statusRes.json();
-        if (Array.isArray(data)) setStatuses(data);
+        if (Array.isArray(data)) {
+          setStatuses(data);
+        } else if (data && Array.isArray(data.subs)) {
+          setStatuses(data.subs);
+        }
       }
     } catch {}
     setLoading(false);
@@ -145,7 +155,7 @@ export default function SubsTab({ projectId }: Props) {
   };
 
   const getStatusForSub = (subId: string): SubStatus | undefined => {
-    return statuses.find(s => s.sub_id === subId);
+    return statuses.find(s => s.id === subId);
   };
 
   const statusBadge = (status?: SubStatus) => {
@@ -333,9 +343,9 @@ export default function SubsTab({ projectId }: Props) {
                   </div>
 
                   <div className="flex items-center gap-2 ml-3">
-                    {status?.link_token ? (
+                    {status?.latest_active_link?.token ? (
                       <button
-                        onClick={(e) => { e.stopPropagation(); handleCopyLink(status.link_token!, sub.id); }}
+                        onClick={(e) => { e.stopPropagation(); handleCopyLink(status.latest_active_link!.token, sub.id); }}
                         className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                           copiedId === sub.id
                             ? "bg-[#22C55E]/20 text-[#22C55E]"
@@ -384,7 +394,7 @@ export default function SubsTab({ projectId }: Props) {
                         <div className="flex items-center gap-2">
                           <Link2 size={11} className="text-gray-500" />
                           <span className="text-gray-500">Link sent:</span>
-                          <span className="text-gray-300">{status.link_created_at ? new Date(status.link_created_at).toLocaleString() : "—"}</span>
+                          <span className="text-gray-300">{status.latest_active_link?.created_at ? new Date(status.latest_active_link.created_at).toLocaleString() : "—"}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Eye size={11} className="text-gray-500" />
@@ -407,7 +417,7 @@ export default function SubsTab({ projectId }: Props) {
 
                     {/* Actions */}
                     <div className="flex items-center gap-2 pt-1">
-                      {status?.link_token && (
+                      {status?.latest_active_link && (
                         <button
                           onClick={() => handleGenerateLink(sub.id)}
                           disabled={generating === sub.id}
