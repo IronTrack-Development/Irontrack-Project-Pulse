@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList
+  RefreshCw, Zap, ClipboardList, Users
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -12,6 +12,7 @@ import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
 import PriorityTab from "@/components/tabs/PriorityTab";
 import ReportsTab from "@/components/tabs/ReportsTab";
+import SubsTab from "@/components/tabs/SubsTab";
 import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
@@ -26,6 +27,7 @@ const TABS = [
   { id: "milestones", label: "Milestones", icon: Flag },
   { id: "progress", label: "Progress", icon: TrendingUp },
   { id: "reports", label: "Reports", icon: ClipboardList },
+  { id: "subs", label: "Subs", icon: Users },
 ];
 
 interface Project {
@@ -179,6 +181,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "milestones" && <MilestonesTab projectId={id} />}
         {activeTab === "progress" && <ProgressTab projectId={id} />}
         {activeTab === "reports" && <ReportsTab projectId={id} />}
+        {activeTab === "subs" && <SubsTab projectId={id} />}
       </div>
     </div>
   );
