@@ -6,11 +6,14 @@ import {
   CheckCircle2,
   AlertTriangle,
   Clock,
-  ArrowRight,
   CalendarDays,
   Loader2,
   XCircle,
+  ChevronDown,
   ChevronRight,
+  Users,
+  Timer,
+  Send,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -197,7 +200,607 @@ function StatCard({
   );
 }
 
+// ─── Empty State ───────────────────────────────────────────────────────────────
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div className="text-center py-12 text-gray-600">
+      <CalendarDays size={32} className="mx-auto mb-3 opacity-40" />
+      <p className="text-sm">{message}</p>
+    </div>
+  );
+}
+
+// ─── My Full Scope Tab ────────────────────────────────────────────────────────
+
+function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
+  const [completeExpanded, setCompleteExpanded] = useState(false);
+
+  // Gather all activities into status groups
+  const allActivities = [
+    ...activities.overdue,
+    ...activities.today,
+    ...activities.this_week,
+    ...activities.next_two_weeks,
+    ...activities.upcoming,
+    ...activities.complete,
+  ];
+
+  // Deduplicate by id
+  const seen = new Set<string>();
+  const deduped: Activity[] = [];
+  for (const act of allActivities) {
+    if (!seen.has(act.id)) {
+      seen.add(act.id);
+      deduped.push(act);
+    }
+  }
+
+  const overdue = deduped.filter(
+    (a) => a.status === "late" || (a.finish_date && new Date(a.finish_date + "T12:00:00") < new Date() && a.percent_complete < 100 && a.status !== "complete")
+  );
+  const inProgress = deduped.filter(
+    (a) => a.status === "in_progress" && !overdue.find((o) => o.id === a.id)
+  );
+  const complete = deduped.filter(
+    (a) => a.status === "complete" || a.percent_complete >= 100
+  );
+  const notStarted = deduped.filter(
+    (a) =>
+      !overdue.find((o) => o.id === a.id) &&
+      !inProgress.find((ip) => ip.id === a.id) &&
+      !complete.find((c) => c.id === a.id)
+  );
+
+  const total = deduped.length;
+
+  return (
+    <div className="space-y-4">
+      {/* Total badge */}
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-400">
+          <span className="text-white font-semibold">{total}</span> tasks assigned to your scope
+        </p>
+      </div>
+
+      {/* Overdue */}
+      {overdue.length > 0 && (
+        <ScopeGroup
+          label="Overdue"
+          count={overdue.length}
+          accentClass="text-red-400"
+          borderClass="border-red-800/40"
+          bgClass="bg-red-950/20"
+          iconNode={<AlertTriangle size={14} className="text-red-400" />}
+          activities={overdue}
+          defaultOpen
+        />
+      )}
+
+      {/* In Progress */}
+      {inProgress.length > 0 && (
+        <ScopeGroup
+          label="In Progress"
+          count={inProgress.length}
+          accentClass="text-orange-400"
+          borderClass="border-orange-800/40"
+          bgClass="bg-orange-950/20"
+          iconNode={<Clock size={14} className="text-orange-400" />}
+          activities={inProgress}
+          defaultOpen
+        />
+      )}
+
+      {/* Not Started */}
+      {notStarted.length > 0 && (
+        <ScopeGroup
+          label="Not Started"
+          count={notStarted.length}
+          accentClass="text-gray-300"
+          borderClass="border-[#1F1F25]"
+          bgClass="bg-[#13131A]"
+          iconNode={<ChevronRight size={14} className="text-gray-500" />}
+          activities={notStarted}
+          defaultOpen
+        />
+      )}
+
+      {/* Complete — collapsed by default */}
+      {complete.length > 0 && (
+        <ScopeGroup
+          label="Complete"
+          count={complete.length}
+          accentClass="text-green-400"
+          borderClass="border-green-800/40"
+          bgClass="bg-green-950/20"
+          iconNode={<CheckCircle2 size={14} className="text-green-400" />}
+          activities={complete}
+          defaultOpen={false}
+          forceOpen={completeExpanded}
+          onToggle={() => setCompleteExpanded((v) => !v)}
+        />
+      )}
+
+      {total === 0 && (
+        <EmptyState message="No activities assigned to your scope yet." />
+      )}
+    </div>
+  );
+}
+
+function ScopeGroup({
+  label,
+  count,
+  accentClass,
+  borderClass,
+  bgClass,
+  iconNode,
+  activities,
+  defaultOpen,
+  forceOpen,
+  onToggle,
+}: {
+  label: string;
+  count: number;
+  accentClass: string;
+  borderClass: string;
+  bgClass: string;
+  iconNode: React.ReactNode;
+  activities: Activity[];
+  defaultOpen: boolean;
+  forceOpen?: boolean;
+  onToggle?: () => void;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const isOpen = forceOpen !== undefined ? forceOpen : open;
+
+  function toggle() {
+    if (onToggle) {
+      onToggle();
+    } else {
+      setOpen((v) => !v);
+    }
+  }
+
+  return (
+    <div className={`border ${borderClass} rounded-xl overflow-hidden`}>
+      <button
+        onClick={toggle}
+        className={`w-full flex items-center justify-between px-4 py-3 ${bgClass}`}
+      >
+        <div className="flex items-center gap-2">
+          {iconNode}
+          <span className={`text-sm font-semibold ${accentClass}`}>
+            {label}
+          </span>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full bg-black/20 ${accentClass}`}>
+            {count}
+          </span>
+        </div>
+        <ChevronDown
+          size={16}
+          className={`text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="p-3 space-y-2 bg-[#0B0B0D]">
+          {activities.map((act) => (
+            <ActivityCard key={act.id} activity={act} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Progress Report Tab ──────────────────────────────────────────────────────
+
+type ActivityStatusChoice = "started" | "in_progress" | "complete";
+
+interface ReportState {
+  selectedActivityIds: Set<string>;
+  activityStatuses: Record<string, ActivityStatusChoice>;
+  manpowerCount: number;
+  totalHours: number;
+  delayReasons: Set<string>;
+  notes: string;
+  submittedBy: string;
+}
+
+const DELAY_CHIPS = [
+  "Weather",
+  "Material Delay",
+  "Waiting on Other Trade",
+  "Inspection Hold",
+  "Equipment",
+  "Design Issue",
+  "None",
+];
+
+function ProgressReportTab({
+  activities,
+  token,
+  ackName,
+}: {
+  activities: ViewData["activities"];
+  token: string;
+  ackName: string;
+}) {
+  // All non-complete activities are available to report on
+  const allActivities = [
+    ...activities.overdue,
+    ...activities.today,
+    ...activities.this_week,
+    ...activities.next_two_weeks,
+    ...activities.upcoming,
+  ];
+  const seen = new Set<string>();
+  const reportableActivities: Activity[] = [];
+  for (const act of allActivities) {
+    if (!seen.has(act.id) && act.status !== "complete" && act.percent_complete < 100) {
+      seen.add(act.id);
+      reportableActivities.push(act);
+    }
+  }
+
+  const [report, setReport] = useState<ReportState>({
+    selectedActivityIds: new Set(),
+    activityStatuses: {},
+    manpowerCount: 1,
+    totalHours: 8,
+    delayReasons: new Set(),
+    notes: "",
+    submittedBy: ackName,
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitResult, setSubmitResult] = useState<{
+    submitted_at: string;
+  } | null>(null);
+
+  function toggleActivity(id: string) {
+    setReport((prev) => {
+      const next = new Set(prev.selectedActivityIds);
+      if (next.has(id)) {
+        next.delete(id);
+        const statuses = { ...prev.activityStatuses };
+        delete statuses[id];
+        return { ...prev, selectedActivityIds: next, activityStatuses: statuses };
+      } else {
+        next.add(id);
+        return {
+          ...prev,
+          selectedActivityIds: next,
+          activityStatuses: { ...prev.activityStatuses, [id]: "in_progress" },
+        };
+      }
+    });
+  }
+
+  function setActivityStatus(id: string, status: ActivityStatusChoice) {
+    setReport((prev) => ({
+      ...prev,
+      activityStatuses: { ...prev.activityStatuses, [id]: status },
+    }));
+  }
+
+  function setManpower(val: number) {
+    setReport((prev) => ({
+      ...prev,
+      manpowerCount: val,
+      totalHours: val * 8,
+    }));
+  }
+
+  function toggleDelay(chip: string) {
+    setReport((prev) => {
+      const next = new Set(prev.delayReasons);
+      if (chip === "None") {
+        // None clears everything else
+        return { ...prev, delayReasons: new Set(["None"]) };
+      }
+      // Selecting something real clears "None"
+      next.delete("None");
+      if (next.has(chip)) {
+        next.delete(chip);
+      } else {
+        next.add(chip);
+      }
+      return { ...prev, delayReasons: next };
+    });
+  }
+
+  async function handleSubmit() {
+    if (!report.submittedBy.trim()) return;
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch(`/api/view/${token}/report`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          worked_on_activity_ids: Array.from(report.selectedActivityIds),
+          activity_statuses: report.activityStatuses,
+          manpower_count: report.manpowerCount,
+          total_hours: report.totalHours,
+          delay_reasons: Array.from(report.delayReasons),
+          notes: report.notes,
+          submitted_by: report.submittedBy.trim(),
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) {
+        setSubmitError(json.error ?? "Failed to submit report");
+        return;
+      }
+      setSubmitResult({ submitted_at: json.submitted_at ?? new Date().toISOString() });
+    } catch {
+      setSubmitError("Network error — please try again");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  // ── Success state
+  if (submitResult) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center space-y-4">
+        <div className="w-16 h-16 rounded-full bg-green-900/30 border border-green-700/40 flex items-center justify-center">
+          <CheckCircle2 size={32} className="text-green-400" />
+        </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Report Submitted</h2>
+          <p className="text-sm text-gray-400 mt-1">
+            {new Date(submitResult.submitted_at).toLocaleString("en-US", {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>
+        <p className="text-xs text-gray-600 max-w-xs">
+          Your foreman report has been recorded. The GC can view it in their IronTrack dashboard.
+        </p>
+        <button
+          onClick={() => setSubmitResult(null)}
+          className="mt-4 text-sm text-[#F97316] underline underline-offset-2"
+        >
+          Submit another report
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-5 pb-8">
+      {/* Beta banner */}
+      <div className="bg-[#1A1620] border border-purple-800/30 rounded-xl px-4 py-3 flex items-center gap-3">
+        <span className="text-base">📊</span>
+        <p className="text-xs text-purple-300 leading-snug">
+          <span className="font-semibold">Progress Reports — Free during beta.</span>{" "}
+          Coming soon: $10/month for your whole team.
+        </p>
+      </div>
+
+      {/* Section 1: What did you work on today? */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-gray-200">
+          What did you work on today?
+        </h3>
+        <p className="text-xs text-gray-500">Tap to select tasks you worked on</p>
+
+        {reportableActivities.length === 0 ? (
+          <p className="text-xs text-gray-600 py-4 text-center">
+            No active tasks in your scope right now.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {reportableActivities.map((act) => {
+              const selected = report.selectedActivityIds.has(act.id);
+              return (
+                <div key={act.id} className="space-y-2">
+                  {/* Tappable task card */}
+                  <button
+                    onClick={() => toggleActivity(act.id)}
+                    className={`w-full text-left rounded-xl p-4 border transition-all ${
+                      selected
+                        ? "bg-[#F97316]/10 border-[#F97316]/50"
+                        : "bg-[#13131A] border-[#1F1F25]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm text-gray-100 leading-snug flex-1">
+                        {act.activity_name}
+                      </p>
+                      <div
+                        className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
+                          selected
+                            ? "bg-[#F97316] border-[#F97316]"
+                            : "border-[#3a3a45] bg-transparent"
+                        }`}
+                      >
+                        {selected && <CheckCircle2 size={12} className="text-white" />}
+                      </div>
+                    </div>
+                    {act.finish_date && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Due: {formatDate(act.finish_date)}
+                      </p>
+                    )}
+                  </button>
+
+                  {/* Status buttons (only show when selected) */}
+                  {selected && (
+                    <div className="flex gap-2 px-1">
+                      {(
+                        [
+                          { key: "started", label: "Started" },
+                          { key: "in_progress", label: "In Progress" },
+                          { key: "complete", label: "Complete" },
+                        ] as { key: ActivityStatusChoice; label: string }[]
+                      ).map(({ key, label }) => {
+                        const active = report.activityStatuses[act.id] === key;
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => setActivityStatus(act.id, key)}
+                            className={`flex-1 py-2 px-2 rounded-lg text-xs font-medium border transition-colors ${
+                              active
+                                ? key === "complete"
+                                  ? "bg-green-800/40 border-green-600/50 text-green-300"
+                                  : key === "in_progress"
+                                  ? "bg-orange-800/40 border-orange-600/50 text-orange-300"
+                                  : "bg-blue-800/40 border-blue-600/50 text-blue-300"
+                                : "bg-[#0B0B0D] border-[#1F1F25] text-gray-500"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-[#1F1F25]" />
+
+      {/* Section 2: Manpower */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+          <Users size={15} className="text-[#F97316]" />
+          Manpower
+        </h3>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-1.5">
+            <label className="text-xs text-gray-500">Workers on site today</label>
+            <input
+              type="number"
+              min={0}
+              max={999}
+              value={report.manpowerCount}
+              onChange={(e) => setManpower(Math.max(0, parseInt(e.target.value) || 0))}
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs text-gray-500 flex items-center gap-1">
+              <Timer size={11} /> Total hours worked
+            </label>
+            <input
+              type="number"
+              min={0}
+              max={9999}
+              step={0.5}
+              value={report.totalHours}
+              onChange={(e) =>
+                setReport((prev) => ({
+                  ...prev,
+                  totalHours: Math.max(0, parseFloat(e.target.value) || 0),
+                }))
+              }
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-[#1F1F25]" />
+
+      {/* Section 3: Delays / Issues */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-200">Delays / Issues</h3>
+          <span className="text-xs text-gray-600">Optional</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {DELAY_CHIPS.map((chip) => {
+            const active = report.delayReasons.has(chip);
+            return (
+              <button
+                key={chip}
+                onClick={() => toggleDelay(chip)}
+                className={`px-3 py-2 rounded-full text-xs font-medium border transition-colors ${
+                  active
+                    ? chip === "None"
+                      ? "bg-gray-700 border-gray-500 text-gray-100"
+                      : "bg-red-900/40 border-red-600/50 text-red-300"
+                    : "bg-[#13131A] border-[#1F1F25] text-gray-400"
+                }`}
+              >
+                {chip}
+              </button>
+            );
+          })}
+        </div>
+        <textarea
+          value={report.notes}
+          onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
+          placeholder="Additional notes… (optional)"
+          rows={3}
+          className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
+        />
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-[#1F1F25]" />
+
+      {/* Section 4: Submit */}
+      <div className="space-y-3">
+        {/* Name confirm */}
+        <div className="space-y-1.5">
+          <label className="text-xs text-gray-500">Submitted by</label>
+          <input
+            type="text"
+            value={report.submittedBy}
+            onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
+            placeholder="Your name"
+            className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+          />
+        </div>
+
+        {submitError && (
+          <p className="text-xs text-red-400 text-center">{submitError}</p>
+        )}
+
+        <button
+          onClick={handleSubmit}
+          disabled={submitting || !report.submittedBy.trim()}
+          className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-900/30"
+        >
+          {submitting ? (
+            <Loader2 size={20} className="animate-spin" />
+          ) : (
+            <>
+              <Send size={18} />
+              Submit Daily Report
+            </>
+          )}
+        </button>
+
+        <p className="text-xs text-gray-600 text-center">
+          One report per day. Submitting again today will update your previous report.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
+
+type TabKey = "today" | "full_scope" | "this_week" | "next_two_weeks" | "progress_report";
 
 export default function SubScheduleViewPage() {
   const { token } = useParams<{ token: string }>();
@@ -206,9 +809,7 @@ export default function SubScheduleViewPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState<"today" | "this_week" | "next_two_weeks" | "dependencies">(
-    "today"
-  );
+  const [activeTab, setActiveTab] = useState<TabKey>("today");
 
   // Acknowledge flow state — gate-first: sub must ack before seeing schedule
   const [ackName, setAckName] = useState("");
@@ -260,6 +861,7 @@ export default function SubScheduleViewPage() {
         return;
       }
       setAckDone(true);
+      setShowGate(false);
       setAckTimestamp(json.acknowledged_at ?? new Date().toISOString());
     } catch {
       setAckError("Network error — please try again");
@@ -294,28 +896,32 @@ export default function SubScheduleViewPage() {
     );
   }
 
-  const { project, sub, stats, activities, dependencies } = data;
+  const { project, sub, stats, activities } = data;
 
-  const tabs = [
+  const tabs: { key: TabKey; label: string; count?: number }[] = [
     {
-      key: "today" as const,
+      key: "today",
       label: "Today",
       count: activities.today.length + activities.overdue.length,
     },
     {
-      key: "this_week" as const,
+      key: "full_scope",
+      label: "My Full Scope",
+      count: stats.total_tasks,
+    },
+    {
+      key: "this_week",
       label: "This Week",
       count: activities.this_week.length,
     },
     {
-      key: "next_two_weeks" as const,
+      key: "next_two_weeks",
       label: "Next 2 Weeks",
       count: activities.next_two_weeks.length,
     },
     {
-      key: "dependencies" as const,
-      label: "Dependencies",
-      count: dependencies.length,
+      key: "progress_report",
+      label: "Progress Report",
     },
   ];
 
@@ -380,7 +986,7 @@ export default function SubScheduleViewPage() {
                 <>
                   <CheckCircle2 size={16} />
                   Acknowledge {"&"} View Schedule
-                </>  
+                </>
               )}
             </button>
           </div>
@@ -452,7 +1058,7 @@ export default function SubScheduleViewPage() {
               }`}
             >
               {tab.label}
-              {tab.count > 0 && (
+              {tab.count !== undefined && tab.count > 0 && (
                 <span
                   className={`text-xs rounded-full px-1.5 py-0 ${
                     activeTab === tab.key
@@ -494,6 +1100,11 @@ export default function SubScheduleViewPage() {
                 <EmptyState message="No active tasks today for your trades." />
               ) : null}
             </>
+          )}
+
+          {/* My Full Scope Tab */}
+          {activeTab === "full_scope" && (
+            <FullScopeTab activities={activities} />
           )}
 
           {/* This Week Tab */}
@@ -552,19 +1163,13 @@ export default function SubScheduleViewPage() {
             </>
           )}
 
-          {/* Dependencies Tab */}
-          {activeTab === "dependencies" && (
-            <>
-              {dependencies.length > 0 ? (
-                <div className="space-y-3">
-                  {dependencies.map((dep, i) => (
-                    <DependencyCard key={i} dep={dep} />
-                  ))}
-                </div>
-              ) : (
-                <EmptyState message="No cross-trade dependencies found for your tasks." />
-              )}
-            </>
+          {/* Progress Report Tab */}
+          {activeTab === "progress_report" && (
+            <ProgressReportTab
+              activities={activities}
+              token={token}
+              ackName={ackName}
+            />
           )}
         </div>
       </div>
@@ -586,78 +1191,6 @@ export default function SubScheduleViewPage() {
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-// ─── Dependency Card ───────────────────────────────────────────────────────────
-
-function DependencyCard({ dep }: { dep: DependencyEntry }) {
-  const predStatus = dep.predecessor.status;
-  const isBlocking = predStatus !== "complete";
-
-  return (
-    <div
-      className={`bg-[#13131A] border rounded-xl p-4 space-y-3 ${
-        isBlocking ? "border-orange-700/40" : "border-[#1F1F25]"
-      }`}
-    >
-      {isBlocking && (
-        <div className="flex items-center gap-1.5 text-xs text-orange-400">
-          <AlertTriangle size={12} />
-          <span className="font-medium">Blocking dependency</span>
-        </div>
-      )}
-
-      {/* Predecessor (other trade's task) */}
-      <div className="space-y-1">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          {dep.predecessor.trade ?? "Other Trade"} must complete:
-        </p>
-        <p className="text-sm text-gray-200 font-medium">{dep.predecessor.activity_name}</p>
-        <div className="flex flex-wrap gap-x-3 text-xs text-gray-500">
-          {dep.predecessor.finish_date && (
-            <span>By: <span className="text-gray-300">{formatDate(dep.predecessor.finish_date)}</span></span>
-          )}
-          <span>Status: {dep.predecessor.status === "complete"
-            ? <span className="text-green-400">Complete</span>
-            : dep.predecessor.status === "late"
-              ? <span className="text-red-400">Late</span>
-              : <span className="text-orange-400">In Progress</span>}
-          </span>
-        </div>
-      </div>
-
-      {/* Arrow connector */}
-      <div className="flex items-center gap-2 text-gray-600">
-        <div className="flex-1 h-px bg-[#1F1F25]" />
-        <ArrowRight size={14} className="text-[#F97316]" />
-        <div className="flex-1 h-px bg-[#1F1F25]" />
-      </div>
-
-      {/* Your activity */}
-      <div className="space-y-1">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          Before you can start:
-        </p>
-        <p className="text-sm text-gray-100 font-medium">{dep.your_activity.activity_name}</p>
-        {dep.your_activity.start_date && (
-          <p className="text-xs text-gray-500">
-            Your start: <span className="text-gray-300">{formatDate(dep.your_activity.start_date)}</span>
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Empty State ───────────────────────────────────────────────────────────────
-
-function EmptyState({ message }: { message: string }) {
-  return (
-    <div className="text-center py-12 text-gray-600">
-      <CalendarDays size={32} className="mx-auto mb-3 opacity-40" />
-      <p className="text-sm">{message}</p>
     </div>
   );
 }
