@@ -591,7 +591,7 @@ function ProgressReportTab({
         return {
           ...prev,
           selectedActivityIds: next,
-          activityStatuses: { ...prev.activityStatuses, [id]: "in_progress" },
+          activityStatuses: { ...prev.activityStatuses, [id]: "0" },
         };
       }
     });
