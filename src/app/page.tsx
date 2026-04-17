@@ -87,13 +87,24 @@ export default function LandingPage() {
             <p className="text-base md:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
               Upload your project schedule. Get a 3-week lookahead, milestone tracking, and progress — instantly. No training. No setup. Just answers.
             </p>
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl text-base md:text-lg font-bold transition-colors shadow-lg shadow-[#F97316]/20"
-            >
-              Get Started — $19.99/month
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl text-base md:text-lg font-bold transition-colors shadow-lg shadow-[#F97316]/20"
+              >
+                <HardHat className="w-5 h-5" />
+                I&apos;m a General Contractor
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/signup/sub"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-white rounded-xl text-base md:text-lg font-bold transition-colors border border-[#2a2a35]"
+              >
+                <Briefcase className="w-5 h-5" />
+                I&apos;m a Subcontractor
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
 
           {/* App Screenshot Placeholder */}

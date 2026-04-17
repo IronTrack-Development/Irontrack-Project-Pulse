@@ -30,10 +30,11 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Public routes that don't require auth
-  const publicRoutes = ['/', '/login', '/signup', '/terms', '/privacy'];
+  const publicRoutes = ['/', '/login', '/signup', '/signup/sub', '/terms', '/privacy'];
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
   const isSubView = request.nextUrl.pathname.startsWith('/view/');
+  const isSubRoute = request.nextUrl.pathname.startsWith('/sub/');
   const isStaticAsset =
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/favicon') ||
@@ -51,6 +52,12 @@ export async function middleware(request: NextRequest) {
     redirectUrl.pathname = '/login';
     redirectUrl.searchParams.set('redirect', request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
+  }
+
+  // Sub routes: require auth but NOT a GC subscription check
+  // (user is already verified above; subs have separate billing)
+  if (isSubRoute) {
+    return supabaseResponse;
   }
 
   // Allow subscribe page and setup page for authenticated users
