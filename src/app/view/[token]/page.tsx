@@ -18,6 +18,18 @@ import {
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+interface PastReport {
+  id: string;
+  report_date: string;
+  submitted_by: string;
+  manpower_count: number | null;
+  total_hours: number | null;
+  delay_reasons: string[];
+  notes: string | null;
+  worked_on_activities: Array<{ activity_id: string; status: string }>;
+  submitted_at: string;
+}
+
 interface Activity {
   id: string;
   activity_id?: string;
@@ -418,14 +430,120 @@ const DELAY_CHIPS = [
   "None",
 ];
 
+// ─── Past Reports Section ────────────────────────────────────────────────────
+
+function PastReportsSection({ reports }: { reports: PastReport[] }) {
+  const [open, setOpen] = useState(false);
+
+  if (reports.length === 0) return null;
+
+  return (
+    <div className="border border-[#1F1F25] rounded-xl overflow-hidden">
+      {/* Collapsible header */}
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-[#13131A]"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-gray-200">
+            📋 Past Reports
+          </span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1F1F25] text-gray-400">
+            {reports.length}
+          </span>
+        </div>
+        <ChevronDown
+          size={16}
+          className={`text-gray-500 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className="divide-y divide-[#1F1F25] bg-[#0B0B0D]">
+          {reports.map((report) => (
+            <div key={report.id} className="p-4 space-y-2">
+              {/* Date + submitted by */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-gray-100">
+                  {formatDate(report.report_date)}
+                </span>
+                <span className="text-xs text-gray-500">
+                  by {report.submitted_by}
+                </span>
+              </div>
+
+              {/* Manpower + hours */}
+              <div className="flex gap-4 text-xs text-gray-400">
+                {report.manpower_count != null && (
+                  <span className="flex items-center gap-1">
+                    <Users size={11} className="text-[#F97316]" />
+                    {report.manpower_count} workers
+                  </span>
+                )}
+                {report.total_hours != null && (
+                  <span className="flex items-center gap-1">
+                    <Timer size={11} className="text-[#F97316]" />
+                    {report.total_hours}h total
+                  </span>
+                )}
+              </div>
+
+              {/* Delay chips */}
+              {report.delay_reasons.length > 0 && !report.delay_reasons.includes("None") && (
+                <div className="flex flex-wrap gap-1.5">
+                  {report.delay_reasons.map((d) => (
+                    <span
+                      key={d}
+                      className="text-xs px-2 py-0.5 rounded-full bg-red-900/30 border border-red-700/30 text-red-400"
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Task progress list */}
+              {report.worked_on_activities.length > 0 && (
+                <div className="space-y-1">
+                  {report.worked_on_activities.map((task, i) => {
+                    const pct = parseInt(task.status, 10);
+                    const displayPct = isNaN(pct) ? task.status : `${pct}%`;
+                    return (
+                      <div key={i} className="flex items-center justify-between text-xs">
+                        <span className="text-gray-500 truncate pr-2 flex-1">
+                          Task
+                        </span>
+                        <span className="text-gray-300 flex-shrink-0">{displayPct}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Notes */}
+              {report.notes && (
+                <p className="text-xs text-gray-500 italic">“{report.notes}”</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Progress Report Tab ────────────────────────────────────────────────────
+
 function ProgressReportTab({
   activities,
   token,
   ackName,
+  pastReports,
 }: {
   activities: ViewData["activities"];
   token: string;
   ackName: string;
+  pastReports: PastReport[];
 }) {
   // All non-complete activities are available to report on
   const allActivities = [
@@ -579,6 +697,9 @@ function ProgressReportTab({
 
   return (
     <div className="space-y-5 pb-8">
+      {/* Past Reports — above the form */}
+      <PastReportsSection reports={pastReports} />
+
       {/* Beta banner */}
       <div className="bg-[#1A1620] border border-purple-800/30 rounded-xl px-4 py-3 flex items-center gap-3">
         <span className="text-base">📊</span>
@@ -817,6 +938,9 @@ export default function SubScheduleViewPage() {
 
   const [activeTab, setActiveTab] = useState<TabKey>("today");
 
+  // Past reports state — fetched once after schedule loads
+  const [pastReports, setPastReports] = useState<PastReport[]>([]);
+
   // Acknowledge flow state — gate-first: sub must ack before seeing schedule
   const [ackName, setAckName] = useState("");
   const [ackSubmitting, setAckSubmitting] = useState(false);
@@ -843,9 +967,23 @@ export default function SubScheduleViewPage() {
     }
   }, [token]);
 
+  // Fetch past reports (best-effort, non-blocking)
+  const fetchPastReports = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/view/${token}/reports`);
+      if (res.ok) {
+        const json: PastReport[] = await res.json();
+        setPastReports(Array.isArray(json) ? json : []);
+      }
+    } catch {
+      // Silently ignore — past reports are non-critical
+    }
+  }, [token]);
+
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    fetchPastReports();
+  }, [fetchData, fetchPastReports]);
 
   // Acknowledge handler
   async function handleAcknowledge() {
@@ -1175,6 +1313,7 @@ export default function SubScheduleViewPage() {
               activities={activities}
               token={token}
               ackName={ackName}
+              pastReports={pastReports}
             />
           )}
         </div>

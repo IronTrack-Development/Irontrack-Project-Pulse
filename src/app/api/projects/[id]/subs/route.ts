@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { normalizeCompanyName } from "@/lib/company-match";
 
 // GET /api/projects/[id]/subs — list all subs on a project
 export async function GET(
@@ -88,6 +89,36 @@ export async function POST(
       );
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // ── Auto-match to a sub_companies record (fire-and-forget) ──────────────────
+  // Normalize the submitted sub_name and compare against all sub_companies.
+  // If we find a match, link the new project_subs row to that company.
+  if (data?.id) {
+    try {
+      const normalizedSubName = normalizeCompanyName(body.sub_name);
+
+      // Fetch all sub_companies (typically small table; no full-text index needed)
+      const { data: companies } = await supabase
+        .from("sub_companies")
+        .select("id, company_name");
+
+      if (companies && companies.length > 0) {
+        const match = companies.find(
+          (c) => normalizeCompanyName(c.company_name) === normalizedSubName
+        );
+
+        if (match) {
+          // Update the project_subs row to link to the matched sub_company
+          await supabase
+            .from("project_subs")
+            .update({ sub_company_id: match.id })
+            .eq("id", data.id);
+        }
+      }
+    } catch {
+      // Auto-matching is best-effort — never fail the request
+    }
   }
 
   return NextResponse.json(data, { status: 201 });
