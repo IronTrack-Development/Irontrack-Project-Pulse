@@ -673,8 +673,8 @@ export async function POST(req: NextRequest) {
       health_score: xScore,
       ai_parsed: false,
     });
-  } else if (ext === "xml" || ext === "pdf") {
-    // AI-powered parsing for XML and PDF files
+  } else if (ext === "xml") {
+    // AI-powered parsing for XML files
     try {
       rows = await aiParseSchedule(buffer, filename, ext);
       usedAI = true;
@@ -692,7 +692,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
   } else {
-    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .pdf, .mpp, .xml, .xer" }, { status: 400 });
+    return NextResponse.json({ error: "Unsupported file type. Accepted: .xlsx, .xls, .csv, .mpp, .xml, .xer" }, { status: 400 });
   }
 
   if (rows.length === 0) {

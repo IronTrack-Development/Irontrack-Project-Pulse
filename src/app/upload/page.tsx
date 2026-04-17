@@ -67,7 +67,7 @@ function UploadContent() {
   // Validate file type client-side (since mobile accept attr is unreliable)
   const isValidFileType = (f: File): boolean => {
     const ext = f.name.split(".").pop()?.toLowerCase() || "";
-    return ["xlsx", "xls", "csv", "mpp", "xml", "xer", "pdf"].includes(ext);
+    return ["xlsx", "xls", "csv", "mpp", "xml", "xer"].includes(ext);
   };
 
   const autoDetectMapping = async (f: File) => {
@@ -384,7 +384,7 @@ function UploadContent() {
                     </>
                   )}
                   <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
-                    {[".xlsx", ".csv", ".mpp", ".xml", ".xer", ".pdf"].map((ext) => (
+                    {[".xlsx", ".csv", ".mpp", ".xml", ".xer"].map((ext) => (
                       <span key={ext} className="text-xs bg-[#1F1F25] text-gray-500 px-2 py-1 rounded font-mono">
                         {ext}
                       </span>
