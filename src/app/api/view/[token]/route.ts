@@ -40,10 +40,10 @@ export async function GET(
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
   }
 
-  // 3. Get the sub's trades
+  // 3. Get the sub info (trades + manually selected activity_ids)
   const { data: sub, error: subError } = await supabase
     .from("project_subs")
-    .select("id, sub_name, trades")
+    .select("id, sub_name, trades, activity_ids")
     .eq("id", link.sub_id)
     .single();
 
@@ -51,12 +51,29 @@ export async function GET(
     return NextResponse.json({ error: "Sub not found" }, { status: 404 });
   }
 
-  // 4. Query activities for the sub's trades
-  const { data: subActivities, error: actError } = await supabase
-    .from("parsed_activities")
-    .select("*")
-    .eq("project_id", link.project_id)
-    .in("trade", sub.trades);
+  // 4. Query activities — use manually selected IDs if available, otherwise fall back to trade filter
+  let subActivities;
+  let actError;
+
+  if (sub.activity_ids && sub.activity_ids.length > 0) {
+    // GC hand-picked specific activities for this sub
+    const result = await supabase
+      .from("parsed_activities")
+      .select("*")
+      .eq("project_id", link.project_id)
+      .in("id", sub.activity_ids);
+    subActivities = result.data;
+    actError = result.error;
+  } else {
+    // Fall back to trade-based filtering
+    const result = await supabase
+      .from("parsed_activities")
+      .select("*")
+      .eq("project_id", link.project_id)
+      .in("trade", sub.trades);
+    subActivities = result.data;
+    actError = result.error;
+  }
 
   if (actError) {
     return NextResponse.json({ error: actError.message }, { status: 500 });

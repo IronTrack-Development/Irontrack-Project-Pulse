@@ -36,6 +36,7 @@ export async function POST(
     contact_phone?: string;
     contact_email?: string;
     trades: string[];
+    activity_ids?: string[];
     notes?: string;
   };
 
@@ -48,8 +49,8 @@ export async function POST(
   if (!body.sub_name || typeof body.sub_name !== "string") {
     return NextResponse.json({ error: "sub_name is required" }, { status: 400 });
   }
-  if (!Array.isArray(body.trades) || body.trades.length === 0) {
-    return NextResponse.json({ error: "trades array is required and must not be empty" }, { status: 400 });
+  if (!Array.isArray(body.trades)) {
+    body.trades = [];
   }
 
   // Verify the project exists
@@ -72,6 +73,7 @@ export async function POST(
       contact_phone: body.contact_phone ?? null,
       contact_email: body.contact_email ?? null,
       trades: body.trades,
+      activity_ids: body.activity_ids ?? null,
       notes: body.notes ?? null,
     })
     .select()

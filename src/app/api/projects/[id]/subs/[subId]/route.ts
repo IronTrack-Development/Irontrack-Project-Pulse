@@ -52,6 +52,7 @@ export async function PATCH(
     "contact_phone",
     "contact_email",
     "trades",
+    "activity_ids",
     "notes",
   ];
   const updates: Record<string, unknown> = {};
