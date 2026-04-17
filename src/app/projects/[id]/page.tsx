@@ -100,63 +100,67 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   const color = healthColor(project.health_score);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[#0B0B0D] overflow-x-hidden">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25]">
-        <div className="px-6 pt-4 pb-0 max-w-7xl mx-auto">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm mb-2 transition-colors"
-              >
-                <ArrowLeft size={14} />
-                Back
-              </Link>
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-3 h-3 rounded-full shrink-0"
-                  style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}
-                />
-                <h1 className="text-xl font-bold text-white">{project.name}</h1>
-                <span className="text-xs text-gray-500 font-mono">{project.project_number}</span>
-              </div>
-              <p className="text-sm text-gray-500 mt-0.5 ml-6">
-                {project.client_name} · {project.location}
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
+        <div className="px-4 md:px-6 pt-3 md:pt-4 pb-0 max-w-7xl mx-auto">
+          {/* Top row: back + action buttons */}
+          <div className="flex items-center justify-between mb-2">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px]"
+            >
+              <ArrowLeft size={16} />
+              Back
+            </Link>
+            <div className="flex items-center gap-1.5 md:gap-3">
               <button
                 onClick={fetchProject}
-                className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+                className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
-                <RefreshCw size={15} />
+                <RefreshCw size={16} />
               </button>
               <NotificationBell projectId={id} />
               <ShareSnapshot projectId={id} />
               <Link
                 href={`/projects/${id}/report`}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
-                <ClipboardList size={13} />
-                Report
+                <ClipboardList size={14} />
+                <span className="hidden sm:inline">Report</span>
               </Link>
               <Link
                 href={`/upload?project=${id}`}
-                className="px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                className="hidden md:flex px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
               >
                 Upload Schedule
               </Link>
             </div>
           </div>
 
-          {/* Tabs */}
+          {/* Project name + info */}
+          <div className="mb-3">
+            <div className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full shrink-0"
+                style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}
+              />
+              <h1 className="text-lg md:text-xl font-bold text-white truncate">{project.name}</h1>
+            </div>
+            {(project.client_name || project.location) && (
+              <p className="text-xs md:text-sm text-gray-500 mt-0.5 ml-5 truncate">
+                {[project.client_name, project.location].filter(Boolean).join(" · ")}
+              </p>
+            )}
+          </div>
+
+          {/* Tabs — bigger touch targets */}
           <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1">
             {TABS.map(({ id: tabId, label, icon: Icon }) => (
               <button
                 key={tabId}
                 onClick={() => setActiveTab(tabId)}
-                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3 md:px-4 py-3 md:py-2.5 text-xs md:text-sm font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px] ${
                   activeTab === tabId
                     ? "border-[#F97316] text-[#F97316]"
                     : "border-transparent text-gray-500 hover:text-gray-300"
@@ -171,7 +175,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
       </div>
 
       {/* Tab content */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
         {activeTab === "priority" && <PriorityTab projectId={id} />}
         {activeTab === "today" && <DayPlanTab projectId={id} day="today" />}
         {activeTab === "tomorrow" && <DayPlanTab projectId={id} day="tomorrow" />}
