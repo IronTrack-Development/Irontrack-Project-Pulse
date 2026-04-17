@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileNav from "@/components/MobileNav";
+import ManifestLoader from "@/components/ManifestLoader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -15,7 +16,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
   description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
-  manifest: "/manifest.json",
+  // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
     title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
     description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
@@ -43,11 +44,8 @@ export const metadata: Metadata = {
       },
     ],
   },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: "IronTrack Pulse",
-  },
+  // appleWebApp removed from root — applied conditionally via ManifestLoader
+  // to prevent iOS from overriding sub view URLs on Add to Home Screen
 };
 
 export default function RootLayout({
@@ -66,6 +64,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=3" />
       </head>
       <body className="bg-[#0B0B0D] text-gray-100 min-h-screen overflow-x-hidden">
+        <ManifestLoader />
         {children}
         <MobileNav />
       </body>
