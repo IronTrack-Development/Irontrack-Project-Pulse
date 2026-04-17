@@ -599,14 +599,14 @@ function ProgressReportTab({
   }
 
   function setActivityStatus(id: string, status: ActivityStatusChoice) {
-    setReport((prev) => ({
-      ...prev,
-      activityStatuses: { ...prev.activityStatuses, [id]: status },
-    }));
+    setReport((prev): ReportState => {
+      const statuses: Record<string, ActivityStatusChoice> = { ...prev.activityStatuses, [id]: status };
+      return { ...prev, activityStatuses: statuses };
+    });
   }
 
   function setManpower(val: number) {
-    setReport((prev) => ({
+    setReport((prev): ReportState => ({
       ...prev,
       manpowerCount: val,
       totalHours: val * 8,
@@ -614,7 +614,7 @@ function ProgressReportTab({
   }
 
   function toggleDelay(chip: string) {
-    setReport((prev) => {
+    setReport((prev): ReportState => {
       const next = new Set(prev.delayReasons);
       if (chip === "None") {
         // None clears everything else
@@ -833,7 +833,7 @@ function ProgressReportTab({
               step={0.5}
               value={report.totalHours}
               onChange={(e) =>
-                setReport((prev) => ({
+                setReport((prev): ReportState => ({
                   ...prev,
                   totalHours: Math.max(0, parseFloat(e.target.value) || 0),
                 }))
@@ -875,7 +875,7 @@ function ProgressReportTab({
         </div>
         <textarea
           value={report.notes}
-          onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
+          onChange={(e) => setReport((prev): ReportState => ({ ...prev, notes: e.target.value }))}
           placeholder="Additional notes… (optional)"
           rows={3}
           className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
@@ -893,7 +893,7 @@ function ProgressReportTab({
           <input
             type="text"
             value={report.submittedBy}
-            onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
+            onChange={(e) => setReport((prev): ReportState => ({ ...prev, submittedBy: e.target.value }))}
             placeholder="Your name"
             className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
           />
