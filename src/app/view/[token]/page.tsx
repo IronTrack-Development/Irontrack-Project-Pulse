@@ -579,19 +579,20 @@ function ProgressReportTab({
   } | null>(null);
 
   function toggleActivity(id: string) {
-    setReport((prev) => {
+    setReport((prev): ReportState => {
       const next = new Set(prev.selectedActivityIds);
       if (next.has(id)) {
         next.delete(id);
-        const statuses = { ...prev.activityStatuses };
+        const statuses: Record<string, ActivityStatusChoice> = { ...prev.activityStatuses };
         delete statuses[id];
         return { ...prev, selectedActivityIds: next, activityStatuses: statuses };
       } else {
         next.add(id);
+        const statuses: Record<string, ActivityStatusChoice> = { ...prev.activityStatuses, [id]: "0" as ActivityStatusChoice };
         return {
           ...prev,
           selectedActivityIds: next,
-          activityStatuses: { ...prev.activityStatuses, [id]: "0" },
+          activityStatuses: statuses,
         };
       }
     });
