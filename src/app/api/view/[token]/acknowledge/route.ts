@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rate-limit";
 
 // POST /api/view/[token]/acknowledge
 // PUBLIC — records a sub's acknowledgment of a schedule.
@@ -11,6 +12,20 @@ export async function POST(
   { params }: { params: Promise<{ token: string }> }
 ) {
   const { token } = await params;
+
+  // Rate limiting: 10 requests per minute per IP
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const rl = rateLimit(`acknowledge:${ip}`, 10, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const supabase = getServiceClient();
 
   let body: { view_id?: string; acknowledged_by?: string } = {};

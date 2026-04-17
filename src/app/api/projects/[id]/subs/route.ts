@@ -39,6 +39,7 @@ export async function POST(
     trades: string[];
     activity_ids?: string[];
     notes?: string;
+    company_code?: string;
   };
 
   try {
@@ -91,29 +92,46 @@ export async function POST(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // ── Auto-match to a sub_companies record (fire-and-forget) ──────────────────
-  // Normalize the submitted sub_name and compare against all sub_companies.
-  // If we find a match, link the new project_subs row to that company.
+  // ── Link to sub_companies record ─────────────────────────────────────────────
+  // If a company_code was provided, do an exact lookup first (instant matching).
+  // Otherwise fall back to fuzzy name normalization.
   if (data?.id) {
     try {
-      const normalizedSubName = normalizeCompanyName(body.sub_name);
+      let matched = false;
 
-      // Fetch all sub_companies (typically small table; no full-text index needed)
-      const { data: companies } = await supabase
-        .from("sub_companies")
-        .select("id, company_name");
-
-      if (companies && companies.length > 0) {
-        const match = companies.find(
-          (c) => normalizeCompanyName(c.company_name) === normalizedSubName
-        );
-
-        if (match) {
-          // Update the project_subs row to link to the matched sub_company
+      // Fast path: company_code exact match
+      if (body.company_code?.trim()) {
+        const { data: byCode } = await supabase
+          .from("sub_companies")
+          .select("id")
+          .eq("company_code", body.company_code.trim())
+          .single();
+        if (byCode) {
           await supabase
             .from("project_subs")
-            .update({ sub_company_id: match.id })
+            .update({ sub_company_id: byCode.id })
             .eq("id", data.id);
+          matched = true;
+        }
+      }
+
+      // Slow path: fuzzy name normalization
+      if (!matched) {
+        const normalizedSubName = normalizeCompanyName(body.sub_name);
+        const { data: companies } = await supabase
+          .from("sub_companies")
+          .select("id, company_name");
+
+        if (companies && companies.length > 0) {
+          const match = companies.find(
+            (c) => normalizeCompanyName(c.company_name) === normalizedSubName
+          );
+          if (match) {
+            await supabase
+              .from("project_subs")
+              .update({ sub_company_id: match.id })
+              .eq("id", data.id);
+          }
         }
       }
     } catch {

@@ -637,12 +637,77 @@ export async function POST(req: NextRequest) {
       };
     }).filter(Boolean);
 
+    // FIX 1: Save old activity name->id mapping BEFORE deleting (XER re-upload)
+    const xerSubsWithActivities: { id: string; activity_ids: string[] }[] = [];
+    const xerOldIdToName = new Map<string, string>();
+    {
+      const { data: xerSubsToRemap } = await supabase
+        .from("project_subs")
+        .select("id, activity_ids")
+        .eq("project_id", projectId)
+        .not("activity_ids", "is", null);
+
+      if (xerSubsToRemap && xerSubsToRemap.length > 0) {
+        const allOldIds = xerSubsToRemap
+          .flatMap((s) => s.activity_ids ?? [])
+          .filter(Boolean);
+        if (allOldIds.length > 0) {
+          const { data: oldActs } = await supabase
+            .from("parsed_activities")
+            .select("id, activity_name")
+            .in("id", allOldIds);
+          if (oldActs) {
+            for (const a of oldActs) xerOldIdToName.set(a.id, a.activity_name);
+          }
+        }
+        for (const s of xerSubsToRemap) {
+          if (s.activity_ids && s.activity_ids.length > 0) {
+            xerSubsWithActivities.push({ id: s.id, activity_ids: s.activity_ids });
+          }
+        }
+      }
+    }
+
+    // Delete existing activities before inserting XER activities
+    await supabase.from("parsed_activities").delete().eq("project_id", projectId);
+
     // Insert in batches and return early
     const insertedXer: { id: string }[] = [];
     for (let i = 0; i < xerActivities.length; i += 100) {
       const batch = xerActivities.slice(i, i + 100);
       const { data } = await supabase.from("parsed_activities").insert(batch).select("id");
       if (data) insertedXer.push(...data);
+    }
+
+    // FIX 1: Remap project_subs.activity_ids to new UUIDs after XER re-upload
+    if (xerSubsWithActivities.length > 0 && insertedXer.length > 0) {
+      const { data: xerNewActs } = await supabase
+        .from("parsed_activities")
+        .select("id, activity_name")
+        .eq("project_id", projectId);
+      const xerNewNameToId = new Map<string, string>();
+      if (xerNewActs) {
+        for (const a of xerNewActs) xerNewNameToId.set(a.activity_name, a.id);
+      }
+      for (const sub of xerSubsWithActivities) {
+        const remapped: string[] = [];
+        const unmapped: string[] = [];
+        for (const oldId of sub.activity_ids) {
+          const name = xerOldIdToName.get(oldId);
+          if (name) {
+            const newId = xerNewNameToId.get(name);
+            if (newId) remapped.push(newId);
+            else unmapped.push(name);
+          }
+        }
+        if (unmapped.length > 0) {
+          console.warn(`[upload/xer] Sub ${sub.id}: could not remap activities (removed from schedule): ${unmapped.join(", ")}`);
+        }
+        await supabase
+          .from("project_subs")
+          .update({ activity_ids: remapped.length > 0 ? remapped : null })
+          .eq("id", sub.id);
+      }
     }
 
     const xMilestoneCount = xerActivities.filter((a) => a?.milestone).length;
@@ -751,6 +816,37 @@ export async function POST(req: NextRequest) {
     if (!key) return null;
     return row[key] ?? null;
   };
+
+  // FIX 1: Save old activity name->id mapping BEFORE deleting (re-upload remapping)
+  const subsWithActivities: { id: string; activity_ids: string[] }[] = [];
+  const oldIdToName = new Map<string, string>();
+  {
+    const { data: subsToRemap } = await supabase
+      .from("project_subs")
+      .select("id, activity_ids")
+      .eq("project_id", projectId)
+      .not("activity_ids", "is", null);
+
+    if (subsToRemap && subsToRemap.length > 0) {
+      const allOldIds = subsToRemap
+        .flatMap((s) => s.activity_ids ?? [])
+        .filter(Boolean);
+      if (allOldIds.length > 0) {
+        const { data: oldActs } = await supabase
+          .from("parsed_activities")
+          .select("id, activity_name")
+          .in("id", allOldIds);
+        if (oldActs) {
+          for (const a of oldActs) oldIdToName.set(a.id, a.activity_name);
+        }
+      }
+      for (const s of subsToRemap) {
+        if (s.activity_ids && s.activity_ids.length > 0) {
+          subsWithActivities.push({ id: s.id, activity_ids: s.activity_ids });
+        }
+      }
+    }
+  }
 
   // Delete existing activities for this project (re-upload flow)
   await supabase.from("parsed_activities").delete().eq("project_id", projectId);
@@ -864,6 +960,39 @@ export async function POST(req: NextRequest) {
   }
 
   const milestoneCount = activitiesToInsert.filter((a) => a?.milestone).length;
+
+  // FIX 1: Remap project_subs.activity_ids to new UUIDs after re-upload
+  if (subsWithActivities.length > 0 && inserted.length > 0) {
+    const { data: newActs } = await supabase
+      .from("parsed_activities")
+      .select("id, activity_name")
+      .eq("project_id", projectId);
+    const newNameToId = new Map<string, string>();
+    if (newActs) {
+      for (const a of newActs) newNameToId.set(a.activity_name, a.id);
+    }
+    for (const sub of subsWithActivities) {
+      const remapped: string[] = [];
+      const unmapped: string[] = [];
+      for (const oldId of sub.activity_ids) {
+        const name = oldIdToName.get(oldId);
+        if (name) {
+          const newId = newNameToId.get(name);
+          if (newId) remapped.push(newId);
+          else unmapped.push(name);
+        }
+      }
+      if (unmapped.length > 0) {
+        console.warn(
+          `[upload] Sub ${sub.id}: could not remap activities (removed from schedule): ${unmapped.join(", ")}`
+        );
+      }
+      await supabase
+        .from("project_subs")
+        .update({ activity_ids: remapped.length > 0 ? remapped : null })
+        .eq("id", sub.id);
+    }
+  }
 
   // Update upload record
   await supabase

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rate-limit";
 
 const BUCKET = "sub-report-photos";
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB hard ceiling (client compresses before this)
@@ -14,6 +15,20 @@ export async function POST(
   { params }: { params: Promise<{ token: string }> }
 ) {
   const { token } = await params;
+
+  // Rate limiting: 20 requests per minute per IP
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const rl = rateLimit(`upload-photo:${ip}`, 20, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const supabase = getServiceClient();
 
   // ── Validate token ──────────────────────────────────────────────────────────

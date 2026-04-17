@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rate-limit";
 
 // GET /api/view/[token]/reports
 // PUBLIC — returns past progress reports submitted through this share link.
@@ -9,6 +10,20 @@ export async function GET(
   { params }: { params: Promise<{ token: string }> }
 ) {
   const { token } = await params;
+
+  // Rate limiting: 30 requests per minute per IP
+  const ip =
+    _req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    _req.headers.get("x-real-ip") ??
+    "unknown";
+  const rl = rateLimit(`view-reports:${ip}`, 30, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const supabase = getServiceClient();
 
   // 1. Validate token
