@@ -379,14 +379,14 @@ export default function SubScheduleViewPage() {
               ) : (
                 <>
                   <CheckCircle2 size={16} />
-                  Acknowledge &amp; View Schedule
+                  Acknowledge {"&"} View Schedule
                 </>  
               )}
             </button>
           </div>
 
           <p className="text-[10px] text-gray-700 text-center">
-            © {new Date().getFullYear()} IronTrack Development LLC
+            {"©"} {new Date().getFullYear()} IronTrack Development LLC
           </p>
         </div>
       </div>
@@ -395,7 +395,7 @@ export default function SubScheduleViewPage() {
 
   return (
     <div className="min-h-screen bg-[#0B0B0D] pb-24">
-      {/* ── Header ── */
+      {/* ── Header ── */}
       <header className="bg-[#0F0F14] border-b border-[#1F1F25] sticky top-0 z-30">
         <div className="max-w-2xl mx-auto px-4 py-3">
           {/* Logo row */}
