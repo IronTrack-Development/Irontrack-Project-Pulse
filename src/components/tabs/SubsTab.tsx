@@ -293,8 +293,8 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex-none px-5 py-4 border-t border-[#1F1F25] bg-[#121217]">
+        {/* Footer — pb-20 to clear MobileNav on phones */}
+        <div className="flex-none px-5 py-4 pb-20 md:pb-4 border-t border-[#1F1F25] bg-[#121217]">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -371,7 +371,15 @@ export default function SubsTab({ projectId }: Props) {
       const res = await fetch(`/api/projects/${projectId}/activities`);
       if (res.ok) {
         const data = await res.json();
-        const list: Activity[] = Array.isArray(data) ? data : (data.activities ?? []);
+        const raw = Array.isArray(data) ? data : (data.activities ?? []);
+        const list: Activity[] = raw.map((a: Record<string, unknown>) => ({
+          id: a.id as string,
+          name: (a.activity_name ?? a.name ?? "Unnamed") as string,
+          trade: (a.trade ?? "General") as string,
+          start_date: (a.start_date ?? null) as string | null,
+          finish_date: (a.finish_date ?? null) as string | null,
+          status: (a.status ?? "not_started") as string,
+        }));
         setActivities(list);
         setActivitiesLoading(false);
         return list;
