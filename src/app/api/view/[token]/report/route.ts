@@ -5,12 +5,13 @@ import { getServiceClient } from "@/lib/supabase";
 // PUBLIC — records a sub foreman's daily progress report.
 // Body: {
 //   worked_on_activity_ids: string[],
-//   activity_statuses: Record<string, string>,  // activity_id -> "started"|"in_progress"|"complete"
+//   activity_statuses: Record<string, string>,  // activity_id -> "0"|"25"|"50"|"75"|"100"
 //   manpower_count: number,
 //   total_hours: number,
 //   delay_reasons: string[],
 //   notes: string,
 //   submitted_by: string,
+//   photo_urls: string[],  // public Supabase Storage URLs (uploaded before submit)
 // }
 export async function POST(
   req: NextRequest,
@@ -27,6 +28,7 @@ export async function POST(
     delay_reasons?: string[];
     notes?: string;
     submitted_by?: string;
+    photo_urls?: string[];
   } = {};
 
   try {
@@ -82,6 +84,7 @@ export async function POST(
         total_hours: body.total_hours ?? null,
         delay_reasons: body.delay_reasons ?? [],
         notes: body.notes?.trim() ?? null,
+        photo_urls: body.photo_urls ?? [],
         submitted_at: new Date().toISOString(),
       },
       {
