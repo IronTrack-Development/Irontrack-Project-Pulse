@@ -396,7 +396,7 @@ function ScopeGroup({
 
 // ─── Progress Report Tab ──────────────────────────────────────────────────────
 
-type ActivityStatusChoice = "started" | "in_progress" | "complete";
+type ActivityStatusChoice = "0" | "25" | "50" | "75" | "100";
 
 interface ReportState {
   selectedActivityIds: Set<string>;
@@ -637,12 +637,14 @@ function ProgressReportTab({
 
                   {/* Status buttons (only show when selected) */}
                   {selected && (
-                    <div className="flex gap-2 px-1">
+                    <div className="flex gap-1.5 px-1">
                       {(
                         [
-                          { key: "started", label: "Started" },
-                          { key: "in_progress", label: "In Progress" },
-                          { key: "complete", label: "Complete" },
+                          { key: "0", label: "0%" },
+                          { key: "25", label: "25%" },
+                          { key: "50", label: "50%" },
+                          { key: "75", label: "75%" },
+                          { key: "100", label: "100%" },
                         ] as { key: ActivityStatusChoice; label: string }[]
                       ).map(({ key, label }) => {
                         const active = report.activityStatuses[act.id] === key;
@@ -650,13 +652,17 @@ function ProgressReportTab({
                           <button
                             key={key}
                             onClick={() => setActivityStatus(act.id, key)}
-                            className={`flex-1 py-2 px-2 rounded-lg text-xs font-medium border transition-colors ${
+                            className={`flex-1 py-2.5 px-1 rounded-lg text-xs font-bold border transition-colors ${
                               active
-                                ? key === "complete"
+                                ? key === "100"
                                   ? "bg-green-800/40 border-green-600/50 text-green-300"
-                                  : key === "in_progress"
+                                  : key === "75"
+                                  ? "bg-emerald-800/40 border-emerald-600/50 text-emerald-300"
+                                  : key === "50"
                                   ? "bg-orange-800/40 border-orange-600/50 text-orange-300"
-                                  : "bg-blue-800/40 border-blue-600/50 text-blue-300"
+                                  : key === "25"
+                                  ? "bg-blue-800/40 border-blue-600/50 text-blue-300"
+                                  : "bg-[#1F1F25] border-[#2a2a35] text-gray-300"
                                 : "bg-[#0B0B0D] border-[#1F1F25] text-gray-500"
                             }`}
                           >
