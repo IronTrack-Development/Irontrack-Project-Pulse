@@ -16,36 +16,20 @@ export default function SubViewLayout({
   useEffect(() => {
     if (!token) return;
 
-    // Remove any existing manifest link (from root layout)
-    const existing = document.querySelector('link[rel="manifest"]');
-    if (existing) existing.remove();
+    // Remove the root PWA manifest so iOS Safari saves the actual URL
+    // instead of the manifest's start_url when user taps "Add to Home Screen"
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    if (manifestLink) manifestLink.remove();
 
-    // Add dynamic manifest pointing to this sub's token URL
-    const link = document.createElement("link");
-    link.rel = "manifest";
-    link.href = `/api/view/${token}/manifest`;
-    document.head.appendChild(link);
+    // Remove apple-mobile-web-app-capable so iOS doesn't treat this as a standalone app
+    // This ensures "Add to Home Screen" saves the full /view/[token] URL
+    const awaCap = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
+    if (awaCap) awaCap.remove();
 
-    // Set apple-mobile-web-app meta tags for iOS Add to Home Screen
-    const setMeta = (name: string, content: string) => {
-      let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = name;
-        document.head.appendChild(meta);
-      }
-      meta.content = content;
-    };
+    // Set the page title to something useful for the home screen icon name
+    document.title = "IronTrack Pulse";
 
-    setMeta("apple-mobile-web-app-capable", "yes");
-    setMeta("apple-mobile-web-app-status-bar-style", "black-translucent");
-    setMeta("apple-mobile-web-app-title", "IronTrack Pulse");
-
-    return () => {
-      // Cleanup on unmount
-      const added = document.querySelector(`link[href="/api/view/${token}/manifest"]`);
-      if (added) added.remove();
-    };
+    return () => {};
   }, [token]);
 
   return (
