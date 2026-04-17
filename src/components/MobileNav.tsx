@@ -14,8 +14,8 @@ const navItems = [
 export default function MobileNav() {
   const pathname = usePathname();
 
-  // Don't show on public pages
-  if (pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/subscribe") {
+  // Don't show on public pages or sub view pages
+  if (pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/subscribe" || pathname.startsWith("/view/")) {
     return null;
   }
 

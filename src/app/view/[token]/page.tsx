@@ -210,12 +210,13 @@ export default function SubScheduleViewPage() {
     "today"
   );
 
-  // Acknowledge flow state
+  // Acknowledge flow state — gate-first: sub must ack before seeing schedule
   const [ackName, setAckName] = useState("");
   const [ackSubmitting, setAckSubmitting] = useState(false);
   const [ackDone, setAckDone] = useState(false);
   const [ackTimestamp, setAckTimestamp] = useState<string | null>(null);
   const [ackError, setAckError] = useState<string | null>(null);
+  const [showGate, setShowGate] = useState(true);
 
   // Fetch schedule data
   const fetchData = useCallback(async () => {
@@ -318,9 +319,83 @@ export default function SubScheduleViewPage() {
     },
   ];
 
+  // Gate screen: must acknowledge before viewing schedule
+  if (showGate && !ackDone) {
+    return (
+      <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center px-4">
+        <div className="w-full max-w-sm space-y-6">
+          {/* Logo */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-8 h-8 rounded-lg bg-[#F97316] flex items-center justify-center">
+              <span className="text-white font-bold text-sm">P</span>
+            </div>
+            <span className="text-sm font-semibold text-gray-400 tracking-wide uppercase">IronTrack Pulse</span>
+          </div>
+
+          {/* Project info */}
+          <div className="text-center space-y-1">
+            <h1 className="text-xl font-bold text-white">{project.name}</h1>
+            <p className="text-[#F97316] font-medium">{sub.name}</p>
+            <p className="text-xs text-gray-500">{sub.trades.join(", ")}</p>
+          </div>
+
+          {/* Acknowledge card */}
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 space-y-4">
+            <div className="text-center">
+              <CalendarDays size={28} className="mx-auto text-[#F97316] mb-2" />
+              <p className="text-sm text-gray-300 leading-relaxed">
+                You&apos;ve been shared a filtered schedule view for your trades on this project.
+              </p>
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 mb-1.5 block">Your full name</label>
+              <input
+                type="text"
+                value={ackName}
+                onChange={(e) => setAckName(e.target.value)}
+                placeholder="e.g., Joe Martinez"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+                onKeyDown={(e) => { if (e.key === "Enter") handleAcknowledge(); }}
+                autoFocus
+              />
+            </div>
+
+            <p className="text-xs text-gray-500 text-center leading-snug">
+              By continuing, I confirm I have received and reviewed the schedule for my trades on this project.
+            </p>
+
+            {ackError && (
+              <p className="text-xs text-red-400 text-center">{ackError}</p>
+            )}
+
+            <button
+              onClick={handleAcknowledge}
+              disabled={!ackName.trim() || ackSubmitting}
+              className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+            >
+              {ackSubmitting ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <>
+                  <CheckCircle2 size={16} />
+                  Acknowledge &amp; View Schedule
+                </>  
+              )}
+            </button>
+          </div>
+
+          <p className="text-[10px] text-gray-700 text-center">
+            © {new Date().getFullYear()} IronTrack Development LLC
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[#0B0B0D] pb-40">
-      {/* ── Header ── */}
+    <div className="min-h-screen bg-[#0B0B0D] pb-24">
+      {/* ── Header ── */
       <header className="bg-[#0F0F14] border-b border-[#1F1F25] sticky top-0 z-30">
         <div className="max-w-2xl mx-auto px-4 py-3">
           {/* Logo row */}
@@ -494,63 +569,23 @@ export default function SubScheduleViewPage() {
         </div>
       </div>
 
-      {/* ── Acknowledge Bar (fixed bottom) ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0F0F14] border-t border-[#1F1F25]">
-        <div className="max-w-2xl mx-auto px-4 py-3">
-          {ackDone ? (
-            <div className="flex items-center gap-3 bg-green-950/40 border border-green-700/40 rounded-xl px-4 py-3">
-              <CheckCircle2 className="text-green-400 flex-shrink-0" size={20} />
-              <div>
-                <p className="text-sm font-semibold text-green-400">Schedule Acknowledged</p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  Confirmed by <span className="text-gray-200">{ackName}</span>
-                  {ackTimestamp && (
-                    <> · {new Date(ackTimestamp).toLocaleString("en-US", {
-                      month: "short", day: "numeric", year: "numeric",
-                      hour: "numeric", minute: "2-digit",
-                    })}</>
-                  )}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <p className="text-xs text-gray-500 text-center leading-snug">
-                I confirm I have received and reviewed this schedule
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={ackName}
-                  onChange={(e) => setAckName(e.target.value)}
-                  placeholder="Your full name"
-                  className="flex-1 bg-[#13131A] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAcknowledge();
-                  }}
-                />
-                <button
-                  onClick={handleAcknowledge}
-                  disabled={!ackName.trim() || ackSubmitting}
-                  className="flex-shrink-0 bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-1.5"
-                >
-                  {ackSubmitting ? (
-                    <Loader2 size={14} className="animate-spin" />
-                  ) : (
-                    <>
-                      Acknowledge
-                      <ChevronRight size={14} />
-                    </>
-                  )}
-                </button>
-              </div>
-              {ackError && (
-                <p className="text-xs text-red-400 text-center">{ackError}</p>
+      {/* ── Acknowledged confirmation (fixed bottom, slim) ── */}
+      {ackDone && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-green-950/60 border-t border-green-700/40 safe-bottom">
+          <div className="max-w-2xl mx-auto px-4 py-2 flex items-center gap-2">
+            <CheckCircle2 className="text-green-400 flex-shrink-0" size={16} />
+            <p className="text-xs text-green-400">
+              Acknowledged by <span className="font-semibold text-green-300">{ackName}</span>
+              {ackTimestamp && (
+                <> · {new Date(ackTimestamp).toLocaleString("en-US", {
+                  month: "short", day: "numeric",
+                  hour: "numeric", minute: "2-digit",
+                })}</>
               )}
-            </div>
-          )}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
