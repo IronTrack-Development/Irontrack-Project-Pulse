@@ -18,7 +18,13 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import Link from 'next/link';
-import { ALL_TRADES, BUILDING_TYPE_DEFAULTS, BUILDING_TYPES } from '@/lib/production-rates';
+import {
+  ALL_TRADES,
+  BUILDING_TYPE_DEFAULTS,
+  BUILDING_TYPES,
+  STRUCTURE_TYPES,
+  BUILDING_TYPE_DEFAULT_STRUCTURE,
+} from '@/lib/production-rates';
 import { GeneratedSchedule, ScheduleActivity } from '@/lib/schedule-engine';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -26,6 +32,7 @@ import { GeneratedSchedule, ScheduleActivity } from '@/lib/schedule-engine';
 interface ScheduleInput {
   projectName: string;
   buildingType: string;
+  structureType: string;
   totalSF: number;
   stories: number;
   isGroundUp: boolean;
@@ -132,7 +139,10 @@ function phaseColor(phase: string): string {
 export default function ScheduleGeneratorPage() {
   // Form state
   const [projectName, setProjectName] = useState('');
-  const [buildingType, setBuildingType] = useState('Office TI');
+  const [buildingType, setBuildingType] = useState('Office Buildings');
+  const [structureType, setStructureType] = useState(
+    BUILDING_TYPE_DEFAULT_STRUCTURE['Office Buildings'] ?? STRUCTURE_TYPES[3]
+  );
   const [totalSF, setTotalSF] = useState<string>('10000');
   const [stories, setStories] = useState<string>('1');
   const [isGroundUp, setIsGroundUp] = useState(false);
@@ -142,7 +152,7 @@ export default function ScheduleGeneratorPage() {
     return d.toISOString().slice(0, 10);
   });
   const [selectedTrades, setSelectedTrades] = useState<string[]>(
-    BUILDING_TYPE_DEFAULTS['Office TI'] ?? []
+    BUILDING_TYPE_DEFAULTS['Office Buildings'] ?? []
   );
   const [showQuantities, setShowQuantities] = useState(false);
   const [quantityOverrides, setQuantityOverrides] = useState<Record<string, string>>({});
@@ -162,10 +172,12 @@ export default function ScheduleGeneratorPage() {
     [sfNum, storiesNum, isGroundUp]
   );
 
-  // When building type changes, update default trades
+  // When building type changes, update default trades + auto-select structure type
   const handleBuildingTypeChange = (bt: string) => {
     setBuildingType(bt);
     setSelectedTrades(BUILDING_TYPE_DEFAULTS[bt] ?? []);
+    const defaultStruct = BUILDING_TYPE_DEFAULT_STRUCTURE[bt];
+    if (defaultStruct) setStructureType(defaultStruct);
   };
 
   // Toggle a single trade
@@ -206,6 +218,7 @@ export default function ScheduleGeneratorPage() {
     const input: ScheduleInput = {
       projectName: projectName.trim(),
       buildingType,
+      structureType,
       totalSF: parseInt(totalSF),
       stories: parseInt(stories) || 1,
       isGroundUp,
@@ -364,6 +377,22 @@ export default function ScheduleGeneratorPage() {
                   {BUILDING_TYPES.map((bt) => (
                     <option key={bt} value={bt}>
                       {bt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Structure Type */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Structure Type</label>
+                <select
+                  value={structureType}
+                  onChange={(e) => setStructureType(e.target.value)}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                >
+                  {STRUCTURE_TYPES.map((st) => (
+                    <option key={st} value={st}>
+                      {st}
                     </option>
                   ))}
                 </select>

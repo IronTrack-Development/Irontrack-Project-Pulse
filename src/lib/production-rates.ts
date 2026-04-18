@@ -538,69 +538,148 @@ export const ALL_TRADES: string[] = [
   ...new Set(PRODUCTION_RATES.map((r) => r.trade)),
 ];
 
-/** Default trades selected by building type */
+/** Default trades selected by building type (17 commercial types) */
 export const BUILDING_TYPE_DEFAULTS: Record<string, string[]> = {
-  'Restaurant TI': [
-    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
-    'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware',
-    'Windows & Glazing',
-  ],
-  Hotel: [
-    'Concrete', 'Structural Steel', 'Framing', 'Drywall', 'HVAC',
-    'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
-    'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
-    'Exterior Finishes', 'Landscaping',
-  ],
-  'Self-Storage': [
-    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Roofing',
-    'Electrical', 'Doors & Hardware', 'Painting',
-  ],
-  'Retail TI': [
-    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
-    'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware',
-    'Windows & Glazing',
-  ],
-  'Office TI': [
-    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
-    'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware',
-    'Windows & Glazing',
-  ],
-  Industrial: [
+  'Retail Centers': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
-    'Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler',
-    'Doors & Hardware', 'Windows & Glazing', 'Painting',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
   ],
-  Medical: [
+  'Restaurants': [
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware',
-    'Windows & Glazing', 'Exterior Finishes',
+    'Windows & Glazing',
   ],
-  Education: [
-    'Earthwork & Civil', 'Concrete', 'Masonry', 'Framing', 'Drywall',
+  'Hospitality / Hotels': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
     'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
   ],
-  'Multi-Family': [
-    'Earthwork & Civil', 'Concrete', 'Framing', 'Drywall', 'HVAC',
-    'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
+  'Entertainment': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Medical & Healthcare Facilities': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
+    'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
   ],
-  'Ground-Up Commercial': [
-    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
-    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
-    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
-    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes',
-    'Landscaping',
+  'Office Buildings': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
+    'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
+    'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
+    'Exterior Finishes', 'Landscaping',
   ],
-  'Mixed-Use': [
+  'Industrial / Warehouses': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
+    'Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler',
+    'Doors & Hardware', 'Windows & Glazing', 'Painting',
+  ],
+  'Self-Storage Facilities': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel',
+    'Roofing', 'Electrical', 'Doors & Hardware', 'Painting',
+  ],
+  'Automotive Service Centers': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
+    'Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler',
+    'Doors & Hardware', 'Windows & Glazing', 'Painting',
+  ],
+  'Educational Facilities': [
+    'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Fitness & Recreation Centers': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Community & Assembly Buildings': [
+    'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Financial Institutions': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Senior Living Facilities': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Municipal & Public Safety Buildings': [
+    'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
+    'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+  ],
+  'Data Centers': [
+    'Earthwork & Civil', 'Concrete', 'Structural Steel',
+    'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
+    'Fire Sprinkler', 'Roofing', 'Painting',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes',
-    'Landscaping',
+  ],
+  'Multi-Family': [
+    'Earthwork & Civil', 'Concrete', 'Framing', 'Drywall',
+    'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
+    'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
+    'Exterior Finishes', 'Landscaping',
   ],
 };
 
 export const BUILDING_TYPES = Object.keys(BUILDING_TYPE_DEFAULTS);
+
+/** All 18 structure types */
+export const STRUCTURE_TYPES: string[] = [
+  'Masonry Structures',
+  'Tilt-Up Concrete Structures',
+  'Wood-Framed Structures',
+  'Structural Steel Frame Structures',
+  'Pre-Engineered Metal Building Structures',
+  'Hybrid Masonry and Steel Structures',
+  'Cast-In-Place Reinforced Concrete Structures',
+  'Precast Concrete Structures',
+  'Insulated Concrete Form (ICF) Structures',
+  'Light Gauge Steel Framing Structures',
+  'Mass Timber / Cross-Laminated Timber (CLT) Structures',
+  'Podium Style Mixed Material Structures',
+  'Modular / Prefabricated Building Structures',
+  'Post-Tensioned Concrete Slab Structures',
+  'Steel Moment Frame Structures',
+  'Braced Frame Structures',
+  'Shear Wall Structures',
+  'Tensile Membrane / Fabric Structures',
+];
+
+/** Default structure type per building type */
+export const BUILDING_TYPE_DEFAULT_STRUCTURE: Record<string, string> = {
+  'Retail Centers':                   'Structural Steel Frame Structures',
+  'Restaurants':                      'Light Gauge Steel Framing Structures',
+  'Hospitality / Hotels':             'Structural Steel Frame Structures',
+  'Entertainment':                    'Structural Steel Frame Structures',
+  'Medical & Healthcare Facilities':  'Structural Steel Frame Structures',
+  'Office Buildings':                 'Structural Steel Frame Structures',
+  'Industrial / Warehouses':          'Pre-Engineered Metal Building Structures',
+  'Self-Storage Facilities':          'Pre-Engineered Metal Building Structures',
+  'Automotive Service Centers':       'Masonry Structures',
+  'Educational Facilities':           'Structural Steel Frame Structures',
+  'Fitness & Recreation Centers':     'Structural Steel Frame Structures',
+  'Community & Assembly Buildings':   'Masonry Structures',
+  'Financial Institutions':           'Structural Steel Frame Structures',
+  'Senior Living Facilities':         'Wood-Framed Structures',
+  'Municipal & Public Safety Buildings': 'Masonry Structures',
+  'Data Centers':                     'Structural Steel Frame Structures',
+  'Multi-Family':                     'Wood-Framed Structures',
+};

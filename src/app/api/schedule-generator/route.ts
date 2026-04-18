@@ -72,5 +72,9 @@ function validateInput(input: ScheduleInput): string | null {
   if (!input.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(input.startDate)) {
     return 'startDate must be in YYYY-MM-DD format';
   }
+  // structureType is optional — engine defaults to Structural Steel Frame
+  if (input.structureType !== undefined && typeof input.structureType !== 'string') {
+    return 'structureType must be a string';
+  }
   return null;
 }
