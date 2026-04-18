@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
+import { createNotification } from "@/lib/notifications-store";
 
 // POST /api/view/[token]/acknowledge
 // PUBLIC — records a sub's acknowledgment of a schedule.
@@ -87,6 +88,26 @@ export async function POST(
         return NextResponse.json({ error: updateError.message }, { status: 500 });
       }
 
+      // Fire-and-forget: notify the project owner
+      void (async () => {
+        try {
+          const sc = getServiceClient();
+          const [{ data: project }, { data: sub }] = await Promise.all([
+            sc.from("daily_projects").select("user_id, name").eq("id", link.project_id).single(),
+            sc.from("project_subs").select("sub_name").eq("id", link.sub_id).single(),
+          ]);
+          if (project?.user_id) {
+            await createNotification(
+              project.user_id,
+              "ack_received",
+              "Schedule Acknowledged",
+              `${sub?.sub_name ?? acknowledgedBy} acknowledged the schedule for ${project.name}`,
+              { project_id: link.project_id, sub_id: link.sub_id, acknowledged_by: acknowledgedBy }
+            );
+          }
+        } catch { /* best-effort */ }
+      })();
+
       return NextResponse.json({
         success: true,
         acknowledged_by: acknowledgedBy,
@@ -119,6 +140,26 @@ export async function POST(
   if (insertError) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
+
+  // Fire-and-forget: notify the project owner
+  void (async () => {
+    try {
+      const sc = getServiceClient();
+      const [{ data: project }, { data: sub }] = await Promise.all([
+        sc.from("daily_projects").select("user_id, name").eq("id", link.project_id).single(),
+        sc.from("project_subs").select("sub_name").eq("id", link.sub_id).single(),
+      ]);
+      if (project?.user_id) {
+        await createNotification(
+          project.user_id,
+          "ack_received",
+          "Schedule Acknowledged",
+          `${sub?.sub_name ?? acknowledgedBy} acknowledged the schedule for ${project.name}`,
+          { project_id: link.project_id, sub_id: link.sub_id, acknowledged_by: acknowledgedBy }
+        );
+      }
+    } catch { /* best-effort */ }
+  })();
 
   return NextResponse.json({
     success: true,

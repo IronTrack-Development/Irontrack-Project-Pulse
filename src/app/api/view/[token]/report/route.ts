@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
+import { createNotification } from "@/lib/notifications-store";
 
 // POST /api/view/[token]/report
 // PUBLIC — records a sub foreman's daily progress report.
@@ -121,6 +122,26 @@ export async function POST(
     }
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
+
+  // Fire-and-forget: notify the project owner
+  void (async () => {
+    try {
+      const sc = getServiceClient();
+      const [{ data: project }, { data: sub }] = await Promise.all([
+        sc.from("daily_projects").select("user_id, name").eq("id", link.project_id).single(),
+        sc.from("project_subs").select("sub_name").eq("id", link.sub_id).single(),
+      ]);
+      if (project?.user_id) {
+        await createNotification(
+          project.user_id,
+          "report_submitted",
+          "Daily Report Submitted",
+          `${submittedBy} submitted a daily report for ${project.name}`,
+          { project_id: link.project_id, sub_id: link.sub_id, submitted_by: submittedBy, sub_name: sub?.sub_name }
+        );
+      }
+    } catch { /* best-effort */ }
+  })();
 
   return NextResponse.json({
     success: true,

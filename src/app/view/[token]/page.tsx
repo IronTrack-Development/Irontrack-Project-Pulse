@@ -1628,6 +1628,46 @@ export default function SubScheduleViewPage() {
   const [ackError, setAckError] = useState<string | null>(null);
   const [showGate, setShowGate] = useState(true);
 
+  // ── localStorage session helpers (30-min TTL) ────────────────────────────
+  const ACK_SESSION_TTL = 30 * 60 * 1000;
+
+  function loadAckSession(): { name: string; timestamp: number } | null {
+    try {
+      const raw = localStorage.getItem(`irontrack_ack_${token}`);
+      if (!raw) return null;
+      const s = JSON.parse(raw);
+      if (Date.now() - s.timestamp < ACK_SESSION_TTL) return s;
+      localStorage.removeItem(`irontrack_ack_${token}`);
+      return null;
+    } catch { return null; }
+  }
+
+  function saveAckSession(name: string) {
+    try {
+      localStorage.setItem(
+        `irontrack_ack_${token}`,
+        JSON.stringify({ name, timestamp: Date.now() })
+      );
+    } catch { /* ignore */ }
+  }
+
+  function loadSubSession(): { company_name: string; full_name: string; token: string; project_id: string } | null {
+    // Search all irontrack_sub_session_* keys for a matching token
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key?.startsWith('irontrack_sub_session_')) continue;
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        const s = JSON.parse(raw);
+        if (s.token === token && Date.now() - s.timestamp < ACK_SESSION_TTL) {
+          return s;
+        }
+      }
+    } catch { /* ignore */ }
+    return null;
+  }
+
   const fetchData = useCallback(async () => {
     try {
       const res = await fetch(`/api/view/${token}`);
@@ -1662,6 +1702,26 @@ export default function SubScheduleViewPage() {
     fetchPastReports();
   }, [fetchData, fetchPastReports]);
 
+  // ── Check localStorage for existing ack session on mount ─────────────────
+  useEffect(() => {
+    // Check for existing ack session first
+    const ackSession = loadAckSession();
+    if (ackSession) {
+      setAckName(ackSession.name);
+      setAckDone(true);
+      setShowGate(false);
+      setAckTimestamp(new Date(ackSession.timestamp).toISOString());
+      return;
+    }
+
+    // Check for sub registration session (auto-fill name)
+    const subSession = loadSubSession();
+    if (subSession) {
+      setAckName(subSession.full_name);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
   async function handleAcknowledge() {
     if (!ackName.trim() || !data) return;
     setAckSubmitting(true);
@@ -1680,9 +1740,12 @@ export default function SubScheduleViewPage() {
         setAckError(json.error ?? "Failed to acknowledge");
         return;
       }
+      const acknowledgedAt = json.acknowledged_at ?? new Date().toISOString();
       setAckDone(true);
       setShowGate(false);
-      setAckTimestamp(json.acknowledged_at ?? new Date().toISOString());
+      setAckTimestamp(acknowledgedAt);
+      // Persist ack to localStorage so re-opening within 30 min skips the gate
+      saveAckSession(ackName.trim());
     } catch {
       setAckError("Network error — please try again");
     } finally {

@@ -34,6 +34,7 @@ export async function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
   const isSubView = request.nextUrl.pathname.startsWith('/view/');
+  const isJoinRoute = request.nextUrl.pathname.startsWith('/join/');
   const isSubRoute = request.nextUrl.pathname.startsWith('/sub/');
   const isStaticAsset =
     request.nextUrl.pathname.startsWith('/_next') ||
@@ -42,7 +43,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/manifest');
 
   // Allow public routes, API routes, sub view pages, and static assets
-  if (isPublicRoute || isApiRoute || isStaticAsset || isSubView) {
+  if (isPublicRoute || isApiRoute || isStaticAsset || isSubView || isJoinRoute) {
     return supabaseResponse;
   }
 

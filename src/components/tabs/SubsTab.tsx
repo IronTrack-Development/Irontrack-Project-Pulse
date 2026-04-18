@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import {
   Plus, Link2, Copy, Check, Trash2, UserPlus, Send,
   Eye, CheckCircle, AlertTriangle, Clock, X, ChevronDown, ChevronUp,
-  ListChecks, Search, ChevronsUpDown, FileText
+  ListChecks, Search, ChevronsUpDown, FileText, QrCode, Printer, ExternalLink
 } from "lucide-react";
 
 // ─── Interfaces ───────────────────────────────────────────────────────────────
@@ -344,6 +344,12 @@ export default function SubsTab({ projectId }: Props) {
   const [generating, setGenerating] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
+  // QR Code modal state
+  const [showQrModal, setShowQrModal] = useState(false);
+  const [qrData, setQrData] = useState<{ url: string; project_name: string } | null>(null);
+  const [qrLoading, setQrLoading] = useState(false);
+  const [qrCopied, setQrCopied] = useState(false);
+
   // Activity picker state
   const [pickerSubId, setPickerSubId] = useState<string | null>(null);
   const [activitiesLoading, setActivitiesLoading] = useState(false);
@@ -366,6 +372,31 @@ export default function SubsTab({ projectId }: Props) {
   const [reportsOpen, setReportsOpen] = useState<Record<string, boolean>>({});
 
   // ── Data Fetching ──────────────────────────────────────────────────────────
+
+  // ── QR Code ─────────────────────────────────────────────────────────────────
+
+  const handleOpenQrModal = async () => {
+    setShowQrModal(true);
+    if (qrData) return; // Already loaded
+    setQrLoading(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/qr`);
+      if (res.ok) {
+        const data = await res.json();
+        setQrData(data);
+      }
+    } catch {
+      // ignore
+    }
+    setQrLoading(false);
+  };
+
+  const handleCopyQrLink = async () => {
+    if (!qrData?.url) return;
+    await navigator.clipboard.writeText(qrData.url);
+    setQrCopied(true);
+    setTimeout(() => setQrCopied(false), 2000);
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -605,13 +636,22 @@ export default function SubsTab({ projectId }: Props) {
               {subs.length} sub{subs.length !== 1 ? "s" : ""} on this project
             </p>
           </div>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors"
-          >
-            <UserPlus size={14} />
-            Add Sub
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleOpenQrModal}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
+            >
+              <QrCode size={14} />
+              QR Code
+            </button>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors"
+            >
+              <UserPlus size={14} />
+              Add Sub
+            </button>
+          </div>
         </div>
 
         {/* Add Sub Form */}
@@ -1007,6 +1047,99 @@ export default function SubsTab({ projectId }: Props) {
           onSave={handleSaveActivities}
           onClose={() => setPickerSubId(null)}
         />
+      )}
+
+      {/* QR Code Modal */}
+      {showQrModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowQrModal(false); }}
+        >
+          <div className="w-full max-w-sm bg-[#0B0B0D] border border-[#1F1F25] rounded-2xl shadow-2xl overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] bg-[#121217]">
+              <div className="flex items-center gap-2">
+                <QrCode size={16} className="text-[#F97316]" />
+                <h3 className="text-sm font-bold text-white">Sub Self-Registration QR</h3>
+              </div>
+              <button
+                onClick={() => setShowQrModal(false)}
+                className="text-gray-500 hover:text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-5 space-y-4">
+              {qrLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="w-8 h-8 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : qrData ? (
+                <>
+                  {/* Description */}
+                  <p className="text-xs text-gray-400 text-center leading-relaxed">
+                    Post this in the job trailer. Subs scan to self-register and see their schedule.
+                  </p>
+
+                  {/* QR Code Image */}
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="bg-white p-3 rounded-xl inline-block">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(qrData.url)}&bgcolor=ffffff&color=000000&margin=4`}
+                        alt="QR Code for sub registration"
+                        width={260}
+                        height={260}
+                        className="rounded-lg"
+                      />
+                    </div>
+                    <p className="text-sm font-semibold text-white text-center">{qrData.project_name}</p>
+                  </div>
+
+                  {/* Join URL */}
+                  <div className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">Registration Link</p>
+                    <p className="text-xs text-gray-400 break-all font-mono leading-relaxed">{qrData.url}</p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCopyQrLink}
+                      className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
+                        qrCopied
+                          ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                          : "bg-[#1F1F25] text-gray-300 hover:text-white border border-[#2a2a35] hover:border-[#F97316]/30"
+                      }`}
+                    >
+                      {qrCopied ? <Check size={13} /> : <ExternalLink size={13} />}
+                      {qrCopied ? "Copied!" : "Copy Link"}
+                    </button>
+                    <button
+                      onClick={() => window.print()}
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] text-gray-300 hover:text-white border border-[#2a2a35] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <Printer size={13} />
+                      Print
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-sm text-red-400">Failed to load QR code. Please try again.</p>
+                  <button
+                    onClick={() => { setQrData(null); handleOpenQrModal(); }}
+                    className="mt-3 text-xs text-[#F97316] underline"
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

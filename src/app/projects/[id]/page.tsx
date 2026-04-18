@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars
+  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -124,6 +124,13 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               </button>
               <NotificationBell projectId={id} />
               <ShareSnapshot projectId={id} />
+              <Link
+                href={`/projects/${id}/weekly-summary`}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
+              >
+                <FileBarChart2 size={14} />
+                <span>Weekly Summary</span>
+              </Link>
               <Link
                 href={`/projects/${id}/report`}
                 className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
