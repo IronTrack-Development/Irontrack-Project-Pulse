@@ -943,6 +943,23 @@ export default function SubsTab({ projectId }: Props) {
                                           ))}
                                         </div>
                                       )}
+                                      {report.notes && (
+                                        <p className="text-[10px] text-gray-500 italic mt-1">"{report.notes}"</p>
+                                      )}
+                                      {report.photo_urls && report.photo_urls.length > 0 && (
+                                        <div className="flex gap-1.5 mt-2 overflow-x-auto scrollbar-none">
+                                          {report.photo_urls.map((url: string, i: number) => (
+                                            <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="flex-none">
+                                              <img
+                                                src={url}
+                                                alt={`Report photo ${i + 1}`}
+                                                className="w-14 h-14 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
+                                                loading="lazy"
+                                              />
+                                            </a>
+                                          ))}
+                                        </div>
+                                      )}
                                     </div>
                                   ))
                                 )}

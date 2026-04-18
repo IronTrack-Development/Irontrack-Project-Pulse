@@ -103,7 +103,7 @@ export async function POST(
         submitted_at: new Date().toISOString(),
       },
       {
-        onConflict: "link_id,report_date",
+        onConflict: "link_id,report_date,submitted_by",
       }
     )
     .select()
