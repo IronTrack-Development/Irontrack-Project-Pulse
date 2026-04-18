@@ -31,6 +31,8 @@ export async function middleware(request: NextRequest) {
 
   // Public routes that don't require auth
   const publicRoutes = ['/', '/login', '/signup', '/signup/sub', '/terms', '/privacy'];
+  // Protected routes that require auth + active GC subscription:
+  // /schedule-generator — Schedule Simulator (enterprise feature, GC login required)
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
   const isSubView = request.nextUrl.pathname.startsWith('/view/');

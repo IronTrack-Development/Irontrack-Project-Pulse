@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useParams } from "next/navigation";
 import {
   CheckCircle2,
@@ -20,6 +20,8 @@ import {
   ZoomIn,
   ChevronLeft,
 } from "lucide-react";
+
+import { extractPhotoTimestamp } from "@/lib/photo-utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -296,24 +298,32 @@ function PhotoStrip({ urls }: { urls: string[] }) {
   return (
     <>
       <div className="flex gap-2 overflow-x-auto scrollbar-hide py-1">
-        {urls.map((url, i) => (
-          <button
-            key={url}
-            onClick={() => setLightboxIndex(i)}
-            className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-[#2a2a35] group"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={url}
-              alt={`Photo ${i + 1}`}
-              loading="lazy"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-              <ZoomIn size={14} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </button>
-        ))}
+        {urls.map((url, i) => {
+          const ts = extractPhotoTimestamp(url);
+          return (
+            <button
+              key={url}
+              onClick={() => setLightboxIndex(i)}
+              className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-[#2a2a35] group"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={url}
+                alt={`Photo ${i + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                <ZoomIn size={14} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              {ts && (
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-0.5 py-0.5 text-center">
+                  <span className="text-white text-[8px] leading-none font-medium">{ts}</span>
+                </div>
+              )}
+            </button>
+          );
+        })}
       </div>
       {lightboxIndex !== null && (
         <Lightbox
@@ -485,24 +495,32 @@ function ReportPreviewCard({
               Photos ({allPhotoUrls.length})
             </p>
             <div className="grid grid-cols-3 gap-2">
-              {allPhotoUrls.map((url, i) => (
-                <button
-                  key={url + i}
-                  onClick={() => setLightboxIndex(i)}
-                  className="relative aspect-square rounded-xl overflow-hidden border border-[#2a2a35] group"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={url}
-                    alt={`Photo ${i + 1}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                    <ZoomIn size={18} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                </button>
-              ))}
+              {allPhotoUrls.map((url, i) => {
+                const ts = extractPhotoTimestamp(url);
+                return (
+                  <button
+                    key={url + i}
+                    onClick={() => setLightboxIndex(i)}
+                    className="relative aspect-square rounded-xl overflow-hidden border border-[#2a2a35] group"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={url}
+                      alt={`Photo ${i + 1}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                      <ZoomIn size={18} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    {ts && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/60 rounded-b-xl px-1 py-1 text-center">
+                        <span className="text-white text-[9px] leading-none font-medium">{ts}</span>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -552,8 +570,41 @@ function ReportPreviewCard({
 
 // ─── Activity Card ─────────────────────────────────────────────────────────────
 
-function ActivityCard({ activity }: { activity: Activity }) {
+function ActivityCard({
+  activity,
+  trendPct,
+  prevTrendPct,
+}: {
+  activity: Activity;
+  trendPct?: number | null;
+  prevTrendPct?: number | null;
+}) {
   const pct = activity.percent_complete ?? 0;
+
+  // Trend indicator: compare trendPct (latest reported) vs prevTrendPct (prior report)
+  let trendNode: React.ReactNode = null;
+  if (trendPct != null && prevTrendPct != null) {
+    if (trendPct > prevTrendPct) {
+      trendNode = (
+        <span className="text-green-400 text-xs font-bold" title={`${prevTrendPct}% → ${trendPct}%`}>
+          ↑
+        </span>
+      );
+    } else if (trendPct < prevTrendPct) {
+      trendNode = (
+        <span className="text-red-400 text-xs font-bold" title={`${prevTrendPct}% → ${trendPct}%`}>
+          ↓
+        </span>
+      );
+    } else {
+      trendNode = (
+        <span className="text-gray-500 text-xs font-bold" title="No change since last report">
+          →
+        </span>
+      );
+    }
+  }
+
   return (
     <div className="bg-[#13131A] border border-[#1F1F25] rounded-xl p-4 space-y-2">
       <div className="flex items-start justify-between gap-2">
@@ -577,12 +628,15 @@ function ActivityCard({ activity }: { activity: Activity }) {
       <div className="space-y-1">
         <div className="flex justify-between text-xs text-gray-500">
           <span>Progress</span>
-          <span className="text-gray-300">{pct}%</span>
+          <span className="flex items-center gap-1">
+            {trendNode}
+            <span className="text-gray-300">{trendPct != null ? trendPct : pct}%</span>
+          </span>
         </div>
         <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full bg-[#F97316] transition-all"
-            style={{ width: `${Math.min(pct, 100)}%` }}
+            style={{ width: `${Math.min(trendPct != null ? trendPct : pct, 100)}%` }}
           />
         </div>
       </div>
@@ -630,8 +684,35 @@ function EmptyState({ message }: { message: string }) {
 
 // ─── My Full Scope Tab ────────────────────────────────────────────────────────
 
-function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
+function FullScopeTab({
+  activities,
+  pastReports,
+}: {
+  activities: ViewData["activities"];
+  pastReports: PastReport[];
+}) {
   const [completeExpanded, setCompleteExpanded] = useState(false);
+
+  // Build trend map: activity_id -> { latest: number, prev: number | null }
+  // pastReports is sorted newest-first; cross-reference worked_on_activities
+  const trendMap = useMemo(() => {
+    const map: Record<string, { latest: number; prev: number | null }> = {};
+    // Walk through reports newest-first
+    for (const report of pastReports) {
+      for (const wa of report.worked_on_activities) {
+        const rawPct = parseInt(wa.status, 10);
+        const pct = isNaN(rawPct) ? 0 : rawPct;
+        if (!(wa.activity_id in map)) {
+          // First occurrence = latest
+          map[wa.activity_id] = { latest: pct, prev: null };
+        } else if (map[wa.activity_id].prev === null) {
+          // Second occurrence = previous
+          map[wa.activity_id].prev = pct;
+        }
+      }
+    }
+    return map;
+  }, [pastReports]);
 
   const allActivities = [
     ...activities.overdue,
@@ -692,6 +773,7 @@ function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
           iconNode={<AlertTriangle size={14} className="text-red-400" />}
           activities={overdue}
           defaultOpen
+          trendMap={trendMap}
         />
       )}
 
@@ -705,6 +787,7 @@ function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
           iconNode={<Clock size={14} className="text-orange-400" />}
           activities={inProgress}
           defaultOpen
+          trendMap={trendMap}
         />
       )}
 
@@ -718,6 +801,7 @@ function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
           iconNode={<ChevronRight size={14} className="text-gray-500" />}
           activities={notStarted}
           defaultOpen
+          trendMap={trendMap}
         />
       )}
 
@@ -733,6 +817,7 @@ function FullScopeTab({ activities }: { activities: ViewData["activities"] }) {
           defaultOpen={false}
           forceOpen={completeExpanded}
           onToggle={() => setCompleteExpanded((v) => !v)}
+          trendMap={trendMap}
         />
       )}
 
@@ -754,6 +839,7 @@ function ScopeGroup({
   defaultOpen,
   forceOpen,
   onToggle,
+  trendMap,
 }: {
   label: string;
   count: number;
@@ -765,6 +851,7 @@ function ScopeGroup({
   defaultOpen: boolean;
   forceOpen?: boolean;
   onToggle?: () => void;
+  trendMap?: Record<string, { latest: number; prev: number | null }>;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const isOpen = forceOpen !== undefined ? forceOpen : open;
@@ -795,9 +882,17 @@ function ScopeGroup({
 
       {isOpen && (
         <div className="p-3 space-y-2 bg-[#0B0B0D]">
-          {activities.map((act) => (
-            <ActivityCard key={act.id} activity={act} />
-          ))}
+          {activities.map((act) => {
+            const trend = trendMap?.[act.id];
+            return (
+              <ActivityCard
+                key={act.id}
+                activity={act}
+                trendPct={trend?.latest}
+                prevTrendPct={trend?.prev ?? undefined}
+              />
+            );
+          })}
         </div>
       )}
     </div>
@@ -1305,6 +1400,7 @@ function ProgressReportTab({
       />
 
       {/* Beta banner */}
+      {/* TODO: Check sub_companies.subscription_status when beta ends */}
       <div className="bg-[#1A1620] border border-purple-800/30 rounded-xl px-4 py-3 flex items-center gap-3">
         <span className="text-base">📊</span>
         <p className="text-xs text-purple-300 leading-snug">
@@ -1951,7 +2047,7 @@ export default function SubScheduleViewPage() {
           )}
 
           {/* Full Scope Tab */}
-          {activeTab === "full_scope" && <FullScopeTab activities={activities} />}
+          {activeTab === "full_scope" && <FullScopeTab activities={activities} pastReports={pastReports} />}
 
           {/* This Week Tab */}
           {activeTab === "this_week" && (

@@ -6,6 +6,7 @@ import {
   Eye, CheckCircle, AlertTriangle, Clock, X, ChevronDown, ChevronUp,
   ListChecks, Search, ChevronsUpDown, FileText, QrCode, Printer, ExternalLink
 } from "lucide-react";
+import { extractPhotoTimestamp } from "@/lib/photo-utils";
 
 // ─── Interfaces ───────────────────────────────────────────────────────────────
 
@@ -988,16 +989,24 @@ export default function SubsTab({ projectId }: Props) {
                                       )}
                                       {report.photo_urls && report.photo_urls.length > 0 && (
                                         <div className="flex gap-1.5 mt-2 overflow-x-auto scrollbar-none">
-                                          {report.photo_urls.map((url: string, i: number) => (
-                                            <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="flex-none">
-                                              <img
-                                                src={url}
-                                                alt={`Report photo ${i + 1}`}
-                                                className="w-14 h-14 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
-                                                loading="lazy"
-                                              />
-                                            </a>
-                                          ))}
+                                          {report.photo_urls.map((url: string, i: number) => {
+                                            const ts = extractPhotoTimestamp(url);
+                                            return (
+                                              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="flex-none relative">
+                                                <img
+                                                  src={url}
+                                                  alt={`Report photo ${i + 1}`}
+                                                  className="w-14 h-14 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
+                                                  loading="lazy"
+                                                />
+                                                {ts && (
+                                                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 rounded-b-lg px-0.5 py-0.5 text-center">
+                                                    <span className="text-white text-[8px] leading-none font-medium">{ts}</span>
+                                                  </div>
+                                                )}
+                                              </a>
+                                            );
+                                          })}
                                         </div>
                                       )}
                                     </div>

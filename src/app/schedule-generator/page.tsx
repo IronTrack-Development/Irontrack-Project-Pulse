@@ -1,0 +1,886 @@
+'use client';
+
+import { useState, useMemo, useCallback } from 'react';
+import {
+  Calendar,
+  Building2,
+  Layers,
+  CheckSquare,
+  Square,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  Loader2,
+  AlertTriangle,
+  Clock,
+  BarChart3,
+  Flag,
+  ArrowLeft,
+} from 'lucide-react';
+import Link from 'next/link';
+import { ALL_TRADES, BUILDING_TYPE_DEFAULTS, BUILDING_TYPES } from '@/lib/production-rates';
+import { GeneratedSchedule, ScheduleActivity } from '@/lib/schedule-engine';
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface ScheduleInput {
+  projectName: string;
+  buildingType: string;
+  totalSF: number;
+  stories: number;
+  isGroundUp: boolean;
+  selectedTrades: string[];
+  quantities?: Record<string, number>;
+  startDate: string;
+}
+
+// ─── Quantity labels for the overrides panel ──────────────────────────────────
+const QUANTITY_LABELS: { key: string; label: string; unit: string }[] = [
+  { key: 'mass_grading_cy', label: 'Mass Grading', unit: 'CY' },
+  { key: 'fine_grading_sf', label: 'Fine Grading', unit: 'SF' },
+  { key: 'asphalt_tons', label: 'Asphalt Paving', unit: 'tons' },
+  { key: 'wet_utilities_lf', label: 'Wet Utilities Trenching', unit: 'LF' },
+  { key: 'storm_drain_lf', label: 'Storm Drain', unit: 'LF' },
+  { key: 'footings_lf', label: 'Footings / Grade Beams', unit: 'LF' },
+  { key: 'slab_prep_sf', label: 'Slab on Grade Prep', unit: 'SF' },
+  { key: 'slab_pour_sf', label: 'Slab on Grade Pour', unit: 'SF' },
+  { key: 'cmu_blocks', label: 'CMU Blocks', unit: 'each' },
+  { key: 'steel_tons', label: 'Structural Steel', unit: 'tons' },
+  { key: 'decking_sf', label: 'Metal Decking', unit: 'SF' },
+  { key: 'framing_sf', label: 'Metal Stud Framing', unit: 'SF' },
+  { key: 'drywall_hang_sf', label: 'Drywall (Hang)', unit: 'SF' },
+  { key: 'drywall_finish_sf', label: 'Drywall (Finish)', unit: 'SF' },
+  { key: 'grid_ceiling_sf', label: 'T-Bar Grid Ceiling', unit: 'SF' },
+  { key: 'sprinkler_pipe_lf', label: 'Sprinkler Pipe', unit: 'LF' },
+  { key: 'sprinkler_heads', label: 'Sprinkler Heads', unit: 'each' },
+  { key: 'ductwork_lbs', label: 'HVAC Ductwork', unit: 'lbs' },
+  { key: 'vav_units', label: 'VAV / RTU Units', unit: 'each' },
+  { key: 'plumbing_rough_sf', label: 'Plumbing Rough-In Area', unit: 'SF' },
+  { key: 'plumbing_fixtures', label: 'Plumbing Fixtures', unit: 'each' },
+  { key: 'conduit_lf', label: 'Electrical Conduit', unit: 'LF' },
+  { key: 'devices_each', label: 'Electrical Devices', unit: 'each' },
+  { key: 'storefront_sf', label: 'Storefront Glazing', unit: 'SF' },
+  { key: 'stucco_sf', label: 'Stucco / EIFS', unit: 'SF' },
+  { key: 'roofing_sf', label: 'Roofing', unit: 'SF' },
+  { key: 'interior_paint_sf', label: 'Interior Paint', unit: 'SF' },
+  { key: 'flooring_sf', label: 'Flooring (Total)', unit: 'SF' },
+  { key: 'landscaping_sf', label: 'Landscaping', unit: 'SF' },
+  { key: 'door_openings', label: 'Door Openings', unit: 'each' },
+];
+
+// ─── SF-based estimator (mirrors engine logic, for UI preview) ────────────────
+function estimateQuantitiesForUI(totalSF: number, stories: number, isGroundUp: boolean): Record<string, number> {
+  const footprintSF = totalSF / Math.max(stories, 1);
+  const perimeterLF = Math.sqrt(footprintSF) * 4 * 0.85;
+  const wallHeightFt = 14;
+  return {
+    mass_grading_cy: Math.round(footprintSF * 0.25),
+    fine_grading_sf: Math.round(footprintSF * 2.2),
+    asphalt_tons: Math.round(footprintSF * 0.04),
+    wet_utilities_lf: Math.round(perimeterLF * 0.8),
+    storm_drain_lf: Math.round(perimeterLF * 0.5),
+    footings_lf: Math.round(perimeterLF + (footprintSF / 400) * 20),
+    slab_prep_sf: Math.round(footprintSF),
+    slab_pour_sf: Math.round(footprintSF),
+    cmu_blocks: isGroundUp ? Math.round(perimeterLF * wallHeightFt * 1.125 * 0.4) : 0,
+    steel_tons: Math.round(totalSF * 0.008),
+    decking_sf: Math.round(footprintSF * (stories - 1 + 1)),
+    framing_sf: Math.round(totalSF * 1.8),
+    drywall_hang_sf: Math.round(totalSF * 2.5),
+    drywall_finish_sf: Math.round(totalSF * 2.5),
+    grid_ceiling_sf: Math.round(totalSF * 0.70),
+    sprinkler_pipe_lf: Math.round(totalSF * 0.15),
+    sprinkler_heads: Math.ceil(totalSF / 130),
+    ductwork_lbs: Math.round(totalSF * 1.2),
+    vav_units: Math.max(1, Math.ceil(totalSF / 1500)),
+    plumbing_rough_sf: Math.round(totalSF),
+    plumbing_fixtures: Math.max(4, Math.ceil(totalSF / 400)),
+    conduit_lf: Math.round(totalSF * 0.25),
+    devices_each: Math.ceil(totalSF / 200),
+    storefront_sf: Math.round(perimeterLF * wallHeightFt * 0.25),
+    stucco_sf: Math.round(perimeterLF * wallHeightFt * stories * 0.60),
+    roofing_sf: Math.round(footprintSF * 1.05),
+    interior_paint_sf: Math.round(totalSF * 2.5),
+    flooring_sf: Math.round(totalSF * 0.88),
+    landscaping_sf: Math.round(footprintSF * 1.5),
+    door_openings: Math.max(4, Math.ceil(totalSF / 350)),
+  };
+}
+
+// ─── Phase colors ─────────────────────────────────────────────────────────────
+const PHASE_COLORS: Record<string, string> = {
+  'Phase 1': '#6366F1',
+  'Phase 2': '#22C55E',
+  'Phase 3': '#EAB308',
+  'Phase 4': '#3B82F6',
+  'Phase 5': '#F97316',
+  'Phase 6': '#14B8A6',
+  'Phase 7': '#A855F7',
+  'Phase 8': '#EC4899',
+  'Phase 9': '#64748B',
+};
+
+function phaseColor(phase: string): string {
+  for (const key of Object.keys(PHASE_COLORS)) {
+    if (phase.startsWith(key)) return PHASE_COLORS[key];
+  }
+  return '#64748B';
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export default function ScheduleGeneratorPage() {
+  // Form state
+  const [projectName, setProjectName] = useState('');
+  const [buildingType, setBuildingType] = useState('Office TI');
+  const [totalSF, setTotalSF] = useState<string>('10000');
+  const [stories, setStories] = useState<string>('1');
+  const [isGroundUp, setIsGroundUp] = useState(false);
+  const [startDate, setStartDate] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    return d.toISOString().slice(0, 10);
+  });
+  const [selectedTrades, setSelectedTrades] = useState<string[]>(
+    BUILDING_TYPE_DEFAULTS['Office TI'] ?? []
+  );
+  const [showQuantities, setShowQuantities] = useState(false);
+  const [quantityOverrides, setQuantityOverrides] = useState<Record<string, string>>({});
+
+  // Results state
+  const [schedule, setSchedule] = useState<GeneratedSchedule | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [activePhaseFilter, setActivePhaseFilter] = useState<string | null>(null);
+  const [showCriticalOnly, setShowCriticalOnly] = useState(false);
+
+  // SF-based estimates for quantities panel
+  const sfNum = parseInt(totalSF) || 0;
+  const storiesNum = parseInt(stories) || 1;
+  const estimates = useMemo(
+    () => estimateQuantitiesForUI(sfNum, storiesNum, isGroundUp),
+    [sfNum, storiesNum, isGroundUp]
+  );
+
+  // When building type changes, update default trades
+  const handleBuildingTypeChange = (bt: string) => {
+    setBuildingType(bt);
+    setSelectedTrades(BUILDING_TYPE_DEFAULTS[bt] ?? []);
+  };
+
+  // Toggle a single trade
+  const toggleTrade = (trade: string) => {
+    setSelectedTrades((prev) =>
+      prev.includes(trade) ? prev.filter((t) => t !== trade) : [...prev, trade]
+    );
+  };
+
+  // Submit
+  const handleGenerate = useCallback(async () => {
+    if (!projectName.trim()) {
+      setError('Please enter a project name');
+      return;
+    }
+    if (!totalSF || parseInt(totalSF) <= 0) {
+      setError('Please enter a valid square footage');
+      return;
+    }
+    if (selectedTrades.length === 0) {
+      setError('Please select at least one trade');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setSchedule(null);
+    setActivePhaseFilter(null);
+    setShowCriticalOnly(false);
+
+    // Build quantities from overrides (only non-empty values)
+    const quantities: Record<string, number> = {};
+    Object.entries(quantityOverrides).forEach(([k, v]) => {
+      const n = parseFloat(v);
+      if (!isNaN(n) && n > 0) quantities[k] = n;
+    });
+
+    const input: ScheduleInput = {
+      projectName: projectName.trim(),
+      buildingType,
+      totalSF: parseInt(totalSF),
+      stories: parseInt(stories) || 1,
+      isGroundUp,
+      selectedTrades,
+      quantities: Object.keys(quantities).length > 0 ? quantities : undefined,
+      startDate,
+    };
+
+    try {
+      const res = await fetch('/api/schedule-generator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ error: 'Server error' }));
+        throw new Error(errData.error ?? `HTTP ${res.status}`);
+      }
+
+      const data: GeneratedSchedule = await res.json();
+      setSchedule(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Generation failed');
+    } finally {
+      setLoading(false);
+    }
+  }, [projectName, buildingType, totalSF, stories, isGroundUp, startDate, selectedTrades, quantityOverrides]);
+
+  // Export XLSX
+  const handleExportXLSX = useCallback(async () => {
+    if (!schedule) return;
+    try {
+      const { generateXLSX } = await import('@/lib/export-xlsx');
+      const buf = generateXLSX(schedule);
+      const blob = new Blob([buf as unknown as ArrayBuffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${schedule.projectName.replace(/\s+/g, '_')}_Schedule.xlsx`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('XLSX export error:', err);
+    }
+  }, [schedule]);
+
+  // Export MS Project XML
+  const handleExportMSP = useCallback(async () => {
+    if (!schedule) return;
+    try {
+      const { generateMSProjectXML } = await import('@/lib/export-msp-xml');
+      const xml = generateMSProjectXML(schedule);
+      const blob = new Blob([xml], { type: 'application/xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${schedule.projectName.replace(/\s+/g, '_')}_Schedule.xml`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('MSP XML export error:', err);
+    }
+  }, [schedule]);
+
+  // Filtered activities for table
+  const filteredActivities = useMemo<ScheduleActivity[]>(() => {
+    if (!schedule) return [];
+    let acts = schedule.activities;
+    if (activePhaseFilter) acts = acts.filter((a) => a.phase === activePhaseFilter);
+    if (showCriticalOnly) acts = acts.filter((a) => a.isCritical);
+    return acts;
+  }, [schedule, activePhaseFilter, showCriticalOnly]);
+
+  // Project end for Gantt bar width calculation
+  const totalWorkingDays = schedule?.summary.totalDuration ?? 1;
+
+  return (
+    <div className="min-h-screen bg-[#0B0B0D] text-gray-100">
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
+          <Link
+            href="/dashboard"
+            className="text-gray-500 hover:text-gray-300 transition-colors"
+          >
+            <ArrowLeft size={20} />
+          </Link>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded bg-[#F97316]/10 border border-[#F97316]/20 flex items-center justify-center">
+              <BarChart3 size={16} className="text-[#F97316]" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-gray-100 leading-tight">
+                Schedule Simulator
+              </h1>
+              <p className="text-xs text-gray-500">
+                Generate baseline CPM schedules from project parameters
+              </p>
+            </div>
+          </div>
+          {schedule && (
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                onClick={handleExportXLSX}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F25] border border-[#2A2A35] hover:border-[#F97316]/40 text-sm text-gray-300 hover:text-white transition-colors"
+              >
+                <Download size={14} />
+                XLSX
+              </button>
+              <button
+                onClick={handleExportMSP}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F25] border border-[#2A2A35] hover:border-[#F97316]/40 text-sm text-gray-300 hover:text-white transition-colors"
+              >
+                <Download size={14} />
+                MS Project XML
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+        {/* ── Input Form ───────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left column: Project basics */}
+          <div className="lg:col-span-1 space-y-5">
+            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5 space-y-4">
+              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                <Building2 size={14} className="text-[#F97316]" />
+                Project Details
+              </h2>
+
+              {/* Project Name */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Project Name</label>
+                <input
+                  type="text"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  placeholder="e.g. Downtown Office TI — Suite 400"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                />
+              </div>
+
+              {/* Building Type */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Building Type</label>
+                <select
+                  value={buildingType}
+                  onChange={(e) => handleBuildingTypeChange(e.target.value)}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                >
+                  {BUILDING_TYPES.map((bt) => (
+                    <option key={bt} value={bt}>
+                      {bt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Total SF */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Total Square Footage</label>
+                <input
+                  type="number"
+                  value={totalSF}
+                  onChange={(e) => setTotalSF(e.target.value)}
+                  min={500}
+                  step={500}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                />
+              </div>
+
+              {/* Stories */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Number of Stories</label>
+                <input
+                  type="number"
+                  value={stories}
+                  onChange={(e) => setStories(e.target.value)}
+                  min={1}
+                  max={50}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                />
+              </div>
+
+              {/* Ground-Up / TI Toggle */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium">Project Type</label>
+                <div className="flex rounded-lg overflow-hidden border border-[#1F1F25]">
+                  <button
+                    onClick={() => setIsGroundUp(false)}
+                    className={`flex-1 py-2 text-sm font-medium transition-colors ${
+                      !isGroundUp
+                        ? 'bg-[#F97316] text-white'
+                        : 'bg-[#0B0B0D] text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Tenant Improvement
+                  </button>
+                  <button
+                    onClick={() => setIsGroundUp(true)}
+                    className={`flex-1 py-2 text-sm font-medium transition-colors ${
+                      isGroundUp
+                        ? 'bg-[#F97316] text-white'
+                        : 'bg-[#0B0B0D] text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Ground-Up
+                  </button>
+                </div>
+              </div>
+
+              {/* Start Date */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-400 font-medium flex items-center gap-1.5">
+                  <Calendar size={12} className="text-[#F97316]" />
+                  Construction Start Date
+                </label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Middle + Right: Trades + Quantities */}
+          <div className="lg:col-span-2 space-y-5">
+            {/* Trade Selection */}
+            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                  <Layers size={14} className="text-[#F97316]" />
+                  Scope of Work
+                </h2>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSelectedTrades([...ALL_TRADES])}
+                    className="text-xs text-gray-500 hover:text-gray-300 transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => setSelectedTrades([])}
+                    className="text-xs text-gray-500 hover:text-gray-300 transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                  >
+                    None
+                  </button>
+                  <button
+                    onClick={() =>
+                      setSelectedTrades(BUILDING_TYPE_DEFAULTS[buildingType] ?? [])
+                    }
+                    className="text-xs text-[#F97316] hover:text-orange-300 transition-colors px-2 py-1 rounded hover:bg-[#F97316]/10"
+                  >
+                    Reset to Type
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {ALL_TRADES.map((trade) => {
+                  const checked = selectedTrades.includes(trade);
+                  return (
+                    <button
+                      key={trade}
+                      onClick={() => toggleTrade(trade)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm text-left transition-colors ${
+                        checked
+                          ? 'border-[#F97316]/40 bg-[#F97316]/10 text-gray-100'
+                          : 'border-[#1F1F25] bg-[#0B0B0D] text-gray-500 hover:text-gray-400 hover:border-[#2A2A35]'
+                      }`}
+                    >
+                      {checked ? (
+                        <CheckSquare size={14} className="text-[#F97316] flex-shrink-0" />
+                      ) : (
+                        <Square size={14} className="flex-shrink-0" />
+                      )}
+                      <span className="truncate leading-tight">{trade}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Optional Quantities Override */}
+            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl overflow-hidden">
+              <button
+                onClick={() => setShowQuantities((v) => !v)}
+                className="w-full flex items-center justify-between p-5 hover:bg-[#151519] transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                    Optional: Override Quantities
+                  </h2>
+                  <span className="text-xs text-gray-600 font-normal normal-case">
+                    (pre-filled from SF estimates)
+                  </span>
+                </div>
+                {showQuantities ? (
+                  <ChevronUp size={16} className="text-gray-500" />
+                ) : (
+                  <ChevronDown size={16} className="text-gray-500" />
+                )}
+              </button>
+
+              {showQuantities && (
+                <div className="px-5 pb-5 border-t border-[#1F1F25]">
+                  <p className="text-xs text-gray-500 mt-4 mb-4">
+                    Enter actual take-off quantities from plan sets to improve accuracy.
+                    Leave blank to use SF-based estimates.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {QUANTITY_LABELS.map(({ key, label, unit }) => (
+                      <div key={key} className="flex items-center gap-2">
+                        <div className="flex-1 min-w-0">
+                          <label className="text-xs text-gray-400 truncate block mb-1">
+                            {label}
+                          </label>
+                          <div className="flex items-center gap-1">
+                            <input
+                              type="number"
+                              value={quantityOverrides[key] ?? ''}
+                              onChange={(e) =>
+                                setQuantityOverrides((prev) => ({
+                                  ...prev,
+                                  [key]: e.target.value,
+                                }))
+                              }
+                              placeholder={String(estimates[key] ?? '')}
+                              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-xs text-gray-100 placeholder-gray-700 focus:outline-none focus:border-[#F97316]/40"
+                            />
+                            <span className="text-xs text-gray-600 w-8 flex-shrink-0">
+                              {unit}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Generate Button */}
+            <button
+              onClick={handleGenerate}
+              disabled={loading}
+              className="w-full py-4 rounded-xl bg-[#F97316] hover:bg-orange-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-base transition-colors flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Generating Schedule…
+                </>
+              ) : (
+                <>
+                  <BarChart3 size={18} />
+                  Generate Baseline CPM Schedule
+                </>
+              )}
+            </button>
+
+            {error && (
+              <div className="flex items-center gap-2 bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm">
+                <AlertTriangle size={16} className="flex-shrink-0" />
+                {error}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Results ──────────────────────────────────────────────────────── */}
+        {schedule && (
+          <div className="space-y-6">
+            {/* Summary Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <StatCard
+                label="Calendar Duration"
+                value={`${schedule.totalDuration} days`}
+                sub={`~${Math.round(schedule.totalDuration / 30.5)} months`}
+                color="text-[#F97316]"
+                icon={<Clock size={16} />}
+              />
+              <StatCard
+                label="Working Days"
+                value={schedule.summary.totalDuration}
+                sub="5-day work week"
+                color="text-blue-400"
+                icon={<Calendar size={16} />}
+              />
+              <StatCard
+                label="Total Activities"
+                value={schedule.summary.totalActivities}
+                sub={`${schedule.criticalPath.length} on critical path`}
+                color="text-purple-400"
+                icon={<Layers size={16} />}
+              />
+              <StatCard
+                label="Est. Completion"
+                value={formatDate(schedule.endDate)}
+                sub={`Start: ${formatDate(schedule.startDate)}`}
+                color="text-green-400"
+                icon={<Flag size={16} />}
+              />
+            </div>
+
+            {/* Phase Summary Bar */}
+            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
+              <h3 className="text-sm font-semibold text-gray-300 mb-4">Phase Breakdown</h3>
+              <div className="space-y-2">
+                {schedule.summary.phases.map((phase) => {
+                  const pct = Math.round(
+                    (phase.duration / schedule.summary.totalDuration) * 100
+                  );
+                  const color = phaseColor(phase.name);
+                  return (
+                    <button
+                      key={phase.name}
+                      onClick={() =>
+                        setActivePhaseFilter(
+                          activePhaseFilter === phase.name ? null : phase.name
+                        )
+                      }
+                      className="w-full text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="text-xs text-gray-400 w-48 truncate"
+                          style={{ color }}
+                        >
+                          {phase.name.replace(/Phase \d+: /, '')}
+                        </span>
+                        <div className="flex-1 bg-[#0B0B0D] rounded-full h-3 overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all"
+                            style={{ width: `${Math.max(pct, 2)}%`, backgroundColor: color, opacity: activePhaseFilter === phase.name ? 1 : 0.7 }}
+                          />
+                        </div>
+                        <span className="text-xs text-gray-500 w-20 text-right">
+                          {phase.duration}d ({pct}%)
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              {activePhaseFilter && (
+                <button
+                  onClick={() => setActivePhaseFilter(null)}
+                  className="mt-3 text-xs text-[#F97316] hover:text-orange-300 transition-colors"
+                >
+                  ← Show all phases
+                </button>
+              )}
+            </div>
+
+            {/* Activity Table + Gantt */}
+            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl overflow-hidden">
+              {/* Table controls */}
+              <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-sm font-semibold text-gray-300">
+                    Activities
+                    {activePhaseFilter && (
+                      <span className="ml-2 text-xs text-gray-500">
+                        — {activePhaseFilter.replace(/Phase \d+: /, '')}
+                      </span>
+                    )}
+                  </h3>
+                  <span className="text-xs text-gray-600">
+                    {filteredActivities.length} activities
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setShowCriticalOnly((v) => !v)}
+                    className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
+                      showCriticalOnly
+                        ? 'border-red-500/40 bg-red-500/10 text-red-400'
+                        : 'border-[#1F1F25] text-gray-500 hover:text-gray-400'
+                    }`}
+                  >
+                    <Flag size={11} />
+                    Critical Only
+                  </button>
+                  <div className="flex gap-3 text-xs text-gray-600">
+                    <span className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-sm bg-red-500/60 inline-block" />
+                      Critical
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-sm bg-[#F97316]/40 inline-block" />
+                      Float
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-[#1F1F25] text-gray-500">
+                      <th className="text-left px-3 py-2.5 font-medium w-10">#</th>
+                      <th className="text-left px-3 py-2.5 font-medium">Activity</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-28">Trade</th>
+                      <th className="text-right px-3 py-2.5 font-medium w-16">Days</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-24">Start</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-24">Finish</th>
+                      <th className="text-right px-3 py-2.5 font-medium w-16">Float</th>
+                      <th className="px-3 py-2.5 font-medium w-48">Timeline</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredActivities.map((act, i) => {
+                      const isCrit = act.isCritical ?? false;
+                      const float = act.totalFloat ?? 0;
+
+                      // Gantt bar: ES offset + duration
+                      // We need ES in working days — derive from date diff
+                      const esDay = workingDayOffset(schedule.startDate, act.earlyStart ?? schedule.startDate);
+                      const barLeft = totalWorkingDays > 0 ? (esDay / totalWorkingDays) * 100 : 0;
+                      const barWidth = totalWorkingDays > 0 ? (act.duration / totalWorkingDays) * 100 : 0;
+                      const floatWidth = totalWorkingDays > 0 ? (float / totalWorkingDays) * 100 : 0;
+
+                      return (
+                        <tr
+                          key={act.id}
+                          className={`border-b border-[#1A1A20] transition-colors hover:bg-[#14141A] ${
+                            isCrit ? 'bg-red-950/10' : ''
+                          }`}
+                        >
+                          <td className="px-3 py-2 text-gray-600">{act.activityId}</td>
+                          <td className="px-3 py-2">
+                            <div className="flex items-center gap-1.5">
+                              {isCrit && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+                              )}
+                              <span className={isCrit ? 'text-gray-100' : 'text-gray-300'}>
+                                {act.name}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-3 py-2">
+                            <span
+                              className="px-1.5 py-0.5 rounded text-gray-300 text-xs"
+                              style={{
+                                backgroundColor: `${phaseColor(act.phase)}20`,
+                                color: phaseColor(act.phase),
+                              }}
+                            >
+                              {act.trade}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2 text-right text-gray-300">{act.duration}</td>
+                          <td className="px-3 py-2 text-gray-400">{act.earlyStart ?? '—'}</td>
+                          <td className="px-3 py-2 text-gray-400">{act.earlyFinish ?? '—'}</td>
+                          <td className={`px-3 py-2 text-right ${float === 0 ? 'text-red-400' : 'text-gray-400'}`}>
+                            {float}d
+                          </td>
+                          <td className="px-3 py-2">
+                            {/* Mini Gantt bar */}
+                            <div className="relative h-4 bg-[#0B0B0D] rounded overflow-hidden">
+                              {/* Float bar (behind) */}
+                              {floatWidth > 0 && (
+                                <div
+                                  className="absolute top-0 h-full rounded"
+                                  style={{
+                                    left: `${barLeft}%`,
+                                    width: `${barWidth + floatWidth}%`,
+                                    backgroundColor: '#F97316',
+                                    opacity: 0.2,
+                                  }}
+                                />
+                              )}
+                              {/* Duration bar */}
+                              <div
+                                className="absolute top-0 h-full rounded"
+                                style={{
+                                  left: `${barLeft}%`,
+                                  width: `${Math.max(barWidth, 1)}%`,
+                                  backgroundColor: isCrit ? '#EF4444' : phaseColor(act.phase),
+                                  opacity: 0.85,
+                                }}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Export buttons (bottom) */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={handleExportXLSX}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-gray-300 hover:text-white font-medium text-sm transition-colors"
+              >
+                <Download size={16} />
+                Download XLSX Schedule
+              </button>
+              <button
+                onClick={handleExportMSP}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-gray-300 hover:text-white font-medium text-sm transition-colors"
+              >
+                <Download size={16} />
+                Download MS Project XML
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function StatCard({
+  label,
+  value,
+  sub,
+  color,
+  icon,
+}: {
+  label: string;
+  value: string | number;
+  sub: string;
+  color: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-4">
+      <div className={`flex items-center gap-1.5 mb-2 ${color}`}>
+        {icon}
+        <span className="text-xs font-medium uppercase tracking-wider">{label}</span>
+      </div>
+      <div className="text-2xl font-bold text-gray-100 mb-0.5">{value}</div>
+      <div className="text-xs text-gray-500">{sub}</div>
+    </div>
+  );
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function formatDate(dateStr: string): string {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+/** Approximate working-day offset from project start to a calendar date */
+function workingDayOffset(startStr: string, targetStr: string): number {
+  if (!targetStr || targetStr === startStr) return 0;
+  const start = new Date(startStr + 'T00:00:00');
+  const target = new Date(targetStr + 'T00:00:00');
+  let days = 0;
+  const cur = new Date(start);
+  while (cur < target) {
+    cur.setDate(cur.getDate() + 1);
+    const dow = cur.getDay();
+    if (dow !== 0 && dow !== 6) days++;
+  }
+  return days;
+}

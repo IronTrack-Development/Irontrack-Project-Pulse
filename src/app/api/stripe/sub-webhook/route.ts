@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { getServiceClient } from "@/lib/supabase";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-04-30.basil",
+  apiVersion: "2026-03-25.dahlia",
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -46,15 +46,16 @@ export async function POST(req: NextRequest) {
         const subCompanyId = session.metadata?.sub_company_id;
         if (!subCompanyId) break;
 
-        // Retrieve the subscription to get period end
+        // Retrieve the subscription to get period end (in v22+, period end is on items)
         let subscriptionEndsAt: string | null = null;
         if (session.subscription) {
           const subscription = await stripe.subscriptions.retrieve(
             session.subscription as string
           );
-          subscriptionEndsAt = new Date(
-            subscription.current_period_end * 1000
-          ).toISOString();
+          const periodEnd = subscription.items?.data?.[0]?.current_period_end;
+          if (periodEnd) {
+            subscriptionEndsAt = new Date(periodEnd * 1000).toISOString();
+          }
         }
 
         await supabase
@@ -83,22 +84,24 @@ export async function POST(req: NextRequest) {
           if (!company) break;
 
           const isActive = subscription.status === "active";
+          const periodEnd0 = subscription.items?.data?.[0]?.current_period_end;
           await supabase
             .from("sub_companies")
             .update({
               subscription_status: isActive ? "active" : subscription.status,
-              subscription_ends_at: new Date(subscription.current_period_end * 1000).toISOString(),
+              subscription_ends_at: periodEnd0 ? new Date(periodEnd0 * 1000).toISOString() : null,
             })
             .eq("id", company.id);
           break;
         }
 
         const isActive = subscription.status === "active";
+        const periodEndB = subscription.items?.data?.[0]?.current_period_end;
         await supabase
           .from("sub_companies")
           .update({
             subscription_status: isActive ? "active" : subscription.status,
-            subscription_ends_at: new Date(subscription.current_period_end * 1000).toISOString(),
+            subscription_ends_at: periodEndB ? new Date(periodEndB * 1000).toISOString() : null,
           })
           .eq("id", subCompanyId);
         break;
@@ -109,11 +112,12 @@ export async function POST(req: NextRequest) {
         const subCompanyId = subscription.metadata?.sub_company_id;
 
         if (subCompanyId) {
+          const periodEndD = subscription.items?.data?.[0]?.current_period_end;
           await supabase
             .from("sub_companies")
             .update({
               subscription_status: "inactive",
-              subscription_ends_at: new Date(subscription.current_period_end * 1000).toISOString(),
+              subscription_ends_at: periodEndD ? new Date(periodEndD * 1000).toISOString() : null,
             })
             .eq("id", subCompanyId);
         } else {
