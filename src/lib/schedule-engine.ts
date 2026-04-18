@@ -2125,6 +2125,26 @@ function computeCPM(activities: ScheduleActivity[]): ScheduleActivity[] {
   return activities;
 }
 
+// ─── Delivery → Construction Activity Links ──────────────────────────────────
+//
+// Maps the last "Delivery" activityId in each procurement chain to a substring
+// that must appear in the matching construction activity's name. The CPM engine
+// will then decide whether the procurement or construction path is critical.
+
+const DELIVERY_LINKS: Record<string, string> = {
+  P104:  'Steel Erection',     // → Structural Steel Erection (4000)
+  P304:  'Storefront',         // → Storefront & Glazing (5010)
+  P404:  'Hollow Metal',       // → Hollow Metal Doors & Frames (5030)
+  P504:  'HVAC Rough',         // → HVAC Rough — Ductwork (6010)
+  P604:  'Sprinkler Rough',    // → Fire Sprinkler Rough-In (6000)
+  P704:  'Electrical Conduit', // → Electrical Conduit Rough-In (6030)
+  P803:  'Roofing',            // → Roofing System (5000)
+  P904:  'Millwork',           // → Specialties, Millwork (8050)
+  P1003: 'Flooring',           // → Flooring Installation (7060)
+  P1103: 'CMU',                // → Masonry (CMU Block) (4030)
+  P1204: 'Footing',            // → Form & Pour Footings (3010)
+};
+
 // ─── Main Engine ──────────────────────────────────────────────────────────────
 
 export function generateSchedule(input: ScheduleInput): GeneratedSchedule {
@@ -2144,11 +2164,17 @@ export function generateSchedule(input: ScheduleInput): GeneratedSchedule {
   const estQ = estimateQuantities(totalSF, stories, isGroundUp);
   const quantities: Record<string, number> = { ...estQ, ...userQuantities };
 
-  // 2. Filter activity templates — base + structure-type additions (ground-up only)
+  // 2. Filter activity templates — procurement chains + base + structure-type additions
   const structureAdditions = isGroundUp
     ? (STRUCTURE_TYPE_TEMPLATES[structureType] ?? [])
     : [];
-  const combinedTemplate = [...MASTER_TEMPLATE, ...structureAdditions];
+  // Procurement templates run from day 1 alongside early site work.
+  // filterActivities uses requiresTrades to include only relevant chains.
+  const combinedTemplate = [
+    ...PROCUREMENT_TEMPLATES,
+    ...MASTER_TEMPLATE,
+    ...structureAdditions,
+  ];
   const filtered = filterActivities(combinedTemplate, selectedTrades, isGroundUp);
 
   // 3. Assign sequential IDs + build activityId→id map
@@ -2178,6 +2204,7 @@ export function generateSchedule(input: ScheduleInput): GeneratedSchedule {
 
     // Resolve predecessors
     const phaseOrder = [
+      'Phase 0: Procurement & Submittals',
       'Phase 1: Pre-Construction & Mobilization',
       'Phase 2: Site Work & Earthwork',
       'Phase 3: Foundations',
@@ -2204,6 +2231,27 @@ export function generateSchedule(input: ScheduleInput): GeneratedSchedule {
       predecessors,
     } as ScheduleActivity;
   });
+
+  // 4b. Link procurement delivery activities to matching construction activities.
+  //     This must happen AFTER the activities array is built (IDs are assigned)
+  //     but BEFORE CPM so the engine sees the full dependency graph.
+  for (const [deliveryActId, linkSubstr] of Object.entries(DELIVERY_LINKS)) {
+    const deliveryAct = activities.find((a) => a.activityId === deliveryActId);
+    if (!deliveryAct) continue;
+
+    // Find the first non-procurement activity whose name contains linkSubstr
+    const constructionAct = activities.find(
+      (a) =>
+        !a.phase.startsWith('Phase 0') &&
+        a.activityId !== deliveryActId &&
+        a.name.toLowerCase().includes(linkSubstr.toLowerCase())
+    );
+    if (!constructionAct) continue;
+
+    if (!constructionAct.predecessors.includes(deliveryAct.id)) {
+      constructionAct.predecessors.push(deliveryAct.id);
+    }
+  }
 
   // 5. CPM calculation (assigns totalFloat, isCritical to each activity)
   computeCPM(activities);

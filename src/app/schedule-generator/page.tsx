@@ -41,38 +41,65 @@ interface ScheduleInput {
   startDate: string;
 }
 
-// ─── Quantity labels for the overrides panel ──────────────────────────────────
-const QUANTITY_LABELS: { key: string; label: string; unit: string }[] = [
-  { key: 'mass_grading_cy', label: 'Mass Grading', unit: 'CY' },
-  { key: 'fine_grading_sf', label: 'Fine Grading', unit: 'SF' },
-  { key: 'asphalt_tons', label: 'Asphalt Paving', unit: 'tons' },
-  { key: 'wet_utilities_lf', label: 'Wet Utilities Trenching', unit: 'LF' },
-  { key: 'storm_drain_lf', label: 'Storm Drain', unit: 'LF' },
-  { key: 'footings_lf', label: 'Footings / Grade Beams', unit: 'LF' },
-  { key: 'slab_prep_sf', label: 'Slab on Grade Prep', unit: 'SF' },
-  { key: 'slab_pour_sf', label: 'Slab on Grade Pour', unit: 'SF' },
-  { key: 'cmu_blocks', label: 'CMU Blocks', unit: 'each' },
-  { key: 'steel_tons', label: 'Structural Steel', unit: 'tons' },
-  { key: 'decking_sf', label: 'Metal Decking', unit: 'SF' },
-  { key: 'framing_sf', label: 'Metal Stud Framing', unit: 'SF' },
-  { key: 'drywall_hang_sf', label: 'Drywall (Hang)', unit: 'SF' },
-  { key: 'drywall_finish_sf', label: 'Drywall (Finish)', unit: 'SF' },
-  { key: 'grid_ceiling_sf', label: 'T-Bar Grid Ceiling', unit: 'SF' },
-  { key: 'sprinkler_pipe_lf', label: 'Sprinkler Pipe', unit: 'LF' },
-  { key: 'sprinkler_heads', label: 'Sprinkler Heads', unit: 'each' },
-  { key: 'ductwork_lbs', label: 'HVAC Ductwork', unit: 'lbs' },
-  { key: 'vav_units', label: 'VAV / RTU Units', unit: 'each' },
-  { key: 'plumbing_rough_sf', label: 'Plumbing Rough-In Area', unit: 'SF' },
-  { key: 'plumbing_fixtures', label: 'Plumbing Fixtures', unit: 'each' },
-  { key: 'conduit_lf', label: 'Electrical Conduit', unit: 'LF' },
-  { key: 'devices_each', label: 'Electrical Devices', unit: 'each' },
-  { key: 'storefront_sf', label: 'Storefront Glazing', unit: 'SF' },
-  { key: 'stucco_sf', label: 'Stucco / EIFS', unit: 'SF' },
-  { key: 'roofing_sf', label: 'Roofing', unit: 'SF' },
-  { key: 'interior_paint_sf', label: 'Interior Paint', unit: 'SF' },
-  { key: 'flooring_sf', label: 'Flooring (Total)', unit: 'SF' },
-  { key: 'landscaping_sf', label: 'Landscaping', unit: 'SF' },
-  { key: 'door_openings', label: 'Door Openings', unit: 'each' },
+// ─── Quantity groups for the overrides panel ──────────────────────────────────
+
+interface QuantityItem { key: string; label: string; unit: string }
+interface QuantityGroup { id: string; label: string; items: QuantityItem[] }
+
+const QUANTITY_GROUPS: QuantityGroup[] = [
+  {
+    id: 'interior',
+    label: 'Interior Finishes',
+    items: [
+      { key: 'drywall_sf',       label: 'Drywall',             unit: 'SF'   },
+      { key: 'paint_sf',         label: 'Paint',               unit: 'SF'   },
+      { key: 'ceiling_grid_sf',  label: 'Ceiling Grid / ACT',  unit: 'SF'   },
+      { key: 'carpet_sf',        label: 'Carpet',              unit: 'SF'   },
+      { key: 'lvt_sf',           label: 'LVT',                 unit: 'SF'   },
+      { key: 'tile_sf',          label: 'Ceramic Tile',        unit: 'SF'   },
+    ],
+  },
+  {
+    id: 'mep',
+    label: 'MEP',
+    items: [
+      { key: 'ductwork_lbs',           label: 'Ductwork',          unit: 'lbs'  },
+      { key: 'sprinkler_heads',        label: 'Sprinkler Heads',   unit: 'each' },
+      { key: 'plumbing_fixtures',      label: 'Plumbing Fixtures', unit: 'each' },
+      { key: 'electrical_panels_each', label: 'Electrical Panels', unit: 'each' },
+      { key: 'conduit_lf',             label: 'Conduit',           unit: 'LF'   },
+      { key: 'pipe_lf',                label: 'Pipe',              unit: 'LF'   },
+    ],
+  },
+  {
+    id: 'envelope',
+    label: 'Building Envelope',
+    items: [
+      { key: 'doors_each',    label: 'Doors',               unit: 'each' },
+      { key: 'storefront_sf', label: 'Windows / Storefront', unit: 'SF'   },
+      { key: 'roofing_sf',    label: 'Roofing',             unit: 'SF'   },
+    ],
+  },
+  {
+    id: 'sitework',
+    label: 'Sitework / Utilities',
+    items: [
+      { key: 'wet_water_lf',        label: 'Water Line',         unit: 'LF' },
+      { key: 'wet_sewer_lf',        label: 'Sewer Line',         unit: 'LF' },
+      { key: 'wet_storm_lf',        label: 'Storm Drain',        unit: 'LF' },
+      { key: 'dry_elec_conduit_lf', label: 'Electrical Conduit', unit: 'LF' },
+      { key: 'dry_telecom_lf',      label: 'Telecom',            unit: 'LF' },
+      { key: 'dry_gas_lf',          label: 'Gas Line',           unit: 'LF' },
+    ],
+  },
+  {
+    id: 'other',
+    label: 'Other',
+    items: [
+      { key: 'elevator_cars', label: 'Elevator Cars', unit: 'each' },
+      { key: 'demo_sf',       label: 'Demolition',    unit: 'SF'   },
+    ],
+  },
 ];
 
 // ─── SF-based estimator (mirrors engine logic, for UI preview) ────────────────
@@ -80,42 +107,42 @@ function estimateQuantitiesForUI(totalSF: number, stories: number, isGroundUp: b
   const footprintSF = totalSF / Math.max(stories, 1);
   const perimeterLF = Math.sqrt(footprintSF) * 4 * 0.85;
   const wallHeightFt = 14;
+  const elevatorCars = totalSF < 40000 ? 1 : totalSF < 100000 ? 2 : 3;
   return {
-    mass_grading_cy: Math.round(footprintSF * 0.25),
-    fine_grading_sf: Math.round(footprintSF * 2.2),
-    asphalt_tons: Math.round(footprintSF * 0.04),
-    wet_utilities_lf: Math.round(perimeterLF * 0.8),
-    storm_drain_lf: Math.round(perimeterLF * 0.5),
-    footings_lf: Math.round(perimeterLF + (footprintSF / 400) * 20),
-    slab_prep_sf: Math.round(footprintSF),
-    slab_pour_sf: Math.round(footprintSF),
-    cmu_blocks: isGroundUp ? Math.round(perimeterLF * wallHeightFt * 1.125 * 0.4) : 0,
-    steel_tons: Math.round(totalSF * 0.008),
-    decking_sf: Math.round(footprintSF * (stories - 1 + 1)),
-    framing_sf: Math.round(totalSF * 1.8),
-    drywall_hang_sf: Math.round(totalSF * 2.5),
-    drywall_finish_sf: Math.round(totalSF * 2.5),
-    grid_ceiling_sf: Math.round(totalSF * 0.70),
-    sprinkler_pipe_lf: Math.round(totalSF * 0.15),
-    sprinkler_heads: Math.ceil(totalSF / 130),
-    ductwork_lbs: Math.round(totalSF * 1.2),
-    vav_units: Math.max(1, Math.ceil(totalSF / 1500)),
-    plumbing_rough_sf: Math.round(totalSF),
-    plumbing_fixtures: Math.max(4, Math.ceil(totalSF / 400)),
-    conduit_lf: Math.round(totalSF * 0.25),
-    devices_each: Math.ceil(totalSF / 200),
+    // Interior Finishes
+    drywall_sf:      Math.round(totalSF * 2.5),
+    paint_sf:        Math.round(totalSF * 3.0),
+    ceiling_grid_sf: Math.round(totalSF * 0.85),
+    carpet_sf:       Math.round(totalSF * 0.30),
+    lvt_sf:          Math.round(totalSF * 0.20),
+    tile_sf:         Math.round(totalSF * 0.10),
+    // MEP
+    ductwork_lbs:           Math.round(totalSF * 1.2),
+    sprinkler_heads:        Math.ceil(totalSF / 120),
+    plumbing_fixtures:      Math.max(4, Math.ceil(totalSF / 400)),
+    electrical_panels_each: Math.max(2, stories * 2 + 2),
+    conduit_lf:             Math.round(totalSF * 0.25),
+    pipe_lf:                Math.round(totalSF * 0.15),
+    // Building Envelope
+    doors_each:    Math.max(4, Math.ceil(totalSF / 300)),
     storefront_sf: Math.round(perimeterLF * wallHeightFt * 0.25),
-    stucco_sf: Math.round(perimeterLF * wallHeightFt * stories * 0.60),
-    roofing_sf: Math.round(footprintSF * 1.05),
-    interior_paint_sf: Math.round(totalSF * 2.5),
-    flooring_sf: Math.round(totalSF * 0.88),
-    landscaping_sf: Math.round(footprintSF * 1.5),
-    door_openings: Math.max(4, Math.ceil(totalSF / 350)),
+    roofing_sf:    Math.round(footprintSF * 1.05),
+    // Sitework / Utilities
+    wet_water_lf:        Math.round(200 + totalSF * 0.01),
+    wet_sewer_lf:        Math.round(200 + totalSF * 0.01),
+    wet_storm_lf:        Math.round(150 + totalSF * 0.008),
+    dry_elec_conduit_lf: Math.round(200 + totalSF * 0.005),
+    dry_telecom_lf:      Math.round(100 + totalSF * 0.003),
+    dry_gas_lf:          Math.round(100 + totalSF * 0.002),
+    // Other
+    elevator_cars: elevatorCars,
+    demo_sf:       isGroundUp ? 0 : Math.round(totalSF * 0.5),
   };
 }
 
 // ─── Phase colors ─────────────────────────────────────────────────────────────
 const PHASE_COLORS: Record<string, string> = {
+  'Phase 0': '#8B5CF6', // violet — procurement
   'Phase 1': '#6366F1',
   'Phase 2': '#22C55E',
   'Phase 3': '#EAB308',
@@ -156,6 +183,10 @@ export default function ScheduleGeneratorPage() {
   );
   const [showQuantities, setShowQuantities] = useState(false);
   const [quantityOverrides, setQuantityOverrides] = useState<Record<string, string>>({});
+  // Track which quantity groups are expanded (all expanded by default)
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
+    () => Object.fromEntries(QUANTITY_GROUPS.map((g) => [g.id, true]))
+  );
 
   // Results state
   const [schedule, setSchedule] = useState<GeneratedSchedule | null>(null);
@@ -185,6 +216,11 @@ export default function ScheduleGeneratorPage() {
     setSelectedTrades((prev) =>
       prev.includes(trade) ? prev.filter((t) => t !== trade) : [...prev, trade]
     );
+  };
+
+  // Toggle a quantity group expand/collapse
+  const toggleGroup = (groupId: string) => {
+    setExpandedGroups((prev) => ({ ...prev, [groupId]: !prev[groupId] }));
   };
 
   // Submit
@@ -246,7 +282,7 @@ export default function ScheduleGeneratorPage() {
     } finally {
       setLoading(false);
     }
-  }, [projectName, buildingType, totalSF, stories, isGroundUp, startDate, selectedTrades, quantityOverrides]);
+  }, [projectName, buildingType, structureType, totalSF, stories, isGroundUp, startDate, selectedTrades, quantityOverrides]);
 
   // Export XLSX
   const handleExportXLSX = useCallback(async () => {
@@ -525,7 +561,7 @@ export default function ScheduleGeneratorPage() {
               </div>
             </div>
 
-            {/* Optional Quantities Override */}
+            {/* Optional Quantities Override — grouped & collapsible */}
             <div className="bg-[#111115] border border-[#1F1F25] rounded-xl overflow-hidden">
               <button
                 onClick={() => setShowQuantities((v) => !v)}
@@ -547,39 +583,64 @@ export default function ScheduleGeneratorPage() {
               </button>
 
               {showQuantities && (
-                <div className="px-5 pb-5 border-t border-[#1F1F25]">
-                  <p className="text-xs text-gray-500 mt-4 mb-4">
-                    Enter actual take-off quantities from plan sets to improve accuracy.
-                    Leave blank to use SF-based estimates.
+                <div className="border-t border-[#1F1F25]">
+                  <p className="text-xs text-gray-500 px-5 pt-4 pb-3">
+                    Enter actual take-off quantities to improve accuracy. Leave blank to use SF-based estimates.
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {QUANTITY_LABELS.map(({ key, label, unit }) => (
-                      <div key={key} className="flex items-center gap-2">
-                        <div className="flex-1 min-w-0">
-                          <label className="text-xs text-gray-400 truncate block mb-1">
-                            {label}
-                          </label>
-                          <div className="flex items-center gap-1">
-                            <input
-                              type="number"
-                              value={quantityOverrides[key] ?? ''}
-                              onChange={(e) =>
-                                setQuantityOverrides((prev) => ({
-                                  ...prev,
-                                  [key]: e.target.value,
-                                }))
-                              }
-                              placeholder={String(estimates[key] ?? '')}
-                              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-xs text-gray-100 placeholder-gray-700 focus:outline-none focus:border-[#F97316]/40"
-                            />
-                            <span className="text-xs text-gray-600 w-8 flex-shrink-0">
-                              {unit}
-                            </span>
+
+                  {QUANTITY_GROUPS.map((group) => {
+                    const isOpen = expandedGroups[group.id] ?? true;
+                    return (
+                      <div key={group.id} className="border-t border-[#1A1A20]">
+                        {/* Group header */}
+                        <button
+                          onClick={() => toggleGroup(group.id)}
+                          className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#151519] transition-colors"
+                        >
+                          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                            {group.label}
+                          </span>
+                          {isOpen ? (
+                            <ChevronUp size={13} className="text-gray-600" />
+                          ) : (
+                            <ChevronDown size={13} className="text-gray-600" />
+                          )}
+                        </button>
+
+                        {/* Group items */}
+                        {isOpen && (
+                          <div className="px-5 pb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {group.items.map(({ key, label, unit }) => (
+                              <div key={key} className="flex items-center gap-2">
+                                <div className="flex-1 min-w-0">
+                                  <label className="text-xs text-gray-400 truncate block mb-1">
+                                    {label}
+                                  </label>
+                                  <div className="flex items-center gap-1">
+                                    <input
+                                      type="number"
+                                      value={quantityOverrides[key] ?? ''}
+                                      onChange={(e) =>
+                                        setQuantityOverrides((prev) => ({
+                                          ...prev,
+                                          [key]: e.target.value,
+                                        }))
+                                      }
+                                      placeholder={String(estimates[key] ?? '')}
+                                      className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-xs text-gray-100 placeholder-gray-700 focus:outline-none focus:border-[#F97316]/40"
+                                    />
+                                    <span className="text-xs text-gray-600 w-10 flex-shrink-0">
+                                      {unit}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        </div>
+                        )}
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -755,12 +816,11 @@ export default function ScheduleGeneratorPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredActivities.map((act, i) => {
+                    {filteredActivities.map((act) => {
                       const isCrit = act.isCritical ?? false;
                       const float = act.totalFloat ?? 0;
 
                       // Gantt bar: ES offset + duration
-                      // We need ES in working days — derive from date diff
                       const esDay = workingDayOffset(schedule.startDate, act.earlyStart ?? schedule.startDate);
                       const barLeft = totalWorkingDays > 0 ? (esDay / totalWorkingDays) * 100 : 0;
                       const barWidth = totalWorkingDays > 0 ? (act.duration / totalWorkingDays) * 100 : 0;
