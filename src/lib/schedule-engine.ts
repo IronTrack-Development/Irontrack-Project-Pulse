@@ -1,4 +1,4 @@
-/**
+﻿/**
  * IronTrack Schedule Simulator — CPM Engine
  * Generates baseline CPM construction schedules from project parameters.
  *
@@ -93,91 +93,149 @@ function estimateQuantities(
   isGroundUp: boolean
 ): Record<string, number> {
   const footprintSF = totalSF / Math.max(stories, 1);
-  const perimeterLF = Math.sqrt(footprintSF) * 4 * 0.85; // slight correction for non-square
-  const wallHeightFt = 14; // avg floor-to-floor, commercial
+  const perimeterLF = Math.sqrt(footprintSF) * 4 * 0.85;
+  const wallHeightFt = 14;
+
+  // Elevator car count
+  const elevatorCars = totalSF < 40000 ? 1 : totalSF < 100000 ? 2 : 3;
 
   return {
     // Site / Civil
-    mass_grading_cy: footprintSF * 0.25,                         // rough cut/fill
-    fine_grading_sf: footprintSF * 2.2,                          // site area ~2.2× building footprint
-    asphalt_tons: footprintSF * 0.04,                            // parking + drives
+    mass_grading_cy: footprintSF * 0.25,
+    fine_grading_sf: footprintSF * 2.2,
+    asphalt_tons: footprintSF * 0.04,
     wet_utilities_lf: perimeterLF * 0.8,
     storm_drain_lf: perimeterLF * 0.5,
     dry_utilities_lf: perimeterLF * 1.2,
 
+    // Wet Utilities (site mains)
+    wet_water_lf: Math.round(200 + totalSF * 0.01),
+    wet_sewer_lf: Math.round(200 + totalSF * 0.01),
+    wet_storm_lf: Math.round(150 + totalSF * 0.008),
+
+    // Dry Utilities (underground)
+    dry_elec_conduit_lf: Math.round(200 + totalSF * 0.005),
+    dry_telecom_lf: Math.round(100 + totalSF * 0.003),
+    dry_gas_lf: Math.round(100 + totalSF * 0.002),
+
+    // Sitework / Paving
+    sitework_asphalt_tons: Math.round(footprintSF * 0.04),
+    sitework_sidewalk_sf: Math.round(perimeterLF * 8),
+    sitework_striping_sf: Math.round(footprintSF * 1.8),
+    sitework_curb_lf: Math.round(perimeterLF * 1.1),
+
+    // Demolition
+    demo_sf: isGroundUp ? 0 : Math.round(totalSF * 0.5),
+
     // Concrete
-    footings_lf: perimeterLF + (footprintSF / 400) * 20,        // perimeter + interior footings
-    slab_prep_sf: footprintSF,
-    slab_pour_sf: footprintSF,
-    underslab_plumbing_lf: isGroundUp ? footprintSF * 0.04 : 0,
+    footings_lf: Math.round(perimeterLF + (footprintSF / 400) * 20),
+    slab_prep_sf: Math.round(footprintSF),
+    slab_pour_sf: Math.round(footprintSF),
+    underslab_plumbing_lf: isGroundUp ? Math.round(footprintSF * 0.04) : 0,
+
+    // Waterproofing
+    waterproofing_bg_sf: isGroundUp ? Math.round(perimeterLF * wallHeightFt * 0.5) : 0,
+    waterproofing_ag_sf: Math.round(footprintSF * 1.05),
 
     // Masonry
     cmu_blocks: isGroundUp
-      ? perimeterLF * wallHeightFt * 1.125 * 0.4               // 40% of exterior is CMU
+      ? Math.round(perimeterLF * wallHeightFt * 1.125 * 0.4)
       : 0,
 
     // Structural Steel
-    steel_tons: totalSF * 0.008,
-    decking_sf: footprintSF * (stories - 1 + 1),                // all elevated floors + roof structure
-    joists_each: footprintSF / 80,                              // ~1 joist per 80 SF
+    steel_tons: Math.round(totalSF * 0.008),
+    decking_sf: Math.round(footprintSF * stories),
+    joists_each: Math.round(footprintSF / 80),
 
     // Framing
-    framing_sf: totalSF * 1.8,                                  // interior partition wall area (both sides)
-    blocking_lf: totalSF * 0.05,
+    framing_sf: Math.round(totalSF * 1.8),
+    blocking_lf: Math.round(totalSF * 0.05),
+
+    // Insulation
+    insulation_batt_sf: Math.round(totalSF * 1.5),
+    insulation_rigid_sf: Math.round(footprintSF * 1.1),
+    insulation_spray_sf: Math.round(totalSF * 0.25),
 
     // Drywall
-    drywall_hang_sf: totalSF * 2.5,                             // walls + ceilings (both sides)
-    drywall_finish_sf: totalSF * 2.5,
-    grid_ceiling_sf: totalSF * 0.70,                            // 70% has ACT ceilings
-    ceiling_tile_sf: totalSF * 0.70,
+    drywall_hang_sf: Math.round(totalSF * 2.5),
+    drywall_finish_sf: Math.round(totalSF * 2.5),
+    drywall_sf: Math.round(totalSF * 2.5),
+    paint_sf: Math.round(totalSF * 3.0),
+    grid_ceiling_sf: Math.round(totalSF * 0.70),
+    ceiling_tile_sf: Math.round(totalSF * 0.70),
+    ceiling_grid_sf: Math.round(totalSF * 0.85),
 
     // Fire Sprinkler
-    sprinkler_pipe_lf: totalSF * 0.15,
-    sprinkler_heads: Math.ceil(totalSF / 130),
+    sprinkler_pipe_lf: Math.round(totalSF * 0.15),
+    sprinkler_heads: Math.ceil(totalSF / 120),
 
     // HVAC
-    ductwork_lbs: totalSF * 1.2,
+    ductwork_lbs: Math.round(totalSF * 1.2),
     vav_units: Math.max(1, Math.ceil(totalSF / 1500)),
     diffusers: Math.ceil(totalSF / 150),
-    hydronic_lf: totalSF * 0.05,                               // only if hydronic system
+    hydronic_lf: Math.round(totalSF * 0.05),
+
+    // Fire Alarm
+    fire_alarm_devices: Math.ceil(totalSF / 200),
+    fire_alarm_wire_lf: Math.round(totalSF * 0.2),
+
+    // Low Voltage / Data
+    lv_cable_lf: Math.round(totalSF * 0.3),
+    lv_devices: Math.ceil(totalSF / 200),
+    lv_test_sf: Math.round(totalSF),
 
     // Plumbing
-    plumbing_rough_sf: totalSF,
+    plumbing_rough_sf: Math.round(totalSF),
     plumbing_fixtures: Math.max(4, Math.ceil(totalSF / 400)),
+    pipe_lf: Math.round(totalSF * 0.15),
 
     // Electrical
-    conduit_lf: totalSF * 0.25,
-    branch_wiring_sf: totalSF,
+    conduit_lf: Math.round(totalSF * 0.25),
+    branch_wiring_sf: Math.round(totalSF),
     devices_each: Math.ceil(totalSF / 200),
     panels_each: Math.max(1, Math.ceil(totalSF / 10000)),
+    electrical_panels_each: Math.max(2, stories * 2 + 2),
+
+    // Conveying / Elevator
+    elevator_cars: elevatorCars,
+    elevator_shaft_prep_days: Math.max(3, elevatorCars * 4),
+    elevator_install_days: Math.max(15, elevatorCars * 20),
+    elevator_test_days: Math.max(3, elevatorCars * 4),
 
     // Glazing
-    storefront_sf: perimeterLF * wallHeightFt * 0.25,          // 25% of facade is glass
-    curtainwall_sf: 0,                                          // rarely on standard commercial
-    door_openings: Math.max(4, Math.ceil(totalSF / 350)),
+    storefront_sf: Math.round(perimeterLF * wallHeightFt * 0.25),
+    windows_sf: Math.round(totalSF * 0.15),
+    curtainwall_sf: 0,
+    door_openings: Math.max(4, Math.ceil(totalSF / 300)),
+    doors_each: Math.max(4, Math.ceil(totalSF / 300)),
 
     // Exterior
-    stucco_sf: perimeterLF * wallHeightFt * stories * 0.60,   // 60% of facade after glazing
+    stucco_sf: Math.round(perimeterLF * wallHeightFt * stories * 0.60),
     eifs_sf: 0,
     siding_sf: 0,
 
     // Roofing
-    roofing_sf: footprintSF * 1.05,                            // 5% overhang/parapet factor
+    roofing_sf: Math.round(footprintSF * 1.05),
 
-    // Interior
-    interior_paint_sf: totalSF * 2.5,
-    flooring_sf: totalSF * 0.88,                               // 88% of floor area gets floor finish
-    carpet_sf: totalSF * 0.35,
-    lvt_sf: totalSF * 0.35,
-    tile_sf: totalSF * 0.18,
+    // Interior Finishes
+    interior_paint_sf: Math.round(totalSF * 2.5),
+    flooring_sf: Math.round(totalSF * 0.88),
+    carpet_sf: Math.round(totalSF * 0.30),
+    lvt_sf: Math.round(totalSF * 0.20),
+    tile_sf: Math.round(totalSF * 0.10),
+
+    // Specialties (Division 10)
+    specialty_rooms: Math.max(2, Math.ceil(totalSF / 3000)),
+    specialty_stalls: Math.max(2, Math.ceil(totalSF / 5000)),
+    specialty_signs: Math.max(5, Math.ceil(totalSF / 500)),
 
     // Landscaping
-    landscaping_sf: footprintSF * 1.5,
-    irrigation_lf: perimeterLF * 1.8,
+    landscaping_sf: Math.round(footprintSF * 1.5),
+    irrigation_lf: Math.round(perimeterLF * 1.8),
 
     // Closeout
     punchlist_items: Math.max(50, Math.ceil(totalSF / 80)),
-    cleaning_sf: totalSF,
+    cleaning_sf: Math.round(totalSF),
 
     // Doors & Hardware
     hm_doors: Math.ceil(door_openings_calc(totalSF) * 0.70),
@@ -1040,6 +1098,264 @@ const STRUCTURE_TYPE_TEMPLATES: Record<string, ActivityTemplate[]> = {
 
 // ─── Activity Template ────────────────────────────────────────────────────────
 
+// ─── Procurement & Submittal Chain Templates ────────────────────────────────
+//
+// These run starting at project mobilization. Each chain's final "Delivery"
+// activity is a predecessor to the corresponding installation activity below.
+
+const PROCUREMENT_TEMPLATES: ActivityTemplate[] = [
+  // ── Structural Steel (lead ~65 wd) ──────────────────────────────────────
+  { activityId: 'P100', name: 'Submit Steel Shop Drawings', trade: 'Structural Steel',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Structural Steel'] },
+  { activityId: 'P101', name: 'Architect Review & Approval — Steel', trade: 'Structural Steel',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P100'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Structural Steel'] },
+  { activityId: 'P102', name: 'Purchase Steel', trade: 'Structural Steel',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P101'], fallbackPredecessorIds: ['P100'], requiresTrades: ['Structural Steel'] },
+  { activityId: 'P103', name: 'Steel Fabrication', trade: 'Structural Steel',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 35,
+    predecessorIds: ['P102'], fallbackPredecessorIds: ['P101'], requiresTrades: ['Structural Steel'] },
+  { activityId: 'P104', name: 'Steel Delivery', trade: 'Structural Steel',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P103'], fallbackPredecessorIds: ['P102'], requiresTrades: ['Structural Steel'] },
+
+  // ── Elevator (lead ~105 wd) ──────────────────────────────────────────────
+  { activityId: 'P200', name: 'Submit Elevator Submittals', trade: 'Conveying (Elevator)',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Conveying (Elevator)'] },
+  { activityId: 'P201', name: 'Review & Approval — Elevator', trade: 'Conveying (Elevator)',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 15,
+    predecessorIds: ['P200'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Conveying (Elevator)'] },
+  { activityId: 'P202', name: 'Purchase / Award Elevator', trade: 'Conveying (Elevator)',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P201'], fallbackPredecessorIds: ['P200'], requiresTrades: ['Conveying (Elevator)'] },
+  { activityId: 'P203', name: 'Elevator Fabrication', trade: 'Conveying (Elevator)',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 60,
+    predecessorIds: ['P202'], fallbackPredecessorIds: ['P201'], requiresTrades: ['Conveying (Elevator)'] },
+  { activityId: 'P204', name: 'Elevator Delivery', trade: 'Conveying (Elevator)',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P203'], fallbackPredecessorIds: ['P202'], requiresTrades: ['Conveying (Elevator)'] },
+
+  // ── Windows / Storefront (lead ~70 wd) ──────────────────────────────────
+  { activityId: 'P300', name: 'Submit Window Shop Drawings', trade: 'Windows & Glazing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Windows & Glazing'] },
+  { activityId: 'P301', name: 'Review & Approval — Windows', trade: 'Windows & Glazing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P300'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Windows & Glazing'] },
+  { activityId: 'P302', name: 'Purchase Windows', trade: 'Windows & Glazing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P301'], fallbackPredecessorIds: ['P300'], requiresTrades: ['Windows & Glazing'] },
+  { activityId: 'P303', name: 'Window Fabrication', trade: 'Windows & Glazing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 40,
+    predecessorIds: ['P302'], fallbackPredecessorIds: ['P301'], requiresTrades: ['Windows & Glazing'] },
+  { activityId: 'P304', name: 'Window Delivery', trade: 'Windows & Glazing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P303'], fallbackPredecessorIds: ['P302'], requiresTrades: ['Windows & Glazing'] },
+
+  // ── Doors & Hardware (lead ~55 wd) ──────────────────────────────────────
+  { activityId: 'P400', name: 'Submit HM Door Shop Drawings', trade: 'Doors & Hardware',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Doors & Hardware'] },
+  { activityId: 'P401', name: 'Review & Approval — Doors', trade: 'Doors & Hardware',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P400'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Doors & Hardware'] },
+  { activityId: 'P402', name: 'Purchase Doors', trade: 'Doors & Hardware',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P401'], fallbackPredecessorIds: ['P400'], requiresTrades: ['Doors & Hardware'] },
+  { activityId: 'P403', name: 'Door Fabrication', trade: 'Doors & Hardware',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 30,
+    predecessorIds: ['P402'], fallbackPredecessorIds: ['P401'], requiresTrades: ['Doors & Hardware'] },
+  { activityId: 'P404', name: 'Door Delivery', trade: 'Doors & Hardware',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P403'], fallbackPredecessorIds: ['P402'], requiresTrades: ['Doors & Hardware'] },
+
+  // ── HVAC (lead ~75 wd) ──────────────────────────────────────────────────
+  { activityId: 'P500', name: 'Submit HVAC Equipment Submittals', trade: 'HVAC',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['HVAC'] },
+  { activityId: 'P501', name: 'Review & Approval — HVAC', trade: 'HVAC',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P500'], fallbackPredecessorIds: ['1000'], requiresTrades: ['HVAC'] },
+  { activityId: 'P502', name: 'Purchase HVAC Equipment', trade: 'HVAC',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P501'], fallbackPredecessorIds: ['P500'], requiresTrades: ['HVAC'] },
+  { activityId: 'P503', name: 'HVAC Equipment Fabrication', trade: 'HVAC',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 45,
+    predecessorIds: ['P502'], fallbackPredecessorIds: ['P501'], requiresTrades: ['HVAC'] },
+  { activityId: 'P504', name: 'HVAC Equipment Delivery', trade: 'HVAC',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P503'], fallbackPredecessorIds: ['P502'], requiresTrades: ['HVAC'] },
+
+  // ── Fire Sprinkler (lead ~55 wd) ────────────────────────────────────────
+  { activityId: 'P600', name: 'Submit Sprinkler Shop Drawings', trade: 'Fire Sprinkler',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Fire Sprinkler'] },
+  { activityId: 'P601', name: 'Review & Approval — Sprinkler', trade: 'Fire Sprinkler',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P600'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Fire Sprinkler'] },
+  { activityId: 'P602', name: 'Purchase Sprinkler Materials', trade: 'Fire Sprinkler',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P601'], fallbackPredecessorIds: ['P600'], requiresTrades: ['Fire Sprinkler'] },
+  { activityId: 'P603', name: 'Sprinkler Material Fabrication', trade: 'Fire Sprinkler',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 25,
+    predecessorIds: ['P602'], fallbackPredecessorIds: ['P601'], requiresTrades: ['Fire Sprinkler'] },
+  { activityId: 'P604', name: 'Sprinkler Delivery', trade: 'Fire Sprinkler',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P603'], fallbackPredecessorIds: ['P602'], requiresTrades: ['Fire Sprinkler'] },
+
+  // ── Electrical (lead ~90 wd) ────────────────────────────────────────────
+  { activityId: 'P700', name: 'Submit Electrical Submittals', trade: 'Electrical',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Electrical'] },
+  { activityId: 'P701', name: 'Review & Approval — Electrical', trade: 'Electrical',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P700'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Electrical'] },
+  { activityId: 'P702', name: 'Purchase Switchgear & Panels', trade: 'Electrical',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P701'], fallbackPredecessorIds: ['P700'], requiresTrades: ['Electrical'] },
+  { activityId: 'P703', name: 'Switchgear Fabrication', trade: 'Electrical',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 60,
+    predecessorIds: ['P702'], fallbackPredecessorIds: ['P701'], requiresTrades: ['Electrical'] },
+  { activityId: 'P704', name: 'Switchgear Delivery', trade: 'Electrical',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P703'], fallbackPredecessorIds: ['P702'], requiresTrades: ['Electrical'] },
+
+  // ── Roofing (lead ~25 wd) ───────────────────────────────────────────────
+  { activityId: 'P800', name: 'Submit Roofing Submittals', trade: 'Roofing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Roofing'] },
+  { activityId: 'P801', name: 'Review & Approval — Roofing', trade: 'Roofing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P800'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Roofing'] },
+  { activityId: 'P802', name: 'Purchase Roofing Materials', trade: 'Roofing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P801'], fallbackPredecessorIds: ['P800'], requiresTrades: ['Roofing'] },
+  { activityId: 'P803', name: 'Roofing Material Delivery', trade: 'Roofing',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P802'], fallbackPredecessorIds: ['P801'], requiresTrades: ['Roofing'] },
+
+  // ── Millwork (lead ~70 wd, always included) ─────────────────────────────
+  { activityId: 'P900', name: 'Submit Millwork Shop Drawings', trade: 'Mobilization',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [] },
+  { activityId: 'P901', name: 'Review & Approval — Millwork', trade: 'Mobilization',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P900'], fallbackPredecessorIds: ['1000'] },
+  { activityId: 'P902', name: 'Field Measure — Millwork', trade: 'Mobilization',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P901'], fallbackPredecessorIds: ['P900'] },
+  { activityId: 'P903', name: 'Millwork Fabrication', trade: 'Mobilization',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 40,
+    predecessorIds: ['P902'], fallbackPredecessorIds: ['P901'] },
+  { activityId: 'P904', name: 'Millwork Delivery', trade: 'Mobilization',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P903'], fallbackPredecessorIds: ['P902'] },
+
+  // ── Flooring (lead ~30 wd) ──────────────────────────────────────────────
+  { activityId: 'P1000', name: 'Submit Flooring Submittals', trade: 'Flooring',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Flooring'] },
+  { activityId: 'P1001', name: 'Review & Approval — Flooring', trade: 'Flooring',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1000'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Flooring'] },
+  { activityId: 'P1002', name: 'Purchase Flooring', trade: 'Flooring',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P1001'], fallbackPredecessorIds: ['P1000'], requiresTrades: ['Flooring'] },
+  { activityId: 'P1003', name: 'Flooring Delivery', trade: 'Flooring',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1002'], fallbackPredecessorIds: ['P1001'], requiresTrades: ['Flooring'] },
+
+  // ── CMU Block / Masonry (lead ~30 wd) ───────────────────────────────────
+  { activityId: 'P1100', name: 'Submit Masonry Submittals', trade: 'Masonry',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Masonry'] },
+  { activityId: 'P1101', name: 'Review & Approval — Masonry', trade: 'Masonry',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1100'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Masonry'] },
+  { activityId: 'P1102', name: 'Purchase Block / Masonry', trade: 'Masonry',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P1101'], fallbackPredecessorIds: ['P1100'], requiresTrades: ['Masonry'] },
+  { activityId: 'P1103', name: 'Block Delivery', trade: 'Masonry',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1102'], fallbackPredecessorIds: ['P1101'], requiresTrades: ['Masonry'] },
+
+  // ── Concrete / Rebar (lead ~45 wd) ──────────────────────────────────────
+  { activityId: 'P1200', name: 'Submit Concrete Mix Designs', trade: 'Concrete',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['1000'], fallbackPredecessorIds: [], requiresTrades: ['Concrete'] },
+  { activityId: 'P1201', name: 'Review & Approval — Concrete', trade: 'Concrete',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1200'], fallbackPredecessorIds: ['1000'], requiresTrades: ['Concrete'] },
+  { activityId: 'P1202', name: 'Rebar Shop Drawings', trade: 'Concrete',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 10,
+    predecessorIds: ['P1201'], fallbackPredecessorIds: ['P1200'], requiresTrades: ['Concrete'] },
+  { activityId: 'P1203', name: 'Rebar Fabrication', trade: 'Concrete',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 15,
+    predecessorIds: ['P1202'], fallbackPredecessorIds: ['P1201'], requiresTrades: ['Concrete'] },
+  { activityId: 'P1204', name: 'Rebar Delivery', trade: 'Concrete',
+    phase: 'Phase 0: Procurement & Submittals', quantityKey: '__fixed__',
+    rateRef: { trade: '', task: '' }, fixedDays: 5,
+    predecessorIds: ['P1203'], fallbackPredecessorIds: ['P1202'], requiresTrades: ['Concrete'] },
+];
 const MASTER_TEMPLATE: ActivityTemplate[] = [
   // ── Phase 1: Pre-Construction & Mobilization ──────────────────────────────
   {
@@ -2024,3 +2340,4 @@ export function generateSchedule(input: ScheduleInput): GeneratedSchedule {
     },
   };
 }
+

@@ -504,6 +504,256 @@ export const PRODUCTION_RATES: ProductionRate[] = [
     notes: 'Mainline and lateral pipe install',
   },
 
+  // ─── CEILING GRID / ACT ─────────────────────────────────────────────────────
+
+  {
+    trade: 'Ceiling Grid / ACT',
+    task: 'Grid Installation',
+    unit: 'SF',
+    ratePerDay: { low: 2000, mid: 3000, high: 4000 },
+    notes: 'Main runners and cross tees; ACT suspension grid system',
+  },
+  {
+    trade: 'Ceiling Grid / ACT',
+    task: 'ACT Tile Installation',
+    unit: 'SF',
+    ratePerDay: { low: 3000, mid: 4000, high: 5000 },
+    notes: '2×2 or 2×4 acoustic ceiling tiles laid into existing or new grid',
+  },
+
+  // ─── INSULATION ───────────────────────────────────────────────────────────────
+
+  {
+    trade: 'Insulation',
+    task: 'Batt Insulation',
+    unit: 'SF',
+    ratePerDay: { low: 2000, mid: 3000, high: 4000 },
+    notes: 'Fiberglass or mineral wool batt; wall and roof applications',
+  },
+  {
+    trade: 'Insulation',
+    task: 'Rigid Board Insulation',
+    unit: 'SF',
+    ratePerDay: { low: 1000, mid: 1500, high: 2000 },
+    notes: 'Polyiso, EPS, or XPS foam board; roof deck or foundation',
+  },
+  {
+    trade: 'Insulation',
+    task: 'Spray Foam Insulation',
+    unit: 'SF',
+    ratePerDay: { low: 1500, mid: 2250, high: 3000 },
+    notes: 'Open or closed-cell spray foam; walls, roof deck, crawlspace',
+  },
+
+  // ─── WATERPROOFING ────────────────────────────────────────────────────────────
+
+  {
+    trade: 'Waterproofing',
+    task: 'Below-Grade Membrane',
+    unit: 'SF',
+    ratePerDay: { low: 500, mid: 750, high: 1000 },
+    notes: 'Sheet or fluid-applied membrane; foundation walls, below-slab',
+  },
+  {
+    trade: 'Waterproofing',
+    task: 'Above-Grade Coating',
+    unit: 'SF',
+    ratePerDay: { low: 1000, mid: 1500, high: 2000 },
+    notes: 'Elastomeric coating, deck waterproofing, plaza deck systems',
+  },
+
+  // ─── SPECIALTIES (DIVISION 10) ───────────────────────────────────────────────
+
+  {
+    trade: 'Specialties (Division 10)',
+    task: 'Toilet Accessories',
+    unit: 'rooms',
+    ratePerDay: { low: 20, mid: 30, high: 40 },
+    notes: 'TP holders, soap dispensers, hand dryers, mirrors per restroom',
+  },
+  {
+    trade: 'Specialties (Division 10)',
+    task: 'Toilet Partitions',
+    unit: 'stalls',
+    ratePerDay: { low: 15, mid: 20, high: 25 },
+    notes: 'Metal or solid plastic toilet partitions, floor-to-ceiling',
+  },
+  {
+    trade: 'Specialties (Division 10)',
+    task: 'Signage',
+    unit: 'signs',
+    ratePerDay: { low: 20, mid: 30, high: 40 },
+    notes: 'Wayfinding, ADA, room ID, exterior monument and address signs',
+  },
+
+  // ─── DEMOLITION ──────────────────────────────────────────────────────────────
+
+  {
+    trade: 'Demolition',
+    task: 'Interior Demo',
+    unit: 'SF',
+    ratePerDay: { low: 3000, mid: 4500, high: 6000 },
+    notes: 'Non-structural: walls, ceilings, flooring, MEP removal',
+  },
+  {
+    trade: 'Demolition',
+    task: 'Structural Demo',
+    unit: 'SF',
+    ratePerDay: { low: 1000, mid: 2000, high: 3000 },
+    notes: 'Structural elements, slabs, load-bearing walls — requires engineering',
+  },
+
+  // ─── CONVEYING (ELEVATOR) ────────────────────────────────────────────────────
+
+  {
+    trade: 'Conveying (Elevator)',
+    task: 'Shaft Prep',
+    unit: 'cars',
+    ratePerDay: { low: 0.25, mid: 0.25, high: 0.33 },
+    notes: '3–5 working days per elevator car for shaft prep and rail setting',
+  },
+  {
+    trade: 'Conveying (Elevator)',
+    task: 'Car Install',
+    unit: 'cars',
+    ratePerDay: { low: 0.05, mid: 0.05, high: 0.067 },
+    notes: '15–25 working days per car for cab, hoisting, and connections',
+  },
+  {
+    trade: 'Conveying (Elevator)',
+    task: 'Testing Inspection',
+    unit: 'cars',
+    ratePerDay: { low: 0.25, mid: 0.25, high: 0.33 },
+    notes: '3–5 working days per car for AHJ inspection and certification',
+  },
+
+  // ─── FIRE ALARM ──────────────────────────────────────────────────────────────
+
+  {
+    trade: 'Fire Alarm',
+    task: 'Device Installation',
+    unit: 'each',
+    ratePerDay: { low: 40, mid: 60, high: 80 },
+    notes: 'Smoke/heat detectors, pull stations, horns/strobes',
+  },
+  {
+    trade: 'Fire Alarm',
+    task: 'Wire Pulling',
+    unit: 'LF',
+    ratePerDay: { low: 500, mid: 750, high: 1000 },
+    notes: 'FPLR or FPLP cable; conduit runs and home runs to FACP',
+  },
+  {
+    trade: 'Fire Alarm',
+    task: 'Panel Programming',
+    unit: 'days',
+    ratePerDay: { low: 1, mid: 1, high: 1 },
+    notes: '2–5 days for FACP programming, testing, and AHJ witness test',
+  },
+
+  // ─── LOW VOLTAGE / DATA ──────────────────────────────────────────────────────
+
+  {
+    trade: 'Low Voltage / Data',
+    task: 'Cable Pulling',
+    unit: 'LF',
+    ratePerDay: { low: 500, mid: 1000, high: 1500 },
+    notes: 'Cat6/6A, fiber, coax; horizontal cabling from IDF to outlets',
+  },
+  {
+    trade: 'Low Voltage / Data',
+    task: 'Device Trim',
+    unit: 'each',
+    ratePerDay: { low: 30, mid: 45, high: 60 },
+    notes: 'Data jacks, faceplates, rack terminations, patch panel',
+  },
+  {
+    trade: 'Low Voltage / Data',
+    task: 'System Testing',
+    unit: 'SF',
+    ratePerDay: { low: 1000, mid: 1500, high: 2000 },
+    notes: 'Cable certification and system commissioning',
+  },
+
+  // ─── SITEWORK / PAVING ───────────────────────────────────────────────────────
+
+  {
+    trade: 'Sitework / Paving',
+    task: 'Asphalt Paving',
+    unit: 'tons',
+    ratePerDay: { low: 600, mid: 900, high: 1200 },
+    notes: 'Full paving crew with paver and roller; base + surface course',
+  },
+  {
+    trade: 'Sitework / Paving',
+    task: 'Concrete Sidewalks',
+    unit: 'SF',
+    ratePerDay: { low: 500, mid: 750, high: 1000 },
+    notes: 'Formed, poured, and finished sidewalks and ADA ramps',
+  },
+  {
+    trade: 'Sitework / Paving',
+    task: 'Parking Striping',
+    unit: 'SF',
+    ratePerDay: { low: 5000, mid: 7500, high: 10000 },
+    notes: 'Parking lot striping, arrows, and ADA markings',
+  },
+  {
+    trade: 'Sitework / Paving',
+    task: 'Curb & Gutter',
+    unit: 'LF',
+    ratePerDay: { low: 200, mid: 300, high: 400 },
+    notes: 'Monolithic or two-piece formed concrete curb and gutter',
+  },
+
+  // ─── WET UTILITIES ────────────────────────────────────────────────────────────
+
+  {
+    trade: 'Wet Utilities',
+    task: 'Water Line',
+    unit: 'LF',
+    ratePerDay: { low: 80, mid: 115, high: 150 },
+    notes: 'Domestic water service and distribution mains; DIP or PVC',
+  },
+  {
+    trade: 'Wet Utilities',
+    task: 'Sewer Line',
+    unit: 'LF',
+    ratePerDay: { low: 50, mid: 85, high: 120 },
+    notes: 'Sanitary sewer laterals and collection mains; PVC or HDPE',
+  },
+  {
+    trade: 'Wet Utilities',
+    task: 'Storm Drain',
+    unit: 'LF',
+    ratePerDay: { low: 50, mid: 85, high: 120 },
+    notes: 'Storm pipe, catch basins, and inlets; RCP or HDPE',
+  },
+
+  // ─── DRY UTILITIES ───────────────────────────────────────────────────────────
+
+  {
+    trade: 'Dry Utilities',
+    task: 'Electrical Conduit Underground',
+    unit: 'LF',
+    ratePerDay: { low: 150, mid: 225, high: 300 },
+    notes: 'PVC conduit in trench; primary and secondary electrical distribution',
+  },
+  {
+    trade: 'Dry Utilities',
+    task: 'Telecom Data Underground',
+    unit: 'LF',
+    ratePerDay: { low: 200, mid: 300, high: 400 },
+    notes: 'Conduit sleeves for telecom, fiber, cable TV from ROW to building',
+  },
+  {
+    trade: 'Dry Utilities',
+    task: 'Gas Line Underground',
+    unit: 'LF',
+    ratePerDay: { low: 100, mid: 150, high: 200 },
+    notes: 'Polyethylene gas distribution pipe; service and yard piping',
+  },
+
   // ─── CLOSEOUT ─────────────────────────────────────────────────────────────
 
   {
@@ -545,97 +795,141 @@ export const BUILDING_TYPE_DEFAULTS: Record<string, string[]> = {
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Restaurants': [
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
-    'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware',
-    'Windows & Glazing',
+    'Fire Sprinkler', 'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
+    'Ceiling Grid / ACT', 'Insulation', 'Specialties (Division 10)',
+    'Demolition', 'Fire Alarm', 'Low Voltage / Data',
   ],
   'Hospitality / Hotels': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
     'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Entertainment': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Medical & Healthcare Facilities': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
     'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Office Buildings': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Framing', 'Drywall',
     'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Industrial / Warehouses': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler',
     'Doors & Hardware', 'Windows & Glazing', 'Painting',
+    'Insulation', 'Waterproofing', 'Demolition', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Self-Storage Facilities': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel',
     'Roofing', 'Electrical', 'Doors & Hardware', 'Painting',
+    'Insulation', 'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Automotive Service Centers': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler',
     'Doors & Hardware', 'Windows & Glazing', 'Painting',
+    'Insulation', 'Waterproofing', 'Demolition', 'Fire Alarm',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Educational Facilities': [
     'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Fitness & Recreation Centers': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Community & Assembly Buildings': [
     'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Financial Institutions': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Demolition', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Senior Living Facilities': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel', 'Masonry',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Municipal & Public Safety Buildings': [
     'Earthwork & Civil', 'Concrete', 'Masonry', 'Structural Steel',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting', 'Flooring',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Data Centers': [
     'Earthwork & Civil', 'Concrete', 'Structural Steel',
     'Framing', 'Drywall', 'HVAC', 'Plumbing', 'Electrical',
     'Fire Sprinkler', 'Roofing', 'Painting',
     'Doors & Hardware', 'Windows & Glazing', 'Exterior Finishes',
+    'Insulation', 'Waterproofing', 'Demolition', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
   'Multi-Family': [
     'Earthwork & Civil', 'Concrete', 'Framing', 'Drywall',
     'HVAC', 'Plumbing', 'Electrical', 'Fire Sprinkler', 'Roofing',
     'Painting', 'Flooring', 'Doors & Hardware', 'Windows & Glazing',
     'Exterior Finishes', 'Landscaping',
+    'Ceiling Grid / ACT', 'Insulation', 'Waterproofing', 'Specialties (Division 10)',
+    'Conveying (Elevator)', 'Fire Alarm', 'Low Voltage / Data',
+    'Sitework / Paving', 'Wet Utilities', 'Dry Utilities',
   ],
 };
 
