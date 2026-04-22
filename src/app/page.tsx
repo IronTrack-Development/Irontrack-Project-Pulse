@@ -32,10 +32,8 @@ export default function LandingPage() {
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                className="text-sm font-medium transition-colors"
+                className="text-sm font-medium transition-colors hover:text-[#0D0D0D]"
                 style={{ color: "rgba(13,13,13,0.55)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#0D0D0D")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(13,13,13,0.55)")}
               >
                 {item}
               </a>
