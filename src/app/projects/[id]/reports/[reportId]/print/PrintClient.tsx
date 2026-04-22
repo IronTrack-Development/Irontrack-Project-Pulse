@@ -133,6 +133,36 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         >
           🖨 Print PDF
         </button>
+        <button
+          onClick={async () => {
+            const url = window.location.href;
+            const title = `Issue Report ${report.report_number} — ${report.activity_name}`;
+            if (navigator.share) {
+              try {
+                await navigator.share({ title, url });
+              } catch {
+                // User cancelled — ignore
+              }
+            } else {
+              try {
+                await navigator.clipboard.writeText(url);
+                const btn = document.getElementById('share-btn');
+                if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => { btn.textContent = '🔗 Share'; }, 2000); }
+              } catch {
+                prompt('Copy this link:', url);
+              }
+            }
+          }}
+          id="share-btn"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "4px",
+            padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
+            fontWeight: 600, color: "white", cursor: "pointer",
+            background: "#3B82F6", border: "none",
+          }}
+        >
+          🔗 Share
+        </button>
       </div>
 
       {/* Document */}
