@@ -6,9 +6,7 @@ import {
 } from "lucide-react";
 import HeroVideo from "@/components/hero-video";
 import MobileMenu from "@/components/MobileMenu";
-import dynamic from "next/dynamic";
-
-const IronTrackDemo = dynamic(() => import("@/components/IronTrackDemo"), { ssr: false });
+import DemoSection from "@/components/DemoSection";
 
 export default function LandingPage() {
   return (
@@ -509,7 +507,7 @@ export default function LandingPage() {
       {/* ═══ INTERACTIVE DEMO ═══ */}
       <section className="border-t" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0A0A0C" }}>
         <div className="max-w-7xl mx-auto">
-          <IronTrackDemo />
+          <DemoSection />
         </div>
       </section>
 
