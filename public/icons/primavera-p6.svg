@@ -1,0 +1,8 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="8" fill="#C74634"/>
+  <text x="6" y="33" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="white">P6</text>
+  <rect x="34" y="12" width="8" height="3" rx="1" fill="rgba(255,255,255,0.5)"/>
+  <rect x="34" y="18" width="8" height="3" rx="1" fill="rgba(255,255,255,0.4)"/>
+  <rect x="34" y="24" width="8" height="3" rx="1" fill="rgba(255,255,255,0.3)"/>
+  <rect x="34" y="30" width="8" height="3" rx="1" fill="rgba(255,255,255,0.2)"/>
+</svg>

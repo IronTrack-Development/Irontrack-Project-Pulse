@@ -6,6 +6,9 @@ import {
 } from "lucide-react";
 import HeroVideo from "@/components/hero-video";
 import MobileMenu from "@/components/MobileMenu";
+import dynamic from "next/dynamic";
+
+const IronTrackDemo = dynamic(() => import("@/components/IronTrackDemo"), { ssr: false });
 
 export default function LandingPage() {
   return (
@@ -109,18 +112,19 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {[
-              { name: "Microsoft Project", ext: ".mpp", icon: "📊" },
-              { name: "Primavera P6", ext: ".xer", icon: "📋" },
-              { name: "Excel", ext: ".xlsx", icon: "📗" },
-              { name: "XML / MSPDI", ext: ".xml", icon: "📄" },
-              { name: "CSV", ext: ".csv", icon: "📑" },
+              { name: "Microsoft Project", ext: ".mpp", icon: "/icons/ms-project.svg" },
+              { name: "Primavera P6", ext: ".xer", icon: "/icons/primavera-p6.svg" },
+              { name: "Excel", ext: ".xlsx", icon: "/icons/excel.svg" },
+              { name: "XML / MSPDI", ext: ".xml", icon: "/icons/xml.svg" },
+              { name: "CSV", ext: ".csv", icon: "/icons/csv.svg" },
             ].map((fmt) => (
               <div
                 key={fmt.name}
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border"
+                className="flex items-center gap-3 px-5 py-3 rounded-xl border shadow-sm"
                 style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}
               >
-                <span className="text-lg">{fmt.icon}</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={fmt.icon} alt={fmt.name} className="w-8 h-8 rounded-lg" />
                 <div>
                   <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>{fmt.name}</div>
                   <div className="text-[10px] font-mono" style={{ color: "rgba(13,13,13,0.4)" }}>{fmt.ext}</div>
@@ -499,6 +503,13 @@ export default function LandingPage() {
               Get Started
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ INTERACTIVE DEMO ═══ */}
+      <section className="border-t" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0A0A0C" }}>
+        <div className="max-w-7xl mx-auto">
+          <IronTrackDemo />
         </div>
       </section>
 

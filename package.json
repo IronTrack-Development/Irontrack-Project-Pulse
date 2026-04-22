@@ -14,6 +14,7 @@
     "@types/papaparse": "^5.5.2",
     "@types/web-push": "^3.6.4",
     "cfb": "^1.2.2",
+    "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
     "next": "16.2.3",
     "papaparse": "^5.5.3",
