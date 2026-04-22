@@ -61,6 +61,23 @@ export interface ParsedActivity {
   normalized_area?: string | null;
   normalized_work_type?: string | null;
   normalized_trade?: string | null;
+
+  // Reforecast engine (009_schedule_reforecast)
+  baseline_start?: string | null;
+  baseline_finish?: string | null;
+  baseline_duration?: number | null;
+  forecast_start?: string | null;
+  forecast_finish?: string | null;
+  early_start?: string | null;
+  early_finish?: string | null;
+  late_start?: string | null;
+  late_finish?: string | null;
+  is_critical?: boolean;
+  total_float?: number | null;
+  free_float?: number | null;
+  dependency_links?: any[];
+  manual_override?: boolean;
+  last_reforecast_at?: string | null;
 }
 
 export interface DailyRisk {
