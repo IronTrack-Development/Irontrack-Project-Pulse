@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2
+  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -12,6 +12,7 @@ import ProgressTab from "@/components/tabs/ProgressTab";
 import DayPlanTab from "@/components/tabs/DayPlanTab";
 import PriorityTab from "@/components/tabs/PriorityTab";
 import ReportsTab from "@/components/tabs/ReportsTab";
+import ReforecastTab from "@/components/tabs/ReforecastTab";
 import SubsTab from "@/components/tabs/SubsTab";
 import SixWeekTab from "@/components/tabs/SixWeekTab";
 import { SupportButton } from "@/components/support-button";
@@ -28,6 +29,7 @@ const TABS = [
   { id: "6week", label: "6-Week", icon: Binoculars },
   { id: "milestones", label: "Milestones", icon: Flag },
   { id: "progress", label: "Progress", icon: TrendingUp },
+  { id: "reforecast", label: "Reforecast", icon: GitBranch },
   { id: "reports", label: "Reports", icon: ClipboardList },
   { id: "subs", label: "Subs", icon: Users },
 ];
@@ -193,6 +195,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "week3" && <WeekTab projectId={id} weekNumber={3} />}
         {activeTab === "milestones" && <MilestonesTab projectId={id} />}
         {activeTab === "progress" && <ProgressTab projectId={id} />}
+        {activeTab === "reforecast" && <ReforecastTab projectId={id} />}
         {activeTab === "reports" && <ReportsTab projectId={id} />}
         {activeTab === "6week" && <SixWeekTab projectId={id} />}
         {activeTab === "subs" && <SubsTab projectId={id} />}

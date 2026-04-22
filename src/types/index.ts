@@ -211,6 +211,45 @@ export interface ReportIssue {
   updated_at: string;
 }
 
+// Schedule Reforecast Engine types
+export interface ScheduleSnapshot {
+  id: string;
+  project_id: string;
+  snapshot_name?: string;
+  snapshot_type: 'baseline' | 'reforecast' | 'manual';
+  trigger_description?: string;
+  baseline_finish_date?: string;
+  forecast_finish_date?: string;
+  completion_delta_days: number;
+  critical_path_changed: boolean;
+  total_activities: number;
+  complete_activities: number;
+  critical_activities: number;
+  at_risk_activities: number;
+  recovery_actions: any[];
+  risk_flags: any[];
+  schedule_impacts: any[];
+  created_at: string;
+}
+
+export interface ProgressUpdate {
+  id: string;
+  project_id: string;
+  activity_id: string;
+  previous_percent_complete?: number;
+  new_percent_complete?: number;
+  previous_remaining_duration?: number;
+  new_remaining_duration?: number;
+  previous_status?: string;
+  new_status?: string;
+  actual_start_set?: string;
+  actual_finish_set?: string;
+  manual_override: boolean;
+  updated_by?: string;
+  notes?: string;
+  created_at: string;
+}
+
 export interface LookaheadGroup {
   weekLabel: string;
   weekStart: string;

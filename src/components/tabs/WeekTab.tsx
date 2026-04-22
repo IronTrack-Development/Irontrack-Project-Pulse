@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarDays, Loader2, Share2 } from "lucide-react";
+import { CalendarDays, Loader2, Share2, QrCode } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
+import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
 
 interface Activity {
@@ -34,6 +35,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
+  const [showQR, setShowQR] = useState(false);
 
   useEffect(() => {
     const fetchWeekData = async () => {
@@ -206,13 +208,23 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
               <div className="text-xs text-gray-500">Week {weekNumber}</div>
               <div className="text-sm font-medium text-white">{formatDateRange()}</div>
             </div>
-            <button
-              onClick={handleShareClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
-            >
-              <Share2 size={13} />
-              {shareStatus || "Share"}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowQR(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                title="Share via QR Code"
+              >
+                <QrCode size={13} />
+                QR
+              </button>
+              <button
+                onClick={handleShareClick}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+              >
+                <Share2 size={13} />
+                {shareStatus || "Share"}
+              </button>
+            </div>
           </>
         )}
       </div>
@@ -294,6 +306,14 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
           projectId={projectId}
           onClose={() => setDrawerActivity(null)}
           onActivityChange={(a) => setDrawerActivity(a)}
+        />
+      )}
+
+      {showQR && (
+        <WeekQRModal
+          projectId={projectId}
+          weekNumber={weekNumber}
+          onClose={() => setShowQR(false)}
         />
       )}
 
