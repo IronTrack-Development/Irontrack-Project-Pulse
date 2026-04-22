@@ -424,7 +424,7 @@ export default function LandingPage() {
               For field operators.
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 icon: HardHat,
@@ -440,6 +440,11 @@ export default function LandingPage() {
                 icon: Building2,
                 title: "General Contractors",
                 desc: "You need every project visible and every risk flagged. Pulse gives your entire team a shared operating picture — upload once, everyone's aligned.",
+              },
+              {
+                icon: Users,
+                title: "Subcontractors",
+                desc: "Your GC shares the schedule — you see only your scope. QR code in the trailer, no login needed. Know exactly when you're up, report progress, and flag issues before they cost you money.",
               },
             ].map((persona) => (
               <div
