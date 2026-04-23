@@ -43,10 +43,23 @@ function LoginForm() {
       // This prevents the middleware race condition where the session
       // isn't visible yet on the next request
       await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Check if user is a subcontractor — redirect to sub dashboard if so
+      let destination = redirect;
+      if (redirect === "/dashboard") {
+        const { data: subCompany } = await supabase
+          .from("sub_companies")
+          .select("id")
+          .eq("user_id", data.user.id)
+          .maybeSingle();
+        if (subCompany) {
+          destination = "/sub/dashboard";
+        }
+      }
       
       // Use window.location for a full page navigation instead of client-side routing
       // This ensures the middleware sees the fresh auth cookies on the new request
-      window.location.href = redirect;
+      window.location.href = destination;
     }
   };
 
