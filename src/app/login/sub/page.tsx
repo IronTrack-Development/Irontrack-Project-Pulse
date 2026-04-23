@@ -4,7 +4,7 @@ import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
-import { Briefcase, Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 function SubLoginForm() {
   const router = useRouter();
@@ -75,7 +75,7 @@ function SubLoginForm() {
         <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(59,130,246,0.1)" }}>
-              <Briefcase className="w-6 h-6" style={{ color: "#3B82F6" }} />
+              <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
