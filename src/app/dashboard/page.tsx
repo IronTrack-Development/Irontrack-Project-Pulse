@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase-browser";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -50,10 +52,28 @@ function formatDate(dateStr?: string) {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [projects, setProjects] = useState<ProjectWithStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [dbError, setDbError] = useState(false);
+
+  // Redirect sub users to their dashboard
+  useEffect(() => {
+    (async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: subCompany } = await supabase
+        .from("sub_companies")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (subCompany) {
+        router.replace("/sub/dashboard");
+      }
+    })();
+  }, [router]);
 
   const triggerNotificationCheck = async () => {
     try {
