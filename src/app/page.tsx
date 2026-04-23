@@ -10,7 +10,7 @@ import DemoSection from "@/components/DemoSection";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen" style={{ background: "#F5F3EE" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "#F5F3EE" }}>
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-50 border-b" style={{ background: "#F5F3EE", borderColor: "rgba(13,13,13,0.08)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">

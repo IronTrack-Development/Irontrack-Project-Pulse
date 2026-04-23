@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
-import { Building2, Loader2, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { Building2, Loader2, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -97,11 +97,17 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* Back to Home */}
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-300 transition-colors mb-6">
+          <ArrowLeft className="w-4 h-4" />
+          Back to home
+        </Link>
+
         {/* Logo */}
-        <div className="flex items-center justify-center mb-8">
-          <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
-          <span className="text-2xl font-bold text-white">IronTrack Project Pulse</span>
-        </div>
+        <Link href="/" className="flex items-center justify-center mb-8 group">
+          <Building2 className="w-8 h-8 text-[#F97316] mr-2 group-hover:text-[#EA580C] transition-colors" />
+          <span className="text-2xl font-bold text-white group-hover:text-gray-200 transition-colors">IronTrack Project Pulse</span>
+        </Link>
 
         {/* Signup Card */}
         <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
