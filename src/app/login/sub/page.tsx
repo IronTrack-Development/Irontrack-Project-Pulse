@@ -4,12 +4,12 @@ import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
-import { HardHat, Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Briefcase, Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 
-function LoginForm() {
+function SubLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/dashboard";
+  const redirect = searchParams.get("redirect") || "/sub/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,10 +36,10 @@ function LoginForm() {
     }
 
     if (data.user) {
-      // Sign out all other sessions — single session enforcement
+      // Sign out all other sessions
       await supabase.auth.signOut({ scope: "others" });
 
-      // Wait briefly for the auth cookie to propagate before navigating
+      // Wait briefly for auth cookie to propagate
       await new Promise(resolve => setTimeout(resolve, 300));
       
       window.location.href = redirect;
@@ -74,15 +74,15 @@ function LoginForm() {
         {/* Login Card */}
         <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(232,93,28,0.1)" }}>
-              <HardHat className="w-6 h-6" style={{ color: "#E85D1C" }} />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(59,130,246,0.1)" }}>
+              <Briefcase className="w-6 h-6" style={{ color: "#3B82F6" }} />
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                General Contractor
+                Subcontractor
               </h1>
               <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                Sign in to your GC account
+                Sign in to your sub account
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ function LoginForm() {
               type="submit"
               disabled={loading}
               className="w-full py-3 px-4 rounded-xl font-bold text-white transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              style={{ background: "#E85D1C" }}
+              style={{ background: "#3B82F6" }}
             >
               {loading ? (
                 <>
@@ -164,13 +164,13 @@ function LoginForm() {
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
               Don't have an account?{" "}
-              <Link href="/signup" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
+              <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
                 Sign up
               </Link>
             </p>
             <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Subcontractor?{" "}
-              <Link href="/login/sub" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
+              General Contractor?{" "}
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
                 Sign in here
               </Link>
             </p>
@@ -186,14 +186,14 @@ function LoginForm() {
   );
 }
 
-export default function LoginPage() {
+export default function SubLoginPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F3EE" }}>
-        <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#E85D1C" }} />
+        <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#3B82F6" }} />
       </div>
     }>
-      <LoginForm />
+      <SubLoginForm />
     </Suspense>
   );
 }
