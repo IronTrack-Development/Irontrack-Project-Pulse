@@ -1,6 +1,6 @@
 import type { ParsedActivity } from "@/types";
 import { getServiceClient } from "./supabase";
-import { getArizonaDateString } from "@/lib/arizona-date";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 interface RiskInsert {
   project_id: string;
@@ -18,7 +18,7 @@ export async function runRiskDetection(
   activities: ParsedActivity[]
 ): Promise<number> {
   const supabase = getServiceClient();
-  const today = new Date(getArizonaDateString() + "T00:00:00");
+  const today = new Date(getArizonaToday() + "T00:00:00");
 
   const risks: RiskInsert[] = [];
 
