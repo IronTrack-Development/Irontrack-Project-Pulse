@@ -1,8 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw } from "lucide-react";
+import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw, Users, CloudRain, Sun, CloudSun, Cloud, CloudLightning, Wind, Snowflake, Thermometer, Activity } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
+
+interface YesterdayRecap {
+  logDate: string;
+  dateLabel: string;
+  totalWorkers: number;
+  totalCrewHours: number;
+  weather: { conditions: string[]; high?: number; low?: number; impact: string };
+  activitiesAdvanced: number;
+  activitiesCompleted: number;
+  delayCodes: string[];
+  lostCrewHours: number;
+}
 
 interface TodayData {
   date: string;
@@ -12,6 +24,7 @@ interface TodayData {
   atRisk: ParsedActivity[];
   actionItems: string[];
   risks: DailyRisk[];
+  yesterdayRecap: YesterdayRecap | null;
 }
 
 function statusColor(status: string) {
@@ -83,8 +96,88 @@ export default function TodayTab({ projectId }: { projectId: string }) {
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
+  const weatherIcon = (conditions: string[]) => {
+    const c = conditions[0] || "";
+    if (c.includes("Storm")) return <CloudLightning size={14} className="text-[#EAB308]" />;
+    if (c.includes("Rain")) return <CloudRain size={14} className="text-[#3B82F6]" />;
+    if (c.includes("Wind")) return <Wind size={14} className="text-gray-400" />;
+    if (c.includes("Freeze")) return <Snowflake size={14} className="text-[#60A5FA]" />;
+    if (c.includes("Heat")) return <Thermometer size={14} className="text-[#EF4444]" />;
+    if (c.includes("Overcast")) return <Cloud size={14} className="text-gray-400" />;
+    if (c.includes("Partly")) return <CloudSun size={14} className="text-[#EAB308]" />;
+    return <Sun size={14} className="text-[#EAB308]" />;
+  };
+
+  const impactLabel = (impact: string) => {
+    switch (impact) {
+      case "full_stop": return { text: "Full Stop", color: "text-[#EF4444]" };
+      case "partial_stop": return { text: "Partial Stop", color: "text-[#F97316]" };
+      case "minor_slowdown": return { text: "Minor Slowdown", color: "text-[#EAB308]" };
+      default: return { text: "No Impact", color: "text-[#22C55E]" };
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* Yesterday Recap */}
+      {data.yesterdayRecap && (
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5">
+          <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Yesterday — {data.yesterdayRecap.dateLabel}</div>
+          <div className="grid grid-cols-2 gap-3">
+            {/* Crew */}
+            <div className="flex items-center gap-2">
+              <Users size={14} className="text-[#F97316] shrink-0" />
+              <span className="text-sm text-gray-300">
+                {data.yesterdayRecap.totalWorkers} workers · {data.yesterdayRecap.totalCrewHours} crew-hours
+              </span>
+            </div>
+            {/* Weather */}
+            <div className="flex items-center gap-2">
+              {weatherIcon(data.yesterdayRecap.weather.conditions)}
+              <span className="text-sm text-gray-300">
+                {data.yesterdayRecap.weather.high != null ? `${data.yesterdayRecap.weather.high}°` : ""}
+                {data.yesterdayRecap.weather.high != null && data.yesterdayRecap.weather.low != null ? "/" : ""}
+                {data.yesterdayRecap.weather.low != null ? `${data.yesterdayRecap.weather.low}°` : ""}
+                {data.yesterdayRecap.weather.conditions.length > 0 && (
+                  <span className="ml-1 text-gray-500">{data.yesterdayRecap.weather.conditions[0]}</span>
+                )}
+              </span>
+              <span className={`text-xs ${impactLabel(data.yesterdayRecap.weather.impact).color}`}>
+                {impactLabel(data.yesterdayRecap.weather.impact).text}
+              </span>
+            </div>
+            {/* Activities */}
+            <div className="flex items-center gap-2">
+              <Activity size={14} className="text-[#3B82F6] shrink-0" />
+              <span className="text-sm text-gray-300">
+                {data.yesterdayRecap.activitiesAdvanced} advanced{data.yesterdayRecap.activitiesCompleted > 0 ? `, ${data.yesterdayRecap.activitiesCompleted} completed` : ""}
+              </span>
+            </div>
+            {/* Issues */}
+            <div className="flex items-center gap-2">
+              {data.yesterdayRecap.delayCodes.length > 0 || data.yesterdayRecap.lostCrewHours > 0 ? (
+                <>
+                  <AlertTriangle size={14} className="text-[#EF4444] shrink-0" />
+                  <span className="text-sm text-gray-300">
+                    {data.yesterdayRecap.delayCodes.length > 0
+                      ? `${data.yesterdayRecap.delayCodes.length} delay${data.yesterdayRecap.delayCodes.length > 1 ? "s" : ""} (${data.yesterdayRecap.delayCodes[0]})`
+                      : ""}
+                    {data.yesterdayRecap.lostCrewHours > 0
+                      ? `${data.yesterdayRecap.delayCodes.length > 0 ? " · " : ""}${data.yesterdayRecap.lostCrewHours} lost crew-hours`
+                      : ""}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 size={14} className="text-[#22C55E] shrink-0" />
+                  <span className="text-sm text-[#22C55E]">No issues</span>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Date header */}
       <div className="flex items-center justify-between">
         <div>

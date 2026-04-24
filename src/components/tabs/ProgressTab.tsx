@@ -1,7 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, TrendingUp, Calendar, CheckCircle2 } from "lucide-react";
+import { Loader2, TrendingUp, Calendar, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
+
+interface ActivityActual {
+  activityId: string;
+  actualPercent: number;
+  plannedPercent: number;
+  delta: number;
+  activityName: string;
+  trade: string;
+  history: { logDate: string; pctBefore: number; pctAfter: number; note: string | null }[];
+}
 
 interface ProgressData {
   totalActivities: number;
@@ -9,10 +19,95 @@ interface ProgressData {
   percentComplete: number;
   targetFinishDate: string | null;
   daysRemaining: number | null;
+  activityActuals?: ActivityActual[];
 }
 
 interface ProgressTabProps {
   projectId: string;
+}
+
+function DeltaBadge({ delta }: { delta: number }) {
+  if (delta === 0) return <span className="text-xs text-gray-500">On track</span>;
+  if (delta > 0) return <span className="text-xs text-[#22C55E] font-semibold">+{delta}% ahead</span>;
+  return <span className="text-xs text-[#EF4444] font-semibold">{delta}% behind</span>;
+}
+
+function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
+  const [expanded, setExpanded] = useState(false);
+  const actualClamped = Math.min(100, Math.max(0, activity.actualPercent));
+  const plannedClamped = Math.min(100, Math.max(0, activity.plannedPercent));
+
+  return (
+    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left px-4 py-3 hover:bg-[#1F1F25]/30 transition-colors"
+      >
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-white truncate">{activity.activityName}</div>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="text-xs text-[#F97316]">{activity.trade}</span>
+              <DeltaBadge delta={activity.delta} />
+            </div>
+          </div>
+          {activity.history.length > 0 && (
+            expanded
+              ? <ChevronUp size={14} className="text-gray-500 shrink-0" />
+              : <ChevronDown size={14} className="text-gray-500 shrink-0" />
+          )}
+        </div>
+        {/* Dual progress bars */}
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-600 w-14 shrink-0">Planned</span>
+            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gray-600 transition-all duration-500"
+                style={{ width: `${plannedClamped}%` }}
+              />
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 w-8 text-right">{activity.plannedPercent}%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-600 w-14 shrink-0">Actual</span>
+            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-[#F97316] transition-all duration-500"
+                style={{ width: `${actualClamped}%` }}
+              />
+            </div>
+            <span className="text-[10px] font-mono text-[#F97316] w-8 text-right">{activity.actualPercent}%</span>
+          </div>
+        </div>
+      </button>
+
+      {/* History drawer */}
+      {expanded && activity.history.length > 0 && (
+        <div className="border-t border-[#1F1F25] px-4 py-3 space-y-2">
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Log History</div>
+          {activity.history.map((h, i) => {
+            const delta = h.pctAfter - h.pctBefore;
+            const dateLabel = new Date(h.logDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            return (
+              <div key={i} className="flex items-start gap-2 text-xs">
+                <span className="text-gray-500 shrink-0 w-14">{dateLabel}</span>
+                <span className="text-gray-400">
+                  {h.pctBefore}% → {h.pctAfter}%
+                  <span className={delta > 0 ? " text-[#22C55E]" : delta < 0 ? " text-[#EF4444]" : " text-gray-500"}>
+                    {" "}({delta > 0 ? "+" : ""}{delta}%)
+                  </span>
+                </span>
+                {h.note && (
+                  <span className="text-gray-600 italic truncate">&ldquo;{h.note}&rdquo;</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function ProgressTab({ projectId }: ProgressTabProps) {
@@ -104,6 +199,30 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
           </div>
         </div>
       </div>
+
+      {/* Actual vs Planned — from daily logs */}
+      {data.activityActuals && data.activityActuals.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <TrendingUp size={15} className="text-[#F97316]" />
+            <h3 className="font-semibold text-white">Actual vs Planned</h3>
+            <span className="text-xs text-gray-500">({data.activityActuals.length} tracked)</span>
+          </div>
+          <div className="flex items-center gap-4 mb-3 text-[10px] text-gray-600">
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-1.5 rounded-full bg-gray-600" /> Planned
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-1.5 rounded-full bg-[#F97316]" /> Actual (from logs)
+            </div>
+          </div>
+          <div className="space-y-2">
+            {data.activityActuals.map((a) => (
+              <ActivityProgressCard key={a.activityId} activity={a} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Breakdown */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">

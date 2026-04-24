@@ -63,7 +63,85 @@ export async function GET(
       return { ...m, status, milestone_date: m.finish_date || m.start_date };
     });
 
-    return NextResponse.json({ milestones: milestonesWithStatus });
+    // Fetch daily log context strips for each milestone (±2 days around finish_date)
+    const milestoneContextMap: Record<string, Array<{
+      logDate: string;
+      crewSize: number;
+      status: string;
+      summary: string;
+    }>> = {};
+
+    // Collect all milestone dates and query daily logs
+    const milestoneDates = milestonesWithStatus
+      .filter((m) => m.milestone_date)
+      .map((m) => ({ id: m.id, date: m.milestone_date }));
+
+    if (milestoneDates.length > 0) {
+      // Build a date range that covers all milestones ±2 days
+      const allDates = milestoneDates.map((m) => new Date(m.date));
+      const minDate = new Date(Math.min(...allDates.map((d) => d.getTime())));
+      const maxDate = new Date(Math.max(...allDates.map((d) => d.getTime())));
+      minDate.setDate(minDate.getDate() - 2);
+      maxDate.setDate(maxDate.getDate() + 2);
+      const minStr = minDate.toISOString().split("T")[0];
+      const maxStr = maxDate.toISOString().split("T")[0];
+
+      const { data: contextLogs } = await supabase
+        .from("daily_logs")
+        .select("log_date, crew, status, delay_codes, delay_narrative, weather")
+        .eq("project_id", projectId)
+        .gte("log_date", minStr)
+        .lte("log_date", maxStr)
+        .in("status", ["submitted", "locked"])
+        .order("log_date");
+
+      if (contextLogs) {
+        for (const ms of milestoneDates) {
+          const msDate = new Date(ms.date);
+          const msMin = new Date(msDate);
+          msMin.setDate(msMin.getDate() - 2);
+          const msMax = new Date(msDate);
+          msMax.setDate(msMax.getDate() + 2);
+          const msMinStr = msMin.toISOString().split("T")[0];
+          const msMaxStr = msMax.toISOString().split("T")[0];
+
+          const relevant = contextLogs.filter(
+            (l) => l.log_date >= msMinStr && l.log_date <= msMaxStr
+          );
+
+          milestoneContextMap[ms.id] = relevant.map((l) => {
+            const crew = (l.crew || []) as Array<{ headcount: number }>;
+            const crewSize = crew.reduce((s, c) => s + (c.headcount || 0), 0);
+            const delayCodes = (l.delay_codes || []) as string[];
+            const weather = (l.weather || {}) as { conditions?: string[]; impact?: string };
+            const parts: string[] = [];
+            if (weather.conditions && weather.conditions.length > 0) {
+              parts.push(weather.conditions[0]);
+            }
+            if (delayCodes.length > 0) {
+              parts.push(`Delay: ${delayCodes.join(", ")}`);
+            }
+            if (l.delay_narrative) {
+              parts.push(l.delay_narrative.substring(0, 80));
+            }
+            return {
+              logDate: l.log_date,
+              crewSize,
+              status: l.status,
+              summary: parts.join(" · ") || "Normal operations",
+            };
+          });
+        }
+      }
+    }
+
+    // Attach context to milestones
+    const milestonesWithContext = milestonesWithStatus.map((m) => ({
+      ...m,
+      contextStrip: milestoneContextMap[m.id] || [],
+    }));
+
+    return NextResponse.json({ milestones: milestonesWithContext });
   } catch (error: unknown) {
     console.error("Milestones API error:", error);
     return NextResponse.json(

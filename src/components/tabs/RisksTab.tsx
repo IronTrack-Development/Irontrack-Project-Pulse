@@ -22,6 +22,9 @@ function riskTypeLabel(type: string): string {
     case "INSPECTION_RISK": return "Inspection Risk";
     case "MISSING_LOGIC": return "Missing Logic";
     case "LONG_DURATION": return "Long Duration";
+    case "WEATHER_PATTERN": return "Weather Pattern";
+    case "LABOR_SHORTAGE": return "Labor Shortage";
+    case "LOST_TIME_ACCUMULATION": return "Lost Time";
     default: return type.replace(/_/g, " ");
   }
 }

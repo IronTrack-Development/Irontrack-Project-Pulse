@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarDays, RefreshCw, ChevronDown } from "lucide-react";
+import { CalendarDays, RefreshCw, ChevronDown, AlertTriangle } from "lucide-react";
 import type { LookaheadGroup, ParsedActivity } from "@/types";
+
+interface TradeFlag {
+  trade: string;
+  behindPercent: number;
+  message: string;
+}
 
 const DAY_OPTIONS = [7, 14, 21] as const;
 
@@ -65,6 +71,7 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
 export default function LookaheadTab({ projectId }: { projectId: string }) {
   const [days, setDays] = useState<7 | 14 | 21>(14);
   const [groups, setGroups] = useState<LookaheadGroup[]>([]);
+  const [tradeFlags, setTradeFlags] = useState<TradeFlag[]>([]);
   const [loading, setLoading] = useState(true);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
@@ -74,6 +81,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
     if (res.ok) {
       const data = await res.json();
       setGroups(data.groups || []);
+      setTradeFlags(data.tradeFlags || []);
     }
     setLoading(false);
   };
@@ -106,6 +114,21 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
           ))}
         </div>
       </div>
+
+      {/* Trade flags from daily logs */}
+      {tradeFlags.length > 0 && (
+        <div className="space-y-2">
+          {tradeFlags.map((flag) => (
+            <div
+              key={flag.trade}
+              className="bg-[#EAB308]/10 border border-[#EAB308]/20 rounded-xl px-4 py-3 flex items-start gap-3"
+            >
+              <AlertTriangle size={14} className="text-[#EAB308] shrink-0 mt-0.5" />
+              <div className="text-xs text-[#EAB308]">{flag.message}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex justify-center py-16">
@@ -142,17 +165,21 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
 
                 {!isCollapsed && (
                   <div className="px-4 pb-4 space-y-4">
-                    {group.trades.map(({ trade, activities }) => (
+                    {group.trades.map(({ trade, activities }) => {
+                      const flagged = tradeFlags.find((f) => f.trade === trade);
+                      return (
                       <div key={trade}>
                         <div className="flex items-center gap-2 mb-2 px-1">
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">{trade}</span>
+                          <span className={`text-xs font-bold uppercase tracking-wide ${flagged ? "text-[#EAB308]" : "text-gray-400"}`}>{trade}</span>
                           <span className="text-xs text-gray-600">({activities.length})</span>
+                          {flagged && <AlertTriangle size={10} className="text-[#EAB308]" />}
                         </div>
                         <div className="space-y-1.5">
                           {activities.map((a) => <ActivityRow key={a.id} activity={a} />)}
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>

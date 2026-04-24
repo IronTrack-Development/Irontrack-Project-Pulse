@@ -194,5 +194,119 @@ export async function runRiskDetection(
     }
   }
 
+  // Run daily-log-driven risk detection
+  const logRiskCount = await runDailyLogRiskDetection(projectId, supabase, activities);
+
+  return risks.length + logRiskCount;
+}
+
+/**
+ * Detect risks from daily log patterns:
+ * - Weather pattern: 3+ weather delays in last 7 daily logs
+ * - Labor shortage: trade headcount averaging < 50% of schedule
+ * - Lost time accumulation: > 40 crew-hours lost in 7 days
+ */
+async function runDailyLogRiskDetection(
+  projectId: string,
+  supabase: ReturnType<typeof getServiceClient>,
+  activities: ParsedActivity[]
+): Promise<number> {
+  const risks: RiskInsert[] = [];
+
+  // Fetch last 7 daily logs
+  const { data: recentLogs } = await supabase
+    .from("daily_logs")
+    .select("*")
+    .eq("project_id", projectId)
+    .in("status", ["submitted", "locked"])
+    .order("log_date", { ascending: false })
+    .limit(7);
+
+  if (!recentLogs || recentLogs.length === 0) return 0;
+
+  // 1. WEATHER PATTERN RISK
+  const weatherDelayLogs = recentLogs.filter((log) => {
+    const delayCodes = (log.delay_codes || []) as string[];
+    return delayCodes.includes("Weather");
+  });
+
+  if (weatherDelayLogs.length >= 3) {
+    risks.push({
+      project_id: projectId,
+      risk_type: "WEATHER_PATTERN",
+      severity: "medium",
+      title: "Weather Pattern Detected",
+      description: `${weatherDelayLogs.length} weather delays in last 7 daily logs. Consider schedule buffer.`,
+      suggested_action: "Review weather forecast for next 2 weeks and add contingency days to critical path activities.",
+      status: "open",
+    });
+  }
+
+  // 2. LABOR SHORTAGE RISK
+  // Build a trade headcount map from schedule (activities with trade + start/finish spanning today-ish)
+  const todayStr = getArizonaToday();
+  const tradeWorkersScheduled = new Map<string, number>();
+  for (const a of activities) {
+    if (!a.trade || a.status === "complete") continue;
+    if (a.start_date && a.finish_date && a.start_date <= todayStr && a.finish_date >= todayStr) {
+      // Count each active activity as needing workers
+      tradeWorkersScheduled.set(a.trade, (tradeWorkersScheduled.get(a.trade) || 0) + 1);
+    }
+  }
+
+  // Get last 3 logs for labor analysis
+  const last3Logs = recentLogs.slice(0, 3);
+  const tradeActualCounts = new Map<string, number[]>();
+  for (const log of last3Logs) {
+    const crew = (log.crew || []) as { trade: string; headcount: number }[];
+    for (const c of crew) {
+      if (!c.trade) continue;
+      if (!tradeActualCounts.has(c.trade)) tradeActualCounts.set(c.trade, []);
+      tradeActualCounts.get(c.trade)!.push(c.headcount || 0);
+    }
+  }
+
+  // For trades with scheduled work, check if actual headcount is averaging < 50%
+  // We use a rough heuristic: if a trade has scheduled activities but averaging very low headcount
+  for (const [trade, counts] of tradeActualCounts) {
+    if (counts.length === 0) continue;
+    const avg = counts.reduce((s, c) => s + c, 0) / counts.length;
+    // Use scheduled workers as baseline — each active activity expects at least 2 workers
+    const scheduledCount = (tradeWorkersScheduled.get(trade) || 0) * 2;
+    if (scheduledCount > 0 && avg < scheduledCount * 0.5) {
+      risks.push({
+        project_id: projectId,
+        risk_type: "LABOR_SHORTAGE",
+        severity: "high",
+        title: `${trade} Understaffed`,
+        description: `${trade} averaging ${Math.round(avg)} workers vs ${scheduledCount} planned over last ${counts.length} logs.`,
+        suggested_action: `Contact ${trade} foreman — confirm crew availability and mobilization plan.`,
+        status: "open",
+      });
+    }
+  }
+
+  // 3. LOST TIME ACCUMULATION
+  const totalLostHours = recentLogs.reduce(
+    (sum, log) => sum + (Number(log.lost_crew_hours) || 0),
+    0
+  );
+
+  if (totalLostHours > 40) {
+    risks.push({
+      project_id: projectId,
+      risk_type: "LOST_TIME_ACCUMULATION",
+      severity: "high",
+      title: "Significant Lost Time",
+      description: `${Math.round(totalLostHours)} crew-hours lost in last ${recentLogs.length} daily logs.`,
+      suggested_action: "Review delay causes with field team — identify mitigation strategies for top delay codes.",
+      status: "open",
+    });
+  }
+
+  if (risks.length > 0) {
+    await supabase.from("daily_risks").insert(risks);
+  }
+
   return risks.length;
 }

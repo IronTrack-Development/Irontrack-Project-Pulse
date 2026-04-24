@@ -4,7 +4,8 @@ import { getArizonaToday } from "@/lib/arizona-date";
 export function generateBriefSummary(
   activities: ParsedActivity[],
   risks: DailyRisk[],
-  projectName: string
+  projectName: string,
+  yesterdaySummary?: string[]
 ): BriefSummary {
   const todayStr = getArizonaToday();
   const today = new Date(todayStr + "T12:00:00");
@@ -104,10 +105,15 @@ export function generateBriefSummary(
       }
     : undefined;
 
+  // Build three-part structure: yesterday, today, watchlist
+  const fullToday = yesterdaySummary
+    ? [...yesterdaySummary, ...todaySentences]
+    : todaySentences;
+
   return {
     date: todayStr,
     status,
-    today: todaySentences,
+    today: fullToday,
     watchlist,
     risks: briefRisks,
     actions,

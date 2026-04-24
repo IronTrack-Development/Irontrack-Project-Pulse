@@ -79,5 +79,92 @@ export async function GET(
     });
   }
 
-  return NextResponse.json({ days, groups });
+  // ── Reality-adjusted flags from daily log progress ──
+  // Get recent daily logs to pull progress data
+  const { data: recentLogs } = await supabase
+    .from("daily_logs")
+    .select("id, log_date")
+    .eq("project_id", id)
+    .in("status", ["submitted", "locked"])
+    .order("log_date", { ascending: false })
+    .limit(10);
+
+  interface TradeFlag {
+    trade: string;
+    behindPercent: number;
+    message: string;
+  }
+  const tradeFlags: TradeFlag[] = [];
+
+  if (recentLogs && recentLogs.length > 0) {
+    const logIds = recentLogs.map((l) => l.id);
+    const logDateMap = new Map(recentLogs.map((l) => [l.id, l.log_date]));
+
+    const { data: progressEntries } = await supabase
+      .from("daily_log_progress")
+      .select("daily_log_id, activity_id, pct_complete_before, pct_complete_after")
+      .in("daily_log_id", logIds);
+
+    if (progressEntries && progressEntries.length > 0) {
+      // Get activity trade info
+      const activityIds = [...new Set(progressEntries.filter(p => p.activity_id).map(p => p.activity_id!))];
+      const { data: activityData } = await supabase
+        .from("parsed_activities")
+        .select("id, trade, percent_complete, original_duration, remaining_duration")
+        .in("id", activityIds);
+
+      const activityMap = new Map((activityData || []).map(a => [a.id, a]));
+
+      // Group progress entries by trade, take last 5 per trade
+      const tradeEntries = new Map<string, { pctBefore: number; pctAfter: number; logDate: string }[]>();
+      for (const p of progressEntries) {
+        if (!p.activity_id) continue;
+        const act = activityMap.get(p.activity_id);
+        if (!act || !act.trade) continue;
+        if (!tradeEntries.has(act.trade)) tradeEntries.set(act.trade, []);
+        tradeEntries.get(act.trade)!.push({
+          pctBefore: Number(p.pct_complete_before) || 0,
+          pctAfter: Number(p.pct_complete_after) || 0,
+          logDate: logDateMap.get(p.daily_log_id) || "",
+        });
+      }
+
+      for (const [trade, entries] of tradeEntries) {
+        // Sort by date descending, take last 5
+        const sorted = entries.sort((a, b) => b.logDate.localeCompare(a.logDate)).slice(0, 5);
+        if (sorted.length < 2) continue;
+
+        // Calculate average daily progress rate
+        const avgDelta = sorted.reduce((s, e) => s + (e.pctAfter - e.pctBefore), 0) / sorted.length;
+
+        // Compare to expected rate: for active activities in this trade, what's the planned daily rate?
+        const tradeActivities = (activityData || []).filter(
+          a => a.trade === trade && (a.remaining_duration || 0) > 0
+        );
+        if (tradeActivities.length === 0) continue;
+
+        // Average expected daily progress across trade activities
+        const avgExpectedDaily = tradeActivities.reduce((s, a) => {
+          const remaining = 100 - (a.percent_complete || 0);
+          const days = a.remaining_duration || 1;
+          return s + (remaining / days);
+        }, 0) / tradeActivities.length;
+
+        if (avgExpectedDaily <= 0) continue;
+
+        const ratio = avgDelta / avgExpectedDaily;
+        const behindPercent = Math.round((1 - ratio) * 100);
+
+        if (behindPercent >= 20) {
+          tradeFlags.push({
+            trade,
+            behindPercent,
+            message: `\u26A0\uFE0F ${trade} trending ${behindPercent}% behind plan based on last ${sorted.length} logs \u2014 consider rebaselining`,
+          });
+        }
+      }
+    }
+  }
+
+  return NextResponse.json({ days, groups, tradeFlags });
 }

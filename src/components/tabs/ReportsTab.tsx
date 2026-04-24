@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ClipboardList, ExternalLink, Trash2, RefreshCw,
-  FileText, ChevronRight, AlertTriangle
+  FileText, ChevronRight, AlertTriangle, CalendarDays,
+  Users, CloudRain, Activity, Printer
 } from "lucide-react";
 import type { IssueReport, ReportStatus } from "@/types";
 
@@ -29,6 +30,134 @@ function formatDate(dateStr: string): string {
     day: "numeric",
     year: "numeric",
   });
+}
+
+interface WeeklyLogData {
+  weekStart: string;
+  weekEnd: string;
+  totalCrewHours: number;
+  totalWorkers: number;
+  activitiesCompleted: number;
+  activitiesAdvanced: number;
+  weatherImpactDays: number;
+  delayCount: number;
+  lostCrewHours: number;
+  logCount: number;
+}
+
+function WeeklyLogReport({ projectId }: { projectId: string }) {
+  const [data, setData] = useState<WeeklyLogData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [generated, setGenerated] = useState(false);
+
+  const generate = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/daily-logs/weekly-summary`);
+      if (res.ok) {
+        const json = await res.json();
+        setData({
+          weekStart: json.monday,
+          weekEnd: json.sunday,
+          totalCrewHours: json.totalCrewHours || 0,
+          totalWorkers: json.avgDailyCrew || 0,
+          activitiesCompleted: (json.activitiesCompleted || []).length,
+          activitiesAdvanced: (json.activitiesAdvanced || []).length,
+          weatherImpactDays: json.weatherImpactDays || 0,
+          delayCount: json.totalDelayDays || 0,
+          lostCrewHours: json.totalLostCrewHours || 0,
+          logCount: json.totalLogDays || 0,
+        });
+        setGenerated(true);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const exportPdf = () => {
+    // Open the printable weekly report HTML in a new tab
+    window.open(`/api/projects/${projectId}/daily-logs/weekly-report-pdf`, "_blank");
+  };
+
+  if (!generated) {
+    return (
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 mb-3">
+          <CalendarDays size={16} className="text-[#F97316]" />
+          <h3 className="text-sm font-bold text-white">Weekly Log Report</h3>
+        </div>
+        <p className="text-xs text-gray-500 mb-4">
+          Generate a summary from this week&apos;s daily logs — crew-hours, progress, weather, and issues.
+        </p>
+        <button
+          onClick={generate}
+          disabled={loading}
+          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+        >
+          {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}
+          Generate Weekly Report
+        </button>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  const weekLabel = `${new Date(data.weekStart + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${new Date(data.weekEnd + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+
+  return (
+    <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <CalendarDays size={16} className="text-[#F97316]" />
+            <h3 className="text-sm font-bold text-white">Weekly Log Report</h3>
+          </div>
+          <div className="text-xs text-gray-500">{weekLabel} · {data.logCount} log{data.logCount !== 1 ? "s" : ""}</div>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={generate}
+            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            title="Refresh"
+          >
+            <RefreshCw size={14} />
+          </button>
+          <button
+            onClick={exportPdf}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+          >
+            <Printer size={12} />
+            Export PDF
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+          <Users size={14} className="mx-auto text-[#F97316] mb-1" />
+          <div className="text-lg font-bold text-white">{data.totalCrewHours}</div>
+          <div className="text-[10px] text-gray-500">Crew-Hours</div>
+        </div>
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+          <Activity size={14} className="mx-auto text-[#22C55E] mb-1" />
+          <div className="text-lg font-bold text-white">{data.activitiesCompleted}</div>
+          <div className="text-[10px] text-gray-500">Completed</div>
+        </div>
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+          <CloudRain size={14} className="mx-auto text-[#3B82F6] mb-1" />
+          <div className="text-lg font-bold text-white">{data.weatherImpactDays}</div>
+          <div className="text-[10px] text-gray-500">Weather Days</div>
+        </div>
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+          <AlertTriangle size={14} className="mx-auto text-[#EF4444] mb-1" />
+          <div className="text-lg font-bold text-white">{data.lostCrewHours}</div>
+          <div className="text-[10px] text-gray-500">Lost Hours</div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function ReportsTab({ projectId }: Props) {
@@ -74,6 +203,9 @@ export default function ReportsTab({ projectId }: Props) {
 
   return (
     <div>
+      {/* Weekly Log Report */}
+      <WeeklyLogReport projectId={projectId} />
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
