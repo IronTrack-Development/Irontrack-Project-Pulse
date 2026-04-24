@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { resolveClientDate } from "@/lib/arizona-date";
 
 interface Activity {
   id: string;
@@ -43,18 +44,11 @@ export async function GET(
 
   const supabase = getServiceClient();
 
-  // Use client's date if provided, otherwise fall back to server time
-  let targetDate: Date;
-  if (clientDate) {
-    targetDate = new Date(clientDate + "T12:00:00"); // noon to avoid timezone edge cases
-    if (day === "tomorrow") {
-      targetDate.setDate(targetDate.getDate() + 1);
-    }
-  } else {
-    targetDate = new Date();
-    if (day === "tomorrow") {
-      targetDate.setDate(targetDate.getDate() + 1);
-    }
+  // Use client's date if provided, otherwise fall back to Arizona timezone
+  const resolvedDate = resolveClientDate(clientDate);
+  let targetDate = new Date(resolvedDate + "T12:00:00"); // noon to avoid timezone edge cases
+  if (day === "tomorrow") {
+    targetDate.setDate(targetDate.getDate() + 1);
   }
   const targetDateStr = targetDate.toISOString().split("T")[0];
 

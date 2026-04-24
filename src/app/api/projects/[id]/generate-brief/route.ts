@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { generateBriefSummary } from "@/lib/brief-engine";
 import { computeHealthScore } from "@/lib/health-score";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export async function POST(
   _req: NextRequest,
@@ -10,7 +11,7 @@ export async function POST(
   const { id } = await params;
   const supabase = getServiceClient();
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getArizonaToday();
 
   const [{ data: project }, { data: activities }, { data: risks }] = await Promise.all([
     supabase.from("daily_projects").select("*").eq("id", id).single(),

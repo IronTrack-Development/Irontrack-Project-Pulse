@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 // GET /api/projects/[id]/weekly-summary
 // Returns structured JSON data for the weekly summary report.
@@ -10,13 +11,13 @@ export async function GET(
   const { id } = await params;
   const supabase = getServiceClient();
 
-  const today = new Date();
+  const todayStr = getArizonaToday();
+  const today = new Date(todayStr + "T12:00:00");
   const sevenDaysAgo = new Date(today);
   sevenDaysAgo.setDate(today.getDate() - 7);
   const nextWeekEnd = new Date(today);
   nextWeekEnd.setDate(today.getDate() + 7);
 
-  const todayStr = today.toISOString().split("T")[0];
   const sevenDaysAgoStr = sevenDaysAgo.toISOString().split("T")[0];
   const nextWeekEndStr = nextWeekEnd.toISOString().split("T")[0];
 

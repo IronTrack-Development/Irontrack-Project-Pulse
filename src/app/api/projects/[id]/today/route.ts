@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { resolveClientDate } from "@/lib/arizona-date";
 
 export async function GET(
   _req: NextRequest,
@@ -11,9 +12,9 @@ export async function GET(
   const { searchParams } = new URL(_req.url);
   const clientDate = searchParams.get("clientDate"); // YYYY-MM-DD from client's timezone
 
-  const today = clientDate ? new Date(clientDate + "T12:00:00") : new Date();
+  const todayStr = resolveClientDate(clientDate);
+  const today = new Date(todayStr + "T12:00:00");
   today.setHours(0, 0, 0, 0);
-  const todayStr = clientDate || today.toISOString().split("T")[0];
 
   const threeDaysAgo = new Date(today);
   threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);

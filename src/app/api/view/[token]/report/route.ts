@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
 import { createNotification } from "@/lib/notifications-store";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 // POST /api/view/[token]/report
 // PUBLIC — records a sub foreman's daily progress report.
@@ -83,7 +84,7 @@ export async function POST(
     status: body.activity_statuses?.[id] ?? "in_progress",
   }));
 
-  const reportDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const reportDate = getArizonaToday(); // YYYY-MM-DD
 
   // Upsert the report (one per link per day)
   const { data: report, error: insertError } = await supabase

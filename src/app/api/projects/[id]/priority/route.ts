@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { resolveClientDate } from "@/lib/arizona-date";
 import type { ParsedActivity } from "@/types";
 
 function daysBetween(a: Date, b: Date): number {
@@ -23,7 +24,8 @@ export async function GET(
   const all: ParsedActivity[] = activities || [];
   const { searchParams } = new URL(_req.url);
   const clientDate = searchParams.get("clientDate");
-  const today = clientDate ? new Date(clientDate + "T12:00:00") : new Date();
+  const todayStr = resolveClientDate(clientDate);
+  const today = new Date(todayStr + "T12:00:00");
   today.setHours(0, 0, 0, 0);
 
   // ── Build id→activity map ────────────────────────────────────────────────

@@ -1238,7 +1238,7 @@ function ProgressReportTab({
 
   // Upload all photos and return URLs
   async function uploadPhotos(): Promise<string[]> {
-    const reportDate = new Date().toISOString().split("T")[0];
+    const reportDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
     const urls: string[] = [];
 
     for (const photo of photos) {
@@ -1371,7 +1371,7 @@ function ProgressReportTab({
           projectName={projectName}
           subName={subName}
           submittedBy={report.submittedBy}
-          reportDate={new Date().toISOString().split("T")[0]}
+          reportDate={new Date().toLocaleDateString('en-CA')}
           activities={reportableActivities}
           selectedActivityIds={Array.from(report.selectedActivityIds)}
           activityStatuses={report.activityStatuses}

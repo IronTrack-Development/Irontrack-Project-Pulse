@@ -78,7 +78,7 @@ export default function Dashboard() {
   const triggerNotificationCheck = async () => {
     try {
       if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
       // Non-blocking: we don't await or handle the response
       fetch(`/api/notifications/check?clientDate=${today}`).catch(() => {});
     } catch {

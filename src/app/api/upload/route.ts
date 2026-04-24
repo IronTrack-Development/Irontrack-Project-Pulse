@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Allow up to 300 seconds for AI-powered PDF/MPP parsing (Vercel Pro)
 export const maxDuration = 300;
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 import { inferTrade } from "@/lib/trade-inference";
 import { normalizeWBS, buildMPPWBSPath, type FlatHierarchyRow } from "@/lib/wbs-normalizer";
 import { runRiskDetection } from "@/lib/risk-engine";
@@ -445,7 +446,7 @@ export async function POST(req: NextRequest) {
   const userId = project.user_id;
 
   // Daily upload limit check — 50 uploads per day
-  const today = new Date().toISOString().split('T')[0];
+  const today = getArizonaToday();
   const { data: uploadStats } = await supabase
     .from('user_uploads')
     .select('upload_count')
@@ -462,7 +463,8 @@ export async function POST(req: NextRequest) {
   }
 
   // Monthly upload limit check — 50 uploads per month
-  const monthStart = new Date();
+  const todayStr = getArizonaToday();
+  const monthStart = new Date(todayStr + "T12:00:00");
   monthStart.setDate(1);
   const monthStartStr = monthStart.toISOString().split('T')[0];
 

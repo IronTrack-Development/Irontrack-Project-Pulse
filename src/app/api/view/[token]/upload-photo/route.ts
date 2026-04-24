@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 const BUCKET = "sub-report-photos";
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB hard ceiling (client compresses before this)
@@ -86,7 +87,7 @@ export async function POST(
 
   const reportDate =
     (formData.get("report_date") as string | null) ??
-    new Date().toISOString().split("T")[0];
+    getArizonaToday();
 
   // Unique filename to avoid collisions
   const timestamp = Date.now();

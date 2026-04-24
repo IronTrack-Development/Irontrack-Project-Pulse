@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -36,7 +37,7 @@ export async function GET(
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getArizonaToday();
 
   // Run all queries in parallel
   const [

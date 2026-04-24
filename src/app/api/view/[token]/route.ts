@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 import { rateLimit } from "@/lib/rate-limit";
 
 // GET /api/view/[token]
@@ -143,8 +144,8 @@ export async function GET(
     .single();
 
   // 7. Group activities by time bucket
-  const now = new Date();
-  const todayStr = now.toISOString().split("T")[0];
+  const todayStr = getArizonaToday();
+  const now = new Date(todayStr + "T12:00:00");
 
   const weekEnd = new Date(now);
   weekEnd.setDate(weekEnd.getDate() + 7);

@@ -1,13 +1,14 @@
 import type { ParsedActivity, DailyRisk, BriefSummary } from "@/types";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export function generateBriefSummary(
   activities: ParsedActivity[],
   risks: DailyRisk[],
   projectName: string
 ): BriefSummary {
-  const today = new Date();
+  const todayStr = getArizonaToday();
+  const today = new Date(todayStr + "T12:00:00");
   today.setHours(0, 0, 0, 0);
-  const todayStr = today.toISOString().split("T")[0];
 
   // Today's active activities
   const todayActivities = activities.filter((a) => {

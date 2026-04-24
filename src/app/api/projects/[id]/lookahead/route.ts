@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 import type { LookaheadGroup } from "@/types";
 
 export async function GET(
@@ -12,13 +13,13 @@ export async function GET(
   const { searchParams } = new URL(req.url);
   const days = parseInt(searchParams.get("days") || "14");
 
-  const today = new Date();
+  const todayStr = getArizonaToday();
+  const today = new Date(todayStr + "T12:00:00Z");
   today.setHours(0, 0, 0, 0);
 
-  const endDate = new Date(today);
+  const endDate = new Date(todayStr + "T12:00:00");
   endDate.setDate(endDate.getDate() + days);
 
-  const todayStr = today.toISOString().split("T")[0];
   const endStr = endDate.toISOString().split("T")[0];
 
   const { data: activities, error } = await supabase

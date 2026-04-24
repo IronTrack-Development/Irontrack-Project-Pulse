@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 function getWeekRange(weekNumber: number): { start: string; end: string } {
-  const now = new Date();
+  const todayStr = getArizonaToday();
+  const now = new Date(todayStr + "T12:00:00");
   const currentDay = now.getDay();
   const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
   

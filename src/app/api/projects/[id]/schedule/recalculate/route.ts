@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 import {
   runReforecast,
   dbRowToScheduleTask,
@@ -74,7 +75,7 @@ export async function POST(
   const result = runReforecast(
     projectId,
     tasks,
-    project.start_date || new Date().toISOString().split("T")[0],
+    project.start_date || getArizonaToday(),
     project.target_finish_date || null,
     previousCritical
   );

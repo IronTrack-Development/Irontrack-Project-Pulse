@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase-server";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export async function GET() {
   const supabase = await createClient();
@@ -23,7 +24,7 @@ export async function GET() {
   // Enrich with stats for each project
   const enriched = await Promise.all(
     (projects || []).map(async (project) => {
-      const today = new Date().toISOString().split("T")[0];
+      const today = getArizonaToday();
 
       const { count: totalActivities } = await serviceSupabase
         .from("parsed_activities")

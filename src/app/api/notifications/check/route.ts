@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceClient } from '@/lib/supabase';
 import { webpush } from '@/lib/web-push';
+import { resolveClientDate } from '@/lib/arizona-date';
 
 interface PushSubscriptionRow {
   user_id: string;
@@ -46,9 +47,7 @@ export async function GET(req: NextRequest) {
   // falling back to server UTC.
   const url = new URL(req.url);
   const clientDateParam = url.searchParams.get('clientDate');
-  const today = clientDateParam && /^\d{4}-\d{2}-\d{2}$/.test(clientDateParam)
-    ? clientDateParam
-    : new Date().toISOString().split('T')[0];
+  const today = resolveClientDate(clientDateParam);
 
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);

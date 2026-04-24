@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 // GET /api/projects/[id]/lookahead-6week
 // Returns activities in the 4-6 week window, organized by category:
@@ -12,7 +13,8 @@ export async function GET(
   const supabase = getServiceClient();
 
   // Calculate the 4-6 week window
-  const now = new Date();
+  const todayStr = getArizonaToday();
+  const now = new Date(todayStr + "T12:00:00");
   const week4Start = new Date(now);
   week4Start.setDate(now.getDate() + 21); // 3 weeks from now = start of week 4
   const week6End = new Date(now);

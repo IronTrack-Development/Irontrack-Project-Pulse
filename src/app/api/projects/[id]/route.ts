@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export async function GET(
   _req: NextRequest,
@@ -16,7 +17,7 @@ export async function GET(
 
   if (error) return NextResponse.json({ error: error.message }, { status: 404 });
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getArizonaToday();
 
   const [
     { count: totalActivities },

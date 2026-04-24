@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
 import { getServiceClient } from "@/lib/supabase";
 import { normalizeCompanyName } from "@/lib/company-match";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 // GET /api/sub/dashboard
 // Requires auth. Returns the sub PM's projects, latest reports, and stats.
@@ -166,7 +167,8 @@ export async function GET() {
   const allReportsForStats = allReports ?? [];
 
   // 10. Compute stats
-  const oneWeekAgo = new Date();
+  const todayStr = getArizonaToday();
+  const oneWeekAgo = new Date(todayStr + "T12:00:00");
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
   const weekAgoStr = oneWeekAgo.toISOString().split("T")[0];
 
