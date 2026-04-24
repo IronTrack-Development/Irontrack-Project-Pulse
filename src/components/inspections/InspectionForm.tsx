@@ -20,24 +20,174 @@ interface Props {
   onCreated: () => void;
 }
 
-const INSPECTION_TYPES = [
-  "Footing/Foundation",
-  "Slab Pre-Pour",
-  "Rough Framing",
-  "Rough Electrical",
-  "Rough Plumbing",
-  "Rough Mechanical/HVAC",
-  "Insulation",
-  "Drywall/Lath",
-  "Stucco/Exterior",
-  "Roofing",
-  "Fire Sprinkler",
-  "Elevator",
-  "ADA Compliance",
-  "Grading/Drainage",
-  "Final Building",
-  "Final Electrical",
-  "Final Plumbing/Mechanical",
+const INSPECTION_CATEGORIES: { label: string; types: string[] }[] = [
+  {
+    label: "Site & Earthwork",
+    types: [
+      "Erosion Control/SWPPP",
+      "Grading/Drainage",
+      "Compaction/Soil Density",
+      "Underground Utilities (Wet)",
+      "Underground Utilities (Dry)",
+      "Storm Drain",
+      "Retention/Detention Basin",
+      "Paving/Base Course",
+      "Curb & Gutter",
+      "Landscape/Irrigation",
+    ],
+  },
+  {
+    label: "Foundation & Concrete",
+    types: [
+      "Footing/Foundation",
+      "Stem Wall",
+      "Slab Pre-Pour",
+      "Post-Tension Pre-Pour",
+      "Post-Tension Stressing",
+      "Tilt-Up Panel Pre-Pour",
+      "Tilt-Up Panel Erection",
+      "Grade Beam",
+      "Pier/Caisson",
+      "Retaining Wall",
+      "Concrete Masonry (CMU)",
+      "Masonry/Grout/Rebar",
+    ],
+  },
+  {
+    label: "Structural",
+    types: [
+      "Rough Framing",
+      "Structural Steel",
+      "Steel Connection/Welding",
+      "Structural Bolting/Torque",
+      "Wood Truss",
+      "Glulam/LVL",
+      "Shearwall/Hold-Down",
+      "Special Inspection — Concrete",
+      "Special Inspection — Steel",
+      "Special Inspection — Masonry",
+      "Special Inspection — Soil",
+      "Special Inspection — Spray Fireproofing",
+    ],
+  },
+  {
+    label: "Mechanical / HVAC",
+    types: [
+      "Rough Mechanical/HVAC",
+      "HVAC Ductwork",
+      "Mechanical Equipment Set",
+      "Kitchen Hood/Exhaust",
+      "Refrigeration",
+      "Boiler",
+      "Final Mechanical",
+    ],
+  },
+  {
+    label: "Electrical",
+    types: [
+      "Temporary Power",
+      "Underground Electrical/Conduit",
+      "Rough Electrical",
+      "Service/Panel",
+      "Low Voltage/Data/Telecom",
+      "Emergency Generator",
+      "Transformer",
+      "Lighting/Photometric",
+      "Final Electrical",
+    ],
+  },
+  {
+    label: "Plumbing",
+    types: [
+      "Underground Plumbing",
+      "Rough Plumbing",
+      "Water Line/Backflow",
+      "Sewer/Sanitary",
+      "Gas Line/Pressure Test",
+      "Grease Trap/Interceptor",
+      "Medical Gas",
+      "Final Plumbing",
+    ],
+  },
+  {
+    label: "Fire & Life Safety",
+    types: [
+      "Fire Sprinkler — Underground",
+      "Fire Sprinkler — Rough",
+      "Fire Sprinkler — Final/Flow Test",
+      "Fire Alarm — Rough",
+      "Fire Alarm — Final/Acceptance Test",
+      "Fire Damper/Smoke Damper",
+      "Fire-Rated Assembly",
+      "Fire Caulking/Firestopping",
+      "Fire Pump",
+      "Smoke Control/Pressurization",
+      "Emergency Lighting/Exit Signs",
+      "Fire Lane/Access",
+      "Hood Suppression System",
+    ],
+  },
+  {
+    label: "Building Envelope",
+    types: [
+      "Insulation",
+      "Vapor Barrier",
+      "Air Barrier",
+      "Waterproofing/Below-Grade",
+      "Roofing",
+      "Roof Deck/Sheathing",
+      "Drywall/Lath",
+      "Stucco/Exterior",
+      "Window/Storefront/Curtainwall",
+      "Exterior Cladding/Siding",
+      "Sealant/Caulking",
+    ],
+  },
+  {
+    label: "Accessibility & Code",
+    types: [
+      "ADA Compliance",
+      "ADA — Parking/Ramps",
+      "ADA — Restrooms",
+      "ADA — Signage/Wayfinding",
+      "Energy Compliance (IECC/ASHRAE)",
+      "Sound/Acoustical",
+    ],
+  },
+  {
+    label: "Vertical Transport",
+    types: [
+      "Elevator",
+      "Escalator",
+      "Conveyor System",
+    ],
+  },
+  {
+    label: "Specialty",
+    types: [
+      "Swimming Pool/Spa",
+      "Fuel Storage Tank",
+      "Pre-Manufactured Structure",
+      "Photovoltaic/Solar",
+      "EV Charging Infrastructure",
+      "Data Center/Server Room",
+      "Clean Room",
+      "Radiation Shielding",
+      "Walk-In Cooler/Freezer",
+    ],
+  },
+  {
+    label: "Final / Close-Out",
+    types: [
+      "Final Building",
+      "Certificate of Occupancy (TCO)",
+      "Certificate of Occupancy (CO)",
+      "Final Site/Landscaping",
+      "T.I. Final (Tenant Improvement)",
+      "Re-Inspection",
+      "Permit Extension",
+    ],
+  },
 ];
 
 const TIME_WINDOWS = [
@@ -203,8 +353,12 @@ export default function InspectionForm({ projectId, jurisdiction, onCreated }: P
               className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
             >
               <option value="">Select inspection type...</option>
-              {INSPECTION_TYPES.map((t) => (
-                <option key={t} value={t}>{t}</option>
+              {INSPECTION_CATEGORIES.map((cat) => (
+                <optgroup key={cat.label} label={cat.label}>
+                  {cat.types.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
