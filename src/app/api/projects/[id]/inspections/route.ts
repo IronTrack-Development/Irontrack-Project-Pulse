@@ -25,10 +25,22 @@ export async function GET(
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  // Get jurisdiction-specific inspection codes if jurisdiction is locked
+  let inspectionCodes: { code: string; description: string; category: string; permit_type: string | null }[] = [];
+  if (pj?.jurisdiction_id) {
+    const { data: codes } = await supabase
+      .from("jurisdiction_inspection_codes")
+      .select("code, description, category, permit_type")
+      .eq("jurisdiction_id", pj.jurisdiction_id)
+      .order("sort_order", { ascending: true });
+    inspectionCodes = codes || [];
+  }
+
   return NextResponse.json({
     jurisdiction: pj?.jurisdictions || null,
     projectJurisdiction: pj || null,
     inspections: inspections || [],
+    inspectionCodes,
   });
 }
 

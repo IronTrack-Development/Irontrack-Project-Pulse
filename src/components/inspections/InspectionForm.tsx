@@ -14,9 +14,17 @@ interface Jurisdiction {
   portal_verified: boolean;
 }
 
+interface InspectionCode {
+  code: string;
+  description: string;
+  category: string;
+  permit_type: string | null;
+}
+
 interface Props {
   projectId: string;
   jurisdiction: Jurisdiction;
+  inspectionCodes?: InspectionCode[];
   onCreated: () => void;
 }
 
@@ -218,7 +226,7 @@ function getNextBusinessDay(): string {
   return d.toISOString().split("T")[0];
 }
 
-export default function InspectionForm({ projectId, jurisdiction, onCreated }: Props) {
+export default function InspectionForm({ projectId, jurisdiction, inspectionCodes = [], onCreated }: Props) {
   const [inspectionType, setInspectionType] = useState("");
   const [permitNumber, setPermitNumber] = useState("");
   const [requestedDate, setRequestedDate] = useState(getNextBusinessDay());
@@ -353,13 +361,32 @@ export default function InspectionForm({ projectId, jurisdiction, onCreated }: P
               className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
             >
               <option value="">Select inspection type...</option>
-              {INSPECTION_CATEGORIES.map((cat) => (
-                <optgroup key={cat.label} label={cat.label}>
-                  {cat.types.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </optgroup>
-              ))}
+              {inspectionCodes.length > 0 ? (
+                // Database-driven jurisdiction-specific codes
+                (() => {
+                  const categories = [...new Set(inspectionCodes.map(c => c.category))];
+                  return categories.map(cat => (
+                    <optgroup key={cat} label={cat}>
+                      {inspectionCodes
+                        .filter(c => c.category === cat)
+                        .map(c => (
+                          <option key={c.code} value={`${c.code} — ${c.description}`}>
+                            {c.code} — {c.description}
+                          </option>
+                        ))}
+                    </optgroup>
+                  ));
+                })()
+              ) : (
+                // Fallback to generic categories
+                INSPECTION_CATEGORIES.map((cat) => (
+                  <optgroup key={cat.label} label={cat.label}>
+                    {cat.types.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </optgroup>
+                ))
+              )}
             </select>
           </div>
 

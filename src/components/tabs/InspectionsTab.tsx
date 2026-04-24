@@ -33,6 +33,13 @@ interface Inspection {
   created_at: string;
 }
 
+interface InspectionCode {
+  code: string;
+  description: string;
+  category: string;
+  permit_type: string | null;
+}
+
 interface Props {
   projectId: string;
 }
@@ -40,6 +47,7 @@ interface Props {
 export default function InspectionsTab({ projectId }: Props) {
   const [jurisdiction, setJurisdiction] = useState<Jurisdiction | null>(null);
   const [inspections, setInspections] = useState<Inspection[]>([]);
+  const [inspectionCodes, setInspectionCodes] = useState<InspectionCode[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
@@ -49,6 +57,7 @@ export default function InspectionsTab({ projectId }: Props) {
         const data = await res.json();
         setJurisdiction(data.jurisdiction);
         setInspections(data.inspections || []);
+        setInspectionCodes(data.inspectionCodes || []);
       }
     } finally {
       setLoading(false);
@@ -119,6 +128,7 @@ export default function InspectionsTab({ projectId }: Props) {
       <InspectionForm
         projectId={projectId}
         jurisdiction={jurisdiction}
+        inspectionCodes={inspectionCodes}
         onCreated={fetchData}
       />
 
