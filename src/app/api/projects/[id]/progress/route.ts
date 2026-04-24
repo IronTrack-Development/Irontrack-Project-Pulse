@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export async function GET(
   request: NextRequest,
@@ -36,8 +37,7 @@ export async function GET(
     let daysRemaining: number | null = null;
     if (project?.target_finish_date) {
       const targetDate = new Date(project.target_finish_date);
-      const now = new Date();
-      now.setHours(0, 0, 0, 0);
+      const now = new Date(getArizonaToday() + "T00:00:00");
       const diffTime = targetDate.getTime() - now.getTime();
       daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }

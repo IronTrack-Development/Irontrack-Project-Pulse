@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 // GET /api/projects/[id]/daily-logs — list logs for a project
 export async function GET(
@@ -33,7 +34,7 @@ export async function POST(
   const supabase = getServiceClient();
   const body = await req.json();
 
-  const logDate = body.log_date || new Date().toISOString().split("T")[0];
+  const logDate = body.log_date || getArizonaToday();
 
   // Upsert: if a log for this project+date exists, update it
   const { data: existing } = await supabase

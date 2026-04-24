@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export async function GET(
   request: NextRequest,
@@ -45,7 +46,7 @@ export async function GET(
     });
 
     // Add status to each milestone
-    const now = new Date();
+    const now = new Date(getArizonaToday() + "T00:00:00");
     const milestonesWithStatus = allMilestones.map((m) => {
       const date = new Date(m.finish_date || m.start_date);
       const isComplete = (m.percent_complete || 0) >= 100;

@@ -111,7 +111,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
     fetchLogs();
   }, [projectId]);
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleDateString("en-CA");
   const hasTodayLog = logs.some((l) => l.log_date === today);
 
   return (

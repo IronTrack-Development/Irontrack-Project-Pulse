@@ -112,8 +112,7 @@ function deriveStatus(row: {
   percent_complete?: number | null;
   start_date?: string | null;
 }): string {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = new Date(getArizonaToday() + "T00:00:00");
   if (row.actual_finish || (row.percent_complete !== null && row.percent_complete !== undefined && row.percent_complete >= 100)) {
     return "complete";
   }

@@ -1,4 +1,5 @@
 import type { DailyRisk, ParsedActivity } from "@/types";
+import { getArizonaToday } from "@/lib/arizona-date";
 
 export interface HealthResult {
   score: number;
@@ -21,8 +22,7 @@ export function computeHealthScore(
   score -= mediumRisks.length * 5;
   score -= atRiskMilestones.length * 7;
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = new Date(getArizonaToday() + "T00:00:00");
   const lateStarts = activities.filter((a) => {
     if (!a.start_date) return false;
     const start = new Date(a.start_date);

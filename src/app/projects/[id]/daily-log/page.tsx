@@ -7,7 +7,7 @@ import DailyLogWizard from "@/components/daily-log/DailyLogWizard";
 
 function DailyLogInner({ projectId }: { projectId: string }) {
   const searchParams = useSearchParams();
-  const date = searchParams.get("date") || new Date().toISOString().split("T")[0];
+  const date = searchParams.get("date") || new Date().toLocaleDateString("en-CA");
   const existingLogId = searchParams.get("logId") || undefined;
   const [projectName, setProjectName] = useState("");
   const [loading, setLoading] = useState(true);
