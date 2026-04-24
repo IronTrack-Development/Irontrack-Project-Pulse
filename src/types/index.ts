@@ -292,6 +292,10 @@ export interface DailyLogWeather {
   conditions: WeatherCondition[];
   impact: WeatherImpact;
   source?: string;
+  current_temp?: number;
+  wind_speed?: number;
+  weather_code?: number;
+  confirmed?: boolean;
 }
 
 export interface DailyLogCrewEntry {

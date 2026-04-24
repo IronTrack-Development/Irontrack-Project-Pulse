@@ -17,6 +17,8 @@ interface DailyLogWizardProps {
   projectName: string;
   logDate: string;
   existingLogId?: string;
+  projectLat?: number;
+  projectLon?: number;
 }
 
 const SCREENS = ["Snapshot", "Work & Issues", "Photos & Submit"];
@@ -26,6 +28,8 @@ export default function DailyLogWizard({
   projectName,
   logDate,
   existingLogId,
+  projectLat,
+  projectLon,
 }: DailyLogWizardProps) {
   const [screen, setScreen] = useState(0);
   const [logId, setLogId] = useState(existingLogId || "");
@@ -35,6 +39,11 @@ export default function DailyLogWizard({
   const [lastSaved, setLastSaved] = useState<string | null>(null);
   const [isOnline, setIsOnline] = useState(typeof navigator !== "undefined" ? navigator.onLine : true);
   const [activities, setActivities] = useState<ParsedActivity[]>([]);
+
+  // Determine lat/lon: use project values or default to Phoenix
+  const lat = projectLat ?? 33.4484;
+  const lon = projectLon ?? -112.074;
+  const usingDefaultLocation = !projectLat || !projectLon;
 
   // Form state
   const [weather, setWeather] = useState<DailyLogWeather>({
@@ -49,6 +58,7 @@ export default function DailyLogWizard({
   const [photos, setPhotos] = useState<(DailyLogPhoto & { localUrl?: string; file?: File })[]>([]);
 
   const autosaveTimer = useRef<NodeJS.Timeout | null>(null);
+  const crewPreFilled = useRef(false);
 
   // Online/offline detection
   useEffect(() => {
@@ -70,6 +80,34 @@ export default function DailyLogWizard({
       .catch(() => {});
   }, [projectId]);
 
+  // Pre-fill crew from yesterday's log (most recent log for this project)
+  useEffect(() => {
+    if (crewPreFilled.current) return;
+    if (existingLogId) return; // Don't pre-fill if loading an existing log
+
+    async function prefillCrew() {
+      try {
+        const res = await fetch(`/api/projects/${projectId}/daily-logs?limit=1&offset=0`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const logs = data.logs || [];
+        if (logs.length > 0 && logs[0].crew && logs[0].crew.length > 0) {
+          // Only set if crew is currently empty (haven't loaded from draft or server yet)
+          setCrew((current) => {
+            if (current.length === 0) {
+              crewPreFilled.current = true;
+              return logs[0].crew;
+            }
+            return current;
+          });
+        }
+      } catch {
+        // Silently fail — crew pre-fill is a nice-to-have
+      }
+    }
+    prefillCrew();
+  }, [projectId, existingLogId]);
+
   // Load existing log or offline draft
   useEffect(() => {
     async function loadData() {
@@ -87,6 +125,7 @@ export default function DailyLogWizard({
             setDelayCodes(data.delay_codes || []);
             setDelayNarrative(data.delay_narrative || "");
             setLostCrewHours(data.lost_crew_hours || 0);
+            crewPreFilled.current = true; // Mark as loaded
             return;
           }
         } catch {}
@@ -96,7 +135,7 @@ export default function DailyLogWizard({
       const draft = await loadDraft(projectId, logDate);
       if (draft) {
         if (draft.weather) setWeather(draft.weather);
-        if (draft.crew) setCrew(draft.crew);
+        if (draft.crew) { setCrew(draft.crew); crewPreFilled.current = true; }
         if (draft.progress) setProgress(draft.progress);
         if (draft.delayCodes) setDelayCodes(draft.delayCodes);
         if (draft.delayNarrative) setDelayNarrative(draft.delayNarrative);
@@ -205,11 +244,11 @@ export default function DailyLogWizard({
     setScreen(newScreen);
   };
 
-  // Submit handler
-  const handleSubmit = async () => {
+  // Submit handler — returns boolean for success/failure
+  const handleSubmit = async (): Promise<boolean> => {
     if (!isOnline) {
       alert("You're offline. Your log is saved locally and will sync when you reconnect.");
-      return;
+      return false;
     }
 
     setIsSubmitting(true);
@@ -234,7 +273,7 @@ export default function DailyLogWizard({
         }
       }
 
-      // Submit the log
+      // Submit the log (set status + submitted_at)
       const res = await fetch(`/api/projects/${projectId}/daily-logs/${currentLogId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -244,10 +283,12 @@ export default function DailyLogWizard({
       if (res.ok) {
         setLogStatus("submitted");
         await deleteDraft(projectId, logDate);
+        return true;
       }
+      return false;
     } catch (e) {
       console.error("Submit failed:", e);
-      alert("Submit failed. Your data is saved — try again.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
@@ -332,6 +373,9 @@ export default function DailyLogWizard({
             onWeatherChange={setWeather}
             crew={crew}
             onCrewChange={setCrew}
+            projectLat={lat}
+            projectLon={lon}
+            usingDefaultLocation={usingDefaultLocation}
           />
         )}
         {screen === 1 && (
@@ -359,6 +403,8 @@ export default function DailyLogWizard({
             onSubmit={handleSubmit}
             isSubmitting={isSubmitting}
             logStatus={logStatus}
+            projectId={projectId}
+            logDate={logDate}
           />
         )}
 

@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import {
   Camera, X, Tag, Image as ImageIcon,
   Thermometer, Users, TrendingUp, AlertTriangle, ImagePlus,
+  CheckCircle2, AlertCircle,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type {
   DailyLogPhoto, DailyLogWeather, DailyLogCrewEntry,
   DailyLogProgress, DelayCode, ParsedActivity,
@@ -19,9 +21,11 @@ interface PhotosSubmitScreenProps {
   crew: DailyLogCrewEntry[];
   progress: DailyLogProgress[];
   delayCodes: DelayCode[];
-  onSubmit: () => void;
+  onSubmit: () => Promise<boolean>;
   isSubmitting: boolean;
   logStatus: string;
+  projectId: string;
+  logDate: string;
 }
 
 export default function PhotosSubmitScreen({
@@ -35,16 +39,32 @@ export default function PhotosSubmitScreen({
   onSubmit,
   isSubmitting,
   logStatus,
+  projectId,
+  logDate,
 }: PhotosSubmitScreenProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const router = useRouter();
 
   const totalHeadcount = crew.reduce((sum, c) => sum + (c.headcount || 0), 0);
   const totalCrewHours = crew.reduce((sum, c) => sum + ((c.headcount || 0) * (c.hours || 0)), 0);
   const activitiesAdvanced = progress.filter(
     (p) => (p.pct_complete_after || 0) > (p.pct_complete_before || 0)
   ).length;
+
+  // Format the log date for display
+  const formattedDate = (() => {
+    try {
+      return new Date(logDate + "T12:00:00").toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return logDate;
+    }
+  })();
 
   const handleFiles = useCallback(
     (files: FileList | null) => {
@@ -76,19 +96,55 @@ export default function PhotosSubmitScreen({
     onPhotosChange(photos.filter((p) => p.id !== photoId));
   };
 
-  const updatePhotoActivity = (photoId: string, activityId: string | undefined) => {
-    onPhotosChange(
-      photos.map((p) => (p.id === photoId ? { ...p, activity_id: activityId } : p))
-    );
-  };
-
   const getActivityName = (activityId?: string) => {
     if (!activityId) return null;
     return activities.find((a) => a.id === activityId)?.activity_name || null;
   };
 
+  const handleComplete = async () => {
+    const success = await onSubmit();
+    if (success) {
+      setToast({ type: "success", message: `✅ Log saved for ${formattedDate}` });
+      // Auto-redirect after 1.5 seconds
+      setTimeout(() => {
+        router.push(`/projects/${projectId}`);
+      }, 1500);
+    } else {
+      setToast({ type: "error", message: "Failed to save log. Please try again." });
+      // Clear error toast after 4 seconds
+      setTimeout(() => setToast(null), 4000);
+    }
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Toast notification */}
+      {toast && (
+        <div
+          className={`fixed top-4 left-4 right-4 z-50 max-w-2xl mx-auto p-4 rounded-2xl
+            flex items-center gap-3 shadow-lg transition-all animate-in fade-in slide-in-from-top-2
+            ${toast.type === "success"
+              ? "bg-[#22C55E]/15 border border-[#22C55E]/40 text-[#22C55E]"
+              : "bg-[#EF4444]/15 border border-[#EF4444]/40 text-[#EF4444]"
+            }`}
+        >
+          {toast.type === "success" ? (
+            <CheckCircle2 size={20} />
+          ) : (
+            <AlertCircle size={20} />
+          )}
+          <span className="text-sm font-medium flex-1">{toast.message}</span>
+          {toast.type === "success" && (
+            <button
+              onClick={() => router.push(`/projects/${projectId}`)}
+              className="text-xs underline underline-offset-2 hover:no-underline whitespace-nowrap"
+            >
+              View Log
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Camera / Photo Capture — BIG prominent button */}
       <div>
         <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
@@ -210,7 +266,7 @@ export default function PhotosSubmitScreen({
           <div className="flex items-center gap-2 text-gray-400">
             <Thermometer size={14} className="text-[#F97316]" />
             <span>
-              {weather.high ?? "--"}°/{weather.low ?? "--"}°
+              {weather.current_temp ?? weather.high ?? "--"}°F
               {(weather.conditions || []).length > 0 && (
                 <span className="text-gray-600"> · {weather.conditions.join(", ")}</span>
               )}
@@ -235,10 +291,10 @@ export default function PhotosSubmitScreen({
         </div>
       </div>
 
-      {/* Submit Button */}
+      {/* Complete Daily Log Button */}
       <button
         type="button"
-        onClick={onSubmit}
+        onClick={handleComplete}
         disabled={isSubmitting || logStatus === "submitted"}
         className={`w-full py-4 rounded-2xl text-base font-bold transition-all min-h-[56px]
           ${logStatus === "submitted"
@@ -249,10 +305,10 @@ export default function PhotosSubmitScreen({
           }`}
       >
         {logStatus === "submitted"
-          ? "✓ Submitted"
+          ? "✅ Submitted"
           : isSubmitting
             ? "Submitting..."
-            : "Submit Daily Log"}
+            : "Complete Daily Log ✅"}
       </button>
     </div>
   );
