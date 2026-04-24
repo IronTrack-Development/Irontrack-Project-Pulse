@@ -18,9 +18,11 @@ import SixWeekTab from "@/components/tabs/SixWeekTab";
 import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
+import DailyLogTab from "@/components/tabs/DailyLogTab";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
+  { id: "dailylog", label: "Daily Log", icon: ClipboardList },
   { id: "today", label: "Today", icon: CalendarCheck },
   { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
   { id: "week1", label: "Week 1", icon: CalendarDays },
@@ -188,6 +190,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
       {/* Tab content */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
         {activeTab === "priority" && <PriorityTab projectId={id} />}
+        {activeTab === "dailylog" && <DailyLogTab projectId={id} />}
         {activeTab === "today" && <DayPlanTab projectId={id} day="today" />}
         {activeTab === "tomorrow" && <DayPlanTab projectId={id} day="tomorrow" />}
         {activeTab === "week1" && <WeekTab projectId={id} weekNumber={1} />}

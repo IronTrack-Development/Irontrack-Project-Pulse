@@ -276,3 +276,73 @@ export interface LookaheadGroup {
     activities: ParsedActivity[];
   }[];
 }
+
+// ── Daily Log types ──────────────────────────────────────────
+
+export type DailyLogStatus = 'draft' | 'submitted' | 'locked';
+export type WeatherCondition = 'Sunny' | 'Partly Cloudy' | 'Overcast' | 'Rain' | 'Storm' | 'High Wind' | 'Freeze' | 'Heat Advisory';
+export type WeatherImpact = 'none' | 'minor_slowdown' | 'partial_stop' | 'full_stop';
+export type DelayCode = 'Weather' | 'Manpower' | 'RFI' | 'Inspection' | 'Change Order' | 'Equipment' | 'Material' | 'Other';
+
+export interface DailyLogWeather {
+  high?: number;
+  low?: number;
+  precip?: string;
+  wind?: string;
+  conditions: WeatherCondition[];
+  impact: WeatherImpact;
+  source?: string;
+}
+
+export interface DailyLogCrewEntry {
+  trade: string;
+  company: string;
+  headcount: number;
+  hours: number;
+}
+
+export interface DailyLog {
+  id: string;
+  project_id: string;
+  log_date: string;
+  superintendent?: string;
+  weather: DailyLogWeather;
+  crew: DailyLogCrewEntry[];
+  deliveries?: string;
+  equipment: string[];
+  delay_codes: DelayCode[];
+  delay_narrative?: string;
+  lost_crew_hours: number;
+  toolbox_talk?: string;
+  incidents?: string;
+  visitors?: string;
+  status: DailyLogStatus;
+  created_at: string;
+  updated_at: string;
+  submitted_at?: string;
+  locked_at?: string;
+}
+
+export interface DailyLogProgress {
+  id: string;
+  daily_log_id: string;
+  activity_id?: string;
+  pct_complete_before: number;
+  pct_complete_after: number;
+  note?: string;
+  // joined from parsed_activities
+  activity_name?: string;
+  trade?: string;
+}
+
+export interface DailyLogPhoto {
+  id: string;
+  daily_log_id: string;
+  activity_id?: string;
+  storage_path: string;
+  taken_at?: string;
+  uploaded_at: string;
+  caption?: string;
+  gps_lat?: number;
+  gps_lon?: number;
+}
