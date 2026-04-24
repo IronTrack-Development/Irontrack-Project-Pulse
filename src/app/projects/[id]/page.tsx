@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch
+  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -19,10 +19,12 @@ import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
 import DailyLogTab from "@/components/tabs/DailyLogTab";
+import InspectionsTab from "@/components/tabs/InspectionsTab";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
   { id: "dailylog", label: "Daily Log", icon: ClipboardList },
+  { id: "inspections", label: "Inspections", icon: ShieldCheck },
   { id: "today", label: "Today", icon: CalendarCheck },
   { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
   { id: "week1", label: "Week 1", icon: CalendarDays },
@@ -191,6 +193,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
         {activeTab === "priority" && <PriorityTab projectId={id} />}
         {activeTab === "dailylog" && <DailyLogTab projectId={id} />}
+        {activeTab === "inspections" && <InspectionsTab projectId={id} />}
         {activeTab === "today" && <DayPlanTab projectId={id} day="today" />}
         {activeTab === "tomorrow" && <DayPlanTab projectId={id} day="tomorrow" />}
         {activeTab === "week1" && <WeekTab projectId={id} weekNumber={1} />}
