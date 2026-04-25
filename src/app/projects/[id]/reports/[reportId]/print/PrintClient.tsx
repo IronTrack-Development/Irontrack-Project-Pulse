@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import MarkupCanvas from "@/components/markup/MarkupCanvas";
+import type { MarkupAction } from "@/components/markup/MarkupCanvas";
 import type { IssueReport, ReportIssue, IssuePriority, IssueCategory } from "@/types";
 
 interface IssueWithPhotos extends ReportIssue {
@@ -50,6 +52,47 @@ function fmtNorm(val?: string | null): string {
 }
 
 export default function PrintClient({ report, issues, projectId }: Props) {
+  const docRef = useRef<HTMLDivElement>(null);
+  const [markupCapturing, setMarkupCapturing] = useState(false);
+  const [markupActive, setMarkupActive] = useState(false);
+  const [markupScreenshot, setMarkupScreenshot] = useState<string | null>(null);
+  const [markedUpUrl, setMarkedUpUrl] = useState<string | null>(null);
+
+  const startMarkup = async () => {
+    const el = docRef.current;
+    if (!el) return;
+    setMarkupCapturing(true);
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const canvas = await html2canvas(el, {
+        useCORS: true,
+        allowTaint: true,
+        scale: Math.min(window.devicePixelRatio || 1, 2),
+        logging: false,
+        backgroundColor: "#ffffff",
+      });
+      setMarkupScreenshot(canvas.toDataURL("image/jpeg", 0.92));
+      setMarkupActive(true);
+    } catch (err) {
+      console.warn("Markup capture failed:", err);
+      setMarkupScreenshot("");
+      setMarkupActive(true);
+    } finally {
+      setMarkupCapturing(false);
+    }
+  };
+
+  const handleMarkupDone = (compositeUrl: string, _actions: MarkupAction[]) => {
+    setMarkedUpUrl(compositeUrl);
+    setMarkupActive(false);
+    setMarkupScreenshot(null);
+  };
+
+  const handleMarkupCancel = () => {
+    setMarkupActive(false);
+    setMarkupScreenshot(null);
+  };
+
   useEffect(() => {
     // Inject print styles into document head
     const style = document.createElement("style");
@@ -134,6 +177,35 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           🖨 Print PDF
         </button>
         <button
+          onClick={startMarkup}
+          disabled={markupCapturing}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "4px",
+            padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
+            fontWeight: 600, color: "white",
+            cursor: markupCapturing ? "wait" : "pointer",
+            background: markedUpUrl ? "#7C3AED" : "#7C3AED",
+            border: "none",
+            opacity: markupCapturing ? 0.6 : 1,
+          }}
+        >
+          {markupCapturing ? "⏳ Capturing…" : markedUpUrl ? "✏️ Re-markup" : "✏️ Markup"}
+        </button>
+        {markedUpUrl && (
+          <a
+            href={markedUpUrl}
+            download={`${report.report_number}-markup.jpg`}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "4px",
+              padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
+              fontWeight: 600, color: "white", textDecoration: "none",
+              background: "#16A34A", border: "none",
+            }}
+          >
+            ⬇ Save Markup
+          </a>
+        )}
+        <button
           onClick={async () => {
             const url = window.location.href;
             const title = `Issue Report ${report.report_number} — ${report.activity_name}`;
@@ -165,8 +237,26 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         </button>
       </div>
 
+      {/* Marked-up image preview */}
+      {markedUpUrl && (
+        <div style={{
+          background: "#f5f3ff", borderBottom: "3px solid #7C3AED",
+          padding: "12px 16px",
+        }}>
+          <div style={{ fontSize: "12px", color: "#7C3AED", fontWeight: 700, marginBottom: "8px" }}>
+            ✏️ Markup applied — download or print below
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={markedUpUrl}
+            alt="Marked-up report"
+            style={{ maxWidth: "100%", borderRadius: "4px", border: "1px solid #c4b5fd" }}
+          />
+        </div>
+      )}
+
       {/* Document */}
-      <div style={{ maxWidth: "8.5in", margin: "0 auto", padding: "16px" }}>
+      <div ref={docRef} style={{ maxWidth: "8.5in", margin: "0 auto", padding: "16px" }}>
         {/* Header bar */}
         <div
           style={{
@@ -459,5 +549,14 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         </div>
       </div>
     </div>
+
+    {/* Fullscreen markup canvas */}
+    {markupActive && markupScreenshot !== null && (
+      <MarkupCanvas
+        backgroundImageUrl={markupScreenshot || undefined}
+        onDone={handleMarkupDone}
+        onCancel={handleMarkupCancel}
+      />
+    )}
   );
 }

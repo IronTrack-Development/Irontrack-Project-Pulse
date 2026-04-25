@@ -1,0 +1,392 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { X, Camera, Trash2, Edit3, Loader2, CheckSquare, PlayCircle, Eye, AlertTriangle } from "lucide-react";
+
+interface Photo {
+  id: string;
+  storage_path: string;
+  photo_type: string;
+  caption?: string | null;
+  uploaded_at: string;
+}
+
+interface Contact {
+  id: string;
+  name: string;
+  company: string | null;
+  role: string;
+}
+
+interface PunchItem {
+  id: string;
+  item_number: string;
+  description: string;
+  location?: string | null;
+  building?: string | null;
+  floor?: string | null;
+  room?: string | null;
+  trade?: string | null;
+  priority: string;
+  status: string;
+  due_date?: string | null;
+  closed_date?: string | null;
+  notes?: string | null;
+  assigned_contact?: Contact | null;
+  punch_item_photos?: Photo[];
+}
+
+interface PunchItemDetailProps {
+  item: PunchItem;
+  projectId: string;
+  supabaseUrl: string;
+  onClose: () => void;
+  onUpdated: () => void;
+}
+
+const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
+  code:        { label: "Code",        color: "#F97316", bg: "bg-orange-500/15" },
+  standard:    { label: "Standard",    color: "#6B7280", bg: "bg-gray-500/15" },
+  cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
+};
+
+const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  open:               { label: "Open",               color: "#EF4444", bg: "bg-red-500/15" },
+  in_progress:        { label: "In Progress",        color: "#EAB308", bg: "bg-yellow-500/15" },
+  ready_for_reinspect:{ label: "Ready for Re-inspect", color: "#A855F7", bg: "bg-purple-500/15" },
+  closed:             { label: "Closed",             color: "#22C55E", bg: "bg-green-500/15" },
+  disputed:           { label: "Disputed",           color: "#F97316", bg: "bg-orange-500/15" },
+};
+
+export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose, onUpdated }: PunchItemDetailProps) {
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [notes, setNotes] = useState(item.notes || "");
+  const [editingNotes, setEditingNotes] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const completionPhotoRef = useRef<HTMLInputElement>(null);
+
+  const issuePhotos = (item.punch_item_photos || []).filter((p) => p.photo_type === "issue");
+  const completedPhotos = (item.punch_item_photos || []).filter((p) => p.photo_type === "completed");
+
+  const photoUrl = (path: string) =>
+    `${supabaseUrl}/storage/v1/object/public/punch-photos/${path}`;
+
+  const updateStatus = async (status: string) => {
+    setSaving(true);
+    try {
+      await fetch(`/api/projects/${projectId}/punch-list/${item.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      onUpdated();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const saveNotes = async () => {
+    setSaving(true);
+    try {
+      await fetch(`/api/projects/${projectId}/punch-list/${item.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes }),
+      });
+      setEditingNotes(false);
+      onUpdated();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const deleteItem = async () => {
+    if (!confirm(`Delete ${item.item_number}? This cannot be undone.`)) return;
+    setDeleting(true);
+    try {
+      await fetch(`/api/projects/${projectId}/punch-list/${item.id}`, { method: "DELETE" });
+      onClose();
+      onUpdated();
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const addCompletionPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingPhoto(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("photo_type", "completed");
+      await fetch(`/api/projects/${projectId}/punch-list/${item.id}/photos`, {
+        method: "POST",
+        body: fd,
+      });
+      onUpdated();
+    } finally {
+      setUploadingPhoto(false);
+      if (completionPhotoRef.current) completionPhotoRef.current.value = "";
+    }
+  };
+
+  const deletePhoto = async (photoId: string) => {
+    await fetch(`/api/projects/${projectId}/punch-list/${item.id}/photos?photoId=${photoId}`, {
+      method: "DELETE",
+    });
+    onUpdated();
+  };
+
+  const priorityCfg = PRIORITY_CONFIG[item.priority] || PRIORITY_CONFIG.standard;
+  const statusCfg = STATUS_CONFIG[item.status] || STATUS_CONFIG.open;
+  const isLifeSafety = item.priority === "life_safety";
+
+  const locationParts = [item.building, item.floor && `Floor ${item.floor}`, item.room && `Rm ${item.room}`].filter(Boolean);
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="w-full sm:max-w-lg bg-[#121217] rounded-t-3xl sm:rounded-3xl border border-[#1F1F25] overflow-y-auto max-h-[95dvh]">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#1F1F25]">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xs font-mono text-gray-500 shrink-0">{item.item_number}</span>
+            {isLifeSafety && <AlertTriangle size={14} className="text-red-400 animate-pulse shrink-0" />}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={deleteItem}
+              disabled={deleting}
+              className="p-2 rounded-xl text-gray-600 hover:text-red-400 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
+            >
+              {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-gray-400 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        </div>
+
+        <div className="px-5 pt-4 pb-6 space-y-4">
+          {/* Description */}
+          <p className="text-sm font-semibold text-white leading-snug">{item.description}</p>
+
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2">
+            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusCfg.bg}`} style={{ color: statusCfg.color }}>
+              {statusCfg.label}
+            </span>
+            <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${priorityCfg.bg} ${isLifeSafety ? "animate-pulse" : ""}`} style={{ color: priorityCfg.color }}>
+              {priorityCfg.label}
+            </span>
+            {item.trade && (
+              <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-700/40 text-gray-400">
+                {item.trade}
+              </span>
+            )}
+          </div>
+
+          {/* Meta */}
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            {locationParts.length > 0 && (
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-gray-500 mb-0.5">Location</p>
+                <p className="text-white font-medium">{locationParts.join(" · ")}</p>
+              </div>
+            )}
+            {item.assigned_contact && (
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-gray-500 mb-0.5">Assigned To</p>
+                <p className="text-white font-medium truncate">{item.assigned_contact.name}</p>
+                {item.assigned_contact.company && (
+                  <p className="text-gray-500 truncate">{item.assigned_contact.company}</p>
+                )}
+              </div>
+            )}
+            {item.due_date && (
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-gray-500 mb-0.5">Due Date</p>
+                <p className="text-white font-medium">{new Date(item.due_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+              </div>
+            )}
+            {item.closed_date && (
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-gray-500 mb-0.5">Closed</p>
+                <p className="text-green-400 font-medium">{new Date(item.closed_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+              </div>
+            )}
+          </div>
+
+          {/* Photos — issue + completed side by side */}
+          {(issuePhotos.length > 0 || completedPhotos.length > 0) && (
+            <div className="space-y-2">
+              {issuePhotos.length > 0 && completedPhotos.length > 0 ? (
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1.5 font-medium">Issue</p>
+                    <div className="grid gap-1.5">
+                      {issuePhotos.map((photo) => (
+                        <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={photoUrl(photo.storage_path)} alt="Issue" className="w-full h-full object-cover" />
+                          <button
+                            onClick={() => deletePhoto(photo.id)}
+                            className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"
+                          >
+                            <X size={10} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1.5 font-medium">Completed</p>
+                    <div className="grid gap-1.5">
+                      {completedPhotos.map((photo) => (
+                        <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={photoUrl(photo.storage_path)} alt="Completed" className="w-full h-full object-cover" />
+                          <button
+                            onClick={() => deletePhoto(photo.id)}
+                            className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"
+                          >
+                            <X size={10} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-xs text-gray-500 mb-1.5 font-medium">{issuePhotos.length > 0 ? "Issue Photos" : "Completion Photos"}</p>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {[...issuePhotos, ...completedPhotos].map((photo) => (
+                      <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={photoUrl(photo.storage_path)} alt="Photo" className="w-full h-full object-cover" />
+                        <button
+                          onClick={() => deletePhoto(photo.id)}
+                          className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"
+                        >
+                          <X size={10} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Add completion photo */}
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            ref={completionPhotoRef}
+            className="hidden"
+            onChange={addCompletionPhoto}
+          />
+          <button
+            onClick={() => completionPhotoRef.current?.click()}
+            disabled={uploadingPhoto}
+            className="w-full py-3 rounded-xl border border-dashed border-green-500/30 bg-green-500/5
+              text-green-400 text-sm font-medium flex items-center justify-center gap-2
+              hover:bg-green-500/10 hover:border-green-500/50 transition-all min-h-[44px]"
+          >
+            {uploadingPhoto ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />}
+            {uploadingPhoto ? "Uploading..." : "Add Completion Photo"}
+          </button>
+
+          {/* Notes */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs text-gray-400 font-medium">Notes</label>
+              {!editingNotes && (
+                <button onClick={() => setEditingNotes(true)} className="p-1.5 text-gray-500 hover:text-white">
+                  <Edit3 size={12} />
+                </button>
+              )}
+            </div>
+            {editingNotes ? (
+              <div className="space-y-2">
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={3}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+                    placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+                  placeholder="Add notes..."
+                />
+                <div className="flex gap-2">
+                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-gray-400 rounded-lg bg-[#1F1F25]">Cancel</button>
+                  <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-white rounded-lg bg-[#F97316]">
+                    {saving ? "Saving..." : "Save Notes"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-400">{notes || <span className="text-gray-600 italic">No notes</span>}</p>
+            )}
+          </div>
+
+          {/* Status action buttons */}
+          <div className="border-t border-[#1F1F25] pt-4 space-y-2">
+            <p className="text-xs text-gray-500 font-medium mb-2">Update Status</p>
+            <div className="grid grid-cols-1 gap-2">
+              {item.status === "open" && (
+                <button
+                  onClick={() => updateStatus("in_progress")}
+                  disabled={saving}
+                  className="w-full py-3.5 rounded-xl bg-yellow-500/15 text-yellow-400 font-semibold text-sm
+                    hover:bg-yellow-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
+                >
+                  <PlayCircle size={16} />
+                  Start Work
+                </button>
+              )}
+              {(item.status === "open" || item.status === "in_progress") && (
+                <button
+                  onClick={() => updateStatus("ready_for_reinspect")}
+                  disabled={saving}
+                  className="w-full py-3.5 rounded-xl bg-purple-500/15 text-purple-400 font-semibold text-sm
+                    hover:bg-purple-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
+                >
+                  <Eye size={16} />
+                  Ready for Re-inspect
+                </button>
+              )}
+              {item.status !== "closed" && (
+                <button
+                  onClick={() => updateStatus("closed")}
+                  disabled={saving}
+                  className="w-full py-3.5 rounded-xl bg-green-500/15 text-green-400 font-bold text-sm
+                    hover:bg-green-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
+                >
+                  {saving ? <Loader2 size={16} className="animate-spin" /> : <CheckSquare size={16} />}
+                  Close Item
+                </button>
+              )}
+              {item.status === "closed" && (
+                <button
+                  onClick={() => updateStatus("open")}
+                  disabled={saving}
+                  className="w-full py-3.5 rounded-xl bg-[#1F1F25] text-gray-400 font-medium text-sm
+                    hover:bg-[#2a2a35] transition-all min-h-[52px]"
+                >
+                  Reopen Item
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck, FileCheck, MessageCircleQuestion, Receipt
+  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck, FileCheck, MessageCircleQuestion, Receipt, Layers
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -24,6 +24,7 @@ import DirectoryTab from "@/components/tabs/DirectoryTab";
 import SubmittalsTab from "@/components/tabs/SubmittalsTab";
 import TMTab from "@/components/tabs/TMTab";
 import RFIsTab from "@/components/tabs/RFIsTab";
+import DrawingsTab from "@/components/tabs/DrawingsTab";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
@@ -44,6 +45,7 @@ const TABS = [
   { id: "submittals", label: "Submittals", icon: FileCheck },
   { id: "rfis", label: "RFIs", icon: MessageCircleQuestion },
   { id: "tm", label: "T&M", icon: Receipt },
+  { id: "drawings", label: "Drawings", icon: Layers },
 ];
 
 interface Project {
@@ -217,6 +219,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "submittals" && <SubmittalsTab projectId={id} />}
         {activeTab === "rfis" && <RFIsTab projectId={id} />}
         {activeTab === "tm" && <TMTab projectId={id} />}
+        {activeTab === "drawings" && <DrawingsTab projectId={id} />}
       </div>
     </div>
   );
