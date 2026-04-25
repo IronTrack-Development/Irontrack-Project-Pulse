@@ -122,22 +122,30 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
     setUploadProgress("Uploading PDF to storage...");
 
     try {
-      // Step 1: Upload directly to Supabase Storage (bypasses Vercel 50MB limit)
-      const { createClient } = await import("@/lib/supabase-browser");
-      const supabase = createClient();
-      const timestamp = Date.now();
-      const safeName = uploadForm.name.replace(/[^a-zA-Z0-9_-]/g, "_");
-      const storagePath = `${projectId}/${safeName}_${timestamp}.pdf`;
+      // Step 1: Get a signed upload URL from the server (uses service key)
+      const urlRes = await fetch(`/api/projects/${projectId}/drawings/upload-url`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: uploadForm.name }),
+      });
+      if (!urlRes.ok) {
+        alert("Failed to get upload URL");
+        return;
+      }
+      const { signed_url, token, storage_path: storagePath } = await urlRes.json();
 
-      const { error: storageError } = await supabase.storage
-        .from("drawings")
-        .upload(storagePath, uploadFile, {
-          contentType: "application/pdf",
-          upsert: false,
-        });
+      // Step 2: Upload directly to Supabase Storage via signed URL (no size limit)
+      const uploadRes = await fetch(signed_url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+        body: uploadFile,
+      });
 
-      if (storageError) {
-        alert(`Storage upload failed: ${storageError.message}`);
+      if (!uploadRes.ok) {
+        const errText = await uploadRes.text().catch(() => "Unknown error");
+        alert(`Storage upload failed: ${errText}`);
         return;
       }
 
