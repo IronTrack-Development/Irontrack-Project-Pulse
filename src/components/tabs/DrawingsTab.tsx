@@ -149,21 +149,30 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
         return;
       }
 
-      setUploadProgress("Processing pages...");
+      setUploadProgress("Counting pages...");
 
-      // Step 2: Get page count client-side via pdf.js if available, otherwise estimate
+      // Get accurate page count using pdfjs-dist (same lib react-pdf uses)
       let pageCount = 1;
       try {
+        const pdfjsLib = await import("pdfjs-dist");
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
         const arrayBuffer = await uploadFile.arrayBuffer();
-        // Quick page count: scan for /Type /Page entries in the PDF
-        const bytes = new Uint8Array(arrayBuffer);
-        const text = new TextDecoder('latin1').decode(bytes);
-        const matches = text.match(/\/Type\s*\/Page[^s]/g);
-        if (matches && matches.length > 0) {
-          pageCount = matches.length;
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        pageCount = pdf.numPages;
+        pdf.destroy();
+      } catch (e) {
+        console.warn("pdfjs page count failed, trying regex fallback:", e);
+        try {
+          const arrayBuffer = await uploadFile.arrayBuffer();
+          const bytes = new Uint8Array(arrayBuffer);
+          const text = new TextDecoder('latin1').decode(bytes);
+          const matches = text.match(/\/Type\s*\/Page[^s]/g);
+          if (matches && matches.length > 0) {
+            pageCount = matches.length;
+          }
+        } catch {
+          pageCount = 1;
         }
-      } catch {
-        pageCount = 1;
       }
 
       setUploadProgress("Creating drawing set...");
