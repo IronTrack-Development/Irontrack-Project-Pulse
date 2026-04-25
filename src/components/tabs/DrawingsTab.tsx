@@ -119,24 +119,64 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
   const handleUpload = async () => {
     if (!uploadFile || !uploadForm.name.trim()) return;
     setUploading(true);
-    setUploadProgress("Uploading PDF...");
+    setUploadProgress("Uploading PDF to storage...");
 
     try {
-      const fd = new FormData();
-      fd.append("file", uploadFile);
-      fd.append("name", uploadForm.name);
-      fd.append("revision", uploadForm.revision);
-      fd.append("description", uploadForm.description);
-      fd.append("mode", uploadForm.mode);
+      // Step 1: Upload directly to Supabase Storage (bypasses Vercel 50MB limit)
+      const { createClient } = await import("@/lib/supabase-browser");
+      const supabase = createClient();
+      const timestamp = Date.now();
+      const safeName = uploadForm.name.replace(/[^a-zA-Z0-9_-]/g, "_");
+      const storagePath = `${projectId}/${safeName}_${timestamp}.pdf`;
 
+      const { error: storageError } = await supabase.storage
+        .from("drawings")
+        .upload(storagePath, uploadFile, {
+          contentType: "application/pdf",
+          upsert: false,
+        });
+
+      if (storageError) {
+        alert(`Storage upload failed: ${storageError.message}`);
+        return;
+      }
+
+      setUploadProgress("Processing pages...");
+
+      // Step 2: Get page count client-side via pdf.js if available, otherwise estimate
+      let pageCount = 1;
+      try {
+        const arrayBuffer = await uploadFile.arrayBuffer();
+        // Quick page count: scan for /Type /Page entries in the PDF
+        const bytes = new Uint8Array(arrayBuffer);
+        const text = new TextDecoder('latin1').decode(bytes);
+        const matches = text.match(/\/Type\s*\/Page[^s]/g);
+        if (matches && matches.length > 0) {
+          pageCount = matches.length;
+        }
+      } catch {
+        pageCount = 1;
+      }
+
+      setUploadProgress("Creating drawing set...");
+
+      // Step 3: POST metadata to API (no file — just metadata + storage path)
       const resp = await fetch(`/api/projects/${projectId}/drawings`, {
         method: "POST",
-        body: fd,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: uploadForm.name,
+          revision: uploadForm.revision,
+          description: uploadForm.description,
+          mode: uploadForm.mode,
+          storage_path: storagePath,
+          page_count: pageCount,
+        }),
       });
 
       if (!resp.ok) {
         const err = await resp.json();
-        alert(`Upload failed: ${err.error}`);
+        alert(`Failed to create drawing set: ${err.error}`);
         return;
       }
 
@@ -146,8 +186,8 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
       setUploadFile(null);
       setUploadForm({ name: "", revision: "Rev 0", description: "", mode: "new_revision" });
       await fetchSets();
-    } catch {
-      alert("Upload failed — please try again");
+    } catch (e) {
+      alert(`Upload failed — ${e instanceof Error ? e.message : 'please try again'}`);
     } finally {
       setUploading(false);
       setUploadProgress("");

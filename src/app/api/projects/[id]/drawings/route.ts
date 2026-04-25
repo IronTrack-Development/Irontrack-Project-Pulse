@@ -38,7 +38,8 @@ export async function GET(
 }
 
 // POST /api/projects/[id]/drawings
-// Accepts multipart form data with: file (PDF), name, revision, description, uploaded_by
+// Accepts JSON with: name, revision, description, storage_path, page_count, mode
+// File is uploaded directly to Supabase Storage from the client
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -46,54 +47,17 @@ export async function POST(
   const { id } = await params;
   const supabase = getServiceClient();
 
-  const formData = await req.formData();
-  const file = formData.get("file") as File | null;
-  const name = (formData.get("name") as string) || "Drawing Set";
-  const revision = (formData.get("revision") as string) || "Rev 0";
-  const description = (formData.get("description") as string) || null;
-  const uploaded_by = (formData.get("uploaded_by") as string) || null;
-  const markCurrentMode = (formData.get("mode") as string) || "new_revision"; // "new_revision" | "replace"
+  const body = await req.json();
+  const name = body.name || "Drawing Set";
+  const revision = body.revision || "Rev 0";
+  const description = body.description || null;
+  const uploaded_by = body.uploaded_by || null;
+  const markCurrentMode = body.mode || "new_revision";
+  const storagePath = body.storage_path;
+  const pageCount = body.page_count || 1;
 
-  if (!file) {
-    return NextResponse.json({ error: "PDF file is required" }, { status: 400 });
-  }
-
-  // Store the full PDF in the drawings bucket
-  const timestamp = Date.now();
-  const safeName = name.replace(/[^a-zA-Z0-9_-]/g, "_");
-  const storagePath = `${id}/${safeName}_${timestamp}.pdf`;
-
-  const arrayBuffer = await file.arrayBuffer();
-  const { error: uploadError } = await supabase.storage
-    .from("drawings")
-    .upload(storagePath, arrayBuffer, {
-      contentType: "application/pdf",
-      upsert: false,
-    });
-
-  if (uploadError) {
-    console.error('Drawing upload error:', uploadError);
-    return NextResponse.json({ error: `Upload failed: ${uploadError.message}` }, { status: 500 });
-  }
-
-  // Get page count from form data (client extracts via pdf.js) or default to 1
-  let pageCount = 1;
-  const clientPageCount = formData.get("page_count");
-  if (clientPageCount) {
-    pageCount = parseInt(clientPageCount as string, 10) || 1;
-  } else {
-    // Fallback: try to extract page count server-side
-    try {
-      const buffer = Buffer.from(arrayBuffer);
-      // Quick PDF page count — scan for /Type /Page entries
-      const text = buffer.toString('latin1');
-      const matches = text.match(/\/Type\s*\/Page[^s]/g);
-      if (matches && matches.length > 0) {
-        pageCount = matches.length;
-      }
-    } catch {
-      pageCount = 1;
-    }
+  if (!storagePath) {
+    return NextResponse.json({ error: "storage_path is required" }, { status: 400 });
   }
 
   // If replacing, mark previous sets with same name as not current
