@@ -1,0 +1,369 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import {
+  Shield, ShieldCheck, Calendar, Clock, MapPin, User,
+  RefreshCw, CheckCircle2, Edit3, Lock, Trash2, FileText,
+  AlertTriangle, Save,
+} from "lucide-react";
+import type { ToolboxTalk, ToolboxTalkAttendee } from "@/types";
+import AttendanceSheet from "./AttendanceSheet";
+
+interface TalkDetailProps {
+  projectId: string;
+  talkId: string;
+  onBack: () => void;
+}
+
+function categoryLabel(cat: string) {
+  return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProps) {
+  const [talk, setTalk] = useState<(ToolboxTalk & { attendees?: ToolboxTalkAttendee[] }) | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Editable fields
+  const [notes, setNotes] = useState("");
+  const [correctiveActions, setCorrectiveActions] = useState("");
+  const [followUpNeeded, setFollowUpNeeded] = useState(false);
+  const [followUpNotes, setFollowUpNotes] = useState("");
+  const [dirty, setDirty] = useState(false);
+
+  const fetchTalk = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/safety/${talkId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setTalk(data);
+        setNotes(data.notes || "");
+        setCorrectiveActions(data.corrective_actions || "");
+        setFollowUpNeeded(data.follow_up_needed || false);
+        setFollowUpNotes(data.follow_up_notes || "");
+        setDirty(false);
+      }
+    } catch {}
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTalk();
+  }, [talkId]);
+
+  const handleSave = async () => {
+    if (!dirty) return;
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/safety/${talkId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          notes: notes.trim() || null,
+          corrective_actions: correctiveActions.trim() || null,
+          follow_up_needed: followUpNeeded,
+          follow_up_notes: followUpNotes.trim() || null,
+        }),
+      });
+      if (res.ok) {
+        setDirty(false);
+        fetchTalk();
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to save");
+      }
+    } catch {
+      setError("Failed to save");
+    }
+    setSaving(false);
+  };
+
+  const handleComplete = async () => {
+    setCompleting(true);
+    setError(null);
+    try {
+      // Save any pending changes first
+      if (dirty) await handleSave();
+
+      const res = await fetch(
+        `/api/projects/${projectId}/safety/${talkId}/complete`,
+        { method: "POST" }
+      );
+      if (res.ok) {
+        fetchTalk();
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to complete");
+      }
+    } catch {
+      setError("Failed to complete");
+    }
+    setCompleting(false);
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("Delete this draft talk?")) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/safety/${talkId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        onBack();
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to delete");
+      }
+    } catch {
+      setError("Failed to delete");
+    }
+    setDeleting(false);
+  };
+
+  const handleExportPdf = () => {
+    window.open(
+      `/api/projects/${projectId}/safety/${talkId}/pdf`,
+      "_blank"
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!talk) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-sm text-gray-500">Talk not found</p>
+      </div>
+    );
+  }
+
+  const isReadOnly = talk.status === "locked" || talk.status === "completed";
+  const talkDate = new Date(talk.talk_date + "T12:00:00");
+
+  return (
+    <div className="space-y-4">
+      {/* Talk header */}
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="flex items-start justify-between mb-3">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-base font-bold text-white">{talk.topic}</h3>
+            <div className="flex flex-wrap gap-2 mt-1.5">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#3B82F6]/10 text-[#3B82F6]">
+                {categoryLabel(talk.category)}
+              </span>
+              {talk.status === "completed" && (
+                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#22C55E]/10 text-[#22C55E]">
+                  <ShieldCheck size={10} />
+                  Completed
+                </span>
+              )}
+              {talk.status === "locked" && (
+                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400">
+                  <Lock size={10} />
+                  Locked
+                </span>
+              )}
+              {talk.status === "draft" && (
+                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
+                  <Edit3 size={10} />
+                  Draft
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-gray-400">
+          <div className="flex items-center gap-1.5">
+            <Calendar size={12} className="text-[#F97316]" />
+            {talkDate.toLocaleDateString("en-US", {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+          {talk.presenter && (
+            <div className="flex items-center gap-1.5">
+              <User size={12} className="text-[#F97316]" />
+              {talk.presenter}
+            </div>
+          )}
+          <div className="flex items-center gap-1.5">
+            <Clock size={12} className="text-[#F97316]" />
+            {talk.duration_minutes} min
+          </div>
+          {talk.location && (
+            <div className="flex items-center gap-1.5">
+              <MapPin size={12} className="text-[#F97316]" />
+              {talk.location}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Talking Points */}
+      {(talk.talking_points || []).length > 0 && (
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+          <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+            <Shield size={14} className="text-[#F97316]" />
+            Talking Points
+          </h4>
+          <ol className="space-y-2.5 pl-1">
+            {talk.talking_points.map((point, idx) => (
+              <li key={idx} className="flex gap-2.5 text-sm text-gray-300 leading-relaxed">
+                <span className="text-[#F97316] font-medium shrink-0 w-5 text-right">
+                  {idx + 1}.
+                </span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* Attendance Section */}
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <AttendanceSheet
+          projectId={projectId}
+          talkId={talkId}
+          attendees={talk.attendees || []}
+          readOnly={isReadOnly}
+          onRefresh={fetchTalk}
+        />
+      </div>
+
+      {/* Notes & Corrective Actions */}
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-4">
+        <div>
+          <label className="text-xs text-gray-500 mb-1 block">Notes</label>
+          <textarea
+            value={notes}
+            onChange={(e) => {
+              setNotes(e.target.value);
+              setDirty(true);
+            }}
+            disabled={isReadOnly}
+            rows={3}
+            placeholder="Additional notes..."
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+          />
+        </div>
+
+        <div>
+          <label className="text-xs text-gray-500 mb-1 block">
+            Corrective Actions
+          </label>
+          <textarea
+            value={correctiveActions}
+            onChange={(e) => {
+              setCorrectiveActions(e.target.value);
+              setDirty(true);
+            }}
+            disabled={isReadOnly}
+            rows={2}
+            placeholder="Any corrective actions needed..."
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+          />
+        </div>
+
+        {/* Follow-up toggle */}
+        <div className="flex items-start gap-3">
+          <button
+            onClick={() => {
+              if (!isReadOnly) {
+                setFollowUpNeeded(!followUpNeeded);
+                setDirty(true);
+              }
+            }}
+            disabled={isReadOnly}
+            className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center shrink-0 transition-colors ${
+              followUpNeeded
+                ? "bg-[#EAB308]/20 text-[#EAB308]"
+                : "bg-[#1F1F25] text-gray-600"
+            } ${isReadOnly ? "cursor-default" : "cursor-pointer"}`}
+          >
+            {followUpNeeded && <AlertTriangle size={12} />}
+          </button>
+          <div className="flex-1">
+            <div className="text-sm text-white">Follow-up Needed</div>
+            {followUpNeeded && (
+              <textarea
+                value={followUpNotes}
+                onChange={(e) => {
+                  setFollowUpNotes(e.target.value);
+                  setDirty(true);
+                }}
+                disabled={isReadOnly}
+                rows={2}
+                placeholder="Follow-up details..."
+                className="w-full mt-2 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm text-red-400">
+          {error}
+        </div>
+      )}
+
+      {/* Actions */}
+      <div className="flex flex-wrap gap-2">
+        {dirty && !isReadOnly && (
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
+          >
+            <Save size={14} />
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+        )}
+
+        {talk.status === "draft" && (
+          <button
+            onClick={handleComplete}
+            disabled={completing}
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#22C55E]/20 hover:bg-[#22C55E]/30 text-[#22C55E] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
+          >
+            <CheckCircle2 size={14} />
+            {completing ? "Completing..." : "Complete Talk"}
+          </button>
+        )}
+
+        <button
+          onClick={handleExportPdf}
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+        >
+          <FileText size={14} />
+          Export PDF
+        </button>
+
+        {talk.status === "draft" && (
+          <button
+            onClick={handleDelete}
+            disabled={deleting}
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px] ml-auto"
+          >
+            <Trash2 size={14} />
+            {deleting ? "Deleting..." : "Delete"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -350,3 +350,64 @@ export interface DailyLogPhoto {
   gps_lat?: number;
   gps_lon?: number;
 }
+
+// ── Safety / Toolbox Talk types ──────────────────────────────────
+
+export type ToolboxTalkCategory =
+  | 'falls' | 'electrical' | 'excavation' | 'confined_space'
+  | 'scaffolding' | 'ppe' | 'heat_illness' | 'cold_stress'
+  | 'fire_prevention' | 'hazcom' | 'lockout_tagout' | 'crane_rigging'
+  | 'housekeeping' | 'hand_power_tools' | 'ladders' | 'silica'
+  | 'struck_by' | 'caught_between' | 'traffic_control' | 'general' | 'custom';
+
+export type ToolboxTalkStatus = 'draft' | 'completed' | 'locked';
+
+export interface ToolboxTalk {
+  id: string;
+  project_id: string;
+  talk_date: string;
+  topic: string;
+  category: ToolboxTalkCategory;
+  presenter?: string;
+  duration_minutes: number;
+  location?: string;
+  weather_conditions?: string;
+  notes?: string;
+  talking_points: string[];
+  corrective_actions?: string;
+  follow_up_needed: boolean;
+  follow_up_notes?: string;
+  status: ToolboxTalkStatus;
+  linked_activity_id?: string;
+  created_at: string;
+  updated_at: string;
+  completed_at?: string;
+  locked_at?: string;
+  attendee_count?: number;
+  signed_count?: number;
+}
+
+export interface ToolboxTalkAttendee {
+  id: string;
+  talk_id: string;
+  name: string;
+  trade?: string;
+  company?: string;
+  signed: boolean;
+  signed_at?: string;
+  created_at: string;
+}
+
+export interface ToolboxTalkTemplate {
+  id: string;
+  category: ToolboxTalkCategory;
+  title: string;
+  talking_points: string[];
+  hazards: string[];
+  ppe_required: string[];
+  duration_minutes: number;
+  osha_reference?: string;
+  is_system: boolean;
+  project_id?: string;
+  created_at: string;
+}

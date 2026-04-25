@@ -21,6 +21,8 @@ import {
   TrendingUp,
   FileBarChart2,
   Users,
+  Shield,
+  HardHat,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
 
@@ -86,6 +88,14 @@ const NAV_GROUPS: GroupDef[] = [
     ],
   },
   {
+    id: "safety",
+    label: "Safety",
+    icon: Shield,
+    tabs: [
+      { id: "safety", label: "Toolbox Talks", icon: Shield },
+    ],
+  },
+  {
     id: "project",
     label: "Project",
     icon: BarChart3,
@@ -126,6 +136,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
     fieldops: "dailylog",
     documents: "submittals",
     money: "tm",
+    safety: "safety",
     project: "progress",
   });
 
