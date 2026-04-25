@@ -20,6 +20,7 @@ import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
 import DailyLogTab from "@/components/tabs/DailyLogTab";
 import InspectionsTab from "@/components/tabs/InspectionsTab";
+import DirectoryTab from "@/components/tabs/DirectoryTab";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
@@ -36,6 +37,7 @@ const TABS = [
   { id: "reforecast", label: "Reforecast", icon: GitBranch },
   { id: "reports", label: "Reports", icon: ClipboardList },
   { id: "subs", label: "Subs", icon: Users },
+  { id: "directory", label: "Directory", icon: Users },
 ];
 
 interface Project {
@@ -205,6 +207,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "reports" && <ReportsTab projectId={id} />}
         {activeTab === "6week" && <SixWeekTab projectId={id} />}
         {activeTab === "subs" && <SubsTab projectId={id} />}
+        {activeTab === "directory" && <DirectoryTab projectId={id} />}
       </div>
     </div>
   );
