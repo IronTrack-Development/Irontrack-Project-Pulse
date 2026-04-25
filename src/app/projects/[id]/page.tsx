@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck
+  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck, FileCheck
 } from "lucide-react";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -21,6 +21,7 @@ import NotificationBell from "@/components/NotificationBell";
 import DailyLogTab from "@/components/tabs/DailyLogTab";
 import InspectionsTab from "@/components/tabs/InspectionsTab";
 import DirectoryTab from "@/components/tabs/DirectoryTab";
+import SubmittalsTab from "@/components/tabs/SubmittalsTab";
 
 const TABS = [
   { id: "priority", label: "Priority", icon: Zap },
@@ -38,6 +39,7 @@ const TABS = [
   { id: "reports", label: "Reports", icon: ClipboardList },
   { id: "subs", label: "Subs", icon: Users },
   { id: "directory", label: "Directory", icon: Users },
+  { id: "submittals", label: "Submittals", icon: FileCheck },
 ];
 
 interface Project {
@@ -208,6 +210,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "6week" && <SixWeekTab projectId={id} />}
         {activeTab === "subs" && <SubsTab projectId={id} />}
         {activeTab === "directory" && <DirectoryTab projectId={id} />}
+        {activeTab === "submittals" && <SubmittalsTab projectId={id} />}
       </div>
     </div>
   );
