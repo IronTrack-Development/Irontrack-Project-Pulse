@@ -26,6 +26,7 @@ import SubmittalsTab from "@/components/tabs/SubmittalsTab";
 import TMTab from "@/components/tabs/TMTab";
 import RFIsTab from "@/components/tabs/RFIsTab";
 import DrawingsTab from "@/components/tabs/DrawingsTab";
+import PunchListTab from "@/components/tabs/PunchListTab";
 
 interface Project {
   id: string;
@@ -184,6 +185,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "rfis" && <RFIsTab projectId={id} />}
         {activeTab === "tm" && <TMTab projectId={id} />}
         {activeTab === "drawings" && <DrawingsTab projectId={id} />}
+        {activeTab === "punch" && <PunchListTab projectId={id} />}
       </div>
     </div>
   );
