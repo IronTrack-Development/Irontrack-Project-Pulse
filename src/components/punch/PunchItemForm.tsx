@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Camera, X, Loader2 } from "lucide-react";
+import { Camera, Pencil, X, Loader2 } from "lucide-react";
+import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import VoiceTextArea from "@/components/VoiceTextArea";
 
 interface Contact {
@@ -41,6 +42,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
   const [description, setDescription] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [showPhotoMarkup, setShowPhotoMarkup] = useState(false);
   const [building, setBuilding] = useState(_lastBuilding);
   const [floor, setFloor] = useState(_lastFloor);
   const [room, setRoom] = useState("");
@@ -163,6 +165,14 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <div className="relative rounded-2xl overflow-hidden aspect-video w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photoPreview} alt="Issue photo" className="w-full h-full object-cover" />
+              {/* Markup button */}
+              <button
+                onClick={() => setShowPhotoMarkup(true)}
+                className="absolute top-2 left-2 p-2 bg-black/60 hover:bg-purple-600/80 rounded-full text-white transition-colors"
+                title="Annotate photo"
+              >
+                <Pencil size={14} />
+              </button>
               <button
                 onClick={() => { setPhotoFile(null); setPhotoPreview(null); if (fileRef.current) fileRef.current.value = ""; }}
                 className="absolute top-2 right-2 p-2 bg-black/60 rounded-full text-white"
