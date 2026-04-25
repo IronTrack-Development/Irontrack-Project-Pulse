@@ -204,37 +204,55 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
         </div>
       </div>
 
-      {/* ── Mobile: top scroll row (visible only on mobile) ─────────────────── */}
+      {/* ── Mobile: group pills + sub-tab strip ──────────────────────────── */}
       <div className="md:hidden">
-        <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1 border-b border-[#1F1F25]">
-          {activeGroup.tabs.map(({ id: tabId, label, icon: Icon }) => {
-            const isActive = activeTab === tabId;
+        {/* Group selector pills */}
+        <div className="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none">
+          {NAV_GROUPS.map(({ id, label, icon: Icon }) => {
+            const isActive = activeGroupId === id;
             return (
               <button
-                key={tabId}
-                onClick={() => {
-                  lastTabPerGroup.current[activeGroupId] = tabId;
-                  onTabChange(tabId);
-                }}
-                className="flex items-center gap-1.5 px-3 py-3 text-xs font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px]"
+                key={id}
+                onClick={() => handleGroupClick(id)}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all min-h-[36px] whitespace-nowrap shrink-0"
                 style={{
-                  borderBottomColor: isActive ? "#F97316" : "transparent",
-                  color: isActive ? "#F97316" : "#6B7280",
+                  background: isActive ? "#F97316" : "#1F1F25",
+                  color: isActive ? "#fff" : "#9CA3AF",
                 }}
               >
-                <Icon size={14} />
+                <Icon size={13} />
                 {label}
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* ── Mobile bottom bar ─────────────────────────────────────────────────── */}
-      <MobileBottomNav
-        activeGroupId={activeGroupId}
-        onGroupChange={handleGroupClick}
-      />
+        {/* Sub-tab strip for active group (skip if only 1 tab) */}
+        {activeGroup.tabs.length > 1 && (
+          <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1 border-b border-[#1F1F25]">
+            {activeGroup.tabs.map(({ id: tabId, label, icon: Icon }) => {
+              const isActive = activeTab === tabId;
+              return (
+                <button
+                  key={tabId}
+                  onClick={() => {
+                    lastTabPerGroup.current[activeGroupId] = tabId;
+                    onTabChange(tabId);
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-3 text-xs font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px]"
+                  style={{
+                    borderBottomColor: isActive ? "#F97316" : "transparent",
+                    color: isActive ? "#F97316" : "#6B7280",
+                  }}
+                >
+                  <Icon size={14} />
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </>
   );
 }

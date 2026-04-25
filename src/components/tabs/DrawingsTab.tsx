@@ -198,7 +198,18 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
       }
 
       const data = await resp.json();
-      setUploadProgress(`Uploaded — ${data.sheet_count} pages processed`);
+
+      // Auto-classify sheets using AI
+      setUploadProgress("Classifying sheets... (this may take a moment for large sets)");
+      try {
+        await fetch(`/api/projects/${projectId}/drawings/${data.drawing_set.id}/classify`, {
+          method: "POST",
+        });
+      } catch (classifyErr) {
+        console.warn("Auto-classify failed (sheets can be classified manually):", classifyErr);
+      }
+
+      setUploadProgress(`Uploaded & classified — ${data.sheet_count} pages processed`);
       setShowUpload(false);
       setUploadFile(null);
       setUploadForm({ name: "", revision: "Rev 0", description: "", mode: "new_revision" });
@@ -240,10 +251,12 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
           </div>
         ) : (
           <SheetBrowser
+            projectId={projectId}
             sheets={selectedSetSheets}
             drawingSet={selectedSet}
             onSheetSelect={handleSheetSelect}
             onBack={() => { setSelectedSet(null); setSelectedSetSheets([]); }}
+            onSheetsRefresh={() => selectedSet && loadSheets(selectedSet.id)}
           />
         )}
       </>

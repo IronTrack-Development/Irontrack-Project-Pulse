@@ -224,10 +224,23 @@ export default function SheetViewer({
         </button>
 
         <div className="flex-1 min-w-0">
-          <p className="text-white font-medium text-sm truncate">
-            {currentSheet.sheet_number}
-            {currentSheet.sheet_title ? ` — ${currentSheet.sheet_title}` : ""}
-          </p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="text-white font-medium text-sm truncate">
+              {currentSheet.sheet_number}
+              {currentSheet.sheet_title ? ` — ${currentSheet.sheet_title}` : ""}
+            </p>
+            {currentSheet.discipline && currentSheet.discipline !== "general" && (
+              <span
+                className="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide shrink-0"
+                style={{
+                  backgroundColor: (DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280") + "25",
+                  color: DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280",
+                }}
+              >
+                {currentSheet.discipline.replace("_", " ")}
+              </span>
+            )}
+          </div>
           <p className="text-gray-500 text-xs truncate">{drawingSet.name} · {drawingSet.revision}</p>
         </div>
 
@@ -371,24 +384,40 @@ export default function SheetViewer({
       </div>
 
       {/* Sheet navigation */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#121217] border-t border-[#1F1F25] shrink-0">
-        <button
-          onClick={() => setSheetIndex((i) => Math.max(i - 1, 0))}
-          disabled={sheetIndex === 0}
-          className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
-        >
-          <ChevronLeft size={16} /> Prev
-        </button>
-        <span className="text-gray-400 text-sm">
-          {sheetIndex + 1} / {sheets.length}
-        </span>
-        <button
-          onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
-          disabled={sheetIndex === sheets.length - 1}
-          className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
-        >
-          Next <ChevronRight size={16} />
-        </button>
+      <div className="flex flex-col bg-[#121217] border-t border-[#1F1F25] shrink-0">
+        {/* Discipline context row */}
+        {currentSheet.discipline && currentSheet.discipline !== "general" && (
+          <div className="flex items-center justify-center gap-1.5 py-1 border-b border-[#1F1F25]/50">
+            <span
+              className="text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280" }}
+            >
+              {currentSheet.discipline.replace("_", " ")}
+            </span>
+          </div>
+        )}
+        <div className="flex items-center justify-between px-4 py-3">
+          <button
+            onClick={() => setSheetIndex((i) => Math.max(i - 1, 0))}
+            disabled={sheetIndex === 0}
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+          >
+            <ChevronLeft size={16} /> Prev
+          </button>
+          <div className="text-center">
+            <p className="text-gray-400 text-sm">{sheetIndex + 1} / {sheets.length}</p>
+            {currentSheet.sheet_number && (
+              <p className="text-gray-600 text-xs mt-0.5">{currentSheet.sheet_number}</p>
+            )}
+          </div>
+          <button
+            onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
+            disabled={sheetIndex === sheets.length - 1}
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+          >
+            Next <ChevronRight size={16} />
+          </button>
+        </div>
       </div>
 
       {/* Selected pin popup */}
