@@ -6,9 +6,9 @@ import {
   FileImage,
   ChevronDown,
   ChevronRight,
-  Sparkles,
-  RefreshCw,
+  ClipboardList,
 } from "lucide-react";
+import SheetOrganizer from "@/components/drawings/SheetOrganizer";
 
 interface DrawingSheet {
   id: string;
@@ -122,6 +122,7 @@ interface SheetBrowserProps {
   onSheetSelect: (sheetIndex: number) => void;
   onBack: () => void;
   onSheetsRefresh?: () => void;
+  openOrganizerOnMount?: boolean;
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -133,9 +134,9 @@ export default function SheetBrowser({
   onSheetSelect,
   onBack,
   onSheetsRefresh,
+  openOrganizerOnMount = false,
 }: SheetBrowserProps) {
-  const [classifying, setClassifying] = useState(false);
-  const [classifyError, setClassifyError] = useState("");
+  const [showOrganizer, setShowOrganizer] = useState(openOrganizerOnMount);
 
   // Check if all sheets are still unclassified (all "general" with generic names)
   const allUnclassified = sheets.length > 0 && sheets.every(
@@ -185,59 +186,26 @@ export default function SheetBrowser({
     });
   }, []);
 
-  const handleClassify = async () => {
-    setClassifying(true);
-    setClassifyError("");
-    try {
-      // Extract text client-side first
-      let pageTexts: string[] = [];
-      const storagePath = sheets[0]?.storage_path;
-      if (storagePath) {
-        try {
-          const { createClient } = await import("@/lib/supabase-browser");
-          const supabase = createClient();
-          const { data: publicUrlData } = supabase.storage.from("drawings").getPublicUrl(storagePath);
-          const pdfRes = await fetch(publicUrlData.publicUrl);
-          const pdfBuffer = await pdfRes.arrayBuffer();
-          const pdfjsLib = await import("pdfjs-dist");
-          pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
-          const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
-          for (let i = 1; i <= pdf.numPages; i++) {
-            try {
-              const page = await pdf.getPage(i);
-              const content = await page.getTextContent();
-              const text = content.items.map((item: unknown) => (item as {str?:string}).str || '').join(' ').trim();
-              pageTexts.push(text.length > 500 ? text.slice(-500) : text);
-            } catch {
-              pageTexts.push('');
-            }
-          }
-          pdf.destroy();
-        } catch (e) {
-          console.warn('Client PDF text extraction failed:', e);
-        }
-      }
-
-      const res = await fetch(
-        `/api/projects/${projectId}/drawings/${drawingSet.id}/classify`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pageTexts }),
-        }
-      );
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: "Classification failed" }));
-        setClassifyError(err.error || "Classification failed");
-      } else {
-        onSheetsRefresh?.();
-      }
-    } catch (e) {
-      setClassifyError(e instanceof Error ? e.message : "Classification failed");
-    } finally {
-      setClassifying(false);
+  // Organizer saved — refresh sheets and close
+  const handleOrganizerSaved = (updatedSheets: DrawingSheet[]) => {
+    setShowOrganizer(false);
+    if (updatedSheets.length > 0) {
+      onSheetsRefresh?.();
     }
   };
+
+  // Organizer overlay
+  if (showOrganizer) {
+    return (
+      <SheetOrganizer
+        projectId={projectId}
+        drawingSet={drawingSet}
+        sheets={sheets}
+        onClose={() => setShowOrganizer(false)}
+        onSaved={handleOrganizerSaved}
+      />
+    );
+  }
 
   return (
     <div>
@@ -255,6 +223,14 @@ export default function SheetBrowser({
             {drawingSet.revision} · {drawingSet.sheet_count} sheets
           </p>
         </div>
+        {/* Organize button */}
+        <button
+          onClick={() => setShowOrganizer(true)}
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
+        >
+          <ClipboardList size={14} />
+          Organize
+        </button>
         {drawingSet.is_current && (
           <span className="px-2 py-0.5 bg-green-500/15 text-green-400 rounded text-xs font-medium border border-green-500/20 shrink-0">
             Current
@@ -270,33 +246,20 @@ export default function SheetBrowser({
         </div>
       ) : (
         <>
-          {/* Unclassified banner */}
+          {/* Unorganized banner */}
           {allUnclassified && (
             <div className="mb-4 p-3 bg-[#1F1F25] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
-              <Sparkles size={16} className="text-[#F97316] shrink-0" />
+              <ClipboardList size={16} className="text-[#F97316] shrink-0" />
               <p className="text-gray-300 text-sm flex-1">
-                Sheets haven&apos;t been classified yet.
+                Sheets haven&apos;t been organized yet.
               </p>
               <button
-                onClick={handleClassify}
-                disabled={classifying}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
+                onClick={() => setShowOrganizer(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
               >
-                {classifying ? (
-                  <>
-                    <RefreshCw size={12} className="animate-spin" /> Classifying...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={12} /> Classify Sheets
-                  </>
-                )}
+                <ClipboardList size={12} /> Organize Sheets
               </button>
             </div>
-          )}
-
-          {classifyError && (
-            <p className="mb-3 text-red-400 text-xs px-1">{classifyError}</p>
           )}
 
           {/* Discipline-grouped collapsible sections */}

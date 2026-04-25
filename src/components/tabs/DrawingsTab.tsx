@@ -57,6 +57,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
   const [selectedSet, setSelectedSet] = useState<DrawingSet | null>(null);
   const [selectedSetSheets, setSelectedSetSheets] = useState<DrawingSheet[]>([]);
   const [sheetsLoading, setSheetsLoading] = useState(false);
+  const [openOrganizerOnMount, setOpenOrganizerOnMount] = useState(false);
 
   // Viewer state
   const [viewerSheetIndex, setViewerSheetIndex] = useState(0);
@@ -199,47 +200,15 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
       const data = await resp.json();
 
-      // Extract text client-side (pdfjs works in browser, not in serverless)
-      setUploadProgress("Extracting text from pages...");
-      let pageTexts: string[] = [];
-      try {
-        const pdfjsLib = await import("pdfjs-dist");
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
-        const pdfArrayBuffer = await uploadFile.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: pdfArrayBuffer }).promise;
-        for (let i = 1; i <= pdf.numPages; i++) {
-          try {
-            const page = await pdf.getPage(i);
-            const content = await page.getTextContent();
-            const text = content.items.map((item: unknown) => (item as {str?:string}).str || '').join(' ').trim();
-            // Focus on last ~500 chars (title block)
-            pageTexts.push(text.length > 500 ? text.slice(-500) : text);
-          } catch {
-            pageTexts.push('');
-          }
-        }
-        pdf.destroy();
-      } catch (e) {
-        console.warn('Client-side text extraction failed:', e);
-      }
-
-      // Auto-classify sheets using AI (send extracted text to avoid server-side PDF parsing)
-      setUploadProgress("Classifying sheets... (this may take a moment for large sets)");
-      try {
-        await fetch(`/api/projects/${projectId}/drawings/${data.drawing_set.id}/classify`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pageTexts }),
-        });
-      } catch (classifyErr) {
-        console.warn("Auto-classify failed (sheets can be classified manually):", classifyErr);
-      }
-
-      setUploadProgress(`Uploaded & classified — ${data.sheet_count} pages processed`);
+      setUploadProgress(`Done — organize your sheets`);
       setShowUpload(false);
       setUploadFile(null);
       setUploadForm({ name: "", revision: "Rev 0", description: "", mode: "new_revision" });
       await fetchSets();
+
+      // Immediately open the sheet browser with organizer for the new set
+      setOpenOrganizerOnMount(true);
+      await handleSetSelect(data.drawing_set);
     } catch (e) {
       alert(`Upload failed — ${e instanceof Error ? e.message : 'please try again'}`);
     } finally {
@@ -281,8 +250,9 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             sheets={selectedSetSheets}
             drawingSet={selectedSet}
             onSheetSelect={handleSheetSelect}
-            onBack={() => { setSelectedSet(null); setSelectedSetSheets([]); }}
+            onBack={() => { setSelectedSet(null); setSelectedSetSheets([]); setOpenOrganizerOnMount(false); }}
             onSheetsRefresh={() => selectedSet && loadSheets(selectedSet.id)}
+            openOrganizerOnMount={openOrganizerOnMount}
           />
         )}
       </>
