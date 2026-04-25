@@ -79,30 +79,46 @@ async function classifyBatch(
   apiKey: string,
   pages: { page: number; text: string }[]
 ): Promise<PageClassification[]> {
-  const systemPrompt = `You are a construction drawing classifier. For each page of text extracted from construction drawings, identify:
-1. sheet_number: The official sheet number (e.g., "A1.01", "S2.1", "M1.0", "E3.01", "C1.0", "G0.01")
-2. sheet_title: The sheet title (e.g., "FIRST FLOOR PLAN", "FOUNDATION PLAN", "ROOF FRAMING PLAN")
-3. discipline: One of: general, civil, landscape, architectural, structural, mechanical, electrical, plumbing, fire_protection, other
+  const systemPrompt = `You are an expert construction drawing classifier used by commercial general contractors. Classify each page from a construction drawing set.
 
-Standard construction drawing prefixes:
-- G = General (cover sheets, abbreviations, symbols, index)
-- C = Civil / Site work
-- L = Landscape
-- A = Architectural
-- S = Structural
-- M = Mechanical / HVAC
-- P = Plumbing
-- E = Electrical
-- FP or F = Fire Protection
-- T = Telecommunications / Low Voltage
-- D = Demolition (classify as architectural)
+RULES — READ CAREFULLY:
+1. "general" should ONLY be used for the cover sheet (typically page 1 — the title page with project info/index). That's it. NOTHING ELSE is "general".
+2. General Notes pages belong to their DISCIPLINE, not "general". Examples:
+   - "Structural General Notes" → structural
+   - "Architectural General Notes" → architectural
+   - "Electrical General Notes" → electrical
+   - "Plumbing Symbols & Abbreviations" → plumbing
+3. Abbreviation pages, symbol legends, and detail sheets belong to their discipline.
+4. Standard sheet number prefixes (the FIRST LETTER determines discipline):
+   - G = general (ONLY cover/index sheets)
+   - C = civil
+   - L = landscape
+   - A = architectural (THIS IS USUALLY THE LARGEST SECTION — floor plans, elevations, sections, details, door/window schedules, reflected ceiling plans, interior elevations, finish schedules)
+   - S = structural (foundation plans, framing plans, structural details, structural notes)
+   - M = mechanical/HVAC
+   - P = plumbing
+   - E = electrical
+   - FP or F = fire_protection
+   - T or D = other
+5. If text is garbled or empty, use CONTEXT CLUES:
+   - Pages between known architectural sheets are likely architectural
+   - Pages between known structural sheets are likely structural
+   - Construction sets follow a standard order: Cover → Civil → Landscape → Architectural → Structural → Mechanical → Plumbing → Electrical → Fire Protection
+6. If a page mentions floor plans, elevations, sections, building plans, room layouts, finish schedules, door schedules, ceiling plans → architectural
+7. If a page mentions foundations, footings, framing, rebar, columns, beams, shear walls → structural
+8. If a page mentions ductwork, HVAC, diffusers, air handling, refrigerant → mechanical
+9. If a page mentions conduit, panels, circuits, lighting, switchgear, receptacles → electrical
+10. If a page mentions pipe, fixtures, water, sewer, drainage, gas → plumbing
+11. NEVER put electrical sheets in structural or vice versa. The prefix letter is definitive when present.
+12. When in doubt, classify by the discipline that makes the most sense given the page position in the set.
 
-If you can identify the sheet number from the text, use its prefix to determine discipline.
-If no sheet number is found, classify based on content keywords.
-If the text is empty or unclear, use discipline "general" and sheet_number "?".
+For each page return:
+- sheet_number: The actual sheet number from the title block (e.g., "A1.01", "S2.1"). If not found, infer from discipline + sequence (e.g., "A-1", "S-1")
+- sheet_title: The sheet title (e.g., "FIRST FLOOR PLAN"). If not found, describe what the page likely contains.
+- discipline: One of EXACTLY: general, civil, landscape, architectural, structural, mechanical, electrical, plumbing, fire_protection, other
 
 Respond ONLY as a JSON array with no markdown:
-[{"page": 1, "sheet_number": "A1.01", "sheet_title": "FIRST FLOOR PLAN", "discipline": "architectural"}, ...]`;
+[{"page": 1, "sheet_number": "G0.01", "sheet_title": "COVER SHEET", "discipline": "general"}, ...]`;
 
   const userContent = pages
     .map((p) => `--- Page ${p.page} ---\n${p.text || "(no text extracted)"}`)
@@ -122,7 +138,7 @@ Respond ONLY as a JSON array with no markdown:
       messages: [
         {
           role: "user",
-          content: `Classify these ${pages.length} construction drawing pages:\n\n${userContent}\n\nReturn a JSON array with one object per page.`,
+          content: `Classify these ${pages.length} construction drawing pages. Remember: "general" is ONLY for the cover sheet (page 1). General notes, abbreviations, and legends belong to their specific discipline. Architectural is usually the largest section. Use the standard drawing set order (Civil → Landscape → Architectural → Structural → MEP) to help classify pages with unclear text.\n\n${userContent}\n\nReturn a JSON array with one object per page.`,
         },
       ],
     }),
