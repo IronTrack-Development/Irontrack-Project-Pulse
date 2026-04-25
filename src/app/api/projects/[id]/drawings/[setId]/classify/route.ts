@@ -46,32 +46,60 @@ interface DrawingSheet {
 }
 
 async function extractPageTexts(pdfBuffer: ArrayBuffer): Promise<string[]> {
-  // Use pdfjs-dist legacy build (works in Node without a worker)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs" as string) as any;
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "";
-
-  const uint8 = new Uint8Array(pdfBuffer);
-  const doc = await pdfjsLib.getDocument({ data: uint8, disableFontFace: true }).promise;
-  const numPages = doc.numPages;
+  // Use pdf-parse for serverless-compatible text extraction
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const pdfParse = require("pdf-parse");
+  const buffer = Buffer.from(pdfBuffer);
+  
+  // pdf-parse extracts all text at once — we need per-page
+  // Use the pagerender option to capture per-page text
   const pageTexts: string[] = [];
-
-  for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-    try {
-      const page = await doc.getPage(pageNum);
-      const content = await page.getTextContent();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const fullText = content.items.map((item: any) => item.str || "").join(" ").trim();
-      // Focus on last ~400 chars (title block area at bottom of page)
-      const excerpt = fullText.length > 400 ? fullText.slice(-400) : fullText;
-      pageTexts.push(excerpt);
-      page.cleanup();
-    } catch {
-      pageTexts.push("");
+  
+  try {
+    // First get total page count
+    const result = await pdfParse(buffer, {
+      max: 0, // just metadata
+    });
+    const numPages = result.numpages;
+    
+    // Extract each page individually
+    for (let i = 1; i <= numPages; i++) {
+      try {
+        const pageResult = await pdfParse(buffer, {
+          max: i,
+          // Custom page render to get specific page
+          pagerender: function(pageData: { getTextContent: () => Promise<{ items: { str: string }[] }> }) {
+            return pageData.getTextContent().then(function(textContent: { items: { str: string }[] }) {
+              return textContent.items.map((item: { str: string }) => item.str).join(' ');
+            });
+          }
+        });
+        // pageResult.text contains all pages up to max — get the last page's contribution
+        const text = pageResult.text || '';
+        // Focus on last ~500 chars (title block area)
+        const excerpt = text.length > 500 ? text.slice(-500) : text;
+        pageTexts.push(excerpt);
+      } catch {
+        pageTexts.push('');
+      }
+    }
+  } catch (e) {
+    console.error('[classify] pdf-parse failed, trying raw text extraction:', e);
+    // Fallback: extract raw text from PDF binary
+    const text = buffer.toString('latin1');
+    // Split by page markers and extract text chunks
+    const pageMatches = text.split(/\/Type\s*\/Page[^s]/);
+    for (let i = 1; i < pageMatches.length; i++) {
+      // Extract readable strings from each page section
+      const readable = pageMatches[i]
+        .replace(/[^\x20-\x7E\n]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(-300);
+      pageTexts.push(readable);
     }
   }
-
-  await doc.destroy();
+  
   return pageTexts;
 }
 
