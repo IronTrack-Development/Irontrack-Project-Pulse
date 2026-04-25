@@ -64,6 +64,7 @@ const NAV_GROUPS: GroupDef[] = [
       { id: "dailylog", label: "Daily Log", icon: ClipboardList },
       { id: "inspections", label: "Inspections", icon: ShieldCheck },
       { id: "punch", label: "Punch List", icon: CheckSquare },
+      { id: "reports", label: "Reports", icon: FileBarChart2 },
     ],
   },
   {
@@ -90,7 +91,6 @@ const NAV_GROUPS: GroupDef[] = [
     icon: BarChart3,
     tabs: [
       { id: "progress", label: "Progress", icon: TrendingUp },
-      { id: "reports", label: "Reports", icon: FileBarChart2 },
       { id: "directory", label: "Directory", icon: Users },
       { id: "subs", label: "Subs", icon: Users },
     ],
