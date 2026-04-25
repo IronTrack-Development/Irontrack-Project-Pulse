@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 
+// Allow large PDF uploads (up to 50MB on Vercel Pro)
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// Increase max duration for large file processing
+export const maxDuration = 60;
+
 // GET /api/projects/[id]/drawings
 export async function GET(
   req: NextRequest,
@@ -62,19 +72,28 @@ export async function POST(
     });
 
   if (uploadError) {
-    return NextResponse.json({ error: uploadError.message }, { status: 500 });
+    console.error('Drawing upload error:', uploadError);
+    return NextResponse.json({ error: `Upload failed: ${uploadError.message}` }, { status: 500 });
   }
 
-  // Get page count using pdf-parse
+  // Get page count from form data (client extracts via pdf.js) or default to 1
   let pageCount = 1;
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pdfParse = require("pdf-parse");
-    const buffer = Buffer.from(arrayBuffer);
-    const parsed = await pdfParse(buffer);
-    pageCount = parsed.numpages || 1;
-  } catch {
-    pageCount = 1;
+  const clientPageCount = formData.get("page_count");
+  if (clientPageCount) {
+    pageCount = parseInt(clientPageCount as string, 10) || 1;
+  } else {
+    // Fallback: try to extract page count server-side
+    try {
+      const buffer = Buffer.from(arrayBuffer);
+      // Quick PDF page count — scan for /Type /Page entries
+      const text = buffer.toString('latin1');
+      const matches = text.match(/\/Type\s*\/Page[^s]/g);
+      if (matches && matches.length > 0) {
+        pageCount = matches.length;
+      }
+    } catch {
+      pageCount = 1;
+    }
   }
 
   // If replacing, mark previous sets with same name as not current
