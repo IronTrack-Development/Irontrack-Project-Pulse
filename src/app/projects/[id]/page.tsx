@@ -3,9 +3,10 @@
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
-  ArrowLeft, CalendarDays, CalendarCheck, CalendarPlus, Flag, TrendingUp,
-  RefreshCw, Zap, ClipboardList, Users, Binoculars, FileBarChart2, GitBranch, ShieldCheck, FileCheck, MessageCircleQuestion, Receipt, Layers
+  ArrowLeft,
+  RefreshCw, ClipboardList, FileBarChart2,
 } from "lucide-react";
+import ProjectNav from "@/components/navigation/ProjectNav";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
 import ProgressTab from "@/components/tabs/ProgressTab";
@@ -25,28 +26,6 @@ import SubmittalsTab from "@/components/tabs/SubmittalsTab";
 import TMTab from "@/components/tabs/TMTab";
 import RFIsTab from "@/components/tabs/RFIsTab";
 import DrawingsTab from "@/components/tabs/DrawingsTab";
-
-const TABS = [
-  { id: "priority", label: "Priority", icon: Zap },
-  { id: "dailylog", label: "Daily Log", icon: ClipboardList },
-  { id: "inspections", label: "Inspections", icon: ShieldCheck },
-  { id: "today", label: "Today", icon: CalendarCheck },
-  { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
-  { id: "week1", label: "Week 1", icon: CalendarDays },
-  { id: "week2", label: "Week 2", icon: CalendarDays },
-  { id: "week3", label: "Week 3", icon: CalendarDays },
-  { id: "6week", label: "6-Week", icon: Binoculars },
-  { id: "milestones", label: "Milestones", icon: Flag },
-  { id: "progress", label: "Progress", icon: TrendingUp },
-  { id: "reforecast", label: "Reforecast", icon: GitBranch },
-  { id: "reports", label: "Reports", icon: ClipboardList },
-  { id: "subs", label: "Subs", icon: Users },
-  { id: "directory", label: "Directory", icon: Users },
-  { id: "submittals", label: "Submittals", icon: FileCheck },
-  { id: "rfis", label: "RFIs", icon: MessageCircleQuestion },
-  { id: "tm", label: "T&M", icon: Receipt },
-  { id: "drawings", label: "Drawings", icon: Layers },
-];
 
 interface Project {
   id: string;
@@ -118,7 +97,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   const color = healthColor(project.health_score);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B0B0D] overflow-x-hidden pb-16 md:pb-0">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25]">
         <div className="px-4 md:px-6 pt-3 md:pt-4 pb-0 max-w-7xl mx-auto">
@@ -179,23 +158,8 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
             )}
           </div>
 
-          {/* Tabs — bigger touch targets */}
-          <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1">
-            {TABS.map(({ id: tabId, label, icon: Icon }) => (
-              <button
-                key={tabId}
-                onClick={() => setActiveTab(tabId)}
-                className={`flex items-center gap-1.5 px-3 md:px-4 py-3 md:py-2.5 text-xs md:text-sm font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px] ${
-                  activeTab === tabId
-                    ? "border-[#F97316] text-[#F97316]"
-                    : "border-transparent text-gray-500 hover:text-gray-300"
-                }`}
-              >
-                <Icon size={14} />
-                {label}
-              </button>
-            ))}
-          </div>
+          {/* Grouped navigation */}
+          <ProjectNav activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
 
