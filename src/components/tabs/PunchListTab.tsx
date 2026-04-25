@@ -381,7 +381,7 @@ export default function PunchListTab({ projectId }: Props) {
       {/* FAB */}
       <button
         onClick={() => setShowForm(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#F97316] text-white
+        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[#F97316] text-white
           shadow-lg shadow-[#F97316]/30 flex items-center justify-center
           hover:bg-[#ea6c10] active:scale-95 transition-all z-40"
         aria-label="Add punch item"
@@ -391,7 +391,7 @@ export default function PunchListTab({ projectId }: Props) {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#1F1F25] border border-[#F97316]/30
+        <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[#1F1F25] border border-[#F97316]/30
           text-white text-sm font-medium px-4 py-3 rounded-2xl shadow-xl animate-fade-in">
           {toast}
         </div>

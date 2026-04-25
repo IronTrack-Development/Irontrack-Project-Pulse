@@ -128,22 +128,58 @@ async function main() {
     }
   }
 
-  // Update DB
-  console.log(`\n💾 Updating ${sheets.length} sheets...`);
+  // Use SQL UPDATE FROM VALUES for an efficient single-query bulk update
+  console.log(`\n💾 Bulk-updating ${sheets.length} sheets via SQL...`);
   const classMap = new Map(allClassifications.map(c => [c.page, c]));
-  let updated = 0, failed = 0;
 
-  for (const sheet of sheets) {
+  const updates = sheets.map(sheet => {
     const c = classMap.get(sheet.page_index + 1);
-    const { error } = await supabase.from("drawing_sheets")
-      .update({
-        sheet_number: c?.sheet_number || `P${sheet.page_index + 1}`,
-        sheet_title: c?.sheet_title || `Page ${sheet.page_index + 1}`,
-        discipline: c?.discipline || "general",
-      })
-      .eq("id", sheet.id);
-    if (error) { console.error(`  ✗ ${sheet.id}:`, error.message); failed++; }
-    else updated++;
+    return {
+      id: sheet.id,
+      sheet_number: c?.sheet_number || `P${sheet.page_index + 1}`,
+      sheet_title: c?.sheet_title || `Page ${sheet.page_index + 1}`,
+      discipline: c?.discipline || "general",
+    };
+  });
+
+  let updated = 0, failed = 0;
+  const CHUNK = 50;
+  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  for (let i = 0; i < updates.length; i += CHUNK) {
+    const chunk = updates.slice(i, i + CHUNK);
+    // Build VALUES clause: (id::uuid, sheet_number, sheet_title, discipline::discipline_type)
+    const valueRows = chunk
+      .map(r => `('${r.id}'::uuid, ${esc(r.sheet_number)}, ${esc(r.sheet_title)}, ${esc(r.discipline)}::text)`)
+      .join(",\n");
+    const sql = `
+      UPDATE drawing_sheets ds
+      SET
+        sheet_number = v.sheet_number,
+        sheet_title  = v.sheet_title,
+        discipline   = v.discipline::text
+      FROM (VALUES ${valueRows}) AS v(id, sheet_number, sheet_title, discipline)
+      WHERE ds.id = v.id
+    `;
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
+      method: "POST",
+      headers: {
+        "apikey": SERVICE_KEY,
+        "Authorization": `Bearer ${SERVICE_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
+      },
+      body: JSON.stringify({ sql_text: sql }),
+    });
+    if (!resp.ok) {
+      const err = await resp.text();
+      console.error(`  ✗ Chunk ${Math.floor(i/CHUNK)+1}: HTTP ${resp.status} ${err.slice(0,200)}`);
+      failed += chunk.length;
+    } else {
+      updated += chunk.length;
+      console.log(`  ✓ Chunk ${Math.floor(i/CHUNK)+1}: ${chunk.length} rows OK`);
+    }
   }
 
   // Summary
