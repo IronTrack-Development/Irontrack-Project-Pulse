@@ -189,9 +189,42 @@ export default function SheetBrowser({
     setClassifying(true);
     setClassifyError("");
     try {
+      // Extract text client-side first
+      let pageTexts: string[] = [];
+      const storagePath = sheets[0]?.storage_path;
+      if (storagePath) {
+        try {
+          const { createClient } = await import("@/lib/supabase-browser");
+          const supabase = createClient();
+          const { data: publicUrlData } = supabase.storage.from("drawings").getPublicUrl(storagePath);
+          const pdfRes = await fetch(publicUrlData.publicUrl);
+          const pdfBuffer = await pdfRes.arrayBuffer();
+          const pdfjsLib = await import("pdfjs-dist");
+          pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+          const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+          for (let i = 1; i <= pdf.numPages; i++) {
+            try {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              const text = content.items.map((item: unknown) => (item as {str?:string}).str || '').join(' ').trim();
+              pageTexts.push(text.length > 500 ? text.slice(-500) : text);
+            } catch {
+              pageTexts.push('');
+            }
+          }
+          pdf.destroy();
+        } catch (e) {
+          console.warn('Client PDF text extraction failed:', e);
+        }
+      }
+
       const res = await fetch(
         `/api/projects/${projectId}/drawings/${drawingSet.id}/classify`,
-        { method: "POST" }
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pageTexts }),
+        }
       );
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: "Classification failed" }));

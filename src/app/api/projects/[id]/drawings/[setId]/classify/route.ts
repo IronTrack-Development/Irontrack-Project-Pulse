@@ -205,8 +205,9 @@ Respond ONLY as a JSON array with no markdown:
 }
 
 // POST /api/projects/[id]/drawings/[setId]/classify
+// Accepts optional JSON body with { pageTexts: string[] } from client-side extraction
 export async function POST(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string; setId: string }> }
 ) {
   const { setId } = await params;
@@ -236,33 +237,36 @@ export async function POST(
 
   const typedSheets = sheets as DrawingSheet[];
 
-  // 2. Download the PDF from Supabase Storage
-  const storagePath = typedSheets[0].storage_path;
-  const { data: fileData, error: downloadErr } = await supabase.storage
-    .from("drawings")
-    .download(storagePath);
-
-  if (downloadErr || !fileData) {
-    return NextResponse.json(
-      { error: `Failed to download PDF: ${downloadErr?.message}` },
-      { status: 500 }
-    );
-  }
-
-  // 3. Extract text per page using pdfjs-dist
+  // 2. Get page texts — prefer client-side extracted text, fallback to server-side
   let pageTexts: string[];
   try {
-    const arrayBuffer = await fileData.arrayBuffer();
-    pageTexts = await extractPageTexts(arrayBuffer);
+    const body = await req.json().catch(() => ({}));
+    if (body.pageTexts && Array.isArray(body.pageTexts) && body.pageTexts.length > 0) {
+      pageTexts = body.pageTexts;
+    } else {
+      // Server-side fallback — download and extract
+      const storagePath = typedSheets[0].storage_path;
+      const { data: fileData, error: downloadErr } = await supabase.storage
+        .from("drawings")
+        .download(storagePath);
+      if (downloadErr || !fileData) {
+        return NextResponse.json(
+          { error: `Failed to download PDF: ${downloadErr?.message}` },
+          { status: 500 }
+        );
+      }
+      const arrayBuffer = await fileData.arrayBuffer();
+      pageTexts = await extractPageTexts(arrayBuffer);
+    }
   } catch (e) {
-    console.error("[classify] PDF text extraction failed:", e);
+    console.error("[classify] Text extraction failed:", e);
     return NextResponse.json(
-      { error: `PDF text extraction failed: ${e instanceof Error ? e.message : String(e)}` },
+      { error: `Text extraction failed: ${e instanceof Error ? e.message : String(e)}` },
       { status: 500 }
     );
   }
 
-  // 4. Send batches to Claude (25 pages at a time)
+  // 3. Send batches to Claude (25 pages at a time)
   const BATCH_SIZE = 25;
   const allClassifications: PageClassification[] = [];
 

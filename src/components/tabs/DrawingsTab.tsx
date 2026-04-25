@@ -199,11 +199,37 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
       const data = await resp.json();
 
-      // Auto-classify sheets using AI
+      // Extract text client-side (pdfjs works in browser, not in serverless)
+      setUploadProgress("Extracting text from pages...");
+      let pageTexts: string[] = [];
+      try {
+        const pdfjsLib = await import("pdfjs-dist");
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+        const pdfArrayBuffer = await uploadFile.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: pdfArrayBuffer }).promise;
+        for (let i = 1; i <= pdf.numPages; i++) {
+          try {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            const text = content.items.map((item: unknown) => (item as {str?:string}).str || '').join(' ').trim();
+            // Focus on last ~500 chars (title block)
+            pageTexts.push(text.length > 500 ? text.slice(-500) : text);
+          } catch {
+            pageTexts.push('');
+          }
+        }
+        pdf.destroy();
+      } catch (e) {
+        console.warn('Client-side text extraction failed:', e);
+      }
+
+      // Auto-classify sheets using AI (send extracted text to avoid server-side PDF parsing)
       setUploadProgress("Classifying sheets... (this may take a moment for large sets)");
       try {
         await fetch(`/api/projects/${projectId}/drawings/${data.drawing_set.id}/classify`, {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pageTexts }),
         });
       } catch (classifyErr) {
         console.warn("Auto-classify failed (sheets can be classified manually):", classifyErr);
