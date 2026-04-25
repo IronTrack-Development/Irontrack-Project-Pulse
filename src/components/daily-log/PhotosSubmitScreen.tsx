@@ -2,10 +2,11 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import {
-  Camera, X, Tag, Image as ImageIcon,
+  Camera, Pencil, X, Tag, Image as ImageIcon,
   Thermometer, Users, TrendingUp, AlertTriangle, ImagePlus,
   CheckCircle2, AlertCircle,
 } from "lucide-react";
+import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import { useRouter } from "next/navigation";
 import type {
   DailyLogPhoto, DailyLogWeather, DailyLogCrewEntry,
@@ -46,6 +47,7 @@ export default function PhotosSubmitScreen({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [markupPhotoId, setMarkupPhotoId] = useState<string | null>(null);
   const router = useRouter();
 
   const totalHeadcount = crew.reduce((sum, c) => sum + (c.headcount || 0), 0);
@@ -117,6 +119,7 @@ export default function PhotosSubmitScreen({
   };
 
   return (
+    <>
     <div className="space-y-6 relative">
       {/* Toast notification */}
       {toast && (
@@ -242,6 +245,18 @@ export default function PhotosSubmitScreen({
                       </span>
                     </div>
                   )}
+                  {/* Markup button */}
+                  {src && (
+                    <button
+                      type="button"
+                      onClick={() => setMarkupPhotoId(photo.id)}
+                      className="absolute top-1 left-1 w-7 h-7 rounded-full bg-purple-700/80 flex items-center justify-center
+                        opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Annotate photo"
+                    >
+                      <Pencil size={12} className="text-white" />
+                    </button>
+                  )}
                   {/* Remove button */}
                   <button
                     type="button"
@@ -311,5 +326,61 @@ export default function PhotosSubmitScreen({
             : "Complete Daily Log ✅"}
       </button>
     </div>
+
+    {/* Photo markup overlay */}
+    <MarkupPhotoOverlay
+      markupPhotoId={markupPhotoId}
+      photos={photos}
+      onPhotosChange={onPhotosChange}
+      onClose={() => setMarkupPhotoId(null)}
+    />
+    </>
+  );
+}
+
+// ─── Helper component for photo markup overlay ──────────────────────────────
+
+interface MarkupPhotoOverlayProps {
+  markupPhotoId: string | null;
+  photos: (import("@/types").DailyLogPhoto & { localUrl?: string; file?: File })[];
+  onPhotosChange: (photos: (import("@/types").DailyLogPhoto & { localUrl?: string; file?: File })[]) => void;
+  onClose: () => void;
+}
+
+function MarkupPhotoOverlay({
+  markupPhotoId,
+  photos,
+  onPhotosChange,
+  onClose,
+}: MarkupPhotoOverlayProps) {
+  if (!markupPhotoId) return null;
+  const photo = photos.find((p) => p.id === markupPhotoId);
+  const src = photo?.localUrl || (photo?.storage_path
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/daily-log-photos/${photo.storage_path}`
+    : null);
+  if (!src || !photo) return null;
+
+  return (
+    <PhotoMarkup
+      imageUrl={src}
+      onSave={(annotatedUrl) => {
+        // Update photo with annotated version
+        onPhotosChange(
+          photos.map((p) => (p.id === markupPhotoId ? { ...p, localUrl: annotatedUrl } : p))
+        );
+        // Also update the underlying file for upload
+        fetch(annotatedUrl)
+          .then((r) => r.blob())
+          .then((blob) => {
+            const f = new File([blob], "daily-log-markup.jpg", { type: "image/jpeg" });
+            onPhotosChange(
+              photos.map((p) => (p.id === markupPhotoId ? { ...p, localUrl: annotatedUrl, file: f } : p))
+            );
+          })
+          .catch(() => {});
+        onClose();
+      }}
+      onClose={onClose}
+    />
   );
 }

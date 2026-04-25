@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Camera, Pencil, X, Loader2 } from "lucide-react";
 import PhotoMarkup from "@/components/markup/PhotoMarkup";
-import VoiceTextArea from "@/components/VoiceTextArea";
+import VoiceTextArea from "@/components/daily-log/VoiceTextArea";
 
 interface Contact {
   id: string;
@@ -138,6 +138,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
   }, [photoPreview]);
 
   return (
+    <>
     <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="w-full sm:max-w-lg bg-[#121217] rounded-t-3xl sm:rounded-3xl border border-[#1F1F25] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
@@ -321,5 +322,26 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
         </div>
       </div>
     </div>
+
+    {/* Photo markup overlay */}
+    {showPhotoMarkup && photoPreview && (
+      <PhotoMarkup
+        imageUrl={photoPreview}
+        onSave={(annotatedUrl) => {
+          setPhotoPreview(annotatedUrl);
+          // Convert data URL back to a File for upload
+          fetch(annotatedUrl)
+            .then((r) => r.blob())
+            .then((blob) => {
+              const f = new File([blob], "punch-photo-markup.jpg", { type: "image/jpeg" });
+              setPhotoFile(f);
+            })
+            .catch(() => {});
+          setShowPhotoMarkup(false);
+        }}
+        onClose={() => setShowPhotoMarkup(false)}
+      />
+    )}
+    </>
   );
 }

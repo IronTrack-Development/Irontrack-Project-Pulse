@@ -51,13 +51,14 @@ export default function MarkupWrapper({
       try {
         // Dynamically import html2canvas to avoid SSR issues
         const html2canvas = (await import("html2canvas")).default;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const canvas = await html2canvas(el, {
           useCORS: true,
           allowTaint: true,
           scale: Math.min(window.devicePixelRatio || 1, 2),
           logging: false,
           backgroundColor: "#0B0B0D",
-        });
+        } as any);
         if (!cancelled) {
           setScreenshotUrl(canvas.toDataURL("image/jpeg", 0.92));
         }

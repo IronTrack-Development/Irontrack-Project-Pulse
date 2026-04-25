@@ -41,7 +41,7 @@ export async function GET(
   // By sub (assigned_to)
   const bySubMap: Record<string, { name: string; company: string; count: number }> = {};
   for (const item of items) {
-    const contact = item.assigned_contact as { id: string; name: string; company: string } | null;
+    const contact = (item.assigned_contact as unknown) as { id: string; name: string; company: string } | null;
     if (contact) {
       if (!bySubMap[contact.id]) {
         bySubMap[contact.id] = { name: contact.name, company: contact.company, count: 0 };

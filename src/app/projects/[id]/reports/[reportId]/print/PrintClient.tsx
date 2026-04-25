@@ -64,13 +64,14 @@ export default function PrintClient({ report, issues, projectId }: Props) {
     setMarkupCapturing(true);
     try {
       const html2canvas = (await import("html2canvas")).default;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const canvas = await html2canvas(el, {
         useCORS: true,
         allowTaint: true,
         scale: Math.min(window.devicePixelRatio || 1, 2),
         logging: false,
         backgroundColor: "#ffffff",
-      });
+      } as any);
       setMarkupScreenshot(canvas.toDataURL("image/jpeg", 0.92));
       setMarkupActive(true);
     } catch (err) {
@@ -123,6 +124,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
   const generatedAt = formatDate(new Date().toISOString());
 
   return (
+    <>
     <div
       className="print-overlay"
       style={{
@@ -558,5 +560,6 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         onCancel={handleMarkupCancel}
       />
     )}
+    </>
   );
 }
