@@ -1,0 +1,956 @@
+[
+  {
+    "page": 1,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 2,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 3,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 4,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 5,
+    "sheet_number": "C1.01",
+    "sheet_title": "FINAL PLAT ENCANTO SHEET INDEX",
+    "discipline": "civil"
+  },
+  {
+    "page": 6,
+    "sheet_number": "C1.02",
+    "sheet_title": "FINAL PLAT ENCANTO - ROW AREA TABLE",
+    "discipline": "civil"
+  },
+  {
+    "page": 7,
+    "sheet_number": "C1.03",
+    "sheet_title": "FINAL PLAT ENCANTO - KEY MAP",
+    "discipline": "civil"
+  },
+  {
+    "page": 8,
+    "sheet_number": "C1.04",
+    "sheet_title": "FINAL PLAT ENCANTO - KEY MAP",
+    "discipline": "civil"
+  },
+  {
+    "page": 9,
+    "sheet_number": "C2.01",
+    "sheet_title": "PAVING & DRAINAGE PLANS - SHEET INDEX",
+    "discipline": "civil"
+  },
+  {
+    "page": 10,
+    "sheet_number": "C2.02",
+    "sheet_title": "PAVING & DRAINAGE PLANS - KEY MAP & LEGEND",
+    "discipline": "civil"
+  },
+  {
+    "page": 11,
+    "sheet_number": "C2.03",
+    "sheet_title": "PAVING & DRAINAGE PLANS - GRADING",
+    "discipline": "civil"
+  },
+  {
+    "page": 12,
+    "sheet_number": "C2.04",
+    "sheet_title": "PAVING & DRAINAGE PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 13,
+    "sheet_number": "C2.05",
+    "sheet_title": "PAVING & DRAINAGE PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 14,
+    "sheet_number": "C2.06",
+    "sheet_title": "PAVING & DRAINAGE PLANS - STORM DRAIN DETAILS",
+    "discipline": "civil"
+  },
+  {
+    "page": 15,
+    "sheet_number": "C2.07",
+    "sheet_title": "CROSS SECTIONS",
+    "discipline": "civil"
+  },
+  {
+    "page": 16,
+    "sheet_number": "C2.08",
+    "sheet_title": "STORM PROFILES",
+    "discipline": "civil"
+  },
+  {
+    "page": 17,
+    "sheet_number": "C2.09",
+    "sheet_title": "STORM DETAILS",
+    "discipline": "civil"
+  },
+  {
+    "page": 18,
+    "sheet_number": "C2.10",
+    "sheet_title": "STORM DETAILS",
+    "discipline": "civil"
+  },
+  {
+    "page": 19,
+    "sheet_number": "C2.11",
+    "sheet_title": "ADA PARKING DETAILS",
+    "discipline": "civil"
+  },
+  {
+    "page": 20,
+    "sheet_number": "C2.12",
+    "sheet_title": "BI-DIRECTIONAL WB-50 TRUCK ROUTING EXHIBIT",
+    "discipline": "civil"
+  },
+  {
+    "page": 21,
+    "sheet_number": "C2.13",
+    "sheet_title": "BI-DIRECTIONAL WB-50 TRUCK ROUTING EXHIBIT",
+    "discipline": "civil"
+  },
+  {
+    "page": 22,
+    "sheet_number": "C3.01",
+    "sheet_title": "STORMWATER POLLUTION PREVENTION PLAN",
+    "discipline": "civil"
+  },
+  {
+    "page": 23,
+    "sheet_number": "C3.02",
+    "sheet_title": "ENCANTO STORAGE STORMWATER POLLUTION PREVENTION PLAN",
+    "discipline": "civil"
+  },
+  {
+    "page": 24,
+    "sheet_number": "C3.03",
+    "sheet_title": "ENCANTO STORAGE STORMWATER POLLUTION PREVENTION PLAN - SEDIMENT WATTLE",
+    "discipline": "civil"
+  },
+  {
+    "page": 25,
+    "sheet_number": "C4.01",
+    "sheet_title": "UTILITY PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 26,
+    "sheet_number": "C1.0",
+    "sheet_title": "KEY MAP & LEGEND",
+    "discipline": "civil"
+  },
+  {
+    "page": 27,
+    "sheet_number": "C1.0",
+    "sheet_title": "GENERAL NOTES & SECTIONS",
+    "discipline": "civil"
+  },
+  {
+    "page": 28,
+    "sheet_number": "C1.0",
+    "sheet_title": "GENERAL NOTES & SECTIONS",
+    "discipline": "civil"
+  },
+  {
+    "page": 29,
+    "sheet_number": "C1.0",
+    "sheet_title": "GENERAL NOTES & SECTIONS",
+    "discipline": "civil"
+  },
+  {
+    "page": 30,
+    "sheet_number": "C1.0",
+    "sheet_title": "STANDARD DETAILS",
+    "discipline": "civil"
+  },
+  {
+    "page": 31,
+    "sheet_number": "C1.0",
+    "sheet_title": "UTILITY PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 32,
+    "sheet_number": "C1.0",
+    "sheet_title": "UTILITY PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 33,
+    "sheet_number": "C1.0",
+    "sheet_title": "SUMMARY OF QUANTITIES",
+    "discipline": "civil"
+  },
+  {
+    "page": 34,
+    "sheet_number": "C1.0",
+    "sheet_title": "BUCKEYE PAVING NOTES",
+    "discipline": "civil"
+  },
+  {
+    "page": 35,
+    "sheet_number": "C1.0",
+    "sheet_title": "MCDOT GENERAL NOTES",
+    "discipline": "civil"
+  },
+  {
+    "page": 36,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE PAVING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 37,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE PAVING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 38,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 39,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 40,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 41,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 42,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 43,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE STRIPING PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 44,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 45,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 46,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 47,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 48,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 49,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 50,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE WATER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 51,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE SEWER PLANS SHEET INDEX",
+    "discipline": "civil"
+  },
+  {
+    "page": 52,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE SEWER PLANS",
+    "discipline": "civil"
+  },
+  {
+    "page": 53,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE SEWER PLANS GENERAL NOTES & SECTIONS",
+    "discipline": "civil"
+  },
+  {
+    "page": 54,
+    "sheet_number": "C1.0",
+    "sheet_title": "OFFSITE SEWER PLANS PLAN & PROFILE",
+    "discipline": "civil"
+  },
+  {
+    "page": 55,
+    "sheet_number": "E1.0",
+    "sheet_title": "STREETLIGHT DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 56,
+    "sheet_number": "E1.0",
+    "sheet_title": "STREETLIGHT FIXTURE AND LOCATION PLAN",
+    "discipline": "electrical"
+  },
+  {
+    "page": 57,
+    "sheet_number": "E1.0",
+    "sheet_title": "STREETLIGHT DETAIL AND NOTES",
+    "discipline": "electrical"
+  },
+  {
+    "page": 58,
+    "sheet_number": "E1.0",
+    "sheet_title": "STREETLIGHT INSTALLATION DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 59,
+    "sheet_number": "E1.0",
+    "sheet_title": "STREETLIGHT PHOTOMETRICS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 60,
+    "sheet_number": "L1.0",
+    "sheet_title": "LANDSCAPE PLAN",
+    "discipline": "landscape"
+  },
+  {
+    "page": 61,
+    "sheet_number": "L1.1",
+    "sheet_title": "LANDSCAPE PLAN",
+    "discipline": "landscape"
+  },
+  {
+    "page": 62,
+    "sheet_number": "L1.0",
+    "sheet_title": "LANDSCAPE NOTES",
+    "discipline": "landscape"
+  },
+  {
+    "page": 63,
+    "sheet_number": "L2.1",
+    "sheet_title": "IRRIGATION PLAN",
+    "discipline": "landscape"
+  },
+  {
+    "page": 64,
+    "sheet_number": "L2.2",
+    "sheet_title": "IRRIGATION PLAN",
+    "discipline": "landscape"
+  },
+  {
+    "page": 65,
+    "sheet_number": "L2.0",
+    "sheet_title": "IRRIGATION GENERAL NOTES",
+    "discipline": "landscape"
+  },
+  {
+    "page": 66,
+    "sheet_number": "L3.0",
+    "sheet_title": "LANDSCAPE AND IRRIGATION DETAILS",
+    "discipline": "landscape"
+  },
+  {
+    "page": 67,
+    "sheet_number": "A1.0",
+    "sheet_title": "SITE PLAN",
+    "discipline": "architectural"
+  },
+  {
+    "page": 68,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 69,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 70,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 71,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 72,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 73,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 74,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 75,
+    "sheet_number": "?",
+    "sheet_title": "BLANK",
+    "discipline": "general"
+  },
+  {
+    "page": 76,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 77,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 78,
+    "sheet_number": "A?",
+    "sheet_title": "SECTION",
+    "discipline": "architectural"
+  },
+  {
+    "page": 79,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 80,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 81,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 82,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 83,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 84,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 85,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 86,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 87,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 88,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 89,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 90,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 91,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 92,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 93,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 94,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 95,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 96,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 97,
+    "sheet_number": "?",
+    "sheet_title": "UNKNOWN",
+    "discipline": "general"
+  },
+  {
+    "page": 98,
+    "sheet_number": "G?",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 99,
+    "sheet_number": "G?",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 100,
+    "sheet_number": "G?",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 101,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 102,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 103,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 104,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 105,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 106,
+    "sheet_number": "G0.01",
+    "sheet_title": "SHEET INDEX",
+    "discipline": "general"
+  },
+  {
+    "page": 107,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 108,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 109,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 110,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 111,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 112,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 113,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 114,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 115,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 116,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 117,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 118,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 119,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 120,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 121,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 122,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 123,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 124,
+    "sheet_number": "G0.01",
+    "sheet_title": "TITLE SHEET",
+    "discipline": "general"
+  },
+  {
+    "page": 125,
+    "sheet_number": "G0.02",
+    "sheet_title": "SYMBOLS AND ABBREVIATIONS",
+    "discipline": "general"
+  },
+  {
+    "page": 126,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 127,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 128,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 129,
+    "sheet_number": "?",
+    "sheet_title": "KEY PLAN",
+    "discipline": "general"
+  },
+  {
+    "page": 130,
+    "sheet_number": "?",
+    "sheet_title": "KEY PLAN",
+    "discipline": "general"
+  },
+  {
+    "page": 131,
+    "sheet_number": "?",
+    "sheet_title": "KEY PLAN",
+    "discipline": "general"
+  },
+  {
+    "page": 132,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 133,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 134,
+    "sheet_number": "M?.??",
+    "sheet_title": "MECHANICAL UNIT DETAIL WITH CURB AND DUCT SUPPORT DETAILS",
+    "discipline": "mechanical"
+  },
+  {
+    "page": 135,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 136,
+    "sheet_number": "?",
+    "sheet_title": "KEY PLAN",
+    "discipline": "general"
+  },
+  {
+    "page": 137,
+    "sheet_number": "?",
+    "sheet_title": "KEY PLAN",
+    "discipline": "general"
+  },
+  {
+    "page": 138,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 139,
+    "sheet_number": "?",
+    "sheet_title": "",
+    "discipline": "general"
+  },
+  {
+    "page": 140,
+    "sheet_number": "P?.??",
+    "sheet_title": "PLUMBING DETAILS - CLEANOUTS, DRAINS, AND WATER HEATER",
+    "discipline": "plumbing"
+  },
+  {
+    "page": 141,
+    "sheet_number": "M?.??",
+    "sheet_title": "MECHANICAL PLAN DETAILS",
+    "discipline": "mechanical"
+  },
+  {
+    "page": 142,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 143,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 144,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 145,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 146,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 147,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL AND LOW VOLTAGE PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 148,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 149,
+    "sheet_number": "T?.??",
+    "sheet_title": "LOW VOLTAGE PLAN DETAILS",
+    "discipline": "other"
+  },
+  {
+    "page": 150,
+    "sheet_number": "E?.??",
+    "sheet_title": "ELECTRICAL AND LOW VOLTAGE PLAN DETAILS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 151,
+    "sheet_number": "?",
+    "sheet_title": "Unknown",
+    "discipline": "general"
+  },
+  {
+    "page": 152,
+    "sheet_number": "?",
+    "sheet_title": "Unknown",
+    "discipline": "general"
+  },
+  {
+    "page": 153,
+    "sheet_number": "?",
+    "sheet_title": "Unknown",
+    "discipline": "general"
+  },
+  {
+    "page": 154,
+    "sheet_number": "?",
+    "sheet_title": "Unknown",
+    "discipline": "general"
+  },
+  {
+    "page": 155,
+    "sheet_number": "E1.0",
+    "sheet_title": "ELECTRICAL FIXTURE SCHEDULE",
+    "discipline": "electrical"
+  },
+  {
+    "page": 156,
+    "sheet_number": "S1.0",
+    "sheet_title": "STRUCTURAL NOTES",
+    "discipline": "structural"
+  },
+  {
+    "page": 157,
+    "sheet_number": "C1.0",
+    "sheet_title": "SITE PLAN",
+    "discipline": "civil"
+  },
+  {
+    "page": 158,
+    "sheet_number": "E2.0",
+    "sheet_title": "PHOTOMETRIC ANALYSIS",
+    "discipline": "electrical"
+  },
+  {
+    "page": 159,
+    "sheet_number": "?",
+    "sheet_title": "Unknown",
+    "discipline": "general"
+  }
+]

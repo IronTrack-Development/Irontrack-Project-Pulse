@@ -2,7 +2,7 @@
  * classify-from-json.mjs  — Phase 2: Claude classification from saved text
  * Run: node scripts/classify-from-json.mjs
  */
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createClient } from "@supabase/supabase-js";
@@ -111,21 +111,31 @@ async function main() {
     .order("page_index", { ascending: true });
   if (!sheets?.length) { console.error("No sheets found"); process.exit(1); }
 
-  // Classify in batches
-  const allClassifications = [];
-  const totalBatches = Math.ceil(pages.length / BATCH_SIZE);
-  for (let i = 0; i < pages.length; i += BATCH_SIZE) {
-    const batch = pages.slice(i, i + BATCH_SIZE);
-    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
-    console.log(`🤖 Batch ${batchNum}/${totalBatches} (pages ${batch[0].page}–${batch[batch.length - 1].page})...`);
-    try {
-      const results = await classifyBatch(apiKey, batch);
-      allClassifications.push(...results);
-      console.log(`   ✓ ${results.length} pages classified`);
-    } catch (e) {
-      console.error(`   ✗ Batch failed:`, e.message);
-      batch.forEach(p => allClassifications.push({ page: p.page, sheet_number: `P${p.page}`, sheet_title: `Page ${p.page}`, discipline: "general" }));
+  // Check for saved classifications checkpoint
+  const classCheckpoint = resolve(projectRoot, "scripts/encanto-classifications.json");
+  let allClassifications = [];
+  try {
+    allClassifications = JSON.parse(await readFile(classCheckpoint, "utf-8"));
+    console.log(`✅ Loaded ${allClassifications.length} classifications from checkpoint (skipping Claude)`);
+  } catch {
+    // No checkpoint, run Claude
+    const totalBatches = Math.ceil(pages.length / BATCH_SIZE);
+    for (let i = 0; i < pages.length; i += BATCH_SIZE) {
+      const batch = pages.slice(i, i + BATCH_SIZE);
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+      console.log(`🤖 Batch ${batchNum}/${totalBatches} (pages ${batch[0].page}–${batch[batch.length - 1].page})...`);
+      try {
+        const results = await classifyBatch(apiKey, batch);
+        allClassifications.push(...results);
+        console.log(`   ✓ ${results.length} pages classified`);
+        // Save checkpoint after each batch
+        await writeFile(classCheckpoint, JSON.stringify(allClassifications, null, 2));
+      } catch (e) {
+        console.error(`   ✗ Batch failed:`, e.message);
+        batch.forEach(p => allClassifications.push({ page: p.page, sheet_number: `P${p.page}`, sheet_title: `Page ${p.page}`, discipline: "general" }));
+      }
     }
+    console.log(`✅ All batches complete. Checkpoint saved.`);
   }
 
   // Use SQL UPDATE FROM VALUES for an efficient single-query bulk update
@@ -194,6 +204,11 @@ async function main() {
   for (const c of allClassifications.slice(0, 10)) {
     console.log(`   Pg ${String(c.page).padStart(3)} | ${c.sheet_number.padEnd(8)} | ${c.discipline.padEnd(15)} | ${c.sheet_title}`);
   }
+}
+
+function esc(s) {
+  if (!s) return "NULL";
+  return `'${String(s).replace(/'/g, "''")}'`;
 }
 
 main().catch(e => { console.error("Fatal:", e); process.exit(1); });
