@@ -20,10 +20,11 @@ import {
   Receipt,
   BarChart3,
   TrendingUp,
-  FileBarChart2,
+  Eye,
   Users,
   Shield,
   HardHat,
+  Camera,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
 
@@ -66,8 +67,9 @@ const NAV_GROUPS: GroupDef[] = [
     tabs: [
       { id: "dailylog", label: "Daily Log", icon: ClipboardList },
       { id: "inspections", label: "Inspections", icon: ShieldCheck },
+      { id: "field-reports", label: "Reports", icon: Camera },
       { id: "punch", label: "Punch List", icon: CheckSquare },
-      { id: "reports", label: "Reports", icon: FileBarChart2 },
+      { id: "reports", label: "Observations", icon: Eye },
     ],
   },
   {

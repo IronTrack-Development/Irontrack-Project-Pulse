@@ -29,6 +29,7 @@ import DrawingsTab from "@/components/tabs/DrawingsTab";
 import PunchListTab from "@/components/tabs/PunchListTab";
 import SafetyTab from "@/components/tabs/SafetyTab";
 import CoordinationTab from "@/components/tabs/CoordinationTab";
+import FieldReportsTab from "@/components/tabs/FieldReportsTab";
 
 interface Project {
   id: string;
@@ -134,7 +135,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
                 className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
                 <ClipboardList size={14} />
-                <span className="hidden sm:inline">Report</span>
+                <span className="hidden sm:inline">Observe</span>
               </Link>
               <Link
                 href={`/upload?project=${id}`}
@@ -189,6 +190,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "drawings" && <DrawingsTab projectId={id} />}
         {activeTab === "punch" && <PunchListTab projectId={id} />}
         {activeTab === "safety" && <SafetyTab projectId={id} />}
+        {activeTab === "field-reports" && <FieldReportsTab projectId={id} />}
         {activeTab === "coordination" && <CoordinationTab projectId={id} />}
         {activeTab === "action-tracker" && <CoordinationTab projectId={id} defaultView="actions" />}
       </div>

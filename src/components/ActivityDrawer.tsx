@@ -480,7 +480,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div>
             <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
               <ClipboardList size={12} className="inline mr-1.5 text-[#F97316]" />
-              Issue Report
+              Observation
             </div>
             <button
               onClick={() => {
@@ -490,7 +490,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
             >
               <ClipboardList size={14} className="text-[#F97316]" />
-              Generate Report
+              New Observation
             </button>
           </div>
 

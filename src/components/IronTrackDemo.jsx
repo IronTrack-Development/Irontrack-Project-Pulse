@@ -31,7 +31,7 @@ const SCENES = [
   { id: "milestones", label: "Milestones", sub: "What's done, what's coming", icon: Flag },
   { id: "progress", label: "Progress", sub: "Activity breakdown", icon: TrendingUp },
   { id: "reforecast", label: "Reforecast + MPP Export", sub: "Update field, export back to MS Project", icon: GitBranch },
-  { id: "reports", label: "Issue Reports", sub: "Generate & share PDFs", icon: ClipboardList },
+  { id: "reports", label: "Observations", sub: "Generate & share PDFs", icon: ClipboardList },
   { id: "subs", label: "Subs & QR", sub: "Self-registration via QR", icon: QrCode },
 ];
 
@@ -633,7 +633,7 @@ function Reforecast() {
 
   return (
     <>
-      <ProjectHeader tabs={["Progress", "Reforecast", "Reports", "Subs"]} active={1} />
+      <ProjectHeader tabs={["Progress", "Reforecast", "Observations", "Subs"]} active={1} />
       <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
         <AnimatePresence mode="wait">
           {state === 0 && (
@@ -826,7 +826,7 @@ function Reports() {
   }, []);
   return (
     <>
-      <ProjectHeader tabs={["Reforecast", "Reports", "Subs", "Settings"]} active={1} />
+      <ProjectHeader tabs={["Reforecast", "Observations", "Subs", "Settings"]} active={1} />
       <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
         <AnimatePresence mode="wait">
           {state === 0 && (
@@ -834,12 +834,12 @@ function Reports() {
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 14 }}>
                 <ClipboardList size={15} color={C.orange} />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>Issue Reports</div>
-                  <div style={{ fontSize: 10, color: C.dim }}>1 report generated</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>Observations</div>
+                  <div style={{ fontSize: 10, color: C.dim }}>1 observation generated</div>
                 </div>
                 <div style={{ background: C.orange, borderRadius: 8, padding: "6px 9px", display: "flex", alignItems: "center", gap: 4 }}>
                   <ClipboardList size={10} color="#fff" />
-                  <span style={{ fontSize: 10, color: "#fff", fontWeight: 700 }}>New Report</span>
+                  <span style={{ fontSize: 10, color: "#fff", fontWeight: 700 }}>New Observation</span>
                 </div>
               </div>
               <div style={{ background: C.card, borderRadius: 12, padding: 12 }}>
@@ -946,11 +946,11 @@ function Reports() {
               </div>
               <div style={{ background: "#1E3A5F", borderRadius: 8, padding: "16px 12px", marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: 1 }}>ISSUE REPORT</span>
+                  <span style={{ fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: 1 }}>FIELD OBSERVATION</span>
                   <span style={{ fontSize: 11, color: "#9DB5D4" }}>IR-001</span>
                 </div>
               </div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: "#1E3A5F", marginBottom: 10 }}>Project Issue Report</div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: "#1E3A5F", marginBottom: 10 }}>Project Field Observation</div>
               <div style={{ background: "#fff", borderRadius: 8, padding: 10, fontSize: 10, lineHeight: 1.7, border: "1px solid #E5E7EB" }}>
                 <div><strong style={{ color: "#1E3A5F" }}>Schedule Item:</strong> <span style={{ color: "#333" }}>SES Gear Pad</span></div>
                 <div><strong style={{ color: "#1E3A5F" }}>Report #:</strong> <span style={{ color: "#333" }}>IR-001</span></div>
@@ -1033,7 +1033,7 @@ function QrPlaceholder() {
 function SubsQR() {
   return (
     <>
-      <ProjectHeader tabs={["Reports", "Subs", "Integrations", "Settings"]} active={1} />
+      <ProjectHeader tabs={["Observations", "Subs", "Integrations", "Settings"]} active={1} />
       <div style={{ flex: 1, overflowY: "auto", padding: "14px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
           <div>

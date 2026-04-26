@@ -211,10 +211,10 @@ export default function ReportsTab({ projectId }: Props) {
         <div>
           <h2 className="text-white font-bold text-lg flex items-center gap-2">
             <ClipboardList size={18} className="text-[#F97316]" />
-            Issue Reports
+            Observations
           </h2>
           <p className="text-gray-500 text-sm mt-0.5">
-            {reports.length} report{reports.length !== 1 ? "s" : ""} generated
+            {reports.length} observation{reports.length !== 1 ? "s" : ""} generated
           </p>
         </div>
         <div className="flex gap-2">
@@ -229,7 +229,7 @@ export default function ReportsTab({ projectId }: Props) {
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
           >
             <ClipboardList size={14} />
-            New Report
+            New Observation
           </Link>
         </div>
       </div>
@@ -239,16 +239,16 @@ export default function ReportsTab({ projectId }: Props) {
           <div className="w-14 h-14 rounded-full bg-[#1F1F25] flex items-center justify-center mb-4">
             <FileText size={24} className="text-gray-600" />
           </div>
-          <p className="text-gray-400 font-semibold mb-1">No reports yet</p>
+          <p className="text-gray-400 font-semibold mb-1">No observations yet</p>
           <p className="text-gray-600 text-sm mb-6">
-            Generate your first issue report from the field.
+            Start your first observation to document field conditions.
           </p>
           <Link
             href={`/projects/${projectId}/report`}
             className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <ClipboardList size={16} />
-            Generate Report
+            New Observation
           </Link>
         </div>
       ) : (
@@ -287,7 +287,7 @@ export default function ReportsTab({ projectId }: Props) {
                         onClick={() => handleDelete(report.id)}
                         disabled={deletingId === report.id}
                         className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-[#EF4444] transition-colors disabled:opacity-40"
-                        title="Delete report"
+                        title="Delete observation"
                       >
                         {deletingId === report.id ? (
                           <RefreshCw size={14} className="animate-spin" />
@@ -322,7 +322,7 @@ export default function ReportsTab({ projectId }: Props) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-gray-500 hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
                 >
-                  View Report
+                  View Observation
                   <ChevronRight size={12} />
                 </a>
               )}

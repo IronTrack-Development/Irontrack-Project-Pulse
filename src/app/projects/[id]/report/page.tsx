@@ -353,7 +353,7 @@ export default function GenerateReportPage({
     } catch (err) {
       console.error("Generate report error:", err);
       const msg = err instanceof Error ? err.message : "Unknown error";
-      alert(`Failed to generate report: ${msg}`);
+      alert(`Failed to generate observation: ${msg}`);
     } finally {
       setSubmitting(false);
     }
@@ -363,7 +363,7 @@ export default function GenerateReportPage({
     if (!doneReportId) return;
     const url = `${window.location.origin}/projects/${id}/reports/${doneReportId}/print`;
     if (navigator.share) {
-      await navigator.share({ title: `Issue Report ${doneReportNum}`, url });
+      await navigator.share({ title: `Field Observation ${doneReportNum}`, url });
     } else {
       await navigator.clipboard.writeText(url);
       alert("Link copied to clipboard!");
@@ -387,12 +387,12 @@ export default function GenerateReportPage({
           <div className="flex-1">
             <h1 className="text-white font-bold flex items-center gap-2">
               <ClipboardList size={18} className="text-[#F97316]" />
-              Generate Report
+              New Observation
             </h1>
             <p className="text-xs text-gray-500 mt-0.5">
               {step === "select" && "Step 1: Select Schedule Item"}
               {step === "issues" && `Step 2: Add Issues${selectedActivity ? ` — ${selectedActivity.activity_name}` : ""}`}
-              {step === "done" && "Report Generated ✅"}
+              {step === "done" && "Observation Generated ✅"}
             </p>
           </div>
         </div>
@@ -540,7 +540,7 @@ export default function GenerateReportPage({
                 className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
               />
               {showPreparedByPrompt && !preparedBy.trim() && (
-                <p className="text-xs text-[#EF4444] mt-1">Please enter your name before generating the report.</p>
+                <p className="text-xs text-[#EF4444] mt-1">Please enter your name before generating the observation.</p>
               )}
             </div>
 
@@ -633,12 +633,12 @@ export default function GenerateReportPage({
               ) : (
                 <>
                   <ClipboardList size={18} />
-                  Generate Report{issues.length > 0 ? ` (${issues.length} issue${issues.length !== 1 ? "s" : ""})` : ""}
+                  Generate Observation{issues.length > 0 ? ` (${issues.length} issue${issues.length !== 1 ? "s" : ""})` : ""}
                 </>
               )}
             </button>
             {issues.length === 0 && (
-              <p className="text-center text-xs text-gray-600 mt-2">Add at least one issue to generate the report.</p>
+              <p className="text-center text-xs text-gray-600 mt-2">Add at least one issue to generate the observation.</p>
             )}
           </div>
         )}
@@ -649,14 +649,14 @@ export default function GenerateReportPage({
             <div className="w-16 h-16 rounded-full bg-[#22C55E]/15 flex items-center justify-center mb-4">
               <CheckCircle size={36} className="text-[#22C55E]" />
             </div>
-            <h2 className="text-white font-bold text-2xl mb-1">Report Generated!</h2>
+            <h2 className="text-white font-bold text-2xl mb-1">Observation Generated!</h2>
             <p className="text-gray-500 text-sm mb-6">{doneReportNum}</p>
 
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-5 w-full text-left mb-6">
               <div className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Schedule Item</div>
               <div className="text-white font-semibold mb-1">{selectedActivity?.activity_name}</div>
               <div className="text-gray-500 text-sm mb-3">
-                Issue Report — {issues.length} issue{issues.length !== 1 ? "s" : ""}
+                Field Observation — {issues.length} issue{issues.length !== 1 ? "s" : ""}
               </div>
               <div className="text-xs text-gray-600">
                 Generated {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
@@ -678,7 +678,7 @@ export default function GenerateReportPage({
                 className="flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3.5 text-sm font-semibold transition-all"
               >
                 <Share2 size={16} />
-                Share Report Link
+                Share Observation Link
               </button>
               <button
                 onClick={() => router.push(`/projects/${id}`)}

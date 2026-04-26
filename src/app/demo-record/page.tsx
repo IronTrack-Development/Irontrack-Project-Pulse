@@ -36,7 +36,7 @@ const SCENES = [
   { id: "priority", label: "Priority View" },
   { id: "lookahead", label: "3-Week Lookahead" },
   { id: "reforecast", label: "Schedule Reforecast" },
-  { id: "reports", label: "Issue Reports" },
+  { id: "reports", label: "Observations" },
   { id: "readycheck", label: "Ready Check" },
   { id: "subs", label: "Sub Portal + QR" },
   { id: "export", label: "MSPDI Export" },
@@ -290,11 +290,11 @@ function ReportsScene() {
       <div style={{ flex: 1, padding: "16px 18px 0", overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 14 }}>
           <ClipboardList size={16} color={C.orange} />
-          <span style={{ fontSize: 18, fontWeight: 700, color: C.text }}>Issue Reports</span>
+          <span style={{ fontSize: 18, fontWeight: 700, color: C.text }}>Observations</span>
         </div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           style={{ background: "#1e3a5f", borderRadius: "12px 12px 0 0", padding: "10px 14px" }}>
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>ISSUE REPORT · IR-003</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>FIELD OBSERVATION · IR-003</span>
         </motion.div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
           style={{ background: C.card, borderRadius: "0 0 12px 12px", padding: 14, marginBottom: 12 }}>

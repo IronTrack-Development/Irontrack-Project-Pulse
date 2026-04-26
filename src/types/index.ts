@@ -277,6 +277,32 @@ export interface LookaheadGroup {
   }[];
 }
 
+// ── Field Report types ───────────────────────────────────────
+
+export type FieldReportStatus = 'open' | 'in_progress' | 'resolved';
+export type FieldReportPriority = 'high' | 'medium' | 'low';
+
+export interface FieldReport {
+  id: string;
+  project_id: string;
+  report_number: number;
+  title: string;
+  photo_path?: string;
+  photo_caption?: string;
+  assigned_to?: string;
+  assigned_company?: string;
+  comments?: string;
+  location?: string;
+  status: FieldReportStatus;
+  priority: FieldReportPriority;
+  linked_activity_id?: string;
+  trade?: string;
+  resolved_at?: string;
+  resolution_notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // ── Daily Log types ──────────────────────────────────────────
 
 export type DailyLogStatus = 'draft' | 'submitted' | 'locked';

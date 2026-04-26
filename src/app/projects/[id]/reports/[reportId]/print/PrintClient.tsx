@@ -210,7 +210,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         <button
           onClick={async () => {
             const url = window.location.href;
-            const title = `Issue Report ${report.report_number} — ${report.activity_name}`;
+            const title = `Field Observation ${report.report_number} — ${report.activity_name}`;
             if (navigator.share) {
               try {
                 await navigator.share({ title, url });
@@ -273,7 +273,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           }}
         >
           <h1 style={{ fontSize: "16pt", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: 0 }}>
-            Issue Report
+            Field Observation Report
           </h1>
           <span style={{ fontSize: "10pt", color: "#93c5fd", fontWeight: 600 }}>
             {report.report_number}
@@ -282,7 +282,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
 
         {/* Project title */}
         <div style={{ fontSize: "16pt", fontWeight: 700, color: "#1a1a1a", marginBottom: "16px" }}>
-          {report.project_name ? `${report.project_name} Project` : "Project Issue Report"}
+          {report.project_name ? `${report.project_name} Project` : "Project Field Observation"}
         </div>
 
         {/* Info box */}

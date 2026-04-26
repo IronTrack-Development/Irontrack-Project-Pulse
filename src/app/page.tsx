@@ -242,10 +242,10 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Field Issue Reports
+                  Field Observations
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Walk the job, snap photos, tag the issue to a schedule item, and generate a professional PDF — all from your phone. Share it instantly with the native share sheet. Every report is saved to project history.
+                  Walk the job, snap photos, tag the issue to a schedule item, and generate a professional PDF — all from your phone. Share it instantly with the native share sheet. Every observation is saved to project history.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Photo Capture", "PDF Generation", "Priority Tagging", "Share Link"].map((tag) => (
@@ -258,7 +258,7 @@ export default function LandingPage() {
               <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                   <div className="px-4 py-2.5" style={{ background: "#1e3a5f" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Issue Report</span>
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">Field Observation</span>
                     <span className="text-[10px] ml-2" style={{ color: "#93c5fd" }}>IR-003</span>
                   </div>
                   <div className="px-4 py-3 space-y-2">
@@ -485,7 +485,7 @@ export default function LandingPage() {
                 "All file formats — MPP, XLSX, CSV, XML, XER",
                 "3-week lookahead + milestones + progress",
                 "Schedule reforecast engine",
-                "Field issue reports with photos",
+                "Field observations with photos",
                 "Ready Check sub communication",
                 "QR code week sharing",
                 "MSPDI export for MS Project / P6",
