@@ -7,9 +7,7 @@ import {
   AlertTriangle, BookOpen, Wrench, MessageSquare, Eye,
   BarChart3, Columns3, Truck, Search, Clipboard, Settings
 } from "lucide-react";
-import HeroVideo from "@/components/hero-video";
 import MobileMenu from "@/components/MobileMenu";
-import DemoSection from "@/components/DemoSection";
 
 export default function LandingPage() {
   return (
@@ -65,8 +63,7 @@ export default function LandingPage() {
 
       {/* ═══ HERO ═══ */}
       <section className="relative overflow-hidden">
-        <HeroVideo />
-        <div className="max-w-7xl mx-auto px-6 py-10 md:py-20">
+        <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
               The Complete Field Management Platform
@@ -708,13 +705,6 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ INTERACTIVE DEMO ═══ */}
-      <section className="border-t" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0A0A0C" }}>
-        <div className="max-w-7xl mx-auto">
-          <DemoSection />
         </div>
       </section>
 
