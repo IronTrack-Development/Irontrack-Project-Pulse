@@ -79,7 +79,7 @@ export default function LandingPage() {
               <em className="font-medium" style={{ color: "#E85D1C" }}>Don&apos;t Chase It.</em>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Schedule intelligence. Daily field ops. Safety compliance. Trade coordination. Subcontractor management. One app, one price — built by field operators who&apos;ve lived it.
+              Schedule intelligence. Daily field ops. Safety compliance. Trade coordination. Subcontractor management. One app, one price - built by field operators who&apos;ve lived it.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
@@ -160,7 +160,7 @@ export default function LandingPage() {
                   Schedule Intelligence
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Upload your schedule once. Instantly see today, tomorrow, and three weeks out — grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates your entire critical path in seconds. Float, forecast finish date, risk flags, milestones, and MSPDI export. Pure math, zero AI. Results you can trust and defend.
+                  Upload your schedule once. Instantly see today, tomorrow, and three weeks out - grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates your entire critical path in seconds. Float, forecast finish date, risk flags, milestones, and MSPDI export. Pure math, zero AI. Results you can trust and defend.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
@@ -173,10 +173,10 @@ export default function LandingPage() {
               <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="space-y-2 mb-4">
                   {[
-                    { task: "Install Structural Steel — Bldg A", pct: "85%", color: "#E85D1C" },
-                    { task: "Rough-In Electrical — Tower 2", pct: "60%", color: "#3B82F6" },
+                    { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#E85D1C" },
+                    { task: "Rough-In Electrical - Tower 2", pct: "60%", color: "#3B82F6" },
                     { task: "Pour Foundation North Wing", pct: "100%", color: "#22C55E" },
-                    { task: "Fire Sprinkler Rough-In — Bldg B", pct: "0%", color: "#6B7280" },
+                    { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "#6B7280" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                       <div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
@@ -218,7 +218,7 @@ export default function LandingPage() {
                   <div className="px-4 py-3 space-y-2">
                     <div className="flex items-center gap-2">
                       <Sun className="w-3.5 h-3.5" style={{ color: "#EAB308" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>72°F — Clear, wind 8mph</span>
+                      <span className="text-xs" style={{ color: "#0D0D0D" }}>72°F - Clear, wind 8mph</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
@@ -233,7 +233,7 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#DC2626" }}>High</span>
-                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Missing backing for grab bars — Corridor 2</span>
+                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Missing backing for grab bars - Corridor 2</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#22C55E" }}>Done</span>
@@ -288,10 +288,10 @@ export default function LandingPage() {
                     <span className="text-[10px] ml-2 text-red-200">OSHA Template</span>
                   </div>
                   <div className="px-4 py-3 space-y-2">
-                    <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>Fall Protection — Scaffolding</div>
+                    <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>Fall Protection - Scaffolding</div>
                     <div className="flex items-center gap-2">
                       <Shield className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs" style={{ color: "rgba(13,13,13,0.55)" }}>OSHA 1926.451 — Scaffolds</span>
+                      <span className="text-xs" style={{ color: "rgba(13,13,13,0.55)" }}>OSHA 1926.451 - Scaffolds</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
@@ -323,15 +323,15 @@ export default function LandingPage() {
                   <div className="px-4 py-3 space-y-2">
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs font-bold" style={{ color: "#DC2626" }}>Conflict: Electrical + HVAC — Level 3 ceiling</span>
+                      <span className="text-xs font-bold" style={{ color: "#DC2626" }}>Conflict: Electrical + HVAC - Level 3 ceiling</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clipboard className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Re-sequence HVAC rough-in — Owner: AMS Mechanical</span>
+                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Re-sequence HVAC rough-in - Owner: AMS Mechanical</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clipboard className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Confirm conduit routing — Owner: ATS Electric</span>
+                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Confirm conduit routing - Owner: ATS Electric</span>
                     </div>
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default function LandingPage() {
                   Documents
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Manage submittals with full approval workflows. Draft RFIs with AI assistance — describe the issue and get a professional RFI ready to send. Organize drawings by discipline with version control. Everything searchable, everything tracked.
+                  Manage submittals with full approval workflows. Draft RFIs with AI assistance - describe the issue and get a professional RFI ready to send. Organize drawings by discipline with version control. Everything searchable, everything tracked.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
@@ -397,7 +397,7 @@ export default function LandingPage() {
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                     <Search className="w-4 h-4" style={{ color: "#E85D1C" }} />
                     <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>DWG: Mechanical — Level 3</span>
+                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>DWG: Mechanical - Level 3</span>
                       <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rev C · 4 sheets</div>
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#3B82F6", background: "rgba(59,130,246,0.1)" }}>Current</span>
@@ -415,21 +415,21 @@ export default function LandingPage() {
                       <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>ATS Electric</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Confirmed ✓</span>
                     </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rough-In Electrical — Mon Apr 21</span>
+                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rough-In Electrical - Mon Apr 21</span>
                   </div>
                   <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Buildtek Framing</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Awaiting</span>
                     </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Exterior Framing Bldg B — Tue Apr 22</span>
+                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Exterior Framing Bldg B - Tue Apr 22</span>
                   </div>
                   <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.03)" }}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>AMS Fire Protection</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EF4444", background: "rgba(239,68,68,0.1)" }}>Issue Flagged</span>
                     </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sprinkler install delayed — material lead time</span>
+                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sprinkler install delayed - material lead time</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-center mb-3">
@@ -449,7 +449,7 @@ export default function LandingPage() {
                   Ready Check & Sub Portal
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Tap any activity, send a ready-check via SMS or email. Subs confirm they&apos;re mobilizing — or flag an issue before it becomes a problem. Share any week via QR code — subs scan and see only their scope. Schedule logic is protected: no float, no predecessors, no critical path data exposed. Zero friction, zero risk.
+                  Tap any activity, send a ready-check via SMS or email. Subs confirm they&apos;re mobilizing - or flag an issue before it becomes a problem. Share any week via QR code - subs scan and see only their scope. Schedule logic is protected: no float, no predecessors, no critical path data exposed. Zero friction, zero risk.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["SMS/Email", "QR Sharing", "Trade Filtering", "Protected Schedule Data"].map((tag) => (
@@ -461,24 +461,24 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [07] Sub Ops — FEATURED ── */}
+            {/* ── [07] Sub Ops - FEATURED ── */}
             <div className="relative">
               <div className="absolute -inset-4 md:-inset-8 rounded-3xl" style={{ background: "rgba(232,93,28,0.04)", border: "2px solid rgba(232,93,28,0.15)" }} />
               <div className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center">
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.12)" }}>
                     <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>New — The Sub Differentiator</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>New - The Sub Differentiator</span>
                   </div>
                   <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[07]</div>
                   <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
                     Sub Ops
                   </h3>
                   <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    The full subcontractor management platform. Digitize your morning huddle with the Dispatch Board — assign crews to jobs with scope, safety focus, and materials. Track foremen, journeymen, and apprentices with a real crew roster. Log production quantities with photos. Maintain an SOP library with read-tracking for compliance.
+                    The full subcontractor management platform. Digitize your morning huddle with the Dispatch Board - assign crews to jobs with scope, safety focus, and materials. Track foremen, journeymen, and apprentices with a real crew roster. Log production quantities with photos. Maintain an SOP library with read-tracking for compliance.
                   </p>
                   <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Field crews flag blockers in real-time. Multi-department subs get a Kanban handoff board — sheet metal to piping to controls — with checklists and handoff photos. This isn&apos;t a viewer. It&apos;s how you run your company.
+                    Field crews flag blockers in real-time. Multi-department subs get a Kanban handoff board - sheet metal to piping to controls - with checklists and handoff photos. This isn&apos;t a viewer. It&apos;s how you run your company.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {["Morning Dispatch", "Foreman Tracking", "Production Logs", "SOP Library", "Handoff Board", "Blocker Reports"].map((tag) => (
@@ -523,7 +523,7 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                    <span className="text-xs font-bold" style={{ color: "#DC2626" }}>1 Blocker: Material delay — flex duct, ETA Wed</span>
+                    <span className="text-xs font-bold" style={{ color: "#DC2626" }}>1 Blocker: Material delay - flex duct, ETA Wed</span>
                   </div>
                 </div>
               </div>
@@ -557,7 +557,7 @@ export default function LandingPage() {
                   Platform Features
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Light and dark themes so you can read the screen at 6 AM or midnight. Full Spanish localization for bilingual crews. Mobile-first design that works on any device — because nobody&apos;s carrying a laptop through a construction site.
+                  Light and dark themes so you can read the screen at 6 AM or midnight. Full Spanish localization for bilingual crews. Mobile-first design that works on any device - because nobody&apos;s carrying a laptop through a construction site.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Dark Mode", "Light Mode", "Español", "Mobile-First"].map((tag) => (
@@ -590,22 +590,22 @@ export default function LandingPage() {
               {
                 icon: HardHat,
                 title: "Superintendents",
-                desc: "You run the job. Daily logs, field reports, coordination meetings, and toolbox talks — all from your phone. Know what's happening today, what's at risk, and what's about to blow up before it does.",
+                desc: "You run the job. Daily logs, field reports, coordination meetings, and toolbox talks - all from your phone. Know what's happening today, what's at risk, and what's about to blow up before it does.",
               },
               {
                 icon: Briefcase,
                 title: "Project Managers",
-                desc: "You own the schedule and the client relationship. Reforecast engine, milestone tracking, sub portal, document management — executive snapshots and risk detection without digging through spreadsheets.",
+                desc: "You own the schedule and the client relationship. Reforecast engine, milestone tracking, sub portal, document management - executive snapshots and risk detection without digging through spreadsheets.",
               },
               {
                 icon: Building2,
                 title: "General Contractors",
-                desc: "Full platform visibility across every project. Trade coordination, conflict detection, sub management, safety compliance. Your entire team on one shared operating picture — upload once, everyone's aligned.",
+                desc: "Full platform visibility across every project. Trade coordination, conflict detection, sub management, safety compliance. Your entire team on one shared operating picture - upload once, everyone's aligned.",
               },
               {
                 icon: Users,
                 title: "Subcontractors",
-                desc: "This isn't just a schedule viewer. Sub Ops gives you a morning dispatch board, foreman and crew management, production tracking, SOP library, and department handoff boards. Run your entire operation — not just see when you're up.",
+                desc: "This isn't just a schedule viewer. Sub Ops gives you a morning dispatch board, foreman and crew management, production tracking, SOP library, and department handoff boards. Run your entire operation - not just see when you're up.",
               },
             ].map((persona) => (
               <div
@@ -646,13 +646,13 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-3 mb-8">
                 {[
-                  "All schedule formats — MPP, XER, XLSX, CSV, XML",
-                  "Schedule intelligence — lookahead, reforecast, critical path",
-                  "Field ops — daily logs, reports, inspections, punch list",
-                  "Safety & compliance — toolbox talks, OSHA templates",
-                  "Trade coordination — meetings, conflict detection, action items",
-                  "Documents — submittals, RFIs with AI, drawings",
-                  "Sub Ops — dispatch, foreman tracking, production, SOPs, handoffs",
+                  "All schedule formats - MPP, XER, XLSX, CSV, XML",
+                  "Schedule intelligence - lookahead, reforecast, critical path",
+                  "Field ops - daily logs, reports, inspections, punch list",
+                  "Safety & compliance - toolbox talks, OSHA templates",
+                  "Trade coordination - meetings, conflict detection, action items",
+                  "Documents - submittals, RFIs with AI, drawings",
+                  "Sub Ops - dispatch, foreman tracking, production, SOPs, handoffs",
                   "Ready Check + QR sharing",
                   "Light/dark theme + Spanish localization",
                   "Up to 50 projects",
@@ -672,7 +672,7 @@ export default function LandingPage() {
                 Get Started
               </Link>
             </div>
-            {/* Sub Ops Standalone — Coming Soon */}
+            {/* Sub Ops Standalone - Coming Soon */}
             <div className="rounded-2xl p-8 md:p-10 border-2 flex flex-col" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
               <div className="text-center mb-8">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.08)" }}>
