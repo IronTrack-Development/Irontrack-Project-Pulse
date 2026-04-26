@@ -63,24 +63,30 @@ Return ONLY valid JSON with this exact structure (no markdown, no explanation):
 
 Return only the JSON object.`;
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-3-5-haiku-20241022",
-      max_tokens: 512,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userMessage }],
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20250414",
+        max_tokens: 512,
+        system: systemPrompt,
+        messages: [{ role: "user", content: userMessage }],
+      }),
+    });
+  } catch (networkError) {
+    console.error("[ai-draft] Network error calling Claude API:", networkError);
+    return NextResponse.json({ error: "AI service unavailable — network error" }, { status: 502 });
+  }
 
   if (!response.ok) {
-    const err = await response.text();
-    console.error("[ai-draft] Claude error:", err);
+    const errBody = await response.text();
+    console.error(`[ai-draft] Claude error: status=${response.status} body=${errBody}`);
     return NextResponse.json({ error: "AI service error" }, { status: 502 });
   }
 

@@ -14,6 +14,39 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const MPP_CONVERTER_URL = process.env.MPP_CONVERTER_URL || "https://mpp-converter-production.up.railway.app";
 
+// Compute successor_ids as the inverse of predecessor_ids for all activities in a project
+async function computeSuccessorIds(supabase: ReturnType<typeof getServiceClient>, projectId: string) {
+  const { data: activities } = await supabase
+    .from("parsed_activities")
+    .select("id, activity_id, predecessor_ids")
+    .eq("project_id", projectId);
+
+  if (!activities?.length) return;
+
+  // Build reverse map: predecessor -> list of successors
+  const successorMap = new Map<string, Set<string>>();
+
+  for (const act of activities) {
+    if (!act.predecessor_ids?.length) continue;
+    for (const predId of act.predecessor_ids) {
+      // Find the predecessor activity by activity_id or id
+      const predAct = activities.find((a: { activity_id: string | null; id: string }) => a.activity_id === predId || a.id === predId);
+      if (predAct) {
+        if (!successorMap.has(predAct.id)) successorMap.set(predAct.id, new Set());
+        successorMap.get(predAct.id)!.add(act.activity_id || act.id);
+      }
+    }
+  }
+
+  // Batch update
+  for (const [actId, successors] of successorMap) {
+    await supabase
+      .from("parsed_activities")
+      .update({ successor_ids: Array.from(successors) })
+      .eq("id", actId);
+  }
+}
+
 // Convert MPP via MPXJ microservice on Railway
 async function convertMppViaService(buffer: Buffer, filename: string): Promise<RawRow[]> {
   // Build multipart form data manually for Node.js compatibility
@@ -711,6 +744,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Compute successor_ids from predecessor_ids
+    await computeSuccessorIds(supabase, projectId);
+
     const xMilestoneCount = xerActivities.filter((a) => a?.milestone).length;
     await supabase.from("schedule_uploads").update({ parse_status: "complete", activity_count: insertedXer.length }).eq("id", upload.id);
 
@@ -994,6 +1030,9 @@ export async function POST(req: NextRequest) {
         .eq("id", sub.id);
     }
   }
+
+  // Compute successor_ids from predecessor_ids
+  await computeSuccessorIds(supabase, projectId);
 
   // Update upload record
   await supabase

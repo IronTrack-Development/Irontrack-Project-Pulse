@@ -81,18 +81,7 @@ const DISCIPLINE_COLOR: Record<Discipline, string> = {
   other: "#6B7280",           // gray
 };
 
-const DISCIPLINE_EMOJI: Record<Discipline, string> = {
-  architectural: "🏗️",
-  structural: "🔩",
-  mechanical: "⚙️",
-  electrical: "⚡",
-  plumbing: "🔧",
-  civil: "🌍",
-  landscape: "🌿",
-  fire_protection: "🔥",
-  general: "📋",
-  other: "📄",
-};
+
 
 // Natural sort for sheet numbers like A1.01, A1.02, A2.01, S1.1, S2.1
 function naturalSheetSort(a: DrawingSheet, b: DrawingSheet): number {
@@ -280,9 +269,7 @@ export default function SheetBrowser({
                     className="w-full flex items-center gap-3 px-4 py-3 min-h-[52px] hover:bg-[#1A1A20] transition-colors"
                   >
                     {/* Discipline icon + label */}
-                    <span className="text-lg leading-none shrink-0">
-                      {DISCIPLINE_EMOJI[disc]}
-                    </span>
+                    <span className="w-3 h-3 rounded-full inline-block shrink-0" style={{ backgroundColor: DISCIPLINE_COLOR[disc] }} />
                     <span
                       className="font-semibold text-sm flex-1 text-left"
                       style={{ color }}
