@@ -233,7 +233,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                       {issuePhotos.map((photo) => (
                         <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={photoUrl(photo.storage_path)} alt="Issue" className="w-full h-full object-cover" />
+                          <img src={photoUrl(photo.storage_path)} alt="Issue" className="w-full h-full object-cover" loading="lazy" />
                           <button
                             onClick={() => deletePhoto(photo.id)}
                             className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"
@@ -250,7 +250,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                       {completedPhotos.map((photo) => (
                         <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={photoUrl(photo.storage_path)} alt="Completed" className="w-full h-full object-cover" />
+                          <img src={photoUrl(photo.storage_path)} alt="Completed" className="w-full h-full object-cover" loading="lazy" />
                           <button
                             onClick={() => deletePhoto(photo.id)}
                             className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"
@@ -269,7 +269,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                     {[...issuePhotos, ...completedPhotos].map((photo) => (
                       <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={photoUrl(photo.storage_path)} alt="Photo" className="w-full h-full object-cover" />
+                        <img src={photoUrl(photo.storage_path)} alt="Photo" className="w-full h-full object-cover" loading="lazy" />
                         <button
                           onClick={() => deletePhoto(photo.id)}
                           className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white"

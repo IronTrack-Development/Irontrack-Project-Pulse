@@ -71,7 +71,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             {photos.map((photo) => (
               <div key={photo.id} className="relative w-16 h-16 rounded-lg overflow-hidden group">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" />
+                <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" loading="lazy" />
                 <button
                   type="button"
                   onClick={() => removePhoto(photo.id)}
@@ -122,7 +122,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
           {photos.map((photo) => (
             <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" />
+              <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" loading="lazy" />
               <button
                 type="button"
                 onClick={() => removePhoto(photo.id)}

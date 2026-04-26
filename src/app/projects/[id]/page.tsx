@@ -1,45 +1,89 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, Suspense } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   RefreshCw, ClipboardList, FileBarChart2, Settings,
 } from "lucide-react";
 import SettingsPanel from "@/components/settings/SettingsPanel";
 import ProjectNav from "@/components/navigation/ProjectNav";
-import WeekTab from "@/components/tabs/WeekTab";
-import MilestonesTab from "@/components/tabs/MilestonesTab";
-import ProgressTab from "@/components/tabs/ProgressTab";
-import DayPlanTab from "@/components/tabs/DayPlanTab";
-import PriorityTab from "@/components/tabs/PriorityTab";
-import ReportsTab from "@/components/tabs/ReportsTab";
-import ReforecastTab from "@/components/tabs/ReforecastTab";
-import SubsTab from "@/components/tabs/SubsTab";
-import SixWeekTab from "@/components/tabs/SixWeekTab";
 import { SupportButton } from "@/components/support-button";
 import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
-import DailyLogTab from "@/components/tabs/DailyLogTab";
-import InspectionsTab from "@/components/tabs/InspectionsTab";
-import DirectoryTab from "@/components/tabs/DirectoryTab";
-import SubmittalsTab from "@/components/tabs/SubmittalsTab";
-import TMTab from "@/components/tabs/TMTab";
-import RFIsTab from "@/components/tabs/RFIsTab";
-import DrawingsTab from "@/components/tabs/DrawingsTab";
-import PunchListTab from "@/components/tabs/PunchListTab";
-import SafetyTab from "@/components/tabs/SafetyTab";
-import CoordinationTab from "@/components/tabs/CoordinationTab";
-import FieldReportsTab from "@/components/tabs/FieldReportsTab";
-import SubDashboardTab from "@/components/tabs/SubDashboardTab";
-import SubDispatchTab from "@/components/tabs/SubDispatchTab";
-import SubForemenTab from "@/components/tabs/SubForemenTab";
-import SubCheckinsTab from "@/components/tabs/SubCheckinsTab";
-import SubProductionTab from "@/components/tabs/SubProductionTab";
-import SubBlockersTab from "@/components/tabs/SubBlockersTab";
-import SubSOPsTab from "@/components/tabs/SubSOPsTab";
-import SubHandoffsTab from "@/components/tabs/SubHandoffsTab";
-import SubCrewTab from "@/components/tabs/SubCrewTab";
+import { ProjectDataProvider } from "@/lib/ProjectDataContext";
+
+// ---------------------------------------------------------------------------
+// Lazy-loaded tab components — only fetched when the user navigates to them
+// ---------------------------------------------------------------------------
+const WeekTab = dynamic(() => import("@/components/tabs/WeekTab"), { ssr: false });
+const MilestonesTab = dynamic(() => import("@/components/tabs/MilestonesTab"), { ssr: false });
+const ProgressTab = dynamic(() => import("@/components/tabs/ProgressTab"), { ssr: false });
+const DayPlanTab = dynamic(() => import("@/components/tabs/DayPlanTab"), { ssr: false });
+const PriorityTab = dynamic(() => import("@/components/tabs/PriorityTab"), { ssr: false });
+const ReportsTab = dynamic(() => import("@/components/tabs/ReportsTab"), { ssr: false });
+const ReforecastTab = dynamic(() => import("@/components/tabs/ReforecastTab"), { ssr: false });
+const SubsTab = dynamic(() => import("@/components/tabs/SubsTab"), { ssr: false });
+const SixWeekTab = dynamic(() => import("@/components/tabs/SixWeekTab"), { ssr: false });
+const DailyLogTab = dynamic(() => import("@/components/tabs/DailyLogTab"), { ssr: false });
+const InspectionsTab = dynamic(() => import("@/components/tabs/InspectionsTab"), { ssr: false });
+const DirectoryTab = dynamic(() => import("@/components/tabs/DirectoryTab"), { ssr: false });
+const SubmittalsTab = dynamic(() => import("@/components/tabs/SubmittalsTab"), { ssr: false });
+const TMTab = dynamic(() => import("@/components/tabs/TMTab"), { ssr: false });
+const RFIsTab = dynamic(() => import("@/components/tabs/RFIsTab"), { ssr: false });
+const DrawingsTab = dynamic(() => import("@/components/tabs/DrawingsTab"), { ssr: false });
+const PunchListTab = dynamic(() => import("@/components/tabs/PunchListTab"), { ssr: false });
+const SafetyTab = dynamic(() => import("@/components/tabs/SafetyTab"), { ssr: false });
+const CoordinationTab = dynamic(() => import("@/components/tabs/CoordinationTab"), { ssr: false });
+const FieldReportsTab = dynamic(() => import("@/components/tabs/FieldReportsTab"), { ssr: false });
+const SubDashboardTab = dynamic(() => import("@/components/tabs/SubDashboardTab"), { ssr: false });
+const SubDispatchTab = dynamic(() => import("@/components/tabs/SubDispatchTab"), { ssr: false });
+const SubForemenTab = dynamic(() => import("@/components/tabs/SubForemenTab"), { ssr: false });
+const SubCheckinsTab = dynamic(() => import("@/components/tabs/SubCheckinsTab"), { ssr: false });
+const SubProductionTab = dynamic(() => import("@/components/tabs/SubProductionTab"), { ssr: false });
+const SubBlockersTab = dynamic(() => import("@/components/tabs/SubBlockersTab"), { ssr: false });
+const SubSOPsTab = dynamic(() => import("@/components/tabs/SubSOPsTab"), { ssr: false });
+const SubHandoffsTab = dynamic(() => import("@/components/tabs/SubHandoffsTab"), { ssr: false });
+const SubCrewTab = dynamic(() => import("@/components/tabs/SubCrewTab"), { ssr: false });
+
+// ---------------------------------------------------------------------------
+// TabLoader — shown while a lazy-loaded tab chunk is downloading
+// ---------------------------------------------------------------------------
+function TabLoader() {
+  return (
+    <div className="flex items-center justify-center py-20">
+      <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// KeepAliveTab — keeps frequently-used tabs mounted (hidden) to avoid
+// re-fetching data on every tab switch. Only used for the busiest tabs.
+// ---------------------------------------------------------------------------
+function KeepAliveTab({ active, children }: { active: boolean; children: React.ReactNode }) {
+  const [hasBeenActive, setHasBeenActive] = useState(false);
+
+  useEffect(() => {
+    if (active && !hasBeenActive) setHasBeenActive(true);
+  }, [active, hasBeenActive]);
+
+  if (!hasBeenActive) return null;
+
+  return (
+    <div style={{ display: active ? "block" : "none" }}>
+      {children}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Tabs that use KeepAlive (high-frequency, data-heavy)
+// ---------------------------------------------------------------------------
+const KEEP_ALIVE_TABS = new Set([
+  "priority", "today", "tomorrow", "week1", "week2", "week3", "dailylog", "progress",
+]);
 
 interface Project {
   id: string;
@@ -110,6 +154,19 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   }
 
   const color = healthColor(project.health_score);
+
+  // Helper: render a tab with Suspense. KeepAlive tabs stay mounted; others unmount.
+  function renderTab(tabKey: string, node: React.ReactNode) {
+    if (KEEP_ALIVE_TABS.has(tabKey)) {
+      return (
+        <KeepAliveTab active={activeTab === tabKey}>
+          <Suspense fallback={<TabLoader />}>{node}</Suspense>
+        </KeepAliveTab>
+      );
+    }
+    if (activeTab !== tabKey) return null;
+    return <Suspense fallback={<TabLoader />}>{node}</Suspense>;
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden pb-16 md:pb-0" style={{ backgroundColor: 'var(--bg-primary)' }}>
@@ -184,42 +241,47 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         </div>
       </div>
 
-      {/* Tab content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
-        {activeTab === "priority" && <PriorityTab projectId={id} />}
-        {activeTab === "dailylog" && <DailyLogTab projectId={id} />}
-        {activeTab === "inspections" && <InspectionsTab projectId={id} />}
-        {activeTab === "today" && <DayPlanTab projectId={id} day="today" />}
-        {activeTab === "tomorrow" && <DayPlanTab projectId={id} day="tomorrow" />}
-        {activeTab === "week1" && <WeekTab projectId={id} weekNumber={1} />}
-        {activeTab === "week2" && <WeekTab projectId={id} weekNumber={2} />}
-        {activeTab === "week3" && <WeekTab projectId={id} weekNumber={3} />}
-        {activeTab === "milestones" && <MilestonesTab projectId={id} />}
-        {activeTab === "progress" && <ProgressTab projectId={id} />}
-        {activeTab === "reforecast" && <ReforecastTab projectId={id} />}
-        {activeTab === "reports" && <ReportsTab projectId={id} />}
-        {activeTab === "6week" && <SixWeekTab projectId={id} />}
-        {activeTab === "subs" && <SubsTab projectId={id} />}
-        {activeTab === "directory" && <DirectoryTab projectId={id} />}
-        {activeTab === "submittals" && <SubmittalsTab projectId={id} />}
-        {activeTab === "rfis" && <RFIsTab projectId={id} />}
-        {activeTab === "tm" && <TMTab projectId={id} />}
-        {activeTab === "drawings" && <DrawingsTab projectId={id} />}
-        {activeTab === "punch" && <PunchListTab projectId={id} />}
-        {activeTab === "safety" && <SafetyTab projectId={id} />}
-        {activeTab === "field-reports" && <FieldReportsTab projectId={id} />}
-        {activeTab === "coordination" && <CoordinationTab projectId={id} />}
-        {activeTab === "action-tracker" && <CoordinationTab projectId={id} defaultView="actions" />}
-        {activeTab === "sub-dashboard" && <SubDashboardTab projectId={id} />}
-        {activeTab === "sub-dispatch" && <SubDispatchTab projectId={id} />}
-        {activeTab === "sub-foremen" && <SubForemenTab projectId={id} />}
-        {activeTab === "sub-checkins" && <SubCheckinsTab projectId={id} />}
-        {activeTab === "sub-production" && <SubProductionTab projectId={id} />}
-        {activeTab === "sub-blockers" && <SubBlockersTab projectId={id} />}
-        {activeTab === "sub-handoffs" && <SubHandoffsTab projectId={id} />}
-        {activeTab === "sub-crew" && <SubCrewTab projectId={id} />}
-        {activeTab === "sub-sops" && <SubSOPsTab projectId={id} />}
-      </div>
+      {/* Tab content — wrapped in shared data provider */}
+      <ProjectDataProvider projectId={id}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+          {/* KeepAlive tabs (stay mounted once visited) */}
+          {renderTab("priority", <PriorityTab projectId={id} />)}
+          {renderTab("dailylog", <DailyLogTab projectId={id} />)}
+          {renderTab("today", <DayPlanTab projectId={id} day="today" />)}
+          {renderTab("tomorrow", <DayPlanTab projectId={id} day="tomorrow" />)}
+          {renderTab("week1", <WeekTab projectId={id} weekNumber={1} />)}
+          {renderTab("week2", <WeekTab projectId={id} weekNumber={2} />)}
+          {renderTab("week3", <WeekTab projectId={id} weekNumber={3} />)}
+          {renderTab("progress", <ProgressTab projectId={id} />)}
+
+          {/* Standard tabs (unmount when switching away) */}
+          {renderTab("inspections", <InspectionsTab projectId={id} />)}
+          {renderTab("milestones", <MilestonesTab projectId={id} />)}
+          {renderTab("reforecast", <ReforecastTab projectId={id} />)}
+          {renderTab("reports", <ReportsTab projectId={id} />)}
+          {renderTab("6week", <SixWeekTab projectId={id} />)}
+          {renderTab("subs", <SubsTab projectId={id} />)}
+          {renderTab("directory", <DirectoryTab projectId={id} />)}
+          {renderTab("submittals", <SubmittalsTab projectId={id} />)}
+          {renderTab("rfis", <RFIsTab projectId={id} />)}
+          {renderTab("tm", <TMTab projectId={id} />)}
+          {renderTab("drawings", <DrawingsTab projectId={id} />)}
+          {renderTab("punch", <PunchListTab projectId={id} />)}
+          {renderTab("safety", <SafetyTab projectId={id} />)}
+          {renderTab("field-reports", <FieldReportsTab projectId={id} />)}
+          {renderTab("coordination", <CoordinationTab projectId={id} />)}
+          {renderTab("action-tracker", <CoordinationTab projectId={id} defaultView="actions" />)}
+          {renderTab("sub-dashboard", <SubDashboardTab projectId={id} />)}
+          {renderTab("sub-dispatch", <SubDispatchTab projectId={id} />)}
+          {renderTab("sub-foremen", <SubForemenTab projectId={id} />)}
+          {renderTab("sub-checkins", <SubCheckinsTab projectId={id} />)}
+          {renderTab("sub-production", <SubProductionTab projectId={id} />)}
+          {renderTab("sub-blockers", <SubBlockersTab projectId={id} />)}
+          {renderTab("sub-handoffs", <SubHandoffsTab projectId={id} />)}
+          {renderTab("sub-crew", <SubCrewTab projectId={id} />)}
+          {renderTab("sub-sops", <SubSOPsTab projectId={id} />)}
+        </div>
+      </ProjectDataProvider>
 
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>

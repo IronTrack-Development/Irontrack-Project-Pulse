@@ -21,7 +21,7 @@ export async function GET(
 
   let query = supabase
     .from("parsed_activities")
-    .select("*")
+    .select("id, activity_id, activity_name, trade, start_date, finish_date, actual_start, actual_finish, percent_complete, status, original_duration, remaining_duration, milestone, float_days, is_critical, normalized_building, normalized_area, normalized_phase, normalized_trade, wbs, predecessor_ids, successor_ids, project_id")
     .eq("project_id", id)
     .order(sort as string, { ascending: dir });
 
