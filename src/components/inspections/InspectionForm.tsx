@@ -358,7 +358,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
             <select
               value={inspectionType}
               onChange={(e) => setInspectionType(e.target.value)}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
             >
               <option value="">Select inspection type...</option>
               {inspectionCodes.length > 0 ? (
@@ -398,7 +398,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={permitNumber}
               onChange={(e) => setPermitNumber(e.target.value)}
               placeholder="Enter permit number"
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -409,7 +409,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               type="date"
               value={requestedDate}
               onChange={(e) => setRequestedDate(e.target.value)}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -421,7 +421,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactName}
               onChange={(e) => setContactName(e.target.value)}
               placeholder="Your name"
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -433,7 +433,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
               placeholder="Your phone number"
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -449,7 +449,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                   className={`flex-1 px-3 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
                     timeWindow === tw.value
                       ? "bg-[#F97316] text-white"
-                      : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-gray-400 hover:text-white"
+                      : "bg-[#121217] border border-[#1F1F25] text-gray-400 hover:text-white"
                   }`}
                 >
                   {tw.label}
@@ -466,7 +466,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Additional notes for this inspection..."
               rows={3}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
             />
           </div>
         </div>

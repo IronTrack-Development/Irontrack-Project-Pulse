@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: var(--bg-primary);
+  --color-background: #0B0B0D;
   --color-panel: #121217;
   --color-border: #1F1F25;
   --color-accent-orange: #F97316;
@@ -16,8 +16,8 @@
 }
 
 html {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: #0B0B0D;
+  color: #e5e7eb;
   font-family: 'Inter', system-ui, sans-serif;
   scroll-behavior: smooth;
 }
@@ -25,7 +25,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  background-color: #0B0B0D;
 }
 
 ::-webkit-scrollbar {
@@ -33,14 +33,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: #0B0B0D;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-primary);
+  background: #1F1F25;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-hover);
+  background: #2a2a35;
 }
 
 /* ── Theme Variables ────────────────────────────────────── */

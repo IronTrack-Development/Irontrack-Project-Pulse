@@ -66,7 +66,7 @@ function TalkCard({
   return (
     <button
       onClick={onClick}
-      className="block w-full text-left bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[var(--border-secondary)] transition-colors min-h-[44px]"
+      className="block w-full text-left bg-[#121217] border border-[#1F1F25] rounded-xl p-4 hover:border-[#2a2a35] transition-colors min-h-[44px]"
     >
       <div className="flex items-start justify-between mb-2">
         <div className="min-w-0 flex-1">
@@ -198,7 +198,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
           </button>
           <button
             onClick={fetchTalks}
-            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
           >
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           </button>
@@ -225,7 +225,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
           <div className="text-[10px] text-gray-500 uppercase tracking-wider">
             This Month
           </div>
@@ -233,13 +233,13 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
             {thisMonthTalks.length}
           </div>
         </div>
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
           <div className="text-[10px] text-gray-500 uppercase tracking-wider">
             Avg Attendance
           </div>
           <div className="text-lg font-bold text-white mt-1">{avgAttendance}</div>
         </div>
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
           <div className="text-[10px] text-gray-500 uppercase tracking-wider">
             Follow-ups
           </div>

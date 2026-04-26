@@ -156,7 +156,7 @@ export default function ForemanManager({ projectId }: Props) {
         ) : (
           <>
             {/* Info Card */}
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -200,18 +200,18 @@ export default function ForemanManager({ projectId }: Props) {
 
             {/* Production Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
+              <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold text-white">{f.production_stats?.total_entries ?? 0}</p>
                 <p className="text-xs text-gray-500">Production Entries</p>
               </div>
-              <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
+              <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold text-white">{f.production_stats?.this_week_hours ?? 0}</p>
                 <p className="text-xs text-gray-500">Hours This Week</p>
               </div>
             </div>
 
             {/* Recent Dispatches */}
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <Send size={14} className="text-[#F97316]" /> Recent Dispatches
               </h3>
@@ -236,7 +236,7 @@ export default function ForemanManager({ projectId }: Props) {
             </div>
 
             {/* Recent Check-ins */}
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <CheckCircle size={14} className="text-[#F97316]" /> Recent Check-Ins
               </h3>
@@ -258,7 +258,7 @@ export default function ForemanManager({ projectId }: Props) {
             </div>
 
             {/* SOP Compliance */}
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <FileText size={14} className="text-[#F97316]" /> SOP Compliance
               </h3>
@@ -317,7 +317,7 @@ export default function ForemanManager({ projectId }: Props) {
 
       {/* Add Form */}
       {showAdd && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <h3 className="text-sm font-bold text-white">New Foreman</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -326,7 +326,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g., Mike Rodriguez"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -335,7 +335,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.trade}
                 onChange={(e) => setForm({ ...form, trade: e.target.value })}
                 placeholder="e.g., Electrical"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -344,7 +344,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 placeholder="602-555-1234"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -353,7 +353,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="mike@company.com"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -362,7 +362,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.certifications}
                 onChange={(e) => setForm({ ...form, certifications: e.target.value })}
                 placeholder="OSHA 30, First Aid (comma separated)"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -371,7 +371,7 @@ export default function ForemanManager({ projectId }: Props) {
                 type="date"
                 value={form.hire_date}
                 onChange={(e) => setForm({ ...form, hire_date: e.target.value })}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -391,7 +391,7 @@ export default function ForemanManager({ projectId }: Props) {
 
       {/* Foreman Cards */}
       {foremen.length === 0 ? (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <Users size={28} className="mx-auto text-gray-600 mb-2" />
           <p className="text-sm text-gray-400">No foremen on your roster</p>
           <p className="text-xs text-gray-600 mt-1">Add foremen to start dispatching work</p>
@@ -404,7 +404,7 @@ export default function ForemanManager({ projectId }: Props) {
               <div
                 key={f.id}
                 onClick={() => fetchDetail(f.id)}
-                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[#F97316]/30 transition-colors cursor-pointer space-y-2"
+                className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 hover:border-[#F97316]/30 transition-colors cursor-pointer space-y-2"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-white truncate">{f.name}</span>

@@ -205,7 +205,7 @@ export default function CheckInView({ projectId }: Props) {
         <>
           {dispatch ? (
             <div className="space-y-3">
-              <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+              <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
                 <div className="flex items-center gap-2">
                   <Send size={14} className="text-[#F97316]" />
                   <span className="text-sm font-bold text-white">Today&apos;s Dispatch</span>
@@ -253,7 +253,7 @@ export default function CheckInView({ projectId }: Props) {
               )}
             </div>
           ) : (
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6 text-center space-y-3">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6 text-center space-y-3">
               <Clock size={28} className="mx-auto text-gray-600" />
               <p className="text-sm text-gray-400">No dispatch for today</p>
               <p className="text-xs text-gray-600">You can still check in manually</p>
@@ -270,7 +270,7 @@ export default function CheckInView({ projectId }: Props) {
 
       {/* ── Check-In Form ── */}
       {step === "checkin" && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
             <CheckCircle size={14} className="text-[#F97316]" /> Check-In Form
           </h3>
@@ -286,7 +286,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
                 placeholder="e.g., 4"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -298,7 +298,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={hoursWorked}
                 onChange={(e) => setHoursWorked(e.target.value)}
                 placeholder="e.g., 8"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function CheckInView({ projectId }: Props) {
             <label className="text-xs font-medium text-gray-400 mb-1.5 block">Site Photo</label>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
             >
               <Camera size={16} />
               {sitePhoto ? sitePhoto.name : "Capture or upload photo"}
@@ -329,7 +329,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Any notes about today..."
               rows={3}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -357,7 +357,7 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           {entries.map((entry, idx) => (
-            <div key={idx} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+            <div key={idx} className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-gray-400">Entry #{idx + 1}</span>
                 {entries.length > 1 && (
@@ -372,7 +372,7 @@ export default function CheckInView({ projectId }: Props) {
                   value={entry.description}
                   onChange={(e) => updateEntry(idx, "description", e.target.value)}
                   placeholder="e.g., Ran conduit on 3rd floor east wing"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -383,7 +383,7 @@ export default function CheckInView({ projectId }: Props) {
                     value={entry.quantity}
                     onChange={(e) => updateEntry(idx, "quantity", e.target.value)}
                     placeholder="45"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -391,7 +391,7 @@ export default function CheckInView({ projectId }: Props) {
                   <select
                     value={entry.unit}
                     onChange={(e) => updateEntry(idx, "unit", e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
                   >
                     {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
                   </select>
@@ -402,7 +402,7 @@ export default function CheckInView({ projectId }: Props) {
                     value={entry.area}
                     onChange={(e) => updateEntry(idx, "area", e.target.value)}
                     placeholder="3rd Floor"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
               </div>
@@ -411,7 +411,7 @@ export default function CheckInView({ projectId }: Props) {
 
           <button
             onClick={addEntry}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
           >
             <Plus size={14} /> Add Another Entry
           </button>
@@ -432,7 +432,7 @@ export default function CheckInView({ projectId }: Props) {
 
       {/* ── Blocker Form ── */}
       {step === "blocker" && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <AlertTriangle size={14} className="text-red-400" /> Report Blocker
@@ -450,7 +450,7 @@ export default function CheckInView({ projectId }: Props) {
             <select
               value={blockerCategory}
               onChange={(e) => setBlockerCategory(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
             >
               <option value="material">Material</option>
               <option value="labor">Labor</option>
@@ -472,7 +472,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setBlockerDescription(e.target.value)}
               placeholder="What's the issue?"
               rows={3}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -483,7 +483,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setBlockerImpact(e.target.value)}
               placeholder="How does this affect work?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 

@@ -41,7 +41,7 @@ const IMPACT_BUTTONS: { value: WeatherImpact; label: string; emoji: string }[] =
 ];
 
 function impactColor(value: WeatherImpact, active: boolean): string {
-  if (!active) return "bg-[var(--bg-secondary)] text-gray-500 border-[var(--border-primary)]";
+  if (!active) return "bg-[#121217] text-gray-500 border-[#1F1F25]";
   switch (value) {
     case "none": return "bg-[#22C55E]/15 text-[#22C55E] border-[#22C55E]/40";
     case "minor_slowdown": return "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/40";
@@ -108,21 +108,21 @@ function Stepper({
           type="button"
           onClick={() => onChange(Math.max(min, value - step))}
           className="w-11 h-11 flex items-center justify-center rounded-l-xl
-            bg-[var(--bg-primary)] border border-[var(--border-primary)] text-gray-400
-            hover:bg-[var(--bg-tertiary)] active:bg-[var(--bg-hover)] transition-colors"
+            bg-[#0B0B0D] border border-[#1F1F25] text-gray-400
+            hover:bg-[#1F1F25] active:bg-[#2a2a35] transition-colors"
         >
           <Minus size={16} />
         </button>
         <div className="w-14 h-11 flex items-center justify-center
-          bg-[var(--bg-primary)] border-t border-b border-[var(--border-primary)] text-white font-bold text-lg">
+          bg-[#0B0B0D] border-t border-b border-[#1F1F25] text-white font-bold text-lg">
           {value}
         </div>
         <button
           type="button"
           onClick={() => onChange(value + step)}
           className="w-11 h-11 flex items-center justify-center rounded-r-xl
-            bg-[var(--bg-primary)] border border-[var(--border-primary)] text-gray-400
-            hover:bg-[var(--bg-tertiary)] active:bg-[var(--bg-hover)] transition-colors"
+            bg-[#0B0B0D] border border-[#1F1F25] text-gray-400
+            hover:bg-[#1F1F25] active:bg-[#2a2a35] transition-colors"
         >
           <Plus size={16} />
         </button>
@@ -227,12 +227,12 @@ export default function SnapshotScreen({
         </h3>
 
         {weatherLoading ? (
-          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 flex items-center justify-center gap-3">
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 flex items-center justify-center gap-3">
             <RefreshCw size={18} className="text-[#F97316] animate-spin" />
             <span className="text-sm text-gray-400">Fetching weather…</span>
           </div>
         ) : weatherError ? (
-          <div className="bg-[var(--bg-secondary)] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
+          <div className="bg-[#121217] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
             <p className="text-sm text-[#EAB308] mb-1">Weather unavailable — enter manually</p>
             <p className="text-xs text-gray-500">Could not reach weather service</p>
           </div>
@@ -242,8 +242,8 @@ export default function SnapshotScreen({
             <button
               type="button"
               onClick={() => setWeatherExpanded(!weatherExpanded)}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5
-                flex items-center justify-between transition-colors hover:border-[var(--border-secondary)]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-2xl p-5
+                flex items-center justify-between transition-colors hover:border-[#2a2a35]"
             >
               <div className="flex items-center gap-4">
                 <span className="text-4xl">{weatherInfo?.emoji || "🌤️"}</span>
@@ -272,7 +272,7 @@ export default function SnapshotScreen({
 
             {/* Expanded edit fields */}
             {weatherExpanded && (
-              <div className="mt-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-3">
+              <div className="mt-3 bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs text-gray-500 mb-1 block">High °F</label>
@@ -281,7 +281,7 @@ export default function SnapshotScreen({
                       inputMode="numeric"
                       value={weather.high ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, high: e.target.value ? parseInt(e.target.value) : undefined })}
-                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                         focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                       placeholder="--"
                     />
@@ -293,7 +293,7 @@ export default function SnapshotScreen({
                       inputMode="numeric"
                       value={weather.low ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, low: e.target.value ? parseInt(e.target.value) : undefined })}
-                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                         focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                       placeholder="--"
                     />
@@ -314,7 +314,7 @@ export default function SnapshotScreen({
                             transition-all min-h-[36px] border
                             ${active
                               ? "bg-[#F97316]/15 text-[#F97316] border-[#F97316]/40"
-                              : "bg-[var(--bg-primary)] text-gray-400 border-[var(--border-primary)] hover:border-[var(--border-secondary)]"
+                              : "bg-[#0B0B0D] text-gray-400 border-[#1F1F25] hover:border-[#2a2a35]"
                             }`}
                         >
                           <Icon size={14} />
@@ -389,13 +389,13 @@ export default function SnapshotScreen({
           {crew.map((entry, i) => (
             <div
               key={i}
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 relative group"
+              className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 relative group"
             >
               {/* Remove button — top right corner */}
               <button
                 type="button"
                 onClick={() => removeCrewEntry(i)}
-                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[var(--bg-primary)] border border-[var(--border-primary)]
+                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-[#0B0B0D] border border-[#1F1F25]
                   flex items-center justify-center text-red-400/50 hover:text-red-400
                   hover:border-red-400/40 transition-colors"
               >
@@ -429,14 +429,14 @@ export default function SnapshotScreen({
 
         {/* Add Trade */}
         {showAddTrade ? (
-          <div className="mt-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-3">
+          <div className="mt-3 bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
             <input
               type="text"
               value={newTrade}
               onChange={(e) => setNewTrade(e.target.value)}
               placeholder="Trade name (e.g. Electrical)"
               autoFocus
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
             <input
@@ -444,7 +444,7 @@ export default function SnapshotScreen({
               value={newCompany}
               onChange={(e) => setNewCompany(e.target.value)}
               placeholder="Company name (optional)"
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
             <div className="flex gap-2">
@@ -460,8 +460,8 @@ export default function SnapshotScreen({
               <button
                 type="button"
                 onClick={() => { setShowAddTrade(false); setNewTrade(""); setNewCompany(""); }}
-                className="flex-1 py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-gray-400 text-sm
-                  hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
+                className="flex-1 py-2.5 rounded-xl bg-[#1F1F25] text-gray-400 text-sm
+                  hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Cancel
               </button>
@@ -471,7 +471,7 @@ export default function SnapshotScreen({
           <button
             type="button"
             onClick={() => setShowAddTrade(true)}
-            className="mt-3 w-full py-3 rounded-xl border border-dashed border-[var(--border-primary)] text-sm
+            className="mt-3 w-full py-3 rounded-xl border border-dashed border-[#1F1F25] text-sm
               text-gray-500 hover:text-[#F97316] hover:border-[#F97316]/30 transition-colors min-h-[44px]"
           >
             + Add Trade
@@ -481,11 +481,11 @@ export default function SnapshotScreen({
         {/* Summary line */}
         {crew.length > 0 && (
           <div className="mt-3 flex items-center justify-center gap-6 py-2.5 rounded-xl
-            bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-sm">
+            bg-[#121217] border border-[#1F1F25] text-sm">
             <span className="text-gray-400">
               <span className="font-bold text-white">{totalHeadcount}</span> workers
             </span>
-            <span className="text-[var(--border-primary)]">|</span>
+            <span className="text-[#1F1F25]">|</span>
             <span className="text-gray-400">
               <span className="font-bold text-white">{totalHours.toLocaleString()}</span> crew-hours
             </span>

@@ -3,9 +3,9 @@ import { Building2, ArrowLeft } from "lucide-react";
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen bg-[#0B0B0D]">
       {/* Header */}
-      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/95 backdrop-blur sticky top-0 z-50">
+      <header className="border-b border-[#1F1F25] bg-[#0B0B0D]/95 backdrop-blur sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <Link
             href="/"
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
           {/* Aggregate Data */}
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">3. Aggregate Data and Intelligence</h2>
-            <p className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-6">
+            <p className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-6">
               <strong className="text-white">We analyze uploaded schedules in anonymized, aggregate form to improve our scheduling intelligence, benchmark accuracy, and product features.</strong> This aggregate data contains no personally identifiable information and cannot be traced back to any individual user or project.
             </p>
             <p className="mt-4">
@@ -231,7 +231,7 @@ export default function PrivacyPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--border-primary)] py-8 mt-16">
+      <footer className="border-t border-[#1F1F25] py-8 mt-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />

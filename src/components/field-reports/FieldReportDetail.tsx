@@ -81,7 +81,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
       const el = document.createElement("div");
       el.textContent = "Markup coming soon";
       el.className =
-        "fixed bottom-20 left-1/2 -translate-x-1/2 bg-[var(--bg-tertiary)] text-white px-4 py-2 rounded-lg text-sm font-medium z-50 shadow-lg";
+        "fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#1F1F25] text-white px-4 py-2 rounded-lg text-sm font-medium z-50 shadow-lg";
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 2000);
     }
@@ -123,7 +123,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
             </button>
           </>
         ) : (
-          <div className="w-full h-48 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] flex items-center justify-center">
+          <div className="w-full h-48 rounded-xl bg-[#121217] border border-[#1F1F25] flex items-center justify-center">
             <ImageOff size={40} className="text-gray-600" />
           </div>
         )}
@@ -137,7 +137,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           value={report.title}
           onChange={(e) => handleFieldChange("title", e.target.value)}
           onBlur={() => handleBlurSave("title")}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+          className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
         />
       </div>
 
@@ -150,7 +150,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           onChange={(e) => handleFieldChange("assigned_to", e.target.value)}
           onBlur={() => handleBlurSave("assigned_to")}
           placeholder="Name or company"
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+          className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
         />
       </div>
 
@@ -163,7 +163,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           onBlur={() => handleBlurSave("comments")}
           placeholder="Notes about this issue..."
           rows={3}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
+          className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
         />
       </div>
 
@@ -187,7 +187,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("location", e.target.value)}
               onBlur={() => handleBlurSave("location")}
               placeholder="Building, floor, area..."
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
@@ -200,7 +200,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 handleFieldChange("priority", e.target.value);
                 save({ priority: e.target.value as FieldReport["priority"] });
               }}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
             >
               <option value="high">High</option>
               <option value="medium">Medium</option>
@@ -217,7 +217,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 handleFieldChange("status", e.target.value);
                 save({ status: e.target.value as FieldReport["status"] });
               }}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
             >
               <option value="open">Open</option>
               <option value="in_progress">In Progress</option>
@@ -234,7 +234,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("trade", e.target.value)}
               onBlur={() => handleBlurSave("trade")}
               placeholder="e.g. Electrical, Plumbing..."
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
@@ -248,7 +248,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 onBlur={() => handleBlurSave("resolution_notes")}
                 placeholder="How was this resolved?"
                 rows={2}
-                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
+                className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
               />
             </div>
           )}

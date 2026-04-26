@@ -155,9 +155,9 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center">
-      <div className="bg-[var(--bg-secondary)] w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[var(--border-primary)]">
+      <div className="bg-[#121217] w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[#1F1F25]">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
+        <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <BookOpen size={16} className="text-[#F97316]" />
             {showForm
@@ -185,7 +185,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
                   placeholder="Template title"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -195,7 +195,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   <select
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value as ToolboxTalkCategory)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -210,7 +210,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                     onChange={(e) => setFormDuration(parseInt(e.target.value) || 15)}
                     min={5}
                     max={120}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formOsha}
                   onChange={(e) => setFormOsha(e.target.value)}
                   placeholder="e.g. 29 CFR 1926.501"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -250,7 +250,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                     {temps.map((t) => (
                       <div
                         key={t.id}
-                        className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 flex items-center justify-between gap-2"
+                        className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 flex items-center justify-between gap-2"
                       >
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
@@ -299,12 +299,12 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[var(--border-primary)] flex gap-2">
+        <div className="p-4 border-t border-[#1F1F25] flex gap-2">
           {showForm ? (
             <>
               <button
                 onClick={resetForm}
-                className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Cancel
               </button>
@@ -321,7 +321,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <>
               <button
                 onClick={onClose}
-                className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Close
               </button>

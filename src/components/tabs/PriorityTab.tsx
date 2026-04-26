@@ -95,7 +95,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
   }
 
   return (
-    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 border-l-[#F97316] rounded-xl p-5 space-y-4">
+    <div className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#F97316] rounded-xl p-5 space-y-4">
       {/* Current critical activity */}
       <div
         className="cursor-pointer"
@@ -117,7 +117,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
 
       {/* Grid: successor + milestone + impact */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
             Next Critical Successor
           </div>
@@ -126,7 +126,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
           </div>
         </div>
 
-        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
             Nearest Critical Milestone
           </div>
@@ -157,7 +157,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
       )}
 
       {/* Impact statement */}
-      <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
+      <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Impact</div>
         <div className="text-xs text-gray-300">{data.impactStatement}</div>
       </div>
@@ -194,7 +194,7 @@ function InspectionsSection({
         <div
           key={insp.id}
           onClick={() => onOpenDrawer(insp.id)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 border-l-[#3B82F6] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
+          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#3B82F6] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex-1 min-w-0">
@@ -271,7 +271,7 @@ function LateTasksSection({
         <div
           key={task.id}
           onClick={() => onOpenDrawer(task.id)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 border-l-[#EF4444] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
+          className="bg-[#121217] border border-[#1F1F25] border-l-4 border-l-[#EF4444] rounded-xl p-5 cursor-pointer hover:bg-[#1A1A22] transition-colors"
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex-1 min-w-0">
@@ -290,7 +290,7 @@ function LateTasksSection({
             Planned finish: <span className="text-gray-300">{formatDate(task.plannedFinish)}</span>
           </div>
 
-          <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-2">
+          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-2">
             <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Impact</div>
             <div className="text-xs text-gray-300">{task.impactStatement}</div>
           </div>
@@ -387,7 +387,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
         <p className="text-white font-semibold">Failed to load priority data</p>
         <button
           onClick={fetchData}
-          className="mt-3 px-4 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs transition-colors"
+          className="mt-3 px-4 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs transition-colors"
         >
           Retry
         </button>
@@ -420,7 +420,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
       <div className="flex justify-end">
         <button
           onClick={fetchData}
-          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors"
+          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
         >
           <RefreshCw size={14} />
         </button>

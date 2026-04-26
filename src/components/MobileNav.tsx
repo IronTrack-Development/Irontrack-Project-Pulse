@@ -32,7 +32,7 @@ export default function MobileNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] z-50 safe-area-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[#121217] border-t border-[#1F1F25] z-50 safe-area-bottom">
       <div className="flex items-center justify-around h-16 px-2">
         {items.map(({ href, label, icon: Icon }) => {
           const active = pathname === href || (label !== "Dashboard" && label !== "Report" && href !== "/dashboard" && pathname.startsWith(href));

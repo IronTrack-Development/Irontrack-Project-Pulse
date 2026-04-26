@@ -122,7 +122,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
     <div className="space-y-4">
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 flex-1 min-w-48 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
+        <div className="flex items-center gap-2 flex-1 min-w-48 bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
           <Search size={14} className="text-gray-500" />
           <input
             value={search}
@@ -134,7 +134,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
         >
           <option value="">All Statuses</option>
           <option value="not_started">Not Started</option>
@@ -145,7 +145,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
         <select
           value={tradeFilter}
           onChange={(e) => setTradeFilter(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
         >
           <option value="">All Trades</option>
           {trades.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -156,7 +156,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <select
             value={buildingFilter}
             onChange={(e) => setBuildingFilter(e.target.value)}
-            className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
           >
             <option value="">All Buildings</option>
             {buildings.map((b) => (
@@ -170,7 +170,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <select
             value={phaseFilter}
             onChange={(e) => setPhaseFilter(e.target.value)}
-            className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
           >
             <option value="">All Phases</option>
             {phases.map((p) => (
@@ -185,7 +185,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
       </div>
 
       {/* Table */}
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <RefreshCw size={18} className="text-[#F97316] animate-spin" />
@@ -199,7 +199,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[var(--border-primary)]">
+                <tr className="border-b border-[#1F1F25]">
                   {[
                     { label: "ID", col: "activity_id" },
                     { label: "Activity", col: "activity_name" },
@@ -229,8 +229,8 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                   <tr
                     key={a.id}
                     onClick={() => setSelected(a)}
-                    className={`border-b border-[var(--border-primary)] cursor-pointer hover:bg-[var(--bg-tertiary)]/50 transition-colors ${
-                      i % 2 === 0 ? "" : "bg-[var(--bg-primary)]/30"
+                    className={`border-b border-[#1F1F25] cursor-pointer hover:bg-[#1F1F25]/50 transition-colors ${
+                      i % 2 === 0 ? "" : "bg-[#0B0B0D]/30"
                     }`}
                   >
                     <td className="px-4 py-3 text-xs text-gray-500 font-mono">{a.activity_id || "—"}</td>

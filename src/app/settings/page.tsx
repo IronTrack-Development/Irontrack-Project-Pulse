@@ -40,7 +40,7 @@ export default async function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] p-8">
+    <div className="min-h-screen bg-[#0B0B0D] p-8">
       <div className="max-w-2xl mx-auto">
         <Link href="/dashboard" className="text-[#F97316] hover:text-[#EA580C] flex items-center gap-2 mb-6">
           <ArrowLeft size={16} />
@@ -82,7 +82,7 @@ export default async function SettingsPage() {
             </div>
 
             {/* Upload limits info */}
-            <div className="mt-6 p-4 bg-[var(--bg-primary)] border border-gray-800 rounded">
+            <div className="mt-6 p-4 bg-[#0B0B0D] border border-gray-800 rounded">
               <h3 className="text-sm font-semibold text-white mb-2">Upload Limits</h3>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Maximum file size: <span className="text-white">100 MB</span></li>

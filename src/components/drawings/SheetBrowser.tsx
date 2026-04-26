@@ -215,7 +215,7 @@ export default function SheetBrowser({
         {/* Organize button */}
         <button
           onClick={() => setShowOrganizer(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
         >
           <ClipboardList size={14} />
           Organize
@@ -237,7 +237,7 @@ export default function SheetBrowser({
         <>
           {/* Unorganized banner */}
           {allUnclassified && (
-            <div className="mb-4 p-3 bg-[var(--bg-tertiary)] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
+            <div className="mb-4 p-3 bg-[#1F1F25] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
               <ClipboardList size={16} className="text-[#F97316] shrink-0" />
               <p className="text-gray-300 text-sm flex-1">
                 Sheets haven&apos;t been organized yet.
@@ -261,7 +261,7 @@ export default function SheetBrowser({
               return (
                 <div
                   key={disc}
-                  className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden"
+                  className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden"
                 >
                   {/* Section header */}
                   <button
@@ -301,14 +301,14 @@ export default function SheetBrowser({
                       maxHeight: isOpen ? `${groupSheets.length * 60 + 8}px` : "0px",
                     }}
                   >
-                    <div className="border-t border-[var(--border-primary)]">
+                    <div className="border-t border-[#1F1F25]">
                       {groupSheets.map((sheet) => {
                         const displayIdx = sheetOriginalIndex.get(sheet.id) ?? 0;
                         return (
                           <button
                             key={sheet.id}
                             onClick={() => onSheetSelect(displayIdx)}
-                            className="w-full flex items-center gap-3 px-4 py-3 min-h-[52px] hover:bg-[#1A1A20] transition-colors border-b border-[var(--border-primary)]/50 last:border-b-0 text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 min-h-[52px] hover:bg-[#1A1A20] transition-colors border-b border-[#1F1F25]/50 last:border-b-0 text-left"
                           >
                             {/* Sheet number */}
                             <span

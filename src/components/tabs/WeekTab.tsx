@@ -78,7 +78,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
   if (!data || data.activities.length === 0) {
     return (
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
         <CalendarDays size={40} className="mx-auto text-gray-700 mb-4" />
         <div className="text-gray-400 text-sm">No activities scheduled this week</div>
       </div>
@@ -181,7 +181,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
             <div className="text-sm text-gray-300">Select activities to share</div>
@@ -195,7 +195,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-white rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[#1F1F25] disabled:text-gray-600 text-white rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 Share ({selectedIds.size})
@@ -211,7 +211,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowQR(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
                 title="Share via QR Code"
               >
                 <QrCode size={13} />
@@ -219,7 +219,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
               </button>
               <button
                 onClick={handleShareClick}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 {shareStatus || "Share"}
@@ -238,14 +238,14 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
           if (dayActivities.length === 0) return null;
 
           return (
-            <div key={dayKey} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
-              <div className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-2">
+            <div key={dayKey} className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+              <div className="bg-[#0B0B0D] border-b border-[#1F1F25] px-4 py-2">
                 <div className="text-xs text-gray-500">{dayNames[day.getDay()]}</div>
                 <div className="text-sm font-medium text-white">
                   {day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                 </div>
               </div>
-              <div className="divide-y divide-[var(--border-primary)]">
+              <div className="divide-y divide-[#1F1F25]">
                 {dayActivities.map((activity) => {
                   const isSelected = selectedIds.has(activity.id);
                   return (
@@ -254,8 +254,8 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                       onClick={() => isSelecting ? toggleActivity(activity.id) : openDrawer(activity.id)}
                       className={`px-4 py-3 transition-colors cursor-pointer ${
                         isSelecting
-                          ? "hover:bg-[var(--bg-tertiary)]/50"
-                          : "hover:bg-[var(--bg-tertiary)]/30"
+                          ? "hover:bg-[#1F1F25]/50"
+                          : "hover:bg-[#1F1F25]/30"
                       } ${
                         isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
                       }`}
@@ -266,7 +266,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => toggleActivity(activity.id)}
-                            className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                            className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
                           />
                         )}
                         <div className="flex items-start justify-between gap-3 flex-1">
@@ -319,9 +319,9 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
       {/* Summary table fallback if no grouping */}
       {Object.keys(data.groupedByDay).length === 0 && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
           <table className="w-full">
-            <thead className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)]">
+            <thead className="bg-[#0B0B0D] border-b border-[#1F1F25]">
               <tr>
                 {isSelecting && (
                   <th className="px-4 py-2 w-12"></th>
@@ -332,7 +332,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">% Complete</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border-primary)]">
+            <tbody className="divide-y divide-[#1F1F25]">
               {data.activities.map((activity) => {
                 const isSelected = selectedIds.has(activity.id);
                 return (
@@ -341,8 +341,8 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                     onClick={() => isSelecting ? toggleActivity(activity.id) : openDrawer(activity.id)}
                     className={`transition-colors cursor-pointer ${
                       isSelecting
-                        ? "hover:bg-[var(--bg-tertiary)]/50"
-                        : "hover:bg-[var(--bg-tertiary)]/30"
+                        ? "hover:bg-[#1F1F25]/50"
+                        : "hover:bg-[#1F1F25]/30"
                     } ${
                       isSelected ? "bg-[#F97316]/20" : ""
                     }`}
@@ -353,7 +353,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => toggleActivity(activity.id)}
-                          className="w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                          className="w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
                         />
                       </td>
                     )}

@@ -133,7 +133,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
     { value: "critical", label: "Critical", color: "#EF4444" },
     { value: "high", label: "High", color: "#F97316" },
     { value: "normal", label: "Normal", color: "#3B82F6" },
-    { value: "low", label: "Low", color: "var(--text-muted)" },
+    { value: "low", label: "Low", color: "#6B7280" },
   ];
 
   const architectContacts = contacts.filter(
@@ -146,12 +146,12 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center">
-      <div className="w-full max-w-xl bg-[var(--bg-secondary)] rounded-t-3xl md:rounded-3xl border border-[var(--border-primary)] max-h-[92vh] overflow-y-auto">
+      <div className="w-full max-w-xl bg-[#121217] rounded-t-3xl md:rounded-3xl border border-[#1F1F25] max-h-[92vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-[var(--bg-secondary)] px-5 py-4 border-b border-[var(--border-primary)] flex items-center justify-between rounded-t-3xl md:rounded-t-3xl z-10">
+        <div className="sticky top-0 bg-[#121217] px-5 py-4 border-b border-[#1F1F25] flex items-center justify-between rounded-t-3xl md:rounded-t-3xl z-10">
           <div className="flex items-center gap-3">
             {step > 1 && (
-              <button onClick={() => setStep((s) => (s - 1) as 1 | 2 | 3)} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <button onClick={() => setStep((s) => (s - 1) as 1 | 2 | 3)} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                 <ArrowLeft size={16} />
               </button>
             )}
@@ -164,7 +164,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
               <p className="text-xs text-gray-500">Step {step} of 3</p>
             </div>
           </div>
-          <button onClick={onCancel} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <button onClick={onCancel} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
             <X size={16} />
           </button>
         </div>
@@ -172,7 +172,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
         {/* Step indicators */}
         <div className="px-5 pt-4 flex gap-2">
           {[1, 2, 3].map((s) => (
-            <div key={s} className={`flex-1 h-1 rounded-full transition-all ${s <= step ? "bg-[#F97316]" : "bg-[var(--bg-tertiary)]"}`} />
+            <div key={s} className={`flex-1 h-1 rounded-full transition-all ${s <= step ? "bg-[#F97316]" : "bg-[#1F1F25]"}`} />
           ))}
         </div>
 
@@ -214,7 +214,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 <button
                   onClick={handleSkipAI}
                   disabled={!roughDescription.trim()}
-                  className="px-4 py-4 rounded-2xl bg-[var(--bg-tertiary)] text-gray-400 hover:text-white
+                  className="px-4 py-4 rounded-2xl bg-[#1F1F25] text-gray-400 hover:text-white
                     text-sm font-medium disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   Manual
@@ -233,7 +233,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   type="text"
                   value={draft.subject}
                   onChange={(e) => setDraft((p) => ({ ...p, subject: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                     placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                   placeholder="RFI subject"
                 />
@@ -246,7 +246,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   value={draft.question}
                   onChange={(e) => setDraft((p) => ({ ...p, question: e.target.value }))}
                   rows={5}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                     placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50"
                   placeholder="Formal question text"
                 />
@@ -260,7 +260,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     type="text"
                     value={draft.spec_section}
                     onChange={(e) => setDraft((p) => ({ ...p, spec_section: e.target.value }))}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
                       placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                     placeholder="03 30 00"
                   />
@@ -271,7 +271,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     type="text"
                     value={draft.drawing_reference}
                     onChange={(e) => setDraft((p) => ({ ...p, drawing_reference: e.target.value }))}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
                       placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                     placeholder="Sheet S-1"
                   />
@@ -290,7 +290,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                       className={`flex-1 py-2.5 rounded-xl text-xs font-medium border transition-all min-h-[44px] ${
                         draft.priority === opt.value
                           ? "border-current text-white"
-                          : "border-[var(--border-primary)] text-gray-500 hover:border-gray-600"
+                          : "border-[#1F1F25] text-gray-500 hover:border-gray-600"
                       }`}
                       style={draft.priority === opt.value ? { color: opt.color, borderColor: opt.color, backgroundColor: `${opt.color}15` } : {}}
                     >
@@ -308,7 +308,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium border transition-all min-h-[44px] ${
                     draft.cost_impact
                       ? "bg-yellow-500/15 border-yellow-500/40 text-yellow-400"
-                      : "bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-gray-500"
+                      : "bg-[#1F1F25] border-[#1F1F25] text-gray-500"
                   }`}
                 >
                   <DollarSign size={14} />
@@ -320,7 +320,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium border transition-all min-h-[44px] ${
                     draft.schedule_impact
                       ? "bg-red-500/15 border-red-500/40 text-red-400"
-                      : "bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-gray-500"
+                      : "bg-[#1F1F25] border-[#1F1F25] text-gray-500"
                   }`}
                 >
                   <Clock size={14} />
@@ -338,7 +338,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   type="date"
                   value={draft.due_date}
                   onChange={(e) => setDraft((p) => ({ ...p, due_date: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                     focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                 />
               </div>
@@ -353,7 +353,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   <select
                     value={draft.assigned_to}
                     onChange={(e) => setDraft((p) => ({ ...p, assigned_to: e.target.value }))}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
                       focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                   >
                     <option value="">Select contact...</option>
@@ -381,7 +381,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
           {/* ─── STEP 3: Review & Submit ─── */}
           {step === 3 && (
             <>
-              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-4">
+              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-2xl p-4 space-y-4">
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Subject</p>
                   <p className="text-sm font-semibold text-white">{draft.subject}</p>
@@ -439,8 +439,8 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 <button
                   onClick={() => handleSave("draft")}
                   disabled={isSaving}
-                  className="flex-1 py-4 rounded-2xl bg-[var(--bg-tertiary)] text-gray-300 font-semibold text-sm
-                    hover:bg-[var(--bg-hover)] disabled:opacity-50 transition-all min-h-[56px]"
+                  className="flex-1 py-4 rounded-2xl bg-[#1F1F25] text-gray-300 font-semibold text-sm
+                    hover:bg-[#2a2a35] disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   {isSaving ? "Saving..." : "Save as Draft"}
                 </button>

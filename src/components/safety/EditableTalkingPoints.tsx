@@ -63,7 +63,7 @@ export default function EditableTalkingPoints({
       {points.map((point, idx) => (
         <div
           key={idx}
-          className="flex items-start gap-1.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-2 group"
+          className="flex items-start gap-1.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-2 group"
         >
           {/* Reorder buttons */}
           <div className="flex flex-col gap-0.5 shrink-0 mt-0.5">

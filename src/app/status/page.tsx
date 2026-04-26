@@ -63,9 +63,9 @@ export default function StatusPage() {
   const lastChecked = "April 13, 2026 at 2:00 AM MST";
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen bg-[#0B0B0D]">
       {/* Header */}
-      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sticky top-0 z-50">
+      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 md:gap-3">
             <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
@@ -110,11 +110,11 @@ export default function StatusPage() {
         </div>
 
         {/* Service List */}
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden mb-8">
-          <div className="px-6 py-4 border-b border-[var(--border-primary)]">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden mb-8">
+          <div className="px-6 py-4 border-b border-[#1F1F25]">
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Services</h2>
           </div>
-          <div className="divide-y divide-[var(--border-primary)]">
+          <div className="divide-y divide-[#1F1F25]">
             {services.map((service) => (
               <div key={service.name} className="flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors">
                 <div>
@@ -135,7 +135,7 @@ export default function StatusPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--border-primary)] py-6 mt-12">
+      <footer className="border-t border-[#1F1F25] py-6 mt-12">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />

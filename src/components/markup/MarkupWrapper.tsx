@@ -57,7 +57,7 @@ export default function MarkupWrapper({
           allowTaint: true,
           scale: Math.min(window.devicePixelRatio || 1, 2),
           logging: false,
-          backgroundColor: "var(--bg-primary)",
+          backgroundColor: "#0B0B0D",
         } as any);
         if (!cancelled) {
           setScreenshotUrl(canvas.toDataURL("image/jpeg", 0.92));
@@ -97,7 +97,7 @@ export default function MarkupWrapper({
       {/* Capturing spinner */}
       {capturing && (
         <div className="fixed inset-0 z-[9998] bg-black/60 flex items-center justify-center">
-          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl px-6 py-5 flex items-center gap-3">
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl px-6 py-5 flex items-center gap-3">
             <div className="w-5 h-5 rounded-full border-2 border-[#F97316] border-t-transparent animate-spin" />
             <span className="text-white text-sm font-semibold">Preparing markup…</span>
           </div>

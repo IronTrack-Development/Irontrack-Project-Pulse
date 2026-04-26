@@ -1,6 +1,6 @@
 export default function HeroVideo() {
   return (
-    <div className="w-full bg-[var(--bg-primary)]">
+    <div className="w-full bg-[#0B0B0D]">
       <video
         autoPlay
         muted

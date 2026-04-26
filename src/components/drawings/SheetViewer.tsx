@@ -213,9 +213,9 @@ export default function SheetViewer({
   if (!currentSheet) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[var(--bg-primary)] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[#0B0B0D] flex flex-col">
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-3 py-2 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] shrink-0 overflow-x-auto">
+      <div className="flex items-center gap-2 px-3 py-2 bg-[#121217] border-b border-[#1F1F25] shrink-0 overflow-x-auto">
         <button
           onClick={onClose}
           className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
@@ -273,7 +273,7 @@ export default function SheetViewer({
           className={`p-2 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors shrink-0 ${
             addPinMode
               ? "bg-[#F97316] text-white"
-              : "text-gray-400 hover:text-white bg-[var(--bg-tertiary)]"
+              : "text-gray-400 hover:text-white bg-[#1F1F25]"
           }`}
           title="Add Pin"
         >
@@ -384,10 +384,10 @@ export default function SheetViewer({
       </div>
 
       {/* Sheet navigation */}
-      <div className="flex flex-col bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] shrink-0">
+      <div className="flex flex-col bg-[#121217] border-t border-[#1F1F25] shrink-0">
         {/* Discipline context row */}
         {currentSheet.discipline && currentSheet.discipline !== "general" && (
-          <div className="flex items-center justify-center gap-1.5 py-1 border-b border-[var(--border-primary)]/50">
+          <div className="flex items-center justify-center gap-1.5 py-1 border-b border-[#1F1F25]/50">
             <span
               className="text-[10px] font-semibold uppercase tracking-widest"
               style={{ color: DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280" }}
@@ -400,7 +400,7 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.max(i - 1, 0))}
             disabled={sheetIndex === 0}
-            className="flex items-center gap-1 px-3 py-2 bg-[var(--bg-tertiary)] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
           >
             <ChevronLeft size={16} /> Prev
           </button>
@@ -413,7 +413,7 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
             disabled={sheetIndex === sheets.length - 1}
-            className="flex items-center gap-1 px-3 py-2 bg-[var(--bg-tertiary)] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
           >
             Next <ChevronRight size={16} />
           </button>
@@ -422,7 +422,7 @@ export default function SheetViewer({
 
       {/* Selected pin popup */}
       {selectedPin && (
-        <div className="absolute bottom-20 left-4 right-4 z-20 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 shadow-xl">
+        <div className="absolute bottom-20 left-4 right-4 z-20 bg-[#121217] border border-[#1F1F25] rounded-xl p-4 shadow-xl">
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-center gap-2">
               <div
@@ -466,7 +466,7 @@ export default function SheetViewer({
 
       {/* Sheet info popup */}
       {showInfo && (
-        <div className="absolute bottom-20 left-4 right-4 z-20 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 shadow-xl">
+        <div className="absolute bottom-20 left-4 right-4 z-20 bg-[#121217] border border-[#1F1F25] rounded-xl p-4 shadow-xl">
           <div className="flex justify-between items-start">
             <div className="space-y-1">
               <p className="text-white font-medium">{currentSheet.sheet_number}</p>

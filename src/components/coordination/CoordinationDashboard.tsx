@@ -115,7 +115,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {(actionSummary.open > 0 || actionSummary.overdue > 0) && (
         <button
           onClick={() => setView("actions")}
-          className="w-full mb-4 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
+          className="w-full mb-4 p-4 rounded-xl bg-[#121217] border border-[#1F1F25] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -182,7 +182,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
             <button
               key={meeting.id}
               onClick={() => handleSelectMeeting(meeting.id)}
-              className="w-full p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
+              className="w-full p-4 rounded-xl bg-[#121217] border border-[#1F1F25] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">

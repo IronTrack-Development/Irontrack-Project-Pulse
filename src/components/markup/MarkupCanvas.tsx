@@ -479,7 +479,7 @@ export default function MarkupCanvas({
 
       {/* ── Toolbar ── */}
       <div
-        className="bg-[var(--bg-primary)] border-t border-[var(--border-primary)] px-3 pt-3"
+        className="bg-[#0B0B0D] border-t border-[#1F1F25] px-3 pt-3"
         style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
       >
         {/* Tool buttons */}
@@ -500,7 +500,7 @@ export default function MarkupCanvas({
               className={`flex flex-col items-center justify-center gap-0.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
                 tool === t.id
                   ? "bg-[#F97316] text-white"
-                  : "bg-[var(--bg-tertiary)] text-gray-400 active:bg-[var(--bg-hover)]"
+                  : "bg-[#1F1F25] text-gray-400 active:bg-[#2a2a35]"
               }`}
               style={{ minWidth: 52, minHeight: 52, padding: "6px 10px" }}
             >
@@ -542,7 +542,7 @@ export default function MarkupCanvas({
                 className={`rounded-lg font-bold transition-all flex items-center justify-center ${
                   sizeKey === s
                     ? "bg-[#F97316] text-white"
-                    : "bg-[var(--bg-tertiary)] text-gray-400"
+                    : "bg-[#1F1F25] text-gray-400"
                 }`}
                 style={{ minWidth: 36, minHeight: 36, fontSize: s === "thin" ? 10 : s === "medium" ? 16 : 22 }}
               >
@@ -558,7 +558,7 @@ export default function MarkupCanvas({
             onClick={() => setActions((prev) => prev.slice(0, -1))}
             disabled={actions.length === 0}
             title="Undo"
-            className="rounded-xl bg-[var(--bg-tertiary)] text-gray-400 hover:text-white disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
+            className="rounded-xl bg-[#1F1F25] text-gray-400 hover:text-white disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ↩
@@ -570,7 +570,7 @@ export default function MarkupCanvas({
               setTextOverlay(null);
             }}
             title="Clear all"
-            className="rounded-xl bg-[var(--bg-tertiary)] text-[#EF4444] transition-all flex items-center justify-center text-base"
+            className="rounded-xl bg-[#1F1F25] text-[#EF4444] transition-all flex items-center justify-center text-base"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             🗑
@@ -578,7 +578,7 @@ export default function MarkupCanvas({
           <button
             onClick={onCancel}
             title="Cancel"
-            className="rounded-xl bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-all flex items-center justify-center text-base font-bold"
+            className="rounded-xl bg-[#1F1F25] text-gray-400 hover:text-white transition-all flex items-center justify-center text-base font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ✕

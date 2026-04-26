@@ -74,7 +74,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
       {/* Trigger button */}
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
       >
         <Share2 size={13} />
         Share
@@ -89,9 +89,9 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
           }}
         >
           {/* Modal panel */}
-          <div className="w-full max-w-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl shadow-2xl flex flex-col">
+          <div className="w-full max-w-lg bg-[#121217] border border-[#1F1F25] rounded-2xl shadow-2xl flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)]">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25]">
               <div className="flex items-center gap-2">
                 <Share2 size={15} className="text-[#F97316]" />
                 <span className="text-sm font-semibold text-white">Executive Snapshot</span>
@@ -120,14 +120,14 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               )}
 
               {snapshotText && !loading && (
-                <pre className="whitespace-pre-wrap text-xs text-gray-300 font-mono leading-relaxed bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 max-h-72 overflow-y-auto">
+                <pre className="whitespace-pre-wrap text-xs text-gray-300 font-mono leading-relaxed bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 max-h-72 overflow-y-auto">
                   {snapshotText}
                 </pre>
               )}
             </div>
 
             {/* Footer actions */}
-            <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-[var(--border-primary)]">
+            <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-[#1F1F25]">
               <button
                 onClick={handleClose}
                 className="px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors"
@@ -138,7 +138,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               {canShare && snapshotText && (
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
                 >
                   <Share2 size={13} />
                   Share

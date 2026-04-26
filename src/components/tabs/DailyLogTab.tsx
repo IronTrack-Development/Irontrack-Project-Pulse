@@ -16,7 +16,7 @@ export default function DailyLogTab({ projectId }: DailyLogTabProps) {
   return (
     <div>
       {/* Sub-view toggle */}
-      <div className="flex gap-1 mb-4 bg-[var(--bg-secondary)] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-4 bg-[#121217] rounded-xl p-1 w-fit">
         <button
           onClick={() => setSubView("logs")}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${

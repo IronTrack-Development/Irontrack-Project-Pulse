@@ -101,7 +101,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-gray-300 hover:text-white rounded-lg text-sm transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-300 hover:text-white rounded-lg text-sm transition-colors min-h-[44px]"
         >
           <Filter size={14} />
           Filters
@@ -110,11 +110,11 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
 
       {/* Filters */}
       {showFilters && (
-        <div className="flex flex-wrap gap-2 mb-4 p-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
+        <div className="flex flex-wrap gap-2 mb-4 p-3 rounded-xl bg-[#121217] border border-[#1F1F25]">
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Statuses</option>
             <option value="open">Open</option>
@@ -125,7 +125,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Categories</option>
             {Object.keys(CATEGORY_COLORS).map((c) => (
@@ -135,7 +135,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Priorities</option>
             <option value="high">High</option>
@@ -178,7 +178,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
               item.due_date && new Date(item.due_date) < new Date();
 
             return (
-              <div key={item.id} className="p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
+              <div key={item.id} className="p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
                 <div className="flex items-start gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -217,7 +217,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                   <select
                     value={item.status}
                     onChange={(e) => updateStatus(item, e.target.value)}
-                    className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px] shrink-0"
+                    className="text-xs rounded px-2 py-1 bg-[#1F1F25] border-none min-h-[36px] shrink-0"
                     style={{ color: STATUS_COLORS[item.status] }}
                   >
                     <option value="open">Open</option>

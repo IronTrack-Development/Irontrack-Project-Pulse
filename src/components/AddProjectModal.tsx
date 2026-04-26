@@ -34,9 +34,9 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl w-full max-w-md">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl w-full max-w-md">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-primary)]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <Building2 size={18} className="text-[#F97316]" />
             <h2 className="font-bold text-white">New Project</h2>
@@ -63,7 +63,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter project name"
               autoFocus
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
           </div>
 
@@ -71,7 +71,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2.5 border border-[var(--border-primary)] text-gray-400 hover:text-white rounded-lg text-sm font-medium transition-colors"
+              className="flex-1 py-2.5 border border-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-sm font-medium transition-colors"
             >
               Cancel
             </button>

@@ -34,7 +34,7 @@ export default function PunchProgressRing({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="var(--border-primary)"
+            stroke="#1F1F25"
             strokeWidth={strokeWidth}
           />
           {/* Progress arc */}

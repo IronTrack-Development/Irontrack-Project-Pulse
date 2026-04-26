@@ -140,9 +140,9 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
   return (
     <>
     <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="w-full sm:max-w-lg bg-[var(--bg-secondary)] rounded-t-3xl sm:rounded-3xl border border-[var(--border-primary)] overflow-y-auto max-h-[95dvh]">
+      <div className="w-full sm:max-w-lg bg-[#121217] rounded-t-3xl sm:rounded-3xl border border-[#1F1F25] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-primary)]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#1F1F25]">
           <h2 className="text-base font-bold text-white">Add Punch Item</h2>
           <button
             onClick={onCancel}
@@ -212,7 +212,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={building}
                 onChange={(e) => setBuilding(e.target.value)}
                 placeholder="A"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
             <div>
@@ -221,7 +221,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
                 placeholder="3"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
             <div>
@@ -230,7 +230,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 placeholder="301"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
               <option value="">Select trade...</option>
               {TRADES.map((t) => (
@@ -256,7 +256,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
               <option value="">Unassigned</option>
               {contacts.map((c) => (
@@ -276,7 +276,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                   className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[40px] border-2 ${
                     priority === p.value
                       ? `${p.color} border-transparent`
-                      : "bg-transparent text-gray-400 border-[var(--border-primary)] hover:border-gray-500"
+                      : "bg-transparent text-gray-400 border-[#1F1F25] hover:border-gray-500"
                   }`}
                 >
                   {p.label}
@@ -292,7 +292,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] [color-scheme:dark]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] [color-scheme:dark]"
             />
           </div>
 
@@ -305,8 +305,8 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <button
               onClick={() => handleSave(false)}
               disabled={saving}
-              className="flex-1 py-3.5 rounded-xl bg-[var(--bg-tertiary)] text-white text-sm font-semibold
-                hover:bg-[var(--bg-hover)] transition-all min-h-[52px] disabled:opacity-50"
+              className="flex-1 py-3.5 rounded-xl bg-[#1F1F25] text-white text-sm font-semibold
+                hover:bg-[#2a2a35] transition-all min-h-[52px] disabled:opacity-50"
             >
               {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save"}
             </button>

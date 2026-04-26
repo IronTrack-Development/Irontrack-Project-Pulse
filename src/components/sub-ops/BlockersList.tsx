@@ -156,14 +156,14 @@ export default function BlockersList({ projectId }: Props) {
 
       {/* Quick Add */}
       {showAdd && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <label className="text-xs font-medium text-gray-400 mb-1 block">Category</label>
               <select
                 value={addCategory}
                 onChange={(e) => setAddCategory(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 <option value="material">Material</option>
                 <option value="labor">Labor</option>
@@ -185,7 +185,7 @@ export default function BlockersList({ projectId }: Props) {
               onChange={(e) => setAddDescription(e.target.value)}
               placeholder="What's the issue?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
@@ -195,7 +195,7 @@ export default function BlockersList({ projectId }: Props) {
               onChange={(e) => setAddImpact(e.target.value)}
               placeholder="How does this affect work?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
           {error && (
@@ -217,7 +217,7 @@ export default function BlockersList({ projectId }: Props) {
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
         >
           <option value="">All Status</option>
           <option value="open">Open</option>
@@ -226,7 +226,7 @@ export default function BlockersList({ projectId }: Props) {
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
         >
           <option value="">All Categories</option>
           <option value="material">Material</option>
@@ -241,7 +241,7 @@ export default function BlockersList({ projectId }: Props) {
         <select
           value={filterForeman}
           onChange={(e) => setFilterForeman(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
         >
           <option value="">All Foremen</option>
           {foremen.map((f) => (
@@ -252,7 +252,7 @@ export default function BlockersList({ projectId }: Props) {
 
       {/* Blocker Cards */}
       {blockers.length === 0 ? (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <CheckCircle size={28} className="mx-auto text-green-500/50 mb-2" />
           <p className="text-sm text-gray-400">No blockers found</p>
           <p className="text-xs text-gray-600 mt-1">
@@ -267,7 +267,7 @@ export default function BlockersList({ projectId }: Props) {
             const isExpanded = expandedId === b.id;
 
             return (
-              <div key={b.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+              <div key={b.id} className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
                 <div
                   className="flex items-center justify-between p-4 cursor-pointer hover:bg-[#1a1a20] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : b.id)}
@@ -292,7 +292,7 @@ export default function BlockersList({ projectId }: Props) {
                 </div>
 
                 {isExpanded && (
-                  <div className="border-t border-[var(--border-primary)] p-4 space-y-3 bg-[#0e0e12] text-xs">
+                  <div className="border-t border-[#1F1F25] p-4 space-y-3 bg-[#0e0e12] text-xs">
                     <div>
                       <span className="text-gray-500 font-medium">Description:</span>
                       <p className="text-gray-300 mt-1 whitespace-pre-wrap">{b.description}</p>
@@ -309,7 +309,7 @@ export default function BlockersList({ projectId }: Props) {
                           <img
                             src={b.photo_url}
                             alt="Blocker photo"
-                            className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
+                            className="w-32 h-32 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
                             loading="lazy"
                           />
                         </a>
@@ -334,7 +334,7 @@ export default function BlockersList({ projectId }: Props) {
                               onChange={(e) => setResolveNotes(e.target.value)}
                               placeholder="Resolution notes (optional)"
                               rows={2}
-                              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
                             />
                             <div className="flex items-center gap-2">
                               <button

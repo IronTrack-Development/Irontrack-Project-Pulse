@@ -151,9 +151,9 @@ export default function NewTalkModal({
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center">
-      <div className="bg-[var(--bg-secondary)] w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[var(--border-primary)]">
+      <div className="bg-[#121217] w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[#1F1F25]">
         {/* Modal header */}
-        <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
+        <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <Shield size={18} className="text-[#F97316]" />
             {mode === "choose"
@@ -176,7 +176,7 @@ export default function NewTalkModal({
             <div className="space-y-3">
               <button
                 onClick={() => setMode("custom")}
-                className="w-full flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[#F97316]/50 transition-colors min-h-[44px]"
+                className="w-full flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4 hover:border-[#F97316]/50 transition-colors min-h-[44px]"
               >
                 <div className="text-left">
                   <div className="text-sm font-medium text-white">
@@ -207,7 +207,7 @@ export default function NewTalkModal({
                       <button
                         key={t.id}
                         onClick={() => selectTemplate(t)}
-                        className="w-full flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
+                        className="w-full flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
                       >
                         <div className="text-left min-w-0 flex-1">
                           <div className="text-sm text-white truncate">
@@ -240,7 +240,7 @@ export default function NewTalkModal({
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="Safety topic for today's talk"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -254,7 +254,7 @@ export default function NewTalkModal({
                   onChange={(e) =>
                     setCategory(e.target.value as ToolboxTalkCategory)
                   }
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
@@ -274,7 +274,7 @@ export default function NewTalkModal({
                     type="date"
                     value={talkDate}
                     onChange={(e) => setTalkDate(e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -287,7 +287,7 @@ export default function NewTalkModal({
                     onChange={(e) => setDuration(parseInt(e.target.value) || 15)}
                     min={5}
                     max={120}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -303,7 +303,7 @@ export default function NewTalkModal({
                     value={presenter}
                     onChange={(e) => setPresenter(e.target.value)}
                     placeholder="Name"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -315,7 +315,7 @@ export default function NewTalkModal({
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="Where"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -341,7 +341,7 @@ export default function NewTalkModal({
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   placeholder="Additional notes..."
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
                 />
               </div>
             </div>
@@ -349,7 +349,7 @@ export default function NewTalkModal({
         </div>
 
         {/* Modal footer */}
-        <div className="p-4 border-t border-[var(--border-primary)] flex gap-2">
+        <div className="p-4 border-t border-[#1F1F25] flex gap-2">
           {mode !== "choose" && (
             <button
               onClick={() => {
@@ -359,14 +359,14 @@ export default function NewTalkModal({
                   setTalkingPoints([""]);
                 }
               }}
-              className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
+              className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
             >
               Back
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
           >
             Cancel
           </button>

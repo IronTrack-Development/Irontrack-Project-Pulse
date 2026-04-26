@@ -132,12 +132,12 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4">
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92dvh] overflow-y-auto">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92dvh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] px-5 py-4 flex items-start justify-between z-10">
+        <div className="sticky top-0 bg-[#121217] border-b border-[#1F1F25] px-5 py-4 flex items-start justify-between z-10">
           <div className="min-w-0 flex-1 pr-3">
             {loading || !submittal ? (
-              <div className="h-5 w-40 bg-[var(--bg-tertiary)] rounded animate-pulse" />
+              <div className="h-5 w-40 bg-[#1F1F25] rounded animate-pulse" />
             ) : (
               <>
                 <p className="text-xs text-gray-500 font-mono mb-0.5">{submittal.submittal_number}</p>
@@ -150,7 +150,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-[var(--bg-tertiary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-[#1F1F25] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
           >
             ✕
           </button>
@@ -167,7 +167,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
               <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[submittal.status] ?? "bg-gray-700 text-gray-300"}`}>
                 {STATUS_LABELS[submittal.status] ?? submittal.status}
               </span>
-              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[var(--bg-tertiary)] text-gray-300">
+              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1F1F25] text-gray-300">
                 🏀 {submittal.ball_in_court.charAt(0).toUpperCase() + submittal.ball_in_court.slice(1)}
               </span>
               {submittal.priority !== "normal" && (
@@ -184,7 +184,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             {/* Details grid */}
             <div className="grid grid-cols-2 gap-3 text-sm">
               {submittal.required_by && (
-                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
+                <div className="bg-[#0B0B0D] rounded-xl p-3">
                   <p className="text-xs text-gray-500 mb-1">Required By</p>
                   <p className={`font-medium ${
                     new Date(submittal.required_by) < new Date() && submittal.status !== "approved" && submittal.status !== "approved_as_noted"
@@ -195,19 +195,19 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                 </div>
               )}
               {submittal.lead_time_days != null && (
-                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
+                <div className="bg-[#0B0B0D] rounded-xl p-3">
                   <p className="text-xs text-gray-500 mb-1">Lead Time</p>
                   <p className="font-medium text-white">{submittal.lead_time_days} days</p>
                 </div>
               )}
               {submittal.submitted_date && (
-                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
+                <div className="bg-[#0B0B0D] rounded-xl p-3">
                   <p className="text-xs text-gray-500 mb-1">Submitted</p>
                   <p className="font-medium text-white">{formatDate(submittal.submitted_date)}</p>
                 </div>
               )}
               {submittal.returned_date && (
-                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
+                <div className="bg-[#0B0B0D] rounded-xl p-3">
                   <p className="text-xs text-gray-500 mb-1">Returned</p>
                   <p className="font-medium text-white">{formatDate(submittal.returned_date)}</p>
                 </div>
@@ -218,7 +218,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             {(submittal.assigned_contact || submittal.reviewer_contact) && (
               <div className="space-y-2">
                 {submittal.assigned_contact && (
-                  <div className="flex items-center justify-between bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
+                  <div className="flex items-center justify-between bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                     <div>
                       <p className="text-xs text-gray-500">Preparing Sub</p>
                       <p className="text-sm font-medium text-white">{submittal.assigned_contact.name}</p>
@@ -229,7 +229,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                   </div>
                 )}
                 {submittal.reviewer_contact && (
-                  <div className="flex items-center justify-between bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
+                  <div className="flex items-center justify-between bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                     <div>
                       <p className="text-xs text-gray-500">Reviewer</p>
                       <p className="text-sm font-medium text-white">{submittal.reviewer_contact.name}</p>
@@ -326,7 +326,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                 {showRevisions && (
                   <div className="space-y-2">
                     {submittal.revisions.slice().reverse().map((rev) => (
-                      <div key={rev.id} className="flex gap-3 bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
+                      <div key={rev.id} className="flex gap-3 bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-xs text-gray-500 font-mono">Rev {rev.revision_number}</span>
@@ -345,10 +345,10 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             )}
 
             {/* Edit + Delete */}
-            <div className="flex gap-3 pt-1 border-t border-[var(--border-primary)]">
+            <div className="flex gap-3 pt-1 border-t border-[#1F1F25]">
               <button
                 onClick={onEdit}
-                className="flex-1 py-3 rounded-xl bg-[var(--bg-tertiary)] text-gray-300 hover:text-white text-sm font-medium transition-colors min-h-[44px]"
+                className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-gray-300 hover:text-white text-sm font-medium transition-colors min-h-[44px]"
               >
                 Edit
               </button>

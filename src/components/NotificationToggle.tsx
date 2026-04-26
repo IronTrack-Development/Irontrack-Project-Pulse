@@ -67,7 +67,7 @@ export default function NotificationToggle() {
 
   if (!supported) {
     return (
-      <div className="flex items-start gap-3 p-4 bg-[var(--bg-primary)] border border-gray-800 rounded-lg">
+      <div className="flex items-start gap-3 p-4 bg-[#0B0B0D] border border-gray-800 rounded-lg">
         <BellOff size={18} className="text-gray-600 mt-0.5 shrink-0" />
         <div>
           <p className="text-sm text-gray-500">

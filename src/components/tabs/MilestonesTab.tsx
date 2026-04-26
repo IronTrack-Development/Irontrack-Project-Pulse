@@ -57,7 +57,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
 
   if (milestones.length === 0) {
     return (
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
         <Flag size={40} className="mx-auto text-gray-700 mb-4" />
         <div className="text-gray-400 text-sm">No milestones found</div>
       </div>
@@ -106,7 +106,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
         return (
           <div
             key={milestone.id}
-            className={`bg-[var(--bg-secondary)] border rounded-xl overflow-hidden transition-all hover:shadow-lg ${getStatusBg(milestone.status)}`}
+            className={`bg-[#121217] border rounded-xl overflow-hidden transition-all hover:shadow-lg ${getStatusBg(milestone.status)}`}
           >
             <button
               onClick={() => hasContext && setExpandedId(isExpanded ? null : milestone.id)}
@@ -150,7 +150,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
 
             {/* Context strip */}
             {isExpanded && hasContext && (
-              <div className="border-t border-[var(--border-primary)] px-4 py-3">
+              <div className="border-t border-[#1F1F25] px-4 py-3">
                 <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">Daily Log Context (±2 days)</div>
                 <div className="space-y-1.5">
                   {milestone.contextStrip!.map((entry, i) => {
@@ -166,7 +166,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                         className={`flex items-center gap-3 text-xs px-2 py-1.5 rounded-lg ${
                           isMilestoneDay
                             ? "bg-[#F97316]/10 border border-[#F97316]/20"
-                            : "bg-[var(--bg-primary)]"
+                            : "bg-[#0B0B0D]"
                         }`}
                       >
                         <span className={`font-mono w-12 shrink-0 ${isMilestoneDay ? "text-[#F97316] font-bold" : "text-gray-500"}`}>

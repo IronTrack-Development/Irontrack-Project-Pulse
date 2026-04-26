@@ -50,8 +50,8 @@ export default function ProjectsPage() {
   useEffect(() => { fetch_(); }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
-      <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-6 py-4">
+    <div className="min-h-screen bg-[#0B0B0D]">
+      <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <div>
             <h1 className="text-xl font-bold text-white">All Projects</h1>
@@ -84,7 +84,7 @@ export default function ProjectsPage() {
               <Link
                 key={p.id}
                 href={`/projects/${p.id}`}
-                className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-5 py-4 hover:border-[#F97316]/30 transition-all group"
+                className="flex items-center bg-[#121217] border border-[#1F1F25] rounded-xl px-5 py-4 hover:border-[#F97316]/30 transition-all group"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">

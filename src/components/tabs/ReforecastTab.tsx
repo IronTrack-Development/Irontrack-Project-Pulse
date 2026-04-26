@@ -205,7 +205,7 @@ export default function ReforecastTab({ projectId }: Props) {
         <div className="flex gap-2">
           <button
             onClick={fetchSnapshots}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors"
           >
             <History size={14} />
             History
@@ -213,7 +213,7 @@ export default function ReforecastTab({ projectId }: Props) {
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors disabled:opacity-40"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors disabled:opacity-40"
           >
             <Download size={14} />
             {exporting ? "Exporting…" : "Export MSPDI"}
@@ -231,15 +231,15 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Completion</div>
           <div className="text-2xl font-bold text-white">{stats.avg_completion}%</div>
-          <div className="mt-1.5 h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+          <div className="mt-1.5 h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[#F97316] to-[#22C55E] rounded-full" style={{ width: `${stats.avg_completion}%` }} />
           </div>
         </div>
 
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Forecast Delta</div>
           <div className="text-2xl font-bold flex items-center gap-1" style={{ color: deltaColor(delta) }}>
             {delta > 0 ? <ArrowUpRight size={20} /> : delta < 0 ? <ArrowDownRight size={20} /> : <Minus size={16} />}
@@ -250,7 +250,7 @@ export default function ReforecastTab({ projectId }: Props) {
           </div>
         </div>
 
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Critical Path</div>
           <div className="text-2xl font-bold text-[#EF4444]">{stats.critical_activities}</div>
           <div className="text-[10px] text-gray-600 mt-1">
@@ -258,7 +258,7 @@ export default function ReforecastTab({ projectId }: Props) {
           </div>
         </div>
 
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">At Risk</div>
           <div className="text-2xl font-bold" style={{ color: stats.at_risk_activities > 0 ? "#EAB308" : "#22C55E" }}>
             {stats.at_risk_activities}
@@ -271,7 +271,7 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Schedule Impacts */}
       {impacts.length > 0 && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
           <button
             onClick={() => setShowImpacts(!showImpacts)}
             className="w-full flex items-center justify-between px-4 py-3 text-left"
@@ -301,7 +301,7 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Risk Flags */}
       {risks.length > 0 && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
           <div className="flex items-center gap-2 px-4 py-3">
             <Shield size={14} className="text-[#EF4444]" />
             <span className="text-sm font-bold text-white">Risk Flags</span>
@@ -320,7 +320,7 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Recovery Actions */}
       {recoveryActions.length > 0 && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
           <button
             onClick={() => setShowRecovery(!showRecovery)}
             className="w-full flex items-center justify-between px-4 py-3 text-left"
@@ -335,7 +335,7 @@ export default function ReforecastTab({ projectId }: Props) {
           {showRecovery && (
             <div className="px-4 pb-4 space-y-2">
               {recoveryActions.map((action: any, i: number) => (
-                <div key={i} className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5">
+                <div key={i} className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#F97316] bg-[#F97316]/15 px-2 py-0.5 rounded uppercase">{action.category}</span>
                     {action.potential_days_recovered > 0 && (
@@ -351,7 +351,7 @@ export default function ReforecastTab({ projectId }: Props) {
       )}
 
       {/* Critical Path Tasks */}
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
         <button
           onClick={() => setShowCritical(!showCritical)}
           className="w-full flex items-center justify-between px-4 py-3 text-left"
@@ -374,7 +374,7 @@ export default function ReforecastTab({ projectId }: Props) {
                 <button
                   key={task.id}
                   onClick={() => handleProgressUpdate(task)}
-                  className="w-full text-left bg-[var(--bg-primary)] border border-[#EF4444]/20 rounded-lg px-3 py-2.5 hover:border-[#EF4444]/40 transition-colors"
+                  className="w-full text-left bg-[#0B0B0D] border border-[#EF4444]/20 rounded-lg px-3 py-2.5 hover:border-[#EF4444]/40 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
@@ -398,7 +398,7 @@ export default function ReforecastTab({ projectId }: Props) {
                       )}
                     </div>
                   </div>
-                  <div className="mt-1.5 h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                  <div className="mt-1.5 h-1 bg-[#1F1F25] rounded-full overflow-hidden">
                     <div className="h-full bg-[#EF4444] rounded-full" style={{ width: `${task.percent_complete}%` }} />
                   </div>
                 </button>
@@ -409,8 +409,8 @@ export default function ReforecastTab({ projectId }: Props) {
       </div>
 
       {/* Update Progress Section */}
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border-primary)]">
+      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1F1F25]">
           <Clock size={14} className="text-[#3B82F6]" />
           <span className="text-sm font-bold text-white">Update Progress</span>
           <span className="text-[10px] text-gray-500 ml-auto">Tap a task to update</span>
@@ -423,7 +423,7 @@ export default function ReforecastTab({ projectId }: Props) {
               <button
                 key={task.id}
                 onClick={() => handleProgressUpdate(task)}
-                className="w-full text-left px-4 py-2.5 border-b border-[var(--border-primary)] hover:bg-[var(--bg-tertiary)]/50 transition-colors"
+                className="w-full text-left px-4 py-2.5 border-b border-[#1F1F25] hover:bg-[#1F1F25]/50 transition-colors"
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex-1 min-w-0">
@@ -450,8 +450,8 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Snapshot History */}
       {showSnapshots && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-primary)]">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1F1F25]">
             <div className="flex items-center gap-2">
               <History size={14} className="text-gray-400" />
               <span className="text-sm font-bold text-white">Reforecast History</span>
@@ -463,7 +463,7 @@ export default function ReforecastTab({ projectId }: Props) {
               <div className="text-xs text-gray-600 py-6 text-center">No snapshots yet. Run a reforecast.</div>
             ) : (
               snapshots.map((snap) => (
-                <div key={snap.id} className="px-4 py-2.5 border-b border-[var(--border-primary)]">
+                <div key={snap.id} className="px-4 py-2.5 border-b border-[#1F1F25]">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-white">{snap.trigger_description || "Reforecast"}</div>

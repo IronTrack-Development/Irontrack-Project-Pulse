@@ -150,7 +150,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
       />
       <button
         onClick={() => fileRef.current?.click()}
-        className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
+        className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
       >
         <ImagePlus size={18} />
         {photos.length === 0 ? "Select Photos" : "Add More Photos"}
@@ -161,7 +161,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
         <>
           <div className="grid grid-cols-2 gap-3 mb-4">
             {photos.map((photo, idx) => (
-              <div key={idx} className="relative bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+              <div key={idx} className="relative bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
                 <img
                   src={photo.preview}
                   alt=""
@@ -178,7 +178,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
                     type="text"
                     value={photo.title}
                     onChange={(e) => updateTitle(idx, e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#F97316] transition-colors"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#F97316] transition-colors"
                   />
                 </div>
               </div>

@@ -86,16 +86,16 @@ export default function QRShareModal({ projectId, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl w-full max-w-sm overflow-hidden">
+      <div className="relative bg-[#121217] border border-[#1F1F25] rounded-2xl w-full max-w-sm overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <QrCode size={16} className="text-[#F97316]" />
             <span className="text-sm font-bold text-white">Directory QR Code</span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
           >
             <X size={16} />
           </button>
@@ -153,7 +153,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               </div>
 
               {/* URL display */}
-              <div className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-4">
+              <div className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
                 <p className="text-[10px] text-gray-400 truncate font-mono">{qrData.url}</p>
               </div>
 
@@ -161,7 +161,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               <div className="flex gap-2 w-full mb-3">
                 <button
                   onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
                 >
                   {copied ? (
                     <>

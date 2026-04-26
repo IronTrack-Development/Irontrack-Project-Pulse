@@ -155,7 +155,7 @@ export default function TMTab({ projectId }: Props) {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchTickets}
-              className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
@@ -173,21 +173,21 @@ export default function TMTab({ projectId }: Props) {
         {/* Summary bar */}
         {totalTickets > 0 && (
           <div className="grid grid-cols-4 gap-2">
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-white">{totalTickets}</p>
               <p className="text-[10px] text-gray-500 mt-0.5">Tickets</p>
             </div>
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-sm font-bold text-[#F97316]">{fmtCurrency(totalCost)}</p>
               <p className="text-[10px] text-gray-500 mt-0.5">Total</p>
             </div>
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingApproval > 0 ? "text-yellow-400" : "text-white"}`}>
                 {pendingApproval}
               </p>
               <p className="text-[10px] text-gray-500 mt-0.5">Pending</p>
             </div>
-            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
+            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${disputed > 0 ? "text-red-400" : "text-white"}`}>
                 {disputed}
               </p>
@@ -210,12 +210,12 @@ export default function TMTab({ projectId }: Props) {
                   className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === f.value
                       ? "bg-[#F97316] text-white"
-                      : "bg-[var(--bg-tertiary)] text-gray-400 hover:text-white"
+                      : "bg-[#1F1F25] text-gray-400 hover:text-white"
                   }`}
                 >
                   {f.label}
                   {count > 0 && (
-                    <span className={`text-[10px] rounded-full px-1.5 ${filter === f.value ? "bg-white/20" : "bg-[var(--bg-hover)]"}`}>
+                    <span className={`text-[10px] rounded-full px-1.5 ${filter === f.value ? "bg-white/20" : "bg-[#2a2a35]"}`}>
                       {count}
                     </span>
                   )}
@@ -228,7 +228,7 @@ export default function TMTab({ projectId }: Props) {
         {/* Ticket list */}
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-[var(--bg-tertiary)] flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-[#1F1F25] flex items-center justify-center mb-4">
               <Receipt size={28} className="text-gray-600" />
             </div>
             <h3 className="text-white font-semibold mb-1">
@@ -255,7 +255,7 @@ export default function TMTab({ projectId }: Props) {
               <button
                 key={t.id}
                 onClick={() => openDetail(t)}
-                className="w-full text-left p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-[#F97316]/40 transition-colors"
+                className="w-full text-left p-4 bg-[#121217] border border-[#1F1F25] rounded-xl hover:border-[#F97316]/40 transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">

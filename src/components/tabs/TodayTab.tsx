@@ -48,7 +48,7 @@ function statusLabel(status: string) {
 
 function ActivityCard({ activity }: { activity: ParsedActivity }) {
   return (
-    <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center gap-3">
+    <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center gap-3">
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium text-white truncate">{activity.activity_name}</div>
         <div className="flex items-center gap-3 mt-1">
@@ -121,7 +121,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
     <div className="space-y-6">
       {/* Yesterday Recap */}
       {data.yesterdayRecap && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5">
           <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Yesterday — {data.yesterdayRecap.dateLabel}</div>
           <div className="grid grid-cols-2 gap-3">
             {/* Crew */}
@@ -184,7 +184,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
           <div className="text-xs text-gray-500 uppercase tracking-widest mb-0.5">Today is</div>
           <div className="text-lg font-bold text-white">{today}</div>
         </div>
-        <button onClick={fetchData} className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors">
+        <button onClick={fetchData} className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors">
           <RefreshCw size={14} />
         </button>
       </div>
@@ -218,7 +218,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
           <span className="text-xs text-gray-500">({data.happeningToday.length})</span>
         </div>
         {data.happeningToday.length === 0 ? (
-          <p className="text-gray-600 text-sm bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+          <p className="text-gray-600 text-sm bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
             No activities scheduled for today.
           </p>
         ) : (

@@ -146,7 +146,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[var(--bg-tertiary)] text-gray-400 border border-[#2a2a33]">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-gray-400 border border-[#2a2a33]">
       On Track
     </span>
   );
@@ -304,7 +304,7 @@ function PhotoStrip({ urls }: { urls: string[] }) {
             <button
               key={url}
               onClick={() => setLightboxIndex(i)}
-              className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-[var(--border-secondary)] group"
+              className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-[#2a2a35] group"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -392,7 +392,7 @@ function ReportPreviewCard({
   return (
     <div className="space-y-5 pb-8">
       {/* Header */}
-      <div className="bg-[#13131A] border border-[var(--border-primary)] rounded-2xl p-5 space-y-4">
+      <div className="bg-[#13131A] border border-[#1F1F25] rounded-2xl p-5 space-y-4">
         <div className="space-y-1">
           <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
             📋 Daily Report Preview
@@ -414,7 +414,7 @@ function ReportPreviewCard({
               return (
                 <div
                   key={act.id}
-                  className="flex items-center justify-between gap-3 bg-[var(--bg-primary)] rounded-xl px-4 py-3"
+                  className="flex items-center justify-between gap-3 bg-[#0B0B0D] rounded-xl px-4 py-3"
                 >
                   <p className="text-sm text-gray-200 flex-1 leading-snug">
                     {act.activity_name}
@@ -501,7 +501,7 @@ function ReportPreviewCard({
                   <button
                     key={url + i}
                     onClick={() => setLightboxIndex(i)}
-                    className="relative aspect-square rounded-xl overflow-hidden border border-[var(--border-secondary)] group"
+                    className="relative aspect-square rounded-xl overflow-hidden border border-[#2a2a35] group"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -532,7 +532,7 @@ function ReportPreviewCard({
           {onEdit && (
             <button
               onClick={onEdit}
-              className="flex-1 bg-[#13131A] border border-[var(--border-primary)] hover:border-gray-500 text-gray-300 font-semibold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2"
+              className="flex-1 bg-[#13131A] border border-[#1F1F25] hover:border-gray-500 text-gray-300 font-semibold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2"
             >
               <ArrowLeft size={18} />
               Edit Report
@@ -606,7 +606,7 @@ function ActivityCard({
   }
 
   return (
-    <div className="bg-[#13131A] border border-[var(--border-primary)] rounded-xl p-4 space-y-2">
+    <div className="bg-[#13131A] border border-[#1F1F25] rounded-xl p-4 space-y-2">
       <div className="flex items-start justify-between gap-2">
         <p className="text-sm font-medium text-gray-100 leading-snug">{activity.activity_name}</p>
         {statusChip(activity.status, pct)}
@@ -633,7 +633,7 @@ function ActivityCard({
             <span className="text-gray-300">{trendPct != null ? trendPct : pct}%</span>
           </span>
         </div>
-        <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+        <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full bg-[#F97316] transition-all"
             style={{ width: `${Math.min(trendPct != null ? trendPct : pct, 100)}%` }}
@@ -658,7 +658,7 @@ function StatCard({
   danger?: boolean;
 }) {
   return (
-    <div className="bg-[#13131A] border border-[var(--border-primary)] rounded-xl p-3 flex flex-col items-center text-center">
+    <div className="bg-[#13131A] border border-[#1F1F25] rounded-xl p-3 flex flex-col items-center text-center">
       <span
         className={`text-2xl font-bold ${
           danger ? "text-red-400" : accent ? "text-[#F97316]" : "text-gray-100"
@@ -796,7 +796,7 @@ function FullScopeTab({
           label="Not Started"
           count={notStarted.length}
           accentClass="text-gray-300"
-          borderClass="border-[var(--border-primary)]"
+          borderClass="border-[#1F1F25]"
           bgClass="bg-[#13131A]"
           iconNode={<ChevronRight size={14} className="text-gray-500" />}
           activities={notStarted}
@@ -881,7 +881,7 @@ function ScopeGroup({
       </button>
 
       {isOpen && (
-        <div className="p-3 space-y-2 bg-[var(--bg-primary)]">
+        <div className="p-3 space-y-2 bg-[#0B0B0D]">
           {activities.map((act) => {
             const trend = trendMap?.[act.id];
             return (
@@ -924,7 +924,7 @@ function PastReportsSection({
   // "View Full Report" overlay
   if (fullReport) {
     return (
-      <div className="border border-[var(--border-primary)] rounded-xl overflow-hidden">
+      <div className="border border-[#1F1F25] rounded-xl overflow-hidden">
         <div className="bg-[#13131A] px-4 py-3 flex items-center gap-3">
           <button
             onClick={() => setFullReportId(null)}
@@ -936,7 +936,7 @@ function PastReportsSection({
             Full Report — {formatDate(fullReport.report_date)}
           </span>
         </div>
-        <div className="bg-[var(--bg-primary)] p-4">
+        <div className="bg-[#0B0B0D] p-4">
           <ReportPreviewCard
             projectName={projectName}
             subName={subName}
@@ -960,14 +960,14 @@ function PastReportsSection({
   }
 
   return (
-    <div className="border border-[var(--border-primary)] rounded-xl overflow-hidden">
+    <div className="border border-[#1F1F25] rounded-xl overflow-hidden">
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between px-4 py-3 bg-[#13131A]"
       >
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold text-gray-200">📋 Past Reports</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-gray-400">
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1F1F25] text-gray-400">
             {reports.length}
           </span>
         </div>
@@ -978,7 +978,7 @@ function PastReportsSection({
       </button>
 
       {open && (
-        <div className="divide-y divide-[var(--border-primary)] bg-[var(--bg-primary)]">
+        <div className="divide-y divide-[#1F1F25] bg-[#0B0B0D]">
           {reports.map((report) => (
             <div key={report.id} className="p-4 space-y-3">
               {/* Date + submitted by */}
@@ -1429,7 +1429,7 @@ function ProgressReportTab({
                     className={`w-full text-left rounded-xl p-4 border transition-all ${
                       selected
                         ? "bg-[#F97316]/10 border-[#F97316]/50"
-                        : "bg-[#13131A] border-[var(--border-primary)]"
+                        : "bg-[#13131A] border-[#1F1F25]"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -1479,8 +1479,8 @@ function ProgressReportTab({
                                   ? "bg-orange-800/40 border-orange-600/50 text-orange-300"
                                   : key === "25"
                                   ? "bg-blue-800/40 border-blue-600/50 text-blue-300"
-                                  : "bg-[var(--bg-tertiary)] border-[var(--border-secondary)] text-gray-300"
-                                : "bg-[var(--bg-primary)] border-[var(--border-primary)] text-gray-500"
+                                  : "bg-[#1F1F25] border-[#2a2a35] text-gray-300"
+                                : "bg-[#0B0B0D] border-[#1F1F25] text-gray-500"
                             }`}
                           >
                             {label}
@@ -1496,7 +1496,7 @@ function ProgressReportTab({
         )}
       </div>
 
-      <div className="border-t border-[var(--border-primary)]" />
+      <div className="border-t border-[#1F1F25]" />
 
       {/* Section 2: Manpower */}
       <div className="space-y-3">
@@ -1513,7 +1513,7 @@ function ProgressReportTab({
               max={999}
               value={report.manpowerCount}
               onChange={(e) => setManpower(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full bg-[#13131A] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
             />
           </div>
           <div className="space-y-1.5">
@@ -1532,13 +1532,13 @@ function ProgressReportTab({
                   totalHours: Math.max(0, parseFloat(e.target.value) || 0),
                 }))
               }
-              className="w-full bg-[#13131A] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
             />
           </div>
         </div>
       </div>
 
-      <div className="border-t border-[var(--border-primary)]" />
+      <div className="border-t border-[#1F1F25]" />
 
       {/* Section 3: Delays */}
       <div className="space-y-3">
@@ -1558,7 +1558,7 @@ function ProgressReportTab({
                     ? chip === "None"
                       ? "bg-gray-700 border-gray-500 text-gray-100"
                       : "bg-red-900/40 border-red-600/50 text-red-300"
-                    : "bg-[#13131A] border-[var(--border-primary)] text-gray-400"
+                    : "bg-[#13131A] border-[#1F1F25] text-gray-400"
                 }`}
               >
                 {chip}
@@ -1571,11 +1571,11 @@ function ProgressReportTab({
           onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
           placeholder="Additional notes… (optional)"
           rows={3}
-          className="w-full bg-[#13131A] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
+          className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
         />
       </div>
 
-      <div className="border-t border-[var(--border-primary)]" />
+      <div className="border-t border-[#1F1F25]" />
 
       {/* Section 4: Photos */}
       <div className="space-y-3">
@@ -1606,7 +1606,7 @@ function ProgressReportTab({
         {photos.length < MAX_PHOTOS && (
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full flex items-center justify-center gap-3 bg-[#13131A] border-2 border-dashed border-[var(--border-secondary)] hover:border-[#F97316]/50 hover:bg-[#F97316]/5 rounded-2xl py-5 transition-colors group"
+            className="w-full flex items-center justify-center gap-3 bg-[#13131A] border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 hover:bg-[#F97316]/5 rounded-2xl py-5 transition-colors group"
           >
             <Camera size={22} className="text-gray-500 group-hover:text-[#F97316] transition-colors" />
             <span className="text-sm text-gray-400 group-hover:text-gray-200 font-medium transition-colors">
@@ -1622,7 +1622,7 @@ function ProgressReportTab({
               <div key={photo.id} className="relative flex-shrink-0">
                 <button
                   onClick={() => setFormLightboxIndex(i)}
-                  className="w-20 h-20 rounded-xl overflow-hidden border border-[var(--border-secondary)] block"
+                  className="w-20 h-20 rounded-xl overflow-hidden border border-[#2a2a35] block"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -1634,7 +1634,7 @@ function ProgressReportTab({
                 {/* Remove button */}
                 <button
                   onClick={() => removePhoto(photo.id)}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 border border-[var(--bg-primary)] flex items-center justify-center shadow-lg"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 border border-[#0B0B0D] flex items-center justify-center shadow-lg"
                 >
                   <X size={11} className="text-white" />
                 </button>
@@ -1651,7 +1651,7 @@ function ProgressReportTab({
             {photos.length < MAX_PHOTOS && (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[var(--border-secondary)] hover:border-[#F97316]/50 flex flex-col items-center justify-center gap-1 transition-colors group"
+                className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 flex flex-col items-center justify-center gap-1 transition-colors group"
               >
                 <Camera size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors" />
                 <span className="text-[10px] text-gray-600 group-hover:text-gray-400 transition-colors">Add</span>
@@ -1670,7 +1670,7 @@ function ProgressReportTab({
         )}
       </div>
 
-      <div className="border-t border-[var(--border-primary)]" />
+      <div className="border-t border-[#1F1F25]" />
 
       {/* Section 5: Submit */}
       <div className="space-y-3">
@@ -1681,7 +1681,7 @@ function ProgressReportTab({
             value={report.submittedBy}
             onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
             placeholder="Your name"
-            className="w-full bg-[#13131A] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+            className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
           />
         </div>
 
@@ -1851,7 +1851,7 @@ export default function SubScheduleViewPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-gray-400">
           <Loader2 className="animate-spin text-[#F97316]" size={32} />
           <p className="text-sm">Loading your schedule…</p>
@@ -1862,7 +1862,7 @@ export default function SubScheduleViewPage() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center px-4">
         <div className="text-center space-y-3 max-w-sm">
           <XCircle className="text-red-500 mx-auto" size={40} />
           <h1 className="text-lg font-semibold text-gray-100">Schedule Unavailable</h1>
@@ -1886,7 +1886,7 @@ export default function SubScheduleViewPage() {
   // Gate screen
   if (showGate && !ackDone) {
     return (
-      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <img src="/icon-192.png" alt="IronTrack" className="w-8 h-8 rounded-lg object-contain" />
@@ -1901,7 +1901,7 @@ export default function SubScheduleViewPage() {
             <p className="text-xs text-gray-500">{sub.trades.join(", ")}</p>
           </div>
 
-          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 space-y-4">
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 space-y-4">
             <div className="text-center">
               <CalendarDays size={28} className="mx-auto text-[#F97316] mb-2" />
               <p className="text-sm text-gray-300 leading-relaxed">
@@ -1916,7 +1916,7 @@ export default function SubScheduleViewPage() {
                 value={ackName}
                 onChange={(e) => setAckName(e.target.value)}
                 placeholder="e.g., Joe Martinez"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
                 onKeyDown={(e) => { if (e.key === "Enter") handleAcknowledge(); }}
                 autoFocus
               />
@@ -1955,9 +1955,9 @@ export default function SubScheduleViewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pb-24">
+    <div className="min-h-screen bg-[#0B0B0D] pb-24">
       {/* Header */}
-      <header className="bg-[#0F0F14] border-b border-[var(--border-primary)] sticky top-0 z-30">
+      <header className="bg-[#0F0F14] border-b border-[#1F1F25] sticky top-0 z-30">
         <div className="max-w-2xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 mb-2">
             <div className="flex items-center gap-1.5">
@@ -2002,7 +2002,7 @@ export default function SubScheduleViewPage() {
               className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.key
                   ? "bg-[#F97316] text-white"
-                  : "bg-[#13131A] text-gray-400 border border-[var(--border-primary)] hover:text-gray-200"
+                  : "bg-[#13131A] text-gray-400 border border-[#1F1F25] hover:text-gray-200"
               }`}
             >
               {tab.label}
@@ -2011,7 +2011,7 @@ export default function SubScheduleViewPage() {
                   className={`text-xs rounded-full px-1.5 py-0 ${
                     activeTab === tab.key
                       ? "bg-white/20 text-white"
-                      : "bg-[var(--bg-tertiary)] text-gray-500"
+                      : "bg-[#1F1F25] text-gray-500"
                   }`}
                 >
                   {tab.count}

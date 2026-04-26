@@ -33,7 +33,7 @@ export default function SubViewLayout({
   }, [token]);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-gray-100 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B0B0D] text-gray-100 overflow-x-hidden">
       {children}
     </div>
   );

@@ -160,18 +160,18 @@ export default function HandoffTemplates({ companyId }: Props) {
       </div>
 
       {showForm && (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <input
             value={formTitle}
             onChange={e => setFormTitle(e.target.value)}
             placeholder="Template title"
-            className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+            className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <select
               value={formFrom}
               onChange={e => setFormFrom(e.target.value)}
-              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-gray-300 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
             >
               <option value="">From: Any Department</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
@@ -179,7 +179,7 @@ export default function HandoffTemplates({ companyId }: Props) {
             <select
               value={formTo}
               onChange={e => setFormTo(e.target.value)}
-              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-gray-300 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
             >
               <option value="">To: Any Department</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
@@ -193,7 +193,7 @@ export default function HandoffTemplates({ companyId }: Props) {
                   value={item}
                   onChange={e => updateItem(idx, e.target.value)}
                   placeholder={`Item ${idx + 1}`}
-                  className="flex-1 px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-white placeholder-gray-500 min-h-[36px]"
+                  className="flex-1 px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[36px]"
                 />
                 {formItems.length > 1 && (
                   <button onClick={() => removeItemField(idx)} className="p-2 text-red-400/50 hover:text-red-400">
@@ -219,7 +219,7 @@ export default function HandoffTemplates({ companyId }: Props) {
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
-              className="px-4 py-2 bg-[var(--bg-tertiary)] text-gray-400 rounded-lg text-xs min-h-[40px]"
+              className="px-4 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-xs min-h-[40px]"
             >
               Cancel
             </button>
@@ -228,7 +228,7 @@ export default function HandoffTemplates({ companyId }: Props) {
       )}
 
       {Object.keys(grouped).length === 0 ? (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <FileText size={32} className="mx-auto text-gray-600 mb-3" />
           <p className="text-gray-400 text-sm">No templates yet</p>
           <p className="text-gray-500 text-xs mt-1">Create templates to speed up handoff checklists</p>
@@ -242,7 +242,7 @@ export default function HandoffTemplates({ companyId }: Props) {
             </div>
             <div className="space-y-2">
               {temps.map(t => (
-                <div key={t.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3">
+                <div key={t.id} className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-white">{t.title}</span>
                     <div className="flex items-center gap-1">

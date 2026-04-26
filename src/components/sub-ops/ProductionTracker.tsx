@@ -93,12 +93,12 @@ export default function ProductionTracker({ projectId }: Props) {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
           <TrendingUp size={16} className="text-[#F97316] mx-auto mb-1" />
           <p className="text-2xl font-bold text-white">{summary.total_entries}</p>
           <p className="text-xs text-gray-500">Entries This Period</p>
         </div>
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
           <Clock size={16} className="text-[#F97316] mx-auto mb-1" />
           <p className="text-2xl font-bold text-white">{summary.total_crew_hours}</p>
           <p className="text-xs text-gray-500">Crew Hours</p>
@@ -107,7 +107,7 @@ export default function ProductionTracker({ projectId }: Props) {
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-1.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-1.5">
+        <div className="flex items-center gap-1.5 bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-1.5">
           <Calendar size={12} className="text-gray-500" />
           <input
             type="date"
@@ -126,7 +126,7 @@ export default function ProductionTracker({ projectId }: Props) {
         <select
           value={filterForeman}
           onChange={(e) => setFilterForeman(e.target.value)}
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
         >
           <option value="">All Foremen</option>
           {foremen.map((f) => (
@@ -137,13 +137,13 @@ export default function ProductionTracker({ projectId }: Props) {
           value={filterProject}
           onChange={(e) => setFilterProject(e.target.value)}
           placeholder="Filter by project..."
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none placeholder-gray-600 min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none placeholder-gray-600 min-h-[36px]"
         />
       </div>
 
       {/* Production Entries */}
       {entries.length === 0 ? (
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <TrendingUp size={28} className="mx-auto text-gray-600 mb-2" />
           <p className="text-sm text-gray-400">No production entries for this period</p>
           <p className="text-xs text-gray-600 mt-1">Production is logged via foreman check-ins</p>
@@ -161,7 +161,7 @@ export default function ProductionTracker({ projectId }: Props) {
           {entries.map((e) => (
             <div
               key={e.id}
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 md:rounded-none md:border-x-0 md:border-t-0"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 md:rounded-none md:border-x-0 md:border-t-0"
             >
               {/* Mobile layout */}
               <div className="md:hidden space-y-1">

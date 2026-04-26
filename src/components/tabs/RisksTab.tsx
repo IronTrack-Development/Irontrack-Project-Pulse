@@ -40,7 +40,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
   const activity = risk.parsed_activities as { activity_name?: string; trade?: string; start_date?: string } | undefined;
 
   return (
-    <div className={`bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 ${style.border} rounded-xl p-5`}>
+    <div className={`bg-[#121217] border border-[#1F1F25] border-l-4 ${style.border} rounded-xl p-5`}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
@@ -59,7 +59,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
       )}
 
       {risk.suggested_action && (
-        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-3">
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-3">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Recommended Action</div>
           <div className="text-xs text-gray-300">{risk.suggested_action}</div>
         </div>
@@ -82,7 +82,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
         </button>
         <button
           onClick={onSnooze}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors"
         >
           <Clock size={12} />
           Snooze
@@ -144,7 +144,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
 
       {/* Filter + refresh */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-[#121217] border border-[#1F1F25] rounded-lg p-1">
           {SEVERITY_FILTERS.map((f) => (
             <button
               key={f}
@@ -157,7 +157,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
             </button>
           ))}
         </div>
-        <button onClick={fetchRisks} className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors">
+        <button onClick={fetchRisks} className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors">
           <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
         </button>
       </div>
@@ -192,7 +192,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
 
       {/* Resolved/snoozed section */}
       {risks.filter((r) => r.status !== "open").length > 0 && (
-        <div className="pt-4 border-t border-[var(--border-primary)]">
+        <div className="pt-4 border-t border-[#1F1F25]">
           <div className="text-xs text-gray-600 mb-3">
             {risks.filter((r) => r.status !== "open").length} resolved/snoozed risks
           </div>
