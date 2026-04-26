@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import {
   Shield, ShieldCheck, Calendar, Clock, MapPin, User,
   RefreshCw, CheckCircle2, Edit3, Lock, Trash2, FileText,
-  AlertTriangle, Save,
+  AlertTriangle, Save, BookOpen, Check,
 } from "lucide-react";
 import type { ToolboxTalk, ToolboxTalkAttendee } from "@/types";
 import AttendanceSheet from "./AttendanceSheet";
+import EditableTalkingPoints from "./EditableTalkingPoints";
 
 interface TalkDetailProps {
   projectId: string;
@@ -32,7 +33,11 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   const [correctiveActions, setCorrectiveActions] = useState("");
   const [followUpNeeded, setFollowUpNeeded] = useState(false);
   const [followUpNotes, setFollowUpNotes] = useState("");
+  const [talkingPoints, setTalkingPoints] = useState<string[]>([]);
   const [dirty, setDirty] = useState(false);
+  const [savingTemplate, setSavingTemplate] = useState(false);
+  const [templateSaved, setTemplateSaved] = useState(false);
+  const [isDefaultPresenter, setIsDefaultPresenter] = useState(false);
 
   const fetchTalk = async () => {
     setLoading(true);
@@ -45,7 +50,13 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
         setCorrectiveActions(data.corrective_actions || "");
         setFollowUpNeeded(data.follow_up_needed || false);
         setFollowUpNotes(data.follow_up_notes || "");
+        setTalkingPoints(data.talking_points || []);
         setDirty(false);
+        // Check if current presenter matches default
+        const defaultPresenter = localStorage.getItem(`pulse_default_presenter_${projectId}`);
+        setIsDefaultPresenter(
+          !!data.presenter && !!defaultPresenter && data.presenter === defaultPresenter
+        );
       }
     } catch {}
     setLoading(false);
@@ -68,6 +79,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           corrective_actions: correctiveActions.trim() || null,
           follow_up_needed: followUpNeeded,
           follow_up_notes: followUpNotes.trim() || null,
+          talking_points: talkingPoints.filter((p) => p.trim()),
         }),
       });
       if (res.ok) {
@@ -126,10 +138,44 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   };
 
   const handleExportPdf = () => {
+    const companyName = localStorage.getItem("pulse_company_name");
+    const params = new URLSearchParams();
+    if (companyName) params.set("company", companyName);
+    const qs = params.toString();
     window.open(
-      `/api/projects/${projectId}/safety/${talkId}/pdf`,
+      `/api/projects/${projectId}/safety/${talkId}/pdf${qs ? `?${qs}` : ""}`,
       "_blank"
     );
+  };
+
+  const handleSaveAsTemplate = async () => {
+    if (!talk) return;
+    setSavingTemplate(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/safety/templates`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: talk.topic,
+          category: talk.category,
+          talking_points: talk.talking_points || [],
+          duration_minutes: talk.duration_minutes,
+        }),
+      });
+      if (res.ok) setTemplateSaved(true);
+    } catch {}
+    setSavingTemplate(false);
+  };
+
+  const handleToggleDefaultPresenter = () => {
+    if (!talk?.presenter) return;
+    if (isDefaultPresenter) {
+      localStorage.removeItem(`pulse_default_presenter_${projectId}`);
+      setIsDefaultPresenter(false);
+    } else {
+      localStorage.setItem(`pulse_default_presenter_${projectId}`, talk.presenter);
+      setIsDefaultPresenter(true);
+    }
   };
 
   if (loading) {
@@ -197,6 +243,18 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             <div className="flex items-center gap-1.5">
               <User size={12} className="text-[#F97316]" />
               {talk.presenter}
+              <button
+                onClick={handleToggleDefaultPresenter}
+                className={`ml-1 flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                  isDefaultPresenter
+                    ? "bg-[#22C55E]/10 text-[#22C55E]"
+                    : "bg-[#1F1F25] text-gray-500 hover:text-gray-300"
+                }`}
+                title={isDefaultPresenter ? "Default presenter" : "Set as default presenter"}
+              >
+                <Check size={8} />
+                {isDefaultPresenter ? "Default" : "Set default"}
+              </button>
             </div>
           )}
           <div className="flex items-center gap-1.5">
@@ -213,22 +271,20 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       </div>
 
       {/* Talking Points */}
-      {(talk.talking_points || []).length > 0 && (
+      {(isReadOnly ? (talk.talking_points || []).length > 0 : true) && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
             <Shield size={14} className="text-[#F97316]" />
             Talking Points
           </h4>
-          <ol className="space-y-2.5 pl-1">
-            {talk.talking_points.map((point, idx) => (
-              <li key={idx} className="flex gap-2.5 text-sm text-gray-300 leading-relaxed">
-                <span className="text-[#F97316] font-medium shrink-0 w-5 text-right">
-                  {idx + 1}.
-                </span>
-                <span>{point}</span>
-              </li>
-            ))}
-          </ol>
+          <EditableTalkingPoints
+            points={isReadOnly ? (talk.talking_points || []) : talkingPoints}
+            onChange={(pts) => {
+              setTalkingPoints(pts);
+              setDirty(true);
+            }}
+            readOnly={isReadOnly}
+          />
         </div>
       )}
 
@@ -352,6 +408,23 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           <FileText size={14} />
           Export PDF
         </button>
+
+        {isReadOnly && !templateSaved && (
+          <button
+            onClick={handleSaveAsTemplate}
+            disabled={savingTemplate}
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
+          >
+            <BookOpen size={14} />
+            {savingTemplate ? "Saving..." : "Save as Template"}
+          </button>
+        )}
+        {templateSaved && (
+          <span className="flex items-center gap-1.5 px-4 py-2.5 text-[#22C55E] text-sm min-h-[44px]">
+            <Check size={14} />
+            Template saved
+          </span>
+        )}
 
         {talk.status === "draft" && (
           <button

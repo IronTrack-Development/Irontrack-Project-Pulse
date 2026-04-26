@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import {
   Shield, ShieldCheck, Plus, RefreshCw, Users, Calendar,
   CheckCircle2, Edit3, Lock, AlertTriangle, ArrowLeft,
+  Settings, BookOpen,
 } from "lucide-react";
 import type { ToolboxTalk } from "@/types";
 import NewTalkModal from "./NewTalkModal";
 import TalkDetail from "./TalkDetail";
+import SafetySettings from "./SafetySettings";
+import TemplateManager from "./TemplateManager";
 
 interface SafetyDashboardProps {
   projectId: string;
@@ -112,6 +115,8 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
   const [total, setTotal] = useState(0);
   const [showNewModal, setShowNewModal] = useState(false);
   const [selectedTalkId, setSelectedTalkId] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
 
   const fetchTalks = async () => {
     setLoading(true);
@@ -185,6 +190,13 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
         </h2>
         <div className="flex items-center gap-2">
           <button
+            onClick={() => setShowSettings(true)}
+            className="p-2 rounded-lg text-gray-500 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            title="Safety Settings"
+          >
+            <Settings size={14} />
+          </button>
+          <button
             onClick={fetchTalks}
             className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
           >
@@ -198,6 +210,17 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
             New Talk
           </button>
         </div>
+      </div>
+
+      {/* Manage Templates link */}
+      <div className="flex items-center gap-3 mb-3">
+        <button
+          onClick={() => setShowTemplates(true)}
+          className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#F97316] transition-colors"
+        >
+          <BookOpen size={12} />
+          Manage Templates
+        </button>
       </div>
 
       {/* Quick Stats */}
@@ -264,6 +287,22 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
             setShowNewModal(false);
             setSelectedTalkId(talkId);
           }}
+        />
+      )}
+
+      {/* Safety Settings Modal */}
+      {showSettings && (
+        <SafetySettings
+          projectId={projectId}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
+
+      {/* Template Manager Modal */}
+      {showTemplates && (
+        <TemplateManager
+          projectId={projectId}
+          onClose={() => setShowTemplates(false)}
         />
       )}
     </div>

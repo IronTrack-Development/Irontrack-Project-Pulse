@@ -411,3 +411,97 @@ export interface ToolboxTalkTemplate {
   project_id?: string;
   created_at: string;
 }
+
+// ─── Coordination Types ───────────────────────────────────────────────────────
+
+export type CoordinationMeetingStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
+export type CoordinationRecurrence = 'none' | 'daily' | 'weekly' | 'biweekly' | 'monthly';
+export type AgendaItemStatus = 'pending' | 'discussed' | 'deferred' | 'resolved';
+export type ActionItemCategory = 'general' | 'rfi' | 'material_delivery' | 'manpower' | 'equipment' | 'schedule' | 'safety' | 'drawing' | 'submittal' | 'inspection' | 'custom';
+export type ActionItemPriority = 'high' | 'medium' | 'low';
+export type ActionItemStatus = 'open' | 'in_progress' | 'resolved' | 'cancelled';
+
+export interface CoordinationMeeting {
+  id: string;
+  project_id: string;
+  meeting_date: string;
+  meeting_type: string;
+  title: string;
+  location?: string;
+  facilitator?: string;
+  start_time?: string;
+  end_time?: string;
+  notes?: string;
+  summary?: string;
+  recurrence: CoordinationRecurrence;
+  recurrence_day?: string;
+  status: CoordinationMeetingStatus;
+  created_at: string;
+  updated_at: string;
+  completed_at?: string;
+  agenda_count?: number;
+  action_count?: number;
+  open_action_count?: number;
+}
+
+export interface CoordinationAgendaItem {
+  id: string;
+  meeting_id: string;
+  activity_id?: string;
+  sort_order: number;
+  title: string;
+  trade?: string;
+  area?: string;
+  notes?: string;
+  has_conflict: boolean;
+  conflict_description?: string;
+  status: AgendaItemStatus;
+  created_at: string;
+}
+
+export interface CoordinationActionItem {
+  id: string;
+  meeting_id: string;
+  project_id: string;
+  title: string;
+  description?: string;
+  assigned_to?: string;
+  assigned_company?: string;
+  assigned_trade?: string;
+  category: ActionItemCategory;
+  priority: ActionItemPriority;
+  due_date?: string;
+  status: ActionItemStatus;
+  resolved_at?: string;
+  resolution_notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CoordinationMeetingType {
+  id: string;
+  project_id?: string;
+  name: string;
+  default_agenda: string[];
+  default_duration_minutes: number;
+  is_system: boolean;
+  created_at: string;
+}
+
+export interface CoordinationAttendee {
+  id: string;
+  meeting_id: string;
+  name: string;
+  company?: string;
+  trade?: string;
+  present: boolean;
+  created_at: string;
+}
+
+export interface ScheduleConflict {
+  activity_a: { id: string; name: string; trade: string; area: string; start: string; finish: string };
+  activity_b: { id: string; name: string; trade: string; area: string; start: string; finish: string };
+  overlap_start: string;
+  overlap_end: string;
+  conflict_type: 'same_area' | 'same_trade_area' | 'predecessor_delay';
+}

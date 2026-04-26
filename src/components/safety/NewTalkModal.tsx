@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Shield, ChevronRight, Plus, Minus } from "lucide-react";
+import { X, Shield, ChevronRight, Plus, Minus, BookOpen } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
+import EditableTalkingPoints from "./EditableTalkingPoints";
 
 interface NewTalkModalProps {
   projectId: string;
@@ -56,9 +57,15 @@ export default function NewTalkModal({
   const [location, setLocation] = useState("");
   const [talkingPoints, setTalkingPoints] = useState<string[]>([""]);
   const [notes, setNotes] = useState("");
+  const [createdTalkId, setCreatedTalkId] = useState<string | null>(null);
+  const [savingTemplate, setSavingTemplate] = useState(false);
+  const [templateSaved, setTemplateSaved] = useState(false);
 
   useEffect(() => {
     fetchTemplates();
+    // Auto-fill default presenter from localStorage
+    const defaultPresenter = localStorage.getItem(`pulse_default_presenter_${projectId}`);
+    if (defaultPresenter) setPresenter(defaultPresenter);
   }, []);
 
   const fetchTemplates = async () => {
@@ -108,19 +115,31 @@ export default function NewTalkModal({
 
       if (res.ok) {
         const data = await res.json();
+        if (!selectedTemplate) {
+          setCreatedTalkId(data.id);
+        }
         onCreated(data.id);
       }
     } catch {}
     setCreating(false);
   };
 
-  const addTalkingPoint = () => setTalkingPoints([...talkingPoints, ""]);
-  const removeTalkingPoint = (idx: number) =>
-    setTalkingPoints(talkingPoints.filter((_, i) => i !== idx));
-  const updateTalkingPoint = (idx: number, val: string) => {
-    const updated = [...talkingPoints];
-    updated[idx] = val;
-    setTalkingPoints(updated);
+  const handleSaveAsTemplate = async () => {
+    setSavingTemplate(true);
+    try {
+      const res = await fetch(`/api/projects/${projectId}/safety/templates`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: topic.trim(),
+          category,
+          talking_points: talkingPoints.filter((p) => p.trim()),
+          duration_minutes: duration,
+        }),
+      });
+      if (res.ok) setTemplateSaved(true);
+    } catch {}
+    setSavingTemplate(false);
   };
 
   // Group templates by category
@@ -303,42 +322,13 @@ export default function NewTalkModal({
 
               {/* Talking Points */}
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs text-gray-500">
-                    Talking Points
-                  </label>
-                  <button
-                    onClick={addTalkingPoint}
-                    className="flex items-center gap-1 text-[10px] text-[#F97316] hover:text-[#ea6c10] min-h-[32px] px-1"
-                  >
-                    <Plus size={10} />
-                    Add
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {talkingPoints.map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <span className="text-xs text-gray-600 mt-3 w-4 text-right shrink-0">
-                        {idx + 1}.
-                      </span>
-                      <textarea
-                        value={point}
-                        onChange={(e) => updateTalkingPoint(idx, e.target.value)}
-                        rows={2}
-                        placeholder="Talking point..."
-                        className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
-                      />
-                      {talkingPoints.length > 1 && (
-                        <button
-                          onClick={() => removeTalkingPoint(idx)}
-                          className="p-1.5 text-gray-600 hover:text-red-400 mt-1 min-w-[32px] min-h-[32px] flex items-center justify-center"
-                        >
-                          <Minus size={12} />
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                <label className="text-xs text-gray-500 mb-2 block">
+                  Talking Points
+                </label>
+                <EditableTalkingPoints
+                  points={talkingPoints}
+                  onChange={setTalkingPoints}
+                />
               </div>
 
               {/* Notes */}

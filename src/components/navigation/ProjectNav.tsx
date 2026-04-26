@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   CheckSquare,
   FileText,
+  Handshake,
   FileCheck,
   MessageCircleQuestion,
   Layers,
@@ -67,6 +68,15 @@ const NAV_GROUPS: GroupDef[] = [
       { id: "inspections", label: "Inspections", icon: ShieldCheck },
       { id: "punch", label: "Punch List", icon: CheckSquare },
       { id: "reports", label: "Reports", icon: FileBarChart2 },
+    ],
+  },
+  {
+    id: "coordination",
+    label: "Coordination",
+    icon: Handshake,
+    tabs: [
+      { id: "coordination", label: "Meetings", icon: Handshake },
+      { id: "action-tracker", label: "Action Items", icon: CheckSquare },
     ],
   },
   {
@@ -134,6 +144,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
   const lastTabPerGroup = useRef<Record<string, string>>({
     schedule: "priority",
     fieldops: "dailylog",
+    coordination: "coordination",
     documents: "submittals",
     money: "tm",
     safety: "safety",
