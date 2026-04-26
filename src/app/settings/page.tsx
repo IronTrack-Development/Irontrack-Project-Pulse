@@ -4,6 +4,7 @@ import NotificationToggle from "@/components/NotificationToggle";
 import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { SupportButton } from "@/components/support-button";
+import AppearanceSettings from "@/components/settings/AppearanceSettings";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -40,7 +41,7 @@ export default async function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] p-8">
+    <div className="min-h-screen bg-[var(--bg-primary)] p-8">
       <div className="max-w-2xl mx-auto">
         <Link href="/dashboard" className="text-[#F97316] hover:text-[#EA580C] flex items-center gap-2 mb-6">
           <ArrowLeft size={16} />
@@ -82,7 +83,7 @@ export default async function SettingsPage() {
             </div>
 
             {/* Upload limits info */}
-            <div className="mt-6 p-4 bg-[#0B0B0D] border border-gray-800 rounded">
+            <div className="mt-6 p-4 bg-[var(--bg-primary)] border border-gray-800 rounded">
               <h3 className="text-sm font-semibold text-white mb-2">Upload Limits</h3>
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Maximum file size: <span className="text-white">100 MB</span></li>
@@ -100,6 +101,14 @@ export default async function SettingsPage() {
           </div>
         </div>
 
+        {/* Appearance — Theme & Language */}
+        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-[#F97316]">🎨</span>
+            Appearance
+          </h2>
+          <AppearanceSettings />
+        </div>
         {/* Push Notifications Section */}
         <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
