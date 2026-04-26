@@ -7,12 +7,15 @@
 
 CREATE TABLE IF NOT EXISTS sub_companies (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
+  company_name TEXT NOT NULL,
   trade TEXT,
   contact_name TEXT,
   contact_email TEXT,
   contact_phone TEXT,
   logo_path TEXT,
+  company_code TEXT UNIQUE,
+  stripe_customer_id TEXT,
+  subscription_status TEXT DEFAULT 'inactive',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -20,7 +23,7 @@ CREATE TABLE IF NOT EXISTS sub_companies (
 CREATE TABLE IF NOT EXISTS sub_foremen (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   company_id UUID NOT NULL REFERENCES sub_companies(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
+  company_name TEXT NOT NULL,
   phone TEXT,
   email TEXT,
   trade TEXT,
