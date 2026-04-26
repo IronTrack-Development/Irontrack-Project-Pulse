@@ -16,15 +16,16 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/projects", label: "Projects", icon: FolderOpen },
   { href: "/upload", label: "Upload", icon: Upload },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col w-64 bg-[#121217] border-r border-[#1F1F25] h-full shrink-0">
+    <aside className="hidden md:flex flex-col w-64 bg-[var(--bg-secondary)] border-r border-[var(--border-primary)] h-full shrink-0">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-[#1F1F25]">
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-[var(--border-primary)]">
         <div className="relative w-8 h-8">
           <Image
             src="/icon-192.png"
@@ -42,7 +43,7 @@ export default function Sidebar() {
 
       {/* Status pill */}
       <div className="px-4 py-3">
-        <div className="flex items-center gap-2 bg-[#0B0B0D] rounded-lg px-3 py-2 border border-[#1F1F25]">
+        <div className="flex items-center gap-2 bg-[var(--bg-primary)] rounded-lg px-3 py-2 border border-[var(--border-primary)]">
           <Zap size={13} className="text-[#F97316]" />
           <span className="text-xs text-gray-400">Field Intelligence</span>
           <span className="ml-auto w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
@@ -72,7 +73,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-[#1F1F25] space-y-3">
+      <div className="px-4 py-4 border-t border-[var(--border-primary)] space-y-3">
         <Link
           href="/"
           className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#F97316] transition-colors"

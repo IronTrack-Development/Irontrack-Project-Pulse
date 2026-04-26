@@ -10,7 +10,6 @@ import {
 import SettingsPanel from "@/components/settings/SettingsPanel";
 import ProjectNav from "@/components/navigation/ProjectNav";
 import { SupportButton } from "@/components/support-button";
-import ShareSnapshot from "@/components/ShareSnapshot";
 import NotificationBell from "@/components/NotificationBell";
 import { ProjectDataProvider } from "@/lib/ProjectDataContext";
 
@@ -185,21 +184,20 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
             <div className="flex items-center gap-1.5 md:gap-3">
               <button
                 onClick={fetchProject}
-                className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <RefreshCw size={16} />
               </button>
               <NotificationBell projectId={id} />
-              <ShareSnapshot projectId={id} />
               <button
                 onClick={() => setSettingsOpen(true)}
-                className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="md:hidden p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Settings size={16} />
               </button>
               <Link
                 href={`/projects/${id}/weekly-summary`}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
               >
                 <FileBarChart2 size={14} />
                 <span>Weekly Summary</span>
@@ -213,7 +211,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               </Link>
               <Link
                 href={`/upload?project=${id}`}
-                className="hidden md:flex px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
+                className="hidden md:flex px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
               >
                 Upload Schedule
               </Link>
