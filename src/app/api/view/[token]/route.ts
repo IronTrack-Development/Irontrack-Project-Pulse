@@ -68,6 +68,29 @@ export async function GET(
   }
 
   // 4. Query activities — use manually selected IDs if available, otherwise fall back to trade filter
+  const SAFE_COLUMNS = "id, activity_id, activity_name, trade, start_date, finish_date, actual_start, actual_finish, percent_complete, status, original_duration, remaining_duration, milestone, normalized_building, normalized_area, normalized_phase, normalized_work_type, normalized_trade, wbs";
+
+  const safeFields = (act: any) => ({
+    id: act.id,
+    activity_id: act.activity_id,
+    activity_name: act.activity_name,
+    trade: act.trade,
+    start_date: act.start_date,
+    finish_date: act.finish_date,
+    actual_start: act.actual_start,
+    actual_finish: act.actual_finish,
+    percent_complete: act.percent_complete,
+    status: act.status,
+    original_duration: act.original_duration,
+    remaining_duration: act.remaining_duration,
+    milestone: act.milestone,
+    normalized_building: act.normalized_building,
+    normalized_area: act.normalized_area,
+    normalized_phase: act.normalized_phase,
+    normalized_trade: act.normalized_trade,
+    wbs: act.wbs,
+  });
+
   let subActivities;
   let actError;
 
@@ -75,7 +98,7 @@ export async function GET(
     // GC hand-picked specific activities for this sub
     const result = await supabase
       .from("parsed_activities")
-      .select("*")
+      .select(SAFE_COLUMNS)
       .eq("project_id", link.project_id)
       .in("id", sub.activity_ids);
     subActivities = result.data;
@@ -84,7 +107,7 @@ export async function GET(
     // Fall back to trade-based filtering
     const result = await supabase
       .from("parsed_activities")
-      .select("*")
+      .select(SAFE_COLUMNS)
       .eq("project_id", link.project_id)
       .in("trade", sub.trades);
     subActivities = result.data;
@@ -95,35 +118,7 @@ export async function GET(
     return NextResponse.json({ error: actError.message }, { status: 500 });
   }
 
-  const activities = subActivities ?? [];
-
-  // 5. Collect predecessor IDs that come from OTHER trades (dependency context)
-  //    predecessor_ids is TEXT[] of activity_id strings (the schedule's own IDs)
-  const subActivityIds = new Set(activities.map((a) => a.activity_id).filter(Boolean));
-
-  const allPredecessorIds: string[] = [];
-  for (const act of activities) {
-    if (Array.isArray(act.predecessor_ids)) {
-      for (const predId of act.predecessor_ids) {
-        if (!subActivityIds.has(predId)) {
-          allPredecessorIds.push(predId);
-        }
-      }
-    }
-  }
-
-  // Fetch predecessor activities from other trades
-  let predecessorActivities: typeof activities = [];
-  if (allPredecessorIds.length > 0) {
-    // predecessor_ids reference activity_id (the schedule field), not the DB id
-    const { data: preds } = await supabase
-      .from("parsed_activities")
-      .select("*")
-      .eq("project_id", link.project_id)
-      .in("activity_id", allPredecessorIds);
-
-    predecessorActivities = preds ?? [];
-  }
+  const activities = (subActivities ?? []).map(safeFields);
 
   // 6. Log the view
   const viewerIp =
@@ -191,37 +186,6 @@ export async function GET(
   const thisWeekTasks = grouped.today.length + grouped.this_week.length;
   const pctComplete = totalTasks > 0 ? Math.round((completeTasks / totalTasks) * 100) : 0;
 
-  // Build dependency map: for each sub activity, list its predecessors
-  const predMap = new Map(predecessorActivities.map((p) => [p.activity_id, p]));
-
-  const dependencies = activities
-    .filter((act) => Array.isArray(act.predecessor_ids) && act.predecessor_ids.length > 0)
-    .flatMap((act) =>
-      (act.predecessor_ids ?? [])
-        .map((predId: string) => {
-          const pred = predMap.get(predId);
-          if (!pred) return null;
-          return {
-            your_activity: {
-              id: act.id,
-              activity_id: act.activity_id,
-              activity_name: act.activity_name,
-              start_date: act.start_date,
-              trade: act.trade,
-            },
-            predecessor: {
-              id: pred.id,
-              activity_id: pred.activity_id,
-              activity_name: pred.activity_name,
-              finish_date: pred.finish_date,
-              trade: pred.trade,
-              status: pred.status,
-            },
-          };
-        })
-        .filter(Boolean)
-    );
-
   return NextResponse.json({
     view_id: viewRecord?.id ?? null,
     project: {
@@ -242,7 +206,6 @@ export async function GET(
       pct_complete: pctComplete,
     },
     activities: grouped,
-    dependencies,
     generated_at: now.toISOString(),
   });
 }

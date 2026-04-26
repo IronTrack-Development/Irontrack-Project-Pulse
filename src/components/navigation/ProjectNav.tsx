@@ -25,6 +25,9 @@ import {
   Shield,
   HardHat,
   Camera,
+  Send,
+  CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
 
@@ -117,6 +120,20 @@ const NAV_GROUPS: GroupDef[] = [
       { id: "subs", label: "Subs", icon: Users },
     ],
   },
+  {
+    id: "subops",
+    label: "Sub Ops",
+    icon: HardHat,
+    tabs: [
+      { id: "sub-dashboard", label: "Dashboard", icon: BarChart3 },
+      { id: "sub-dispatch", label: "Dispatch", icon: Send },
+      { id: "sub-foremen", label: "Foremen", icon: Users },
+      { id: "sub-checkins", label: "Check-Ins", icon: CheckCircle },
+      { id: "sub-production", label: "Production", icon: TrendingUp },
+      { id: "sub-blockers", label: "Blockers", icon: AlertTriangle },
+      { id: "sub-sops", label: "SOPs", icon: FileText },
+    ],
+  },
 ];
 
 // Helper: find which group owns a given tab id
@@ -151,6 +168,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
     money: "tm",
     safety: "safety",
     project: "progress",
+    subops: "sub-dashboard",
   });
 
   // Keep activeGroupId in sync when parent changes activeTab externally

@@ -1,0 +1,230 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import {
+  HardHat, Send, Users, AlertTriangle, TrendingUp, FileText,
+  ChevronRight, Plus, Clock, CheckCircle,
+} from "lucide-react";
+import CompanySetup from "./CompanySetup";
+
+interface Props {
+  projectId: string;
+}
+
+interface Company {
+  id: string;
+  company_name: string;
+  primary_trade: string | null;
+}
+
+interface DashboardData {
+  dispatches: { total: number; acknowledged: number; pending: number };
+  foremen: { id: string; name: string; trade: string; status: string; current_job: string | null }[];
+  blockers: { open_count: number };
+  production: { total_entries: number; total_crew_hours: number };
+  sops: { compliant_foremen: number; total_foremen: number };
+}
+
+const STATUS_ICON: Record<string, React.ReactNode> = {
+  checked_in: <span title="Checked in">✅</span>,
+  not_yet: <span title="Not yet">⏳</span>,
+  off: <span title="Off">🔴</span>,
+};
+
+export default function SubOpsDashboard({ projectId }: Props) {
+  const [companyId, setCompanyId] = useState<string | null>(null);
+  const [company, setCompany] = useState<Company | null>(null);
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("sub_ops_company_id");
+    setCompanyId(stored);
+    setReady(true);
+  }, []);
+
+  const fetchDashboard = useCallback(async (cId: string) => {
+    setLoading(true);
+    try {
+      const [compRes, dashRes] = await Promise.all([
+        fetch(`/api/sub-ops/companies/${cId}`),
+        fetch(`/api/sub-ops/companies/${cId}/dashboard`),
+      ]);
+      if (compRes.ok) setCompany(await compRes.json());
+      if (dashRes.ok) setData(await dashRes.json());
+    } catch {
+      // API may not exist yet — show empty state
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (companyId) fetchDashboard(companyId);
+    else setLoading(false);
+  }, [companyId, fetchDashboard]);
+
+  if (!ready) return null;
+
+  if (!companyId) {
+    return (
+      <CompanySetup
+        onComplete={(id) => {
+          setCompanyId(id);
+          fetchDashboard(id);
+        }}
+      />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-40">
+        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const dispatches = data?.dispatches ?? { total: 0, acknowledged: 0, pending: 0 };
+  const foremen = data?.foremen ?? [];
+  const blockers = data?.blockers ?? { open_count: 0 };
+  const production = data?.production ?? { total_entries: 0, total_crew_hours: 0 };
+  const sops = data?.sops ?? { compliant_foremen: 0, total_foremen: 0 };
+
+  return (
+    <div className="space-y-4">
+      {/* Company Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center">
+            <HardHat size={20} className="text-[#F97316]" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-white">{company?.company_name ?? "Sub Ops"}</h2>
+            {company?.primary_trade && (
+              <p className="text-xs text-gray-500 capitalize">{company.primary_trade.replace(/_/g, " ")}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Stat Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        {/* Today's Dispatch Summary */}
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Send size={14} className="text-[#F97316]" />
+              <span className="text-xs font-semibold text-gray-300">Today&apos;s Dispatches</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-white">{dispatches.total}</p>
+              <p className="text-[10px] text-gray-500">Sent</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-green-400">{dispatches.acknowledged}</p>
+              <p className="text-[10px] text-gray-500">Acknowledged</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-orange-400">{dispatches.pending}</p>
+              <p className="text-[10px] text-gray-500">Pending</p>
+            </div>
+          </div>
+          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
+            <Plus size={14} />
+            Create Dispatch
+          </button>
+        </div>
+
+        {/* Open Blockers */}
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle size={14} className="text-[#F97316]" />
+            <span className="text-xs font-semibold text-gray-300">Open Blockers</span>
+          </div>
+          <p className="text-2xl font-bold text-white">{blockers.open_count}</p>
+          {blockers.open_count > 0 ? (
+            <p className="text-xs text-orange-400">
+              {blockers.open_count} blocker{blockers.open_count !== 1 ? "s" : ""} need attention
+            </p>
+          ) : (
+            <p className="text-xs text-green-400">All clear — no open blockers</p>
+          )}
+        </div>
+
+        {/* This Week's Production */}
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <TrendingUp size={14} className="text-[#F97316]" />
+            <span className="text-xs font-semibold text-gray-300">This Week&apos;s Production</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <p className="text-2xl font-bold text-white">{production.total_crew_hours}</p>
+              <p className="text-[10px] text-gray-500">Crew Hours</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-white">{production.total_entries}</p>
+              <p className="text-[10px] text-gray-500">Entries</p>
+            </div>
+          </div>
+        </div>
+
+        {/* SOP Compliance */}
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <FileText size={14} className="text-[#F97316]" />
+            <span className="text-xs font-semibold text-gray-300">SOP Compliance</span>
+          </div>
+          <p className="text-sm text-gray-300">
+            <span className="text-white font-bold">{sops.compliant_foremen}</span> of{" "}
+            <span className="text-white font-bold">{sops.total_foremen}</span> foremen have acknowledged all required SOPs
+          </p>
+        </div>
+      </div>
+
+      {/* Foreman Status Grid */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Users size={14} className="text-[#F97316]" />
+            <span className="text-sm font-semibold text-white">Foreman Status</span>
+          </div>
+          <span className="text-xs text-gray-500">{foremen.length} foremen</span>
+        </div>
+
+        {foremen.length === 0 ? (
+          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6 text-center">
+            <Users size={24} className="mx-auto text-gray-600 mb-2" />
+            <p className="text-sm text-gray-400">No foremen added yet</p>
+            <p className="text-xs text-gray-600 mt-1">Add foremen from the Foremen tab to get started</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {foremen.map((f) => (
+              <div
+                key={f.id}
+                className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 hover:border-[#F97316]/30 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-semibold text-white truncate">{f.name}</span>
+                  {STATUS_ICON[f.status] ?? STATUS_ICON.not_yet}
+                </div>
+                <p className="text-xs text-gray-500 capitalize">{f.trade?.replace(/_/g, " ") ?? "—"}</p>
+                {f.current_job && (
+                  <p className="text-xs text-gray-400 mt-1 truncate">
+                    <Clock size={10} className="inline mr-1" />
+                    {f.current_job}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

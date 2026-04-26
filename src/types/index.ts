@@ -531,3 +531,144 @@ export interface ScheduleConflict {
   overlap_end: string;
   conflict_type: 'same_area' | 'same_trade_area' | 'predecessor_delay';
 }
+
+// ── Sub Ops types ────────────────────────────────────────────
+
+export type ForemanStatus = 'active' | 'inactive';
+export type DispatchStatus = 'pending' | 'acknowledged' | 'in_progress' | 'completed' | 'cancelled';
+export type BlockerCategory = 'material' | 'gc_delay' | 'weather' | 'manpower' | 'equipment' | 'drawing' | 'inspection' | 'access' | 'other';
+export type BlockerStatus = 'open' | 'resolved';
+export type SOPCategory = 'safety' | 'quality' | 'install_procedure' | 'company_policy' | 'equipment' | 'training' | 'general';
+
+export interface SubCompany {
+  id: string;
+  name: string;
+  trade?: string;
+  contact_name?: string;
+  contact_email?: string;
+  contact_phone?: string;
+  logo_path?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubForeman {
+  id: string;
+  company_id: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  trade?: string;
+  certifications: string[];
+  status: ForemanStatus;
+  avatar_path?: string;
+  hire_date?: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubDispatch {
+  id: string;
+  company_id: string;
+  foreman_id: string;
+  project_name: string;
+  project_location?: string;
+  dispatch_date: string;
+  scope_of_work: string;
+  priority_notes?: string;
+  safety_focus?: string;
+  material_notes?: string;
+  special_instructions?: string;
+  expected_crew_size?: number;
+  expected_hours?: number;
+  acknowledged: boolean;
+  acknowledged_at?: string;
+  status: DispatchStatus;
+  created_at: string;
+  updated_at: string;
+  // Joined
+  foreman_name?: string;
+  sop_count?: number;
+}
+
+export interface SubCheckin {
+  id: string;
+  dispatch_id?: string;
+  foreman_id: string;
+  company_id: string;
+  checkin_date: string;
+  checkin_time: string;
+  crew_count?: number;
+  crew_hours?: number;
+  on_site: boolean;
+  site_photo_path?: string;
+  notes?: string;
+  created_at: string;
+  // Joined
+  foreman_name?: string;
+  production_logs?: SubProductionLog[];
+}
+
+export interface SubProductionLog {
+  id: string;
+  checkin_id?: string;
+  foreman_id: string;
+  company_id: string;
+  log_date: string;
+  description: string;
+  quantity?: number;
+  unit?: string;
+  estimated_quantity?: number;
+  estimated_unit?: string;
+  photo_path?: string;
+  area?: string;
+  notes?: string;
+  created_at: string;
+}
+
+export interface SubBlocker {
+  id: string;
+  foreman_id: string;
+  company_id: string;
+  dispatch_id?: string;
+  blocker_date: string;
+  category: BlockerCategory;
+  description: string;
+  impact?: string;
+  photo_path?: string;
+  status: BlockerStatus;
+  resolved_at?: string;
+  resolution_notes?: string;
+  created_at: string;
+  updated_at: string;
+  // Joined
+  foreman_name?: string;
+}
+
+export interface SubSOP {
+  id: string;
+  company_id: string;
+  title: string;
+  category: SOPCategory;
+  description?: string;
+  file_path: string;
+  file_name: string;
+  file_size?: number;
+  version: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  // Joined
+  acknowledgment_count?: number;
+  total_foremen?: number;
+}
+
+export interface SubSOPAcknowledgment {
+  id: string;
+  sop_id: string;
+  foreman_id: string;
+  acknowledged_at: string;
+  // Joined
+  foreman_name?: string;
+}

@@ -30,6 +30,13 @@ import PunchListTab from "@/components/tabs/PunchListTab";
 import SafetyTab from "@/components/tabs/SafetyTab";
 import CoordinationTab from "@/components/tabs/CoordinationTab";
 import FieldReportsTab from "@/components/tabs/FieldReportsTab";
+import SubDashboardTab from "@/components/tabs/SubDashboardTab";
+import SubDispatchTab from "@/components/tabs/SubDispatchTab";
+import SubForemenTab from "@/components/tabs/SubForemenTab";
+import SubCheckinsTab from "@/components/tabs/SubCheckinsTab";
+import SubProductionTab from "@/components/tabs/SubProductionTab";
+import SubBlockersTab from "@/components/tabs/SubBlockersTab";
+import SubSOPsTab from "@/components/tabs/SubSOPsTab";
 
 interface Project {
   id: string;
@@ -193,6 +200,13 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "field-reports" && <FieldReportsTab projectId={id} />}
         {activeTab === "coordination" && <CoordinationTab projectId={id} />}
         {activeTab === "action-tracker" && <CoordinationTab projectId={id} defaultView="actions" />}
+        {activeTab === "sub-dashboard" && <SubDashboardTab projectId={id} />}
+        {activeTab === "sub-dispatch" && <SubDispatchTab projectId={id} />}
+        {activeTab === "sub-foremen" && <SubForemenTab projectId={id} />}
+        {activeTab === "sub-checkins" && <SubCheckinsTab projectId={id} />}
+        {activeTab === "sub-production" && <SubProductionTab projectId={id} />}
+        {activeTab === "sub-blockers" && <SubBlockersTab projectId={id} />}
+        {activeTab === "sub-sops" && <SubSOPsTab projectId={id} />}
       </div>
     </div>
   );
