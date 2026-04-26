@@ -112,7 +112,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
 
         {/* Today's Dispatch Summary */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Send size={14} className="text-[#F97316]" />
@@ -140,7 +140,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         </div>
 
         {/* Open Blockers */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <AlertTriangle size={14} className="text-[#F97316]" />
             <span className="text-xs font-semibold text-gray-300">Open Blockers</span>
@@ -156,7 +156,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         </div>
 
         {/* This Week's Production */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <TrendingUp size={14} className="text-[#F97316]" />
             <span className="text-xs font-semibold text-gray-300">This Week&apos;s Production</span>
@@ -174,7 +174,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         </div>
 
         {/* SOP Compliance */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <FileText size={14} className="text-[#F97316]" />
             <span className="text-xs font-semibold text-gray-300">SOP Compliance</span>
@@ -197,7 +197,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         </div>
 
         {foremen.length === 0 ? (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6 text-center">
             <Users size={24} className="mx-auto text-gray-600 mb-2" />
             <p className="text-sm text-gray-400">No foremen added yet</p>
             <p className="text-xs text-gray-600 mt-1">Add foremen from the Foremen tab to get started</p>
@@ -207,7 +207,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
             {foremen.map((f) => (
               <div
                 key={f.id}
-                className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 hover:border-[#F97316]/30 transition-colors cursor-pointer"
+                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 hover:border-[#F97316]/30 transition-colors cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-semibold text-white truncate">{f.name}</span>

@@ -85,21 +85,21 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-[#121217] rounded-t-2xl sm:rounded-2xl border border-[#1F1F25] w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl border border-[var(--border-primary)] w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-[#121217] flex items-start justify-between gap-3 px-5 py-4 border-b border-[#1F1F25] z-10">
+        <div className="sticky top-0 bg-[var(--bg-secondary)] flex items-start justify-between gap-3 px-5 py-4 border-b border-[var(--border-primary)] z-10">
           <div className="flex-1 min-w-0">
             <h3 className="text-white font-bold text-base leading-tight">Update Progress</h3>
             <p className="text-xs text-gray-500 mt-0.5 truncate">{task.activity_name}</p>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors shrink-0">
+          <button onClick={onClose} className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors shrink-0">
             <X size={18} />
           </button>
         </div>
 
         <div className="p-5 space-y-5">
           {/* Task info */}
-          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
+          <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div>
                 <span className="text-gray-600">Trade:</span>{" "}
@@ -139,7 +139,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               step={5}
               value={percentComplete}
               onChange={(e) => handlePercentChange(parseInt(e.target.value))}
-              className="w-full h-2 bg-[#1F1F25] rounded-full appearance-none cursor-pointer accent-[#F97316]"
+              className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full appearance-none cursor-pointer accent-[#F97316]"
             />
             <div className="flex gap-2 mt-2">
               {quickButtons.map((val) => (
@@ -149,7 +149,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
                     percentComplete === val
                       ? "bg-[#F97316] text-white"
-                      : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                      : "bg-[var(--bg-tertiary)] text-gray-400 hover:text-white"
                   }`}
                 >
                   {val}%
@@ -169,7 +169,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 className={`text-[10px] px-2 py-1 rounded transition-colors ${
                   manualOverride
                     ? "bg-[#F97316]/15 text-[#F97316] font-bold"
-                    : "bg-[#1F1F25] text-gray-500"
+                    : "bg-[var(--bg-tertiary)] text-gray-500"
                 }`}
               >
                 {manualOverride ? "Manual Override ✓" : "Auto-calculated"}
@@ -185,7 +185,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   setRemainingDuration(parseInt(e.target.value) || 0);
                 }}
                 disabled={!manualOverride}
-                className="w-24 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
+                className="w-24 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
               />
               <span className="text-xs text-gray-500">business days</span>
             </div>
@@ -207,7 +207,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   className={`flex flex-col items-center gap-1 py-2.5 rounded-lg text-[10px] font-semibold transition-all ${
                     status === val
                       ? "ring-2 ring-[#F97316] bg-[#F97316]/10 text-white"
-                      : "bg-[#1F1F25] text-gray-500 hover:text-gray-300"
+                      : "bg-[var(--bg-tertiary)] text-gray-500 hover:text-gray-300"
                   }`}
                 >
                   <Icon size={16} style={{ color: status === val ? color : undefined }} />
@@ -225,7 +225,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 type="date"
                 value={actualStart}
                 onChange={(e) => setActualStart(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
               />
             </div>
             <div>
@@ -234,7 +234,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 type="date"
                 value={actualFinish}
                 onChange={(e) => setActualFinish(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
               />
             </div>
           </div>
@@ -247,13 +247,13 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               placeholder="e.g. Weather delay, crew size reduced..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
             />
           </div>
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-[#121217] px-5 py-4 border-t border-[#1F1F25]">
+        <div className="sticky bottom-0 bg-[var(--bg-secondary)] px-5 py-4 border-t border-[var(--border-primary)]">
           <button
             onClick={handleSave}
             disabled={saving}

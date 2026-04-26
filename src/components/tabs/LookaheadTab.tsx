@@ -17,7 +17,7 @@ function statusStyle(status: string): string {
     case "complete": return "bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20";
     case "in_progress": return "bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/20";
     case "late": return "bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20";
-    default: return "bg-[#1F1F25] text-gray-400 border border-[#1F1F25]";
+    default: return "bg-[var(--bg-tertiary)] text-gray-400 border border-[var(--border-primary)]";
   }
 }
 
@@ -38,7 +38,7 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
       className={`flex items-center gap-3 px-3 py-2 rounded-lg ${
         isInspection
           ? "bg-[#F97316]/10 border border-[#F97316]/20"
-          : "bg-[#0B0B0D] border border-[#1F1F25]"
+          : "bg-[var(--bg-primary)] border border-[var(--border-primary)]"
       }`}
     >
       <div className="flex-1 min-w-0">
@@ -98,7 +98,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
           <div className="text-sm font-semibold text-white">{totalActivities} activities in view</div>
           <div className="text-xs text-gray-500">Grouped by week and trade</div>
         </div>
-        <div className="flex items-center gap-1 bg-[#121217] border border-[#1F1F25] rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-1">
           {DAY_OPTIONS.map((d) => (
             <button
               key={d}
@@ -147,10 +147,10 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
             const isCollapsed = collapsed[group.weekStart];
 
             return (
-              <div key={group.weekStart} className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden">
+              <div key={group.weekStart} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden">
                 <button
                   onClick={() => setCollapsed({ ...collapsed, [group.weekStart]: !isCollapsed })}
-                  className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#1F1F25]/50 transition-colors"
+                  className="w-full flex items-center justify-between px-5 py-3 hover:bg-[var(--bg-tertiary)]/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <CalendarDays size={15} className="text-[#F97316]" />

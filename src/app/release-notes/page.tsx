@@ -143,9 +143,9 @@ export default function ReleaseNotesPage() {
   const filtered = activeTab === "All" ? releases : releases.filter((r) => r.platform === activeTab);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50">
+      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 md:gap-3">
             <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
@@ -174,7 +174,7 @@ export default function ReleaseNotesPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 mb-10 border-b border-[#1F1F25] pb-0">
+        <div className="flex items-center gap-2 mb-10 border-b border-[var(--border-primary)] pb-0">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -203,7 +203,7 @@ export default function ReleaseNotesPage() {
               return (
                 <div
                   key={`${release.platform}-${release.version}`}
-                  className={`bg-[#121217] border border-[#1F1F25] border-l-4 ${colors.leftBorder} rounded-2xl p-6 md:p-8`}
+                  className={`bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 ${colors.leftBorder} rounded-2xl p-6 md:p-8`}
                 >
                   {/* Card Header */}
                   <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -237,7 +237,7 @@ export default function ReleaseNotesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#1F1F25] py-6 mt-12">
+      <footer className="border-t border-[var(--border-primary)] py-6 mt-12">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />

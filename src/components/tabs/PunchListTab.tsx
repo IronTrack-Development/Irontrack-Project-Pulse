@@ -69,7 +69,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; pulse: boolean }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", pulse: true },
   code:        { label: "Code",        color: "#F97316", pulse: false },
-  standard:    { label: "Standard",    color: "#6B7280", pulse: false },
+  standard:    { label: "Standard",    color: "var(--text-muted)", pulse: false },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", pulse: false },
 };
 
@@ -193,7 +193,7 @@ export default function PunchListTab({ projectId }: Props) {
     <div className="space-y-4 pb-24">
       {/* Progress ring + summary stats */}
       {summary && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4">
           <div className="flex items-center gap-4">
             <PunchProgressRing total={summary.total} closed={summary.closed} size={100} />
             <div className="flex-1 grid grid-cols-2 gap-2">
@@ -203,7 +203,7 @@ export default function PunchListTab({ projectId }: Props) {
                 { label: "Re-inspect", value: summary.ready_for_reinspect, color: "#A855F7" },
                 { label: "Closed", value: summary.closed, color: "#22C55E" },
               ].map(({ label, value, color }) => (
-                <div key={label} className="bg-[#0B0B0D] rounded-xl p-2.5 text-center">
+                <div key={label} className="bg-[var(--bg-primary)] rounded-xl p-2.5 text-center">
                   <p className="text-lg font-bold leading-none" style={{ color }}>{value}</p>
                   <p className="text-xs text-gray-500 mt-0.5">{label}</p>
                 </div>
@@ -215,7 +215,7 @@ export default function PunchListTab({ projectId }: Props) {
 
       {/* Bulk actions */}
       {selectedIds.size > 0 && (
-        <div className="flex items-center gap-3 bg-[#1F1F25] rounded-2xl px-4 py-3">
+        <div className="flex items-center gap-3 bg-[var(--bg-tertiary)] rounded-2xl px-4 py-3">
           <span className="text-sm text-gray-300 flex-1">{selectedIds.size} selected</span>
           <button onClick={() => setSelectedIds(new Set())} className="text-xs text-gray-500 min-h-[40px] px-3">
             Clear
@@ -243,7 +243,7 @@ export default function PunchListTab({ projectId }: Props) {
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
                   ? "bg-[#F97316] text-white"
-                  : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                  : "bg-[var(--bg-tertiary)] text-gray-400 hover:text-white"
               }`}
             >
               {label}
@@ -259,7 +259,7 @@ export default function PunchListTab({ projectId }: Props) {
                 <select
                   value={tradeFilter}
                   onChange={(e) => setTradeFilter(e.target.value)}
-                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
+                  className="w-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
                 >
                   <option value="">All Trades</option>
                   {trades.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -272,7 +272,7 @@ export default function PunchListTab({ projectId }: Props) {
                 <select
                   value={subFilter}
                   onChange={(e) => setSubFilter(e.target.value)}
-                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
+                  className="w-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
                 >
                   <option value="">All Subs</option>
                   {subs.map((s) => <option key={s.name} value={contacts.find((c) => c.name === s.name)?.id || ""}>{s.name}</option>)}
@@ -310,8 +310,8 @@ export default function PunchListTab({ projectId }: Props) {
             return (
               <div
                 key={item.id}
-                className={`bg-[#121217] border rounded-2xl p-4 transition-all cursor-pointer
-                  active:scale-[0.99] ${isSelected ? "border-[#F97316]/50" : "border-[#1F1F25] hover:border-[#F97316]/30"}`}
+                className={`bg-[var(--bg-secondary)] border rounded-2xl p-4 transition-all cursor-pointer
+                  active:scale-[0.99] ${isSelected ? "border-[#F97316]/50" : "border-[var(--border-primary)] hover:border-[#F97316]/30"}`}
                 onClick={() => openDetail(item)}
               >
                 {/* Top row */}
@@ -364,7 +364,7 @@ export default function PunchListTab({ projectId }: Props) {
                     <span>{locationParts.join(" · ")}</span>
                   )}
                   {item.trade && (
-                    <span className="px-1.5 py-0.5 rounded-md bg-[#1F1F25] text-gray-400">{item.trade}</span>
+                    <span className="px-1.5 py-0.5 rounded-md bg-[var(--bg-tertiary)] text-gray-400">{item.trade}</span>
                   )}
                   {item.assigned_contact && (
                     <span className="text-gray-500 truncate max-w-[120px]">
@@ -391,7 +391,7 @@ export default function PunchListTab({ projectId }: Props) {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[#1F1F25] border border-[#F97316]/30
+        <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[var(--bg-tertiary)] border border-[#F97316]/30
           text-white text-sm font-medium px-4 py-3 rounded-2xl shadow-xl animate-fade-in">
           {toast}
         </div>

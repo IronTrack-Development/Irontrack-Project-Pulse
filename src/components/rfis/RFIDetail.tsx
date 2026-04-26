@@ -50,7 +50,7 @@ interface RFIDetailProps {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: "Draft",        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: "Draft",        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
@@ -61,7 +61,7 @@ const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   critical: { color: "#EF4444", bg: "bg-red-500/20" },
   high:     { color: "#F97316", bg: "bg-orange-500/20" },
   normal:   { color: "#3B82F6", bg: "bg-blue-500/20" },
-  low:      { color: "#6B7280", bg: "bg-gray-700/30" },
+  low:      { color: "var(--text-muted)", bg: "bg-gray-700/30" },
 };
 
 export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabaseUrl }: RFIDetailProps) {
@@ -119,9 +119,9 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
 
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center">
-      <div className="w-full max-w-xl bg-[#121217] rounded-t-3xl md:rounded-3xl border border-[#1F1F25] max-h-[92vh] overflow-y-auto">
+      <div className="w-full max-w-xl bg-[var(--bg-secondary)] rounded-t-3xl md:rounded-3xl border border-[var(--border-primary)] max-h-[92vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-[#121217] px-5 py-4 border-b border-[#1F1F25] flex items-start justify-between rounded-t-3xl z-10">
+        <div className="sticky top-0 bg-[var(--bg-secondary)] px-5 py-4 border-b border-[var(--border-primary)] flex items-start justify-between rounded-t-3xl z-10">
           <div className="flex-1 min-w-0 mr-3">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-mono text-gray-500">{rfi.rfi_number}</span>
@@ -133,7 +133,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+            className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
           >
             <X size={16} />
           </button>
@@ -239,7 +239,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
               </p>
               <div className="space-y-3">
                 {rfi.rfi_responses.map((resp) => (
-                  <div key={resp.id} className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
+                  <div key={resp.id} className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
                     {resp.responded_by_name && (
                       <p className="text-xs font-medium text-[#F97316] mb-1">{resp.responded_by_name}</p>
                     )}
@@ -262,7 +262,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 value={respondedByName}
                 onChange={(e) => setRespondedByName(e.target.value)}
                 placeholder="Respondent name (optional)"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 text-sm text-white
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-2.5 text-sm text-white
                   placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 mb-2 min-h-[44px]"
               />
               <textarea
@@ -270,7 +270,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 onChange={(e) => setResponseText(e.target.value)}
                 placeholder="Enter response..."
                 rows={3}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-white
                   placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50 mb-2"
               />
               <button

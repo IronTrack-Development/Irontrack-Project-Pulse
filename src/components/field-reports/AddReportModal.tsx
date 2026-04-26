@@ -54,7 +54,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 w-full max-w-sm">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-white font-bold text-base">New Report</h3>
           <button onClick={onClose} className="text-gray-500 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center">
@@ -100,7 +100,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
                   fileRef.current.click();
                 }
               }}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px]"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px]"
             >
               <Upload size={18} />
               Choose from Library

@@ -138,7 +138,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 placeholder="e.g., ABC Plumbing"
                 required
                 autoComplete="organization"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           </div>
@@ -159,7 +159,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 placeholder="e.g., Joe Martinez"
                 required
                 autoComplete="name"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           </div>
@@ -221,7 +221,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         </div>
 
         {/* Instructions */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-4">
           {os === "ios" ? (
             <>
               <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">iPhone / iPad</p>
@@ -232,7 +232,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
                     <p className="text-sm text-gray-200 font-medium">Tap the Share button</p>
                     <p className="text-xs text-gray-500 mt-0.5">
                       Look for the{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-gray-300">□↑</span>{" "}
+                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-gray-300">□↑</span>{" "}
                       icon at the bottom of Safari
                     </p>
                   </div>
@@ -263,7 +263,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
                     <p className="text-sm text-gray-200 font-medium">Tap the three dots</p>
                     <p className="text-xs text-gray-500 mt-0.5">
                       Find the{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-gray-300">⋮</span>{" "}
+                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-gray-300">⋮</span>{" "}
                       menu in the top right of Chrome
                     </p>
                   </div>
@@ -295,7 +295,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         </div>
 
         {/* Tip */}
-        <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-start gap-3">
+        <div className="bg-[#0d0d11] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-start gap-3">
           <span className="text-lg">💡</span>
           <p className="text-xs text-gray-400 leading-relaxed">
             Adding to your home screen means you can open your schedule in one tap — even while on the jobsite with limited connectivity.
@@ -313,7 +313,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
           </button>
           <button
             onClick={onSkip}
-            className="w-full px-4 py-3.5 bg-[#121217] border border-[#1F1F25] text-gray-400 hover:text-white rounded-xl text-sm font-medium transition-colors"
+            className="w-full px-4 py-3.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-gray-400 hover:text-white rounded-xl text-sm font-medium transition-colors"
           >
             Skip for Now
           </button>
@@ -428,7 +428,7 @@ function WaitingScreen({
         </div>
 
         {/* Confirmation Card */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-3">
           <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
             Registration Confirmed
           </p>
@@ -463,7 +463,7 @@ function WaitingScreen({
         </div>
 
         {/* What happens next */}
-        <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-4 space-y-2">
+        <div className="bg-[#0d0d11] border border-[var(--border-primary)] rounded-xl px-4 py-4 space-y-2">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">What Happens Next</p>
           <ul className="space-y-2 text-xs text-gray-400">
             <li className="flex items-start gap-2">

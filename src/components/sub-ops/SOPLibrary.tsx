@@ -179,7 +179,7 @@ export default function SOPLibrary({ projectId }: Props) {
           </div>
         ) : (
           <>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -205,7 +205,7 @@ export default function SOPLibrary({ projectId }: Props) {
                   href={s.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] rounded-lg text-sm text-gray-300 hover:text-white transition-colors min-h-[44px] inline-flex"
+                  className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] rounded-lg text-sm text-gray-300 hover:text-white transition-colors min-h-[44px] inline-flex"
                 >
                   <Download size={14} /> {s.file_name || "Download File"}
                 </a>
@@ -213,7 +213,7 @@ export default function SOPLibrary({ projectId }: Props) {
             </div>
 
             {/* Acknowledgments */}
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                   <Users size={14} className="text-[#F97316]" />
@@ -272,7 +272,7 @@ export default function SOPLibrary({ projectId }: Props) {
 
       {/* Upload Form */}
       {showUpload && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <h3 className="text-sm font-bold text-white">New SOP</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -283,7 +283,7 @@ export default function SOPLibrary({ projectId }: Props) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Fall Protection Procedures"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -291,7 +291,7 @@ export default function SOPLibrary({ projectId }: Props) {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
@@ -306,14 +306,14 @@ export default function SOPLibrary({ projectId }: Props) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of this SOP..."
               rows={2}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
             <label className="text-xs font-medium text-gray-400 mb-1 block">File (PDF/DOC)</label>
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
             >
               <Upload size={14} />
               {file ? file.name : "Choose file..."}
@@ -342,7 +342,7 @@ export default function SOPLibrary({ projectId }: Props) {
 
       {/* Grouped SOP List */}
       {sops.length === 0 ? (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <FileText size={28} className="mx-auto text-gray-600 mb-2" />
           <p className="text-sm text-gray-400">No SOPs uploaded yet</p>
           <p className="text-xs text-gray-600 mt-1">Upload standard operating procedures for your foremen</p>
@@ -354,7 +354,7 @@ export default function SOPLibrary({ projectId }: Props) {
             const catCls = CATEGORY_STYLES[cat] ?? CATEGORY_STYLES.other;
 
             return (
-              <div key={cat} className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+              <div key={cat} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleCategory(cat)}
                   className="w-full flex items-center justify-between px-4 py-3 hover:bg-[#1a1a20] transition-colors"
@@ -369,7 +369,7 @@ export default function SOPLibrary({ projectId }: Props) {
                 </button>
 
                 {!isCollapsed && (
-                  <div className="border-t border-[#1F1F25] divide-y divide-[#1F1F25]">
+                  <div className="border-t border-[var(--border-primary)] divide-y divide-[var(--border-primary)]">
                     {items.map((s) => (
                       <div
                         key={s.id}

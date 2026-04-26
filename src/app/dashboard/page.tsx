@@ -116,9 +116,9 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
+      <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-6 py-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div>
             <h1 className="text-xl font-bold text-white">Command Center</h1>
@@ -130,7 +130,7 @@ export default function Dashboard() {
             <HelpIcon context="Dashboard" />
             <button
               onClick={fetchProjects}
-              className="p-2 rounded-lg bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-400 hover:text-white transition-colors"
             >
               <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
             </button>
@@ -161,23 +161,23 @@ export default function Dashboard() {
         {/* Summary bar */}
         {projects.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
               <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Active Projects</div>
               <div className="text-2xl font-bold text-white">{projects.length}</div>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
               <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">High Risks</div>
               <div className="text-2xl font-bold text-[#EF4444]">
                 {projects.reduce((s, p) => s + p.stats.highRisks, 0)}
               </div>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
               <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Overdue Activities</div>
               <div className="text-2xl font-bold text-[#EAB308]">
                 {projects.reduce((s, p) => s + p.stats.lateActivities, 0)}
               </div>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
               <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Avg Completion</div>
               <div className="text-2xl font-bold text-[#22C55E]">
                 {projects.length > 0
@@ -226,7 +226,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={project.id}
-                  className="group relative bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 hover:border-[#F97316]/30 hover:shadow-lg hover:shadow-[#F97316]/5 transition-all"
+                  className="group relative bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 hover:border-[#F97316]/30 hover:shadow-lg hover:shadow-[#F97316]/5 transition-all"
                 >
                   {/* Delete button */}
                   <button
@@ -238,7 +238,7 @@ export default function Dashboard() {
                       if (res.ok) fetchProjects();
                       else alert('Failed to delete project');
                     }}
-                    className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-[#1F1F25] hover:bg-red-500/20 flex items-center justify-center text-gray-600 hover:text-red-400 transition-all opacity-0 group-hover:opacity-100 z-10"
+                    className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-[var(--bg-tertiary)] hover:bg-red-500/20 flex items-center justify-center text-gray-600 hover:text-red-400 transition-all opacity-0 group-hover:opacity-100 z-10"
                     title="Delete project"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
@@ -271,7 +271,7 @@ export default function Dashboard() {
                       <span className="text-gray-500">Schedule Progress</span>
                       <span className="text-gray-300 font-semibold">{project.stats.completionPercent}%</span>
                     </div>
-                    <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full transition-all"
                         style={{ width: `${project.stats.completionPercent}%` }}
@@ -281,7 +281,7 @@ export default function Dashboard() {
 
                   {/* Today's activity */}
                   {project.stats.todayActivity && (
-                    <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
+                    <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-4">
                       <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Today</div>
                       <div className="text-xs text-gray-300 truncate">{project.stats.todayActivity.activity_name}</div>
                       <div className="text-[10px] text-[#F97316] mt-0.5">{project.stats.todayActivity.trade}</div>
@@ -321,7 +321,7 @@ export default function Dashboard() {
 
                   {/* Next milestone */}
                   {project.stats.nextMilestone && (
-                    <div className="mt-3 pt-3 border-t border-[#1F1F25] flex items-center gap-2">
+                    <div className="mt-3 pt-3 border-t border-[var(--border-primary)] flex items-center gap-2">
                       <Flag size={11} className="text-[#F97316] shrink-0" />
                       <span className="text-xs text-gray-500 truncate flex-1">
                         {project.stats.nextMilestone.activity_name}

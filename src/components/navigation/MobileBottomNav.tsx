@@ -35,8 +35,8 @@ export default function MobileBottomNav({
     <div
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
       style={{
-        background: "#0B0B0D",
-        borderTop: "1px solid #1F1F25",
+        background: "var(--bg-primary)",
+        borderTop: "1px solid var(--border-primary)",
       }}
     >
       <div className="flex items-stretch">
@@ -49,7 +49,7 @@ export default function MobileBottomNav({
               className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
               style={{
                 minHeight: "56px",
-                color: isActive ? "#F97316" : "#6B7280",
+                color: isActive ? "#F97316" : "var(--text-muted)",
               }}
             >
               <Icon size={20} />

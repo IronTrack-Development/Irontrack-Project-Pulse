@@ -200,7 +200,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   return (
     <div className="space-y-4">
       {/* Talk header */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
         <div className="flex items-start justify-between mb-3">
           <div className="min-w-0 flex-1">
             <h3 className="text-base font-bold text-white">{talk.topic}</h3>
@@ -248,7 +248,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 className={`ml-1 flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded transition-colors ${
                   isDefaultPresenter
                     ? "bg-[#22C55E]/10 text-[#22C55E]"
-                    : "bg-[#1F1F25] text-gray-500 hover:text-gray-300"
+                    : "bg-[var(--bg-tertiary)] text-gray-500 hover:text-gray-300"
                 }`}
                 title={isDefaultPresenter ? "Default presenter" : "Set as default presenter"}
               >
@@ -272,7 +272,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
 
       {/* Talking Points */}
       {(isReadOnly ? (talk.talking_points || []).length > 0 : true) && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
             <Shield size={14} className="text-[#F97316]" />
             Talking Points
@@ -289,7 +289,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       )}
 
       {/* Attendance Section */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
         <AttendanceSheet
           projectId={projectId}
           talkId={talkId}
@@ -300,7 +300,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       </div>
 
       {/* Notes & Corrective Actions */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-4">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-4">
         <div>
           <label className="text-xs text-gray-500 mb-1 block">Notes</label>
           <textarea
@@ -312,7 +312,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={3}
             placeholder="Additional notes..."
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
@@ -329,7 +329,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={2}
             placeholder="Any corrective actions needed..."
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
@@ -346,7 +346,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center shrink-0 transition-colors ${
               followUpNeeded
                 ? "bg-[#EAB308]/20 text-[#EAB308]"
-                : "bg-[#1F1F25] text-gray-600"
+                : "bg-[var(--bg-tertiary)] text-gray-600"
             } ${isReadOnly ? "cursor-default" : "cursor-pointer"}`}
           >
             {followUpNeeded && <AlertTriangle size={12} />}
@@ -363,7 +363,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 disabled={isReadOnly}
                 rows={2}
                 placeholder="Follow-up details..."
-                className="w-full mt-2 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+                className="w-full mt-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
               />
             )}
           </div>
@@ -403,7 +403,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
 
         <button
           onClick={handleExportPdf}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
         >
           <FileText size={14} />
           Export PDF

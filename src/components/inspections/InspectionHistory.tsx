@@ -76,9 +76,9 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
   return (
     <div>
       <h3 className="text-sm font-semibold text-gray-300 mb-3">Inspection History</h3>
-      <div className="space-y-1 rounded-xl border border-[#1F1F25] bg-[#121217] overflow-hidden">
+      <div className="space-y-1 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] overflow-hidden">
         {/* Header row — desktop only */}
-        <div className="hidden md:grid grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-2 bg-[#0B0B0D] text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+        <div className="hidden md:grid grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-2 bg-[var(--bg-primary)] text-[10px] font-medium text-gray-500 uppercase tracking-wider">
           <span>Type</span>
           <span>Date</span>
           <span>Permit #</span>
@@ -91,7 +91,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
             {/* Row */}
             <button
               onClick={() => setExpandedId(expandedId === insp.id ? null : insp.id)}
-              className="w-full grid grid-cols-[1fr_auto] md:grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-3 hover:bg-[#1F1F25] transition-colors text-left min-h-[44px] items-center"
+              className="w-full grid grid-cols-[1fr_auto] md:grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-3 hover:bg-[var(--bg-tertiary)] transition-colors text-left min-h-[44px] items-center"
             >
               <div className="flex items-center gap-2">
                 <span className="text-sm text-white">{insp.inspection_type}</span>
@@ -132,7 +132,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
 
             {/* Expanded detail */}
             {expandedId === insp.id && (
-              <div className="px-4 pb-4 bg-[#0B0B0D] border-t border-[#1F1F25]">
+              <div className="px-4 pb-4 bg-[var(--bg-primary)] border-t border-[var(--border-primary)]">
                 <div className="grid grid-cols-2 gap-3 py-3 text-xs">
                   <div>
                     <span className="text-gray-500">Date:</span>
@@ -171,7 +171,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                 </div>
 
                 {/* Status update buttons */}
-                <div className="flex gap-2 flex-wrap pt-2 border-t border-[#1F1F25]">
+                <div className="flex gap-2 flex-wrap pt-2 border-t border-[var(--border-primary)]">
                   <span className="text-[10px] text-gray-500 uppercase tracking-wider self-center mr-1">
                     Update:
                   </span>

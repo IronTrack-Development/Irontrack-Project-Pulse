@@ -82,14 +82,14 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setQuarter(q => offsetQuarter(q, -1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
         <div className="text-sm font-medium text-white">{formatQuarter(quarter)}</div>
         <button
           onClick={() => setQuarter(q => offsetQuarter(q, 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -144,11 +144,11 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {data.milestoneHitRate !== null && (
             <div className="mb-6">
               <h3 className="text-sm font-bold text-white mb-2">Milestone Performance</h3>
-              <div className="bg-[#121217] rounded-xl p-4">
+              <div className="bg-[var(--bg-secondary)] rounded-xl p-4">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16">
                     <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">
-                      <circle cx="18" cy="18" r="16" fill="none" stroke="#1F1F25" strokeWidth="3" />
+                      <circle cx="18" cy="18" r="16" fill="none" stroke="var(--border-primary)" strokeWidth="3" />
                       <circle
                         cx="18" cy="18" r="16" fill="none"
                         stroke={data.milestoneHitRate >= 80 ? "#22C55E" : data.milestoneHitRate >= 50 ? "#EAB308" : "#EF4444"}
@@ -175,7 +175,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
               <h3 className="text-sm font-bold text-white mb-2">Top Delay Reasons</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.topDelays.map((d, i) => (
-                  <div key={d.code} className="bg-[#121217] border border-[#1F1F25] rounded-lg px-4 py-3 text-center">
+                  <div key={d.code} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-center">
                     <div className="text-lg font-bold text-white">#{i + 1}</div>
                     <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
                     <div className="text-xs text-gray-500">{d.count} occurrences</div>
@@ -195,7 +195,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
                   .map(([trade, hours]) => (
                     <div key={trade} className="flex items-center gap-3">
                       <div className="w-24 text-xs text-gray-400 text-right truncate shrink-0">{trade}</div>
-                      <div className="flex-1 h-6 bg-[#1F1F25] rounded-md overflow-hidden">
+                      <div className="flex-1 h-6 bg-[var(--bg-tertiary)] rounded-md overflow-hidden">
                         <div
                           className="h-full bg-[#F97316] rounded-md transition-all duration-500"
                           style={{ width: `${Math.max((hours / maxTrade) * 100, 2)}%` }}
@@ -215,7 +215,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
             <h3 className="text-sm font-bold text-white mb-2">Monthly Breakdown</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {data.monthlyBreakdown.map((m) => (
-                <div key={m.month} className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
+                <div key={m.month} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
                   <div className="text-xs text-gray-500 mb-1">
                     {new Date(m.month + "-15T12:00:00Z").toLocaleDateString("en-US", { month: "long", timeZone: "UTC" })}
                   </div>

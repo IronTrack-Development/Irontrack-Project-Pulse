@@ -3,9 +3,9 @@ import { Building2, ArrowLeft } from "lucide-react";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <header className="border-b border-[#1F1F25] bg-[#0B0B0D]/95 backdrop-blur sticky top-0 z-50">
+      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/95 backdrop-blur sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <Link
             href="/"
@@ -94,7 +94,7 @@ export default function TermsPage() {
           {/* Data Usage */}
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">5. Data Usage and Intelligence</h2>
-            <p className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-6">
+            <p className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-6">
               <strong className="text-white">We may use anonymized, aggregate data from uploaded schedules to improve our platform&apos;s accuracy and intelligence features.</strong> Individual project data is never shared, sold, or identified. Your project-specific data remains private and accessible only to your account.
             </p>
             <p className="mt-4">
@@ -227,7 +227,7 @@ export default function TermsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#1F1F25] py-8 mt-16">
+      <footer className="border-t border-[var(--border-primary)] py-8 mt-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />

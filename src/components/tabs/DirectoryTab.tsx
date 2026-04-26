@@ -112,13 +112,13 @@ export default function DirectoryTab({ projectId }: Props) {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchContacts}
-              className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
             <button
               onClick={() => setShowQRModal(true)}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 hover:text-white border border-[var(--border-secondary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <QrCode size={14} />
               <span className="hidden sm:inline">Share QR</span>
@@ -141,7 +141,7 @@ export default function DirectoryTab({ projectId }: Props) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search contacts…"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-9 pr-9 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-9 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
             {search && (
               <button
@@ -156,7 +156,7 @@ export default function DirectoryTab({ projectId }: Props) {
 
         {/* Empty state */}
         {contacts.length === 0 && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-10 text-center">
             <Users size={36} className="mx-auto text-gray-600 mb-3" />
             <p className="text-gray-300 text-sm font-semibold mb-1">No contacts yet</p>
             <p className="text-gray-600 text-xs mb-5">
@@ -165,7 +165,7 @@ export default function DirectoryTab({ projectId }: Props) {
             <div className="flex items-center justify-center gap-3">
               <button
                 onClick={() => setShowQRModal(true)}
-                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 border border-[var(--border-secondary)] rounded-lg text-xs font-semibold transition-colors"
               >
                 <QrCode size={14} />
                 Share QR Code

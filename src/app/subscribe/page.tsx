@@ -38,7 +38,7 @@ export default function SubscribePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
@@ -47,7 +47,7 @@ export default function SubscribePage() {
         </div>
 
         {/* Subscription Card */}
-        <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
+        <div className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-8">
           <h1 className="text-2xl font-bold text-white mb-2">Subscribe to Project Pulse</h1>
           <p className="text-gray-400 mb-6">
             Get instant schedule intelligence for your construction projects.
@@ -59,7 +59,7 @@ export default function SubscribePage() {
             </div>
           )}
 
-          <div className="bg-[#0B0B0D] border border-[#2A2A30] rounded-lg p-6 mb-6">
+          <div className="bg-[var(--bg-primary)] border border-[#2A2A30] rounded-lg p-6 mb-6">
             <div className="text-center mb-6">
               <div className="text-4xl font-bold text-white mb-2">
                 $19.99<span className="text-xl text-gray-500">/mo</span>

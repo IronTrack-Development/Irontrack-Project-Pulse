@@ -58,14 +58,14 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg bg-[#121217] border border-[#1F1F25] rounded-2xl shadow-2xl">
+      <div className="w-full max-w-lg bg-[var(--bg-secondary)] border border-[var(--bg-tertiary)] rounded-2xl shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between p-4 border-b border-[var(--bg-tertiary)]">
           <div className="flex items-center gap-2">
             <CalendarDays size={18} className="text-[#F97316]" />
             <h3 className="text-white font-semibold">New Meeting</h3>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-400 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-400 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
             <X size={18} />
           </button>
         </div>
@@ -82,8 +82,8 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                   onClick={() => handleTypeChange(mt.name)}
                   className="px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
                   style={{
-                    background: selectedType === mt.name ? "#F97316" : "#1F1F25",
-                    color: selectedType === mt.name ? "#fff" : "#9CA3AF",
+                    background: selectedType === mt.name ? "#F97316" : "var(--bg-tertiary)",
+                    color: selectedType === mt.name ? "#fff" : "var(--text-secondary)",
                   }}
                 >
                   {mt.name}
@@ -100,7 +100,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--bg-tertiary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
               placeholder="Meeting title"
             />
           </div>
@@ -112,7 +112,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
               type="date"
               value={meetingDate}
               onChange={(e) => setMeetingDate(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--bg-tertiary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
           </div>
 
@@ -124,7 +124,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={facilitator}
                 onChange={(e) => setFacilitator(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--bg-tertiary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
                 placeholder="Optional"
               />
             </div>
@@ -134,21 +134,21 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--bg-tertiary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
                 placeholder="Optional"
               />
             </div>
           </div>
 
           {/* Auto-populate toggle */}
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25]">
+          <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--bg-tertiary)]">
             <div>
               <p className="text-sm text-white font-medium">Auto-populate from schedule</p>
               <p className="text-xs text-gray-500">Pull Week 1 activities grouped by trade</p>
             </div>
             <button
               onClick={() => setAutoPopulate(!autoPopulate)}
-              className={`relative w-11 h-6 rounded-full transition-colors ${autoPopulate ? "bg-[#F97316]" : "bg-[#1F1F25]"}`}
+              className={`relative w-11 h-6 rounded-full transition-colors ${autoPopulate ? "bg-[#F97316]" : "bg-[var(--bg-tertiary)]"}`}
             >
               <span
                 className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${autoPopulate ? "left-[22px]" : "left-0.5"}`}
@@ -158,7 +158,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 p-4 border-t border-[#1F1F25]">
+        <div className="flex justify-end gap-3 p-4 border-t border-[var(--bg-tertiary)]">
           <button
             onClick={onClose}
             className="px-4 py-2.5 rounded-lg text-sm text-gray-400 hover:text-white transition-colors min-h-[44px]"

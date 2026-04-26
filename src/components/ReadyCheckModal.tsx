@@ -207,7 +207,7 @@ export default function ReadyCheckModal({
   // ── Render helpers ─────────────────────────────────────────────────────────
 
   const renderActivityCard = () => (
-    <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-2">
+    <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 space-y-2">
       <div className="text-sm font-semibold text-white leading-tight">{activity.activity_name}</div>
       <div className="flex flex-wrap gap-3 text-xs text-gray-400">
         {trade && (
@@ -280,7 +280,7 @@ export default function ReadyCheckModal({
                     className={`w-full flex items-start gap-3 px-3 py-3 rounded-xl border transition-all text-left ${
                       isActive
                         ? "bg-[#F97316]/10 border-[#F97316]/50 text-white"
-                        : "bg-[#0B0B0D] border-[#1F1F25] text-gray-400 hover:border-gray-600"
+                        : "bg-[var(--bg-primary)] border-[var(--border-primary)] text-gray-400 hover:border-gray-600"
                     }`}
                   >
                     <span
@@ -328,10 +328,10 @@ export default function ReadyCheckModal({
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
               rows={6}
-              className="w-full bg-[#0B0B0D] border border-[#F97316]/30 rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed focus:outline-none focus:border-[#F97316]/60 resize-none transition-colors"
+              className="w-full bg-[var(--bg-primary)] border border-[#F97316]/30 rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed focus:outline-none focus:border-[#F97316]/60 resize-none transition-colors"
             />
           ) : (
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed whitespace-pre-wrap">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed whitespace-pre-wrap">
               {generatedMessage}
             </div>
           )}
@@ -339,7 +339,7 @@ export default function ReadyCheckModal({
       </div>
 
       {/* Sticky send button */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom)+64px)] sm:pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom)+64px)] sm:pb-6 pt-4 bg-gradient-to-t from-[var(--bg-secondary)] via-[var(--bg-secondary)]/95 to-transparent">
         <button
           onClick={() => setStep("send_method")}
           className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold rounded-xl py-3.5 text-sm transition-colors"
@@ -364,7 +364,7 @@ export default function ReadyCheckModal({
         </div>
 
         {/* Message preview */}
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-xs text-gray-400 font-mono leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-xs text-gray-400 font-mono leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
           {finalMessage}
         </div>
 
@@ -373,7 +373,7 @@ export default function ReadyCheckModal({
           <button
             onClick={() => handleSend("copy")}
             disabled={sending}
-            className="w-full flex items-center gap-4 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
+            className="w-full flex items-center gap-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
           >
             <div className="w-10 h-10 rounded-xl bg-[#F97316]/15 flex items-center justify-center shrink-0">
               {copied ? (
@@ -400,7 +400,7 @@ export default function ReadyCheckModal({
                 } catch { /* user cancelled */ }
               }}
               disabled={sending}
-              className="w-full flex items-center gap-4 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
+              className="w-full flex items-center gap-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
             >
               <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/15 flex items-center justify-center shrink-0">
                 <Send size={20} className="text-[#3B82F6]" />
@@ -447,7 +447,7 @@ export default function ReadyCheckModal({
         </div>
       </div>
 
-      <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 inline-flex items-center gap-2">
+      <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-2.5 inline-flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-[#EAB308] shrink-0" />
         <span className="text-xs font-semibold text-[#EAB308]">Awaiting Response</span>
       </div>
@@ -461,7 +461,7 @@ export default function ReadyCheckModal({
       <div className="w-full mt-4">
         <button
           onClick={onClose}
-          className="w-full bg-[#1F1F25] hover:bg-[#2a2a35] text-white font-semibold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-white font-semibold rounded-xl py-3.5 text-sm transition-colors"
         >
           Back to Schedule
         </button>
@@ -481,14 +481,14 @@ export default function ReadyCheckModal({
 
       {/* Modal */}
       <div className="fixed inset-x-0 bottom-0 z-50 sm:inset-0 sm:flex sm:items-center sm:justify-center sm:p-4">
-        <div className="relative bg-[#121217] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg h-[90vh] sm:h-auto sm:max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-[#1F1F25] animate-slide-up">
+        <div className="relative bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg h-[90vh] sm:h-auto sm:max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-[var(--border-primary)] animate-slide-up">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1F1F25] shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-primary)] shrink-0">
             <div className="flex items-center gap-2">
               {step === "send_method" && (
                 <button
                   onClick={() => setStep("setup")}
-                  className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors"
                 >
                   <ArrowLeft size={16} />
                 </button>
@@ -508,7 +508,7 @@ export default function ReadyCheckModal({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors"
             >
               <X size={16} />
             </button>

@@ -147,9 +147,9 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 bottom-0 w-full max-w-lg bg-[#121217] border-l border-[#1F1F25] z-50 overflow-y-auto animate-slide-in">
+      <div className="fixed right-0 top-0 bottom-0 w-full max-w-lg bg-[var(--bg-secondary)] border-l border-[var(--border-primary)] z-50 overflow-y-auto animate-slide-in">
         {/* Header */}
-        <div className="sticky top-0 bg-[#121217] border-b border-[#1F1F25] px-6 py-4 flex items-start justify-between gap-3">
+        <div className="sticky top-0 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] px-6 py-4 flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               {activity.activity_id && (
@@ -164,7 +164,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             </div>
             <h2 className="font-bold text-white text-base leading-tight">{activity.activity_name}</h2>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors shrink-0">
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors shrink-0">
             <X size={18} />
           </button>
         </div>
@@ -172,12 +172,12 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
         <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom)+80px)] md:pb-6 space-y-6">
           {/* Trade + Area */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
               <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Trade</div>
               <div className="text-sm font-semibold text-[#F97316]">{activity.trade || "General"}</div>
             </div>
             {activity.area && (
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
                 <div className="flex items-center gap-1 text-[10px] text-gray-600 uppercase tracking-wide mb-1">
                   <MapPin size={9} /> Area
                 </div>
@@ -193,7 +193,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <MapPin size={12} className="inline mr-1.5" />
                 Location
               </div>
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-2">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 space-y-2">
                 {activity.normalized_building && (
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-1.5 text-gray-500">
@@ -237,7 +237,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <Users size={12} className="inline mr-1.5" />
                 Resources
               </div>
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2">
                 <div className="text-sm text-gray-300">{activity.resource_names}</div>
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <FileText size={12} className="inline mr-1.5" />
                 Notes
               </div>
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2">
                 <div className="text-xs text-gray-400 whitespace-pre-wrap leading-relaxed">{activity.notes}</div>
               </div>
             </div>
@@ -292,15 +292,15 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
           {/* Metrics */}
           <div className="grid grid-cols-3 gap-2">
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-white">{activity.original_duration ?? "—"}</div>
               <div className="text-[10px] text-gray-500">Orig Duration</div>
             </div>
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-white">{activity.remaining_duration ?? "—"}</div>
               <div className="text-[10px] text-gray-500">Remaining</div>
             </div>
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-[#3B82F6]">{activity.percent_complete}%</div>
               <div className="text-[10px] text-gray-500">Complete</div>
             </div>
@@ -308,7 +308,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
           {/* Progress bar */}
           <div>
-            <div className="h-2 bg-[#1F1F25] rounded-full overflow-hidden">
+            <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full transition-all"
                 style={{ width: `${activity.percent_complete}%` }}
@@ -374,7 +374,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                       <button
                         key={pred.id}
                         onClick={() => handleRelatedClick(pred)}
-                        className="w-full text-left bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 hover:border-gray-600 hover:bg-[#1F1F25]/60 transition-colors"
+                        className="w-full text-left bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 hover:border-gray-600 hover:bg-[var(--bg-tertiary)]/60 transition-colors"
                         style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(pred.status) }}
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
@@ -393,7 +393,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                           )}
                         </div>
                         <div className="mb-1.5">
-                          <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+                          <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                             <div
                               className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
                               style={{ width: `${pred.percent_complete}%` }}
@@ -431,7 +431,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                       <button
                         key={succ.id}
                         onClick={() => handleRelatedClick(succ)}
-                        className="w-full text-left bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 hover:border-gray-600 hover:bg-[#1F1F25]/60 transition-colors"
+                        className="w-full text-left bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 hover:border-gray-600 hover:bg-[var(--bg-tertiary)]/60 transition-colors"
                         style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(succ.status) }}
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
@@ -450,7 +450,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                           )}
                         </div>
                         <div className="mb-1.5">
-                          <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+                          <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                             <div
                               className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
                               style={{ width: `${succ.percent_complete}%` }}
@@ -487,7 +487,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 onClose();
                 router.push(`/projects/${projectId}/report?activity=${activity.id}`);
               }}
-              className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+              className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
             >
               <ClipboardList size={14} className="text-[#F97316]" />
               New Observation
@@ -506,7 +506,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 Loading…
               </div>
             ) : readyCheck ? (
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-3">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <ReadyCheckBadge status={readyCheck.status} followUpCount={readyCheck.follow_up_count} />
@@ -529,7 +529,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {readyCheck.status === "awaiting_response" && (
                   <button
                     onClick={() => { setIsFollowUp(true); setShowReadyCheckModal(true); }}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-lg py-2.5 text-xs font-semibold transition-colors"
+                    className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 hover:text-white rounded-lg py-2.5 text-xs font-semibold transition-colors"
                   >
                     <RefreshCw size={12} />
                     Send Follow-Up
@@ -539,7 +539,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             ) : (
               <button
                 onClick={() => { setIsFollowUp(false); setShowReadyCheckModal(true); }}
-                className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+                className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
               >
                 <Send size={14} className="text-[#F97316]" />
                 Send Ready Check

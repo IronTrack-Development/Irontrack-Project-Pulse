@@ -81,7 +81,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setWeek((w) => offsetWeek(w, -1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
@@ -91,7 +91,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
         </div>
         <button
           onClick={() => setWeek((w) => offsetWeek(w, 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -99,7 +99,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           href={`/api/projects/${projectId}/daily-logs/weekly-report-pdf?week=${week}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-auto flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-xs font-medium transition-colors min-h-[40px]"
+          className="ml-auto flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-xl text-xs font-medium transition-colors min-h-[40px]"
         >
           <FileText size={14} />
           Export PDF
@@ -117,7 +117,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
       ) : (
         <>
           {/* Narrative */}
-          <div className="bg-[#1F1F25] border-l-3 border-[#F97316] rounded-lg p-3 mb-4 text-sm text-gray-300 italic" style={{ borderLeftWidth: 3 }}>
+          <div className="bg-[var(--bg-tertiary)] border-l-3 border-[#F97316] rounded-lg p-3 mb-4 text-sm text-gray-300 italic" style={{ borderLeftWidth: 3 }}>
             {data.narrative}
           </div>
 
@@ -161,7 +161,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                   .map(([trade, hours]) => (
                     <div key={trade} className="flex items-center gap-3">
                       <div className="w-24 text-xs text-gray-400 text-right truncate shrink-0">{trade}</div>
-                      <div className="flex-1 h-6 bg-[#1F1F25] rounded-md overflow-hidden">
+                      <div className="flex-1 h-6 bg-[var(--bg-tertiary)] rounded-md overflow-hidden">
                         <div
                           className="h-full bg-[#F97316] rounded-md transition-all duration-500"
                           style={{ width: `${Math.max((hours / maxCrewHours) * 100, 2)}%` }}
@@ -184,7 +184,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
               </h3>
               <div className="space-y-1">
                 {data.activitiesCompleted.map((a, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
+                  <div key={i} className="text-xs text-gray-300 bg-[var(--bg-secondary)] rounded-lg px-3 py-2 flex justify-between">
                     <span>{a.activityName}</span>
                     {a.trade && <span className="text-gray-500">{a.trade}</span>}
                   </div>
@@ -201,7 +201,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
               </h3>
               <div className="space-y-1">
                 {data.activitiesAdvanced.map((a, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
+                  <div key={i} className="text-xs text-gray-300 bg-[var(--bg-secondary)] rounded-lg px-3 py-2 flex justify-between">
                     <span>{a.activityName}</span>
                     <span className="text-[#F97316] font-medium">+{a.delta}% → {a.pctAfter}%</span>
                   </div>
@@ -214,10 +214,10 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {Object.keys(data.delayBreakdown).length > 0 && (
             <div className="mb-6">
               <h3 className="text-sm font-bold text-white mb-2">Delay Breakdown</h3>
-              <div className="bg-[#121217] rounded-xl overflow-hidden">
+              <div className="bg-[var(--bg-secondary)] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-[#1F1F25]">
+                    <tr className="border-b border-[var(--border-primary)]">
                       <th className="text-left text-gray-500 px-3 py-2 font-medium">Reason</th>
                       <th className="text-right text-gray-500 px-3 py-2 font-medium">Occurrences</th>
                     </tr>
@@ -226,7 +226,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                     {Object.entries(data.delayBreakdown)
                       .sort((a, b) => b[1] - a[1])
                       .map(([code, count]) => (
-                        <tr key={code} className="border-b border-[#1F1F25] last:border-0">
+                        <tr key={code} className="border-b border-[var(--border-primary)] last:border-0">
                           <td className="px-3 py-2 text-gray-300">{code}</td>
                           <td className="px-3 py-2 text-gray-400 text-right">{count}</td>
                         </tr>
@@ -246,7 +246,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
               <h3 className="text-sm font-bold text-white mb-2">⚠️ Open Issues</h3>
               <div className="space-y-1">
                 {data.openIssues.map((issue, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2">
+                  <div key={i} className="text-xs text-gray-300 bg-[var(--bg-secondary)] rounded-lg px-3 py-2">
                     <span className="text-gray-500 mr-2">{new Date(issue.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                     {issue.narrative}
                   </div>

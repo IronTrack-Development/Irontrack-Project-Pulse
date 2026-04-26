@@ -54,7 +54,7 @@ export default function VoiceTextArea({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={rows}
-          className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 pr-14
+          className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 pr-14
             text-sm text-white placeholder-gray-600 resize-none
             focus:outline-none focus:border-[#F97316]/50 focus:ring-1 focus:ring-[#F97316]/20
             transition-colors"

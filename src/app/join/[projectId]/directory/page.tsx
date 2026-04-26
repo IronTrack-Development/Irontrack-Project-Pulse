@@ -154,7 +154,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           </div>
 
           {/* Info */}
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-3">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-3">
             <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
               What&apos;s Next
             </p>
@@ -223,7 +223,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               placeholder="Full name"
               required
               autoComplete="name"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
@@ -238,7 +238,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company name"
               autoComplete="organization"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
@@ -251,7 +251,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               value={role}
               onChange={(e) => { setRole(e.target.value); setTrade(""); setDiscipline(""); }}
               required
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             >
               <option value="" disabled>Select your role…</option>
               {ROLE_OPTIONS.map((r) => (
@@ -271,7 +271,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={trade}
                 onChange={(e) => setTrade(e.target.value)}
                 placeholder="e.g., Electrical, Plumbing, HVAC"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           )}
@@ -287,7 +287,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={discipline}
                 onChange={(e) => setDiscipline(e.target.value)}
                 placeholder="e.g., Structural, MEP, Civil"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           )}
@@ -303,7 +303,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               autoComplete="email"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
@@ -318,7 +318,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setPhone(e.target.value)}
               placeholder="602-555-1234"
               autoComplete="tel"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 

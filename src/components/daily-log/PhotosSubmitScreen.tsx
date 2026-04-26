@@ -162,7 +162,7 @@ export default function PhotosSubmitScreen({
             <select
               value={selectedTag || ""}
               onChange={(e) => setSelectedTag(e.target.value || null)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-white
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             >
               <option value="">No tag (general)</option>
@@ -274,7 +274,7 @@ export default function PhotosSubmitScreen({
       </div>
 
       {/* Summary Card */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-semibold text-white">Log Summary</h3>
 
         <div className="grid grid-cols-2 gap-3 text-xs">

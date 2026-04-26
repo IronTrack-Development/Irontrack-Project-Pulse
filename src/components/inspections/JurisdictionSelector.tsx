@@ -113,7 +113,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
           placeholder="Search Arizona cities, towns, counties..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+          className="w-full pl-10 pr-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
         />
       </div>
 
@@ -123,12 +123,12 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
       </p>
 
       {/* Scrollable list */}
-      <div className="max-h-[60vh] overflow-y-auto space-y-1 rounded-xl border border-[#1F1F25] bg-[#121217] p-2">
+      <div className="max-h-[60vh] overflow-y-auto space-y-1 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-2">
         {filtered.map((j) => (
           <button
             key={j.id}
             onClick={() => setConfirming(j)}
-            className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[#1F1F25] transition-colors text-left min-h-[44px] group"
+            className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors text-left min-h-[44px] group"
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -156,14 +156,14 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
       {/* Confirmation Dialog */}
       {confirming && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 max-w-md w-full shadow-xl">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 max-w-md w-full shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-white">Confirm Jurisdiction</h3>
               <button onClick={() => setConfirming(null)} className="p-1 text-gray-500 hover:text-white">
                 <X size={18} />
               </button>
             </div>
-            <div className="bg-[#0B0B0D] rounded-xl p-4 mb-4">
+            <div className="bg-[var(--bg-primary)] rounded-xl p-4 mb-4">
               <div className="flex items-center gap-2">
                 <Lock size={16} className="text-[#F97316]" />
                 <span className="text-white font-medium">{confirming.name}</span>
@@ -179,7 +179,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirming(null)}
-                className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
               >
                 Cancel
               </button>

@@ -53,7 +53,7 @@ const STATUS_FILTERS = [
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: "Draft",        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: "Draft",        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
@@ -64,7 +64,7 @@ const PRIORITY_CONFIG: Record<string, { color: string }> = {
   critical: { color: "#EF4444" },
   high:     { color: "#F97316" },
   normal:   { color: "#3B82F6" },
-  low:      { color: "#6B7280" },
+  low:      { color: "var(--text-muted)" },
 };
 
 export default function RFIsTab({ projectId }: RFIsTabProps) {
@@ -156,7 +156,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
           { label: "Overdue", value: overdueRFIs, color: "#EF4444" },
           { label: "Answered", value: answeredRFIs, color: "#22C55E" },
         ].map(({ label, value, color }) => (
-          <div key={label} className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-3 text-center">
+          <div key={label} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-3 text-center">
             <p className="text-xl font-bold" style={{ color }}>{value}</p>
             <p className="text-xs text-gray-500 mt-0.5">{label}</p>
           </div>
@@ -173,7 +173,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
                   ? "bg-[#F97316] text-white"
-                  : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                  : "bg-[var(--bg-tertiary)] text-gray-400 hover:text-white"
               }`}
             >
               {label}
@@ -220,7 +220,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               <button
                 key={rfi.id}
                 onClick={() => openRFIDetail(rfi)}
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-2xl p-4
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4
                   hover:border-[#F97316]/30 active:scale-[0.99] transition-all text-left"
               >
                 {/* Top row: number + badges */}

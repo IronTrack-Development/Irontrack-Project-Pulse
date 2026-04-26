@@ -1,0 +1,415 @@
+# CURRENT_FEATURES.md — IronTrack Pulse
+
+Features are listed by module. Each entry includes: purpose, user type, main files, current status, known issues, and revenue relevance.
+
+---
+
+## Schedule Intelligence
+
+### Schedule Upload & Parse
+- **Purpose:** Import construction schedules from multiple formats
+- **User type:** GC
+- **Formats:** `.xlsx`, `.xls`, `.csv`, `.mpp`, `.xer` (Primavera P6), `.xml` (MSPDI)
+- **Main files:** `src/app/upload/page.tsx`, `src/app/upload/layout.tsx`, `src/app/api/upload/route.ts`
+- **Libraries:** `xlsx`, `papaparse`, `pdf-parse`, `cfb`
+- **Status:** Working. XER parser exists at `src/lib/xer-parser.ts`
+- **Known issues:** Large files (>50MB) may time out on slow connections despite 300s Vercel limit. Mobile iOS had file picker issues (fixed in v1.5.0)
+- **Revenue relevance:** Core GC feature — without this, nothing works
+
+### Lookahead Views (3-week, 6-week)
+- **Purpose:** Show upcoming activities grouped by day and week
+- **User type:** GC
+- **Main files:** `src/components/tabs/LookaheadTab.tsx`, `src/components/tabs/SixWeekTab.tsx`
+- **API:** `GET /api/projects/[id]/lookahead`, `GET /api/projects/[id]/lookahead-6week`
+- **Status:** Working
+- **Revenue relevance:** Core GC value prop
+
+### Day Plan
+- **Purpose:** Today's planned activities with weather integration
+- **User type:** GC
+- **Main files:** `src/components/tabs/DayPlanTab.tsx`
+- **API:** `GET /api/projects/[id]/today-plan`
+- **Status:** Working
+- **Revenue relevance:** Daily driver for superintendent retention
+
+### Week View
+- **Purpose:** 7-day activity view with QR sharing capability
+- **User type:** GC
+- **Main files:** `src/components/tabs/WeekTab.tsx`, `src/components/WeekQRModal.tsx`
+- **API:** `GET /api/projects/[id]/week`, `POST /api/projects/[id]/week-share`
+- **Status:** Working
+- **Revenue relevance:** Drives sub invitation loop
+
+### CPM Reforecast Engine
+- **Purpose:** Recalculate critical path and forecast finish date after progress updates
+- **User type:** GC
+- **Main files:** `src/lib/reforecast-engine.ts`, `src/components/tabs/ReforecastTab.tsx`
+- **API:** `POST /api/projects/[id]/schedule/recalculate`, `GET /api/projects/[id]/schedule/latest`
+- **Status:** Working. Uses CPM forward/backward pass algorithm
+- **Known issues:** Dependency links stored as JSONB in `parsed_activities.dependency_links` — verify population during import
+- **Revenue relevance:** Differentiator vs. basic schedule viewers
+
+### Risk Detection Engine
+- **Purpose:** Automatically flag at-risk activities
+- **User type:** GC
+- **Main files:** `src/lib/risk-engine.ts`
+- **API:** `GET /api/projects/[id]/risks`
+- **Status:** Working. 6 rule types: delayed start, compression, milestone at risk, inspection, missing logic, long duration
+- **Revenue relevance:** "Aha moment" feature — GCs see value immediately
+
+### Health Score
+- **Purpose:** 0–100 project health score shown on dashboard
+- **User type:** GC
+- **Main files:** `src/lib/health-score.ts`
+- **Status:** Working
+- **Revenue relevance:** Dashboard hook — drives daily check-in habit
+
+### Schedule Snapshots
+- **Purpose:** Point-in-time schedule copies for comparison
+- **User type:** GC
+- **Main files:** `src/app/api/projects/[id]/schedule/snapshots/`
+- **Status:** Working
+- **Revenue relevance:** Documentation / CYA feature
+
+### MSPDI Export
+- **Purpose:** Export forecast schedule as XML for Microsoft Project
+- **User type:** GC
+- **Main files:** `src/lib/export-msp-xml.ts`, `src/app/api/projects/[id]/schedule/export-mspdi/route.ts`
+- **Status:** Working
+- **Revenue relevance:** Enterprise GC feature
+
+### Milestones
+- **Purpose:** Track key milestones with timeline view
+- **User type:** GC
+- **Main files:** `src/components/tabs/MilestonesTab.tsx`
+- **API:** `GET /api/projects/[id]/milestones`
+- **Status:** Working
+- **Revenue relevance:** PM/owner reporting
+
+### Priority Tab
+- **Purpose:** Critical path tasks, behind-schedule items, upcoming inspections in one view
+- **User type:** GC
+- **Main files:** `src/components/tabs/PriorityTab.tsx`
+- **API:** `GET /api/projects/[id]/priority`
+- **Status:** Working (added v1.4.0)
+- **Revenue relevance:** Daily driver for sups
+
+### Progress Updates
+- **Purpose:** Update percent complete and remaining duration per activity
+- **User type:** GC
+- **Main files:** `src/components/tabs/ProgressTab.tsx`, `src/components/ProgressUpdateModal.tsx`
+- **API:** `POST /api/projects/[id]/progress`, `GET /api/projects/[id]/schedule/update-progress`
+- **Status:** Working
+- **Revenue relevance:** Creates audit trail → retention
+
+### Activity Detail (Drawer)
+- **Purpose:** Slide-in activity detail with predecessor/successor chain
+- **User type:** GC
+- **Main files:** `src/components/ActivityDrawer.tsx`
+- **API:** `GET /api/projects/[id]/relationships`
+- **Status:** Working (added v1.4.0)
+- **Revenue relevance:** Power user feature
+
+### AI Daily Brief
+- **Purpose:** Plain English daily project summary generated by AI
+- **User type:** GC
+- **Main files:** `src/lib/brief-engine.ts`, `src/app/api/projects/[id]/generate-brief/route.ts`
+- **Status:** Working. Uses Anthropic Claude SDK
+- **Revenue relevance:** Differentiator
+
+---
+
+## Field Operations
+
+### Daily Logs
+- **Purpose:** Full daily construction log — weather, crew, delays, photos, toolbox talk, incidents
+- **User type:** GC
+- **Main files:** `src/components/daily-log/DailyLogWizard.tsx`, `src/components/daily-log/DailyLogList.tsx`
+- **API:** `src/app/api/projects/[id]/daily-logs/`
+- **DB:** `daily_logs`, `daily_log_progress`, `daily_log_photos`
+- **Storage:** `daily-log-photos` bucket
+- **Status:** Working. Voice input supported. Weekly/monthly/quarterly/yearly rollups implemented.
+- **Known issues:** Offline mode mentioned in `src/lib/daily-log-offline.ts` — extent of offline capability ⚠️ needs verification
+- **Revenue relevance:** High — daily driver, replaces paper logs
+
+### Field Reports
+- **Purpose:** Photo-first walkthrough observations with professional PDF export
+- **User type:** GC
+- **Main files:** `src/components/field-reports/FieldReportsDashboard.tsx`, `src/components/field-reports/MultiAddFlow.tsx`
+- **API:** `src/app/api/projects/[id]/field-reports/`, `src/app/api/projects/[id]/reports/`
+- **DB:** `issue_reports`, `report_issues`
+- **Status:** Working. Multi-add flow (add multiple issues in one session) implemented.
+- **Revenue relevance:** High — replaces paper observation forms
+
+### Inspections (Arizona)
+- **Purpose:** Schedule inspections with 107 Arizona jurisdiction database
+- **User type:** GC
+- **Main files:** `src/components/inspections/`, `src/app/api/inspections/`
+- **DB:** `jurisdictions`, `project_jurisdiction`, `inspection_requests`
+- **Status:** Working. Arizona only — 46 cities, 46 towns, 15 counties seeded.
+- **Known issues:** Only Arizona jurisdictions seeded. Non-AZ projects cannot use this feature.
+- **Revenue relevance:** Medium — Arizona market specific
+
+### Punch List
+- **Purpose:** Deficiency tracking from walkthrough to closeout
+- **User type:** GC
+- **Main files:** `src/components/punch/`, `src/app/api/projects/[id]/punch-list/`
+- **DB:** `punch_items`, `punch_item_photos`
+- **Storage:** `punch-photos` bucket
+- **Status:** Working
+- **Revenue relevance:** High — close-out documentation
+
+### Progress Tracking (Activity Level)
+- **See** CPM Reforecast Engine above
+
+---
+
+## Safety & Compliance
+
+### Toolbox Talks
+- **Purpose:** Digital toolbox talk documentation with OSHA templates and attendance tracking
+- **User type:** GC
+- **Main files:** `src/components/safety/SafetyDashboard.tsx`, `src/components/safety/TalkDetail.tsx`, `src/components/safety/AttendanceSheet.tsx`
+- **API:** `src/app/api/projects/[id]/safety/`
+- **DB:** `toolbox_talks`, `toolbox_talk_attendees`, `toolbox_talk_templates`
+- **Status:** Working. 20 OSHA templates seeded in migration 013. Digital signatures, PDF export.
+- **Revenue relevance:** High — compliance requirement, reduces paper
+
+### Safety Templates
+- **Purpose:** System and custom toolbox talk templates
+- **User type:** GC
+- **Main files:** `src/components/safety/TemplateManager.tsx`
+- **API:** `GET/POST /api/projects/[id]/safety/templates`
+- **Status:** Working
+- **Revenue relevance:** Stickiness feature
+
+---
+
+## Trade Coordination
+
+### Coordination Meetings
+- **Purpose:** Trade coordination meeting management with auto-agenda from schedule
+- **User type:** GC
+- **Main files:** `src/components/coordination/CoordinationDashboard.tsx`, `src/components/coordination/MeetingDetail.tsx`
+- **API:** `src/app/api/projects/[id]/coordination/`
+- **DB:** `coordination_meetings`, `coordination_agenda_items`, `coordination_action_items`, `coordination_meeting_types`, `coordination_attendees`
+- **Status:** Working. 5 system meeting types. PDF export for meeting minutes.
+- **Revenue relevance:** High — replaces legal pad meeting notes
+
+### Conflict Detection
+- **Purpose:** Detect trade conflicts in schedule before they hit the field
+- **User type:** GC
+- **Main files:** `src/components/coordination/ConflictDetector.tsx`
+- **API:** `GET /api/projects/[id]/coordination/conflicts`
+- **Status:** Working
+- **Revenue relevance:** Differentiator
+
+### Action Item Tracker
+- **Purpose:** Track meeting action items with owners and due dates
+- **User type:** GC
+- **Main files:** `src/components/coordination/ActionTracker.tsx`
+- **API:** `src/app/api/projects/[id]/coordination/actions`
+- **Status:** Working
+- **Revenue relevance:** Retention — daily check habit
+
+---
+
+## Documents
+
+### Submittals
+- **Purpose:** Submittal log with approval workflow and revision tracking
+- **User type:** GC
+- **Main files:** `src/components/submittals/SubmittalForm.tsx`, `src/components/submittals/SubmittalDetail.tsx`
+- **API:** `src/app/api/projects/[id]/submittals/`
+- **DB:** `submittals`, `submittal_revisions`
+- **Status:** Working
+- **Revenue relevance:** Medium — PM documentation feature
+
+### RFIs (with AI Drafting)
+- **Purpose:** Request for Information management with AI-assisted drafting
+- **User type:** GC
+- **Main files:** `src/components/rfis/RFICreateFlow.tsx`, `src/components/rfis/RFIDetail.tsx`
+- **API:** `src/app/api/projects/[id]/rfis/`, `/rfis/ai-draft`
+- **DB:** `rfis`, `rfi_responses`, `rfi_photos`
+- **Storage:** `rfi-photos` bucket
+- **Status:** Working. AI draft uses Anthropic Claude (`ANTHROPIC_API_KEY` required — not in `.env.example` ⚠️)
+- **Revenue relevance:** High — AI feature is a differentiator
+
+### Drawings
+- **Purpose:** Drawing set upload, organization, sheet viewer, and pin system
+- **User type:** GC
+- **Main files:** `src/components/drawings/`, `src/app/api/projects/[id]/drawings/`
+- **DB:** `drawing_sets`, `drawing_sheets`, `drawing_pins`
+- **Storage:** `drawings` bucket
+- **Status:** Working. PDF upload, sheet classification, viewer with markup pins.
+- **Known issues:** PDF rendering uses `react-pdf` + `pdfjs-dist` — can be slow for large drawing sets
+- **Revenue relevance:** High — PM/super daily use
+
+### T&M Tracker
+- **Purpose:** Time & Material ticket management with dual digital signatures
+- **User type:** GC
+- **Main files:** `src/components/tm/TMTicketForm.tsx`, `src/components/tm/TMTicketDetail.tsx`, `src/components/tm/SignaturePad.tsx`
+- **API:** `src/app/api/projects/[id]/tm-tickets/`
+- **DB:** `tm_tickets`, `tm_labor_items`, `tm_material_items`, `tm_equipment_items`
+- **Storage:** `tm-attachments` bucket
+- **Status:** Working. Signature capture, receipt photos, dispute workflow.
+- **Revenue relevance:** High — protects GC on disputed work
+
+---
+
+## Sub Management & Sharing
+
+### Sub Portal (Tokenized View)
+- **Purpose:** Zero-login schedule view for subcontractors
+- **User type:** Sub (no login)
+- **Main files:** `src/app/view/[token]/page.tsx`, `src/app/api/view/[token]/`
+- **DB:** Uses project data + tokenized access
+- **Status:** Working. Subs can submit reports, acknowledge schedule, upload photos.
+- **Revenue relevance:** Critical — drives sub adoption
+
+### Week QR Share
+- **Purpose:** Share weekly schedule via QR code (no login)
+- **User type:** Sub (no login)
+- **Main files:** `src/components/WeekQRModal.tsx`, `src/app/view/week/[token]/page.tsx`
+- **DB:** `week_share_links`
+- **Status:** Working
+- **Revenue relevance:** Viral growth mechanism
+
+### Ready Check
+- **Purpose:** Send mobilization confirmations to subs before they're needed
+- **User type:** GC → Sub
+- **Main files:** `src/components/ReadyCheckModal.tsx`, `src/components/ReadyCheckBadge.tsx`
+- **API:** `src/app/api/projects/[id]/ready-checks/`
+- **DB:** `ready_checks`, `ready_check_contacts`
+- **Status:** Working (message generation and copy). Actual SMS/email sending ⚠️ needs verification — may be copy-to-send only
+- **Revenue relevance:** High — flagship GC→sub communication feature
+
+### Directory
+- **Purpose:** Company-wide contact directory with QR join flow
+- **User type:** GC
+- **Main files:** `src/components/directory/`, `src/app/join/[projectId]/`
+- **DB:** `company_contacts`, `project_contacts`, `directory_join_tokens`
+- **Status:** Working. QR code generation, join flow, contact cards.
+- **Revenue relevance:** Medium — drives sub database adoption
+
+---
+
+## Sub Ops
+
+### Sub Dashboard
+- **Purpose:** Sub company overview — projects, activity, foreman status
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/SubOpsDashboard.tsx`, `src/app/sub/dashboard/page.tsx`
+- **API:** `GET /api/sub-ops/companies/[companyId]/dashboard`
+- **Status:** Working
+- **Revenue relevance:** Sub retention — daily driver
+
+### Dispatch Board
+- **Purpose:** Morning crew dispatch to job sites
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/DispatchBoard.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/dispatches/`
+- **Status:** Working. Foreman acknowledgment supported.
+- **Revenue relevance:** Core Sub Ops value prop
+
+### Foreman & Crew Management
+- **Purpose:** Roster management for foremen and crew members
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/ForemanManager.tsx`, `src/components/sub-ops/CrewManager.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/foremen/`, `../crew/`
+- **Status:** Working
+- **Revenue relevance:** Sub stickiness
+
+### Check-in & Production Tracking
+- **Purpose:** Foremen log on-site with crew and production quantities
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/CheckInView.tsx`, `src/components/sub-ops/ProductionTracker.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/checkins/`, `../production-photo`
+- **Status:** Working
+- **Revenue relevance:** Sub Ops differentiator
+
+### SOP Library
+- **Purpose:** Upload and manage SOPs with foreman read-acknowledgment tracking
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/SOPLibrary.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/sops/`
+- **DB:** `sub_sops`, `sub_sop_acknowledgments`, `sub_dispatch_sops`
+- **Storage:** `sub-sop-files` bucket
+- **Status:** Working
+- **Revenue relevance:** Compliance/safety documentation
+
+### Blocker Reports
+- **Purpose:** Field crew flags blockers in real-time
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/BlockersList.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/blockers/`
+- **Storage:** `sub-blocker-photos` bucket
+- **Status:** Working
+- **Revenue relevance:** Field communication, reduces delays
+
+### Handoff Tracker
+- **Purpose:** Department-to-department handoff tracking for multi-trade subs
+- **User type:** Sub
+- **Main files:** `src/components/sub-ops/HandoffTracker.tsx`, `src/components/sub-ops/HandoffTemplates.tsx`
+- **API:** `src/app/api/sub-ops/companies/[companyId]/handoffs/`
+- **Status:** Working. Templates, areas, checklists, photos.
+- **Revenue relevance:** Niche but sticky for MEP subs
+
+---
+
+## Platform Features
+
+### Push Notifications
+- **Purpose:** Alert GCs about at-risk activities
+- **Main files:** `src/lib/notifications.ts`, `src/lib/web-push.ts`, `src/components/NotificationBell.tsx`
+- **DB:** `push_subscriptions`, `notification_log`
+- **API:** `GET /api/notifications/check` (cron), `POST /api/notifications/subscribe`
+- **Status:** Working. Cron runs daily at noon (see `vercel.json`). ⚠️ Requires `WEB_PUSH_PUBLIC_KEY` and `WEB_PUSH_PRIVATE_KEY` env vars not in `.env.example`
+- **Revenue relevance:** Retention — brings users back daily
+
+### Dark/Light Theme
+- **Purpose:** Visual theme preference
+- **Main files:** `src/components/ThemeProvider.tsx`, `src/lib/theme.ts`
+- **Status:** Working
+- **Revenue relevance:** UX polish, field usability
+
+### Spanish Localization
+- **Purpose:** Full Spanish UI for bilingual crews
+- **Main files:** `src/lib/i18n.ts`
+- **Status:** Partial — translations exist for navigation and common UI. ⚠️ Coverage of all feature areas needs verification
+- **Revenue relevance:** Expands addressable market
+
+### Schedule Generator (AI Simulator)
+- **Purpose:** Generate a CPM schedule from building type + square footage inputs (enterprise/demo feature)
+- **User type:** GC (protected route)
+- **Main files:** `src/app/schedule-generator/page.tsx`, `src/lib/schedule-engine.ts`, `src/lib/production-rates.ts`
+- **API:** `POST /api/schedule-generator`
+- **Status:** Partially complete (see `DEMO-UPDATES-SUMMARY.md`). Core functionality works. 26 trade activities still missing from Phase 2–8. Procurement predecessor linking not implemented.
+- **Revenue relevance:** Demo/upsell feature; not core product
+
+### Executive Snapshot
+- **Purpose:** Shareable one-click project summary for owners/stakeholders
+- **Main files:** `src/components/ShareSnapshot.tsx`
+- **API:** `GET /api/projects/[id]/snapshot`
+- **Status:** Working (added v1.4.0)
+- **Revenue relevance:** PM/owner communication
+
+### Voice Input
+- **Purpose:** Voice-to-text for daily log narratives
+- **Main files:** `src/lib/use-voice-input.ts`, `src/components/daily-log/VoiceButton.tsx`, `src/components/daily-log/VoiceTextArea.tsx`
+- **Status:** Working. Uses browser Web Speech API.
+- **Revenue relevance:** Field UX, mobile-first
+
+### Settings Page
+- **Purpose:** Storage usage, theme, language
+- **Main files:** `src/app/settings/page.tsx`, `src/components/settings/SettingsPanel.tsx`
+- **DB:** `user_uploads`, `user_storage`
+- **Status:** Working. Storage progress bar, color-coded warnings.
+- **Revenue relevance:** Admin UX
+
+### Upload Limits & Storage Quotas
+- **Purpose:** Prevent abuse; show usage to users
+- **DB:** `user_uploads`, `user_storage`
+- **Limits:** 100MB max file, 50 files/day, 50 files/month, 500MB total storage
+- **Status:** Working (added per `UPLOAD_LIMITS_IMPLEMENTATION.md`)
+- **Revenue relevance:** Cost control

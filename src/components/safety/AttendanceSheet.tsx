@@ -101,28 +101,28 @@ export default function AttendanceSheet({
 
       {/* Add form */}
       {showAddForm && !readOnly && (
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 mb-3">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 mb-3">
           <div className="grid grid-cols-3 gap-2 mb-2">
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name *"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               placeholder="Trade"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
           <div className="flex justify-end gap-2">
@@ -153,7 +153,7 @@ export default function AttendanceSheet({
           {attendees.map((a) => (
             <div
               key={a.id}
-              className="flex items-center gap-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 min-h-[44px]"
+              className="flex items-center gap-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 min-h-[44px]"
             >
               {/* Sign toggle */}
               <button
@@ -162,7 +162,7 @@ export default function AttendanceSheet({
                 className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 transition-colors ${
                   a.signed
                     ? "bg-[#22C55E]/20 text-[#22C55E]"
-                    : "bg-[#1F1F25] text-gray-600 hover:text-gray-400"
+                    : "bg-[var(--bg-tertiary)] text-gray-600 hover:text-gray-400"
                 } ${readOnly ? "cursor-default" : "cursor-pointer"}`}
               >
                 {a.signed && <Check size={14} />}

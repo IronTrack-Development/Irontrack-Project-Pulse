@@ -295,9 +295,9 @@ export default function DailyLogWizard({
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25]">
+      <div className="sticky top-0 z-20 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)]">
         <div className="px-4 pt-3 pb-0 max-w-2xl mx-auto">
           {/* Top row */}
           <div className="flex items-center justify-between mb-2">
@@ -415,7 +415,7 @@ export default function DailyLogWizard({
               type="button"
               onClick={() => goToScreen(screen - 1)}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
-                bg-[#1F1F25] text-gray-300 hover:bg-[#2a2a35] transition-colors min-h-[48px]"
+                bg-[var(--bg-tertiary)] text-gray-300 hover:bg-[var(--bg-hover)] transition-colors min-h-[48px]"
             >
               <ArrowLeft size={16} />
               Back

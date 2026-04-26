@@ -277,7 +277,7 @@ export default function SheetOrganizer({
       id: `custom_${Date.now()}`,
       name: newCategoryName.trim(),
       discipline: "other",
-      color: "#6B7280",
+      color: "var(--text-muted)",
       isCustom: true,
       sort_order: categories.length,
       assignedPages: [],
@@ -438,9 +438,9 @@ export default function SheetOrganizer({
     DISCIPLINE_PREFIX[cat.discipline] || "X";
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0B0B0D] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[var(--bg-primary)] flex flex-col">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-4 border-b border-[#1F1F25] shrink-0">
+      <div className="flex items-center gap-3 px-4 py-4 border-b border-[var(--border-primary)] shrink-0">
         <div className="flex-1 min-w-0">
           <h2 className="text-white font-semibold">Organize Drawing Set</h2>
           <p className="text-gray-500 text-xs mt-0.5">
@@ -459,7 +459,7 @@ export default function SheetOrganizer({
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {/* Add Category button */}
         {showAddCategory ? (
-          <div className="bg-[#121217] border border-[#F97316]/40 rounded-xl p-3 flex gap-2">
+          <div className="bg-[var(--bg-secondary)] border border-[#F97316]/40 rounded-xl p-3 flex gap-2">
             <input
               autoFocus
               type="text"
@@ -470,7 +470,7 @@ export default function SheetOrganizer({
                 if (e.key === "Escape") { setShowAddCategory(false); setNewCategoryName(""); }
               }}
               placeholder="Category name (e.g. Shop Drawings, ASI #3)"
-              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white placeholder-gray-600 text-sm min-h-[44px]"
+              className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-white placeholder-gray-600 text-sm min-h-[44px]"
             />
             <button
               onClick={handleAddCategory}
@@ -480,7 +480,7 @@ export default function SheetOrganizer({
             </button>
             <button
               onClick={() => { setShowAddCategory(false); setNewCategoryName(""); }}
-              className="px-3 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-sm min-h-[44px] min-w-[44px]"
+              className="px-3 py-2 bg-[var(--bg-tertiary)] text-gray-400 rounded-lg text-sm min-h-[44px] min-w-[44px]"
             >
               <X size={16} />
             </button>
@@ -488,7 +488,7 @@ export default function SheetOrganizer({
         ) : (
           <button
             onClick={() => setShowAddCategory(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#121217] border border-[#1F1F25] hover:border-[#F97316]/40 text-gray-400 hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/40 text-gray-400 hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
           >
             <Plus size={15} />
             Add Custom Category
@@ -505,8 +505,8 @@ export default function SheetOrganizer({
           return (
             <div
               key={cat.id}
-              className={`bg-[#121217] border rounded-xl overflow-hidden transition-colors ${
-                isDragOver ? "border-[#F97316]/60" : "border-[#1F1F25]"
+              className={`bg-[var(--bg-secondary)] border rounded-xl overflow-hidden transition-colors ${
+                isDragOver ? "border-[#F97316]/60" : "border-[var(--border-primary)]"
               }`}
               onDragOver={(e) => { e.preventDefault(); setDragOverId(cat.id); }}
               onDrop={() => handleDragEnd(cat.id)}
@@ -552,7 +552,7 @@ export default function SheetOrganizer({
                 {isEditingThisPages ? null : (
                   <button
                     onClick={() => startEditPages(cat.id)}
-                    className="shrink-0 px-2.5 py-1.5 bg-[#1F1F25] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs min-h-[36px] transition-colors"
+                    className="shrink-0 px-2.5 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs min-h-[36px] transition-colors"
                   >
                     Set Pages
                   </button>
@@ -561,7 +561,7 @@ export default function SheetOrganizer({
 
               {/* Page range input */}
               {isEditingThisPages && (
-                <div className="px-3 pb-3 border-t border-[#1F1F25]">
+                <div className="px-3 pb-3 border-t border-[var(--border-primary)]">
                   <div className="pt-3 flex gap-2">
                     <div className="flex-1">
                       <input
@@ -574,7 +574,7 @@ export default function SheetOrganizer({
                           if (e.key === "Escape") { setEditingPages(null); setPageRangeInput(""); setPageRangeError(""); }
                         }}
                         placeholder={`e.g. 2-47, 50, 53-60 (1–${maxPage})`}
-                        className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+                        className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
                       />
                       {pageRangeError && (
                         <p className="text-red-400 text-xs mt-1 flex items-center gap-1">
@@ -594,7 +594,7 @@ export default function SheetOrganizer({
                       </button>
                       <button
                         onClick={() => { setEditingPages(null); setPageRangeInput(""); setPageRangeError(""); }}
-                        className="px-3 py-2 bg-[#1F1F25] text-gray-400 rounded-lg min-h-[36px] min-w-[44px] flex items-center justify-center"
+                        className="px-3 py-2 bg-[var(--bg-tertiary)] text-gray-400 rounded-lg min-h-[36px] min-w-[44px] flex items-center justify-center"
                       >
                         <X size={14} />
                       </button>
@@ -605,7 +605,7 @@ export default function SheetOrganizer({
 
               {/* Sheet list */}
               {isOpen && catSheets.length > 0 && (
-                <div className="border-t border-[#1F1F25]">
+                <div className="border-t border-[var(--border-primary)]">
                   {catSheets.map((sheet) => {
                     const edits = sheetEdits[sheet.id];
                     const displayNumber = edits?.sheet_number ?? sheet.sheet_number;
@@ -615,7 +615,7 @@ export default function SheetOrganizer({
                     return (
                       <div
                         key={sheet.id}
-                        className="flex items-center gap-2 px-4 py-2.5 min-h-[48px] border-b border-[#1F1F25]/50 last:border-b-0 hover:bg-[#1A1A20] transition-colors"
+                        className="flex items-center gap-2 px-4 py-2.5 min-h-[48px] border-b border-[var(--border-primary)]/50 last:border-b-0 hover:bg-[#1A1A20] transition-colors"
                       >
                         {isEditingThis ? (
                           <>
@@ -623,7 +623,7 @@ export default function SheetOrganizer({
                               autoFocus
                               value={editSheetNumber}
                               onChange={(e) => setEditSheetNumber(e.target.value)}
-                              className="w-20 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs font-mono min-h-[36px]"
+                              className="w-20 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs font-mono min-h-[36px]"
                               placeholder="A-1"
                             />
                             <input
@@ -633,7 +633,7 @@ export default function SheetOrganizer({
                                 if (e.key === "Enter") saveSheetEdit(sheet.id);
                                 if (e.key === "Escape") setEditingSheet(null);
                               }}
-                              className="flex-1 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs min-h-[36px]"
+                              className="flex-1 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs min-h-[36px]"
                               placeholder="Sheet title"
                             />
                             <button
@@ -674,7 +674,7 @@ export default function SheetOrganizer({
 
         {/* Uncategorized section */}
         {uncategorizedPages.length > 0 && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
             <div className="flex items-center gap-3 px-4 py-3 min-h-[52px]">
               <div className="w-2.5 h-2.5 rounded-full shrink-0 bg-gray-600" />
               <button
@@ -705,7 +705,7 @@ export default function SheetOrganizer({
                     Move {selectedUncategorized.size} →
                   </button>
                   {showMoveMenu && (
-                    <div className="absolute right-0 top-full mt-1 z-10 bg-[#1F1F25] border border-[#2A2A30] rounded-xl overflow-hidden shadow-xl min-w-[160px]">
+                    <div className="absolute right-0 top-full mt-1 z-10 bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-xl overflow-hidden shadow-xl min-w-[160px]">
                       {categories.map((cat) => (
                         <button
                           key={cat.id}
@@ -726,7 +726,7 @@ export default function SheetOrganizer({
             </div>
 
             {expanded.has("__uncategorized__") && (
-              <div className="border-t border-[#1F1F25] p-3">
+              <div className="border-t border-[var(--border-primary)] p-3">
                 <div className="flex flex-wrap gap-1.5">
                   {uncategorizedPages.map((pageNum) => {
                     const isSelected = selectedUncategorized.has(pageNum);
@@ -744,7 +744,7 @@ export default function SheetOrganizer({
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-mono min-w-[44px] min-h-[36px] transition-colors ${
                           isSelected
                             ? "bg-[#F97316] text-white"
-                            : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                            : "bg-[var(--bg-tertiary)] text-gray-400 hover:text-white"
                         }`}
                       >
                         {pageNum}
@@ -769,7 +769,7 @@ export default function SheetOrganizer({
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-[#1F1F25] shrink-0">
+      <div className="px-4 py-4 border-t border-[var(--border-primary)] shrink-0">
         {saveError && (
           <p className="text-red-400 text-xs mb-3 flex items-center gap-1">
             <AlertTriangle size={12} /> {saveError}
@@ -778,7 +778,7 @@ export default function SheetOrganizer({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl font-medium text-sm min-h-[48px]"
+            className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl font-medium text-sm min-h-[48px]"
           >
             Cancel
           </button>

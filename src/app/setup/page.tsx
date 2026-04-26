@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS daily_projects (
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
-      <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-6 py-4">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-xl font-bold text-white">Database Setup</h1>
           <p className="text-sm text-gray-500 mt-0.5">Check and configure the database</p>
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS daily_projects (
 
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* Status */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Database size={16} className="text-[#3B82F6]" />
               <h2 className="font-semibold text-white">Table Status</h2>
             </div>
-            <button onClick={checkSetup} className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors">
+            <button onClick={checkSetup} className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors">
               <RefreshCw size={14} className={checking ? "animate-spin" : ""} />
             </button>
           </div>
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
 
         {/* Instructions */}
         {status && !status.ready && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
             <h2 className="font-semibold text-white mb-3">Run Migration</h2>
             <ol className="space-y-3 text-sm text-gray-400 mb-5">
               <li className="flex gap-2">
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
               </li>
               <li className="flex gap-2">
                 <span className="text-[#F97316] font-bold shrink-0">2.</span>
-                Open the file at: <code className="text-gray-300 font-mono bg-[#0B0B0D] px-1 rounded">src/migrations/001_irontrack_daily.sql</code>
+                Open the file at: <code className="text-gray-300 font-mono bg-[var(--bg-primary)] px-1 rounded">src/migrations/001_irontrack_daily.sql</code>
               </li>
               <li className="flex gap-2">
                 <span className="text-[#F97316] font-bold shrink-0">3.</span>
@@ -132,13 +132,13 @@ CREATE TABLE IF NOT EXISTS daily_projects (
               </li>
               <li className="flex gap-2">
                 <span className="text-[#F97316] font-bold shrink-0">5.</span>
-                Run the seed: <code className="text-gray-300 font-mono bg-[#0B0B0D] px-1 rounded">npx tsx src/seed/seed-demo.ts</code>
+                Run the seed: <code className="text-gray-300 font-mono bg-[var(--bg-primary)] px-1 rounded">npx tsx src/seed/seed-demo.ts</code>
               </li>
             </ol>
 
             <button
               onClick={copySQL}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-sm transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-sm transition-colors"
             >
               <Copy size={14} />
               {copied ? "Copied!" : "Copy SQL snippet"}

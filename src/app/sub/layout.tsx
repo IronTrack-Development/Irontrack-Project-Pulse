@@ -16,9 +16,9 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
       {/* Top navbar */}
-      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-50">
+      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">

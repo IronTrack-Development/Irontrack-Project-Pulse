@@ -47,7 +47,7 @@ interface PunchItemDetailProps {
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
   code:        { label: "Code",        color: "#F97316", bg: "bg-orange-500/15" },
-  standard:    { label: "Standard",    color: "#6B7280", bg: "bg-gray-500/15" },
+  standard:    { label: "Standard",    color: "var(--text-muted)", bg: "bg-gray-500/15" },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
 
@@ -148,9 +148,9 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="w-full sm:max-w-lg bg-[#121217] rounded-t-3xl sm:rounded-3xl border border-[#1F1F25] overflow-y-auto max-h-[95dvh]">
+      <div className="w-full sm:max-w-lg bg-[var(--bg-secondary)] rounded-t-3xl sm:rounded-3xl border border-[var(--border-primary)] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2 min-w-0">
             <span className="text-xs font-mono text-gray-500 shrink-0">{item.item_number}</span>
             {isLifeSafety && <AlertTriangle size={14} className="text-red-400 animate-pulse shrink-0" />}
@@ -194,13 +194,13 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
           {/* Meta */}
           <div className="grid grid-cols-2 gap-2 text-xs">
             {locationParts.length > 0 && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-gray-500 mb-0.5">Location</p>
                 <p className="text-white font-medium">{locationParts.join(" · ")}</p>
               </div>
             )}
             {item.assigned_contact && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-gray-500 mb-0.5">Assigned To</p>
                 <p className="text-white font-medium truncate">{item.assigned_contact.name}</p>
                 {item.assigned_contact.company && (
@@ -209,13 +209,13 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
               </div>
             )}
             {item.due_date && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-gray-500 mb-0.5">Due Date</p>
                 <p className="text-white font-medium">{new Date(item.due_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
             )}
             {item.closed_date && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-gray-500 mb-0.5">Closed</p>
                 <p className="text-green-400 font-medium">{new Date(item.closed_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
@@ -320,12 +320,12 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-white
                     placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
                   placeholder="Add notes..."
                 />
                 <div className="flex gap-2">
-                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-gray-400 rounded-lg bg-[#1F1F25]">Cancel</button>
+                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-gray-400 rounded-lg bg-[var(--bg-tertiary)]">Cancel</button>
                   <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-white rounded-lg bg-[#F97316]">
                     {saving ? "Saving..." : "Save Notes"}
                   </button>
@@ -337,7 +337,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
           </div>
 
           {/* Status action buttons */}
-          <div className="border-t border-[#1F1F25] pt-4 space-y-2">
+          <div className="border-t border-[var(--border-primary)] pt-4 space-y-2">
             <p className="text-xs text-gray-500 font-medium mb-2">Update Status</p>
             <div className="grid grid-cols-1 gap-2">
               {item.status === "open" && (
@@ -377,8 +377,8 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                 <button
                   onClick={() => updateStatus("open")}
                   disabled={saving}
-                  className="w-full py-3.5 rounded-xl bg-[#1F1F25] text-gray-400 font-medium text-sm
-                    hover:bg-[#2a2a35] transition-all min-h-[52px]"
+                  className="w-full py-3.5 rounded-xl bg-[var(--bg-tertiary)] text-gray-400 font-medium text-sm
+                    hover:bg-[var(--bg-hover)] transition-all min-h-[52px]"
                 >
                   Reopen Item
                 </button>

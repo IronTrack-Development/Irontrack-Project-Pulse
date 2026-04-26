@@ -38,10 +38,10 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
   const plannedClamped = Math.min(100, Math.max(0, activity.plannedPercent));
 
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full text-left px-4 py-3 hover:bg-[#1F1F25]/30 transition-colors"
+        className="w-full text-left px-4 py-3 hover:bg-[var(--bg-tertiary)]/30 transition-colors"
       >
         <div className="flex items-center justify-between mb-2">
           <div className="flex-1 min-w-0">
@@ -61,7 +61,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-gray-600 w-14 shrink-0">Planned</span>
-            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+            <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gray-600 transition-all duration-500"
                 style={{ width: `${plannedClamped}%` }}
@@ -71,7 +71,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-gray-600 w-14 shrink-0">Actual</span>
-            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+            <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-[#F97316] transition-all duration-500"
                 style={{ width: `${actualClamped}%` }}
@@ -84,7 +84,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
 
       {/* History drawer */}
       {expanded && activity.history.length > 0 && (
-        <div className="border-t border-[#1F1F25] px-4 py-3 space-y-2">
+        <div className="border-t border-[var(--border-primary)] px-4 py-3 space-y-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Log History</div>
           {activity.history.map((h, i) => {
             const delta = h.pctAfter - h.pctBefore;
@@ -143,7 +143,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
 
   if (!data) {
     return (
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <div className="text-gray-400 text-sm">Unable to load progress data</div>
       </div>
     );
@@ -158,7 +158,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
   return (
     <div className="space-y-6">
       {/* Large percent complete display */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 text-center">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 text-center">
         <div className="mb-4">
           <TrendingUp size={40} className="mx-auto text-[#F97316]" />
         </div>
@@ -169,13 +169,13 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       </div>
 
       {/* Progress bar visualization */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-gray-500">Progress</span>
             <span className="text-xs font-mono text-gray-400">{data.percentComplete}%</span>
           </div>
-          <div className="w-full bg-[#0B0B0D] rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-[var(--bg-primary)] rounded-full h-3 overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{
@@ -187,12 +187,12 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-4 mt-6">
-          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-4">
+          <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-4">
             <CheckCircle2 size={16} className="text-[#22C55E] mb-2" />
             <div className="text-2xl font-bold text-white">{data.completeActivities}</div>
             <div className="text-xs text-gray-500">Complete</div>
           </div>
-          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-4">
+          <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-4">
             <CheckCircle2 size={16} className="text-gray-600 mb-2" />
             <div className="text-2xl font-bold text-white">{data.totalActivities - data.completeActivities}</div>
             <div className="text-xs text-gray-500">Remaining</div>
@@ -225,7 +225,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       )}
 
       {/* Breakdown */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
         <div className="text-sm font-semibold text-white mb-4">Activity Breakdown</div>
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
 
       {/* Target finish date and countdown */}
       {data.targetFinishDate && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <Calendar size={20} className="text-[#F97316]" />
             <div className="text-sm font-semibold text-white">Target Completion</div>

@@ -431,35 +431,35 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 20px", marginBottom: "12px" }}>
                       {issue.location && (
                         <div>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Location</div>
+                          <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Location</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.location}</div>
                         </div>
                       )}
                       {issue.trade && (
                         <div>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Trade</div>
+                          <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Trade</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.trade}</div>
                         </div>
                       )}
                       <div>
-                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Priority</div>
+                        <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Priority</div>
                         <div style={{ fontSize: "10.5pt", color: priorityColor(issue.priority), fontWeight: 700 }}>
                           {issue.priority.charAt(0).toUpperCase() + issue.priority.slice(1)}
                         </div>
                       </div>
                       <div>
-                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Category</div>
+                        <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Category</div>
                         <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{categoryLabel(issue.category)}</div>
                       </div>
                       {issue.potential_impact && (
                         <div style={{ gridColumn: "1 / -1" }}>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Potential Impact</div>
+                          <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Potential Impact</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.potential_impact}</div>
                         </div>
                       )}
                       {issue.action_needed && (
                         <div style={{ gridColumn: "1 / -1" }}>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Action Needed</div>
+                          <div style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Action Needed</div>
                           <div style={{ fontSize: "10.5pt", color: "#DC2626", fontWeight: 600 }}>{issue.action_needed}</div>
                         </div>
                       )}
@@ -499,7 +499,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                             }}
                           />
                           {issue.photo_captions?.[idx] && (
-                            <span style={{ fontSize: "8.5pt", color: "#6b7280", fontStyle: "italic" }}>
+                            <span style={{ fontSize: "8.5pt", color: "var(--text-muted)", fontStyle: "italic" }}>
                               {issue.photo_captions[idx]}
                             </span>
                           )}
@@ -543,7 +543,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             borderRadius: "2px",
           }}
         />
-        <div style={{ textAlign: "center", color: "#9ca3af", fontSize: "8.5pt" }}>
+        <div style={{ textAlign: "center", color: "var(--text-secondary)", fontSize: "8.5pt" }}>
           <p>
             Generated by: {report.prepared_by || "Field Superintendent"} &nbsp;·&nbsp; Date: {generatedAt}
           </p>

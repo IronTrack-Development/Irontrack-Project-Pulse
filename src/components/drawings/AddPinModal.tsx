@@ -97,9 +97,9 @@ export default function AddPinModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="w-full sm:max-w-md bg-[#121217] rounded-t-2xl sm:rounded-2xl border border-[#1F1F25] overflow-hidden">
+      <div className="w-full sm:max-w-md bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl border border-[var(--border-primary)] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
           <div>
             <h2 className="text-white font-semibold">Add Pin</h2>
             <p className="text-xs text-gray-500 mt-0.5">
@@ -127,7 +127,7 @@ export default function AddPinModal({
                   className={`flex flex-col items-center gap-1 py-2 rounded-lg border transition-all min-h-[60px] ${
                     pinType === t.value
                       ? "border-[#F97316] bg-[#F97316]/10"
-                      : "border-[#1F1F25] bg-[#0B0B0D]"
+                      : "border-[var(--border-primary)] bg-[var(--bg-primary)]"
                   }`}
                 >
                   <div
@@ -148,7 +148,7 @@ export default function AddPinModal({
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder="Short label"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
             />
           </div>
 
@@ -161,7 +161,7 @@ export default function AddPinModal({
               <select
                 value={referenceId}
                 onChange={(e) => setReferenceId(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white text-sm min-h-[44px]"
               >
                 <option value="">— None —</option>
                 {pinType === "rfi" &&
@@ -196,16 +196,16 @@ export default function AddPinModal({
               onChange={(e) => setNotes(e.target.value)}
               placeholder={pinType === "note" ? "Enter note text..." : "Optional notes..."}
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm resize-none"
             />
           </div>
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-4 border-t border-[#1F1F25] flex gap-3">
+        <div className="px-4 py-4 border-t border-[var(--border-primary)] flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl font-medium text-sm min-h-[44px]"
+            className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-gray-300 rounded-xl font-medium text-sm min-h-[44px]"
           >
             Cancel
           </button>

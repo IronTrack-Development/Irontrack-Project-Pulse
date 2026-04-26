@@ -328,7 +328,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           )}
           <button
             onClick={exportPdf}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#1F1F25] text-gray-300 hover:text-white rounded-lg text-sm font-medium transition-colors min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[var(--bg-tertiary)] text-gray-300 hover:text-white rounded-lg text-sm font-medium transition-colors min-h-[44px]"
           >
             <FileText size={14} />
             Export
@@ -336,7 +336,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           {isEditable && (
             <button
               onClick={deleteMeeting}
-              className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-red-400 hover:text-red-300 rounded-lg text-sm transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-red-400 hover:text-red-300 rounded-lg text-sm transition-colors min-h-[44px]"
             >
               <Trash2 size={14} />
             </button>
@@ -355,7 +355,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       )}
 
       {/* Agenda Section */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white font-semibold">Agenda</h3>
           {isEditable && (
@@ -375,7 +375,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
 
         <div className="space-y-2">
           {agendaItems.map((item, i) => (
-            <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25]">
+            <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)]">
               <span className="text-gray-600 text-xs font-mono mt-0.5 w-5 shrink-0">{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -384,7 +384,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400">⚠ conflict</span>
                   )}
                   {item.trade && (
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#1F1F25] text-gray-400">{item.trade}</span>
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[var(--bg-tertiary)] text-gray-400">{item.trade}</span>
                   )}
                 </div>
                 {item.area && <p className="text-xs text-gray-500 mt-0.5">{item.area}</p>}
@@ -393,7 +393,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 <select
                   value={item.status}
                   onChange={(e) => updateAgendaStatus(item.id, e.target.value)}
-                  className="text-xs rounded px-2 py-1 bg-[#1F1F25] border-none min-h-[36px]"
+                  className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px]"
                   style={{ color: AGENDA_STATUS_COLORS[item.status] }}
                 >
                   <option value="pending">Pending</option>
@@ -414,7 +414,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAgendaTitle(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAgendaItem()}
               placeholder="Add agenda item..."
-              className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAgendaItem}
@@ -428,7 +428,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       </div>
 
       {/* Action Items Section */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <h3 className="text-white font-semibold mb-3">Action Items</h3>
 
         {actionItems.length === 0 && (
@@ -437,7 +437,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
 
         <div className="space-y-2">
           {actionItems.map((item) => (
-            <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25]">
+            <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)]">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-white text-sm">{item.title}</span>
@@ -468,7 +468,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 <select
                   value={item.status}
                   onChange={(e) => updateActionStatus(item.id, e.target.value)}
-                  className="text-xs rounded px-2 py-1 bg-[#1F1F25] border-none min-h-[36px]"
+                  className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px]"
                   style={{
                     color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F97316" : item.status === "resolved" ? "#22C55E" : "#6B7280",
                   }}
@@ -492,7 +492,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 onChange={(e) => setNewActionTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addActionItem()}
                 placeholder="Action item title..."
-                className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
               />
               <button
                 onClick={addActionItem}
@@ -509,12 +509,12 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   value={newActionAssignee}
                   onChange={(e) => setNewActionAssignee(e.target.value)}
                   placeholder="Assigned to..."
-                  className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px] w-36"
+                  className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px] w-36"
                 />
                 <select
                   value={newActionCategory}
                   onChange={(e) => setNewActionCategory(e.target.value)}
-                  className="px-2 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
+                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
                 >
                   {Object.keys(CATEGORY_COLORS).map((c) => (
                     <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
@@ -523,7 +523,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 <select
                   value={newActionPriority}
                   onChange={(e) => setNewActionPriority(e.target.value)}
-                  className="px-2 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
+                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -536,7 +536,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       </div>
 
       {/* Attendees Section */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <div className="flex items-center gap-2 mb-3">
           <Users size={16} className="text-gray-400" />
           <h3 className="text-white font-semibold">
@@ -561,7 +561,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               className={`flex items-center gap-2 p-3 rounded-lg border text-left transition-colors min-h-[44px] ${
                 attendee.present
                   ? "bg-[#22C55E]/5 border-[#22C55E]/20"
-                  : "bg-[#0B0B0D] border-[#1F1F25]"
+                  : "bg-[var(--bg-primary)] border-[var(--border-primary)]"
               }`}
             >
               <span className={`text-sm ${attendee.present ? "text-[#22C55E]" : "text-gray-600"}`}>
@@ -587,7 +587,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder="Name..."
-              className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <input
               type="text"
@@ -595,7 +595,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeCompany(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder="Company..."
-              className="w-32 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-32 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAttendee}
@@ -609,7 +609,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       </div>
 
       {/* Meeting Notes */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <h3 className="text-white font-semibold mb-3">Meeting Notes</h3>
         <textarea
           value={notes}
@@ -618,7 +618,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           disabled={!isEditable}
           rows={6}
           placeholder="Meeting notes..."
-          className="w-full px-3 py-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-sm focus:border-[#F97316] focus:outline-none resize-y disabled:opacity-50"
+          className="w-full px-3 py-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-white text-sm focus:border-[#F97316] focus:outline-none resize-y disabled:opacity-50"
         />
         {savingNotes && (
           <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
