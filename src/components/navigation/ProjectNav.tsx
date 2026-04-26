@@ -28,6 +28,7 @@ import {
   Send,
   CheckCircle,
   AlertTriangle,
+  ArrowRightLeft,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
 
@@ -131,6 +132,8 @@ const NAV_GROUPS: GroupDef[] = [
       { id: "sub-checkins", label: "Check-Ins", icon: CheckCircle },
       { id: "sub-production", label: "Production", icon: TrendingUp },
       { id: "sub-blockers", label: "Blockers", icon: AlertTriangle },
+      { id: "sub-handoffs", label: "Handoffs", icon: ArrowRightLeft },
+      { id: "sub-crew", label: "Crew", icon: HardHat },
       { id: "sub-sops", label: "SOPs", icon: FileText },
     ],
   },

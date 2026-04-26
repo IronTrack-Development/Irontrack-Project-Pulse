@@ -42,3 +42,40 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #2a2a35;
 }
+
+/* ── Theme Variables ────────────────────────────────────── */
+:root, .dark-theme {
+  --bg-primary: #0B0B0D;
+  --bg-secondary: #121217;
+  --bg-tertiary: #1F1F25;
+  --bg-hover: #2a2a35;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --border-primary: #1F1F25;
+  --border-secondary: #2a2a35;
+  --accent: #F97316;
+  --accent-hover: #ea6c10;
+}
+
+.light-theme {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
+  --bg-hover: #E5E7EB;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+  --border-primary: #E5E7EB;
+  --border-secondary: #D1D5DB;
+  --accent: #F97316;
+  --accent-hover: #ea6c10;
+}
+
+/* Theme-aware utility overrides */
+.theme-bg-primary { background-color: var(--bg-primary); }
+.theme-bg-secondary { background-color: var(--bg-secondary); }
+.theme-bg-tertiary { background-color: var(--bg-tertiary); }
+.theme-text-primary { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-border { border-color: var(--border-primary); }

@@ -672,3 +672,100 @@ export interface SubSOPAcknowledgment {
   // Joined
   foreman_name?: string;
 }
+
+// ── Handoff Tracker types ────────────────────────────────────
+
+export type CrewMemberRole = 'foreman' | 'journeyman' | 'apprentice' | 'helper' | 'superintendent' | 'project_manager' | 'other';
+export type HandoffStatus = 'not_started' | 'in_progress' | 'ready_for_handoff' | 'handed_off' | 'accepted' | 'issue_flagged';
+
+export interface SubDepartment {
+  id: string;
+  company_id: string;
+  name: string;
+  trade?: string;
+  sort_order: number;
+  color: string;
+  created_at: string;
+  updated_at: string;
+  crew_count?: number;
+}
+
+export interface SubCrewMember {
+  id: string;
+  company_id: string;
+  department_id?: string;
+  foreman_id?: string;
+  name: string;
+  role: CrewMemberRole;
+  phone?: string;
+  email?: string;
+  hourly_rate?: number;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  department_name?: string;
+}
+
+export interface SubHandoffArea {
+  id: string;
+  company_id: string;
+  project_name: string;
+  area_name: string;
+  description?: string;
+  created_at: string;
+  handoff_count?: number;
+  completion_pct?: number;
+}
+
+export interface SubHandoff {
+  id: string;
+  company_id: string;
+  area_id: string;
+  from_department_id: string;
+  to_department_id: string;
+  status: HandoffStatus;
+  handoff_date?: string;
+  accepted_date?: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  from_department_name?: string;
+  to_department_name?: string;
+  area_name?: string;
+  checklist_total?: number;
+  checklist_complete?: number;
+  photo_count?: number;
+}
+
+export interface SubHandoffChecklistTemplate {
+  id: string;
+  company_id: string;
+  from_department_id?: string;
+  to_department_id?: string;
+  title: string;
+  items: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubHandoffChecklistItem {
+  id: string;
+  handoff_id: string;
+  item_text: string;
+  completed: boolean;
+  completed_by?: string;
+  completed_at?: string;
+  photo_path?: string;
+  notes?: string;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface SubHandoffPhoto {
+  id: string;
+  handoff_id: string;
+  photo_path: string;
+  caption?: string;
+  taken_by?: string;
+  created_at: string;
+}

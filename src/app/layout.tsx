@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileNav from "@/components/MobileNav";
 import ManifestLoader from "@/components/ManifestLoader";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -65,8 +66,10 @@ export default function RootLayout({
       </head>
       <body className="bg-[#0B0B0D] text-gray-100 min-h-screen overflow-x-hidden">
         <ManifestLoader />
-        {children}
-        <MobileNav />
+        <ThemeProvider>
+          {children}
+          <MobileNav />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -4,8 +4,9 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
-  RefreshCw, ClipboardList, FileBarChart2,
+  RefreshCw, ClipboardList, FileBarChart2, Settings,
 } from "lucide-react";
+import SettingsPanel from "@/components/settings/SettingsPanel";
 import ProjectNav from "@/components/navigation/ProjectNav";
 import WeekTab from "@/components/tabs/WeekTab";
 import MilestonesTab from "@/components/tabs/MilestonesTab";
@@ -37,6 +38,8 @@ import SubCheckinsTab from "@/components/tabs/SubCheckinsTab";
 import SubProductionTab from "@/components/tabs/SubProductionTab";
 import SubBlockersTab from "@/components/tabs/SubBlockersTab";
 import SubSOPsTab from "@/components/tabs/SubSOPsTab";
+import SubHandoffsTab from "@/components/tabs/SubHandoffsTab";
+import SubCrewTab from "@/components/tabs/SubCrewTab";
 
 interface Project {
   id: string;
@@ -73,6 +76,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   const [activeTab, setActiveTab] = useState("priority");
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const fetchProject = async () => {
     setLoading(true);
@@ -108,9 +112,9 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   const color = healthColor(project.health_score);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] overflow-x-hidden pb-16 md:pb-0">
+    <div className="min-h-screen overflow-x-hidden pb-16 md:pb-0" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25]">
+      <div className="sticky top-0 z-20 backdrop-blur border-b" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 95%, transparent)', borderColor: 'var(--border-primary)' }}>
         <div className="px-4 md:px-6 pt-3 md:pt-4 pb-0 max-w-7xl mx-auto">
           {/* Top row: back + action buttons */}
           <div className="flex items-center justify-between mb-2">
@@ -130,6 +134,12 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               </button>
               <NotificationBell projectId={id} />
               <ShareSnapshot projectId={id} />
+              <button
+                onClick={() => setSettingsOpen(true)}
+                className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              >
+                <Settings size={16} />
+              </button>
               <Link
                 href={`/projects/${id}/weekly-summary`}
                 className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
@@ -206,8 +216,12 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
         {activeTab === "sub-checkins" && <SubCheckinsTab projectId={id} />}
         {activeTab === "sub-production" && <SubProductionTab projectId={id} />}
         {activeTab === "sub-blockers" && <SubBlockersTab projectId={id} />}
+        {activeTab === "sub-handoffs" && <SubHandoffsTab projectId={id} />}
+        {activeTab === "sub-crew" && <SubCrewTab projectId={id} />}
         {activeTab === "sub-sops" && <SubSOPsTab projectId={id} />}
       </div>
+
+      <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 }
