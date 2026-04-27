@@ -57,8 +57,8 @@ export default function OverviewTab({ project }: { project: Project }) {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-white">{project.health_score}</span>
-              <span className="text-[10px] text-gray-500">Health</span>
+              <span className="text-2xl font-bold text-[color:var(--text-primary)]">{project.health_score}</span>
+              <span className="text-[10px] text-[color:var(--text-muted)]">Health</span>
             </div>
           </div>
           <div
@@ -73,10 +73,10 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle size={16} className="text-[#22C55E]" />
-            <span className="text-sm font-semibold text-gray-300">Schedule Progress</span>
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">Schedule Progress</span>
           </div>
-          <div className="text-4xl font-bold text-white mb-1">{stats.completionPercent}%</div>
-          <div className="text-xs text-gray-500 mb-4">
+          <div className="text-4xl font-bold text-[color:var(--text-primary)] mb-1">{stats.completionPercent}%</div>
+          <div className="text-xs text-[color:var(--text-muted)] mb-4">
             {stats.completeActivities} of {stats.totalActivities} activities complete
           </div>
           <div className="h-2 bg-[#1F1F25] rounded-full overflow-hidden">
@@ -91,14 +91,14 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Flag size={16} className="text-[#F97316]" />
-            <span className="text-sm font-semibold text-gray-300">Next Milestone</span>
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">Next Milestone</span>
           </div>
           {stats.nextMilestone ? (
             <>
-              <div className="text-white font-semibold mb-2 leading-tight">
+              <div className="text-[color:var(--text-primary)] font-semibold mb-2 leading-tight">
                 {stats.nextMilestone.activity_name}
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-[color:var(--text-secondary)]">
                 Due {new Date(stats.nextMilestone.finish_date).toLocaleDateString("en-US", {
                   weekday: "short", month: "short", day: "numeric", year: "numeric"
                 })}
@@ -129,30 +129,30 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Activity size={14} className="text-[#3B82F6]" />
-            <span className="text-xs text-gray-500">In Progress</span>
+            <span className="text-xs text-[color:var(--text-muted)]">In Progress</span>
           </div>
-          <div className="text-2xl font-bold text-white">{stats.inProgressActivities}</div>
+          <div className="text-2xl font-bold text-[color:var(--text-primary)]">{stats.inProgressActivities}</div>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <TrendingDown size={14} className="text-[#EAB308]" />
-            <span className="text-xs text-gray-500">Overdue</span>
+            <span className="text-xs text-[color:var(--text-muted)]">Overdue</span>
           </div>
           <div className="text-2xl font-bold text-[#EAB308]">{stats.lateActivities}</div>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle size={14} className="text-[#EF4444]" />
-            <span className="text-xs text-gray-500">High Risks</span>
+            <span className="text-xs text-[color:var(--text-muted)]">High Risks</span>
           </div>
           <div className="text-2xl font-bold text-[#EF4444]">{stats.highRisks}</div>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Clock size={14} className="text-[#22C55E]" />
-            <span className="text-xs text-gray-500">Days Left</span>
+            <span className="text-xs text-[color:var(--text-muted)]">Days Left</span>
           </div>
-          <div className="text-2xl font-bold text-white">
+          <div className="text-2xl font-bold text-[color:var(--text-primary)]">
             {stats.daysToCompletion !== null
               ? stats.daysToCompletion > 0
                 ? stats.daysToCompletion
@@ -164,7 +164,7 @@ export default function OverviewTab({ project }: { project: Project }) {
 
       {/* Activity breakdown */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
-        <h3 className="text-sm font-semibold text-gray-300 mb-4">Activity Status Breakdown</h3>
+        <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">Activity Status Breakdown</h3>
         <div className="space-y-3">
           {[
             { label: "Complete", value: stats.completeActivities, color: "#22C55E" },
@@ -174,8 +174,8 @@ export default function OverviewTab({ project }: { project: Project }) {
           ].map(({ label, value, color }) => (
             <div key={label}>
               <div className="flex items-center justify-between text-xs mb-1">
-                <span className="text-gray-400">{label}</span>
-                <span className="text-gray-300 font-medium">{value} / {stats.totalActivities}</span>
+                <span className="text-[color:var(--text-secondary)]">{label}</span>
+                <span className="text-[color:var(--text-secondary)] font-medium">{value} / {stats.totalActivities}</span>
               </div>
               <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
                 <div

@@ -45,14 +45,14 @@ function ActivityProgressCard({
         className="w-full px-4 py-3 flex items-center gap-3 min-h-[52px]"
       >
         <div className="flex-1 min-w-0 text-left">
-          <div className="text-sm font-medium text-white truncate">
+          <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">
             {activity.activity_name}
           </div>
           <div className="flex items-center gap-2 mt-0.5">
             {activity.trade && (
               <span className="text-xs text-[#F97316]">{activity.trade}</span>
             )}
-            <span className="text-xs text-gray-500">{pctBefore}%</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{pctBefore}%</span>
             {delta !== 0 && (
               <span className={`text-xs font-medium ${delta > 0 ? "text-[#22C55E]" : "text-[#EF4444]"}`}>
                 → {pctAfter}% ({delta > 0 ? "+" : ""}{delta}%)
@@ -60,15 +60,15 @@ function ActivityProgressCard({
             )}
           </div>
         </div>
-        {expanded ? <ChevronUp size={16} className="text-gray-500" /> : <ChevronDown size={16} className="text-gray-500" />}
+        {expanded ? <ChevronUp size={16} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={16} className="text-[color:var(--text-muted)]" />}
       </button>
 
       {expanded && (
         <div className="px-4 pb-4 space-y-3 border-t border-[#1F1F25] pt-3">
           {/* Percent complete slider */}
           <div>
-            <label className="text-xs text-gray-500 mb-2 block">
-              Update % Complete: <span className="text-white font-medium">{pctAfter}%</span>
+            <label className="text-xs text-[color:var(--text-muted)] mb-2 block">
+              Update % Complete: <span className="text-[color:var(--text-primary)] font-medium">{pctAfter}%</span>
             </label>
             <input
               type="range"
@@ -161,10 +161,10 @@ export default function WorkIssuesScreen({
     <div className="space-y-6">
       {/* Activity Progress */}
       <div>
-        <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
           <TrendingUp size={16} className="text-[#22C55E]" />
           Work Performed
-          <span className="text-xs text-gray-500 font-normal">({inProgress.length} activities)</span>
+          <span className="text-xs text-[color:var(--text-muted)] font-normal">({inProgress.length} activities)</span>
         </h3>
 
         {inProgress.length === 0 ? (
@@ -185,7 +185,7 @@ export default function WorkIssuesScreen({
 
       {/* Delays & Issues */}
       <div>
-        <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
           <AlertTriangle size={16} className="text-[#EAB308]" />
           Delays & Issues
         </h3>
@@ -202,7 +202,7 @@ export default function WorkIssuesScreen({
                 className={`px-3 py-2 rounded-full text-xs font-medium border transition-all min-h-[36px]
                   ${active
                     ? "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/40"
-                    : "bg-[#121217] text-gray-400 border-[#1F1F25] hover:border-[#2a2a35]"
+                    : "bg-[#121217] text-[color:var(--text-secondary)] border-[#1F1F25] hover:border-[#2a2a35]"
                   }`}
               >
                 {code}
@@ -222,14 +222,14 @@ export default function WorkIssuesScreen({
 
         {/* Lost crew hours */}
         <div className="mt-3">
-          <label className="text-xs text-gray-400 mb-1.5 block">Lost Crew Hours</label>
+          <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block">Lost Crew Hours</label>
           <input
             type="number"
             inputMode="decimal"
             value={lostCrewHours || ""}
             onChange={(e) => onLostCrewHoursChange(parseFloat(e.target.value) || 0)}
             placeholder="0"
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
               focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
           />
         </div>

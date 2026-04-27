@@ -57,7 +57,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
-  closed:       { label: "Closed",       color: "#4B5563", bg: "bg-gray-800/40" },
+  closed:       { label: "Closed",       color: "#4B5563", bg: "bg-[color:var(--bg-tertiary)]/40" },
 };
 
 const PRIORITY_CONFIG: Record<string, { color: string }> = {
@@ -158,7 +158,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-3 text-center">
             <p className="text-xl font-bold" style={{ color }}>{value}</p>
-            <p className="text-xs text-gray-500 mt-0.5">{label}</p>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{label}</p>
           </div>
         ))}
       </div>
@@ -172,8 +172,8 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               onClick={() => setStatusFilter(value)}
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
-                  ? "bg-[#F97316] text-white"
-                  : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               {label}
@@ -182,7 +182,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#F97316] text-white
+          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
             text-xs font-bold hover:bg-[#ea6c10] transition-all min-h-[44px] shrink-0"
         >
           <Plus size={14} />
@@ -194,14 +194,14 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
       {rfis.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <FileQuestion size={40} className="text-gray-700 mb-4" />
-          <p className="text-sm font-medium text-gray-500 mb-1">No RFIs yet</p>
+          <p className="text-sm font-medium text-[color:var(--text-muted)] mb-1">No RFIs yet</p>
           <p className="text-xs text-gray-600 mb-6">
             {statusFilter ? `No ${statusFilter.replace("_", " ")} RFIs` : "Create your first RFI with AI assistance"}
           </p>
           {!statusFilter && (
             <button
               onClick={() => setShowCreate(true)}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F97316] text-white
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
                 text-sm font-semibold hover:bg-[#ea6c10] transition-all min-h-[44px]"
             >
               <Plus size={16} />
@@ -225,7 +225,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               >
                 {/* Top row: number + badges */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-mono text-gray-500">{rfi.rfi_number}</span>
+                  <span className="text-xs font-mono text-[color:var(--text-muted)]">{rfi.rfi_number}</span>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusCfg.bg}`} style={{ color: statusCfg.color }}>
                     {statusCfg.label}
                   </span>
@@ -248,10 +248,10 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
                 </div>
 
                 {/* Subject */}
-                <p className="text-sm font-semibold text-white mb-2 line-clamp-1">{rfi.subject}</p>
+                <p className="text-sm font-semibold text-[color:var(--text-primary)] mb-2 line-clamp-1">{rfi.subject}</p>
 
                 {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-[color:var(--text-muted)]">
                   {rfi.assigned_contact && (
                     <span className="flex items-center gap-1">
                       <User size={10} />

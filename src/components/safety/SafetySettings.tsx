@@ -41,13 +41,13 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
       <div className="bg-[#121217] w-full max-w-sm rounded-2xl border border-[#1F1F25] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Settings size={16} className="text-[#F97316]" />
             Safety Settings
           </h3>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -56,7 +56,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         {/* Body */}
         <div className="p-4 space-y-4">
           <div>
-            <label className="text-xs text-gray-500 mb-1 block">
+            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
               Company Name
             </label>
             <input
@@ -64,7 +64,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Your company name (for PDF headers)"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Used in exported PDF headers
@@ -72,7 +72,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
           </div>
 
           <div>
-            <label className="text-xs text-gray-500 mb-1 block">
+            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
               Default Presenter
             </label>
             <input
@@ -80,7 +80,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={defaultPresenter}
               onChange={(e) => setDefaultPresenter(e.target.value)}
               placeholder="Auto-fill presenter name on new talks"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Pre-fills the presenter field when creating new talks
@@ -92,13 +92,13 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         <div className="p-4 border-t border-[#1F1F25] flex gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors min-h-[44px]"
+            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
           >
             <Save size={14} />
             Save Settings

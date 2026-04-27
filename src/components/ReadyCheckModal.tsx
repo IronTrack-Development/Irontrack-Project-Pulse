@@ -208,8 +208,8 @@ export default function ReadyCheckModal({
 
   const renderActivityCard = () => (
     <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-2">
-      <div className="text-sm font-semibold text-white leading-tight">{activity.activity_name}</div>
-      <div className="flex flex-wrap gap-3 text-xs text-gray-400">
+      <div className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight">{activity.activity_name}</div>
+      <div className="flex flex-wrap gap-3 text-xs text-[color:var(--text-secondary)]">
         {trade && (
           <span className="flex items-center gap-1">
             <User size={11} className="text-[#F97316]" />
@@ -224,7 +224,7 @@ export default function ReadyCheckModal({
         )}
         {activity.normalized_building && (
           <span className="flex items-center gap-1">
-            <Building2 size={11} className="text-gray-500" />
+            <Building2 size={11} className="text-[color:var(--text-muted)]" />
             {activity.normalized_building
               .split("_")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -250,7 +250,7 @@ export default function ReadyCheckModal({
             <div className="text-xs font-semibold text-[#F97316]">
               Follow-up #{(existingCheck?.follow_up_count ?? 0) + 1}
             </div>
-            <div className="text-xs text-gray-400 mt-0.5">
+            <div className="text-xs text-[color:var(--text-secondary)] mt-0.5">
               Original sent{" "}
               {existingCheck?.sent_at
                 ? new Date(existingCheck.sent_at).toLocaleDateString("en-US", {
@@ -267,7 +267,7 @@ export default function ReadyCheckModal({
         {/* Check type selector (hidden for follow-ups) */}
         {!isFollowUp && (
           <div className="space-y-2">
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">
               Check Type
             </div>
             <div className="space-y-2">
@@ -279,8 +279,8 @@ export default function ReadyCheckModal({
                     onClick={() => setCheckType(ct.value)}
                     className={`w-full flex items-start gap-3 px-3 py-3 rounded-xl border transition-all text-left ${
                       isActive
-                        ? "bg-[#F97316]/10 border-[#F97316]/50 text-white"
-                        : "bg-[#0B0B0D] border-[#1F1F25] text-gray-400 hover:border-gray-600"
+                        ? "bg-[#F97316]/10 border-[#F97316]/50 text-[color:var(--text-primary)]"
+                        : "bg-[#0B0B0D] border-[#1F1F25] text-[color:var(--text-secondary)] hover:border-gray-600"
                     }`}
                   >
                     <span
@@ -291,10 +291,10 @@ export default function ReadyCheckModal({
                       {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <div className={`text-sm font-semibold ${isActive ? "text-white" : "text-gray-300"}`}>
+                      <div className={`text-sm font-semibold ${isActive ? "text-[color:var(--text-primary)]" : "text-[color:var(--text-secondary)]"}`}>
                         {ct.label}
                       </div>
-                      <div className="text-[11px] text-gray-500 mt-0.5">{ct.description}</div>
+                      <div className="text-[11px] text-[color:var(--text-muted)] mt-0.5">{ct.description}</div>
                     </div>
                     <span className={isActive ? "text-[#F97316]" : "text-gray-700"}>
                       {ct.icon}
@@ -309,7 +309,7 @@ export default function ReadyCheckModal({
         {/* Message preview */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">
               Message Preview
             </div>
             <button
@@ -328,10 +328,10 @@ export default function ReadyCheckModal({
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
               rows={6}
-              className="w-full bg-[#0B0B0D] border border-[#F97316]/30 rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed focus:outline-none focus:border-[#F97316]/60 resize-none transition-colors"
+              className="w-full bg-[#0B0B0D] border border-[#F97316]/30 rounded-xl p-4 text-sm text-[color:var(--text-secondary)] font-mono leading-relaxed focus:outline-none focus:border-[#F97316]/60 resize-none transition-colors"
             />
           ) : (
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4 text-sm text-gray-300 font-mono leading-relaxed whitespace-pre-wrap">
+            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4 text-sm text-[color:var(--text-secondary)] font-mono leading-relaxed whitespace-pre-wrap">
               {generatedMessage}
             </div>
           )}
@@ -342,7 +342,7 @@ export default function ReadyCheckModal({
       <div className="absolute bottom-0 left-0 right-0 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom)+64px)] sm:pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
         <button
           onClick={() => setStep("send_method")}
-          className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold rounded-xl py-3.5 text-sm transition-colors"
         >
           <Send size={16} />
           {isFollowUp ? "Send Follow-Up" : "Send Ready Check"}
@@ -357,14 +357,14 @@ export default function ReadyCheckModal({
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4 space-y-4">
         <div className="text-center">
-          <div className="text-base font-bold text-white mb-1">How do you want to share it?</div>
-          <div className="text-xs text-gray-500">
+          <div className="text-base font-bold text-[color:var(--text-primary)] mb-1">How do you want to share it?</div>
+          <div className="text-xs text-[color:var(--text-muted)]">
             {activity.activity_name}
           </div>
         </div>
 
         {/* Message preview */}
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-xs text-gray-400 font-mono leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
+        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-xs text-[color:var(--text-secondary)] font-mono leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
           {finalMessage}
         </div>
 
@@ -383,10 +383,10 @@ export default function ReadyCheckModal({
               )}
             </div>
             <div>
-              <div className="text-sm font-bold text-white">
+              <div className="text-sm font-bold text-[color:var(--text-primary)]">
                 {copied ? "Copied!" : "Copy Message"}
               </div>
-              <div className="text-xs text-gray-500">Paste into any app</div>
+              <div className="text-xs text-[color:var(--text-muted)]">Paste into any app</div>
             </div>
           </button>
 
@@ -406,8 +406,8 @@ export default function ReadyCheckModal({
                 <Send size={20} className="text-[#3B82F6]" />
               </div>
               <div>
-                <div className="text-sm font-bold text-white">Share</div>
-                <div className="text-xs text-gray-500">Text, email, or any app</div>
+                <div className="text-sm font-bold text-[color:var(--text-primary)]">Share</div>
+                <div className="text-xs text-[color:var(--text-muted)]">Text, email, or any app</div>
               </div>
             </button>
           )}
@@ -417,7 +417,7 @@ export default function ReadyCheckModal({
       <div className="px-4 pb-6">
         <button
           onClick={() => setStep("setup")}
-          className="w-full flex items-center justify-center gap-1.5 text-gray-500 hover:text-gray-300 text-sm py-2 transition-colors"
+          className="w-full flex items-center justify-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] text-sm py-2 transition-colors"
         >
           <ArrowLeft size={14} />
           Back
@@ -436,10 +436,10 @@ export default function ReadyCheckModal({
       </div>
 
       <div>
-        <div className="text-xl font-bold text-white mb-1">
+        <div className="text-xl font-bold text-[color:var(--text-primary)] mb-1">
           {isFollowUp ? "Follow-Up Sent" : "Ready Check Sent"}
         </div>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-[color:var(--text-secondary)]">
           {activity.activity_name}
         </div>
         <div className="text-xs text-gray-600 mt-1">
@@ -461,7 +461,7 @@ export default function ReadyCheckModal({
       <div className="w-full mt-4">
         <button
           onClick={onClose}
-          className="w-full bg-[#1F1F25] hover:bg-[#2a2a35] text-white font-semibold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-primary)] font-semibold rounded-xl py-3.5 text-sm transition-colors"
         >
           Back to Schedule
         </button>
@@ -488,12 +488,12 @@ export default function ReadyCheckModal({
               {step === "send_method" && (
                 <button
                   onClick={() => setStep("setup")}
-                  className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
                 >
                   <ArrowLeft size={16} />
                 </button>
               )}
-              <div className="text-sm font-bold text-white">
+              <div className="text-sm font-bold text-[color:var(--text-primary)]">
                 {isFollowUp
                   ? "Send Follow-Up"
                   : step === "confirmation"
@@ -508,7 +508,7 @@ export default function ReadyCheckModal({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
             >
               <X size={16} />
             </button>

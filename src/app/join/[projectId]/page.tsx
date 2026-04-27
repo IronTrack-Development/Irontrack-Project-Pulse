@@ -104,7 +104,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
             className="w-14 h-14 rounded-2xl object-contain shadow-lg shadow-black/30"
           />
           <div className="text-center">
-            <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+            <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">
               IronTrack Pulse
             </p>
           </div>
@@ -112,10 +112,10 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
 
         {/* Project + Header */}
         <div className="text-center space-y-1">
-          <h1 className="text-2xl font-bold text-white leading-tight">
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
             Join {projectName}
           </h1>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-[color:var(--text-secondary)]">
             Register to see your schedule on this project.
           </p>
         </div>
@@ -123,13 +123,13 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Company Name
             </label>
             <div className="relative">
               <Building2
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none"
               />
               <input
                 type="text"
@@ -138,19 +138,19 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 placeholder="e.g., ABC Plumbing"
                 required
                 autoComplete="organization"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Your Full Name
             </label>
             <div className="relative">
               <User
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none"
               />
               <input
                 type="text"
@@ -159,7 +159,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 placeholder="e.g., Joe Martinez"
                 required
                 autoComplete="name"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-11 pr-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           </div>
@@ -173,7 +173,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
           <button
             type="submit"
             disabled={loading || !companyName.trim() || !fullName.trim()}
-            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-[#F97316]/20"
+            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-[#F97316]/20"
           >
             {loading ? (
               <Loader2 size={20} className="animate-spin" />
@@ -213,8 +213,8 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
             <Smartphone size={32} className="text-[#F97316]" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Add to Home Screen</h2>
-            <p className="text-sm text-gray-400 mt-1">
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">Add to Home Screen</h2>
+            <p className="text-sm text-[color:var(--text-secondary)] mt-1">
               Get quick access to your schedule like a native app
             </p>
           </div>
@@ -227,28 +227,28 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
               <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">iPhone / iPad</p>
               <ol className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">1</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">1</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Tap the Share button</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
                       Look for the{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-gray-300">□↑</span>{" "}
+                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">□↑</span>{" "}
                       icon at the bottom of Safari
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">2</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">2</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Scroll down in the menu</p>
-                    <p className="text-xs text-gray-500 mt-0.5">Find and tap <strong className="text-gray-300">&quot;Add to Home Screen&quot;</strong></p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Find and tap <strong className="text-[color:var(--text-secondary)]">&quot;Add to Home Screen&quot;</strong></p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">3</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">3</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Tap &quot;Add&quot;</p>
-                    <p className="text-xs text-gray-500 mt-0.5">The app icon will appear on your home screen</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">The app icon will appear on your home screen</p>
                   </div>
                 </li>
               </ol>
@@ -258,28 +258,28 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
               <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">Android</p>
               <ol className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">1</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">1</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Tap the three dots</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
                       Find the{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-gray-300">⋮</span>{" "}
+                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">⋮</span>{" "}
                       menu in the top right of Chrome
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">2</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">2</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Tap &quot;Add to Home Screen&quot;</p>
-                    <p className="text-xs text-gray-500 mt-0.5">Or look for &quot;Install app&quot; if Chrome offers it</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Or look for &quot;Install app&quot; if Chrome offers it</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-white text-xs font-bold flex items-center justify-center mt-0.5">3</span>
+                  <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">3</span>
                   <div>
                     <p className="text-sm text-gray-200 font-medium">Tap &quot;Add&quot;</p>
-                    <p className="text-xs text-gray-500 mt-0.5">IronTrack Pulse will appear on your home screen</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">IronTrack Pulse will appear on your home screen</p>
                   </div>
                 </li>
               </ol>
@@ -287,7 +287,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
           ) : (
             <>
               <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">Desktop / Other</p>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-[color:var(--text-secondary)]">
                 Bookmark this page for quick access to your schedule. On mobile, use Safari (iPhone) or Chrome (Android) for best results.
               </p>
             </>
@@ -297,7 +297,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         {/* Tip */}
         <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-start gap-3">
           <span className="text-lg">💡</span>
-          <p className="text-xs text-gray-400 leading-relaxed">
+          <p className="text-xs text-[color:var(--text-secondary)] leading-relaxed">
             Adding to your home screen means you can open your schedule in one tap — even while on the jobsite with limited connectivity.
           </p>
         </div>
@@ -306,14 +306,14 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         <div className="flex flex-col gap-3">
           <button
             onClick={onDone}
-            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px]"
+            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px]"
           >
             <CheckCircle2 size={20} />
             I&apos;ve Added It
           </button>
           <button
             onClick={onSkip}
-            className="w-full px-4 py-3.5 bg-[#121217] border border-[#1F1F25] text-gray-400 hover:text-white rounded-xl text-sm font-medium transition-colors"
+            className="w-full px-4 py-3.5 bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
           >
             Skip for Now
           </button>
@@ -420,8 +420,8 @@ function WaitingScreen({
             </div>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">You&apos;re Registered!</h2>
-            <p className="text-sm text-gray-400 mt-1">
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">You&apos;re Registered!</h2>
+            <p className="text-sm text-[color:var(--text-secondary)] mt-1">
               Waiting for your GC to assign schedule items
             </p>
           </div>
@@ -434,17 +434,17 @@ function WaitingScreen({
           </p>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Building2 size={14} className="text-gray-500 flex-none" />
-              <span className="text-sm text-gray-300">{companyName}</span>
+              <Building2 size={14} className="text-[color:var(--text-muted)] flex-none" />
+              <span className="text-sm text-[color:var(--text-secondary)]">{companyName}</span>
             </div>
             <div className="flex items-center gap-2">
-              <User size={14} className="text-gray-500 flex-none" />
-              <span className="text-sm text-gray-300">{fullName}</span>
+              <User size={14} className="text-[color:var(--text-muted)] flex-none" />
+              <span className="text-sm text-[color:var(--text-secondary)]">{fullName}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 size={14} className="text-green-400 flex-none" />
-              <span className="text-sm text-gray-300">
-                Added to <span className="text-white font-medium">{projectName}</span>
+              <span className="text-sm text-[color:var(--text-secondary)]">
+                Added to <span className="text-[color:var(--text-primary)] font-medium">{projectName}</span>
               </span>
             </div>
           </div>
@@ -454,7 +454,7 @@ function WaitingScreen({
         <div className="flex flex-col items-center gap-3 py-2">
           <div className="flex items-center gap-2">
             <PulseDot />
-            <p className="text-sm text-gray-400">Checking for task assignments…</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">Checking for task assignments…</p>
           </div>
           <p className="text-xs text-gray-600 text-center">
             This page will automatically redirect when your GC has assigned your schedule items.
@@ -464,8 +464,8 @@ function WaitingScreen({
 
         {/* What happens next */}
         <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-4 space-y-2">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">What Happens Next</p>
-          <ul className="space-y-2 text-xs text-gray-400">
+          <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">What Happens Next</p>
+          <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
             <li className="flex items-start gap-2">
               <span className="text-[#F97316] flex-none mt-0.5">→</span>
               Your GC will assign specific schedule tasks to your company
@@ -613,7 +613,7 @@ export default function JoinProjectPage() {
   if (step === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
+        <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 size={32} className="animate-spin text-[#F97316]" />
           <p className="text-sm">Loading project…</p>
         </div>
@@ -657,7 +657,7 @@ export default function JoinProjectPage() {
   // Fallback / redirect step
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3 text-gray-400">
+      <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
         <Loader2 size={32} className="animate-spin text-[#F97316]" />
         <p className="text-sm">Redirecting to your schedule…</p>
       </div>

@@ -151,20 +151,20 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
         <div className="sticky top-0 bg-[#121217] px-5 py-4 border-b border-[#1F1F25] flex items-center justify-between rounded-t-3xl md:rounded-t-3xl z-10">
           <div className="flex items-center gap-3">
             {step > 1 && (
-              <button onClick={() => setStep((s) => (s - 1) as 1 | 2 | 3)} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <button onClick={() => setStep((s) => (s - 1) as 1 | 2 | 3)} className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                 <ArrowLeft size={16} />
               </button>
             )}
             <div>
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[color:var(--text-primary)]">
                 {step === 1 && "New RFI — What's the issue?"}
                 {step === 2 && "Review AI Draft"}
                 {step === 3 && "Confirm & Submit"}
               </h2>
-              <p className="text-xs text-gray-500">Step {step} of 3</p>
+              <p className="text-xs text-[color:var(--text-muted)]">Step {step} of 3</p>
             </div>
           </div>
-          <button onClick={onCancel} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <button onClick={onCancel} className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
             <X size={16} />
           </button>
         </div>
@@ -202,7 +202,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   onClick={handleAIDraft}
                   disabled={!roughDescription.trim() || isGenerating}
                   className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl
-                    bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold text-sm
+                    bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
                     disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
                 >
                   {isGenerating ? (
@@ -214,7 +214,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 <button
                   onClick={handleSkipAI}
                   disabled={!roughDescription.trim()}
-                  className="px-4 py-4 rounded-2xl bg-[#1F1F25] text-gray-400 hover:text-white
+                  className="px-4 py-4 rounded-2xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]
                     text-sm font-medium disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   Manual
@@ -228,12 +228,12 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
             <>
               {/* Subject */}
               <div>
-                <label className="block text-xs font-medium text-gray-400 mb-1.5">Subject *</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Subject *</label>
                 <input
                   type="text"
                   value={draft.subject}
                   onChange={(e) => setDraft((p) => ({ ...p, subject: e.target.value }))}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                     placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                   placeholder="RFI subject"
                 />
@@ -241,12 +241,12 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
               {/* Question */}
               <div>
-                <label className="block text-xs font-medium text-gray-400 mb-1.5">Question *</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Question *</label>
                 <textarea
                   value={draft.question}
                   onChange={(e) => setDraft((p) => ({ ...p, question: e.target.value }))}
                   rows={5}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                     placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50"
                   placeholder="Formal question text"
                 />
@@ -255,23 +255,23 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
               {/* Spec Section + Drawing Reference */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-1.5">Spec Section</label>
+                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Spec Section</label>
                   <input
                     type="text"
                     value={draft.spec_section}
                     onChange={(e) => setDraft((p) => ({ ...p, spec_section: e.target.value }))}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                       placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                     placeholder="03 30 00"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-1.5">Drawing Ref</label>
+                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Drawing Ref</label>
                   <input
                     type="text"
                     value={draft.drawing_reference}
                     onChange={(e) => setDraft((p) => ({ ...p, drawing_reference: e.target.value }))}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                       placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                     placeholder="Sheet S-1"
                   />
@@ -280,7 +280,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
               {/* Priority */}
               <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">Priority</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-2">Priority</label>
                 <div className="flex gap-2">
                   {priorityOptions.map((opt) => (
                     <button
@@ -289,8 +289,8 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                       onClick={() => setDraft((p) => ({ ...p, priority: opt.value }))}
                       className={`flex-1 py-2.5 rounded-xl text-xs font-medium border transition-all min-h-[44px] ${
                         draft.priority === opt.value
-                          ? "border-current text-white"
-                          : "border-[#1F1F25] text-gray-500 hover:border-gray-600"
+                          ? "border-current text-[color:var(--text-primary)]"
+                          : "border-[#1F1F25] text-[color:var(--text-muted)] hover:border-gray-600"
                       }`}
                       style={draft.priority === opt.value ? { color: opt.color, borderColor: opt.color, backgroundColor: `${opt.color}15` } : {}}
                     >
@@ -308,7 +308,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium border transition-all min-h-[44px] ${
                     draft.cost_impact
                       ? "bg-yellow-500/15 border-yellow-500/40 text-yellow-400"
-                      : "bg-[#1F1F25] border-[#1F1F25] text-gray-500"
+                      : "bg-[#1F1F25] border-[#1F1F25] text-[color:var(--text-muted)]"
                   }`}
                 >
                   <DollarSign size={14} />
@@ -320,7 +320,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium border transition-all min-h-[44px] ${
                     draft.schedule_impact
                       ? "bg-red-500/15 border-red-500/40 text-red-400"
-                      : "bg-[#1F1F25] border-[#1F1F25] text-gray-500"
+                      : "bg-[#1F1F25] border-[#1F1F25] text-[color:var(--text-muted)]"
                   }`}
                 >
                   <Clock size={14} />
@@ -330,7 +330,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
               {/* Due Date */}
               <div>
-                <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">
                   <Calendar size={12} className="inline mr-1" />
                   Due Date
                 </label>
@@ -338,7 +338,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   type="date"
                   value={draft.due_date}
                   onChange={(e) => setDraft((p) => ({ ...p, due_date: e.target.value }))}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                     focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                 />
               </div>
@@ -346,14 +346,14 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
               {/* Assigned To */}
               {allContacts.length > 0 && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">
                     <User size={12} className="inline mr-1" />
                     Assigned To (Architect / Engineer)
                   </label>
                   <select
                     value={draft.assigned_to}
                     onChange={(e) => setDraft((p) => ({ ...p, assigned_to: e.target.value }))}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                       focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                   >
                     <option value="">Select contact...</option>
@@ -370,7 +370,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 onClick={() => setStep(3)}
                 disabled={!draft.subject.trim() || !draft.question.trim()}
                 className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl
-                  bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold text-sm
+                  bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
                   disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
               >
                 Review RFI <ArrowRight size={16} />
@@ -383,23 +383,23 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
             <>
               <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-2xl p-4 space-y-4">
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Subject</p>
-                  <p className="text-sm font-semibold text-white">{draft.subject}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Subject</p>
+                  <p className="text-sm font-semibold text-[color:var(--text-primary)]">{draft.subject}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Question</p>
-                  <p className="text-sm text-gray-300 leading-relaxed">{draft.question}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Question</p>
+                  <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">{draft.question}</p>
                 </div>
                 {draft.spec_section && (
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Spec Section</p>
-                    <p className="text-sm text-gray-300">{draft.spec_section}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1">Spec Section</p>
+                    <p className="text-sm text-[color:var(--text-secondary)]">{draft.spec_section}</p>
                   </div>
                 )}
                 {draft.drawing_reference && (
                   <div>
-                    <p className="text-xs text-gray-500 mb-1">Drawing Reference</p>
-                    <p className="text-sm text-gray-300">{draft.drawing_reference}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1">Drawing Reference</p>
+                    <p className="text-sm text-[color:var(--text-secondary)]">{draft.drawing_reference}</p>
                   </div>
                 )}
                 <div className="flex flex-wrap gap-2">
@@ -407,7 +407,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     draft.priority === "critical" ? "bg-red-500/20 text-red-400" :
                     draft.priority === "high" ? "bg-orange-500/20 text-orange-400" :
                     draft.priority === "normal" ? "bg-blue-500/20 text-blue-400" :
-                    "bg-gray-700 text-gray-400"
+                    "bg-gray-700 text-[color:var(--text-secondary)]"
                   }`}>
                     {draft.priority.charAt(0).toUpperCase() + draft.priority.slice(1)} Priority
                   </span>
@@ -424,7 +424,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 </div>
                 {photos.length > 0 && (
                   <div>
-                    <p className="text-xs text-gray-500 mb-2">{photos.length} photo{photos.length !== 1 ? "s" : ""} attached</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">{photos.length} photo{photos.length !== 1 ? "s" : ""} attached</p>
                     <div className="flex gap-1.5">
                       {photos.slice(0, 4).map((p) => (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -439,7 +439,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 <button
                   onClick={() => handleSave("draft")}
                   disabled={isSaving}
-                  className="flex-1 py-4 rounded-2xl bg-[#1F1F25] text-gray-300 font-semibold text-sm
+                  className="flex-1 py-4 rounded-2xl bg-[#1F1F25] text-[color:var(--text-secondary)] font-semibold text-sm
                     hover:bg-[#2a2a35] disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   {isSaving ? "Saving..." : "Save as Draft"}
@@ -448,7 +448,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   onClick={() => handleSave("submitted")}
                   disabled={isSaving}
                   className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl
-                    bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold text-sm
+                    bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
                     disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}

@@ -31,14 +31,14 @@ interface ForemanDetail extends Foreman {
 
 const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
   active: { label: "Active", cls: "bg-green-500/20 text-green-300" },
-  inactive: { label: "Inactive", cls: "bg-gray-700 text-gray-400" },
+  inactive: { label: "Inactive", cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
 };
 
 const DISPATCH_STATUS: Record<string, { cls: string }> = {
   pending: { cls: "bg-orange-500/20 text-orange-300" },
   acknowledged: { cls: "bg-green-500/20 text-green-300" },
   completed: { cls: "bg-blue-500/20 text-blue-300" },
-  cancelled: { cls: "bg-gray-700 text-gray-400" },
+  cancelled: { cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
 };
 
 export default function ForemanManager({ projectId }: Props) {
@@ -144,7 +144,7 @@ export default function ForemanManager({ projectId }: Props) {
       <div className="space-y-4">
         <button
           onClick={() => { setSelectedForeman(null); setEditing(false); }}
-          className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
         >
           <ArrowLeft size={16} /> Back to Roster
         </button>
@@ -160,10 +160,10 @@ export default function ForemanManager({ projectId }: Props) {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <h2 className="text-lg font-bold text-white">{f.name}</h2>
+                    <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{f.name}</h2>
                     <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${sBadge.cls}`}>{sBadge.label}</span>
                   </div>
-                  <p className="text-xs text-gray-500 capitalize">{f.trade?.replace(/_/g, " ") || "—"}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] capitalize">{f.trade?.replace(/_/g, " ") || "—"}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -176,13 +176,13 @@ export default function ForemanManager({ projectId }: Props) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
                   <Phone size={12} /> {f.phone || "—"}
                 </div>
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
                   <Mail size={12} /> {f.email || "—"}
                 </div>
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
                   <Calendar size={12} /> Hired: {f.hire_date ? new Date(f.hire_date).toLocaleDateString() : "—"}
                 </div>
               </div>
@@ -201,18 +201,18 @@ export default function ForemanManager({ projectId }: Props) {
             {/* Production Stats */}
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
-                <p className="text-2xl font-bold text-white">{f.production_stats?.total_entries ?? 0}</p>
-                <p className="text-xs text-gray-500">Production Entries</p>
+                <p className="text-2xl font-bold text-[color:var(--text-primary)]">{f.production_stats?.total_entries ?? 0}</p>
+                <p className="text-xs text-[color:var(--text-muted)]">Production Entries</p>
               </div>
               <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
-                <p className="text-2xl font-bold text-white">{f.production_stats?.this_week_hours ?? 0}</p>
-                <p className="text-xs text-gray-500">Hours This Week</p>
+                <p className="text-2xl font-bold text-[color:var(--text-primary)]">{f.production_stats?.this_week_hours ?? 0}</p>
+                <p className="text-xs text-[color:var(--text-muted)]">Hours This Week</p>
               </div>
             </div>
 
             {/* Recent Dispatches */}
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
                 <Send size={14} className="text-[#F97316]" /> Recent Dispatches
               </h3>
               {(f.recent_dispatches?.length ?? 0) === 0 ? (
@@ -224,7 +224,7 @@ export default function ForemanManager({ projectId }: Props) {
                     return (
                       <div key={d.id} className="flex items-center justify-between py-1.5 text-xs">
                         <div className="flex items-center gap-2">
-                          <span className="text-gray-400">{new Date(d.date).toLocaleDateString()}</span>
+                          <span className="text-[color:var(--text-secondary)]">{new Date(d.date).toLocaleDateString()}</span>
                           <span className="text-gray-200">{d.project_name}</span>
                         </div>
                         <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${ds.cls}`}>{d.status}</span>
@@ -237,7 +237,7 @@ export default function ForemanManager({ projectId }: Props) {
 
             {/* Recent Check-ins */}
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
                 <CheckCircle size={14} className="text-[#F97316]" /> Recent Check-Ins
               </h3>
               {(f.recent_checkins?.length ?? 0) === 0 ? (
@@ -247,8 +247,8 @@ export default function ForemanManager({ projectId }: Props) {
                   {f.recent_checkins.map((c) => (
                     <div key={c.id} className="flex items-center justify-between py-1.5 text-xs">
                       <div>
-                        <span className="text-gray-400">{new Date(c.date).toLocaleDateString()}</span>
-                        <span className="text-gray-500 ml-2">👷 {c.crew_count} · ⏱ {c.hours}h</span>
+                        <span className="text-[color:var(--text-secondary)]">{new Date(c.date).toLocaleDateString()}</span>
+                        <span className="text-[color:var(--text-muted)] ml-2">👷 {c.crew_count} · ⏱ {c.hours}h</span>
                       </div>
                       {c.notes && <span className="text-gray-600 truncate max-w-[150px]">{c.notes}</span>}
                     </div>
@@ -259,7 +259,7 @@ export default function ForemanManager({ projectId }: Props) {
 
             {/* SOP Compliance */}
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
                 <FileText size={14} className="text-[#F97316]" /> SOP Compliance
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
@@ -270,7 +270,7 @@ export default function ForemanManager({ projectId }: Props) {
                   ) : (
                     <ul className="mt-1 space-y-0.5">
                       {f.sop_compliance.acknowledged.map((s) => (
-                        <li key={s} className="text-gray-400 flex items-center gap-1">
+                        <li key={s} className="text-[color:var(--text-secondary)] flex items-center gap-1">
                           <CheckCircle size={10} className="text-green-400" /> {s}
                         </li>
                       ))}
@@ -284,7 +284,7 @@ export default function ForemanManager({ projectId }: Props) {
                   ) : (
                     <ul className="mt-1 space-y-0.5">
                       {f.sop_compliance.pending.map((s) => (
-                        <li key={s} className="text-gray-400 flex items-center gap-1">
+                        <li key={s} className="text-[color:var(--text-secondary)] flex items-center gap-1">
                           <Clock size={10} className="text-orange-400" /> {s}
                         </li>
                       ))}
@@ -304,12 +304,12 @@ export default function ForemanManager({ projectId }: Props) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Foremen</h2>
-          <p className="text-xs text-gray-500 mt-0.5">{foremen.length} foremen on roster</p>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Foremen</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{foremen.length} foremen on roster</p>
         </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
           {showAdd ? <><X size={14} /> Cancel</> : <><UserPlus size={14} /> Add Foreman</>}
         </button>
@@ -318,60 +318,60 @@ export default function ForemanManager({ projectId }: Props) {
       {/* Add Form */}
       {showAdd && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-bold text-white">New Foreman</h3>
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">New Foreman</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Name <span className="text-red-400">*</span></label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Name <span className="text-red-400">*</span></label>
               <input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g., Mike Rodriguez"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Trade</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Trade</label>
               <input
                 value={form.trade}
                 onChange={(e) => setForm({ ...form, trade: e.target.value })}
                 placeholder="e.g., Electrical"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Phone</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Phone</label>
               <input
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 placeholder="602-555-1234"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Email</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Email</label>
               <input
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="mike@company.com"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Certifications</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Certifications</label>
               <input
                 value={form.certifications}
                 onChange={(e) => setForm({ ...form, certifications: e.target.value })}
                 placeholder="OSHA 30, First Aid (comma separated)"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Hire Date</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Hire Date</label>
               <input
                 type="date"
                 value={form.hire_date}
                 onChange={(e) => setForm({ ...form, hire_date: e.target.value })}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -381,7 +381,7 @@ export default function ForemanManager({ projectId }: Props) {
           <button
             onClick={handleAdd}
             disabled={adding}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             <Plus size={14} />
             {adding ? "Adding..." : "Add Foreman"}
@@ -393,7 +393,7 @@ export default function ForemanManager({ projectId }: Props) {
       {foremen.length === 0 ? (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <Users size={28} className="mx-auto text-gray-600 mb-2" />
-          <p className="text-sm text-gray-400">No foremen on your roster</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">No foremen on your roster</p>
           <p className="text-xs text-gray-600 mt-1">Add foremen to start dispatching work</p>
         </div>
       ) : (
@@ -407,11 +407,11 @@ export default function ForemanManager({ projectId }: Props) {
                 className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 hover:border-[#F97316]/30 transition-colors cursor-pointer space-y-2"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white truncate">{f.name}</span>
+                  <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{f.name}</span>
                   <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${badge.cls}`}>{badge.label}</span>
                 </div>
-                <p className="text-xs text-gray-500 capitalize">{f.trade?.replace(/_/g, " ") || "—"}</p>
-                <div className="flex items-center justify-between text-xs text-gray-400">
+                <p className="text-xs text-[color:var(--text-muted)] capitalize">{f.trade?.replace(/_/g, " ") || "—"}</p>
+                <div className="flex items-center justify-between text-xs text-[color:var(--text-secondary)]">
                   <span className="flex items-center gap-1">
                     <Award size={10} /> {f.certifications?.length ?? 0} certs
                   </span>

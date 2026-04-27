@@ -72,7 +72,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  not_started: "bg-gray-700 text-gray-300",
+  not_started: "bg-gray-700 text-[color:var(--text-secondary)]",
   in_preparation: "bg-blue-900/60 text-blue-300",
   submitted: "bg-yellow-900/60 text-yellow-300",
   under_review: "bg-purple-900/60 text-purple-300",
@@ -140,17 +140,17 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
               <div className="h-5 w-40 bg-[#1F1F25] rounded animate-pulse" />
             ) : (
               <>
-                <p className="text-xs text-gray-500 font-mono mb-0.5">{submittal.submittal_number}</p>
-                <h2 className="text-base font-bold text-white leading-tight">{submittal.title}</h2>
+                <p className="text-xs text-[color:var(--text-muted)] font-mono mb-0.5">{submittal.submittal_number}</p>
+                <h2 className="text-base font-bold text-[color:var(--text-primary)] leading-tight">{submittal.title}</h2>
                 {submittal.spec_section && (
-                  <p className="text-xs text-gray-500 mt-0.5">Section {submittal.spec_section}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Section {submittal.spec_section}</p>
                 )}
               </>
             )}
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-[#1F1F25] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[#1F1F25] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
           >
             ✕
           </button>
@@ -164,17 +164,17 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
           <div className="p-5 space-y-5">
             {/* Status + badges row */}
             <div className="flex flex-wrap gap-2">
-              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[submittal.status] ?? "bg-gray-700 text-gray-300"}`}>
+              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[submittal.status] ?? "bg-gray-700 text-[color:var(--text-secondary)]"}`}>
                 {STATUS_LABELS[submittal.status] ?? submittal.status}
               </span>
-              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1F1F25] text-gray-300">
+              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1F1F25] text-[color:var(--text-secondary)]">
                 🏀 {submittal.ball_in_court.charAt(0).toUpperCase() + submittal.ball_in_court.slice(1)}
               </span>
               {submittal.priority !== "normal" && (
                 <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
                   submittal.priority === "critical" ? "bg-red-900/60 text-red-300" :
                   submittal.priority === "high" ? "bg-orange-900/60 text-orange-300" :
-                  "bg-gray-700 text-gray-400"
+                  "bg-gray-700 text-[color:var(--text-secondary)]"
                 }`}>
                   {submittal.priority.charAt(0).toUpperCase() + submittal.priority.slice(1)}
                 </span>
@@ -185,10 +185,10 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             <div className="grid grid-cols-2 gap-3 text-sm">
               {submittal.required_by && (
                 <div className="bg-[#0B0B0D] rounded-xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Required By</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Required By</p>
                   <p className={`font-medium ${
                     new Date(submittal.required_by) < new Date() && submittal.status !== "approved" && submittal.status !== "approved_as_noted"
-                      ? "text-red-400" : "text-white"
+                      ? "text-red-400" : "text-[color:var(--text-primary)]"
                   }`}>
                     {formatDate(submittal.required_by)}
                   </p>
@@ -196,20 +196,20 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
               )}
               {submittal.lead_time_days != null && (
                 <div className="bg-[#0B0B0D] rounded-xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Lead Time</p>
-                  <p className="font-medium text-white">{submittal.lead_time_days} days</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Lead Time</p>
+                  <p className="font-medium text-[color:var(--text-primary)]">{submittal.lead_time_days} days</p>
                 </div>
               )}
               {submittal.submitted_date && (
                 <div className="bg-[#0B0B0D] rounded-xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Submitted</p>
-                  <p className="font-medium text-white">{formatDate(submittal.submitted_date)}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Submitted</p>
+                  <p className="font-medium text-[color:var(--text-primary)]">{formatDate(submittal.submitted_date)}</p>
                 </div>
               )}
               {submittal.returned_date && (
                 <div className="bg-[#0B0B0D] rounded-xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Returned</p>
-                  <p className="font-medium text-white">{formatDate(submittal.returned_date)}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Returned</p>
+                  <p className="font-medium text-[color:var(--text-primary)]">{formatDate(submittal.returned_date)}</p>
                 </div>
               )}
             </div>
@@ -220,10 +220,10 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                 {submittal.assigned_contact && (
                   <div className="flex items-center justify-between bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                     <div>
-                      <p className="text-xs text-gray-500">Preparing Sub</p>
-                      <p className="text-sm font-medium text-white">{submittal.assigned_contact.name}</p>
+                      <p className="text-xs text-[color:var(--text-muted)]">Preparing Sub</p>
+                      <p className="text-sm font-medium text-[color:var(--text-primary)]">{submittal.assigned_contact.name}</p>
                       {submittal.assigned_contact.company && (
-                        <p className="text-xs text-gray-500">{submittal.assigned_contact.company}</p>
+                        <p className="text-xs text-[color:var(--text-muted)]">{submittal.assigned_contact.company}</p>
                       )}
                     </div>
                   </div>
@@ -231,10 +231,10 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                 {submittal.reviewer_contact && (
                   <div className="flex items-center justify-between bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                     <div>
-                      <p className="text-xs text-gray-500">Reviewer</p>
-                      <p className="text-sm font-medium text-white">{submittal.reviewer_contact.name}</p>
+                      <p className="text-xs text-[color:var(--text-muted)]">Reviewer</p>
+                      <p className="text-sm font-medium text-[color:var(--text-primary)]">{submittal.reviewer_contact.name}</p>
                       {submittal.reviewer_contact.company && (
-                        <p className="text-xs text-gray-500">{submittal.reviewer_contact.company}</p>
+                        <p className="text-xs text-[color:var(--text-muted)]">{submittal.reviewer_contact.company}</p>
                       )}
                     </div>
                   </div>
@@ -245,20 +245,20 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             {/* Description / Notes */}
             {submittal.description && (
               <div>
-                <p className="text-xs text-gray-500 mb-1">Description</p>
-                <p className="text-sm text-gray-300">{submittal.description}</p>
+                <p className="text-xs text-[color:var(--text-muted)] mb-1">Description</p>
+                <p className="text-sm text-[color:var(--text-secondary)]">{submittal.description}</p>
               </div>
             )}
             {submittal.notes && (
               <div>
-                <p className="text-xs text-gray-500 mb-1">Notes</p>
-                <p className="text-sm text-gray-300">{submittal.notes}</p>
+                <p className="text-xs text-[color:var(--text-muted)] mb-1">Notes</p>
+                <p className="text-sm text-[color:var(--text-secondary)]">{submittal.notes}</p>
               </div>
             )}
 
             {/* Quick Actions */}
             <div>
-              <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Quick Actions</p>
+              <p className="text-xs text-[color:var(--text-muted)] mb-2 font-medium uppercase tracking-wide">Quick Actions</p>
               <div className="grid grid-cols-2 gap-2">
                 {submittal.status !== "submitted" && (
                   <button
@@ -318,7 +318,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
               <div>
                 <button
                   onClick={() => setShowRevisions((v) => !v)}
-                  className="flex items-center gap-2 w-full text-left text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 hover:text-gray-300 transition-colors"
+                  className="flex items-center gap-2 w-full text-left text-xs text-[color:var(--text-muted)] font-medium uppercase tracking-wide mb-2 hover:text-[color:var(--text-secondary)] transition-colors"
                 >
                   Revision History ({submittal.revisions.length})
                   {showRevisions ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -329,12 +329,12 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                       <div key={rev.id} className="flex gap-3 bg-[#0B0B0D] rounded-xl px-3 py-2.5">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500 font-mono">Rev {rev.revision_number}</span>
-                            <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${STATUS_COLORS[rev.status] ?? "bg-gray-700 text-gray-300"}`}>
+                            <span className="text-xs text-[color:var(--text-muted)] font-mono">Rev {rev.revision_number}</span>
+                            <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${STATUS_COLORS[rev.status] ?? "bg-gray-700 text-[color:var(--text-secondary)]"}`}>
                               {STATUS_LABELS[rev.status] ?? rev.status}
                             </span>
                           </div>
-                          {rev.notes && <p className="text-xs text-gray-400 mt-1">{rev.notes}</p>}
+                          {rev.notes && <p className="text-xs text-[color:var(--text-secondary)] mt-1">{rev.notes}</p>}
                           <p className="text-xs text-gray-600 mt-0.5">{formatDateTime(rev.created_at)}</p>
                         </div>
                       </div>
@@ -348,7 +348,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             <div className="flex gap-3 pt-1 border-t border-[#1F1F25]">
               <button
                 onClick={onEdit}
-                className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-gray-300 hover:text-white text-sm font-medium transition-colors min-h-[44px]"
+                className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
               >
                 Edit
               </button>

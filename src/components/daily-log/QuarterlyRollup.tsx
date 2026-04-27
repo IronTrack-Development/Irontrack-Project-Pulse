@@ -47,7 +47,7 @@ const trendBadge = (direction: string) => {
   switch (direction) {
     case "improving": return <span className="text-[#22C55E] text-sm font-medium">📈 Improving</span>;
     case "declining": return <span className="text-[#EF4444] text-sm font-medium">📉 Declining</span>;
-    default: return <span className="text-gray-400 text-sm font-medium">➡️ Stable</span>;
+    default: return <span className="text-[color:var(--text-secondary)] text-sm font-medium">➡️ Stable</span>;
   }
 };
 
@@ -82,14 +82,14 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setQuarter(q => offsetQuarter(q, -1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
-        <div className="text-sm font-medium text-white">{formatQuarter(quarter)}</div>
+        <div className="text-sm font-medium text-[color:var(--text-primary)]">{formatQuarter(quarter)}</div>
         <button
           onClick={() => setQuarter(q => offsetQuarter(q, 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -101,7 +101,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-gray-500 text-sm">
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
           No logs found for this quarter.
         </div>
       ) : (
@@ -143,7 +143,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {/* Milestone hit rate visual */}
           {data.milestoneHitRate !== null && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">Milestone Performance</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Milestone Performance</h3>
               <div className="bg-[#121217] rounded-xl p-4">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16">
@@ -157,11 +157,11 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
                         strokeLinecap="round"
                       />
                     </svg>
-                    <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-white">
+                    <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-[color:var(--text-primary)]">
                       {data.milestoneHitRate}%
                     </div>
                   </div>
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-[color:var(--text-secondary)]">
                     {data.milestonesOnTime} of {data.totalMilestones} milestones completed on time
                   </div>
                 </div>
@@ -172,13 +172,13 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {/* Top delays */}
           {data.topDelays.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">Top Delay Reasons</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Top Delay Reasons</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.topDelays.map((d, i) => (
                   <div key={d.code} className="bg-[#121217] border border-[#1F1F25] rounded-lg px-4 py-3 text-center">
-                    <div className="text-lg font-bold text-white">#{i + 1}</div>
+                    <div className="text-lg font-bold text-[color:var(--text-primary)]">#{i + 1}</div>
                     <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
-                    <div className="text-xs text-gray-500">{d.count} occurrences</div>
+                    <div className="text-xs text-[color:var(--text-muted)]">{d.count} occurrences</div>
                   </div>
                 ))}
               </div>
@@ -188,20 +188,20 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {/* Crew-hours by trade */}
           {Object.keys(data.crewHoursByTrade).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-3">Crew-Hours by Trade</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Crew-Hours by Trade</h3>
               <div className="space-y-2">
                 {Object.entries(data.crewHoursByTrade)
                   .sort((a, b) => b[1] - a[1])
                   .map(([trade, hours]) => (
                     <div key={trade} className="flex items-center gap-3">
-                      <div className="w-24 text-xs text-gray-400 text-right truncate shrink-0">{trade}</div>
+                      <div className="w-24 text-xs text-[color:var(--text-secondary)] text-right truncate shrink-0">{trade}</div>
                       <div className="flex-1 h-6 bg-[#1F1F25] rounded-md overflow-hidden">
                         <div
                           className="h-full bg-[#F97316] rounded-md transition-all duration-500"
                           style={{ width: `${Math.max((hours / maxTrade) * 100, 2)}%` }}
                         />
                       </div>
-                      <div className="w-16 text-xs text-gray-400 text-right shrink-0">
+                      <div className="w-16 text-xs text-[color:var(--text-secondary)] text-right shrink-0">
                         {Math.round(hours).toLocaleString()}
                       </div>
                     </div>
@@ -212,18 +212,18 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
 
           {/* Monthly breakdown */}
           <div className="mb-6">
-            <h3 className="text-sm font-bold text-white mb-2">Monthly Breakdown</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Monthly Breakdown</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {data.monthlyBreakdown.map((m) => (
                 <div key={m.month} className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
-                  <div className="text-xs text-gray-500 mb-1">
+                  <div className="text-xs text-[color:var(--text-muted)] mb-1">
                     {new Date(m.month + "-15T12:00:00Z").toLocaleDateString("en-US", { month: "long", timeZone: "UTC" })}
                   </div>
                   <div className="space-y-1 text-xs">
-                    <div className="flex justify-between"><span className="text-gray-400">Crew-Hours</span><span className="text-white font-medium">{m.crewHours.toLocaleString()}</span></div>
-                    <div className="flex justify-between"><span className="text-gray-400">Delay Days</span><span className="text-white">{m.delayDays}</span></div>
-                    <div className="flex justify-between"><span className="text-gray-400">Completed</span><span className="text-white">{m.completedActivities}</span></div>
-                    <div className="flex justify-between"><span className="text-gray-400">Logged Days</span><span className="text-white">{m.logDays}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Crew-Hours</span><span className="text-[color:var(--text-primary)] font-medium">{m.crewHours.toLocaleString()}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Delay Days</span><span className="text-[color:var(--text-primary)]">{m.delayDays}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Completed</span><span className="text-[color:var(--text-primary)]">{m.completedActivities}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Logged Days</span><span className="text-[color:var(--text-primary)]">{m.logDays}</span></div>
                   </div>
                 </div>
               ))}

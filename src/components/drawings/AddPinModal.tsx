@@ -101,14 +101,14 @@ export default function AddPinModal({
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
           <div>
-            <h2 className="text-white font-semibold">Add Pin</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h2 className="text-[color:var(--text-primary)] font-semibold">Add Pin</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               Position: {xPercent.toFixed(1)}%, {yPercent.toFixed(1)}%
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -118,7 +118,7 @@ export default function AddPinModal({
         <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
           {/* Pin type */}
           <div>
-            <label className="text-xs text-gray-400 uppercase tracking-wider mb-2 block">Pin Type</label>
+            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">Pin Type</label>
             <div className="grid grid-cols-5 gap-2">
               {PIN_TYPES.map((t) => (
                 <button
@@ -134,7 +134,7 @@ export default function AddPinModal({
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: t.color }}
                   />
-                  <span className="text-xs text-gray-300">{t.label}</span>
+                  <span className="text-xs text-[color:var(--text-secondary)]">{t.label}</span>
                 </button>
               ))}
             </div>
@@ -142,26 +142,26 @@ export default function AddPinModal({
 
           {/* Label */}
           <div>
-            <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Label (optional)</label>
+            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">Label (optional)</label>
             <input
               type="text"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder="Short label"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
             />
           </div>
 
           {/* Reference dropdown for RFI / Punch / Submittal */}
           {(pinType === "rfi" || pinType === "punch" || pinType === "submittal") && (
             <div>
-              <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">
+              <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
                 Link to {selectedType.label}
               </label>
               <select
                 value={referenceId}
                 onChange={(e) => setReferenceId(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm min-h-[44px]"
               >
                 <option value="">— None —</option>
                 {pinType === "rfi" &&
@@ -188,7 +188,7 @@ export default function AddPinModal({
 
           {/* Notes */}
           <div>
-            <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">
+            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
               {pinType === "note" ? "Note" : "Additional Notes (optional)"}
             </label>
             <textarea
@@ -196,7 +196,7 @@ export default function AddPinModal({
               onChange={(e) => setNotes(e.target.value)}
               placeholder={pinType === "note" ? "Enter note text..." : "Optional notes..."}
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm resize-none"
             />
           </div>
         </div>
@@ -205,14 +205,14 @@ export default function AddPinModal({
         <div className="px-4 py-4 border-t border-[#1F1F25] flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl font-medium text-sm min-h-[44px]"
+            className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={loading || (pinType === "note" && !notes.trim())}
-            className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
+            className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
             style={{ backgroundColor: selectedType.color }}
           >
             {loading ? "Saving..." : "Add Pin"}

@@ -26,10 +26,10 @@ const TRADES = [
 ];
 
 const PRIORITIES = [
-  { value: "life_safety", label: "Life Safety", color: "bg-red-600 text-white" },
-  { value: "code", label: "Code", color: "bg-orange-500 text-white" },
-  { value: "standard", label: "Standard", color: "bg-gray-600 text-white" },
-  { value: "cosmetic", label: "Cosmetic", color: "bg-blue-500 text-white" },
+  { value: "life_safety", label: "Life Safety", color: "bg-red-600 text-[color:var(--text-primary)]" },
+  { value: "code", label: "Code", color: "bg-orange-500 text-[color:var(--text-primary)]" },
+  { value: "standard", label: "Standard", color: "bg-gray-600 text-[color:var(--text-primary)]" },
+  { value: "cosmetic", label: "Cosmetic", color: "bg-blue-500 text-[color:var(--text-primary)]" },
 ];
 
 // Persistent last-used values across form resets (kept in module scope)
@@ -143,10 +143,10 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
       <div className="w-full sm:max-w-lg bg-[#121217] rounded-t-3xl sm:rounded-3xl border border-[#1F1F25] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#1F1F25]">
-          <h2 className="text-base font-bold text-white">Add Punch Item</h2>
+          <h2 className="text-base font-bold text-[color:var(--text-primary)]">Add Punch Item</h2>
           <button
             onClick={onCancel}
-            className="p-2 rounded-xl text-gray-400 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 rounded-xl text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -169,14 +169,14 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               {/* Markup button */}
               <button
                 onClick={() => setShowPhotoMarkup(true)}
-                className="absolute top-2 left-2 p-2 bg-black/60 hover:bg-purple-600/80 rounded-full text-white transition-colors"
+                className="absolute top-2 left-2 p-2 bg-black/60 hover:bg-purple-600/80 rounded-full text-[color:var(--text-primary)] transition-colors"
                 title="Annotate photo"
               >
                 <Pencil size={14} />
               </button>
               <button
                 onClick={() => { setPhotoFile(null); setPhotoPreview(null); if (fileRef.current) fileRef.current.value = ""; }}
-                className="absolute top-2 right-2 p-2 bg-black/60 rounded-full text-white"
+                className="absolute top-2 right-2 p-2 bg-black/60 rounded-full text-[color:var(--text-primary)]"
               >
                 <X size={16} />
               </button>
@@ -195,7 +195,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Description */}
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block font-medium">Description *</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Description *</label>
             <VoiceTextArea
               value={description}
               onChange={setDescription}
@@ -207,41 +207,41 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
           {/* Location: Building / Floor / Room */}
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Building</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Building</label>
               <input
                 value={building}
                 onChange={(e) => setBuilding(e.target.value)}
                 placeholder="A"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Floor</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Floor</label>
               <input
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
                 placeholder="3"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Room</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Room</label>
               <input
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 placeholder="301"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
 
           {/* Trade */}
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block font-medium">Trade</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Trade</label>
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
               <option value="">Select trade...</option>
               {TRADES.map((t) => (
@@ -252,11 +252,11 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Assigned To */}
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block font-medium">Assign To</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Assign To</label>
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
               <option value="">Unassigned</option>
               {contacts.map((c) => (
@@ -267,7 +267,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Priority chips */}
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block font-medium">Priority</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Priority</label>
             <div className="flex gap-2 flex-wrap">
               {PRIORITIES.map((p) => (
                 <button
@@ -276,7 +276,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                   className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all min-h-[40px] border-2 ${
                     priority === p.value
                       ? `${p.color} border-transparent`
-                      : "bg-transparent text-gray-400 border-[#1F1F25] hover:border-gray-500"
+                      : "bg-transparent text-[color:var(--text-secondary)] border-[#1F1F25] hover:border-gray-500"
                   }`}
                 >
                   {p.label}
@@ -287,12 +287,12 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Due date */}
           <div>
-            <label className="text-xs text-gray-400 mb-1.5 block font-medium">Due Date (optional)</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Due Date (optional)</label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-[#F97316]/50 min-h-[44px] [color-scheme:dark]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] [color-scheme:dark]"
             />
           </div>
 
@@ -305,7 +305,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <button
               onClick={() => handleSave(false)}
               disabled={saving}
-              className="flex-1 py-3.5 rounded-xl bg-[#1F1F25] text-white text-sm font-semibold
+              className="flex-1 py-3.5 rounded-xl bg-[#1F1F25] text-[color:var(--text-primary)] text-sm font-semibold
                 hover:bg-[#2a2a35] transition-all min-h-[52px] disabled:opacity-50"
             >
               {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save"}
@@ -313,7 +313,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <button
               onClick={() => handleSave(true)}
               disabled={saving}
-              className="flex-[2] py-3.5 rounded-xl bg-[#F97316] text-white text-sm font-bold
+              className="flex-[2] py-3.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-bold
                 hover:bg-[#ea6c10] transition-all min-h-[52px] disabled:opacity-50 active:scale-[0.98]"
             >
               {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save & Add Another"}

@@ -59,7 +59,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
     return (
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
         <Flag size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-gray-400 text-sm">No milestones found</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">No milestones found</div>
       </div>
     );
   }
@@ -116,8 +116,8 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                 <div className="flex items-start gap-3 flex-1 min-w-0">
                   <div className="mt-0.5">{getStatusIcon(milestone.status)}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-white mb-1">{milestone.activity_name}</div>
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                    <div className="text-sm font-medium text-[color:var(--text-primary)] mb-1">{milestone.activity_name}</div>
+                    <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
                       <span>
                         {new Date(milestone.milestone_date).toLocaleDateString("en-US", {
                           month: "short",
@@ -140,7 +140,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                   <div className={`text-sm font-semibold shrink-0 ${
                     milestone.percent_complete >= 100 
                       ? "text-[#22C55E]" 
-                      : "text-gray-400"
+                      : "text-[color:var(--text-secondary)]"
                   }`}>
                     {milestone.percent_complete}%
                   </div>
@@ -169,10 +169,10 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                             : "bg-[#0B0B0D]"
                         }`}
                       >
-                        <span className={`font-mono w-12 shrink-0 ${isMilestoneDay ? "text-[#F97316] font-bold" : "text-gray-500"}`}>
+                        <span className={`font-mono w-12 shrink-0 ${isMilestoneDay ? "text-[#F97316] font-bold" : "text-[color:var(--text-muted)]"}`}>
                           {dateLabel}
                         </span>
-                        <span className="flex items-center gap-1 text-gray-400 shrink-0">
+                        <span className="flex items-center gap-1 text-[color:var(--text-secondary)] shrink-0">
                           <Users size={10} />
                           {entry.crewSize}
                         </span>
@@ -183,7 +183,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                         }`}>
                           {entry.status === "locked" ? "Locked" : "Submitted"}
                         </span>
-                        <span className="text-gray-500 truncate flex-1">{entry.summary}</span>
+                        <span className="text-[color:var(--text-muted)] truncate flex-1">{entry.summary}</span>
                       </div>
                     );
                   })}

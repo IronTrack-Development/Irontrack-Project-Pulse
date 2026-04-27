@@ -56,8 +56,8 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-white font-bold text-base">New Report</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center">
+          <h3 className="text-[color:var(--text-primary)] font-bold text-base">New Report</h3>
+          <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] min-w-[44px] min-h-[44px] flex items-center justify-center">
             <X size={18} />
           </button>
         </div>
@@ -69,7 +69,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
         {uploading ? (
           <div className="flex flex-col items-center justify-center py-10">
             <div className="w-8 h-8 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin mb-3" />
-            <p className="text-gray-400 text-sm">Creating report...</p>
+            <p className="text-[color:var(--text-secondary)] text-sm">Creating report...</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -88,7 +88,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
                   fileRef.current.click();
                 }
               }}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors min-h-[56px]"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[56px]"
             >
               <Camera size={18} />
               Take Photo
@@ -100,7 +100,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
                   fileRef.current.click();
                 }
               }}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px]"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[56px]"
             >
               <Upload size={18} />
               Choose from Library

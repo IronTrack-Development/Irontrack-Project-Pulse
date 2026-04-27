@@ -10,7 +10,7 @@ function statusStyle(status: string) {
     case "complete": return "text-[#22C55E] bg-[#22C55E]/10";
     case "in_progress": return "text-[#3B82F6] bg-[#3B82F6]/10";
     case "late": return "text-[#EF4444] bg-[#EF4444]/10";
-    default: return "text-gray-400 bg-gray-800/50";
+    default: return "text-[color:var(--text-secondary)] bg-[color:var(--bg-tertiary)]/50";
   }
 }
 
@@ -123,18 +123,18 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2 flex-1 min-w-48 bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
-          <Search size={14} className="text-gray-500" />
+          <Search size={14} className="text-[color:var(--text-muted)]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search activities..."
-            className="flex-1 bg-transparent text-white text-sm placeholder-gray-600 focus:outline-none"
+            className="flex-1 bg-transparent text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
         >
           <option value="">All Statuses</option>
           <option value="not_started">Not Started</option>
@@ -145,7 +145,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
         <select
           value={tradeFilter}
           onChange={(e) => setTradeFilter(e.target.value)}
-          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
         >
           <option value="">All Trades</option>
           {trades.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -156,7 +156,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <select
             value={buildingFilter}
             onChange={(e) => setBuildingFilter(e.target.value)}
-            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
           >
             <option value="">All Buildings</option>
             {buildings.map((b) => (
@@ -170,7 +170,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <select
             value={phaseFilter}
             onChange={(e) => setPhaseFilter(e.target.value)}
-            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none"
+            className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
           >
             <option value="">All Phases</option>
             {phases.map((p) => (
@@ -179,7 +179,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           </select>
         )}
 
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-[color:var(--text-muted)]">
           {activities.length} activit{activities.length !== 1 ? "ies" : "y"}
         </div>
       </div>
@@ -214,7 +214,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                     <th
                       key={col}
                       onClick={() => handleSort(col)}
-                      className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide cursor-pointer hover:text-gray-300 select-none"
+                      className="text-left px-4 py-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide cursor-pointer hover:text-[color:var(--text-secondary)] select-none"
                     >
                       <div className="flex items-center gap-1">
                         {label}
@@ -233,9 +233,9 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                       i % 2 === 0 ? "" : "bg-[#0B0B0D]/30"
                     }`}
                   >
-                    <td className="px-4 py-3 text-xs text-gray-500 font-mono">{a.activity_id || "—"}</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-muted)] font-mono">{a.activity_id || "—"}</td>
                     <td className="px-4 py-3">
-                      <div className="font-medium text-white max-w-xs truncate">{a.activity_name}</div>
+                      <div className="font-medium text-[color:var(--text-primary)] max-w-xs truncate">{a.activity_name}</div>
                       {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">MILESTONE</span>}
                     </td>
                     {/* Building column — only rendered when hierarchy data exists */}
@@ -244,7 +244,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                         {a.normalized_building ? (
                           <div className="flex items-center gap-1">
                             <Building2 size={11} className="text-gray-600 shrink-0" />
-                            <span className="text-xs text-gray-300 truncate max-w-[100px]">
+                            <span className="text-xs text-[color:var(--text-secondary)] truncate max-w-[100px]">
                               {fmtNormalized(a.normalized_building)}
                             </span>
                           </div>
@@ -253,16 +253,16 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                         )}
                       </td>
                     )}
-                    <td className="px-4 py-3 text-xs text-gray-400">{a.trade || "—"}</td>
-                    <td className="px-4 py-3 text-xs text-gray-400">{fmt(a.start_date)}</td>
-                    <td className="px-4 py-3 text-xs text-gray-400">{fmt(a.finish_date)}</td>
-                    <td className="px-4 py-3 text-xs text-gray-400">{a.original_duration ?? "—"}d</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.trade || "—"}</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{fmt(a.start_date)}</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{fmt(a.finish_date)}</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.original_duration ?? "—"}d</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded font-medium ${statusStyle(a.status)}`}>
                         {statusLabel(a.status)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-xs text-gray-300">{a.percent_complete}%</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.percent_complete}%</td>
                   </tr>
                 ))}
               </tbody>

@@ -121,8 +121,8 @@ export default function Dashboard() {
       <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div>
-            <h1 className="text-xl font-bold text-white">Command Center</h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">Command Center</h1>
+            <p className="text-sm text-[color:var(--text-muted)] mt-0.5">
               {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
             </p>
           </div>
@@ -130,13 +130,13 @@ export default function Dashboard() {
             <HelpIcon context="Dashboard" />
             <button
               onClick={fetchProjects}
-              className="p-2 rounded-lg bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-400 hover:text-white transition-colors"
+              className="p-2 rounded-lg bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
             >
               <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
             </button>
             <button
               onClick={() => setShowAdd(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-sm font-semibold transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Plus size={16} />
               Add Project
@@ -151,7 +151,7 @@ export default function Dashboard() {
           <div className="bg-[#EAB308]/10 border border-[#EAB308]/30 rounded-xl px-5 py-4 mb-6 flex items-center justify-between">
             <div>
               <div className="text-[#EAB308] font-semibold text-sm">Database Setup Required</div>
-              <div className="text-gray-400 text-xs mt-0.5">Run the SQL migration in Supabase to create tables.</div>
+              <div className="text-[color:var(--text-secondary)] text-xs mt-0.5">Run the SQL migration in Supabase to create tables.</div>
             </div>
             <Link href="/setup" className="text-xs px-3 py-1.5 bg-[#EAB308]/20 text-[#EAB308] rounded-lg font-semibold hover:bg-[#EAB308]/30 transition-colors">
               View Setup
@@ -162,23 +162,23 @@ export default function Dashboard() {
         {projects.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Active Projects</div>
-              <div className="text-2xl font-bold text-white">{projects.length}</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Active Projects</div>
+              <div className="text-2xl font-bold text-[color:var(--text-primary)]">{projects.length}</div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">High Risks</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">High Risks</div>
               <div className="text-2xl font-bold text-[#EF4444]">
                 {projects.reduce((s, p) => s + p.stats.highRisks, 0)}
               </div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Overdue Activities</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Overdue Activities</div>
               <div className="text-2xl font-bold text-[#EAB308]">
                 {projects.reduce((s, p) => s + p.stats.lateActivities, 0)}
               </div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Avg Completion</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Avg Completion</div>
               <div className="text-2xl font-bold text-[#22C55E]">
                 {projects.length > 0
                   ? Math.round(projects.reduce((s, p) => s + p.stats.completionPercent, 0) / projects.length)
@@ -193,7 +193,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-center h-64">
             <div className="flex flex-col items-center gap-3">
               <RefreshCw size={24} className="text-[#F97316] animate-spin" />
-              <span className="text-gray-500 text-sm">Loading projects...</span>
+              <span className="text-[color:var(--text-muted)] text-sm">Loading projects...</span>
             </div>
           </div>
         )}
@@ -204,13 +204,13 @@ export default function Dashboard() {
             <div className="w-16 h-16 rounded-2xl bg-[#F97316]/10 border border-[#F97316]/20 flex items-center justify-center mb-4">
               <Building2 size={28} className="text-[#F97316]" />
             </div>
-            <h2 className="text-xl font-bold text-white mb-2">No projects yet</h2>
-            <p className="text-gray-500 text-sm max-w-sm mb-6">
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">No projects yet</h2>
+            <p className="text-[color:var(--text-muted)] text-sm max-w-sm mb-6">
               Create your first project and upload a schedule to start tracking field intelligence.
             </p>
             <button
               onClick={() => setShowAdd(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg font-semibold transition-colors"
+              className="flex items-center gap-2 px-6 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg font-semibold transition-colors"
             >
               <Plus size={18} />
               Create Your First Project
@@ -249,14 +249,14 @@ export default function Dashboard() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${colors.dot}`} />
-                        <span className="text-xs text-gray-500 font-mono">
+                        <span className="text-xs text-[color:var(--text-muted)] font-mono">
                           {project.project_number || "—"}
                         </span>
                       </div>
-                      <h3 className="font-bold text-white text-lg leading-tight truncate group-hover:text-[#F97316] transition-colors">
+                      <h3 className="font-bold text-[color:var(--text-primary)] text-lg leading-tight truncate group-hover:text-[#F97316] transition-colors">
                         {project.name}
                       </h3>
-                      <p className="text-sm text-gray-500 mt-0.5 truncate">
+                      <p className="text-sm text-[color:var(--text-muted)] mt-0.5 truncate">
                         {project.client_name} · {project.location}
                       </p>
                     </div>
@@ -268,8 +268,8 @@ export default function Dashboard() {
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between text-xs mb-1.5">
-                      <span className="text-gray-500">Schedule Progress</span>
-                      <span className="text-gray-300 font-semibold">{project.stats.completionPercent}%</span>
+                      <span className="text-[color:var(--text-muted)]">Schedule Progress</span>
+                      <span className="text-[color:var(--text-secondary)] font-semibold">{project.stats.completionPercent}%</span>
                     </div>
                     <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
                       <div
@@ -283,7 +283,7 @@ export default function Dashboard() {
                   {project.stats.todayActivity && (
                     <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
                       <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Today</div>
-                      <div className="text-xs text-gray-300 truncate">{project.stats.todayActivity.activity_name}</div>
+                      <div className="text-xs text-[color:var(--text-secondary)] truncate">{project.stats.todayActivity.activity_name}</div>
                       <div className="text-[10px] text-[#F97316] mt-0.5">{project.stats.todayActivity.trade}</div>
                     </div>
                   )}
@@ -293,21 +293,21 @@ export default function Dashboard() {
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 mb-0.5">
                         <AlertTriangle size={11} className="text-[#EF4444]" />
-                        <span className="text-sm font-bold text-white">{project.stats.highRisks}</span>
+                        <span className="text-sm font-bold text-[color:var(--text-primary)]">{project.stats.highRisks}</span>
                       </div>
                       <div className="text-[10px] text-gray-600">Risks</div>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 mb-0.5">
                         <TrendingDown size={11} className="text-[#EAB308]" />
-                        <span className="text-sm font-bold text-white">{project.stats.lateActivities}</span>
+                        <span className="text-sm font-bold text-[color:var(--text-primary)]">{project.stats.lateActivities}</span>
                       </div>
                       <div className="text-[10px] text-gray-600">Overdue</div>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 mb-0.5">
                         <Clock size={11} className="text-[#3B82F6]" />
-                        <span className="text-sm font-bold text-white">
+                        <span className="text-sm font-bold text-[color:var(--text-primary)]">
                           {project.stats.daysToCompletion !== null
                             ? project.stats.daysToCompletion > 0
                               ? `${project.stats.daysToCompletion}d`
@@ -323,10 +323,10 @@ export default function Dashboard() {
                   {project.stats.nextMilestone && (
                     <div className="mt-3 pt-3 border-t border-[#1F1F25] flex items-center gap-2">
                       <Flag size={11} className="text-[#F97316] shrink-0" />
-                      <span className="text-xs text-gray-500 truncate flex-1">
+                      <span className="text-xs text-[color:var(--text-muted)] truncate flex-1">
                         {project.stats.nextMilestone.activity_name}
                       </span>
-                      <span className="text-xs text-gray-400 shrink-0">
+                      <span className="text-xs text-[color:var(--text-secondary)] shrink-0">
                         {formatDate(project.stats.nextMilestone.finish_date)}
                       </span>
                     </div>

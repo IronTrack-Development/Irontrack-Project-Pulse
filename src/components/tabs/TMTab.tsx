@@ -51,7 +51,7 @@ const FILTERS = [
 ];
 
 const STATUS_STYLES: Record<string, string> = {
-  draft: "bg-gray-700/60 text-gray-300",
+  draft: "bg-gray-700/60 text-[color:var(--text-secondary)]",
   submitted: "bg-yellow-900/60 text-yellow-300",
   approved: "bg-green-900/60 text-green-300",
   disputed: "bg-red-900/60 text-red-300",
@@ -147,21 +147,21 @@ export default function TMTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-white">T&amp;M Tickets</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">T&amp;M Tickets</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               {totalTickets} ticket{totalTickets !== 1 ? "s" : ""} on this project
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={fetchTickets}
-              className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
             <button
               onClick={() => setShowForm(true)}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
               <span className="hidden sm:inline">New T&amp;M Ticket</span>
@@ -174,24 +174,24 @@ export default function TMTab({ projectId }: Props) {
         {totalTickets > 0 && (
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className="text-xl font-bold text-white">{totalTickets}</p>
-              <p className="text-[10px] text-gray-500 mt-0.5">Tickets</p>
+              <p className="text-xl font-bold text-[color:var(--text-primary)]">{totalTickets}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Tickets</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-sm font-bold text-[#F97316]">{fmtCurrency(totalCost)}</p>
-              <p className="text-[10px] text-gray-500 mt-0.5">Total</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Total</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className={`text-xl font-bold ${pendingApproval > 0 ? "text-yellow-400" : "text-white"}`}>
+              <p className={`text-xl font-bold ${pendingApproval > 0 ? "text-yellow-400" : "text-[color:var(--text-primary)]"}`}>
                 {pendingApproval}
               </p>
-              <p className="text-[10px] text-gray-500 mt-0.5">Pending</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Pending</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className={`text-xl font-bold ${disputed > 0 ? "text-red-400" : "text-white"}`}>
+              <p className={`text-xl font-bold ${disputed > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>
                 {disputed}
               </p>
-              <p className="text-[10px] text-gray-500 mt-0.5">Disputed</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Disputed</p>
             </div>
           </div>
         )}
@@ -209,8 +209,8 @@ export default function TMTab({ projectId }: Props) {
                   onClick={() => setFilter(f.value)}
                   className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === f.value
-                      ? "bg-[#F97316] text-white"
-                      : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {f.label}
@@ -231,10 +231,10 @@ export default function TMTab({ projectId }: Props) {
             <div className="w-16 h-16 rounded-2xl bg-[#1F1F25] flex items-center justify-center mb-4">
               <Receipt size={28} className="text-gray-600" />
             </div>
-            <h3 className="text-white font-semibold mb-1">
+            <h3 className="text-[color:var(--text-primary)] font-semibold mb-1">
               {filter === "all" ? "No T&M Tickets Yet" : `No ${filter} tickets`}
             </h3>
-            <p className="text-gray-500 text-sm max-w-xs">
+            <p className="text-[color:var(--text-muted)] text-sm max-w-xs">
               {filter === "all"
                 ? "Create a ticket to track time & material costs on this project."
                 : `No tickets with "${filter}" status.`}
@@ -242,7 +242,7 @@ export default function TMTab({ projectId }: Props) {
             {filter === "all" && (
               <button
                 onClick={() => setShowForm(true)}
-                className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
+                className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
               >
                 <Plus size={15} />
                 New T&amp;M Ticket
@@ -260,13 +260,13 @@ export default function TMTab({ projectId }: Props) {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-white font-semibold text-sm">{t.ticket_number}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[t.status] ?? "bg-gray-700/60 text-gray-300"}`}>
+                      <span className="text-[color:var(--text-primary)] font-semibold text-sm">{t.ticket_number}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[t.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
                         {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
                       </span>
                       <SigBadge gc={t.gc_signature_path} sub={t.sub_signature_path} />
                     </div>
-                    <p className="text-gray-400 text-xs mt-1 truncate">{t.description}</p>
+                    <p className="text-[color:var(--text-secondary)] text-xs mt-1 truncate">{t.description}</p>
                     {t.sub_contact && (
                       <p className="text-gray-600 text-xs mt-0.5">
                         {t.sub_contact.name}

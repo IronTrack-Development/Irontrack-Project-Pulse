@@ -154,7 +154,7 @@ export default function NewTalkModal({
       <div className="bg-[#121217] w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[#1F1F25]">
         {/* Modal header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Shield size={18} className="text-[#F97316]" />
             {mode === "choose"
               ? "New Toolbox Talk"
@@ -164,7 +164,7 @@ export default function NewTalkModal({
           </h3>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -179,28 +179,28 @@ export default function NewTalkModal({
                 className="w-full flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4 hover:border-[#F97316]/50 transition-colors min-h-[44px]"
               >
                 <div className="text-left">
-                  <div className="text-sm font-medium text-white">
+                  <div className="text-sm font-medium text-[color:var(--text-primary)]">
                     Custom Talk
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
+                  <div className="text-xs text-[color:var(--text-muted)] mt-0.5">
                     Start from scratch with your own topic
                   </div>
                 </div>
-                <ChevronRight size={16} className="text-gray-500" />
+                <ChevronRight size={16} className="text-[color:var(--text-muted)]" />
               </button>
 
-              <div className="text-xs text-gray-500 uppercase tracking-wider mt-4 mb-2">
+              <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-wider mt-4 mb-2">
                 Or start from a template
               </div>
 
               {loadingTemplates ? (
-                <div className="text-center py-8 text-gray-500 text-sm">
+                <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">
                   Loading templates...
                 </div>
               ) : (
                 Object.entries(templatesByCategory).map(([cat, temps]) => (
                   <div key={cat} className="mb-3">
-                    <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1.5 px-1">
+                    <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider mb-1.5 px-1">
                       {cat.replace(/_/g, " ")}
                     </div>
                     {temps.map((t) => (
@@ -210,16 +210,16 @@ export default function NewTalkModal({
                         className="w-full flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
                       >
                         <div className="text-left min-w-0 flex-1">
-                          <div className="text-sm text-white truncate">
+                          <div className="text-sm text-[color:var(--text-primary)] truncate">
                             {t.title}
                           </div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">
+                          <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
                             {t.talking_points.length} talking points ·{" "}
                             {t.duration_minutes} min
                             {t.osha_reference ? ` · ${t.osha_reference}` : ""}
                           </div>
                         </div>
-                        <ChevronRight size={14} className="text-gray-500 ml-2 shrink-0" />
+                        <ChevronRight size={14} className="text-[color:var(--text-muted)] ml-2 shrink-0" />
                       </button>
                     ))}
                   </div>
@@ -232,7 +232,7 @@ export default function NewTalkModal({
             <div className="space-y-4">
               {/* Topic */}
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                   Topic *
                 </label>
                 <input
@@ -240,13 +240,13 @@ export default function NewTalkModal({
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="Safety topic for today's talk"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               {/* Category */}
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                   Category *
                 </label>
                 <select
@@ -254,7 +254,7 @@ export default function NewTalkModal({
                   onChange={(e) =>
                     setCategory(e.target.value as ToolboxTalkCategory)
                   }
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
@@ -267,18 +267,18 @@ export default function NewTalkModal({
               {/* Date + Duration row */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                     Date
                   </label>
                   <input
                     type="date"
                     value={talkDate}
                     onChange={(e) => setTalkDate(e.target.value)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                     Duration (min)
                   </label>
                   <input
@@ -287,7 +287,7 @@ export default function NewTalkModal({
                     onChange={(e) => setDuration(parseInt(e.target.value) || 15)}
                     min={5}
                     max={120}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -295,7 +295,7 @@ export default function NewTalkModal({
               {/* Presenter + Location */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                     Presenter
                   </label>
                   <input
@@ -303,11 +303,11 @@ export default function NewTalkModal({
                     value={presenter}
                     onChange={(e) => setPresenter(e.target.value)}
                     placeholder="Name"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                     Location
                   </label>
                   <input
@@ -315,14 +315,14 @@ export default function NewTalkModal({
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="Where"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
 
               {/* Talking Points */}
               <div>
-                <label className="text-xs text-gray-500 mb-2 block">
+                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">
                   Talking Points
                 </label>
                 <EditableTalkingPoints
@@ -333,7 +333,7 @@ export default function NewTalkModal({
 
               {/* Notes */}
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
                   Notes
                 </label>
                 <textarea
@@ -341,7 +341,7 @@ export default function NewTalkModal({
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   placeholder="Additional notes..."
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
                 />
               </div>
             </div>
@@ -359,14 +359,14 @@ export default function NewTalkModal({
                   setTalkingPoints([""]);
                 }
               }}
-              className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+              className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
             >
               Back
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
           >
             Cancel
           </button>
@@ -374,7 +374,7 @@ export default function NewTalkModal({
             <button
               onClick={handleCreate}
               disabled={creating || !topic.trim()}
-              className="flex-1 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
+              className="flex-1 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
             >
               {creating ? "Creating..." : "Create Talk"}
             </button>

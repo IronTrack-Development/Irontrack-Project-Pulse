@@ -147,7 +147,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl font-bold text-white transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              className="w-full py-3 px-4 rounded-xl font-bold text-[color:var(--text-primary)] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               style={{ background: "#E85D1C" }}
             >
               {loading ? (

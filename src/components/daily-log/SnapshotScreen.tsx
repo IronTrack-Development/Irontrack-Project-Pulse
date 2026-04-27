@@ -41,7 +41,7 @@ const IMPACT_BUTTONS: { value: WeatherImpact; label: string; emoji: string }[] =
 ];
 
 function impactColor(value: WeatherImpact, active: boolean): string {
-  if (!active) return "bg-[#121217] text-gray-500 border-[#1F1F25]";
+  if (!active) return "bg-[#121217] text-[color:var(--text-muted)] border-[#1F1F25]";
   switch (value) {
     case "none": return "bg-[#22C55E]/15 text-[#22C55E] border-[#22C55E]/40";
     case "minor_slowdown": return "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/40";
@@ -102,26 +102,26 @@ function Stepper({
 }) {
   return (
     <div className="flex flex-col items-center gap-1">
-      <span className="text-[10px] text-gray-500 uppercase tracking-wider">{label}</span>
+      <span className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{label}</span>
       <div className="flex items-center gap-0">
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - step))}
           className="w-11 h-11 flex items-center justify-center rounded-l-xl
-            bg-[#0B0B0D] border border-[#1F1F25] text-gray-400
+            bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-secondary)]
             hover:bg-[#1F1F25] active:bg-[#2a2a35] transition-colors"
         >
           <Minus size={16} />
         </button>
         <div className="w-14 h-11 flex items-center justify-center
-          bg-[#0B0B0D] border-t border-b border-[#1F1F25] text-white font-bold text-lg">
+          bg-[#0B0B0D] border-t border-b border-[#1F1F25] text-[color:var(--text-primary)] font-bold text-lg">
           {value}
         </div>
         <button
           type="button"
           onClick={() => onChange(value + step)}
           className="w-11 h-11 flex items-center justify-center rounded-r-xl
-            bg-[#0B0B0D] border border-[#1F1F25] text-gray-400
+            bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-secondary)]
             hover:bg-[#1F1F25] active:bg-[#2a2a35] transition-colors"
         >
           <Plus size={16} />
@@ -221,7 +221,7 @@ export default function SnapshotScreen({
     <div className="space-y-6">
       {/* ─── WEATHER SECTION ─── */}
       <div>
-        <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
           <Thermometer size={16} className="text-[#F97316]" />
           Weather
         </h3>
@@ -229,12 +229,12 @@ export default function SnapshotScreen({
         {weatherLoading ? (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 flex items-center justify-center gap-3">
             <RefreshCw size={18} className="text-[#F97316] animate-spin" />
-            <span className="text-sm text-gray-400">Fetching weather…</span>
+            <span className="text-sm text-[color:var(--text-secondary)]">Fetching weather…</span>
           </div>
         ) : weatherError ? (
           <div className="bg-[#121217] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
             <p className="text-sm text-[#EAB308] mb-1">Weather unavailable — enter manually</p>
-            <p className="text-xs text-gray-500">Could not reach weather service</p>
+            <p className="text-xs text-[color:var(--text-muted)]">Could not reach weather service</p>
           </div>
         ) : (
           <>
@@ -248,18 +248,18 @@ export default function SnapshotScreen({
               <div className="flex items-center gap-4">
                 <span className="text-4xl">{weatherInfo?.emoji || "🌤️"}</span>
                 <div className="text-left">
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-[color:var(--text-primary)]">
                     {weather.current_temp ?? "--"}°F
                   </div>
-                  <div className="text-sm text-gray-400">
+                  <div className="text-sm text-[color:var(--text-secondary)]">
                     {weatherInfo?.label || "Conditions unknown"}
                     {weather.wind_speed != null && (
-                      <span className="text-gray-500"> · {weather.wind_speed} mph wind</span>
+                      <span className="text-[color:var(--text-muted)]"> · {weather.wind_speed} mph wind</span>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="text-gray-500">
+              <div className="text-[color:var(--text-muted)]">
                 {weatherExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
             </button>
@@ -275,25 +275,25 @@ export default function SnapshotScreen({
               <div className="mt-3 bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">High °F</label>
+                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">High °F</label>
                     <input
                       type="number"
                       inputMode="numeric"
                       value={weather.high ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, high: e.target.value ? parseInt(e.target.value) : undefined })}
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                         focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                       placeholder="--"
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">Low °F</label>
+                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Low °F</label>
                     <input
                       type="number"
                       inputMode="numeric"
                       value={weather.low ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, low: e.target.value ? parseInt(e.target.value) : undefined })}
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                         focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                       placeholder="--"
                     />
@@ -301,7 +301,7 @@ export default function SnapshotScreen({
                 </div>
                 {/* Condition chips */}
                 <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">Conditions</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Conditions</label>
                   <div className="flex flex-wrap gap-2">
                     {CONDITION_CHIPS.map(({ label, icon: Icon }) => {
                       const active = (weather.conditions || []).includes(label);
@@ -314,7 +314,7 @@ export default function SnapshotScreen({
                             transition-all min-h-[36px] border
                             ${active
                               ? "bg-[#F97316]/15 text-[#F97316] border-[#F97316]/40"
-                              : "bg-[#0B0B0D] text-gray-400 border-[#1F1F25] hover:border-[#2a2a35]"
+                              : "bg-[#0B0B0D] text-[color:var(--text-secondary)] border-[#1F1F25] hover:border-[#2a2a35]"
                             }`}
                         >
                           <Icon size={14} />
@@ -353,7 +353,7 @@ export default function SnapshotScreen({
 
         {/* Weather Impact buttons — always visible */}
         <div className="mt-4">
-          <label className="text-xs text-gray-500 mb-2 block">Weather Impact on Work</label>
+          <label className="text-xs text-[color:var(--text-muted)] mb-2 block">Weather Impact on Work</label>
           <div className="grid grid-cols-4 gap-2">
             {IMPACT_BUTTONS.map(({ value, label, emoji }) => {
               const active = weather.impact === value;
@@ -378,7 +378,7 @@ export default function SnapshotScreen({
       {/* ─── CREW / MANPOWER SECTION ─── */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
             <Users size={16} className="text-[#3B82F6]" />
             Crew on Site
           </h3>
@@ -404,9 +404,9 @@ export default function SnapshotScreen({
 
               {/* Trade + Company */}
               <div className="mb-3 pr-8">
-                <div className="text-sm font-bold text-white">{entry.trade || "Untitled Trade"}</div>
+                <div className="text-sm font-bold text-[color:var(--text-primary)]">{entry.trade || "Untitled Trade"}</div>
                 {entry.company && (
-                  <div className="text-xs text-gray-500">{entry.company}</div>
+                  <div className="text-xs text-[color:var(--text-muted)]">{entry.company}</div>
                 )}
               </div>
 
@@ -436,7 +436,7 @@ export default function SnapshotScreen({
               onChange={(e) => setNewTrade(e.target.value)}
               placeholder="Trade name (e.g. Electrical)"
               autoFocus
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
             <input
@@ -444,7 +444,7 @@ export default function SnapshotScreen({
               value={newCompany}
               onChange={(e) => setNewCompany(e.target.value)}
               placeholder="Company name (optional)"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
             <div className="flex gap-2">
@@ -452,7 +452,7 @@ export default function SnapshotScreen({
                 type="button"
                 onClick={addCrewEntry}
                 disabled={!newTrade.trim()}
-                className="flex-1 py-2.5 rounded-xl bg-[#F97316] text-white text-sm font-medium
+                className="flex-1 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-medium
                   hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed transition-all min-h-[44px]"
               >
                 Add
@@ -460,7 +460,7 @@ export default function SnapshotScreen({
               <button
                 type="button"
                 onClick={() => { setShowAddTrade(false); setNewTrade(""); setNewCompany(""); }}
-                className="flex-1 py-2.5 rounded-xl bg-[#1F1F25] text-gray-400 text-sm
+                className="flex-1 py-2.5 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] text-sm
                   hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Cancel
@@ -472,7 +472,7 @@ export default function SnapshotScreen({
             type="button"
             onClick={() => setShowAddTrade(true)}
             className="mt-3 w-full py-3 rounded-xl border border-dashed border-[#1F1F25] text-sm
-              text-gray-500 hover:text-[#F97316] hover:border-[#F97316]/30 transition-colors min-h-[44px]"
+              text-[color:var(--text-muted)] hover:text-[#F97316] hover:border-[#F97316]/30 transition-colors min-h-[44px]"
           >
             + Add Trade
           </button>
@@ -482,12 +482,12 @@ export default function SnapshotScreen({
         {crew.length > 0 && (
           <div className="mt-3 flex items-center justify-center gap-6 py-2.5 rounded-xl
             bg-[#121217] border border-[#1F1F25] text-sm">
-            <span className="text-gray-400">
-              <span className="font-bold text-white">{totalHeadcount}</span> workers
+            <span className="text-[color:var(--text-secondary)]">
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHeadcount}</span> workers
             </span>
             <span className="text-[#1F1F25]">|</span>
-            <span className="text-gray-400">
-              <span className="font-bold text-white">{totalHours.toLocaleString()}</span> crew-hours
+            <span className="text-[color:var(--text-secondary)]">
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHours.toLocaleString()}</span> crew-hours
             </span>
           </div>
         )}

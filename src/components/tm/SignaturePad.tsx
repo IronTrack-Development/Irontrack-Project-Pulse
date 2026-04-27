@@ -113,17 +113,17 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
       <div className="w-full sm:max-w-md bg-[#121217] rounded-t-2xl sm:rounded-2xl border border-[#1F1F25] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-[#1F1F25]">
-          <h3 className="text-white font-semibold text-sm">{label}</h3>
+          <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{label}</h3>
           <button
             onClick={onCancel}
-            className="p-2 text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Instruction */}
-        <p className="text-xs text-gray-500 text-center pt-3 pb-1 px-4">
+        <p className="text-xs text-[color:var(--text-muted)] text-center pt-3 pb-1 px-4">
           Sign with your finger in the box below
         </p>
 
@@ -147,7 +147,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
         <div className="flex gap-2 px-4 pb-4 pt-2">
           <button
             onClick={clear}
-            className="flex items-center gap-1.5 px-4 py-3 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[44px] flex-1 justify-center"
+            className="flex items-center gap-1.5 px-4 py-3 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px] flex-1 justify-center"
           >
             <RotateCcw size={15} />
             Clear
@@ -155,7 +155,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
           <button
             onClick={done}
             disabled={isEmpty}
-            className="flex items-center gap-1.5 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl text-sm font-bold transition-colors min-h-[44px] flex-1 justify-center"
+            className="flex items-center gap-1.5 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex-1 justify-center"
           >
             <Check size={15} />
             Done

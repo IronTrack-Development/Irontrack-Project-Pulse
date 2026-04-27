@@ -122,7 +122,7 @@ const platformColors: Record<Platform, { bg: string; text: string; border: strin
   },
   iOS: {
     bg: "bg-gray-500/10",
-    text: "text-gray-400",
+    text: "text-[color:var(--text-secondary)]",
     border: "border-gray-500/20",
     leftBorder: "border-l-gray-400",
   },
@@ -156,11 +156,11 @@ export default function ReleaseNotesPage() {
                 style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
               />
             </div>
-            <span className="text-lg md:text-xl font-bold text-white">
+            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
               IronTrack<span className="hidden md:inline"> Project Pulse</span>
             </span>
           </Link>
-          <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
+          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
             ← Back to home
           </Link>
         </div>
@@ -169,8 +169,8 @@ export default function ReleaseNotesPage() {
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
         {/* Page Title */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Release Notes</h1>
-          <p className="text-gray-400">What&apos;s new in IronTrack Project Pulse</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">Release Notes</h1>
+          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Project Pulse</p>
         </div>
 
         {/* Filter Tabs */}
@@ -182,7 +182,7 @@ export default function ReleaseNotesPage() {
               className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === tab
                   ? "text-[#F97316] border-[#F97316]"
-                  : "text-gray-400 border-transparent hover:text-white"
+                  : "text-[color:var(--text-secondary)] border-transparent hover:text-[color:var(--text-primary)]"
               }`}
             >
               {tab}
@@ -193,7 +193,7 @@ export default function ReleaseNotesPage() {
         {/* Release Cards */}
         {filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No release notes yet for {activeTab}.</p>
+            <p className="text-[color:var(--text-muted)] text-lg">No release notes yet for {activeTab}.</p>
             <p className="text-gray-600 text-sm mt-2">Check back soon.</p>
           </div>
         ) : (
@@ -212,18 +212,18 @@ export default function ReleaseNotesPage() {
                     >
                       {release.platform}
                     </span>
-                    <span className="text-sm font-mono font-semibold text-white">{release.version}</span>
+                    <span className="text-sm font-mono font-semibold text-[color:var(--text-primary)]">{release.version}</span>
                     <span className="text-gray-600">•</span>
-                    <span className="text-sm text-gray-400">{release.date}</span>
+                    <span className="text-sm text-[color:var(--text-secondary)]">{release.date}</span>
                   </div>
 
                   {/* Release Title */}
-                  <h2 className="text-xl font-bold text-white mb-4">{release.title}</h2>
+                  <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-4">{release.title}</h2>
 
                   {/* Changes */}
                   <ul className="space-y-2">
                     {release.changes.map((change, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-gray-300">
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[color:var(--text-secondary)]">
                         <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colors.text.replace("text-", "bg-")}`} />
                         {change}
                       </li>
@@ -241,14 +241,14 @@ export default function ReleaseNotesPage() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />
-            <span className="text-sm text-gray-500">© 2026 IronTrack Development LLC. All rights reserved.</span>
+            <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-gray-500 hover:text-[#F97316] transition-colors">Terms</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-gray-500 hover:text-[#F97316] transition-colors">Privacy</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/status" className="text-gray-500 hover:text-[#F97316] transition-colors">Status</Link>
+            <Link href="/status" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Status</Link>
           </div>
         </div>
       </footer>

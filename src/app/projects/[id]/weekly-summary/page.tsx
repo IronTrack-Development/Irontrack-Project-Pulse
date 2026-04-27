@@ -128,7 +128,7 @@ export default function WeeklySummaryPage({
     return (
       <div className="flex items-center justify-center h-screen bg-white text-center p-8">
         <div>
-          <p className="text-gray-500 mb-4">{error ?? "Summary unavailable"}</p>
+          <p className="text-[color:var(--text-muted)] mb-4">{error ?? "Summary unavailable"}</p>
           <button
             onClick={() => router.back()}
             className="text-orange-500 underline text-sm"
@@ -149,14 +149,14 @@ export default function WeeklySummaryPage({
       <div className="print:hidden sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-500 hover:text-gray-800 text-sm transition-colors"
+          className="flex items-center gap-2 text-[color:var(--text-muted)] hover:text-gray-800 text-sm transition-colors"
         >
           <ArrowLeft size={16} />
           Back to Project
         </button>
         <button
           onClick={() => window.print()}
-          className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-semibold transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
         >
           <Printer size={15} />
           Print / Save PDF
@@ -175,17 +175,17 @@ export default function WeeklySummaryPage({
                 alt="IronTrack"
                 className="w-7 h-7 rounded-md object-contain"
               />
-              <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+              <span className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">
                 IronTrack · Weekly Summary
               </span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mt-1">{project.name}</h1>
             {(project.client_name || project.location) && (
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-sm text-[color:var(--text-muted)] mt-0.5">
                 {[project.client_name, project.location].filter(Boolean).join(" · ")}
               </p>
             )}
-            <p className="text-sm text-gray-400 mt-1">{data.dateRange}</p>
+            <p className="text-sm text-[color:var(--text-secondary)] mt-1">{data.dateRange}</p>
           </div>
           <div className="text-right">
             <div
@@ -200,7 +200,7 @@ export default function WeeklySummaryPage({
             >
               {healthLabel(project.health_score)}
             </div>
-            <div className="text-xs text-gray-400 mt-0.5">Health Score</div>
+            <div className="text-xs text-[color:var(--text-secondary)] mt-0.5">Health Score</div>
           </div>
         </div>
 
@@ -211,7 +211,7 @@ export default function WeeklySummaryPage({
           </h2>
           <p className="text-sm text-gray-700 leading-relaxed">{data.execSummary}</p>
           {project.target_finish_date && (
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-[color:var(--text-muted)] mt-1">
               Target completion: <strong>{formatDate(project.target_finish_date)}</strong>
             </p>
           )}
@@ -235,7 +235,7 @@ export default function WeeklySummaryPage({
                 className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center"
               >
                 <div className={`text-xl font-bold ${color}`}>{value}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{label}</div>
+                <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{label}</div>
               </div>
             ))}
           </div>
@@ -254,23 +254,23 @@ export default function WeeklySummaryPage({
             This Week&apos;s Progress ({activitiesMovedThisWeek.length} activities)
           </h2>
           {activitiesMovedThisWeek.length === 0 ? (
-            <p className="text-sm text-gray-400 italic">No progress reports submitted this week.</p>
+            <p className="text-sm text-[color:var(--text-secondary)] italic">No progress reports submitted this week.</p>
           ) : (
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Activity</th>
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Trade</th>
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Finish</th>
-                  <th className="text-right py-1.5 text-xs font-semibold text-gray-500 uppercase">Progress</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Activity</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Trade</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Finish</th>
+                  <th className="text-right py-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Progress</th>
                 </tr>
               </thead>
               <tbody>
                 {activitiesMovedThisWeek.map((act) => (
                   <tr key={act.id} className="border-b border-gray-100">
                     <td className="py-2 pr-3 text-gray-800 leading-snug">{act.activity_name}</td>
-                    <td className="py-2 pr-3 text-gray-500 text-xs">{act.trade ?? "—"}</td>
-                    <td className="py-2 pr-3 text-gray-500 text-xs">{formatDate(act.finish_date)}</td>
+                    <td className="py-2 pr-3 text-[color:var(--text-muted)] text-xs">{act.trade ?? "—"}</td>
+                    <td className="py-2 pr-3 text-[color:var(--text-muted)] text-xs">{formatDate(act.finish_date)}</td>
                     <td className="py-2 text-right">
                       <span
                         className={`text-xs font-bold ${
@@ -297,16 +297,16 @@ export default function WeeklySummaryPage({
             Sub Activity ({data.reportCount} reports this week)
           </h2>
           {subActivity.length === 0 ? (
-            <p className="text-sm text-gray-400 italic">No sub reports submitted this week.</p>
+            <p className="text-sm text-[color:var(--text-secondary)] italic">No sub reports submitted this week.</p>
           ) : (
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Sub</th>
-                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Reports</th>
-                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Workers</th>
-                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Hours</th>
-                  <th className="text-left py-1.5 text-xs font-semibold text-gray-500 uppercase">Delays</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Sub</th>
+                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Reports</th>
+                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Workers</th>
+                  <th className="text-right py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Hours</th>
+                  <th className="text-left py-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Delays</th>
                 </tr>
               </thead>
               <tbody>
@@ -349,8 +349,8 @@ export default function WeeklySummaryPage({
                     loading="lazy"
                     className="w-full aspect-square object-cover rounded-lg border border-gray-200"
                   />
-                  <p className="text-[9px] text-gray-400 truncate">{photo.submitted_by}</p>
-                  <p className="text-[9px] text-gray-300">{formatDate(photo.report_date)}</p>
+                  <p className="text-[9px] text-[color:var(--text-secondary)] truncate">{photo.submitted_by}</p>
+                  <p className="text-[9px] text-[color:var(--text-secondary)]">{formatDate(photo.report_date)}</p>
                 </div>
               ))}
             </div>
@@ -363,22 +363,22 @@ export default function WeeklySummaryPage({
             Upcoming — Next 7 Days
           </h2>
           {upcoming.length === 0 ? (
-            <p className="text-sm text-gray-400 italic">No activities starting next week.</p>
+            <p className="text-sm text-[color:var(--text-secondary)] italic">No activities starting next week.</p>
           ) : (
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Activity</th>
-                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-gray-500 uppercase">Trade</th>
-                  <th className="text-left py-1.5 text-xs font-semibold text-gray-500 uppercase">Start</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Activity</th>
+                  <th className="text-left py-1.5 pr-3 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Trade</th>
+                  <th className="text-left py-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase">Start</th>
                 </tr>
               </thead>
               <tbody>
                 {upcoming.map((act) => (
                   <tr key={act.id} className="border-b border-gray-100">
                     <td className="py-2 pr-3 text-gray-800">{act.activity_name}</td>
-                    <td className="py-2 pr-3 text-gray-500 text-xs">{act.trade ?? "—"}</td>
-                    <td className="py-2 text-gray-500 text-xs">{formatDate(act.start_date)}</td>
+                    <td className="py-2 pr-3 text-[color:var(--text-muted)] text-xs">{act.trade ?? "—"}</td>
+                    <td className="py-2 text-[color:var(--text-muted)] text-xs">{formatDate(act.start_date)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -387,7 +387,7 @@ export default function WeeklySummaryPage({
         </section>
 
         {/* Footer */}
-        <div className="mt-10 pt-4 border-t border-gray-200 flex items-center justify-between text-xs text-gray-400">
+        <div className="mt-10 pt-4 border-t border-gray-200 flex items-center justify-between text-xs text-[color:var(--text-secondary)]">
           <span>Generated by IronTrack · {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
           <span>Confidential</span>
         </div>

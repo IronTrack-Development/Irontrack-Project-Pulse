@@ -33,7 +33,7 @@ const CATEGORIES = [
 ];
 
 const CATEGORY_STYLES: Record<string, string> = {
-  general: "bg-gray-700 text-gray-300",
+  general: "bg-gray-700 text-[color:var(--text-secondary)]",
   safety: "bg-red-500/20 text-red-300",
   quality: "bg-blue-500/20 text-blue-300",
   environmental: "bg-green-500/20 text-green-300",
@@ -41,7 +41,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   equipment: "bg-yellow-500/20 text-yellow-300",
   material_handling: "bg-purple-500/20 text-purple-300",
   site_access: "bg-indigo-500/20 text-indigo-300",
-  other: "bg-gray-700 text-gray-300",
+  other: "bg-gray-700 text-[color:var(--text-secondary)]",
 };
 
 export default function SOPLibrary({ projectId }: Props) {
@@ -168,7 +168,7 @@ export default function SOPLibrary({ projectId }: Props) {
       <div className="space-y-4">
         <button
           onClick={() => setSelectedSop(null)}
-          className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
         >
           <X size={14} /> Back to Library
         </button>
@@ -183,12 +183,12 @@ export default function SOPLibrary({ projectId }: Props) {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <h2 className="text-lg font-bold text-white">{s.title}</h2>
+                    <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{s.title}</h2>
                     <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded capitalize ${catCls}`}>
                       {s.category.replace(/_/g, " ")}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">Version {s.version}</p>
+                  <p className="text-xs text-[color:var(--text-muted)]">Version {s.version}</p>
                 </div>
                 <button
                   onClick={() => handleDelete(s.id)}
@@ -198,14 +198,14 @@ export default function SOPLibrary({ projectId }: Props) {
                 </button>
               </div>
 
-              {s.description && <p className="text-sm text-gray-300">{s.description}</p>}
+              {s.description && <p className="text-sm text-[color:var(--text-secondary)]">{s.description}</p>}
 
               {s.file_url && (
                 <a
                   href={s.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] rounded-lg text-sm text-gray-300 hover:text-white transition-colors min-h-[44px] inline-flex"
+                  className="flex items-center gap-2 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[44px] inline-flex"
                 >
                   <Download size={14} /> {s.file_name || "Download File"}
                 </a>
@@ -215,7 +215,7 @@ export default function SOPLibrary({ projectId }: Props) {
             {/* Acknowledgments */}
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
                   <Users size={14} className="text-[#F97316]" />
                   Acknowledgments ({s.acknowledged_count}/{s.total_foremen})
                 </h3>
@@ -233,7 +233,7 @@ export default function SOPLibrary({ projectId }: Props) {
                 <div className="space-y-1">
                   {s.acknowledgments.map((a) => (
                     <div key={a.foreman_id} className="flex items-center justify-between py-1.5 text-xs">
-                      <span className="text-gray-300">{a.foreman_name}</span>
+                      <span className="text-[color:var(--text-secondary)]">{a.foreman_name}</span>
                       {a.acknowledged_at ? (
                         <span className="flex items-center gap-1 text-green-400">
                           <CheckCircle size={10} /> {new Date(a.acknowledged_at).toLocaleDateString()}
@@ -259,12 +259,12 @@ export default function SOPLibrary({ projectId }: Props) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">SOP Library</h2>
-          <p className="text-xs text-gray-500 mt-0.5">{sops.length} documents</p>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">SOP Library</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{sops.length} documents</p>
         </div>
         <button
           onClick={() => setShowUpload(!showUpload)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
           {showUpload ? <><X size={14} /> Cancel</> : <><Upload size={14} /> Upload SOP</>}
         </button>
@@ -273,25 +273,25 @@ export default function SOPLibrary({ projectId }: Props) {
       {/* Upload Form */}
       {showUpload && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-bold text-white">New SOP</h3>
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">New SOP</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">
                 Title <span className="text-red-400">*</span>
               </label>
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Fall Protection Procedures"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1 block">Category</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
@@ -300,20 +300,20 @@ export default function SOPLibrary({ projectId }: Props) {
             </div>
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1 block">Description</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of this SOP..."
               rows={2}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1 block">File (PDF/DOC)</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">File (PDF/DOC)</label>
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
             >
               <Upload size={14} />
               {file ? file.name : "Choose file..."}
@@ -332,7 +332,7 @@ export default function SOPLibrary({ projectId }: Props) {
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             <Upload size={14} />
             {uploading ? "Uploading..." : "Upload SOP"}
@@ -344,7 +344,7 @@ export default function SOPLibrary({ projectId }: Props) {
       {sops.length === 0 ? (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <FileText size={28} className="mx-auto text-gray-600 mb-2" />
-          <p className="text-sm text-gray-400">No SOPs uploaded yet</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">No SOPs uploaded yet</p>
           <p className="text-xs text-gray-600 mt-1">Upload standard operating procedures for your foremen</p>
         </div>
       ) : (
@@ -363,9 +363,9 @@ export default function SOPLibrary({ projectId }: Props) {
                     <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded capitalize ${catCls}`}>
                       {cat.replace(/_/g, " ")}
                     </span>
-                    <span className="text-xs text-gray-400">{items.length} document{items.length !== 1 ? "s" : ""}</span>
+                    <span className="text-xs text-[color:var(--text-secondary)]">{items.length} document{items.length !== 1 ? "s" : ""}</span>
                   </div>
-                  {isCollapsed ? <ChevronDown size={14} className="text-gray-500" /> : <ChevronUp size={14} className="text-gray-500" />}
+                  {isCollapsed ? <ChevronDown size={14} className="text-[color:var(--text-muted)]" /> : <ChevronUp size={14} className="text-[color:var(--text-muted)]" />}
                 </button>
 
                 {!isCollapsed && (
@@ -379,9 +379,9 @@ export default function SOPLibrary({ projectId }: Props) {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <FileText size={12} className="text-[#F97316] flex-none" />
-                            <span className="text-sm text-white truncate">{s.title}</span>
+                            <span className="text-sm text-[color:var(--text-primary)] truncate">{s.title}</span>
                           </div>
-                          <p className="text-[10px] text-gray-500 mt-0.5 ml-5">v{s.version}</p>
+                          <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5 ml-5">v{s.version}</p>
                         </div>
                         <div className="flex items-center gap-2 ml-3">
                           <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${

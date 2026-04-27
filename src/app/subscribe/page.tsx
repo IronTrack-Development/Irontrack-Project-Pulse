@@ -43,13 +43,13 @@ export default function SubscribePage() {
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
           <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
-          <span className="text-2xl font-bold text-white">IronTrack Project Pulse</span>
+          <span className="text-2xl font-bold text-[color:var(--text-primary)]">IronTrack Project Pulse</span>
         </div>
 
         {/* Subscription Card */}
         <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Subscribe to Project Pulse</h1>
-          <p className="text-gray-400 mb-6">
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] mb-2">Subscribe to Project Pulse</h1>
+          <p className="text-[color:var(--text-secondary)] mb-6">
             Get instant schedule intelligence for your construction projects.
           </p>
 
@@ -61,27 +61,27 @@ export default function SubscribePage() {
 
           <div className="bg-[#0B0B0D] border border-[#2A2A30] rounded-lg p-6 mb-6">
             <div className="text-center mb-6">
-              <div className="text-4xl font-bold text-white mb-2">
-                $19.99<span className="text-xl text-gray-500">/mo</span>
+              <div className="text-4xl font-bold text-[color:var(--text-primary)] mb-2">
+                $19.99<span className="text-xl text-[color:var(--text-muted)]">/mo</span>
               </div>
-              <p className="text-gray-400">per project</p>
+              <p className="text-[color:var(--text-secondary)]">per project</p>
             </div>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">Unlimited schedule uploads</span>
+                <span className="text-[color:var(--text-secondary)] text-sm">Unlimited schedule uploads</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">Daily risk detection & health scores</span>
+                <span className="text-[color:var(--text-secondary)] text-sm">Daily risk detection & health scores</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">Lookahead intelligence & briefs</span>
+                <span className="text-[color:var(--text-secondary)] text-sm">Lookahead intelligence & briefs</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-[#22C55E] shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">Mobile app access</span>
+                <span className="text-[color:var(--text-secondary)] text-sm">Mobile app access</span>
               </li>
             </ul>
           </div>
@@ -89,7 +89,7 @@ export default function SubscribePage() {
           <button
             onClick={handleSubscribe}
             disabled={loading}
-            className="w-full bg-[#F97316] hover:bg-[#EA580C] disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center mb-4"
+            className="w-full bg-[#F97316] hover:bg-[#EA580C] disabled:bg-gray-600 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center mb-4"
           >
             {loading ? (
               <>
@@ -101,13 +101,13 @@ export default function SubscribePage() {
             )}
           </button>
 
-          <p className="text-center text-gray-500 text-xs">
+          <p className="text-center text-[color:var(--text-muted)] text-xs">
             Secure payment powered by Stripe • Cancel anytime
           </p>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-sm mt-8">
+        <p className="text-center text-[color:var(--text-muted)] text-sm mt-8">
           © 2026 IronTrack Development LLC. All rights reserved.
         </p>
       </div>

@@ -31,7 +31,7 @@ function statusBadge(status: string) {
       );
     case "locked":
       return (
-        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400">
+        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
           <Lock size={10} />
           Locked
         </span>
@@ -70,8 +70,8 @@ function TalkCard({
     >
       <div className="flex items-start justify-between mb-2">
         <div className="min-w-0 flex-1">
-          <div className="text-sm font-medium text-white truncate">{talk.topic}</div>
-          <div className="text-xs text-gray-500 mt-0.5">
+          <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{talk.topic}</div>
+          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">
             {date.toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
@@ -88,13 +88,13 @@ function TalkCard({
       <div className="flex flex-wrap gap-2 mt-2">
         {categoryBadge(talk.category)}
         {(talk.attendee_count ?? 0) > 0 && (
-          <span className="flex items-center gap-1 text-[10px] text-gray-400">
+          <span className="flex items-center gap-1 text-[10px] text-[color:var(--text-secondary)]">
             <Users size={10} />
             {talk.signed_count || 0}/{talk.attendee_count} signed
           </span>
         )}
         {talk.duration_minutes && (
-          <span className="text-[10px] text-gray-500">
+          <span className="text-[10px] text-[color:var(--text-muted)]">
             {talk.duration_minutes} min
           </span>
         )}
@@ -160,7 +160,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
             setSelectedTalkId(null);
             fetchTalks();
           }}
-          className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px] mb-4"
+          className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px] mb-4"
         >
           <ArrowLeft size={16} />
           Back to Safety
@@ -181,30 +181,30 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
     <div>
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-bold text-white flex items-center gap-2">
+        <h2 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
           <Shield size={18} className="text-[#F97316]" />
           Safety
           {total > 0 && (
-            <span className="text-xs text-gray-500 font-normal">({total})</span>
+            <span className="text-xs text-[color:var(--text-muted)] font-normal">({total})</span>
           )}
         </h2>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowSettings(true)}
-            className="p-2 rounded-lg text-gray-500 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
             title="Safety Settings"
           >
             <Settings size={14} />
           </button>
           <button
             onClick={fetchTalks}
-            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
           >
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           </button>
           <button
             onClick={() => setShowNewModal(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-medium transition-colors min-h-[40px]"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors min-h-[40px]"
           >
             <Plus size={14} />
             New Talk
@@ -216,7 +216,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
       <div className="flex items-center gap-3 mb-3">
         <button
           onClick={() => setShowTemplates(true)}
-          className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#F97316] transition-colors"
+          className="flex items-center gap-1.5 text-xs text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
         >
           <BookOpen size={12} />
           Manage Templates
@@ -226,26 +226,26 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
             This Month
           </div>
-          <div className="text-lg font-bold text-white mt-1">
+          <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">
             {thisMonthTalks.length}
           </div>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
             Avg Attendance
           </div>
-          <div className="text-lg font-bold text-white mt-1">{avgAttendance}</div>
+          <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">{avgAttendance}</div>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
             Follow-ups
           </div>
           <div
             className={`text-lg font-bold mt-1 ${
-              followUps > 0 ? "text-[#EAB308]" : "text-white"
+              followUps > 0 ? "text-[#EAB308]" : "text-[color:var(--text-primary)]"
             }`}
           >
             {followUps}
@@ -261,7 +261,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
       ) : talks.length === 0 ? (
         <div className="text-center py-12">
           <Shield size={32} className="mx-auto mb-3 text-gray-700" />
-          <p className="text-sm text-gray-500 mb-1">No toolbox talks yet</p>
+          <p className="text-sm text-[color:var(--text-muted)] mb-1">No toolbox talks yet</p>
           <p className="text-xs text-gray-600">
             Start your first safety talk to document compliance
           </p>

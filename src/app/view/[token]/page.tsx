@@ -146,7 +146,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-gray-400 border border-[#2a2a33]">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#2a2a33]">
       On Track
     </span>
   );
@@ -249,14 +249,14 @@ function Lightbox({
       {/* Close */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white"
+        className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[color:var(--text-primary)]"
       >
         <X size={20} />
       </button>
 
       {/* Counter */}
       {urls.length > 1 && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-gray-400 bg-black/60 px-3 py-1 rounded-full">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-[color:var(--text-secondary)] bg-black/60 px-3 py-1 rounded-full">
           {index + 1} / {urls.length}
         </div>
       )}
@@ -274,13 +274,13 @@ function Lightbox({
         <>
           <button
             onClick={() => setIndex((i) => (i - 1 + urls.length) % urls.length)}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[color:var(--text-primary)]"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={() => setIndex((i) => (i + 1) % urls.length)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[color:var(--text-primary)]"
           >
             <ChevronRight size={20} />
           </button>
@@ -314,11 +314,11 @@ function PhotoStrip({ urls }: { urls: string[] }) {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                <ZoomIn size={14} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ZoomIn size={14} className="text-[color:var(--text-primary)] opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               {ts && (
                 <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-0.5 py-0.5 text-center">
-                  <span className="text-white text-[8px] leading-none font-medium">{ts}</span>
+                  <span className="text-[color:var(--text-primary)] text-[8px] leading-none font-medium">{ts}</span>
                 </div>
               )}
             </button>
@@ -397,16 +397,16 @@ function ReportPreviewCard({
           <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
             📋 Daily Report Preview
           </p>
-          <h2 className="text-lg font-bold text-white">{formatDate(reportDate)}</h2>
-          <p className="text-sm text-gray-300">{projectName}</p>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{formatDate(reportDate)}</h2>
+          <p className="text-sm text-[color:var(--text-secondary)]">{projectName}</p>
           <p className="text-sm text-[#F97316]">{subName}</p>
-          <p className="text-xs text-gray-500">Submitted by: {submittedBy}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">Submitted by: {submittedBy}</p>
         </div>
 
         {/* Tasks */}
         {workedActivities.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Tasks Worked On
             </p>
             {workedActivities.map((act) => {
@@ -429,7 +429,7 @@ function ReportPreviewCard({
                         ? "border-orange-500 text-orange-400 bg-orange-900/20"
                         : pct >= 25
                         ? "border-blue-500 text-blue-400 bg-blue-900/20"
-                        : "border-gray-600 text-gray-400 bg-gray-900/20"
+                        : "border-gray-600 text-[color:var(--text-secondary)] bg-gray-900/20"
                     }`}
                   >
                     {pct}%
@@ -445,16 +445,16 @@ function ReportPreviewCard({
 
         {/* Manpower */}
         <div className="flex gap-4">
-          <div className="flex items-center gap-2 text-sm text-gray-300">
+          <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
             <Users size={15} className="text-[#F97316]" />
             <span>
-              <span className="font-bold text-white">{manpowerCount}</span> workers
+              <span className="font-bold text-[color:var(--text-primary)]">{manpowerCount}</span> workers
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-300">
+          <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
             <Timer size={15} className="text-[#F97316]" />
             <span>
-              <span className="font-bold text-white">{totalHours}</span>h total
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHours}</span>h total
             </span>
           </div>
         </div>
@@ -462,7 +462,7 @@ function ReportPreviewCard({
         {/* Delays */}
         {activeDelays.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Delays / Issues
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -481,17 +481,17 @@ function ReportPreviewCard({
         {/* Notes */}
         {notes.trim() && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Notes
             </p>
-            <p className="text-sm text-gray-300 italic">"{notes}"</p>
+            <p className="text-sm text-[color:var(--text-secondary)] italic">"{notes}"</p>
           </div>
         )}
 
         {/* Photos */}
         {allPhotoUrls.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Photos ({allPhotoUrls.length})
             </p>
             <div className="grid grid-cols-3 gap-2">
@@ -511,11 +511,11 @@ function ReportPreviewCard({
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                      <ZoomIn size={18} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ZoomIn size={18} className="text-[color:var(--text-primary)] opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                     {ts && (
                       <div className="absolute bottom-0 left-0 right-0 bg-black/60 rounded-b-xl px-1 py-1 text-center">
-                        <span className="text-white text-[9px] leading-none font-medium">{ts}</span>
+                        <span className="text-[color:var(--text-primary)] text-[9px] leading-none font-medium">{ts}</span>
                       </div>
                     )}
                   </button>
@@ -532,7 +532,7 @@ function ReportPreviewCard({
           {onEdit && (
             <button
               onClick={onEdit}
-              className="flex-1 bg-[#13131A] border border-[#1F1F25] hover:border-gray-500 text-gray-300 font-semibold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2"
+              className="flex-1 bg-[#13131A] border border-[#1F1F25] hover:border-gray-500 text-[color:var(--text-secondary)] font-semibold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2"
             >
               <ArrowLeft size={18} />
               Edit Report
@@ -542,7 +542,7 @@ function ReportPreviewCard({
             <button
               onClick={onConfirm}
               disabled={confirming}
-              className="flex-1 bg-green-700 hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"
+              className="flex-1 bg-green-700 hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"
             >
               {confirming ? (
                 <Loader2 size={20} className="animate-spin" />
@@ -598,7 +598,7 @@ function ActivityCard({
       );
     } else {
       trendNode = (
-        <span className="text-gray-500 text-xs font-bold" title="No change since last report">
+        <span className="text-[color:var(--text-muted)] text-xs font-bold" title="No change since last report">
           →
         </span>
       );
@@ -612,25 +612,25 @@ function ActivityCard({
         {statusChip(activity.status, pct)}
       </div>
 
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {activity.start_date && (
-          <span>Start: <span className="text-gray-300">{formatDate(activity.start_date)}</span></span>
+          <span>Start: <span className="text-[color:var(--text-secondary)]">{formatDate(activity.start_date)}</span></span>
         )}
         {activity.finish_date && (
-          <span>Finish: <span className="text-gray-300">{formatDate(activity.finish_date)}</span></span>
+          <span>Finish: <span className="text-[color:var(--text-secondary)]">{formatDate(activity.finish_date)}</span></span>
         )}
         {activity.trade && (
-          <span>Trade: <span className="text-gray-300">{activity.trade}</span></span>
+          <span>Trade: <span className="text-[color:var(--text-secondary)]">{activity.trade}</span></span>
         )}
       </div>
 
       {/* Progress bar */}
       <div className="space-y-1">
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
           <span>Progress</span>
           <span className="flex items-center gap-1">
             {trendNode}
-            <span className="text-gray-300">{trendPct != null ? trendPct : pct}%</span>
+            <span className="text-[color:var(--text-secondary)]">{trendPct != null ? trendPct : pct}%</span>
           </span>
         </div>
         <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
@@ -666,7 +666,7 @@ function StatCard({
       >
         {value}
       </span>
-      <span className="text-xs text-gray-500 mt-0.5">{label}</span>
+      <span className="text-xs text-[color:var(--text-muted)] mt-0.5">{label}</span>
     </div>
   );
 }
@@ -758,8 +758,8 @@ function FullScopeTab({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-400">
-          <span className="text-white font-semibold">{total}</span> tasks assigned to your scope
+        <p className="text-sm text-[color:var(--text-secondary)]">
+          <span className="text-[color:var(--text-primary)] font-semibold">{total}</span> tasks assigned to your scope
         </p>
       </div>
 
@@ -795,10 +795,10 @@ function FullScopeTab({
         <ScopeGroup
           label="Not Started"
           count={notStarted.length}
-          accentClass="text-gray-300"
+          accentClass="text-[color:var(--text-secondary)]"
           borderClass="border-[#1F1F25]"
           bgClass="bg-[#13131A]"
-          iconNode={<ChevronRight size={14} className="text-gray-500" />}
+          iconNode={<ChevronRight size={14} className="text-[color:var(--text-muted)]" />}
           activities={notStarted}
           defaultOpen
           trendMap={trendMap}
@@ -876,7 +876,7 @@ function ScopeGroup({
         </div>
         <ChevronDown
           size={16}
-          className={`text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`text-[color:var(--text-muted)] transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -928,7 +928,7 @@ function PastReportsSection({
         <div className="bg-[#13131A] px-4 py-3 flex items-center gap-3">
           <button
             onClick={() => setFullReportId(null)}
-            className="text-gray-400 hover:text-gray-200 transition-colors"
+            className="text-[color:var(--text-secondary)] hover:text-gray-200 transition-colors"
           >
             <ArrowLeft size={18} />
           </button>
@@ -967,13 +967,13 @@ function PastReportsSection({
       >
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold text-gray-200">📋 Past Reports</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1F1F25] text-gray-400">
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
             {reports.length}
           </span>
         </div>
         <ChevronDown
           size={16}
-          className={`text-gray-500 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`text-[color:var(--text-muted)] transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -986,11 +986,11 @@ function PastReportsSection({
                 <span className="text-sm font-semibold text-gray-100">
                   {formatDate(report.report_date)}
                 </span>
-                <span className="text-xs text-gray-500">by {report.submitted_by}</span>
+                <span className="text-xs text-[color:var(--text-muted)]">by {report.submitted_by}</span>
               </div>
 
               {/* Manpower + hours */}
-              <div className="flex gap-4 text-xs text-gray-400">
+              <div className="flex gap-4 text-xs text-[color:var(--text-secondary)]">
                 {report.manpower_count != null && (
                   <span className="flex items-center gap-1">
                     <Users size={11} className="text-[#F97316]" />
@@ -1029,10 +1029,10 @@ function PastReportsSection({
                     const act = allActivities.find((a) => a.id === task.activity_id);
                     return (
                       <div key={i} className="flex items-center justify-between text-xs">
-                        <span className="text-gray-500 truncate pr-2 flex-1">
+                        <span className="text-[color:var(--text-muted)] truncate pr-2 flex-1">
                           {act?.activity_name ?? "Task"}
                         </span>
-                        <span className="text-gray-300 flex-shrink-0">{displayPct}</span>
+                        <span className="text-[color:var(--text-secondary)] flex-shrink-0">{displayPct}</span>
                       </div>
                     );
                   })}
@@ -1052,7 +1052,7 @@ function PastReportsSection({
 
               {/* Notes */}
               {report.notes && (
-                <p className="text-xs text-gray-500 italic">"{report.notes}"</p>
+                <p className="text-xs text-[color:var(--text-muted)] italic">"{report.notes}"</p>
               )}
 
               {/* View full report */}
@@ -1313,8 +1313,8 @@ function ProgressReportTab({
           <CheckCircle2 size={32} className="text-green-400" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-white">Report Submitted</h2>
-          <p className="text-sm text-gray-400 mt-1">
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Report Submitted</h2>
+          <p className="text-sm text-[color:var(--text-secondary)] mt-1">
             {new Date(submitResult.submitted_at).toLocaleString("en-US", {
               weekday: "short",
               month: "short",
@@ -1412,7 +1412,7 @@ function ProgressReportTab({
       {/* Section 1: Tasks */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-gray-200">What did you work on today?</h3>
-        <p className="text-xs text-gray-500">Tap to select tasks you worked on</p>
+        <p className="text-xs text-[color:var(--text-muted)]">Tap to select tasks you worked on</p>
 
         {reportableActivities.length === 0 ? (
           <p className="text-xs text-gray-600 py-4 text-center">
@@ -1443,11 +1443,11 @@ function ProgressReportTab({
                             : "border-[#3a3a45] bg-transparent"
                         }`}
                       >
-                        {selected && <CheckCircle2 size={12} className="text-white" />}
+                        {selected && <CheckCircle2 size={12} className="text-[color:var(--text-primary)]" />}
                       </div>
                     </div>
                     {act.finish_date && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-[color:var(--text-muted)] mt-1">
                         Due: {formatDate(act.finish_date)}
                       </p>
                     )}
@@ -1479,8 +1479,8 @@ function ProgressReportTab({
                                   ? "bg-orange-800/40 border-orange-600/50 text-orange-300"
                                   : key === "25"
                                   ? "bg-blue-800/40 border-blue-600/50 text-blue-300"
-                                  : "bg-[#1F1F25] border-[#2a2a35] text-gray-300"
-                                : "bg-[#0B0B0D] border-[#1F1F25] text-gray-500"
+                                  : "bg-[#1F1F25] border-[#2a2a35] text-[color:var(--text-secondary)]"
+                                : "bg-[#0B0B0D] border-[#1F1F25] text-[color:var(--text-muted)]"
                             }`}
                           >
                             {label}
@@ -1506,18 +1506,18 @@ function ProgressReportTab({
         </h3>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="text-xs text-gray-500">Workers on site today</label>
+            <label className="text-xs text-[color:var(--text-muted)]">Workers on site today</label>
             <input
               type="number"
               min={0}
               max={999}
               value={report.manpowerCount}
               onChange={(e) => setManpower(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs text-gray-500 flex items-center gap-1">
+            <label className="text-xs text-[color:var(--text-muted)] flex items-center gap-1">
               <Timer size={11} /> Total hours worked
             </label>
             <input
@@ -1532,7 +1532,7 @@ function ProgressReportTab({
                   totalHours: Math.max(0, parseFloat(e.target.value) || 0),
                 }))
               }
-              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-white text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
             />
           </div>
         </div>
@@ -1558,7 +1558,7 @@ function ProgressReportTab({
                     ? chip === "None"
                       ? "bg-gray-700 border-gray-500 text-gray-100"
                       : "bg-red-900/40 border-red-600/50 text-red-300"
-                    : "bg-[#13131A] border-[#1F1F25] text-gray-400"
+                    : "bg-[#13131A] border-[#1F1F25] text-[color:var(--text-secondary)]"
                 }`}
               >
                 {chip}
@@ -1571,7 +1571,7 @@ function ProgressReportTab({
           onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
           placeholder="Additional notes… (optional)"
           rows={3}
-          className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
+          className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
         />
       </div>
 
@@ -1608,8 +1608,8 @@ function ProgressReportTab({
             onClick={() => fileInputRef.current?.click()}
             className="w-full flex items-center justify-center gap-3 bg-[#13131A] border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 hover:bg-[#F97316]/5 rounded-2xl py-5 transition-colors group"
           >
-            <Camera size={22} className="text-gray-500 group-hover:text-[#F97316] transition-colors" />
-            <span className="text-sm text-gray-400 group-hover:text-gray-200 font-medium transition-colors">
+            <Camera size={22} className="text-[color:var(--text-muted)] group-hover:text-[#F97316] transition-colors" />
+            <span className="text-sm text-[color:var(--text-secondary)] group-hover:text-gray-200 font-medium transition-colors">
               Add Photo
             </span>
           </button>
@@ -1636,7 +1636,7 @@ function ProgressReportTab({
                   onClick={() => removePhoto(photo.id)}
                   className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 border border-[#0B0B0D] flex items-center justify-center shadow-lg"
                 >
-                  <X size={11} className="text-white" />
+                  <X size={11} className="text-[color:var(--text-primary)]" />
                 </button>
                 {/* Size warning */}
                 {photo.oversized && (
@@ -1654,7 +1654,7 @@ function ProgressReportTab({
                 className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 flex flex-col items-center justify-center gap-1 transition-colors group"
               >
                 <Camera size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors" />
-                <span className="text-[10px] text-gray-600 group-hover:text-gray-400 transition-colors">Add</span>
+                <span className="text-[10px] text-gray-600 group-hover:text-[color:var(--text-secondary)] transition-colors">Add</span>
               </button>
             )}
           </div>
@@ -1675,13 +1675,13 @@ function ProgressReportTab({
       {/* Section 5: Submit */}
       <div className="space-y-3">
         <div className="space-y-1.5">
-          <label className="text-xs text-gray-500">Submitted by</label>
+          <label className="text-xs text-[color:var(--text-muted)]">Submitted by</label>
           <input
             type="text"
             value={report.submittedBy}
             onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
             placeholder="Your name"
-            className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+            className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
           />
         </div>
 
@@ -1689,7 +1689,7 @@ function ProgressReportTab({
         <button
           onClick={() => setMode("preview")}
           disabled={!report.submittedBy.trim()}
-          className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-900/30"
+          className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-900/30"
         >
           <Send size={18} />
           Review Report
@@ -1852,7 +1852,7 @@ export default function SubScheduleViewPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
+        <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 className="animate-spin text-[#F97316]" size={32} />
           <p className="text-sm">Loading your schedule…</p>
         </div>
@@ -1866,7 +1866,7 @@ export default function SubScheduleViewPage() {
         <div className="text-center space-y-3 max-w-sm">
           <XCircle className="text-red-500 mx-auto" size={40} />
           <h1 className="text-lg font-semibold text-gray-100">Schedule Unavailable</h1>
-          <p className="text-sm text-gray-400">{error ?? "This link is invalid or has expired."}</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">{error ?? "This link is invalid or has expired."}</p>
           <p className="text-xs text-gray-600">Contact your general contractor for an updated link.</p>
         </div>
       </div>
@@ -1890,39 +1890,39 @@ export default function SubScheduleViewPage() {
         <div className="w-full max-w-sm space-y-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <img src="/icon-192.png" alt="IronTrack" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="text-sm font-semibold text-gray-400 tracking-wide uppercase">
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">
               IronTrack Pulse
             </span>
           </div>
 
           <div className="text-center space-y-1">
-            <h1 className="text-xl font-bold text-white">{project.name}</h1>
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{project.name}</h1>
             <p className="text-[#F97316] font-medium">{sub.name}</p>
-            <p className="text-xs text-gray-500">{sub.trades.join(", ")}</p>
+            <p className="text-xs text-[color:var(--text-muted)]">{sub.trades.join(", ")}</p>
           </div>
 
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 space-y-4">
             <div className="text-center">
               <CalendarDays size={28} className="mx-auto text-[#F97316] mb-2" />
-              <p className="text-sm text-gray-300 leading-relaxed">
+              <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">
                 You&apos;ve been shared a filtered schedule view for your trades on this project.
               </p>
             </div>
 
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Your full name</label>
+              <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Your full name</label>
               <input
                 type="text"
                 value={ackName}
                 onChange={(e) => setAckName(e.target.value)}
                 placeholder="e.g., Joe Martinez"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
                 onKeyDown={(e) => { if (e.key === "Enter") handleAcknowledge(); }}
                 autoFocus
               />
             </div>
 
-            <p className="text-xs text-gray-500 text-center leading-snug">
+            <p className="text-xs text-[color:var(--text-muted)] text-center leading-snug">
               By continuing, I confirm I have received and reviewed the schedule for my trades on this project.
             </p>
 
@@ -1933,7 +1933,7 @@ export default function SubScheduleViewPage() {
             <button
               onClick={handleAcknowledge}
               disabled={!ackName.trim() || ackSubmitting}
-              className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
             >
               {ackSubmitting ? (
                 <Loader2 size={16} className="animate-spin" />
@@ -1962,7 +1962,7 @@ export default function SubScheduleViewPage() {
           <div className="flex items-center gap-2 mb-2">
             <div className="flex items-center gap-1.5">
               <img src="/icon-192.png" alt="IronTrack" className="w-6 h-6 rounded-md object-contain" />
-              <span className="text-xs font-semibold text-gray-400 tracking-wide uppercase">
+              <span className="text-xs font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">
                 IronTrack Pulse
               </span>
             </div>
@@ -1973,7 +1973,7 @@ export default function SubScheduleViewPage() {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
             <span className="text-sm text-[#F97316] font-medium">{sub.name}</span>
             {sub.trades.length > 0 && (
-              <span className="text-xs text-gray-500">{sub.trades.join(", ")}</span>
+              <span className="text-xs text-[color:var(--text-muted)]">{sub.trades.join(", ")}</span>
             )}
           </div>
           {project.schedule_updated_at && (
@@ -2001,8 +2001,8 @@ export default function SubScheduleViewPage() {
               onClick={() => setActiveTab(tab.key)}
               className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.key
-                  ? "bg-[#F97316] text-white"
-                  : "bg-[#13131A] text-gray-400 border border-[#1F1F25] hover:text-gray-200"
+                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  : "bg-[#13131A] text-[color:var(--text-secondary)] border border-[#1F1F25] hover:text-gray-200"
               }`}
             >
               {tab.label}
@@ -2010,8 +2010,8 @@ export default function SubScheduleViewPage() {
                 <span
                   className={`text-xs rounded-full px-1.5 py-0 ${
                     activeTab === tab.key
-                      ? "bg-white/20 text-white"
-                      : "bg-[#1F1F25] text-gray-500"
+                      ? "bg-white/20 text-[color:var(--text-primary)]"
+                      : "bg-[#1F1F25] text-[color:var(--text-muted)]"
                   }`}
                 >
                   {tab.count}
@@ -2059,7 +2059,7 @@ export default function SubScheduleViewPage() {
                     .sort(([a], [b]) => a.localeCompare(b))
                     .map(([day, acts]) => (
                       <div key={day}>
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-4 first:mt-0">
+                        <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wider mb-2 mt-4 first:mt-0">
                           <CalendarDays size={11} className="inline mr-1.5 -mt-0.5" />
                           {formatDateShort(day)}
                         </p>
@@ -2085,7 +2085,7 @@ export default function SubScheduleViewPage() {
                     .sort(([a], [b]) => a.localeCompare(b))
                     .map(([day, acts]) => (
                       <div key={day}>
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-4 first:mt-0">
+                        <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wider mb-2 mt-4 first:mt-0">
                           <CalendarDays size={11} className="inline mr-1.5 -mt-0.5" />
                           {formatDateShort(day)}
                         </p>

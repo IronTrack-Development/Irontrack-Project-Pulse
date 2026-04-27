@@ -30,7 +30,7 @@ function providerBadge(provider: string | null) {
     case "citizenserve":
       return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400">🟢 Citizenserve</span>;
     case "url":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-gray-400">⬜ URL</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">⬜ URL</span>;
     case "offline":
       return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/20 text-red-400">🔴 Offline</span>;
     default:
@@ -99,26 +99,26 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-white mb-2">Select Jurisdiction</h2>
-        <p className="text-sm text-gray-400">
+        <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">Select Jurisdiction</h2>
+        <p className="text-sm text-[color:var(--text-secondary)]">
           Choose the municipality for this project. This locks permanently.
         </p>
       </div>
 
       {/* Search */}
       <div className="relative mb-4">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
         <input
           type="text"
           placeholder="Search Arizona cities, towns, counties..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+          className="w-full pl-10 pr-4 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
         />
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-gray-500 mb-2">
+      <p className="text-xs text-[color:var(--text-muted)] mb-2">
         {filtered.length} jurisdiction{filtered.length !== 1 ? "s" : ""}
       </p>
 
@@ -132,7 +132,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-white">{j.name}</span>
+                <span className="text-sm font-medium text-[color:var(--text-primary)]">{j.name}</span>
                 {providerBadge(j.portal_provider)}
                 {j.portal_url && !j.portal_verified && (
                   <span className="inline-flex items-center gap-0.5 text-[10px] text-yellow-500">
@@ -141,7 +141,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
                 {j.county} County{j.phone ? ` · ${j.phone}` : ""}
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
           </button>
         ))}
         {filtered.length === 0 && (
-          <p className="text-center py-8 text-gray-500 text-sm">No jurisdictions match your search.</p>
+          <p className="text-center py-8 text-[color:var(--text-muted)] text-sm">No jurisdictions match your search.</p>
         )}
       </div>
 
@@ -158,17 +158,17 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 max-w-md w-full shadow-xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">Confirm Jurisdiction</h3>
-              <button onClick={() => setConfirming(null)} className="p-1 text-gray-500 hover:text-white">
+              <h3 className="text-lg font-bold text-[color:var(--text-primary)]">Confirm Jurisdiction</h3>
+              <button onClick={() => setConfirming(null)} className="p-1 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                 <X size={18} />
               </button>
             </div>
             <div className="bg-[#0B0B0D] rounded-xl p-4 mb-4">
               <div className="flex items-center gap-2">
                 <Lock size={16} className="text-[#F97316]" />
-                <span className="text-white font-medium">{confirming.name}</span>
+                <span className="text-[color:var(--text-primary)] font-medium">{confirming.name}</span>
               </div>
-              <p className="text-xs text-gray-500 mt-1 ml-6">
+              <p className="text-xs text-[color:var(--text-muted)] mt-1 ml-6">
                 {confirming.county} County
                 {confirming.phone ? ` · ${confirming.phone}` : ""}
               </p>
@@ -179,14 +179,14 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirming(null)}
-                className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirm}
                 disabled={saving}
-                className="flex-1 px-4 py-3 bg-[#F97316] text-white rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-50 min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 {saving ? "Locking..." : "Lock Jurisdiction"}
               </button>

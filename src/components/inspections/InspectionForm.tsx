@@ -340,7 +340,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
           </div>
           <button
             onClick={() => setBanner(null)}
-            className="text-gray-500 hover:text-white text-xs shrink-0"
+            className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-xs shrink-0"
           >
             ✕
           </button>
@@ -352,13 +352,13 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Inspection Type */}
           <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1">
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">
               Inspection Type <span className="text-red-400">*</span>
             </label>
             <select
               value={inspectionType}
               onChange={(e) => setInspectionType(e.target.value)}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
             >
               <option value="">Select inspection type...</option>
               {inspectionCodes.length > 0 ? (
@@ -392,54 +392,54 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
 
           {/* Permit Number */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Permit #</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Permit #</label>
             <input
               type="text"
               value={permitNumber}
               onChange={(e) => setPermitNumber(e.target.value)}
               placeholder="Enter permit number"
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Requested Date */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Requested Date</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Requested Date</label>
             <input
               type="date"
               value={requestedDate}
               onChange={(e) => setRequestedDate(e.target.value)}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Contact Name */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Contact Name</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Contact Name</label>
             <input
               type="text"
               value={contactName}
               onChange={(e) => setContactName(e.target.value)}
               placeholder="Your name"
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Contact Phone */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Contact Phone</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Contact Phone</label>
             <input
               type="tel"
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
               placeholder="Your phone number"
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Time Window */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Time Window</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Time Window</label>
             <div className="flex gap-2">
               {TIME_WINDOWS.map((tw) => (
                 <button
@@ -448,8 +448,8 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                   onClick={() => setTimeWindow(tw.value)}
                   className={`flex-1 px-3 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
                     timeWindow === tw.value
-                      ? "bg-[#F97316] text-white"
-                      : "bg-[#121217] border border-[#1F1F25] text-gray-400 hover:text-white"
+                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      : "bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {tw.label}
@@ -460,13 +460,13 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
 
           {/* Notes */}
           <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Notes</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Additional notes for this inspection..."
               rows={3}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
+              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
             />
           </div>
         </div>
@@ -475,7 +475,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
         <button
           type="submit"
           disabled={!inspectionType || submitting}
-          className="w-full px-6 py-4 bg-[#F97316] text-white rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-40 disabled:cursor-not-allowed min-h-[52px]"
+          className="w-full px-6 py-4 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-40 disabled:cursor-not-allowed min-h-[52px]"
         >
           {submitting ? "Scheduling..." : "Schedule Inspection"}
         </button>

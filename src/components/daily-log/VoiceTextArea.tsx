@@ -44,7 +44,7 @@ export default function VoiceTextArea({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-xs font-medium text-gray-400 mb-1.5">
+        <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">
           {label}
         </label>
       )}
@@ -55,13 +55,13 @@ export default function VoiceTextArea({
           placeholder={placeholder}
           rows={rows}
           className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 pr-14
-            text-sm text-white placeholder-gray-600 resize-none
+            text-sm text-[color:var(--text-primary)] placeholder-gray-600 resize-none
             focus:outline-none focus:border-[#F97316]/50 focus:ring-1 focus:ring-[#F97316]/20
             transition-colors"
         />
         {/* Interim text preview */}
         {interim && (
-          <div className="absolute bottom-14 left-4 right-14 text-xs text-gray-500 italic truncate">
+          <div className="absolute bottom-14 left-4 right-14 text-xs text-[color:var(--text-muted)] italic truncate">
             {interim}...
           </div>
         )}

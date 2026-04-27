@@ -81,17 +81,17 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setWeek((w) => offsetWeek(w, -1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
-        <div className="text-sm font-medium text-white">
+        <div className="text-sm font-medium text-[color:var(--text-primary)]">
           {data ? `Week of ${data.mondayLabel}` : week}
-          {data && <span className="text-gray-500 ml-1">– {data.sundayLabel}</span>}
+          {data && <span className="text-[color:var(--text-muted)] ml-1">– {data.sundayLabel}</span>}
         </div>
         <button
           onClick={() => setWeek((w) => offsetWeek(w, 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -99,7 +99,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           href={`/api/projects/${projectId}/daily-logs/weekly-report-pdf?week=${week}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-auto flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-xs font-medium transition-colors min-h-[40px]"
+          className="ml-auto flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-xs font-medium transition-colors min-h-[40px]"
         >
           <FileText size={14} />
           Export PDF
@@ -111,13 +111,13 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-gray-500 text-sm">
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
           No logs found for this week.
         </div>
       ) : (
         <>
           {/* Narrative */}
-          <div className="bg-[#1F1F25] border-l-3 border-[#F97316] rounded-lg p-3 mb-4 text-sm text-gray-300 italic" style={{ borderLeftWidth: 3 }}>
+          <div className="bg-[#1F1F25] border-l-3 border-[#F97316] rounded-lg p-3 mb-4 text-sm text-[color:var(--text-secondary)] italic" style={{ borderLeftWidth: 3 }}>
             {data.narrative}
           </div>
 
@@ -154,20 +154,20 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Crew-hours by trade bar chart */}
           {Object.keys(data.crewHoursByTrade).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-3">Crew-Hours by Trade</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Crew-Hours by Trade</h3>
               <div className="space-y-2">
                 {Object.entries(data.crewHoursByTrade)
                   .sort((a, b) => b[1] - a[1])
                   .map(([trade, hours]) => (
                     <div key={trade} className="flex items-center gap-3">
-                      <div className="w-24 text-xs text-gray-400 text-right truncate shrink-0">{trade}</div>
+                      <div className="w-24 text-xs text-[color:var(--text-secondary)] text-right truncate shrink-0">{trade}</div>
                       <div className="flex-1 h-6 bg-[#1F1F25] rounded-md overflow-hidden">
                         <div
                           className="h-full bg-[#F97316] rounded-md transition-all duration-500"
                           style={{ width: `${Math.max((hours / maxCrewHours) * 100, 2)}%` }}
                         />
                       </div>
-                      <div className="w-16 text-xs text-gray-400 text-right shrink-0">
+                      <div className="w-16 text-xs text-[color:var(--text-secondary)] text-right shrink-0">
                         {Math.round(hours).toLocaleString()}
                       </div>
                     </div>
@@ -179,14 +179,14 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Activities completed */}
           {data.activitiesCompleted.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">
                 ✅ Activities Completed ({data.activitiesCompleted.length})
               </h3>
               <div className="space-y-1">
                 {data.activitiesCompleted.map((a, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
+                  <div key={i} className="text-xs text-[color:var(--text-secondary)] bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
                     <span>{a.activityName}</span>
-                    {a.trade && <span className="text-gray-500">{a.trade}</span>}
+                    {a.trade && <span className="text-[color:var(--text-muted)]">{a.trade}</span>}
                   </div>
                 ))}
               </div>
@@ -196,12 +196,12 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Activities advanced */}
           {data.activitiesAdvanced.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">
                 📈 Activities Advanced ({data.activitiesAdvanced.length})
               </h3>
               <div className="space-y-1">
                 {data.activitiesAdvanced.map((a, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
+                  <div key={i} className="text-xs text-[color:var(--text-secondary)] bg-[#121217] rounded-lg px-3 py-2 flex justify-between">
                     <span>{a.activityName}</span>
                     <span className="text-[#F97316] font-medium">+{a.delta}% → {a.pctAfter}%</span>
                   </div>
@@ -213,13 +213,13 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Delay breakdown */}
           {Object.keys(data.delayBreakdown).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">Delay Breakdown</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Delay Breakdown</h3>
               <div className="bg-[#121217] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-[#1F1F25]">
-                      <th className="text-left text-gray-500 px-3 py-2 font-medium">Reason</th>
-                      <th className="text-right text-gray-500 px-3 py-2 font-medium">Occurrences</th>
+                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">Reason</th>
+                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">Occurrences</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -227,14 +227,14 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                       .sort((a, b) => b[1] - a[1])
                       .map(([code, count]) => (
                         <tr key={code} className="border-b border-[#1F1F25] last:border-0">
-                          <td className="px-3 py-2 text-gray-300">{code}</td>
-                          <td className="px-3 py-2 text-gray-400 text-right">{count}</td>
+                          <td className="px-3 py-2 text-[color:var(--text-secondary)]">{code}</td>
+                          <td className="px-3 py-2 text-[color:var(--text-secondary)] text-right">{count}</td>
                         </tr>
                       ))}
                   </tbody>
                 </table>
               </div>
-              <div className="text-[11px] text-gray-500 mt-2">
+              <div className="text-[11px] text-[color:var(--text-muted)] mt-2">
                 {data.totalDelayDays} delay day{data.totalDelayDays !== 1 ? "s" : ""} · {data.totalLostCrewHours} lost crew-hours · {data.photoCount} photos
               </div>
             </div>
@@ -243,11 +243,11 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Open issues */}
           {data.openIssues.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">⚠️ Open Issues</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">⚠️ Open Issues</h3>
               <div className="space-y-1">
                 {data.openIssues.map((issue, i) => (
-                  <div key={i} className="text-xs text-gray-300 bg-[#121217] rounded-lg px-3 py-2">
-                    <span className="text-gray-500 mr-2">{new Date(issue.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                  <div key={i} className="text-xs text-[color:var(--text-secondary)] bg-[#121217] rounded-lg px-3 py-2">
+                    <span className="text-[color:var(--text-muted)] mr-2">{new Date(issue.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                     {issue.narrative}
                   </div>
                 ))}

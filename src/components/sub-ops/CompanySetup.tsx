@@ -76,8 +76,8 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F97316]/10 mb-2">
             <HardHat size={28} className="text-[#F97316]" />
           </div>
-          <h2 className="text-xl font-bold text-white">Set Up Your Company</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-xl font-bold text-[color:var(--text-primary)]">Set Up Your Company</h2>
+          <p className="text-sm text-[color:var(--text-muted)]">
             Create your sub ops company to manage foremen, dispatches, and production tracking.
           </p>
         </div>
@@ -85,26 +85,26 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         {/* Form */}
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
               Company Name <span className="text-red-400">*</span>
             </label>
             <div className="relative">
-              <Building2 size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Building2 size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
               <input
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="e.g., Martinez Electric LLC"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-9 pr-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Primary Trade</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Primary Trade</label>
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
             >
               <option value="">Select a trade...</option>
               {TRADES.map((t) => (
@@ -115,32 +115,32 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Contact Name</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Contact Name</label>
               <input
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
                 placeholder="Your name"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Phone</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Phone</label>
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="602-555-1234"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Email</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Email</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-bold transition-colors min-h-[44px]"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors min-h-[44px]"
         >
           <Save size={16} />
           {saving ? "Creating..." : "Create Company"}

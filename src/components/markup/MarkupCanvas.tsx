@@ -499,8 +499,8 @@ export default function MarkupCanvas({
               onClick={() => setTool(t.id)}
               className={`flex flex-col items-center justify-center gap-0.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
                 tool === t.id
-                  ? "bg-[#F97316] text-white"
-                  : "bg-[#1F1F25] text-gray-400 active:bg-[#2a2a35]"
+                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  : "bg-[#1F1F25] text-[color:var(--text-secondary)] active:bg-[#2a2a35]"
               }`}
               style={{ minWidth: 52, minHeight: 52, padding: "6px 10px" }}
             >
@@ -541,8 +541,8 @@ export default function MarkupCanvas({
                 onClick={() => setSizeKey(s)}
                 className={`rounded-lg font-bold transition-all flex items-center justify-center ${
                   sizeKey === s
-                    ? "bg-[#F97316] text-white"
-                    : "bg-[#1F1F25] text-gray-400"
+                    ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                    : "bg-[#1F1F25] text-[color:var(--text-secondary)]"
                 }`}
                 style={{ minWidth: 36, minHeight: 36, fontSize: s === "thin" ? 10 : s === "medium" ? 16 : 22 }}
               >
@@ -558,7 +558,7 @@ export default function MarkupCanvas({
             onClick={() => setActions((prev) => prev.slice(0, -1))}
             disabled={actions.length === 0}
             title="Undo"
-            className="rounded-xl bg-[#1F1F25] text-gray-400 hover:text-white disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
+            className="rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ↩
@@ -578,14 +578,14 @@ export default function MarkupCanvas({
           <button
             onClick={onCancel}
             title="Cancel"
-            className="rounded-xl bg-[#1F1F25] text-gray-400 hover:text-white transition-all flex items-center justify-center text-base font-bold"
+            className="rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-all flex items-center justify-center text-base font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ✕
           </button>
           <button
             onClick={handleDone}
-            className="rounded-xl bg-[#F97316] hover:bg-[#ea6c10] text-white font-bold text-sm px-4 transition-all"
+            className="rounded-xl bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm px-4 transition-all"
             style={{ minHeight: 44 }}
           >
             Done ✓

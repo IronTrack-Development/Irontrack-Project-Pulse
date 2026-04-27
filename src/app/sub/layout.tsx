@@ -23,10 +23,10 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Building2 className="w-6 h-6 text-[#F97316]" />
-            <span className="text-lg font-bold text-white">
+            <span className="text-lg font-bold text-[color:var(--text-primary)]">
               IronTrack <span className="text-[#F97316]">Pulse</span>
             </span>
-            <span className="hidden sm:inline-block text-xs text-gray-500 border border-[#2A2A30] rounded px-2 py-0.5 ml-1">
+            <span className="hidden sm:inline-block text-xs text-[color:var(--text-muted)] border border-[#2A2A30] rounded px-2 py-0.5 ml-1">
               Sub Portal
             </span>
           </Link>
@@ -34,7 +34,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
           {/* Logout */}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+            className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <LogOut className="w-4 h-4" />
             <span className="hidden sm:inline">Sign out</span>

@@ -150,7 +150,7 @@ export default function PhotosSubmitScreen({
 
       {/* Camera / Photo Capture — BIG prominent button */}
       <div>
-        <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
           <Camera size={16} className="text-[#F97316]" />
           Photos
         </h3>
@@ -158,11 +158,11 @@ export default function PhotosSubmitScreen({
         {/* Quick tag selector */}
         {activities.length > 0 && (
           <div className="mb-3">
-            <label className="text-xs text-gray-500 mb-1.5 block">Auto-tag photos to activity:</label>
+            <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Auto-tag photos to activity:</label>
             <select
               value={selectedTag || ""}
               onChange={(e) => setSelectedTag(e.target.value || null)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-white
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             >
               <option value="">No tag (general)</option>
@@ -254,7 +254,7 @@ export default function PhotosSubmitScreen({
                         opacity-0 group-hover:opacity-100 transition-opacity"
                       title="Annotate photo"
                     >
-                      <Pencil size={12} className="text-white" />
+                      <Pencil size={12} className="text-[color:var(--text-primary)]" />
                     </button>
                   )}
                   {/* Remove button */}
@@ -264,7 +264,7 @@ export default function PhotosSubmitScreen({
                     className="absolute top-1 right-1 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center
                       opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <X size={14} className="text-white" />
+                    <X size={14} className="text-[color:var(--text-primary)]" />
                   </button>
                 </div>
               );
@@ -275,10 +275,10 @@ export default function PhotosSubmitScreen({
 
       {/* Summary Card */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-white">Log Summary</h3>
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Log Summary</h3>
 
         <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <Thermometer size={14} className="text-[#F97316]" />
             <span>
               {weather.current_temp ?? weather.high ?? "--"}°F
@@ -287,19 +287,19 @@ export default function PhotosSubmitScreen({
               )}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <Users size={14} className="text-[#3B82F6]" />
             <span>{totalHeadcount} workers · {totalCrewHours} hrs</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <TrendingUp size={14} className="text-[#22C55E]" />
             <span>{activitiesAdvanced} activities advanced</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <AlertTriangle size={14} className="text-[#EAB308]" />
             <span>{delayCodes.length} delay codes</span>
           </div>
-          <div className="flex items-center gap-2 text-gray-400">
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <ImageIcon size={14} className="text-purple-400" />
             <span>{photos.length} photos</span>
           </div>
@@ -315,8 +315,8 @@ export default function PhotosSubmitScreen({
           ${logStatus === "submitted"
             ? "bg-[#22C55E]/20 text-[#22C55E] cursor-default"
             : isSubmitting
-              ? "bg-[#F97316]/50 text-white cursor-wait"
-              : "bg-[#F97316] hover:bg-[#ea6c10] text-white active:scale-[0.98]"
+              ? "bg-[#F97316]/50 text-[color:var(--text-primary)] cursor-wait"
+              : "bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] active:scale-[0.98]"
           }`}
       >
         {logStatus === "submitted"

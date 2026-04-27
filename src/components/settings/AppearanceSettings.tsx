@@ -30,7 +30,7 @@ export default function AppearanceSettings() {
     <div className="space-y-6">
       {/* Theme */}
       <div>
-        <p className="text-sm font-medium text-white mb-3">Theme</p>
+        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">Theme</p>
         <div className="flex gap-2">
           <button
             onClick={() => handleThemeChange("dark")}
@@ -59,7 +59,7 @@ export default function AppearanceSettings() {
 
       {/* Language */}
       <div>
-        <p className="text-sm font-medium text-white mb-3">Language</p>
+        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">Language</p>
         <div className="flex gap-2">
           <button
             onClick={() => handleLangChange("en")}

@@ -124,8 +124,8 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
             <Users size={28} className="text-red-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white mb-2">Link Error</h1>
-            <p className="text-sm text-gray-400">{errorMsg}</p>
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">Link Error</h1>
+            <p className="text-sm text-[color:var(--text-secondary)]">{errorMsg}</p>
           </div>
         </div>
       </div>
@@ -143,12 +143,12 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               <CheckCircle2 size={40} className="text-[#22C55E]" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white leading-tight">
+              <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
                 You&apos;re in the directory!
               </h1>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-[color:var(--text-secondary)] mt-2">
                 You&apos;ve been added to{" "}
-                <span className="text-white font-semibold">{projectName}</span>
+                <span className="text-[color:var(--text-primary)] font-semibold">{projectName}</span>
               </p>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
             <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
               What&apos;s Next
             </p>
-            <ul className="space-y-2 text-xs text-gray-400">
+            <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
               <li className="flex items-start gap-2">
                 <span className="text-[#F97316] flex-none mt-0.5">→</span>
                 Your contact info is now in the project directory
@@ -194,17 +194,17 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
             alt="IronTrack Pulse"
             className="w-14 h-14 rounded-2xl object-contain shadow-lg shadow-black/30"
           />
-          <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+          <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">
             IronTrack Pulse
           </p>
         </div>
 
         {/* Title */}
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white leading-tight">
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
             Join {projectName}
           </h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-[color:var(--text-secondary)] mt-1">
             Add yourself to the project directory
           </p>
         </div>
@@ -213,7 +213,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Your Name *
             </label>
             <input
@@ -223,13 +223,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               placeholder="Full name"
               required
               autoComplete="name"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
           {/* Company */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Company
             </label>
             <input
@@ -238,20 +238,20 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company name"
               autoComplete="organization"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
           {/* Role */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Your Role *
             </label>
             <select
               value={role}
               onChange={(e) => { setRole(e.target.value); setTrade(""); setDiscipline(""); }}
               required
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             >
               <option value="" disabled>Select your role…</option>
               {ROLE_OPTIONS.map((r) => (
@@ -263,7 +263,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           {/* Trade — subcontractor only */}
           {role === "subcontractor" && (
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
                 Trade
               </label>
               <input
@@ -271,7 +271,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={trade}
                 onChange={(e) => setTrade(e.target.value)}
                 placeholder="e.g., Electrical, Plumbing, HVAC"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           )}
@@ -279,7 +279,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           {/* Discipline — engineer only */}
           {role === "engineer" && (
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
                 Discipline
               </label>
               <input
@@ -287,14 +287,14 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={discipline}
                 onChange={(e) => setDiscipline(e.target.value)}
                 placeholder="e.g., Structural, MEP, Civil"
-                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
           )}
 
           {/* Email */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Email
             </label>
             <input
@@ -303,13 +303,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               autoComplete="email"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
           {/* Phone */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
               Phone
             </label>
             <input
@@ -318,7 +318,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setPhone(e.target.value)}
               placeholder="602-555-1234"
               autoComplete="tel"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-white text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
           </div>
 
@@ -331,7 +331,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           <button
             type="submit"
             disabled={submitting || !name.trim() || !role}
-            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-[#F97316]/20"
+            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-[#F97316]/20"
           >
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />

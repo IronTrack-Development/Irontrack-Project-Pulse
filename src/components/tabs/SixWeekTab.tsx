@@ -78,7 +78,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#1F1F25] text-gray-500 border border-[#2a2a33]">
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#1F1F25] text-[color:var(--text-muted)] border border-[#2a2a33]">
       Upcoming
     </span>
   );
@@ -93,11 +93,11 @@ function ActivityRow({ activity }: { activity: Activity }) {
       <div className="flex-1 min-w-0">
         <p className="text-sm text-gray-100 font-medium leading-snug">{activity.activity_name}</p>
         <div className="flex items-center gap-3 mt-1 flex-wrap">
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-[color:var(--text-muted)]">
             {formatDateRange(activity.start_date, activity.finish_date)}
           </span>
           {activity.trade && (
-            <span className="text-[10px] bg-[#1F1F25] text-gray-400 px-1.5 py-0.5 rounded">
+            <span className="text-[10px] bg-[#1F1F25] text-[color:var(--text-secondary)] px-1.5 py-0.5 rounded">
               {activity.trade}
             </span>
           )}
@@ -147,7 +147,7 @@ function Section({
             {count}
           </span>
         </div>
-        {open ? <ChevronUp size={16} className="text-gray-500" /> : <ChevronDown size={16} className="text-gray-500" />}
+        {open ? <ChevronUp size={16} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={16} className="text-[color:var(--text-muted)]" />}
       </button>
       {open && <div className="space-y-2">{children}</div>}
     </div>
@@ -166,7 +166,7 @@ function StatCard({ label, value, icon: Icon, color }: {
     <div className="bg-[#13131A] border border-[#1F1F25] rounded-xl p-3 flex flex-col items-center text-center">
       <Icon size={18} className={`${color} mb-1`} />
       <span className={`text-xl font-bold ${color}`}>{value}</span>
-      <span className="text-[10px] text-gray-500 mt-0.5 leading-tight">{label}</span>
+      <span className="text-[10px] text-[color:var(--text-muted)] mt-0.5 leading-tight">{label}</span>
     </div>
   );
 }
@@ -201,7 +201,7 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
     return (
       <div className="text-center py-16">
         <Calendar size={36} className="mx-auto text-gray-700 mb-3" />
-        <p className="text-gray-400 text-sm">No activities in the 4-6 week window</p>
+        <p className="text-[color:var(--text-secondary)] text-sm">No activities in the 4-6 week window</p>
         <p className="text-gray-600 text-xs mt-1">Activities starting 3-6 weeks from today will appear here</p>
       </div>
     );
@@ -212,8 +212,8 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
       {/* Window header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">6-Week Lookahead</h2>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">6-Week Lookahead</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
             {formatDate(data.window.start)} — {formatDate(data.window.end)} · {data.stats.total} activities
           </p>
         </div>
@@ -234,7 +234,7 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
 
       {/* Long-Lead / Procurement */}
       <Section icon={Truck} title="Long-Lead & Procurement" count={data.longLead.length} color="text-purple-400">
-        <p className="text-xs text-gray-500 px-1 -mt-1 mb-2">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
           Items that need ordering/fabrication NOW to land in 4-6 weeks
         </p>
         {data.longLead.map((a) => <ActivityRow key={a.id} activity={a} />)}
@@ -242,12 +242,12 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
 
       {/* Mobilizations by Trade */}
       <Section icon={HardHat} title="Sub Mobilizations" count={data.mobilizations.length} color="text-emerald-400">
-        <p className="text-xs text-gray-500 px-1 -mt-1 mb-2">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
           Trades that need to be on site in weeks 4-6
         </p>
         {Object.entries(data.mobilizationsByTrade).map(([trade, acts]) => (
           <div key={trade} className="space-y-1.5">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-1 pt-2">
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider px-1 pt-2">
               {trade} ({acts.length})
             </p>
             {acts.map((a) => <ActivityRow key={a.id} activity={a} />)}
@@ -257,14 +257,14 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
 
       {/* Inspections */}
       <Section icon={ClipboardCheck} title="Inspections & Testing" count={data.inspections.length} color="text-blue-400">
-        <p className="text-xs text-gray-500 px-1 -mt-1 mb-2">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
           Schedule these now — lead time for inspectors and testing labs
         </p>
         {data.inspections.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
 
       {/* Other */}
-      <Section icon={Calendar} title="Other Activities" count={data.other.length} color="text-gray-400" defaultOpen={false}>
+      <Section icon={Calendar} title="Other Activities" count={data.other.length} color="text-[color:var(--text-secondary)]" defaultOpen={false}>
         {data.other.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
     </div>

@@ -83,14 +83,14 @@ function formatDateTime(dateStr: string | null): string {
 function activityStatusChip(status: string) {
   const s = status?.toLowerCase() ?? "";
   const map: Record<string, { label: string; cls: string }> = {
-    "not started": { label: "Not Started", cls: "bg-gray-700 text-gray-300" },
+    "not started": { label: "Not Started", cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
     "in progress":  { label: "In Progress",  cls: "bg-blue-500/20 text-blue-300" },
     "complete":     { label: "Complete",      cls: "bg-green-500/20 text-green-300" },
     "completed":    { label: "Complete",      cls: "bg-green-500/20 text-green-300" },
     "delayed":      { label: "Delayed",       cls: "bg-red-500/20 text-red-300" },
     "on hold":      { label: "On Hold",       cls: "bg-yellow-500/20 text-yellow-300" },
   };
-  const hit = map[s] ?? { label: status ?? "Unknown", cls: "bg-gray-700 text-gray-400" };
+  const hit = map[s] ?? { label: status ?? "Unknown", cls: "bg-gray-700 text-[color:var(--text-secondary)]" };
   return (
     <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${hit.cls}`}>
       {hit.label}
@@ -182,29 +182,29 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <ListChecks size={18} className="text-[#F97316]" />
-              <h2 className="text-sm font-bold text-white">Select Tasks</h2>
+              <h2 className="text-sm font-bold text-[color:var(--text-primary)]">Select Tasks</h2>
             </div>
-            <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+            <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors">
               <X size={18} />
             </button>
           </div>
-          <p className="text-xs text-gray-500 mb-3">
+          <p className="text-xs text-[color:var(--text-muted)] mb-3">
             <span className="text-[#F97316] font-semibold">{selected.size}</span> of{" "}
-            <span className="font-semibold text-gray-300">{activities.length}</span> activities selected
+            <span className="font-semibold text-[color:var(--text-secondary)]">{activities.length}</span> activities selected
           </p>
           {/* Search */}
           <div className="relative">
-            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search activities or trades..."
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-8 pr-3 py-2 text-white text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               >
                 <X size={12} />
               </button>
@@ -219,7 +219,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
         <div className="flex-1 overflow-y-auto">
           {grouped.size === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-center px-6">
-              <p className="text-gray-500 text-sm">No activities match your search</p>
+              <p className="text-[color:var(--text-muted)] text-sm">No activities match your search</p>
             </div>
           ) : (
             [...grouped.entries()].map(([trade, acts]) => {
@@ -235,11 +235,11 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                   <div className="flex items-center gap-2 px-4 py-2.5 bg-[#121217] sticky top-0 z-10">
                     <button
                       onClick={() => toggleTradeCollapse(trade)}
-                      className="flex items-center gap-2 flex-1 min-w-0 text-left hover:text-white transition-colors"
+                      className="flex items-center gap-2 flex-1 min-w-0 text-left hover:text-[color:var(--text-primary)] transition-colors"
                     >
                       {isCollapsed
-                        ? <ChevronDown size={14} className="text-gray-500 flex-none" />
-                        : <ChevronUp size={14} className="text-gray-500 flex-none" />
+                        ? <ChevronDown size={14} className="text-[color:var(--text-muted)] flex-none" />
+                        : <ChevronUp size={14} className="text-[color:var(--text-muted)] flex-none" />
                       }
                       <span className="text-xs font-semibold text-gray-200 truncate">{trade}</span>
                       <span className="text-[10px] text-gray-600 flex-none">
@@ -252,8 +252,8 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                         allSelected
                           ? "bg-[#F97316]/20 text-[#F97316] hover:bg-[#F97316]/10"
                           : someSelected
-                          ? "bg-[#1F1F25] text-gray-400 hover:text-white"
-                          : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                          ? "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
                       {allSelected ? "Deselect All" : "Select All"}
@@ -278,7 +278,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                                 ? "bg-[#F97316] border-[#F97316]"
                                 : "border-[#3a3a45] bg-[#0B0B0D]"
                             }`}>
-                              {checked && <Check size={10} className="text-white" strokeWidth={3} />}
+                              {checked && <Check size={10} className="text-[color:var(--text-primary)]" strokeWidth={3} />}
                             </div>
                             <input
                               type="checkbox"
@@ -312,14 +312,14 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#1F1F25] text-gray-300 hover:text-white rounded-lg text-sm font-medium transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Check size={14} />
               {saving ? "Saving…" : `Save Selection (${selected.size})`}
@@ -586,7 +586,7 @@ export default function SubsTab({ projectId }: Props) {
   const statusBadge = (status?: SubStatus) => {
     if (!status || status.status === "not_sent") {
       return (
-        <span className="flex items-center gap-1 text-xs text-gray-500">
+        <span className="flex items-center gap-1 text-xs text-[color:var(--text-muted)]">
           <Clock size={12} /> No link sent
         </span>
       );
@@ -632,22 +632,22 @@ export default function SubsTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-white">Subcontractors</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Subcontractors</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               {subs.length} sub{subs.length !== 1 ? "s" : ""} on this project
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handleOpenQrModal}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
             >
               <QrCode size={14} />
               QR Code
             </button>
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <UserPlus size={14} />
               Add Sub
@@ -659,10 +659,10 @@ export default function SubsTab({ projectId }: Props) {
         {showAddForm && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white">Add Subcontractor</h3>
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Add Subcontractor</h3>
               <button
                 onClick={() => { setShowAddForm(false); setAddError(""); }}
-                className="text-gray-500 hover:text-white transition-colors"
+                className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
               >
                 <X size={16} />
               </button>
@@ -670,14 +670,14 @@ export default function SubsTab({ projectId }: Props) {
 
             {/* Company Code field (Fix 2) */}
             <div className="space-y-1">
-              <label className="text-xs text-gray-400 mb-1 block font-medium">Company Code <span className="text-gray-600 font-normal">(optional)</span></label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block font-medium">Company Code <span className="text-gray-600 font-normal">(optional)</span></label>
               <div className="relative">
                 <input
                   value={companyCode}
                   onChange={e => { setCompanyCode(e.target.value); setCodeLookupStatus("idle"); }}
                   onBlur={e => handleCodeLookup(e.target.value)}
                   placeholder="e.g., IT-482916"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
                 />
                 {codeLookupStatus === "loading" && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
@@ -696,40 +696,40 @@ export default function SubsTab({ projectId }: Props) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Company Name *</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Company Name *</label>
                 <input
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddSub()}
                   placeholder="e.g., ABC Plumbing"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Contact Name</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Contact Name</label>
                 <input
                   value={newContact}
                   onChange={e => setNewContact(e.target.value)}
                   placeholder="e.g., Joe Martinez"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Phone</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Phone</label>
                 <input
                   value={newPhone}
                   onChange={e => setNewPhone(e.target.value)}
                   placeholder="602-555-1234"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Email</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Email</label>
                 <input
                   value={newEmail}
                   onChange={e => setNewEmail(e.target.value)}
                   placeholder="joe@abcplumbing.com"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
             </div>
@@ -747,7 +747,7 @@ export default function SubsTab({ projectId }: Props) {
             <button
               onClick={handleAddSub}
               disabled={adding}
-              className="flex items-center gap-1.5 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Plus size={14} />
               {adding ? "Adding…" : "Add Subcontractor"}
@@ -759,7 +759,7 @@ export default function SubsTab({ projectId }: Props) {
         {subs.length === 0 ? (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
             <UserPlus size={32} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-gray-400 text-sm mb-1">No subcontractors added yet</p>
+            <p className="text-[color:var(--text-secondary)] text-sm mb-1">No subcontractors added yet</p>
             <p className="text-gray-600 text-xs">Add a sub to share their filtered schedule view</p>
           </div>
         ) : (
@@ -785,9 +785,9 @@ export default function SubsTab({ projectId }: Props) {
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="text-sm font-semibold text-white truncate">{sub.sub_name}</span>
+                        <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{sub.sub_name}</span>
                         {sub.contact_name && (
-                          <span className="text-xs text-gray-500">({sub.contact_name})</span>
+                          <span className="text-xs text-[color:var(--text-muted)]">({sub.contact_name})</span>
                         )}
                       </div>
 
@@ -796,7 +796,7 @@ export default function SubsTab({ projectId }: Props) {
                         <span className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded ${
                           activityCount > 0
                             ? "bg-[#F97316]/15 text-[#F97316]"
-                            : "bg-[#1F1F25] text-gray-500"
+                            : "bg-[#1F1F25] text-[color:var(--text-muted)]"
                         }`}>
                           <ListChecks size={10} />
                           {activityCount > 0 ? `${activityCount} task${activityCount !== 1 ? "s" : ""} assigned` : "No tasks assigned"}
@@ -815,7 +815,7 @@ export default function SubsTab({ projectId }: Props) {
                           className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                             copiedId === sub.id
                               ? "bg-[#22C55E]/20 text-[#22C55E]"
-                              : "bg-[#1F1F25] text-gray-300 hover:text-white hover:bg-[#2a2a35]"
+                              : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[#2a2a35]"
                           }`}
                         >
                           {copiedId === sub.id ? <Check size={12} /> : <Copy size={12} />}
@@ -825,15 +825,15 @@ export default function SubsTab({ projectId }: Props) {
                         <button
                           onClick={(e) => handleGenerateLink(sub.id, e)}
                           disabled={generating === sub.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-xs font-medium transition-colors"
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
                         >
                           <Send size={12} />
                           {generating === sub.id ? "…" : "Generate Link"}
                         </button>
                       )}
                       {isExpanded
-                        ? <ChevronUp size={16} className="text-gray-500" />
-                        : <ChevronDown size={16} className="text-gray-500" />
+                        ? <ChevronUp size={16} className="text-[color:var(--text-muted)]" />
+                        : <ChevronDown size={16} className="text-[color:var(--text-muted)]" />
                       }
                     </div>
                   </div>
@@ -845,16 +845,16 @@ export default function SubsTab({ projectId }: Props) {
                       {/* Contact Info */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                         <div>
-                          <span className="text-gray-500">Contact:</span>
-                          <span className="text-gray-300 ml-1">{sub.contact_name || "—"}</span>
+                          <span className="text-[color:var(--text-muted)]">Contact:</span>
+                          <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_name || "—"}</span>
                         </div>
                         <div>
-                          <span className="text-gray-500">Phone:</span>
-                          <span className="text-gray-300 ml-1">{sub.contact_phone || "—"}</span>
+                          <span className="text-[color:var(--text-muted)]">Phone:</span>
+                          <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_phone || "—"}</span>
                         </div>
                         <div>
-                          <span className="text-gray-500">Email:</span>
-                          <span className="text-gray-300 ml-1">{sub.contact_email || "—"}</span>
+                          <span className="text-[color:var(--text-muted)]">Email:</span>
+                          <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_email || "—"}</span>
                         </div>
                       </div>
 
@@ -863,7 +863,7 @@ export default function SubsTab({ projectId }: Props) {
                         <button
                           onClick={(e) => openActivityPicker(sub.id, e)}
                           disabled={activitiesLoading}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-50 text-gray-300 hover:text-white rounded-lg text-xs font-medium transition-colors border border-[#2a2a35] hover:border-[#F97316]/30"
+                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-50 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors border border-[#2a2a35] hover:border-[#F97316]/30"
                         >
                           {activitiesLoading ? (
                             <div className="w-3 h-3 border border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -889,22 +889,22 @@ export default function SubsTab({ projectId }: Props) {
                       {status && status.status !== "not_sent" && (
                         <div className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 space-y-1.5 text-xs">
                           <div className="flex items-center gap-2">
-                            <Link2 size={11} className="text-gray-500 flex-none" />
-                            <span className="text-gray-500">Link sent:</span>
-                            <span className="text-gray-300">
+                            <Link2 size={11} className="text-[color:var(--text-muted)] flex-none" />
+                            <span className="text-[color:var(--text-muted)]">Link sent:</span>
+                            <span className="text-[color:var(--text-secondary)]">
                               {formatDateTime(status.latest_active_link?.created_at ?? null)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Eye size={11} className="text-gray-500 flex-none" />
-                            <span className="text-gray-500">Last viewed:</span>
+                            <Eye size={11} className="text-[color:var(--text-muted)] flex-none" />
+                            <span className="text-[color:var(--text-muted)]">Last viewed:</span>
                             <span className={status.last_viewed_at ? "text-[#F97316]" : "text-gray-600"}>
                               {status.last_viewed_at ? formatDateTime(status.last_viewed_at) : "Not yet"}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <CheckCircle size={11} className="text-gray-500 flex-none" />
-                            <span className="text-gray-500">Acknowledged:</span>
+                            <CheckCircle size={11} className="text-[color:var(--text-muted)] flex-none" />
+                            <span className="text-[color:var(--text-muted)]">Acknowledged:</span>
                             <span className={status.acknowledged_at ? "text-[#22C55E]" : "text-gray-600"}>
                               {status.acknowledged_at
                                 ? `${formatDateTime(status.acknowledged_at)}${status.acknowledged_by ? ` by ${status.acknowledged_by}` : ""}`
@@ -923,7 +923,7 @@ export default function SubsTab({ projectId }: Props) {
                         return (
                           <div className="bg-[#121217] border border-[#1F1F25] rounded-lg overflow-hidden">
                             <button
-                              className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-gray-300 hover:text-white transition-colors"
+                              className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
                               onClick={() => setReportsOpen(prev => ({ ...prev, [sub.id]: !isOpen }))}
                             >
                               <span className="flex items-center gap-1.5">
@@ -936,8 +936,8 @@ export default function SubsTab({ projectId }: Props) {
                                 )}
                               </span>
                               {isOpen
-                                ? <ChevronUp size={13} className="text-gray-500" />
-                                : <ChevronDown size={13} className="text-gray-500" />
+                                ? <ChevronUp size={13} className="text-[color:var(--text-muted)]" />
+                                : <ChevronDown size={13} className="text-[color:var(--text-muted)]" />
                               }
                             </button>
                             {isOpen && (
@@ -953,10 +953,10 @@ export default function SubsTab({ projectId }: Props) {
                                     <div key={report.id} className="px-3 py-3 space-y-1.5">
                                       <div className="flex items-center justify-between">
                                         <span className="text-xs font-medium text-gray-200">{formatDate(report.report_date)}</span>
-                                        <span className="text-[10px] text-gray-500">{report.submitted_by}</span>
+                                        <span className="text-[10px] text-[color:var(--text-muted)]">{report.submitted_by}</span>
                                       </div>
                                       {(report.manpower_count != null || report.total_hours != null) && (
-                                        <div className="flex items-center gap-3 text-[10px] text-gray-400">
+                                        <div className="flex items-center gap-3 text-[10px] text-[color:var(--text-secondary)]">
                                           {report.manpower_count != null && <span>👷 {report.manpower_count} worker{report.manpower_count !== 1 ? "s" : ""}</span>}
                                           {report.total_hours != null && <span>⏱ {report.total_hours}h</span>}
                                         </div>
@@ -972,20 +972,20 @@ export default function SubsTab({ projectId }: Props) {
                                         <div className="space-y-1 mt-1">
                                           {report.worked_on_activities.map((wa) => (
                                             <div key={wa.activity_id} className="flex items-center justify-between text-[10px]">
-                                              <span className="text-gray-400 truncate flex-1 mr-2">{wa.activity_name ?? "Unknown"}</span>
+                                              <span className="text-[color:var(--text-secondary)] truncate flex-1 mr-2">{wa.activity_name ?? "Unknown"}</span>
                                               <span className={`flex-none px-1.5 py-0.5 rounded font-medium ${
                                                 wa.status === "100" ? "bg-green-500/15 text-green-400" :
                                                 wa.status === "75"  ? "bg-blue-500/15 text-blue-400" :
                                                 wa.status === "50"  ? "bg-yellow-500/15 text-yellow-400" :
                                                 wa.status === "25"  ? "bg-orange-500/15 text-orange-400" :
-                                                "bg-gray-700 text-gray-400"
+                                                "bg-gray-700 text-[color:var(--text-secondary)]"
                                               }`}>{wa.status}%</span>
                                             </div>
                                           ))}
                                         </div>
                                       )}
                                       {report.notes && (
-                                        <p className="text-[10px] text-gray-500 italic mt-1">"{report.notes}"</p>
+                                        <p className="text-[10px] text-[color:var(--text-muted)] italic mt-1">"{report.notes}"</p>
                                       )}
                                       {report.photo_urls && report.photo_urls.length > 0 && (
                                         <div className="flex gap-1.5 mt-2 overflow-x-auto scrollbar-none">
@@ -1001,7 +1001,7 @@ export default function SubsTab({ projectId }: Props) {
                                                 />
                                                 {ts && (
                                                   <div className="absolute bottom-0 left-0 right-0 bg-black/60 rounded-b-lg px-0.5 py-0.5 text-center">
-                                                    <span className="text-white text-[8px] leading-none font-medium">{ts}</span>
+                                                    <span className="text-[color:var(--text-primary)] text-[8px] leading-none font-medium">{ts}</span>
                                                   </div>
                                                 )}
                                               </a>
@@ -1024,7 +1024,7 @@ export default function SubsTab({ projectId }: Props) {
                           <button
                             onClick={(e) => handleGenerateLink(sub.id, e)}
                             disabled={generating === sub.id}
-                            className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-xs transition-colors disabled:opacity-50"
+                            className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs transition-colors disabled:opacity-50"
                           >
                             <Link2 size={12} />
                             {generating === sub.id ? "…" : "Regenerate Link"}
@@ -1069,11 +1069,11 @@ export default function SubsTab({ projectId }: Props) {
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] bg-[#121217]">
               <div className="flex items-center gap-2">
                 <QrCode size={16} className="text-[#F97316]" />
-                <h3 className="text-sm font-bold text-white">Sub Self-Registration QR</h3>
+                <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Sub Self-Registration QR</h3>
               </div>
               <button
                 onClick={() => setShowQrModal(false)}
-                className="text-gray-500 hover:text-white transition-colors"
+                className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
               >
                 <X size={18} />
               </button>
@@ -1088,7 +1088,7 @@ export default function SubsTab({ projectId }: Props) {
               ) : qrData ? (
                 <>
                   {/* Description */}
-                  <p className="text-xs text-gray-400 text-center leading-relaxed">
+                  <p className="text-xs text-[color:var(--text-secondary)] text-center leading-relaxed">
                     Post this in the job trailer. Subs scan to self-register and see their schedule.
                   </p>
 
@@ -1104,13 +1104,13 @@ export default function SubsTab({ projectId }: Props) {
                         className="rounded-lg"
                       />
                     </div>
-                    <p className="text-sm font-semibold text-white text-center">{qrData.project_name}</p>
+                    <p className="text-sm font-semibold text-[color:var(--text-primary)] text-center">{qrData.project_name}</p>
                   </div>
 
                   {/* Join URL */}
                   <div className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
                     <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">Registration Link</p>
-                    <p className="text-xs text-gray-400 break-all font-mono leading-relaxed">{qrData.url}</p>
+                    <p className="text-xs text-[color:var(--text-secondary)] break-all font-mono leading-relaxed">{qrData.url}</p>
                   </div>
 
                   {/* Action Buttons */}
@@ -1120,7 +1120,7 @@ export default function SubsTab({ projectId }: Props) {
                       className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                         qrCopied
                           ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                          : "bg-[#1F1F25] text-gray-300 hover:text-white border border-[#2a2a35] hover:border-[#F97316]/30"
+                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] hover:border-[#F97316]/30"
                       }`}
                     >
                       {qrCopied ? <Check size={13} /> : <ExternalLink size={13} />}
@@ -1128,7 +1128,7 @@ export default function SubsTab({ projectId }: Props) {
                     </button>
                     <button
                       onClick={() => window.print()}
-                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] text-gray-300 hover:text-white border border-[#2a2a35] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <Printer size={13} />
                       Print

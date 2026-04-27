@@ -181,12 +181,12 @@ export default function AddContactModal({
       <div className="relative bg-[#121217] border border-[#1F1F25] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] flex-none">
-          <h2 className="text-sm font-bold text-white">
+          <h2 className="text-sm font-bold text-[color:var(--text-primary)]">
             {isEdit ? "Edit Contact" : "Add Contact"}
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <X size={16} />
           </button>
@@ -200,7 +200,7 @@ export default function AddContactModal({
               className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
                 mode === "search"
                   ? "text-[#F97316] border-b-2 border-[#F97316]"
-                  : "text-gray-500 hover:text-gray-300"
+                  : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
             >
               Search Existing
@@ -210,7 +210,7 @@ export default function AddContactModal({
               className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
                 mode === "new"
                   ? "text-[#F97316] border-b-2 border-[#F97316]"
-                  : "text-gray-500 hover:text-gray-300"
+                  : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
             >
               Create New
@@ -223,13 +223,13 @@ export default function AddContactModal({
           {mode === "search" && !isEdit && (
             <div className="space-y-3">
               <div className="relative">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
                 <input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by name or email…"
                   autoFocus
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl pl-9 pr-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
 
@@ -241,10 +241,10 @@ export default function AddContactModal({
 
               {!searching && searchQuery && searchResults.length === 0 && (
                 <div className="text-center py-6">
-                  <p className="text-sm text-gray-500 mb-3">No contacts found</p>
+                  <p className="text-sm text-[color:var(--text-muted)] mb-3">No contacts found</p>
                   <button
                     onClick={() => setMode("new")}
-                    className="flex items-center gap-1.5 mx-auto px-4 py-2 bg-[#F97316] text-white rounded-lg text-xs font-semibold"
+                    className="flex items-center gap-1.5 mx-auto px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold"
                   >
                     <Plus size={13} />
                     Create New Contact
@@ -260,8 +260,8 @@ export default function AddContactModal({
                       className="flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3"
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-white truncate">{c.name}</p>
-                        {c.company && <p className="text-xs text-gray-400 truncate">{c.company}</p>}
+                        <p className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{c.name}</p>
+                        {c.company && <p className="text-xs text-[color:var(--text-secondary)] truncate">{c.company}</p>}
                         {c.email && <p className="text-[10px] text-gray-600 truncate">{c.email}</p>}
                       </div>
                       {c.already_on_project ? (
@@ -273,7 +273,7 @@ export default function AddContactModal({
                         <button
                           onClick={() => handleAddExisting(c.id)}
                           disabled={saving}
-                          className="ml-3 flex-none px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-lg text-xs font-semibold transition-colors"
+                          className="ml-3 flex-none px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
                         >
                           Add
                         </button>
@@ -297,33 +297,33 @@ export default function AddContactModal({
               <div className="grid grid-cols-1 gap-3">
                 {/* Name */}
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1 font-medium">Name *</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Name *</label>
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full name"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
                 {/* Company */}
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1 font-medium">Company</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Company</label>
                   <input
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     placeholder="Company name"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
                 {/* Role */}
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1 font-medium">Role *</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Role *</label>
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                   >
                     <option value="" disabled>Select role…</option>
                     {ROLE_OPTIONS.map((r) => (
@@ -335,12 +335,12 @@ export default function AddContactModal({
                 {/* Conditional: trade (subcontractor) */}
                 {role === "subcontractor" && (
                   <div>
-                    <label className="block text-xs text-gray-400 mb-1 font-medium">Trade</label>
+                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Trade</label>
                     <input
                       value={trade}
                       onChange={(e) => setTrade(e.target.value)}
                       placeholder="e.g., Electrical, Plumbing, HVAC"
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -348,37 +348,37 @@ export default function AddContactModal({
                 {/* Conditional: discipline (engineer) */}
                 {role === "engineer" && (
                   <div>
-                    <label className="block text-xs text-gray-400 mb-1 font-medium">Discipline</label>
+                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Discipline</label>
                     <input
                       value={discipline}
                       onChange={(e) => setDiscipline(e.target.value)}
                       placeholder="e.g., Structural, MEP, Civil"
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1 font-medium">Email</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Email</label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="email@example.com"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1 font-medium">Phone</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Phone</label>
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="602-555-1234"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
               </div>
@@ -398,14 +398,14 @@ export default function AddContactModal({
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 bg-[#1F1F25] text-gray-300 hover:text-white rounded-xl text-sm font-medium transition-colors"
+                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || !name.trim() || !role}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
               >
                 {saving ? (
                   <Loader2 size={15} className="animate-spin" />

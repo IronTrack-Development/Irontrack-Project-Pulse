@@ -129,13 +129,13 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
       {/* Header */}
       <button
         onClick={onBack}
-        className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-4 min-h-[44px] transition-colors"
+        className="flex items-center gap-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm mb-4 min-h-[44px] transition-colors"
       >
         <ArrowLeft size={16} />
         Reports
       </button>
 
-      <h2 className="text-lg font-bold text-white mb-4">Multi-Add Reports</h2>
+      <h2 className="text-lg font-bold text-[color:var(--text-primary)] mb-4">Multi-Add Reports</h2>
 
       {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
 
@@ -150,7 +150,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
       />
       <button
         onClick={() => fileRef.current?.click()}
-        className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
+        className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
       >
         <ImagePlus size={18} />
         {photos.length === 0 ? "Select Photos" : "Add More Photos"}
@@ -171,14 +171,14 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
                   onClick={() => removePhoto(idx)}
                   className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-red-600 flex items-center justify-center"
                 >
-                  <X size={12} className="text-white" />
+                  <X size={12} className="text-[color:var(--text-primary)]" />
                 </button>
                 <div className="p-2">
                   <input
                     type="text"
                     value={photo.title}
                     onChange={(e) => updateTitle(idx, e.target.value)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#F97316] transition-colors"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316] transition-colors"
                   />
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
           <button
             onClick={handleCreateAll}
             disabled={creating}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors min-h-[48px] disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[48px] disabled:opacity-50"
           >
             {creating ? (
               <>

@@ -16,7 +16,7 @@ interface Props {
 function statusBadge(status: ReportStatus) {
   switch (status) {
     case "draft":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-gray-300">Draft</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-[color:var(--text-secondary)]">Draft</span>;
     case "generated":
       return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#22C55E]/15 text-[#22C55E]">Generated</span>;
     case "shared":
@@ -85,15 +85,15 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <CalendarDays size={16} className="text-[#F97316]" />
-          <h3 className="text-sm font-bold text-white">Weekly Log Report</h3>
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
         </div>
-        <p className="text-xs text-gray-500 mb-4">
+        <p className="text-xs text-[color:var(--text-muted)] mb-4">
           Generate a summary from this week&apos;s daily logs — crew-hours, progress, weather, and issues.
         </p>
         <button
           onClick={generate}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
         >
           {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}
           Generate Weekly Report
@@ -112,21 +112,21 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <CalendarDays size={16} className="text-[#F97316]" />
-            <h3 className="text-sm font-bold text-white">Weekly Log Report</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
           </div>
-          <div className="text-xs text-gray-500">{weekLabel} · {data.logCount} log{data.logCount !== 1 ? "s" : ""}</div>
+          <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} · {data.logCount} log{data.logCount !== 1 ? "s" : ""}</div>
         </div>
         <div className="flex gap-2">
           <button
             onClick={generate}
-            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
             title="Refresh"
           >
             <RefreshCw size={14} />
           </button>
           <button
             onClick={exportPdf}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <Printer size={12} />
             Export PDF
@@ -137,23 +137,23 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
           <Users size={14} className="mx-auto text-[#F97316] mb-1" />
-          <div className="text-lg font-bold text-white">{data.totalCrewHours}</div>
-          <div className="text-[10px] text-gray-500">Crew-Hours</div>
+          <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.totalCrewHours}</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">Crew-Hours</div>
         </div>
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
           <Activity size={14} className="mx-auto text-[#22C55E] mb-1" />
-          <div className="text-lg font-bold text-white">{data.activitiesCompleted}</div>
-          <div className="text-[10px] text-gray-500">Completed</div>
+          <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.activitiesCompleted}</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">Completed</div>
         </div>
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
           <CloudRain size={14} className="mx-auto text-[#3B82F6] mb-1" />
-          <div className="text-lg font-bold text-white">{data.weatherImpactDays}</div>
-          <div className="text-[10px] text-gray-500">Weather Days</div>
+          <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.weatherImpactDays}</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">Weather Days</div>
         </div>
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
           <AlertTriangle size={14} className="mx-auto text-[#EF4444] mb-1" />
-          <div className="text-lg font-bold text-white">{data.lostCrewHours}</div>
-          <div className="text-[10px] text-gray-500">Lost Hours</div>
+          <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.lostCrewHours}</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">Lost Hours</div>
         </div>
       </div>
     </div>
@@ -209,24 +209,24 @@ export default function ReportsTab({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-white font-bold text-lg flex items-center gap-2">
+          <h2 className="text-[color:var(--text-primary)] font-bold text-lg flex items-center gap-2">
             <ClipboardList size={18} className="text-[#F97316]" />
             Observations
           </h2>
-          <p className="text-gray-500 text-sm mt-0.5">
+          <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
             {reports.length} observation{reports.length !== 1 ? "s" : ""} generated
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={fetchReports}
-            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <RefreshCw size={15} />
           </button>
           <Link
             href={`/projects/${projectId}/report`}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <ClipboardList size={14} />
             New Observation
@@ -239,13 +239,13 @@ export default function ReportsTab({ projectId }: Props) {
           <div className="w-14 h-14 rounded-full bg-[#1F1F25] flex items-center justify-center mb-4">
             <FileText size={24} className="text-gray-600" />
           </div>
-          <p className="text-gray-400 font-semibold mb-1">No observations yet</p>
+          <p className="text-[color:var(--text-secondary)] font-semibold mb-1">No observations yet</p>
           <p className="text-gray-600 text-sm mb-6">
             Start your first observation to document field conditions.
           </p>
           <Link
             href={`/projects/${projectId}/report`}
-            className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
+            className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <ClipboardList size={16} />
             New Observation
@@ -268,7 +268,7 @@ export default function ReportsTab({ projectId }: Props) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-white font-bold text-sm">{report.report_number}</span>
+                      <span className="text-[color:var(--text-primary)] font-bold text-sm">{report.report_number}</span>
                       {statusBadge(report.status)}
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
@@ -277,7 +277,7 @@ export default function ReportsTab({ projectId }: Props) {
                           href={`/projects/${projectId}/reports/${report.id}/print`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-[#F97316] transition-colors"
+                          className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
                           title="View PDF"
                         >
                           <ExternalLink size={14} />
@@ -286,7 +286,7 @@ export default function ReportsTab({ projectId }: Props) {
                       <button
                         onClick={() => handleDelete(report.id)}
                         disabled={deletingId === report.id}
-                        className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-[#EF4444] transition-colors disabled:opacity-40"
+                        className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
                         title="Delete observation"
                       >
                         {deletingId === report.id ? (
@@ -298,11 +298,11 @@ export default function ReportsTab({ projectId }: Props) {
                     </div>
                   </div>
 
-                  <div className="text-gray-300 text-sm font-medium leading-tight mb-2">
+                  <div className="text-[color:var(--text-secondary)] text-sm font-medium leading-tight mb-2">
                     {report.activity_name}
                   </div>
 
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
                     <span className="flex items-center gap-1">
                       <AlertTriangle size={10} className="text-[#EF4444]" />
                       {report.issue_count} issue{report.issue_count !== 1 ? "s" : ""}
@@ -320,7 +320,7 @@ export default function ReportsTab({ projectId }: Props) {
                   href={`/projects/${projectId}/reports/${report.id}/print`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-gray-500 hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
                 >
                   View Observation
                   <ChevronRight size={12} />

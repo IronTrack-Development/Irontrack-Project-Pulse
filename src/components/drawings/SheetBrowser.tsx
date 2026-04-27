@@ -202,20 +202,20 @@ export default function SheetBrowser({
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={onBack}
-          className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
         >
           <ArrowLeft size={18} />
         </button>
         <div className="flex-1 min-w-0">
-          <h2 className="text-white font-semibold truncate">{drawingSet.name}</h2>
-          <p className="text-gray-500 text-xs">
+          <h2 className="text-[color:var(--text-primary)] font-semibold truncate">{drawingSet.name}</h2>
+          <p className="text-[color:var(--text-muted)] text-xs">
             {drawingSet.revision} · {drawingSet.sheet_count} sheets
           </p>
         </div>
         {/* Organize button */}
         <button
           onClick={() => setShowOrganizer(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2A2A30] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
         >
           <ClipboardList size={14} />
           Organize
@@ -231,7 +231,7 @@ export default function SheetBrowser({
       {sheets.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <FileImage size={40} className="text-gray-700 mb-3" />
-          <p className="text-gray-500 text-sm">No sheets in this set</p>
+          <p className="text-[color:var(--text-muted)] text-sm">No sheets in this set</p>
         </div>
       ) : (
         <>
@@ -239,12 +239,12 @@ export default function SheetBrowser({
           {allUnclassified && (
             <div className="mb-4 p-3 bg-[#1F1F25] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
               <ClipboardList size={16} className="text-[#F97316] shrink-0" />
-              <p className="text-gray-300 text-sm flex-1">
+              <p className="text-[color:var(--text-secondary)] text-sm flex-1">
                 Sheets haven&apos;t been organized yet.
               </p>
               <button
                 onClick={() => setShowOrganizer(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
               >
                 <ClipboardList size={12} /> Organize Sheets
               </button>
@@ -289,7 +289,7 @@ export default function SheetBrowser({
                     </span>
 
                     {/* Expand/collapse chevron */}
-                    <span className="text-gray-500 shrink-0">
+                    <span className="text-[color:var(--text-muted)] shrink-0">
                       {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                     </span>
                   </button>
@@ -322,7 +322,7 @@ export default function SheetBrowser({
                             <span className="text-gray-700 shrink-0">—</span>
 
                             {/* Sheet title */}
-                            <span className="text-gray-300 text-sm truncate flex-1">
+                            <span className="text-[color:var(--text-secondary)] text-sm truncate flex-1">
                               {sheet.sheet_title || `Page ${sheet.page_index + 1}`}
                             </span>
 

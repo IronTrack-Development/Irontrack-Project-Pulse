@@ -13,11 +13,11 @@ interface RollupStatCardProps {
 export default function RollupStatCard({ label, value, icon, subtext, accent }: RollupStatCardProps) {
   return (
     <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 flex flex-col items-center text-center min-w-[100px]">
-      {icon && <div className="mb-1 text-gray-500">{icon}</div>}
-      <div className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-white"}`}>
+      {icon && <div className="mb-1 text-[color:var(--text-muted)]">{icon}</div>}
+      <div className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </div>
-      <div className="text-[11px] text-gray-500 mt-0.5">{label}</div>
+      <div className="text-[11px] text-[color:var(--text-muted)] mt-0.5">{label}</div>
       {subtext && <div className="text-[10px] text-gray-600 mt-0.5">{subtext}</div>}
     </div>
   );

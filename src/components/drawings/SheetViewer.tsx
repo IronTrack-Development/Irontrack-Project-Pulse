@@ -218,14 +218,14 @@ export default function SheetViewer({
       <div className="flex items-center gap-2 px-3 py-2 bg-[#121217] border-b border-[#1F1F25] shrink-0 overflow-x-auto">
         <button
           onClick={onClose}
-          className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+          className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
         >
           <X size={18} />
         </button>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-white font-medium text-sm truncate">
+            <p className="text-[color:var(--text-primary)] font-medium text-sm truncate">
               {currentSheet.sheet_number}
               {currentSheet.sheet_title ? ` — ${currentSheet.sheet_title}` : ""}
             </p>
@@ -241,27 +241,27 @@ export default function SheetViewer({
               </span>
             )}
           </div>
-          <p className="text-gray-500 text-xs truncate">{drawingSet.name} · {drawingSet.revision}</p>
+          <p className="text-[color:var(--text-muted)] text-xs truncate">{drawingSet.name} · {drawingSet.revision}</p>
         </div>
 
         {/* Zoom controls */}
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => setScale((s) => Math.max(s - 0.25, 0.5))}
-            className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <ZoomOut size={16} />
           </button>
-          <span className="text-gray-400 text-xs w-10 text-center">{Math.round(scale * 100)}%</span>
+          <span className="text-[color:var(--text-secondary)] text-xs w-10 text-center">{Math.round(scale * 100)}%</span>
           <button
             onClick={() => setScale((s) => Math.min(s + 0.25, 4))}
-            className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <ZoomIn size={16} />
           </button>
           <button
             onClick={() => setScale(1)}
-            className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <RotateCcw size={14} />
           </button>
@@ -272,8 +272,8 @@ export default function SheetViewer({
           onClick={() => setAddPinMode((v) => !v)}
           className={`p-2 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors shrink-0 ${
             addPinMode
-              ? "bg-[#F97316] text-white"
-              : "text-gray-400 hover:text-white bg-[#1F1F25]"
+              ? "bg-[#F97316] text-[color:var(--text-primary)]"
+              : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] bg-[#1F1F25]"
           }`}
           title="Add Pin"
         >
@@ -283,7 +283,7 @@ export default function SheetViewer({
         {/* Sheet info */}
         <button
           onClick={() => setShowInfo((v) => !v)}
-          className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+          className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
         >
           <Info size={16} />
         </button>
@@ -307,7 +307,7 @@ export default function SheetViewer({
           <span className="text-[#F97316] text-sm">Tap on the drawing to place a pin</span>
           <button
             onClick={() => setAddPinMode(false)}
-            className="ml-auto text-[#F97316] hover:text-white text-sm underline"
+            className="ml-auto text-[#F97316] hover:text-[color:var(--text-primary)] text-sm underline"
           >
             Cancel
           </button>
@@ -337,7 +337,7 @@ export default function SheetViewer({
                 file={pdfPublicUrl}
                 loading={
                   <div className="flex items-center justify-center w-full h-64">
-                    <div className="text-gray-500 text-sm">Loading PDF...</div>
+                    <div className="text-[color:var(--text-muted)] text-sm">Loading PDF...</div>
                   </div>
                 }
                 error={
@@ -362,7 +362,7 @@ export default function SheetViewer({
                     e.stopPropagation();
                     setSelectedPin(selectedPin?.id === pin.id ? null : pin);
                   }}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg z-10 min-w-[28px] min-h-[28px] flex items-center justify-center text-white text-xs font-bold transition-transform hover:scale-125"
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-lg z-10 min-w-[28px] min-h-[28px] flex items-center justify-center text-[color:var(--text-primary)] text-xs font-bold transition-transform hover:scale-125"
                   style={{
                     left: `${pin.x_percent}%`,
                     top: `${pin.y_percent}%`,
@@ -400,12 +400,12 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.max(i - 1, 0))}
             disabled={sheetIndex === 0}
-            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
           >
             <ChevronLeft size={16} /> Prev
           </button>
           <div className="text-center">
-            <p className="text-gray-400 text-sm">{sheetIndex + 1} / {sheets.length}</p>
+            <p className="text-[color:var(--text-secondary)] text-sm">{sheetIndex + 1} / {sheets.length}</p>
             {currentSheet.sheet_number && (
               <p className="text-gray-600 text-xs mt-0.5">{currentSheet.sheet_number}</p>
             )}
@@ -413,7 +413,7 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
             disabled={sheetIndex === sheets.length - 1}
-            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-gray-300 disabled:opacity-30 min-h-[44px] text-sm"
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
           >
             Next <ChevronRight size={16} />
           </button>
@@ -430,19 +430,19 @@ export default function SheetViewer({
                 style={{ backgroundColor: PIN_COLORS[selectedPin.pin_type] }}
               />
               <div>
-                <p className="text-white font-medium text-sm capitalize">
+                <p className="text-[color:var(--text-primary)] font-medium text-sm capitalize">
                   {selectedPin.pin_type}
                   {selectedPin.label ? ` — ${selectedPin.label}` : ""}
                 </p>
                 {selectedPin.reference && (
-                  <p className="text-gray-400 text-xs mt-0.5">
+                  <p className="text-[color:var(--text-secondary)] text-xs mt-0.5">
                     {selectedPin.reference.rfi_number || selectedPin.reference.item_number || selectedPin.reference.submittal_number}
                     {" — "}
                     {selectedPin.reference.subject || selectedPin.reference.title}
                   </p>
                 )}
                 {selectedPin.notes && (
-                  <p className="text-gray-300 text-xs mt-1">{selectedPin.notes}</p>
+                  <p className="text-[color:var(--text-secondary)] text-xs mt-1">{selectedPin.notes}</p>
                 )}
               </div>
             </div>
@@ -455,7 +455,7 @@ export default function SheetViewer({
               </button>
               <button
                 onClick={() => setSelectedPin(null)}
-                className="p-1 text-gray-400 hover:text-white min-h-[32px] min-w-[32px] flex items-center justify-center"
+                className="p-1 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-h-[32px] min-w-[32px] flex items-center justify-center"
               >
                 <X size={14} />
               </button>
@@ -469,19 +469,19 @@ export default function SheetViewer({
         <div className="absolute bottom-20 left-4 right-4 z-20 bg-[#121217] border border-[#1F1F25] rounded-xl p-4 shadow-xl">
           <div className="flex justify-between items-start">
             <div className="space-y-1">
-              <p className="text-white font-medium">{currentSheet.sheet_number}</p>
-              {currentSheet.sheet_title && <p className="text-gray-400 text-sm">{currentSheet.sheet_title}</p>}
+              <p className="text-[color:var(--text-primary)] font-medium">{currentSheet.sheet_number}</p>
+              {currentSheet.sheet_title && <p className="text-[color:var(--text-secondary)] text-sm">{currentSheet.sheet_title}</p>}
               {currentSheet.discipline && (
                 <span
-                  className="inline-block px-2 py-0.5 rounded text-xs font-medium text-white"
+                  className="inline-block px-2 py-0.5 rounded text-xs font-medium text-[color:var(--text-primary)]"
                   style={{ backgroundColor: DISCIPLINE_COLORS[currentSheet.discipline] + "30", color: DISCIPLINE_COLORS[currentSheet.discipline] }}
                 >
                   {currentSheet.discipline}
                 </span>
               )}
-              <p className="text-gray-500 text-xs">Page {currentSheet.page_index + 1} · {pins.length} pins</p>
+              <p className="text-[color:var(--text-muted)] text-xs">Page {currentSheet.page_index + 1} · {pins.length} pins</p>
             </div>
-            <button onClick={() => setShowInfo(false)} className="p-1 text-gray-400 hover:text-white min-h-[32px] min-w-[32px] flex items-center justify-center">
+            <button onClick={() => setShowInfo(false)} className="p-1 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-h-[32px] min-w-[32px] flex items-center justify-center">
               <X size={14} />
             </button>
           </div>

@@ -100,9 +100,9 @@ export default function SubOpsDashboard({ projectId }: Props) {
             <HardHat size={20} className="text-[#F97316]" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">{company?.company_name ?? "Sub Ops"}</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{company?.company_name ?? "Sub Ops"}</h2>
             {company?.primary_trade && (
-              <p className="text-xs text-gray-500 capitalize">{company.primary_trade.replace(/_/g, " ")}</p>
+              <p className="text-xs text-[color:var(--text-muted)] capitalize">{company.primary_trade.replace(/_/g, " ")}</p>
             )}
           </div>
         </div>
@@ -116,24 +116,24 @@ export default function SubOpsDashboard({ projectId }: Props) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Send size={14} className="text-[#F97316]" />
-              <span className="text-xs font-semibold text-gray-300">Today&apos;s Dispatches</span>
+              <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Today&apos;s Dispatches</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">{dispatches.total}</p>
-              <p className="text-[10px] text-gray-500">Sent</p>
+              <p className="text-2xl font-bold text-[color:var(--text-primary)]">{dispatches.total}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Sent</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-green-400">{dispatches.acknowledged}</p>
-              <p className="text-[10px] text-gray-500">Acknowledged</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Acknowledged</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-orange-400">{dispatches.pending}</p>
-              <p className="text-[10px] text-gray-500">Pending</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Pending</p>
             </div>
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
+          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
             <Plus size={14} />
             Create Dispatch
           </button>
@@ -143,9 +143,9 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <AlertTriangle size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-gray-300">Open Blockers</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Open Blockers</span>
           </div>
-          <p className="text-2xl font-bold text-white">{blockers.open_count}</p>
+          <p className="text-2xl font-bold text-[color:var(--text-primary)]">{blockers.open_count}</p>
           {blockers.open_count > 0 ? (
             <p className="text-xs text-orange-400">
               {blockers.open_count} blocker{blockers.open_count !== 1 ? "s" : ""} need attention
@@ -159,16 +159,16 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <TrendingUp size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-gray-300">This Week&apos;s Production</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">This Week&apos;s Production</span>
           </div>
           <div className="flex items-center gap-4">
             <div>
-              <p className="text-2xl font-bold text-white">{production.total_crew_hours}</p>
-              <p className="text-[10px] text-gray-500">Crew Hours</p>
+              <p className="text-2xl font-bold text-[color:var(--text-primary)]">{production.total_crew_hours}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Crew Hours</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">{production.total_entries}</p>
-              <p className="text-[10px] text-gray-500">Entries</p>
+              <p className="text-2xl font-bold text-[color:var(--text-primary)]">{production.total_entries}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Entries</p>
             </div>
           </div>
         </div>
@@ -177,11 +177,11 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <FileText size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-gray-300">SOP Compliance</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">SOP Compliance</span>
           </div>
-          <p className="text-sm text-gray-300">
-            <span className="text-white font-bold">{sops.compliant_foremen}</span> of{" "}
-            <span className="text-white font-bold">{sops.total_foremen}</span> foremen have acknowledged all required SOPs
+          <p className="text-sm text-[color:var(--text-secondary)]">
+            <span className="text-[color:var(--text-primary)] font-bold">{sops.compliant_foremen}</span> of{" "}
+            <span className="text-[color:var(--text-primary)] font-bold">{sops.total_foremen}</span> foremen have acknowledged all required SOPs
           </p>
         </div>
       </div>
@@ -191,15 +191,15 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Users size={14} className="text-[#F97316]" />
-            <span className="text-sm font-semibold text-white">Foreman Status</span>
+            <span className="text-sm font-semibold text-[color:var(--text-primary)]">Foreman Status</span>
           </div>
-          <span className="text-xs text-gray-500">{foremen.length} foremen</span>
+          <span className="text-xs text-[color:var(--text-muted)]">{foremen.length} foremen</span>
         </div>
 
         {foremen.length === 0 ? (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6 text-center">
             <Users size={24} className="mx-auto text-gray-600 mb-2" />
-            <p className="text-sm text-gray-400">No foremen added yet</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">No foremen added yet</p>
             <p className="text-xs text-gray-600 mt-1">Add foremen from the Foremen tab to get started</p>
           </div>
         ) : (
@@ -210,12 +210,12 @@ export default function SubOpsDashboard({ projectId }: Props) {
                 className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 hover:border-[#F97316]/30 transition-colors cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-semibold text-white truncate">{f.name}</span>
+                  <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{f.name}</span>
                   {STATUS_ICON[f.status] ?? STATUS_ICON.not_yet}
                 </div>
-                <p className="text-xs text-gray-500 capitalize">{f.trade?.replace(/_/g, " ") ?? "—"}</p>
+                <p className="text-xs text-[color:var(--text-muted)] capitalize">{f.trade?.replace(/_/g, " ") ?? "—"}</p>
                 {f.current_job && (
-                  <p className="text-xs text-gray-400 mt-1 truncate">
+                  <p className="text-xs text-[color:var(--text-secondary)] mt-1 truncate">
                     <Clock size={10} className="inline mr-1" />
                     {f.current_job}
                   </p>

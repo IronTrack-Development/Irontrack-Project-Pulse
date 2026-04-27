@@ -442,14 +442,14 @@ export default function SheetOrganizer({
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-4 border-b border-[#1F1F25] shrink-0">
         <div className="flex-1 min-w-0">
-          <h2 className="text-white font-semibold">Organize Drawing Set</h2>
-          <p className="text-gray-500 text-xs mt-0.5">
+          <h2 className="text-[color:var(--text-primary)] font-semibold">Organize Drawing Set</h2>
+          <p className="text-[color:var(--text-muted)] text-xs mt-0.5">
             {drawingSet.name} · {maxPage} pages
           </p>
         </div>
         <button
           onClick={onClose}
-          className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
         >
           <X size={18} />
         </button>
@@ -470,17 +470,17 @@ export default function SheetOrganizer({
                 if (e.key === "Escape") { setShowAddCategory(false); setNewCategoryName(""); }
               }}
               placeholder="Category name (e.g. Shop Drawings, ASI #3)"
-              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white placeholder-gray-600 text-sm min-h-[44px]"
+              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
             />
             <button
               onClick={handleAddCategory}
-              className="px-3 py-2 bg-[#F97316] text-white rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px]"
+              className="px-3 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px]"
             >
               <Check size={16} />
             </button>
             <button
               onClick={() => { setShowAddCategory(false); setNewCategoryName(""); }}
-              className="px-3 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-sm min-h-[44px] min-w-[44px]"
+              className="px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-sm min-h-[44px] min-w-[44px]"
             >
               <X size={16} />
             </button>
@@ -488,7 +488,7 @@ export default function SheetOrganizer({
         ) : (
           <button
             onClick={() => setShowAddCategory(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#121217] border border-[#1F1F25] hover:border-[#F97316]/40 text-gray-400 hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#121217] border border-[#1F1F25] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
           >
             <Plus size={15} />
             Add Custom Category
@@ -518,7 +518,7 @@ export default function SheetOrganizer({
                   draggable
                   onDragStart={() => setDraggingId(cat.id)}
                   onDragEnd={() => { setDraggingId(null); setDragOverId(null); }}
-                  className="text-gray-700 hover:text-gray-500 cursor-grab active:cursor-grabbing shrink-0 p-1"
+                  className="text-gray-700 hover:text-[color:var(--text-muted)] cursor-grab active:cursor-grabbing shrink-0 p-1"
                 >
                   <GripVertical size={14} />
                 </div>
@@ -534,7 +534,7 @@ export default function SheetOrganizer({
                   onClick={() => toggleSection(cat.id)}
                   className="flex-1 flex items-center gap-2 text-left"
                 >
-                  <span className="text-white font-medium text-sm">{cat.name}</span>
+                  <span className="text-[color:var(--text-primary)] font-medium text-sm">{cat.name}</span>
                   {catSheets.length > 0 && (
                     <span
                       className="text-xs px-1.5 py-0.5 rounded-full"
@@ -552,7 +552,7 @@ export default function SheetOrganizer({
                 {isEditingThisPages ? null : (
                   <button
                     onClick={() => startEditPages(cat.id)}
-                    className="shrink-0 px-2.5 py-1.5 bg-[#1F1F25] hover:bg-[#2A2A30] text-gray-400 hover:text-white rounded-lg text-xs min-h-[36px] transition-colors"
+                    className="shrink-0 px-2.5 py-1.5 bg-[#1F1F25] hover:bg-[#2A2A30] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs min-h-[36px] transition-colors"
                   >
                     Set Pages
                   </button>
@@ -574,7 +574,7 @@ export default function SheetOrganizer({
                           if (e.key === "Escape") { setEditingPages(null); setPageRangeInput(""); setPageRangeError(""); }
                         }}
                         placeholder={`e.g. 2-47, 50, 53-60 (1–${maxPage})`}
-                        className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+                        className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                       />
                       {pageRangeError && (
                         <p className="text-red-400 text-xs mt-1 flex items-center gap-1">
@@ -588,13 +588,13 @@ export default function SheetOrganizer({
                     <div className="flex flex-col gap-2 shrink-0">
                       <button
                         onClick={() => handleSetPages(cat.id)}
-                        className="px-3 py-2 bg-[#F97316] text-white rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px] flex items-center justify-center"
+                        className="px-3 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px] flex items-center justify-center"
                       >
                         <Check size={15} />
                       </button>
                       <button
                         onClick={() => { setEditingPages(null); setPageRangeInput(""); setPageRangeError(""); }}
-                        className="px-3 py-2 bg-[#1F1F25] text-gray-400 rounded-lg min-h-[36px] min-w-[44px] flex items-center justify-center"
+                        className="px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg min-h-[36px] min-w-[44px] flex items-center justify-center"
                       >
                         <X size={14} />
                       </button>
@@ -623,7 +623,7 @@ export default function SheetOrganizer({
                               autoFocus
                               value={editSheetNumber}
                               onChange={(e) => setEditSheetNumber(e.target.value)}
-                              className="w-20 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs font-mono min-h-[36px]"
+                              className="w-20 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs font-mono min-h-[36px]"
                               placeholder="A-1"
                             />
                             <input
@@ -633,12 +633,12 @@ export default function SheetOrganizer({
                                 if (e.key === "Enter") saveSheetEdit(sheet.id);
                                 if (e.key === "Escape") setEditingSheet(null);
                               }}
-                              className="flex-1 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-white text-xs min-h-[36px]"
+                              className="flex-1 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs min-h-[36px]"
                               placeholder="Sheet title"
                             />
                             <button
                               onClick={() => saveSheetEdit(sheet.id)}
-                              className="p-1.5 text-[#F97316] hover:text-white min-w-[36px] min-h-[36px] flex items-center justify-center"
+                              className="p-1.5 text-[#F97316] hover:text-[color:var(--text-primary)] min-w-[36px] min-h-[36px] flex items-center justify-center"
                             >
                               <Check size={14} />
                             </button>
@@ -652,12 +652,12 @@ export default function SheetOrganizer({
                               {displayNumber}
                             </span>
                             <span className="text-gray-600 shrink-0">—</span>
-                            <span className="text-gray-300 text-sm truncate flex-1">
+                            <span className="text-[color:var(--text-secondary)] text-sm truncate flex-1">
                               {displayTitle || `Page ${sheet.page_index + 1}`}
                             </span>
                             <button
                               onClick={() => startEditSheet(sheet.id)}
-                              className="p-1.5 text-gray-700 hover:text-gray-400 opacity-0 group-hover:opacity-100 min-w-[36px] min-h-[36px] flex items-center justify-center hover:opacity-100"
+                              className="p-1.5 text-gray-700 hover:text-[color:var(--text-secondary)] opacity-0 group-hover:opacity-100 min-w-[36px] min-h-[36px] flex items-center justify-center hover:opacity-100"
                             >
                               <Pencil size={12} />
                             </button>
@@ -681,10 +681,10 @@ export default function SheetOrganizer({
                 onClick={() => toggleSection("__uncategorized__")}
                 className="flex-1 flex items-center gap-2 text-left"
               >
-                <span className="text-gray-400 font-medium text-sm">
+                <span className="text-[color:var(--text-secondary)] font-medium text-sm">
                   Uncategorized
                 </span>
-                <span className="text-xs px-1.5 py-0.5 rounded-full bg-gray-700/50 text-gray-500">
+                <span className="text-xs px-1.5 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-muted)]">
                   {uncategorizedPages.length}
                 </span>
                 <span className="text-gray-600 ml-auto">
@@ -700,7 +700,7 @@ export default function SheetOrganizer({
                 <div className="relative shrink-0">
                   <button
                     onClick={() => setShowMoveMenu((v) => !v)}
-                    className="px-2.5 py-1.5 bg-[#F97316] text-white rounded-lg text-xs font-semibold min-h-[36px]"
+                    className="px-2.5 py-1.5 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px]"
                   >
                     Move {selectedUncategorized.size} →
                   </button>
@@ -710,7 +710,7 @@ export default function SheetOrganizer({
                         <button
                           key={cat.id}
                           onClick={() => moveSelectedTo(cat.id)}
-                          className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-[#2A2A30] text-left text-sm text-gray-300 min-h-[44px]"
+                          className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-[#2A2A30] text-left text-sm text-[color:var(--text-secondary)] min-h-[44px]"
                         >
                           <div
                             className="w-2 h-2 rounded-full shrink-0"
@@ -743,8 +743,8 @@ export default function SheetOrganizer({
                         }}
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-mono min-w-[44px] min-h-[36px] transition-colors ${
                           isSelected
-                            ? "bg-[#F97316] text-white"
-                            : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                            ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                            : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                         }`}
                       >
                         {pageNum}
@@ -761,7 +761,7 @@ export default function SheetOrganizer({
         {uncategorizedPages.length === 0 && categories.every((c) => c.assignedPages.length === 0) && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <Layers size={36} className="text-gray-700 mb-3" />
-            <p className="text-gray-500 text-sm">
+            <p className="text-[color:var(--text-muted)] text-sm">
               Use &ldquo;Set Pages&rdquo; on each category to assign pages
             </p>
           </div>
@@ -778,14 +778,14 @@ export default function SheetOrganizer({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl font-medium text-sm min-h-[48px]"
+            className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[48px]"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-xl font-semibold text-sm min-h-[48px] transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[48px] transition-colors"
           >
             {saving ? (
               <>Saving...</>

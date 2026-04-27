@@ -191,7 +191,7 @@ export default function CheckInView({ projectId }: Props) {
   return (
     <div className="space-y-4 max-w-2xl">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-white">Field Check-In</h2>
+        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Field Check-In</h2>
         <button
           onClick={() => setStep("blocker")}
           className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
@@ -208,36 +208,36 @@ export default function CheckInView({ projectId }: Props) {
               <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
                 <div className="flex items-center gap-2">
                   <Send size={14} className="text-[#F97316]" />
-                  <span className="text-sm font-bold text-white">Today&apos;s Dispatch</span>
+                  <span className="text-sm font-bold text-[color:var(--text-primary)]">Today&apos;s Dispatch</span>
                 </div>
-                <p className="text-xs text-gray-300">{dispatch.project_name}</p>
+                <p className="text-xs text-[color:var(--text-secondary)]">{dispatch.project_name}</p>
 
                 <div className="space-y-2 text-xs">
                   <div>
-                    <span className="text-gray-500 font-medium">Scope:</span>
-                    <p className="text-gray-300 mt-0.5 whitespace-pre-wrap">{dispatch.scope_of_work}</p>
+                    <span className="text-[color:var(--text-muted)] font-medium">Scope:</span>
+                    <p className="text-[color:var(--text-secondary)] mt-0.5 whitespace-pre-wrap">{dispatch.scope_of_work}</p>
                   </div>
                   {dispatch.priority_notes && (
                     <div>
                       <span className="text-orange-400 font-medium flex items-center gap-1"><AlertTriangle size={10} /> Priority:</span>
-                      <p className="text-gray-300 mt-0.5">{dispatch.priority_notes}</p>
+                      <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.priority_notes}</p>
                     </div>
                   )}
                   {dispatch.safety_focus && (
                     <div>
                       <span className="text-green-400 font-medium flex items-center gap-1"><Shield size={10} /> Safety:</span>
-                      <p className="text-gray-300 mt-0.5">{dispatch.safety_focus}</p>
+                      <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.safety_focus}</p>
                     </div>
                   )}
                   {dispatch.material_notes && (
                     <div>
                       <span className="text-blue-400 font-medium flex items-center gap-1"><Package size={10} /> Materials:</span>
-                      <p className="text-gray-300 mt-0.5">{dispatch.material_notes}</p>
+                      <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.material_notes}</p>
                     </div>
                   )}
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-gray-400">
+                <div className="flex items-center gap-4 text-xs text-[color:var(--text-secondary)]">
                   {dispatch.expected_crew_size && <span>👷 {dispatch.expected_crew_size} crew</span>}
                   {dispatch.expected_hours && <span>⏱ {dispatch.expected_hours}h expected</span>}
                 </div>
@@ -246,7 +246,7 @@ export default function CheckInView({ projectId }: Props) {
               {!checkedIn && (
                 <button
                   onClick={() => setStep("checkin")}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
                 >
                   <CheckCircle size={16} /> Check In
                 </button>
@@ -255,11 +255,11 @@ export default function CheckInView({ projectId }: Props) {
           ) : (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6 text-center space-y-3">
               <Clock size={28} className="mx-auto text-gray-600" />
-              <p className="text-sm text-gray-400">No dispatch for today</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">No dispatch for today</p>
               <p className="text-xs text-gray-600">You can still check in manually</p>
               <button
                 onClick={() => setStep("checkin")}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px] mx-auto"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px] mx-auto"
               >
                 <CheckCircle size={14} /> Check In Anyway
               </button>
@@ -271,13 +271,13 @@ export default function CheckInView({ projectId }: Props) {
       {/* ── Check-In Form ── */}
       {step === "checkin" && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <CheckCircle size={14} className="text-[#F97316]" /> Check-In Form
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
                 Crew Count <span className="text-red-400">*</span>
               </label>
               <input
@@ -286,11 +286,11 @@ export default function CheckInView({ projectId }: Props) {
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
                 placeholder="e.g., 4"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Hours Worked</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Hours Worked</label>
               <input
                 type="number"
                 min="0"
@@ -298,16 +298,16 @@ export default function CheckInView({ projectId }: Props) {
                 value={hoursWorked}
                 onChange={(e) => setHoursWorked(e.target.value)}
                 placeholder="e.g., 8"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Site Photo</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Site Photo</label>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-gray-400 hover:text-white hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
             >
               <Camera size={16} />
               {sitePhoto ? sitePhoto.name : "Capture or upload photo"}
@@ -323,13 +323,13 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Notes</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Notes</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Any notes about today..."
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -340,7 +340,7 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleCheckIn}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <CheckCircle size={16} />
             {submitting ? "Checking in..." : "Check In"}
@@ -359,7 +359,7 @@ export default function CheckInView({ projectId }: Props) {
           {entries.map((entry, idx) => (
             <div key={idx} className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-gray-400">Entry #{idx + 1}</span>
+                <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Entry #{idx + 1}</span>
                 {entries.length > 1 && (
                   <button onClick={() => removeEntry(idx)} className="text-gray-600 hover:text-red-400">
                     <X size={14} />
@@ -367,42 +367,42 @@ export default function CheckInView({ projectId }: Props) {
                 )}
               </div>
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1 block">What did you install/complete?</label>
+                <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">What did you install/complete?</label>
                 <input
                   value={entry.description}
                   onChange={(e) => updateEntry(idx, "description", e.target.value)}
                   placeholder="e.g., Ran conduit on 3rd floor east wing"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-xs font-medium text-gray-400 mb-1 block">Qty</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Qty</label>
                   <input
                     type="number"
                     value={entry.quantity}
                     onChange={(e) => updateEntry(idx, "quantity", e.target.value)}
                     placeholder="45"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-gray-400 mb-1 block">Unit</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Unit</label>
                   <select
                     value={entry.unit}
                     onChange={(e) => updateEntry(idx, "unit", e.target.value)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
                   >
                     {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-gray-400 mb-1 block">Area</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Area</label>
                   <input
                     value={entry.area}
                     onChange={(e) => updateEntry(idx, "area", e.target.value)}
                     placeholder="3rd Floor"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
               </div>
@@ -411,7 +411,7 @@ export default function CheckInView({ projectId }: Props) {
 
           <button
             onClick={addEntry}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
           >
             <Plus size={14} /> Add Another Entry
           </button>
@@ -423,7 +423,7 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleSubmitProduction}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             {submitting ? "Submitting..." : "Done"}
           </button>
@@ -434,23 +434,23 @@ export default function CheckInView({ projectId }: Props) {
       {step === "blocker" && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
               <AlertTriangle size={14} className="text-red-400" /> Report Blocker
             </h3>
             <button
               onClick={() => { setStep(checkedIn ? "production" : "dispatch"); setError(""); }}
-              className="text-gray-500 hover:text-white"
+              className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
             >
               <X size={16} />
             </button>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Category</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Category</label>
             <select
               value={blockerCategory}
               onChange={(e) => setBlockerCategory(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
             >
               <option value="material">Material</option>
               <option value="labor">Labor</option>
@@ -464,7 +464,7 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
               Description <span className="text-red-400">*</span>
             </label>
             <textarea
@@ -472,18 +472,18 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setBlockerDescription(e.target.value)}
               placeholder="What's the issue?"
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">Impact</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Impact</label>
             <textarea
               value={blockerImpact}
               onChange={(e) => setBlockerImpact(e.target.value)}
               placeholder="How does this affect work?"
               rows={2}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -494,7 +494,7 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleSubmitBlocker}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <AlertTriangle size={16} />
             {submitting ? "Submitting..." : "Submit Blocker"}

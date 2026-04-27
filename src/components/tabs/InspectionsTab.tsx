@@ -96,9 +96,9 @@ export default function InspectionsTab({ projectId }: Props) {
         <div className="flex items-center gap-3 min-w-0">
           <Lock size={16} className="text-[#F97316] shrink-0" />
           <div className="min-w-0">
-            <span className="text-sm font-medium text-white">{jurisdiction.name}</span>
+            <span className="text-sm font-medium text-[color:var(--text-primary)]">{jurisdiction.name}</span>
             {jurisdiction.phone && (
-              <span className="text-sm text-gray-400 ml-2">· {jurisdiction.phone}</span>
+              <span className="text-sm text-[color:var(--text-secondary)] ml-2">· {jurisdiction.phone}</span>
             )}
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function InspectionsTab({ projectId }: Props) {
               href={jurisdiction.portal_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-300 rounded-lg text-xs font-medium hover:bg-[#2a2a35] transition-colors min-h-[36px]"
+              className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium hover:bg-[#2a2a35] transition-colors min-h-[36px]"
             >
               Portal <ExternalLink size={12} />
             </a>
@@ -116,7 +116,7 @@ export default function InspectionsTab({ projectId }: Props) {
           {jurisdiction.phone && (
             <a
               href={`tel:${jurisdiction.phone}`}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-300 rounded-lg text-xs font-medium hover:bg-[#2a2a35] transition-colors min-h-[36px]"
+              className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium hover:bg-[#2a2a35] transition-colors min-h-[36px]"
             >
               <Phone size={12} /> Call
             </a>

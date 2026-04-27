@@ -303,7 +303,7 @@ export default function DailyLogWizard({
           <div className="flex items-center justify-between mb-2">
             <Link
               href={`/projects/${projectId}`}
-              className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
             >
               <ChevronLeft size={16} />
               Back
@@ -322,7 +322,7 @@ export default function DailyLogWizard({
               )}
               {/* Save indicator */}
               {isSaving && (
-                <span className="flex items-center gap-1 text-gray-500">
+                <span className="flex items-center gap-1 text-[color:var(--text-muted)]">
                   <Save size={12} className="animate-pulse" />
                   Saving...
                 </span>
@@ -335,8 +335,8 @@ export default function DailyLogWizard({
 
           {/* Title */}
           <div className="mb-2">
-            <h1 className="text-lg font-bold text-white">Daily Log</h1>
-            <p className="text-xs text-gray-500">
+            <h1 className="text-lg font-bold text-[color:var(--text-primary)]">Daily Log</h1>
+            <p className="text-xs text-[color:var(--text-muted)]">
               {projectName} · {new Date(logDate + "T12:00:00").toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -355,7 +355,7 @@ export default function DailyLogWizard({
                 className={`flex-1 py-2.5 text-xs font-medium border-b-2 transition-all min-h-[40px]
                   ${screen === i
                     ? "border-[#F97316] text-[#F97316]"
-                    : "border-transparent text-gray-500 hover:text-gray-300"
+                    : "border-transparent text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                   }`}
               >
                 {label}
@@ -415,7 +415,7 @@ export default function DailyLogWizard({
               type="button"
               onClick={() => goToScreen(screen - 1)}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
-                bg-[#1F1F25] text-gray-300 hover:bg-[#2a2a35] transition-colors min-h-[48px]"
+                bg-[#1F1F25] text-[color:var(--text-secondary)] hover:bg-[#2a2a35] transition-colors min-h-[48px]"
             >
               <ArrowLeft size={16} />
               Back
@@ -426,7 +426,7 @@ export default function DailyLogWizard({
               type="button"
               onClick={() => goToScreen(screen + 1)}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
-                bg-[#F97316] text-white hover:bg-[#ea6c10] transition-colors min-h-[48px] font-medium"
+                bg-[#F97316] text-[color:var(--text-primary)] hover:bg-[#ea6c10] transition-colors min-h-[48px] font-medium"
             >
               Next
               <ArrowRight size={16} />

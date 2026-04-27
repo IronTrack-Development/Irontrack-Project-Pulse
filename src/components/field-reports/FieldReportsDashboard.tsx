@@ -90,8 +90,8 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-bold text-white">Reports</h2>
-          <span className="px-2 py-0.5 bg-[#1F1F25] text-gray-400 text-xs font-medium rounded-full">
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Reports</h2>
+          <span className="px-2 py-0.5 bg-[#1F1F25] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
             {count}
           </span>
         </div>
@@ -117,14 +117,14 @@ export default function FieldReportsDashboard({ projectId }: Props) {
         <div className="flex-1" />
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
         >
           <Plus size={14} />
           Add
         </button>
         <button
           onClick={() => setShowMultiAdd(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
         >
           <ImagePlus size={14} />
           Multi-add
@@ -139,7 +139,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       ) : reports.length === 0 ? (
         <div className="text-center py-16">
           <ImageOff size={40} className="mx-auto mb-3 text-gray-600" />
-          <p className="text-gray-500 text-sm">No reports yet</p>
+          <p className="text-[color:var(--text-muted)] text-sm">No reports yet</p>
           <p className="text-gray-600 text-xs mt-1">Tap "Add" to snap a photo and create your first report</p>
         </div>
       ) : (
@@ -166,7 +166,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
               {/* Info */}
               <div className="flex-1 text-left min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-sm font-medium text-white truncate">
+                  <span className="text-sm font-medium text-[color:var(--text-primary)] truncate">
                     #{report.report_number} — {report.title}
                   </span>
                 </div>
@@ -190,7 +190,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
                     {report.priority}
                   </span>
                   {report.assigned_to && (
-                    <span className="text-[10px] text-gray-500 truncate">{report.assigned_to}</span>
+                    <span className="text-[10px] text-[color:var(--text-muted)] truncate">{report.assigned_to}</span>
                   )}
                 </div>
               </div>

@@ -51,7 +51,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  not_started: "bg-gray-700/60 text-gray-400",
+  not_started: "bg-gray-700/60 text-[color:var(--text-secondary)]",
   in_preparation: "bg-blue-900/60 text-blue-300",
   submitted: "bg-yellow-900/60 text-yellow-300",
   under_review: "bg-purple-900/60 text-purple-300",
@@ -127,21 +127,21 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-white">Submittals</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Submittals</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               {total} submittal{total !== 1 ? "s" : ""} on this project
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={fetchSubmittals}
-              className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
               <span className="hidden sm:inline">New Submittal</span>
@@ -153,20 +153,20 @@ export default function SubmittalsTab({ projectId }: Props) {
         {total > 0 && (
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className="text-xl font-bold text-white">{total}</p>
-              <p className="text-xs text-gray-500 mt-0.5">Total</p>
+              <p className="text-xl font-bold text-[color:var(--text-primary)]">{total}</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Total</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className={`text-xl font-bold ${pendingReview > 0 ? "text-purple-400" : "text-white"}`}>{pendingReview}</p>
-              <p className="text-xs text-gray-500 mt-0.5">Pending</p>
+              <p className={`text-xl font-bold ${pendingReview > 0 ? "text-purple-400" : "text-[color:var(--text-primary)]"}`}>{pendingReview}</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Pending</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className={`text-xl font-bold ${overdue > 0 ? "text-red-400" : "text-white"}`}>{overdue}</p>
-              <p className="text-xs text-gray-500 mt-0.5">Overdue</p>
+              <p className={`text-xl font-bold ${overdue > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>{overdue}</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Overdue</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <p className={`text-xl font-bold ${approved > 0 ? "text-green-400" : "text-white"}`}>{approved}</p>
-              <p className="text-xs text-gray-500 mt-0.5">Approved</p>
+              <p className={`text-xl font-bold ${approved > 0 ? "text-green-400" : "text-[color:var(--text-primary)]"}`}>{approved}</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Approved</p>
             </div>
           </div>
         )}
@@ -185,8 +185,8 @@ export default function SubmittalsTab({ projectId }: Props) {
                   onClick={() => setFilter(opt.value)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === opt.value
-                      ? "bg-[#F97316] text-white"
-                      : "bg-[#121217] border border-[#1F1F25] text-gray-400 hover:text-white"
+                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      : "bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {opt.label}
@@ -203,13 +203,13 @@ export default function SubmittalsTab({ projectId }: Props) {
         {total === 0 && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
             <FileCheck size={36} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-gray-300 text-sm font-semibold mb-1">No submittals yet</p>
+            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No submittals yet</p>
             <p className="text-gray-600 text-xs mb-5">
               Tap + to create your first submittal
             </p>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <Plus size={14} />
               New Submittal
@@ -231,25 +231,25 @@ export default function SubmittalsTab({ projectId }: Props) {
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="text-xs font-mono text-gray-500">{s.submittal_number}</span>
+                        <span className="text-xs font-mono text-[color:var(--text-muted)]">{s.submittal_number}</span>
                         {s.spec_section && (
                           <span className="text-xs text-gray-600">§ {s.spec_section}</span>
                         )}
                         {s.priority !== "normal" && (
                           <span className={`text-xs font-semibold ${
                             s.priority === "critical" ? "text-red-400" :
-                            s.priority === "high" ? "text-orange-400" : "text-gray-500"
+                            s.priority === "high" ? "text-orange-400" : "text-[color:var(--text-muted)]"
                           }`}>
                             ↑ {s.priority.charAt(0).toUpperCase() + s.priority.slice(1)}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm font-semibold text-white leading-tight mb-2">{s.title}</p>
+                      <p className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight mb-2">{s.title}</p>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[s.status] ?? "bg-gray-700 text-gray-400"}`}>
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[s.status] ?? "bg-gray-700 text-[color:var(--text-secondary)]"}`}>
                           {STATUS_LABELS[s.status] ?? s.status}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-gray-400">
+                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-[color:var(--text-secondary)]">
                           🏀 {s.ball_in_court}
                         </span>
                         {s.revision_count > 1 && (
@@ -259,13 +259,13 @@ export default function SubmittalsTab({ projectId }: Props) {
                       {(s.assigned_contact || s.reviewer_contact) && (
                         <div className="flex flex-wrap gap-3 mt-2">
                           {s.assigned_contact && (
-                            <span className="text-xs text-gray-500">
-                              Sub: <span className="text-gray-300">{s.assigned_contact.name}</span>
+                            <span className="text-xs text-[color:var(--text-muted)]">
+                              Sub: <span className="text-[color:var(--text-secondary)]">{s.assigned_contact.name}</span>
                             </span>
                           )}
                           {s.reviewer_contact && (
-                            <span className="text-xs text-gray-500">
-                              Review: <span className="text-gray-300">{s.reviewer_contact.name}</span>
+                            <span className="text-xs text-[color:var(--text-muted)]">
+                              Review: <span className="text-[color:var(--text-secondary)]">{s.reviewer_contact.name}</span>
                             </span>
                           )}
                         </div>
@@ -273,7 +273,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                     </div>
                     <div className="shrink-0 text-right">
                       {s.required_by && (
-                        <div className={`flex items-center gap-1 text-xs font-medium ${overdueSub ? "text-red-400" : "text-gray-500"}`}>
+                        <div className={`flex items-center gap-1 text-xs font-medium ${overdueSub ? "text-red-400" : "text-[color:var(--text-muted)]"}`}>
                           {overdueSub ? <AlertCircle size={12} /> : <Clock size={12} />}
                           {new Date(s.required_by + "T00:00:00").toLocaleDateString("en-US", {
                             month: "short", day: "numeric",
@@ -294,7 +294,7 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Filtered empty */}
         {total > 0 && filtered.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-gray-500 text-sm">No submittals match this filter</p>
+            <p className="text-[color:var(--text-muted)] text-sm">No submittals match this filter</p>
           </div>
         )}
       </div>

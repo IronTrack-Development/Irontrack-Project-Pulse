@@ -45,7 +45,7 @@ const STATUS_STYLES: Record<string, { label: string; cls: string }> = {
   pending: { label: "Pending", cls: "bg-orange-500/20 text-orange-300" },
   acknowledged: { label: "Acknowledged", cls: "bg-green-500/20 text-green-300" },
   completed: { label: "Completed", cls: "bg-blue-500/20 text-blue-300" },
-  cancelled: { label: "Cancelled", cls: "bg-gray-700 text-gray-400" },
+  cancelled: { label: "Cancelled", cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
 };
 
 function formatDate(d: string) {
@@ -178,12 +178,12 @@ export default function DispatchBoard({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Dispatch Board</h2>
-          <p className="text-xs text-gray-500 mt-0.5">Morning huddle — send daily work assignments</p>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Dispatch Board</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Morning huddle — send daily work assignments</p>
         </div>
         <button
           onClick={() => setView(view === "list" ? "create" : "list")}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
           {view === "list" ? <><Plus size={14} /> Create Dispatch</> : <><X size={14} /> Cancel</>}
         </button>
@@ -192,19 +192,19 @@ export default function DispatchBoard({ projectId }: Props) {
       {view === "create" ? (
         /* ── Create Dispatch Form ── */
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Send size={14} className="text-[#F97316]" /> New Dispatch
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
                 Foreman <span className="text-red-400">*</span>
               </label>
               <select
                 value={form.foreman_id}
                 onChange={(e) => setForm({ ...form, foreman_id: e.target.value })}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 <option value="">Select foreman...</option>
                 {foremen.map((f) => (
@@ -213,41 +213,41 @@ export default function DispatchBoard({ projectId }: Props) {
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Date</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Date</label>
               <input
                 type="date"
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
                 Project Name <span className="text-red-400">*</span>
               </label>
               <input
                 value={form.project_name}
                 onChange={(e) => setForm({ ...form, project_name: e.target.value })}
                 placeholder="e.g., Building A - Phase 2"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Project Location</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Project Location</label>
               <input
                 value={form.project_location}
                 onChange={(e) => setForm({ ...form, project_location: e.target.value })}
                 placeholder="e.g., 3rd Floor, East Wing"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-gray-400 mb-1.5 block">
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
               Scope of Work <span className="text-red-400">*</span>
             </label>
             <textarea
@@ -255,77 +255,77 @@ export default function DispatchBoard({ projectId }: Props) {
               onChange={(e) => setForm({ ...form, scope_of_work: e.target.value })}
               placeholder="What are they doing today?"
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Priority Notes</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Priority Notes</label>
               <textarea
                 value={form.priority_notes}
                 onChange={(e) => setForm({ ...form, priority_notes: e.target.value })}
                 placeholder="What should they watch out for?"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Safety Focus</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Safety Focus</label>
               <textarea
                 value={form.safety_focus}
                 onChange={(e) => setForm({ ...form, safety_focus: e.target.value })}
                 placeholder="Today's safety topic"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Material Notes</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Material Notes</label>
               <textarea
                 value={form.material_notes}
                 onChange={(e) => setForm({ ...form, material_notes: e.target.value })}
                 placeholder="What's being delivered, what to verify"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Special Instructions</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Special Instructions</label>
               <textarea
                 value={form.special_instructions}
                 onChange={(e) => setForm({ ...form, special_instructions: e.target.value })}
                 placeholder="Any other notes"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Expected Crew Size</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Expected Crew Size</label>
               <input
                 type="number"
                 min="1"
                 value={form.expected_crew_size}
                 onChange={(e) => setForm({ ...form, expected_crew_size: e.target.value })}
                 placeholder="e.g., 4"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Expected Hours</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Expected Hours</label>
               <input
                 type="number"
                 min="1"
                 value={form.expected_hours}
                 onChange={(e) => setForm({ ...form, expected_hours: e.target.value })}
                 placeholder="e.g., 8"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -333,7 +333,7 @@ export default function DispatchBoard({ projectId }: Props) {
           {/* SOPs multi-select */}
           {sops.length > 0 && (
             <div>
-              <label className="text-xs font-medium text-gray-400 mb-1.5 block">Attach SOPs</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Attach SOPs</label>
               <div className="flex flex-wrap gap-2">
                 {sops.map((s) => {
                   const selected = form.sop_ids.includes(s.id);
@@ -345,7 +345,7 @@ export default function DispatchBoard({ projectId }: Props) {
                       className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
                         selected
                           ? "bg-[#F97316]/20 text-[#F97316] border border-[#F97316]/30"
-                          : "bg-[#1F1F25] text-gray-400 border border-[#1F1F25] hover:text-white"
+                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#1F1F25] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
                       <FileText size={12} />
@@ -366,7 +366,7 @@ export default function DispatchBoard({ projectId }: Props) {
           <button
             onClick={handleSend}
             disabled={sending}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <Send size={16} />
             {sending ? "Sending..." : "Send Dispatch"}
@@ -378,18 +378,18 @@ export default function DispatchBoard({ projectId }: Props) {
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-1.5 bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-1.5">
-              <Calendar size={12} className="text-gray-500" />
+              <Calendar size={12} className="text-[color:var(--text-muted)]" />
               <input
                 type="date"
                 value={filterDate}
                 onChange={(e) => setFilterDate(e.target.value)}
-                className="bg-transparent text-white text-xs focus:outline-none"
+                className="bg-transparent text-[color:var(--text-primary)] text-xs focus:outline-none"
               />
             </div>
             <select
               value={filterForeman}
               onChange={(e) => setFilterForeman(e.target.value)}
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
             >
               <option value="">All Foremen</option>
               {foremen.map((f) => (
@@ -399,7 +399,7 @@ export default function DispatchBoard({ projectId }: Props) {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
             >
               <option value="">All Status</option>
               <option value="pending">Pending</option>
@@ -413,7 +413,7 @@ export default function DispatchBoard({ projectId }: Props) {
           {dispatches.length === 0 ? (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
               <Send size={28} className="mx-auto text-gray-600 mb-2" />
-              <p className="text-sm text-gray-400">No dispatches for this date</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">No dispatches for this date</p>
               <p className="text-xs text-gray-600 mt-1">Create a dispatch to send work assignments to your foremen</p>
             </div>
           ) : (
@@ -432,17 +432,17 @@ export default function DispatchBoard({ projectId }: Props) {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="text-sm font-semibold text-white truncate">{d.foreman_name}</span>
+                          <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{d.foreman_name}</span>
                           <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${style.cls}`}>
                             {style.label}
                           </span>
                         </div>
-                        <p className="text-xs text-gray-400 truncate">{d.project_name}</p>
+                        <p className="text-xs text-[color:var(--text-secondary)] truncate">{d.project_name}</p>
                         <p className="text-xs text-gray-600 truncate mt-0.5">{d.scope_of_work}</p>
                       </div>
                       <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                        <span className="text-xs text-gray-500">{formatDate(d.date)}</span>
-                        {isExpanded ? <ChevronUp size={14} className="text-gray-500" /> : <ChevronDown size={14} className="text-gray-500" />}
+                        <span className="text-xs text-[color:var(--text-muted)]">{formatDate(d.date)}</span>
+                        {isExpanded ? <ChevronUp size={14} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={14} className="text-[color:var(--text-muted)]" />}
                       </div>
                     </div>
 
@@ -450,39 +450,39 @@ export default function DispatchBoard({ projectId }: Props) {
                       <div className="border-t border-[#1F1F25] p-4 space-y-3 bg-[#0e0e12] text-xs">
                         {d.project_location && (
                           <div className="flex items-start gap-2">
-                            <MapPin size={12} className="text-gray-500 mt-0.5 flex-none" />
-                            <span className="text-gray-300">{d.project_location}</span>
+                            <MapPin size={12} className="text-[color:var(--text-muted)] mt-0.5 flex-none" />
+                            <span className="text-[color:var(--text-secondary)]">{d.project_location}</span>
                           </div>
                         )}
                         <div>
-                          <span className="text-gray-500 font-medium">Scope:</span>
-                          <p className="text-gray-300 mt-1 whitespace-pre-wrap">{d.scope_of_work}</p>
+                          <span className="text-[color:var(--text-muted)] font-medium">Scope:</span>
+                          <p className="text-[color:var(--text-secondary)] mt-1 whitespace-pre-wrap">{d.scope_of_work}</p>
                         </div>
                         {d.priority_notes && (
                           <div>
-                            <span className="text-gray-500 font-medium">Priority Notes:</span>
-                            <p className="text-gray-300 mt-1">{d.priority_notes}</p>
+                            <span className="text-[color:var(--text-muted)] font-medium">Priority Notes:</span>
+                            <p className="text-[color:var(--text-secondary)] mt-1">{d.priority_notes}</p>
                           </div>
                         )}
                         {d.safety_focus && (
                           <div>
-                            <span className="text-gray-500 font-medium">Safety Focus:</span>
-                            <p className="text-gray-300 mt-1">{d.safety_focus}</p>
+                            <span className="text-[color:var(--text-muted)] font-medium">Safety Focus:</span>
+                            <p className="text-[color:var(--text-secondary)] mt-1">{d.safety_focus}</p>
                           </div>
                         )}
                         {d.material_notes && (
                           <div>
-                            <span className="text-gray-500 font-medium">Material Notes:</span>
-                            <p className="text-gray-300 mt-1">{d.material_notes}</p>
+                            <span className="text-[color:var(--text-muted)] font-medium">Material Notes:</span>
+                            <p className="text-[color:var(--text-secondary)] mt-1">{d.material_notes}</p>
                           </div>
                         )}
                         {d.special_instructions && (
                           <div>
-                            <span className="text-gray-500 font-medium">Special Instructions:</span>
-                            <p className="text-gray-300 mt-1">{d.special_instructions}</p>
+                            <span className="text-[color:var(--text-muted)] font-medium">Special Instructions:</span>
+                            <p className="text-[color:var(--text-secondary)] mt-1">{d.special_instructions}</p>
                           </div>
                         )}
-                        <div className="flex items-center gap-4 text-gray-400">
+                        <div className="flex items-center gap-4 text-[color:var(--text-secondary)]">
                           {d.expected_crew_size && (
                             <span className="flex items-center gap-1">
                               <Users size={12} /> {d.expected_crew_size} crew

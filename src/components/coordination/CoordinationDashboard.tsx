@@ -87,7 +87,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => setView("list")}
-            className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] px-2"
+            className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[44px] px-2"
           >
             ← Meetings
           </button>
@@ -123,7 +123,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                 <AlertTriangle size={18} className="text-[#F97316]" />
               </div>
               <div>
-                <span className="text-white text-sm font-medium">
+                <span className="text-[color:var(--text-primary)] text-sm font-medium">
                   {actionSummary.open} open action item{actionSummary.open !== 1 ? "s" : ""}
                 </span>
                 {actionSummary.overdue > 0 && (
@@ -133,7 +133,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                 )}
               </div>
             </div>
-            <ChevronRight size={16} className="text-gray-500" />
+            <ChevronRight size={16} className="text-[color:var(--text-muted)]" />
           </div>
         </button>
       )}
@@ -142,11 +142,11 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Handshake size={20} className="text-[#F97316]" />
-          <h2 className="text-lg font-bold text-white">Coordination Meetings</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Coordination Meetings</h2>
         </div>
         <button
           onClick={() => setShowNewModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
         >
           <Plus size={16} />
           New Meeting
@@ -164,11 +164,11 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {!loading && meetings.length === 0 && (
         <div className="text-center py-16">
           <Handshake size={48} className="text-gray-600 mx-auto mb-4" />
-          <p className="text-gray-400 text-lg mb-2">No coordination meetings yet</p>
-          <p className="text-gray-500 text-sm mb-6">Schedule your first meeting to start tracking trade coordination.</p>
+          <p className="text-[color:var(--text-secondary)] text-lg mb-2">No coordination meetings yet</p>
+          <p className="text-[color:var(--text-muted)] text-sm mb-6">Schedule your first meeting to start tracking trade coordination.</p>
           <button
             onClick={() => setShowNewModal(true)}
-            className="px-6 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="px-6 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             Schedule Meeting
           </button>
@@ -187,7 +187,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-white font-medium truncate">{meeting.title}</h3>
+                    <h3 className="text-[color:var(--text-primary)] font-medium truncate">{meeting.title}</h3>
                     <span
                       className="px-2 py-0.5 rounded-full text-[11px] font-medium shrink-0"
                       style={{
@@ -198,7 +198,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                       {meeting.status.replace("_", " ")}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                  <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
                     <span>{new Date(meeting.meeting_date + "T00:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</span>
                     <span className="text-gray-700">·</span>
                     <span>{meeting.meeting_type.replace(/_/g, " ")}</span>
@@ -212,7 +212,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                 </div>
                 <div className="flex items-center gap-3 shrink-0 text-xs">
                   {(meeting.agenda_count ?? 0) > 0 && (
-                    <span className="text-gray-500">{meeting.agenda_count} agenda</span>
+                    <span className="text-[color:var(--text-muted)]">{meeting.agenda_count} agenda</span>
                   )}
                   {(meeting.open_action_count ?? 0) > 0 && (
                     <span className="text-[#F97316]">{meeting.open_action_count} open</span>

@@ -45,7 +45,7 @@ export default async function PublicWeekView({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-400 text-lg font-semibold">This link has expired</p>
+          <p className="text-[color:var(--text-secondary)] text-lg font-semibold">This link has expired</p>
           <p className="text-gray-600 text-sm mt-2">Ask your superintendent for a new QR code.</p>
         </div>
       </div>
@@ -111,9 +111,9 @@ export default async function PublicWeekView({ params }: PageProps) {
             <div className="w-2 h-2 rounded-full bg-[#F97316]" />
             <span className="text-xs text-[#F97316] font-bold uppercase tracking-wider">IronTrack Project Pulse</span>
           </div>
-          <h1 className="text-white font-bold text-xl">{project.name}</h1>
+          <h1 className="text-[color:var(--text-primary)] font-bold text-xl">{project.name}</h1>
           {(project.client_name || project.location) && (
-            <p className="text-gray-500 text-sm mt-0.5">
+            <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
               {[project.client_name, project.location].filter(Boolean).join(" · ")}
             </p>
           )}
@@ -121,7 +121,7 @@ export default async function PublicWeekView({ params }: PageProps) {
             <span className="text-xs bg-[#F97316]/15 text-[#F97316] px-3 py-1 rounded-full font-bold">
               Week {weekNumber} Lookahead
             </span>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-[color:var(--text-muted)]">
               {fmtRange(startStr, endStr)}
             </span>
           </div>
@@ -145,7 +145,7 @@ export default async function PublicWeekView({ params }: PageProps) {
                 <div className="text-[10px] text-gray-600 uppercase tracking-wide">
                   {dayNames[dayDate.getDay()]}
                 </div>
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-[color:var(--text-primary)]">
                   {dayDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                 </div>
               </div>
@@ -157,14 +157,14 @@ export default async function PublicWeekView({ params }: PageProps) {
                     <div key={`${dayKey}-${task.id}`} className="px-4 py-3">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm text-white font-medium leading-tight">
+                          <div className="text-sm text-[color:var(--text-primary)] font-medium leading-tight">
                             {task.activity_name}
                           </div>
                           <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1">
                             {task.trade && (
                               <span className="text-[10px] text-[#F97316] font-medium">{task.trade}</span>
                             )}
-                            <span className="text-[10px] text-gray-500">
+                            <span className="text-[10px] text-[color:var(--text-muted)]">
                               {fmt(task.start_date)} → {fmt(task.finish_date)}
                             </span>
                             {task.normalized_building && (

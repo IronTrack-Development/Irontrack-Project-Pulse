@@ -89,10 +89,10 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
         {/* Header */}
         <div className="sticky top-0 bg-[#121217] flex items-start justify-between gap-3 px-5 py-4 border-b border-[#1F1F25] z-10">
           <div className="flex-1 min-w-0">
-            <h3 className="text-white font-bold text-base leading-tight">Update Progress</h3>
-            <p className="text-xs text-gray-500 mt-0.5 truncate">{task.activity_name}</p>
+            <h3 className="text-[color:var(--text-primary)] font-bold text-base leading-tight">Update Progress</h3>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5 truncate">{task.activity_name}</p>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors shrink-0">
+          <button onClick={onClose} className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors shrink-0">
             <X size={18} />
           </button>
         </div>
@@ -107,15 +107,15 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               </div>
               <div>
                 <span className="text-gray-600">Duration:</span>{" "}
-                <span className="text-white font-medium">{task.original_duration || 0}d</span>
+                <span className="text-[color:var(--text-primary)] font-medium">{task.original_duration || 0}d</span>
               </div>
               <div>
                 <span className="text-gray-600">Start:</span>{" "}
-                <span className="text-white">{fmt(task.start_date)}</span>
+                <span className="text-[color:var(--text-primary)]">{fmt(task.start_date)}</span>
               </div>
               <div>
                 <span className="text-gray-600">Finish:</span>{" "}
-                <span className="text-white">{fmt(task.finish_date)}</span>
+                <span className="text-[color:var(--text-primary)]">{fmt(task.finish_date)}</span>
               </div>
               {task.is_critical && (
                 <div className="col-span-2">
@@ -129,8 +129,8 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
 
           {/* Percent Complete */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-              Percent Complete: <span className="text-white text-sm">{percentComplete}%</span>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">
+              Percent Complete: <span className="text-[color:var(--text-primary)] text-sm">{percentComplete}%</span>
             </label>
             <input
               type="range"
@@ -148,8 +148,8 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   onClick={() => handlePercentChange(val)}
                   className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
                     percentComplete === val
-                      ? "bg-[#F97316] text-white"
-                      : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {val}%
@@ -161,7 +161,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           {/* Remaining Duration */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+              <label className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
                 Remaining Duration
               </label>
               <button
@@ -169,7 +169,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 className={`text-[10px] px-2 py-1 rounded transition-colors ${
                   manualOverride
                     ? "bg-[#F97316]/15 text-[#F97316] font-bold"
-                    : "bg-[#1F1F25] text-gray-500"
+                    : "bg-[#1F1F25] text-[color:var(--text-muted)]"
                 }`}
               >
                 {manualOverride ? "Manual Override ✓" : "Auto-calculated"}
@@ -185,15 +185,15 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   setRemainingDuration(parseInt(e.target.value) || 0);
                 }}
                 disabled={!manualOverride}
-                className="w-24 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
+                className="w-24 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
               />
-              <span className="text-xs text-gray-500">business days</span>
+              <span className="text-xs text-[color:var(--text-muted)]">business days</span>
             </div>
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Status</label>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Status</label>
             <div className="grid grid-cols-4 gap-2">
               {[
                 { val: "not_started", label: "Not Started", icon: Clock, color: "gray" },
@@ -206,8 +206,8 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   onClick={() => setStatus(val)}
                   className={`flex flex-col items-center gap-1 py-2.5 rounded-lg text-[10px] font-semibold transition-all ${
                     status === val
-                      ? "ring-2 ring-[#F97316] bg-[#F97316]/10 text-white"
-                      : "bg-[#1F1F25] text-gray-500 hover:text-gray-300"
+                      ? "ring-2 ring-[#F97316] bg-[#F97316]/10 text-[color:var(--text-primary)]"
+                      : "bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                   }`}
                 >
                   <Icon size={16} style={{ color: status === val ? color : undefined }} />
@@ -220,34 +220,34 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           {/* Actual Dates */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Actual Start</label>
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Actual Start</label>
               <input
                 type="date"
                 value={actualStart}
                 onChange={(e) => setActualStart(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316]/50"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Actual Finish</label>
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Actual Finish</label>
               <input
                 type="date"
                 value={actualFinish}
                 onChange={(e) => setActualFinish(e.target.value)}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316]/50"
               />
             </div>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Notes (optional)</label>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Notes (optional)</label>
             <textarea
               rows={2}
               placeholder="e.g. Weather delay, crew size reduced..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
             />
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           <button
             onClick={handleSave}
             disabled={saving}
-            className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-white rounded-xl py-3.5 text-sm font-bold transition-all"
+            className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
           >
             {saving ? "Saving & Recalculating…" : "Save & Reforecast"}
           </button>

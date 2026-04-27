@@ -31,7 +31,7 @@ function statusStyle(status: string) {
     case "complete": return "bg-[#22C55E]/15 text-[#22C55E] border-[#22C55E]/30";
     case "in_progress": return "bg-[#3B82F6]/15 text-[#3B82F6] border-[#3B82F6]/30";
     case "late": return "bg-[#EF4444]/15 text-[#EF4444] border-[#EF4444]/30";
-    default: return "bg-gray-800 text-gray-400 border-gray-700";
+    default: return "bg-[color:var(--bg-tertiary)] text-[color:var(--text-secondary)] border-gray-700";
   }
 }
 
@@ -153,7 +153,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               {activity.activity_id && (
-                <span className="text-xs text-gray-500 font-mono">{activity.activity_id}</span>
+                <span className="text-xs text-[color:var(--text-muted)] font-mono">{activity.activity_id}</span>
               )}
               {activity.milestone && (
                 <span className="text-[10px] bg-[#F97316]/20 text-[#F97316] px-2 py-0.5 rounded font-bold uppercase">Milestone</span>
@@ -162,9 +162,9 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {statusLabel(activity.status)}
               </span>
             </div>
-            <h2 className="font-bold text-white text-base leading-tight">{activity.activity_name}</h2>
+            <h2 className="font-bold text-[color:var(--text-primary)] text-base leading-tight">{activity.activity_name}</h2>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-400 hover:text-white transition-colors shrink-0">
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors shrink-0">
             <X size={18} />
           </button>
         </div>
@@ -181,7 +181,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <div className="flex items-center gap-1 text-[10px] text-gray-600 uppercase tracking-wide mb-1">
                   <MapPin size={9} /> Area
                 </div>
-                <div className="text-sm font-semibold text-white">{activity.area}</div>
+                <div className="text-sm font-semibold text-[color:var(--text-primary)]">{activity.area}</div>
               </div>
             )}
           </div>
@@ -189,41 +189,41 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Location / WBS Hierarchy */}
           {(activity.normalized_building || activity.normalized_phase || activity.normalized_area || activity.normalized_work_type) && (
             <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
                 <MapPin size={12} className="inline mr-1.5" />
                 Location
               </div>
               <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 space-y-2">
                 {activity.normalized_building && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-1.5 text-gray-500">
+                    <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
                       <Building2 size={12} /> Building
                     </span>
-                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_building)}</span>
+                    <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_building)}</span>
                   </div>
                 )}
                 {activity.normalized_phase && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-1.5 text-gray-500">
+                    <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
                       <Layers size={12} /> Phase
                     </span>
-                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_phase)}</span>
+                    <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_phase)}</span>
                   </div>
                 )}
                 {activity.normalized_area && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-1.5 text-gray-500">
+                    <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
                       <MapPin size={12} /> Area
                     </span>
-                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_area)}</span>
+                    <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_area)}</span>
                   </div>
                 )}
                 {activity.normalized_work_type && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-1.5 text-gray-500">
+                    <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
                       <Tag size={12} /> Work Type
                     </span>
-                    <span className="font-semibold text-white">{fmtNormalized(activity.normalized_work_type)}</span>
+                    <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_work_type)}</span>
                   </div>
                 )}
               </div>
@@ -233,12 +233,12 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Resources */}
           {activity.resource_names && (
             <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                 <Users size={12} className="inline mr-1.5" />
                 Resources
               </div>
               <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
-                <div className="text-sm text-gray-300">{activity.resource_names}</div>
+                <div className="text-sm text-[color:var(--text-secondary)]">{activity.resource_names}</div>
               </div>
             </div>
           )}
@@ -246,19 +246,19 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Notes */}
           {activity.notes && (
             <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                 <FileText size={12} className="inline mr-1.5" />
                 Notes
               </div>
               <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2">
-                <div className="text-xs text-gray-400 whitespace-pre-wrap leading-relaxed">{activity.notes}</div>
+                <div className="text-xs text-[color:var(--text-secondary)] whitespace-pre-wrap leading-relaxed">{activity.notes}</div>
               </div>
             </div>
           )}
 
           {/* Dates */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Schedule</div>
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">Schedule</div>
             <div className="space-y-2">
               {[
                 { label: "Planned Start", value: activity.start_date, icon: Calendar },
@@ -267,11 +267,11 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 { label: "Actual Finish", value: activity.actual_finish, icon: Calendar },
               ].map(({ label, value, icon: Icon }) => (
                 <div key={label} className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-1.5 text-gray-500">
+                  <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
                     <Icon size={12} />
                     {label}
                   </span>
-                  <span className={`font-medium ${value ? "text-white" : "text-gray-700"}`}>
+                  <span className={`font-medium ${value ? "text-[color:var(--text-primary)]" : "text-gray-700"}`}>
                     {fmt(value)}
                   </span>
                 </div>
@@ -280,7 +280,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <div className={`mt-2 text-xs font-semibold px-2 py-1 rounded inline-block ${
                   daysUntilFinish < 0 ? "bg-red-900/30 text-red-400" :
                   daysUntilFinish <= 3 ? "bg-yellow-900/30 text-yellow-400" :
-                  "bg-gray-800 text-gray-400"
+                  "bg-[color:var(--bg-tertiary)] text-[color:var(--text-secondary)]"
                 }`}>
                   {daysUntilFinish < 0 ? `${Math.abs(daysUntilFinish)} days overdue` :
                    daysUntilFinish === 0 ? "Due today" :
@@ -293,16 +293,16 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Metrics */}
           <div className="grid grid-cols-3 gap-2">
             <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <div className="text-lg font-bold text-white">{activity.original_duration ?? "—"}</div>
-              <div className="text-[10px] text-gray-500">Orig Duration</div>
+              <div className="text-lg font-bold text-[color:var(--text-primary)]">{activity.original_duration ?? "—"}</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">Orig Duration</div>
             </div>
             <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
-              <div className="text-lg font-bold text-white">{activity.remaining_duration ?? "—"}</div>
-              <div className="text-[10px] text-gray-500">Remaining</div>
+              <div className="text-lg font-bold text-[color:var(--text-primary)]">{activity.remaining_duration ?? "—"}</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">Remaining</div>
             </div>
             <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-[#3B82F6]">{activity.percent_complete}%</div>
-              <div className="text-[10px] text-gray-500">Complete</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">Complete</div>
             </div>
           </div>
 
@@ -319,17 +319,17 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* WBS */}
           {activity.wbs && (
             <div className="flex items-center gap-2 text-sm">
-              <Hash size={13} className="text-gray-500" />
-              <span className="text-gray-500">WBS:</span>
-              <span className="text-gray-300 font-mono">{activity.wbs}</span>
+              <Hash size={13} className="text-[color:var(--text-muted)]" />
+              <span className="text-[color:var(--text-muted)]">WBS:</span>
+              <span className="text-[color:var(--text-secondary)] font-mono">{activity.wbs}</span>
             </div>
           )}
 
           {/* Float */}
           {activity.float_days !== null && activity.float_days !== undefined && (
             <div className="flex items-center gap-2 text-sm">
-              <Clock size={13} className="text-gray-500" />
-              <span className="text-gray-500">Float:</span>
+              <Clock size={13} className="text-[color:var(--text-muted)]" />
+              <span className="text-[color:var(--text-muted)]">Float:</span>
               <span className={`font-semibold ${activity.float_days <= 0 ? "text-[#EF4444]" : activity.float_days <= 5 ? "text-[#EAB308]" : "text-[#22C55E]"}`}>
                 {activity.float_days} days
               </span>
@@ -345,9 +345,9 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           ) : (
             <div className="space-y-4">
               {/* Flow summary */}
-              <div className="flex items-center gap-2 text-xs text-gray-500">
+              <div className="flex items-center gap-2 text-xs text-[color:var(--text-muted)]">
                 <Link2 size={12} className="text-gray-600 shrink-0" />
-                <span className="text-gray-500">
+                <span className="text-[color:var(--text-muted)]">
                   {predecessors.length} predecessor{predecessors.length !== 1 ? "s" : ""}
                 </span>
                 <span className="text-gray-700">→</span>
@@ -355,14 +355,14 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                   {activity.activity_name}
                 </span>
                 <span className="text-gray-700">→</span>
-                <span className="text-gray-500">
+                <span className="text-[color:var(--text-muted)]">
                   {successors.length} successor{successors.length !== 1 ? "s" : ""}
                 </span>
               </div>
 
               {/* Predecessors */}
               <div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                   <ArrowLeft size={12} />
                   Predecessors ({predecessors.length})
                 </div>
@@ -378,14 +378,14 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                         style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(pred.status) }}
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <span className="text-sm font-semibold text-white leading-tight line-clamp-2">
+                          <span className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight line-clamp-2">
                             {pred.activity_name}
                           </span>
                           <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(pred.status)}`}>
                             {statusLabel(pred.status)}
                           </span>
                         </div>
-                        <div className="text-[11px] text-gray-500 mb-2">
+                        <div className="text-[11px] text-[color:var(--text-muted)] mb-2">
                           {pred.trade && <span>{pred.trade}</span>}
                           {pred.trade && pred.finish_date && <span className="mx-1">•</span>}
                           {pred.finish_date && (
@@ -419,7 +419,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
               {/* Successors */}
               <div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                   <ArrowRight size={12} />
                   Successors ({successors.length})
                 </div>
@@ -435,14 +435,14 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                         style={{ borderLeftWidth: "3px", borderLeftColor: statusBorderColor(succ.status) }}
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <span className="text-sm font-semibold text-white leading-tight line-clamp-2">
+                          <span className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight line-clamp-2">
                             {succ.activity_name}
                           </span>
                           <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(succ.status)}`}>
                             {statusLabel(succ.status)}
                           </span>
                         </div>
-                        <div className="text-[11px] text-gray-500 mb-2">
+                        <div className="text-[11px] text-[color:var(--text-muted)] mb-2">
                           {succ.trade && <span>{succ.trade}</span>}
                           {succ.trade && succ.start_date && <span className="mx-1">•</span>}
                           {succ.start_date && (
@@ -478,7 +478,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
           {/* Generate Report */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
               <ClipboardList size={12} className="inline mr-1.5 text-[#F97316]" />
               Observation
             </div>
@@ -487,7 +487,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 onClose();
                 router.push(`/projects/${projectId}/report?activity=${activity.id}`);
               }}
-              className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+              className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
             >
               <ClipboardList size={14} className="text-[#F97316]" />
               New Observation
@@ -496,7 +496,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
           {/* Ready Check Section */}
           <div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
               <Send size={12} className="inline mr-1.5 text-[#F97316]" />
               Ready Check
             </div>
@@ -510,7 +510,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <ReadyCheckBadge status={readyCheck.status} followUpCount={readyCheck.follow_up_count} />
-                    <div className="text-xs text-gray-500 mt-1.5">
+                    <div className="text-xs text-[color:var(--text-muted)] mt-1.5">
                       Sent to {readyCheck.contact_name}
                       {readyCheck.contact_company ? ` · ${readyCheck.contact_company}` : ""}
                     </div>
@@ -529,7 +529,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {readyCheck.status === "awaiting_response" && (
                   <button
                     onClick={() => { setIsFollowUp(true); setShowReadyCheckModal(true); }}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-lg py-2.5 text-xs font-semibold transition-colors"
+                    className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg py-2.5 text-xs font-semibold transition-colors"
                   >
                     <RefreshCw size={12} />
                     Send Follow-Up
@@ -539,7 +539,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             ) : (
               <button
                 onClick={() => { setIsFollowUp(false); setShowReadyCheckModal(true); }}
-                className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
+                className="w-full flex items-center justify-center gap-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[#1F1F25] hover:border-[#F97316]/30"
               >
                 <Send size={14} className="text-[#F97316]" />
                 Send Ready Check
@@ -550,7 +550,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Risks for this activity */}
           {risks.length > 0 && (
             <div>
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
                 <AlertTriangle size={12} className="inline mr-1.5 text-[#EF4444]" />
                 Flagged Issues ({risks.length})
               </div>
@@ -558,11 +558,11 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {risks.map((risk) => (
                   <div key={risk.id} className="bg-[#EF4444]/10 border border-[#EF4444]/20 rounded-xl px-3 py-3">
                     <div className="text-xs font-bold text-[#EF4444] mb-1">{risk.title}</div>
-                    <div className="text-xs text-gray-400">{risk.description}</div>
+                    <div className="text-xs text-[color:var(--text-secondary)]">{risk.description}</div>
                     {risk.suggested_action && (
                       <div className="flex items-start gap-1.5 mt-2">
                         <ChevronRight size={12} className="text-[#F97316] shrink-0 mt-0.5" />
-                        <div className="text-xs text-gray-300">{risk.suggested_action}</div>
+                        <div className="text-xs text-[color:var(--text-secondary)]">{risk.suggested_action}</div>
                       </div>
                     )}
                   </div>

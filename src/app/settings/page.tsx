@@ -48,11 +48,11 @@ export default async function SettingsPage() {
           Back to Dashboard
         </Link>
 
-        <h1 className="text-2xl font-bold text-white mb-8">Settings</h1>
+        <h1 className="text-2xl font-bold text-[color:var(--text-primary)] mb-8">Settings</h1>
 
         {/* Storage Quota Section */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
             <HardDrive size={20} className="text-[#F97316]" />
             Storage Usage
           </h2>
@@ -61,12 +61,12 @@ export default async function SettingsPage() {
             {/* Storage progress bar */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-gray-400">Storage</span>
+                <span className="text-sm text-[color:var(--text-secondary)]">Storage</span>
                 <span className={`text-sm font-semibold ${getStorageColor()}`}>
                   {usedMB} MB / {maxMB} MB ({percentUsed.toFixed(0)}%)
                 </span>
               </div>
-              <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+              <div className="w-full bg-[color:var(--bg-tertiary)] rounded-full h-2.5 overflow-hidden">
                 <div
                   className={`h-2.5 rounded-full transition-all ${getStorageBgColor()}`}
                   style={{ width: `${Math.min(percentUsed, 100)}%` }}
@@ -75,7 +75,7 @@ export default async function SettingsPage() {
             </div>
 
             {/* File count */}
-            <div className="flex items-center gap-2 text-gray-400">
+            <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
               <FileText size={16} />
               <span className="text-sm">
                 {fileCount} {fileCount === 1 ? 'project' : 'projects'} uploaded
@@ -83,13 +83,13 @@ export default async function SettingsPage() {
             </div>
 
             {/* Upload limits info */}
-            <div className="mt-6 p-4 bg-[var(--bg-primary)] border border-gray-800 rounded">
-              <h3 className="text-sm font-semibold text-white mb-2">Upload Limits</h3>
-              <ul className="text-xs text-gray-400 space-y-1">
-                <li>• Maximum file size: <span className="text-white">100 MB</span></li>
-                <li>• Daily uploads: <span className="text-white">50 files/day</span></li>
-                <li>• Monthly uploads: <span className="text-white">50 files/month</span></li>
-                <li>• Total storage: <span className="text-white">500 MB</span></li>
+            <div className="mt-6 p-4 bg-[var(--bg-primary)] border border-[color:var(--border-primary)] rounded">
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-2">Upload Limits</h3>
+              <ul className="text-xs text-[color:var(--text-secondary)] space-y-1">
+                <li>• Maximum file size: <span className="text-[color:var(--text-primary)]">100 MB</span></li>
+                <li>• Daily uploads: <span className="text-[color:var(--text-primary)]">50 files/day</span></li>
+                <li>• Monthly uploads: <span className="text-[color:var(--text-primary)]">50 files/month</span></li>
+                <li>• Total storage: <span className="text-[color:var(--text-primary)]">500 MB</span></li>
               </ul>
             </div>
 
@@ -102,16 +102,16 @@ export default async function SettingsPage() {
         </div>
 
         {/* Appearance — Theme & Language */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
             <span className="text-[#F97316]">🎨</span>
             Appearance
           </h2>
           <AppearanceSettings />
         </div>
         {/* Push Notifications Section */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
             <Bell size={20} className="text-[#F97316]" />
             Notifications
           </h2>
@@ -119,15 +119,15 @@ export default async function SettingsPage() {
         </div>
 
         {/* Account section placeholder */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-2">Account</h2>
-          <p className="text-sm text-gray-400">Additional account settings coming soon.</p>
+        <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-2">Account</h2>
+          <p className="text-sm text-[color:var(--text-secondary)]">Additional account settings coming soon.</p>
         </div>
 
         {/* Support Section */}
-        <div className="bg-[#111113] border border-gray-800 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-white mb-2">Need Help?</h2>
-          <p className="text-gray-400 text-sm mb-4">
+        <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-2">Need Help?</h2>
+          <p className="text-[color:var(--text-secondary)] text-sm mb-4">
             Having trouble or found a bug? Send us an email and we'll help you out.
           </p>
           <SupportButton context="Settings page" />

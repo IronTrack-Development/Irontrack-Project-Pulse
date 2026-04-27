@@ -104,28 +104,28 @@ export default function DirectoryTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-white">Project Directory</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Project Directory</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               {contacts.length} contact{contacts.length !== 1 ? "s" : ""} on this project
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={fetchContacts}
-              className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
             <button
               onClick={() => setShowQRModal(true)}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 hover:text-white border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <QrCode size={14} />
               <span className="hidden sm:inline">Share QR</span>
             </button>
             <button
               onClick={() => { setEditContact(null); setShowAddModal(true); }}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <UserPlus size={14} />
               <span className="hidden sm:inline">Add Contact</span>
@@ -136,17 +136,17 @@ export default function DirectoryTab({ projectId }: Props) {
         {/* Search */}
         {contacts.length > 0 && (
           <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search contacts…"
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-9 pr-9 py-2.5 text-white text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               >
                 <X size={14} />
               </button>
@@ -158,21 +158,21 @@ export default function DirectoryTab({ projectId }: Props) {
         {contacts.length === 0 && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
             <Users size={36} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-gray-300 text-sm font-semibold mb-1">No contacts yet</p>
+            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No contacts yet</p>
             <p className="text-gray-600 text-xs mb-5">
               Share the QR code at your next meeting to get everyone in here fast
             </p>
             <div className="flex items-center justify-center gap-3">
               <button
                 onClick={() => setShowQRModal(true)}
-                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
               >
                 <QrCode size={14} />
                 Share QR Code
               </button>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-semibold transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
               >
                 <UserPlus size={14} />
                 Add Manually
@@ -184,7 +184,7 @@ export default function DirectoryTab({ projectId }: Props) {
         {/* No search results */}
         {contacts.length > 0 && filtered.length === 0 && search && (
           <div className="text-center py-8">
-            <p className="text-gray-500 text-sm">No contacts match &quot;{search}&quot;</p>
+            <p className="text-[color:var(--text-muted)] text-sm">No contacts match &quot;{search}&quot;</p>
           </div>
         )}
 
@@ -199,7 +199,7 @@ export default function DirectoryTab({ projectId }: Props) {
 
               return (
                 <div key={group.id}>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <h3 className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wider mb-2">
                     {group.label}
                     <span className="ml-2 text-gray-600 font-normal normal-case tracking-normal">
                       ({groupContacts.length})

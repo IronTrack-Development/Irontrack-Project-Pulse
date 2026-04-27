@@ -296,21 +296,21 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-white font-semibold text-base">Drawings</h2>
-          <p className="text-gray-500 text-xs mt-0.5">
+          <h2 className="text-[color:var(--text-primary)] font-semibold text-base">Drawings</h2>
+          <p className="text-[color:var(--text-muted)] text-xs mt-0.5">
             {drawingSets.length} set{drawingSets.length !== 1 ? "s" : ""}
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={fetchSets}
-            className="p-2.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
+            className="p-2.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
           >
             <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           </button>
           <button
             onClick={() => setShowUpload(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-sm font-semibold min-h-[44px] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] transition-colors"
           >
             <Plus size={16} />
             Upload Set
@@ -329,13 +329,13 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
           <div className="w-16 h-16 rounded-2xl bg-[#1F1F25] flex items-center justify-center mb-4">
             <Layers size={28} className="text-gray-600" />
           </div>
-          <h3 className="text-white font-medium mb-1">No drawings uploaded</h3>
-          <p className="text-gray-500 text-sm mb-6">
+          <h3 className="text-[color:var(--text-primary)] font-medium mb-1">No drawings uploaded</h3>
+          <p className="text-[color:var(--text-muted)] text-sm mb-6">
             Tap + to upload your first drawing set
           </p>
           <button
             onClick={() => setShowUpload(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#F97316] text-white rounded-xl font-semibold text-sm min-h-[44px]"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px]"
           >
             <Upload size={16} />
             Upload Drawing Set
@@ -357,8 +357,8 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-white font-medium text-sm truncate">{set.name}</h3>
-                      <span className="text-gray-500 text-xs px-2 py-0.5 bg-[#1F1F25] rounded">
+                      <h3 className="text-[color:var(--text-primary)] font-medium text-sm truncate">{set.name}</h3>
+                      <span className="text-[color:var(--text-muted)] text-xs px-2 py-0.5 bg-[#1F1F25] rounded">
                         {set.revision}
                       </span>
                       {set.is_current && (
@@ -367,7 +367,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                    <div className="flex items-center gap-3 mt-1 text-xs text-[color:var(--text-muted)]">
                       <span className="flex items-center gap-1">
                         <FileImage size={11} />
                         {set.sheet_count} sheets
@@ -378,7 +378,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                       </span>
                     </div>
                     {set.description && (
-                      <p className="text-gray-500 text-xs mt-1 truncate">{set.description}</p>
+                      <p className="text-[color:var(--text-muted)] text-xs mt-1 truncate">{set.description}</p>
                     )}
                   </div>
                 </div>
@@ -402,10 +402,10 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
           <div className="w-full sm:max-w-md bg-[#121217] rounded-t-2xl sm:rounded-2xl border border-[#1F1F25] overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
-              <h2 className="text-white font-semibold">Upload Drawing Set</h2>
+              <h2 className="text-[color:var(--text-primary)] font-semibold">Upload Drawing Set</h2>
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
-                className="p-2 text-gray-400 hover:text-white rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -415,16 +415,16 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
               {/* File picker */}
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider mb-2 block">
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">
                   PDF File
                 </label>
                 {uploadFile ? (
                   <div className="flex items-center gap-2 p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg">
                     <FileImage size={16} className="text-[#F97316] shrink-0" />
-                    <span className="text-white text-sm flex-1 truncate">{uploadFile.name}</span>
+                    <span className="text-[color:var(--text-primary)] text-sm flex-1 truncate">{uploadFile.name}</span>
                     <button
                       onClick={() => setUploadFile(null)}
-                      className="text-gray-400 hover:text-white p-1"
+                      className="text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] p-1"
                     >
                       <X size={14} />
                     </button>
@@ -432,7 +432,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                 ) : (
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full flex flex-col items-center gap-2 p-6 bg-[#0B0B0D] border-2 border-dashed border-[#1F1F25] hover:border-[#F97316]/50 rounded-lg text-gray-400 hover:text-white transition-colors min-h-[80px]"
+                    className="w-full flex flex-col items-center gap-2 p-6 bg-[#0B0B0D] border-2 border-dashed border-[#1F1F25] hover:border-[#F97316]/50 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[80px]"
                   >
                     <Upload size={20} />
                     <span className="text-sm">Tap to select PDF</span>
@@ -460,7 +460,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
               {/* Name */}
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
                   Set Name *
                 </label>
                 <input
@@ -468,13 +468,13 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.name}
                   onChange={(e) => setUploadForm((p) => ({ ...p, name: e.target.value }))}
                   placeholder="e.g. Architectural Drawings"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
               {/* Revision */}
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
                   Revision
                 </label>
                 <input
@@ -482,13 +482,13 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.revision}
                   onChange={(e) => setUploadForm((p) => ({ ...p, revision: e.target.value }))}
                   placeholder="Rev 0"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
                   Description (optional)
                 </label>
                 <input
@@ -496,14 +496,14 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.description}
                   onChange={(e) => setUploadForm((p) => ({ ...p, description: e.target.value }))}
                   placeholder="Brief description"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
               {/* Mode — only relevant if name matches existing */}
               {drawingSets.some((s) => s.name === uploadForm.name) && (
                 <div>
-                  <label className="text-xs text-gray-400 uppercase tracking-wider mb-2 block">
+                  <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">
                     Existing Set Found — Upload as...
                   </label>
                   <div className="flex gap-2">
@@ -514,7 +514,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                         className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors min-h-[44px] ${
                           uploadForm.mode === mode
                             ? "border-[#F97316] bg-[#F97316]/10 text-[#F97316]"
-                            : "border-[#1F1F25] text-gray-400"
+                            : "border-[#1F1F25] text-[color:var(--text-secondary)]"
                         }`}
                       >
                         {mode === "new_revision" ? "New Revision" : "Replace"}
@@ -533,14 +533,14 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             <div className="px-4 py-4 border-t border-[#1F1F25] flex gap-3">
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
-                className="flex-1 px-4 py-3 bg-[#1F1F25] text-gray-300 rounded-xl font-medium text-sm min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpload}
                 disabled={!uploadFile || !uploadForm.name.trim() || uploading}
-                className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-white rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
+                className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
               >
                 {uploading ? "Uploading..." : "Upload"}
               </button>

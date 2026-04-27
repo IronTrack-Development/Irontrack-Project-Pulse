@@ -158,7 +158,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
       <div className="bg-[#121217] w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col border border-[#1F1F25]">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <BookOpen size={16} className="text-[#F97316]" />
             {showForm
               ? editingId
@@ -168,7 +168,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
           </h3>
           <button
             onClick={showForm ? resetForm : onClose}
-            className="p-2 rounded-lg text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -179,23 +179,23 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
           {showForm ? (
             <div className="space-y-4">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Title *</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Title *</label>
                 <input
                   type="text"
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
                   placeholder="Template title"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Category</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Category</label>
                   <select
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value as ToolboxTalkCategory)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -203,31 +203,31 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 mb-1 block">Duration (min)</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Duration (min)</label>
                   <input
                     type="number"
                     value={formDuration}
                     onChange={(e) => setFormDuration(parseInt(e.target.value) || 15)}
                     min={5}
                     max={120}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">OSHA Reference</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">OSHA Reference</label>
                 <input
                   type="text"
                   value={formOsha}
                   onChange={(e) => setFormOsha(e.target.value)}
                   placeholder="e.g. 29 CFR 1926.501"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-gray-500 mb-2 block">Talking Points</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">Talking Points</label>
                 <EditableTalkingPoints points={formPoints} onChange={setFormPoints} />
               </div>
             </div>
@@ -236,14 +236,14 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               <RefreshCw size={20} className="text-[#F97316] animate-spin" />
             </div>
           ) : templates.length === 0 ? (
-            <div className="text-center py-8 text-gray-500 text-sm">
+            <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">
               No templates yet. Create one to get started.
             </div>
           ) : (
             <div className="space-y-4">
               {Object.entries(grouped).map(([cat, temps]) => (
                 <div key={cat}>
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-2 px-1">
+                  <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider mb-2 px-1">
                     {categoryLabel(cat)}
                   </div>
                   <div className="space-y-1.5">
@@ -254,7 +254,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                       >
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-white truncate">{t.title}</span>
+                            <span className="text-sm text-[color:var(--text-primary)] truncate">{t.title}</span>
                             {t.is_system ? (
                               <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#3B82F6]/10 text-[#3B82F6] shrink-0">
                                 System
@@ -265,7 +265,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                               </span>
                             )}
                           </div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">
+                          <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
                             {t.talking_points.length} points · {t.duration_minutes} min
                             {t.osha_reference ? ` · ${t.osha_reference}` : ""}
                           </div>
@@ -274,7 +274,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                           <div className="flex items-center gap-1 shrink-0">
                             <button
                               onClick={() => startEdit(t)}
-                              className="p-2 text-gray-500 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                              className="p-2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                               title="Edit"
                             >
                               <Save size={13} />
@@ -282,7 +282,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                             <button
                               onClick={() => handleDelete(t.id)}
                               disabled={deleting === t.id}
-                              className="p-2 text-gray-500 hover:text-red-400 transition-colors disabled:opacity-50 min-w-[36px] min-h-[36px] flex items-center justify-center"
+                              className="p-2 text-[color:var(--text-muted)] hover:text-red-400 transition-colors disabled:opacity-50 min-w-[36px] min-h-[36px] flex items-center justify-center"
                               title="Delete"
                             >
                               <Trash2 size={13} />
@@ -304,14 +304,14 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <>
               <button
                 onClick={resetForm}
-                className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || !formTitle.trim()}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 <Save size={14} />
                 {saving ? "Saving..." : editingId ? "Update Template" : "Create Template"}
@@ -321,13 +321,13 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <>
               <button
                 onClick={onClose}
-                className="px-4 py-2.5 bg-[#1F1F25] text-gray-300 rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
               >
                 Close
               </button>
               <button
                 onClick={() => setShowCreate(true)}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-bold transition-colors min-h-[44px]"
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
               >
                 <Plus size={14} />
                 Create New Template

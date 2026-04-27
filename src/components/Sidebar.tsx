@@ -36,8 +36,8 @@ export default function Sidebar() {
           />
         </div>
         <div>
-          <div className="font-bold text-white text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
-          <div className="text-[10px] text-gray-500 font-medium mt-0.5">Run Your Job. Don&apos;t Chase It.</div>
+          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
+          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">Run Your Job. Don&apos;t Chase It.</div>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export default function Sidebar() {
       <div className="px-4 py-3">
         <div className="flex items-center gap-2 bg-[var(--bg-primary)] rounded-lg px-3 py-2 border border-[var(--border-primary)]">
           <Zap size={13} className="text-[#F97316]" />
-          <span className="text-xs text-gray-400">Field Intelligence</span>
+          <span className="text-xs text-[color:var(--text-secondary)]">Field Intelligence</span>
           <span className="ml-auto w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function Sidebar() {
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 transition-all text-sm font-medium ${
                 active
                   ? "bg-[#F97316]/15 text-[#F97316] border border-[#F97316]/20"
-                  : "text-gray-400 hover:text-white hover:bg-white/5"
+                  : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-white/5"
               }`}
             >
               <Icon size={16} />
@@ -76,7 +76,7 @@ export default function Sidebar() {
       <div className="px-4 py-4 border-t border-[var(--border-primary)] space-y-3">
         <Link
           href="/"
-          className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#F97316] transition-colors"
+          className="flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
         >
           <Home size={14} />
           Landing Page

@@ -67,10 +67,10 @@ export default function NotificationToggle() {
 
   if (!supported) {
     return (
-      <div className="flex items-start gap-3 p-4 bg-[#0B0B0D] border border-gray-800 rounded-lg">
+      <div className="flex items-start gap-3 p-4 bg-[#0B0B0D] border border-[color:var(--border-primary)] rounded-lg">
         <BellOff size={18} className="text-gray-600 mt-0.5 shrink-0" />
         <div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[color:var(--text-muted)]">
             Push notifications are not supported in your browser.
           </p>
         </div>
@@ -86,17 +86,17 @@ export default function NotificationToggle() {
           {enabled ? (
             <Bell size={18} className="text-[#F97316] shrink-0" />
           ) : (
-            <BellOff size={18} className="text-gray-500 shrink-0" />
+            <BellOff size={18} className="text-[color:var(--text-muted)] shrink-0" />
           )}
           <div>
-            <p className="text-sm font-medium text-white">Push Notifications</p>
+            <p className="text-sm font-medium text-[color:var(--text-primary)]">Push Notifications</p>
             <p className="text-xs mt-0.5">
               {loading ? (
-                <span className="text-gray-500">Checking status…</span>
+                <span className="text-[color:var(--text-muted)]">Checking status…</span>
               ) : enabled ? (
                 <span className="text-green-400">Enabled</span>
               ) : (
-                <span className="text-gray-500">Disabled</span>
+                <span className="text-[color:var(--text-muted)]">Disabled</span>
               )}
             </p>
           </div>
@@ -118,14 +118,14 @@ export default function NotificationToggle() {
           />
           {loading && (
             <span className="absolute inset-0 flex items-center justify-center">
-              <Loader2 size={12} className="animate-spin text-white" />
+              <Loader2 size={12} className="animate-spin text-[color:var(--text-primary)]" />
             </span>
           )}
         </button>
       </div>
 
       {/* Description */}
-      <p className="text-xs text-gray-500 leading-relaxed">
+      <p className="text-xs text-[color:var(--text-muted)] leading-relaxed">
         Get notified when inspections are approaching with incomplete predecessors, or when
         activities fall behind schedule.
       </p>

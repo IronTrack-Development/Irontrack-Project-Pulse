@@ -87,46 +87,46 @@ export default function ProductionTracker({ projectId }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Production Tracking</h2>
-        <p className="text-xs text-gray-500 mt-0.5">Track what your crews install and complete</p>
+        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Production Tracking</h2>
+        <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Track what your crews install and complete</p>
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
           <TrendingUp size={16} className="text-[#F97316] mx-auto mb-1" />
-          <p className="text-2xl font-bold text-white">{summary.total_entries}</p>
-          <p className="text-xs text-gray-500">Entries This Period</p>
+          <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_entries}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">Entries This Period</p>
         </div>
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 text-center">
           <Clock size={16} className="text-[#F97316] mx-auto mb-1" />
-          <p className="text-2xl font-bold text-white">{summary.total_crew_hours}</p>
-          <p className="text-xs text-gray-500">Crew Hours</p>
+          <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_crew_hours}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">Crew Hours</p>
         </div>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex items-center gap-1.5 bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-1.5">
-          <Calendar size={12} className="text-gray-500" />
+          <Calendar size={12} className="text-[color:var(--text-muted)]" />
           <input
             type="date"
             value={dateFrom}
             onChange={(e) => setDateFrom(e.target.value)}
-            className="bg-transparent text-white text-xs focus:outline-none"
+            className="bg-transparent text-[color:var(--text-primary)] text-xs focus:outline-none"
           />
           <span className="text-gray-600">→</span>
           <input
             type="date"
             value={dateTo}
             onChange={(e) => setDateTo(e.target.value)}
-            className="bg-transparent text-white text-xs focus:outline-none"
+            className="bg-transparent text-[color:var(--text-primary)] text-xs focus:outline-none"
           />
         </div>
         <select
           value={filterForeman}
           onChange={(e) => setFilterForeman(e.target.value)}
-          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none appearance-none min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
         >
           <option value="">All Foremen</option>
           {foremen.map((f) => (
@@ -137,7 +137,7 @@ export default function ProductionTracker({ projectId }: Props) {
           value={filterProject}
           onChange={(e) => setFilterProject(e.target.value)}
           placeholder="Filter by project..."
-          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none placeholder-gray-600 min-h-[36px]"
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none placeholder-gray-600 min-h-[36px]"
         />
       </div>
 
@@ -145,13 +145,13 @@ export default function ProductionTracker({ projectId }: Props) {
       {entries.length === 0 ? (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <TrendingUp size={28} className="mx-auto text-gray-600 mb-2" />
-          <p className="text-sm text-gray-400">No production entries for this period</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">No production entries for this period</p>
           <p className="text-xs text-gray-600 mt-1">Production is logged via foreman check-ins</p>
         </div>
       ) : (
         <div className="space-y-1">
           {/* Table Header */}
-          <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+          <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-semibold text-[color:var(--text-muted)] uppercase tracking-wider">
             <div className="col-span-2">Date</div>
             <div className="col-span-2">Foreman</div>
             <div className="col-span-3">Description</div>
@@ -166,10 +166,10 @@ export default function ProductionTracker({ projectId }: Props) {
               {/* Mobile layout */}
               <div className="md:hidden space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-white">{e.description}</span>
-                  <span className="text-[10px] text-gray-500">{new Date(e.date).toLocaleDateString()}</span>
+                  <span className="text-xs font-semibold text-[color:var(--text-primary)]">{e.description}</span>
+                  <span className="text-[10px] text-[color:var(--text-muted)]">{new Date(e.date).toLocaleDateString()}</span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-gray-400">
+                <div className="flex items-center gap-3 text-xs text-[color:var(--text-secondary)]">
                   <span>{e.foreman_name}</span>
                   <span className="text-[#F97316] font-medium">{e.quantity} {e.unit}</span>
                   {e.area && <span>{e.area}</span>}
@@ -177,11 +177,11 @@ export default function ProductionTracker({ projectId }: Props) {
               </div>
               {/* Desktop layout */}
               <div className="hidden md:grid grid-cols-12 gap-2 items-center text-xs">
-                <div className="col-span-2 text-gray-400">{new Date(e.date).toLocaleDateString()}</div>
-                <div className="col-span-2 text-gray-300">{e.foreman_name}</div>
-                <div className="col-span-3 text-white truncate">{e.description}</div>
+                <div className="col-span-2 text-[color:var(--text-secondary)]">{new Date(e.date).toLocaleDateString()}</div>
+                <div className="col-span-2 text-[color:var(--text-secondary)]">{e.foreman_name}</div>
+                <div className="col-span-3 text-[color:var(--text-primary)] truncate">{e.description}</div>
                 <div className="col-span-2 text-[#F97316] font-medium">{e.quantity} {e.unit}</div>
-                <div className="col-span-3 text-gray-400">{e.area || "—"}</div>
+                <div className="col-span-3 text-[color:var(--text-secondary)]">{e.area || "—"}</div>
               </div>
             </div>
           ))}

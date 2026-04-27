@@ -369,15 +369,15 @@ export default function HandoffTracker({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <ArrowRightLeft size={20} /> Handoff Tracker
           </h2>
-          <p className="text-xs text-gray-500 mt-0.5">Track department-to-department handoffs by area</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Track department-to-department handoffs by area</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setView(view === "board" ? "departments" : "board")}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-300 hover:text-white rounded-lg text-xs font-medium transition-colors min-h-[40px]"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors min-h-[40px]"
           >
             <Settings size={14} />
             {view === "board" ? "Departments" : "Status Board"}
@@ -404,26 +404,26 @@ export default function HandoffTracker({ projectId }: Props) {
       {/* Add Area Form */}
       {showAddArea && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-white">New Area</h3>
+          <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">New Area</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <input
               value={areaProject}
               onChange={e => setAreaProject(e.target.value)}
               placeholder="Project name (e.g. Building A)"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={areaName}
               onChange={e => setAreaName(e.target.value)}
               placeholder="Area name (e.g. Floor 1)"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
           </div>
           <div className="flex gap-2">
-            <button onClick={addArea} className="px-4 py-2 bg-[#F97316] text-white rounded-lg text-xs font-semibold min-h-[40px]">
+            <button onClick={addArea} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px]">
               Add Area
             </button>
-            <button onClick={() => setShowAddArea(false)} className="px-4 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-xs min-h-[40px]">
+            <button onClick={() => setShowAddArea(false)} className="px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]">
               Cancel
             </button>
           </div>
@@ -433,36 +433,36 @@ export default function HandoffTracker({ projectId }: Props) {
       {/* Add Department Form */}
       {showAddDept && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-white">New Department</h3>
+          <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">New Department</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <input
               value={deptName}
               onChange={e => setDeptName(e.target.value)}
               placeholder="Department name"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={deptTrade}
               onChange={e => setDeptTrade(e.target.value)}
               placeholder="Trade (optional)"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <div className="flex items-center gap-2">
-              <label className="text-xs text-gray-400">Color:</label>
+              <label className="text-xs text-[color:var(--text-secondary)]">Color:</label>
               <input
                 type="color"
                 value={deptColor}
                 onChange={e => setDeptColor(e.target.value)}
                 className="w-8 h-8 rounded cursor-pointer bg-transparent border-0"
               />
-              <span className="text-xs text-gray-500">{deptColor}</span>
+              <span className="text-xs text-[color:var(--text-muted)]">{deptColor}</span>
             </div>
           </div>
           <div className="flex gap-2">
-            <button onClick={addDepartment} className="px-4 py-2 bg-blue-500 text-white rounded-lg text-xs font-semibold min-h-[40px]">
+            <button onClick={addDepartment} className="px-4 py-2 bg-blue-500 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px]">
               Add Department
             </button>
-            <button onClick={() => setShowAddDept(false)} className="px-4 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-xs min-h-[40px]">
+            <button onClick={() => setShowAddDept(false)} className="px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]">
               Cancel
             </button>
           </div>
@@ -475,29 +475,29 @@ export default function HandoffTracker({ projectId }: Props) {
           {departments.length === 0 ? (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
               <ArrowRightLeft size={32} className="mx-auto text-gray-600 mb-3" />
-              <p className="text-gray-400 text-sm mb-2">No departments set up yet</p>
-              <p className="text-gray-500 text-xs">Add departments to start tracking handoffs between them</p>
+              <p className="text-[color:var(--text-secondary)] text-sm mb-2">No departments set up yet</p>
+              <p className="text-[color:var(--text-muted)] text-xs">Add departments to start tracking handoffs between them</p>
             </div>
           ) : departments.length < 2 ? (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
-              <p className="text-gray-400 text-sm mb-2">Need at least 2 departments for handoffs</p>
-              <p className="text-gray-500 text-xs">Add another department to start tracking handoffs</p>
+              <p className="text-[color:var(--text-secondary)] text-sm mb-2">Need at least 2 departments for handoffs</p>
+              <p className="text-[color:var(--text-muted)] text-xs">Add another department to start tracking handoffs</p>
             </div>
           ) : board.length === 0 ? (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
-              <p className="text-gray-400 text-sm mb-2">No areas yet</p>
-              <p className="text-gray-500 text-xs">Add areas to track handoffs across departments</p>
+              <p className="text-[color:var(--text-secondary)] text-sm mb-2">No areas yet</p>
+              <p className="text-[color:var(--text-muted)] text-xs">Add areas to track handoffs across departments</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full border-collapse min-w-[600px]">
                 <thead>
                   <tr>
-                    <th className="text-left text-xs font-semibold text-gray-400 px-3 py-2 sticky left-0 bg-[#0B0B0D] z-10 min-w-[140px]">
+                    <th className="text-left text-xs font-semibold text-[color:var(--text-secondary)] px-3 py-2 sticky left-0 bg-[#0B0B0D] z-10 min-w-[140px]">
                       Area
                     </th>
                     {departments.slice(0, -1).map((dept, i) => (
-                      <th key={dept.id} className="text-center text-xs font-semibold text-gray-400 px-2 py-2 min-w-[90px]">
+                      <th key={dept.id} className="text-center text-xs font-semibold text-[color:var(--text-secondary)] px-2 py-2 min-w-[90px]">
                         <div className="flex items-center justify-center gap-1">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: dept.color }} />
                           <span className="truncate">{dept.name}</span>
@@ -513,8 +513,8 @@ export default function HandoffTracker({ projectId }: Props) {
                   {board.map(area => (
                     <tr key={area.area_id} className="border-t border-[#1F1F25]">
                       <td className="px-3 py-2.5 sticky left-0 bg-[#0B0B0D] z-10">
-                        <div className="text-sm font-medium text-white">{area.area_name}</div>
-                        <div className="text-xs text-gray-500">{area.project_name}</div>
+                        <div className="text-sm font-medium text-[color:var(--text-primary)]">{area.area_name}</div>
+                        <div className="text-xs text-[color:var(--text-muted)]">{area.project_name}</div>
                       </td>
                       {area.cells.map((cell, idx) => {
                         const cfg = STATUS_CONFIG[cell.status] || STATUS_CONFIG.not_started;
@@ -540,7 +540,7 @@ export default function HandoffTracker({ projectId }: Props) {
 
           {/* Status Legend */}
           {board.length > 0 && (
-            <div className="flex flex-wrap gap-3 text-xs text-gray-500">
+            <div className="flex flex-wrap gap-3 text-xs text-[color:var(--text-muted)]">
               {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
                 <span key={key} className="flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cfg.color }} />
@@ -556,7 +556,7 @@ export default function HandoffTracker({ projectId }: Props) {
       {view === "departments" && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white">Department Order</h3>
+            <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Department Order</h3>
             <button
               onClick={() => setShowAddDept(!showAddDept)}
               className="flex items-center gap-1.5 px-3 py-2 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 rounded-lg text-xs font-semibold transition-colors min-h-[36px]"
@@ -565,18 +565,18 @@ export default function HandoffTracker({ projectId }: Props) {
             </button>
           </div>
           {departments.length === 0 ? (
-            <p className="text-gray-500 text-sm">No departments yet.</p>
+            <p className="text-[color:var(--text-muted)] text-sm">No departments yet.</p>
           ) : (
             departments.map((dept, idx) => (
               <div key={dept.id} className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="w-4 h-4 rounded" style={{ backgroundColor: dept.color }} />
                   <div>
-                    <div className="text-sm font-medium text-white">{dept.name}</div>
-                    {dept.trade && <div className="text-xs text-gray-500">{dept.trade}</div>}
+                    <div className="text-sm font-medium text-[color:var(--text-primary)]">{dept.name}</div>
+                    {dept.trade && <div className="text-xs text-[color:var(--text-muted)]">{dept.trade}</div>}
                   </div>
                   {dept.crew_count !== undefined && (
-                    <span className="text-xs text-gray-500 bg-[#1F1F25] px-2 py-0.5 rounded">
+                    <span className="text-xs text-[color:var(--text-muted)] bg-[#1F1F25] px-2 py-0.5 rounded">
                       {dept.crew_count} crew
                     </span>
                   )}
@@ -585,14 +585,14 @@ export default function HandoffTracker({ projectId }: Props) {
                   <button
                     onClick={() => moveDepartment(dept.id, "up")}
                     disabled={idx === 0}
-                    className="p-1.5 text-gray-500 hover:text-white disabled:opacity-30 transition-colors"
+                    className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-colors"
                   >
                     <ChevronUp size={14} />
                   </button>
                   <button
                     onClick={() => moveDepartment(dept.id, "down")}
                     disabled={idx === departments.length - 1}
-                    className="p-1.5 text-gray-500 hover:text-white disabled:opacity-30 transition-colors"
+                    className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-colors"
                   >
                     <ChevronDown size={14} />
                   </button>
@@ -625,27 +625,27 @@ export default function HandoffTracker({ projectId }: Props) {
                 {/* Header */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="flex items-center gap-2 text-sm font-medium text-white">
+                    <div className="flex items-center gap-2 text-sm font-medium text-[color:var(--text-primary)]">
                       <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.from_department_color || "#F97316", color: "#fff" }}>
                         {selectedHandoff.from_department_name}
                       </span>
-                      <ArrowRightLeft size={14} className="text-gray-500" />
+                      <ArrowRightLeft size={14} className="text-[color:var(--text-muted)]" />
                       <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.to_department_color || "#3B82F6", color: "#fff" }}>
                         {selectedHandoff.to_department_name}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-[color:var(--text-muted)] mt-1">
                       {selectedHandoff.project_name} · {selectedHandoff.area_name}
                     </p>
                   </div>
-                  <button onClick={() => setSelectedHandoff(null)} className="p-1.5 text-gray-500 hover:text-white">
+                  <button onClick={() => setSelectedHandoff(null)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                     <X size={18} />
                   </button>
                 </div>
 
                 {/* Status */}
                 <div>
-                  <div className="text-xs text-gray-500 mb-2">Status</div>
+                  <div className="text-xs text-[color:var(--text-muted)] mb-2">Status</div>
                   <div className="flex flex-wrap gap-2">
                     {(["not_started", "in_progress", "ready_for_handoff", "handed_off", "accepted", "issue_flagged"] as const).map(s => {
                       const cfg = STATUS_CONFIG[s];
@@ -668,24 +668,24 @@ export default function HandoffTracker({ projectId }: Props) {
                     })}
                   </div>
                   {selectedHandoff.handoff_date && (
-                    <p className="text-xs text-gray-500 mt-1">Handed off: {selectedHandoff.handoff_date}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-1">Handed off: {selectedHandoff.handoff_date}</p>
                   )}
                   {selectedHandoff.accepted_date && (
-                    <p className="text-xs text-gray-500">Accepted: {selectedHandoff.accepted_date}</p>
+                    <p className="text-xs text-[color:var(--text-muted)]">Accepted: {selectedHandoff.accepted_date}</p>
                   )}
                 </div>
 
                 {/* Checklist */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <div className="text-xs text-gray-500 flex items-center gap-1">
+                    <div className="text-xs text-[color:var(--text-muted)] flex items-center gap-1">
                       <Check size={12} />
                       Checklist ({selectedHandoff.checklist_complete}/{selectedHandoff.checklist_total})
                     </div>
                     {templates.length > 0 && (
                       <select
                         onChange={e => { if (e.target.value) applyTemplate(e.target.value); e.target.value = ""; }}
-                        className="text-xs bg-[#1F1F25] border border-[#2a2a35] text-gray-400 rounded px-2 py-1"
+                        className="text-xs bg-[#1F1F25] border border-[#2a2a35] text-[color:var(--text-secondary)] rounded px-2 py-1"
                         defaultValue=""
                       >
                         <option value="" disabled>Apply Template…</option>
@@ -704,7 +704,7 @@ export default function HandoffTracker({ projectId }: Props) {
                           onChange={() => toggleChecklistItem(item)}
                           className="mt-0.5 w-4 h-4 rounded border-gray-600 text-[#F97316] bg-[#1F1F25] focus:ring-0 cursor-pointer"
                         />
-                        <span className={`text-sm ${item.completed ? "text-gray-500 line-through" : "text-gray-300"}`}>
+                        <span className={`text-sm ${item.completed ? "text-[color:var(--text-muted)] line-through" : "text-[color:var(--text-secondary)]"}`}>
                           {item.item_text}
                         </span>
                       </label>
@@ -716,7 +716,7 @@ export default function HandoffTracker({ projectId }: Props) {
                       onChange={e => setNewItemText(e.target.value)}
                       onKeyDown={e => e.key === "Enter" && addChecklistItem()}
                       placeholder="Add checklist item…"
-                      className="flex-1 px-3 py-1.5 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-600 min-h-[36px]"
+                      className="flex-1 px-3 py-1.5 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-600 min-h-[36px]"
                     />
                     <button
                       onClick={addChecklistItem}
@@ -731,10 +731,10 @@ export default function HandoffTracker({ projectId }: Props) {
                 {/* Photos */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <div className="text-xs text-gray-500 flex items-center gap-1">
+                    <div className="text-xs text-[color:var(--text-muted)] flex items-center gap-1">
                       <Camera size={12} /> Photos ({selectedHandoff.photo_count})
                     </div>
-                    <label className="flex items-center gap-1 px-2 py-1 bg-[#1F1F25] text-gray-400 rounded text-xs cursor-pointer hover:text-white transition-colors">
+                    <label className="flex items-center gap-1 px-2 py-1 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded text-xs cursor-pointer hover:text-[color:var(--text-primary)] transition-colors">
                       <Camera size={12} /> Upload
                       <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
                     </label>
@@ -747,7 +747,7 @@ export default function HandoffTracker({ projectId }: Props) {
                             <Camera size={20} />
                           </div>
                           {photo.caption && (
-                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-1.5 py-0.5 text-xs text-gray-300 truncate">
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-1.5 py-0.5 text-xs text-[color:var(--text-secondary)] truncate">
                               {photo.caption}
                             </div>
                           )}
@@ -759,7 +759,7 @@ export default function HandoffTracker({ projectId }: Props) {
 
                 {/* Notes */}
                 <div>
-                  <div className="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                  <div className="text-xs text-[color:var(--text-muted)] mb-1 flex items-center gap-1">
                     <FileText size={12} /> Notes
                   </div>
                   <textarea
@@ -767,7 +767,7 @@ export default function HandoffTracker({ projectId }: Props) {
                     onBlur={e => updateHandoffNotes(e.target.value)}
                     placeholder="Add notes about this handoff…"
                     rows={3}
-                    className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-600 resize-none"
+                    className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-600 resize-none"
                   />
                 </div>
 

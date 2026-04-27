@@ -205,7 +205,7 @@ export default function PunchListTab({ projectId }: Props) {
               ].map(({ label, value, color }) => (
                 <div key={label} className="bg-[#0B0B0D] rounded-xl p-2.5 text-center">
                   <p className="text-lg font-bold leading-none" style={{ color }}>{value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{label}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{label}</p>
                 </div>
               ))}
             </div>
@@ -216,8 +216,8 @@ export default function PunchListTab({ projectId }: Props) {
       {/* Bulk actions */}
       {selectedIds.size > 0 && (
         <div className="flex items-center gap-3 bg-[#1F1F25] rounded-2xl px-4 py-3">
-          <span className="text-sm text-gray-300 flex-1">{selectedIds.size} selected</span>
-          <button onClick={() => setSelectedIds(new Set())} className="text-xs text-gray-500 min-h-[40px] px-3">
+          <span className="text-sm text-[color:var(--text-secondary)] flex-1">{selectedIds.size} selected</span>
+          <button onClick={() => setSelectedIds(new Set())} className="text-xs text-[color:var(--text-muted)] min-h-[40px] px-3">
             Clear
           </button>
           <button
@@ -242,8 +242,8 @@ export default function PunchListTab({ projectId }: Props) {
               onClick={() => setStatusFilter(value)}
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
-                  ? "bg-[#F97316] text-white"
-                  : "bg-[#1F1F25] text-gray-400 hover:text-white"
+                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               {label}
@@ -259,12 +259,12 @@ export default function PunchListTab({ projectId }: Props) {
                 <select
                   value={tradeFilter}
                   onChange={(e) => setTradeFilter(e.target.value)}
-                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
+                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-[color:var(--text-secondary)] appearance-none focus:outline-none min-h-[40px]"
                 >
                   <option value="">All Trades</option>
                   {trades.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
-                <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
               </div>
             )}
             {subs.length > 0 && (
@@ -272,12 +272,12 @@ export default function PunchListTab({ projectId }: Props) {
                 <select
                   value={subFilter}
                   onChange={(e) => setSubFilter(e.target.value)}
-                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-gray-400 appearance-none focus:outline-none min-h-[40px]"
+                  className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-[color:var(--text-secondary)] appearance-none focus:outline-none min-h-[40px]"
                 >
                   <option value="">All Subs</option>
                   {subs.map((s) => <option key={s.name} value={contacts.find((c) => c.name === s.name)?.id || ""}>{s.name}</option>)}
                 </select>
-                <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
               </div>
             )}
           </div>
@@ -288,7 +288,7 @@ export default function PunchListTab({ projectId }: Props) {
       {filteredItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <CheckSquare size={44} className="text-gray-700 mb-4" />
-          <p className="text-sm font-semibold text-gray-500 mb-1">
+          <p className="text-sm font-semibold text-[color:var(--text-muted)] mb-1">
             {statusFilter || tradeFilter || subFilter ? "No items match the filter" : "No punch items yet"}
           </p>
           <p className="text-xs text-gray-600 mb-6">
@@ -323,10 +323,10 @@ export default function PunchListTab({ projectId }: Props) {
                       isSelected ? "bg-[#F97316] border-[#F97316]" : "border-gray-600 bg-transparent"
                     }`}
                   >
-                    {isSelected && <CheckSquare size={10} className="text-white" />}
+                    {isSelected && <CheckSquare size={10} className="text-[color:var(--text-primary)]" />}
                   </button>
 
-                  <span className="text-xs font-mono text-gray-500 shrink-0">{item.item_number}</span>
+                  <span className="text-xs font-mono text-[color:var(--text-muted)] shrink-0">{item.item_number}</span>
 
                   {/* Priority badge */}
                   <span
@@ -354,20 +354,20 @@ export default function PunchListTab({ projectId }: Props) {
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-white font-medium mb-2 line-clamp-2 leading-snug">
+                <p className="text-sm text-[color:var(--text-primary)] font-medium mb-2 line-clamp-2 leading-snug">
                   {item.description}
                 </p>
 
                 {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[color:var(--text-muted)]">
                   {locationParts.length > 0 && (
                     <span>{locationParts.join(" · ")}</span>
                   )}
                   {item.trade && (
-                    <span className="px-1.5 py-0.5 rounded-md bg-[#1F1F25] text-gray-400">{item.trade}</span>
+                    <span className="px-1.5 py-0.5 rounded-md bg-[#1F1F25] text-[color:var(--text-secondary)]">{item.trade}</span>
                   )}
                   {item.assigned_contact && (
-                    <span className="text-gray-500 truncate max-w-[120px]">
+                    <span className="text-[color:var(--text-muted)] truncate max-w-[120px]">
                       {item.assigned_contact.name}
                     </span>
                   )}
@@ -381,7 +381,7 @@ export default function PunchListTab({ projectId }: Props) {
       {/* FAB */}
       <button
         onClick={() => setShowForm(true)}
-        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[#F97316] text-white
+        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[#F97316] text-[color:var(--text-primary)]
           shadow-lg shadow-[#F97316]/30 flex items-center justify-center
           hover:bg-[#ea6c10] active:scale-95 transition-all z-40"
         aria-label="Add punch item"
@@ -392,7 +392,7 @@ export default function PunchListTab({ projectId }: Props) {
       {/* Toast */}
       {toast && (
         <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[#1F1F25] border border-[#F97316]/30
-          text-white text-sm font-medium px-4 py-3 rounded-2xl shadow-xl animate-fade-in">
+          text-[color:var(--text-primary)] text-sm font-medium px-4 py-3 rounded-2xl shadow-xl animate-fade-in">
           {toast}
         </div>
       )}

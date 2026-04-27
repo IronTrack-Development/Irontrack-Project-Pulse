@@ -143,7 +143,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   if (!project) {
     return (
       <div className="p-8 text-center">
-        <p className="text-gray-500 mb-4">
+        <p className="text-[color:var(--text-muted)] mb-4">
           Project not found.{" "}
           <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
         </p>
@@ -176,7 +176,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
           <div className="flex items-center justify-between mb-2">
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-gray-500 hover:text-white text-sm transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
             >
               <ArrowLeft size={16} />
               Back
@@ -184,34 +184,34 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
             <div className="flex items-center gap-1.5 md:gap-3">
               <button
                 onClick={fetchProject}
-                className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <RefreshCw size={16} />
               </button>
               <NotificationBell projectId={id} />
               <button
                 onClick={() => setSettingsOpen(true)}
-                className="md:hidden p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="md:hidden p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Settings size={16} />
               </button>
               <Link
                 href={`/projects/${id}/weekly-summary`}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
               >
                 <FileBarChart2 size={14} />
                 <span>Weekly Summary</span>
               </Link>
               <Link
                 href={`/projects/${id}/report`}
-                className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+                className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
                 <ClipboardList size={14} />
                 <span className="hidden sm:inline">Observe</span>
               </Link>
               <Link
                 href={`/upload?project=${id}`}
-                className="hidden md:flex px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-gray-300 rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
+                className="hidden md:flex px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
               >
                 Upload Schedule
               </Link>
@@ -225,10 +225,10 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
                 className="w-3 h-3 rounded-full shrink-0"
                 style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}
               />
-              <h1 className="text-lg md:text-xl font-bold text-white truncate">{project.name}</h1>
+              <h1 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)] truncate">{project.name}</h1>
             </div>
             {(project.client_name || project.location) && (
-              <p className="text-xs md:text-sm text-gray-500 mt-0.5 ml-5 truncate">
+              <p className="text-xs md:text-sm text-[color:var(--text-muted)] mt-0.5 ml-5 truncate">
                 {[project.client_name, project.location].filter(Boolean).join(" · ")}
               </p>
             )}

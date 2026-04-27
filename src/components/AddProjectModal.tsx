@@ -39,9 +39,9 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <Building2 size={18} className="text-[#F97316]" />
-            <h2 className="font-bold text-white">New Project</h2>
+            <h2 className="font-bold text-[color:var(--text-primary)]">New Project</h2>
           </div>
-          <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -54,7 +54,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wide">
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] mb-1.5 uppercase tracking-wide">
               Project Name
             </label>
             <input
@@ -63,7 +63,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter project name"
               autoFocus
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
           </div>
 
@@ -71,14 +71,14 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2.5 border border-[#1F1F25] text-gray-400 hover:text-white rounded-lg text-sm font-medium transition-colors"
+              className="flex-1 py-2.5 border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving || !name.trim()}
-              className="flex-1 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 text-white rounded-lg text-sm font-semibold transition-colors"
+              className="flex-1 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               {saving ? "Creating..." : "Create Project"}
             </button>

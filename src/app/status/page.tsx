@@ -43,7 +43,7 @@ function StatusBadge({ status }: { status: ServiceStatus }) {
   }
   // coming_soon
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-[color:var(--text-secondary)] border border-gray-500/20">
       <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
       Coming Soon
     </span>
@@ -76,11 +76,11 @@ export default function StatusPage() {
                 style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
               />
             </div>
-            <span className="text-lg md:text-xl font-bold text-white">
+            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
               IronTrack<span className="hidden md:inline"> Project Pulse</span>
             </span>
           </Link>
-          <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors flex items-center gap-1">
             ← Back to home
           </Link>
         </div>
@@ -89,8 +89,8 @@ export default function StatusPage() {
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
         {/* Page Title */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">System Status</h1>
-          <p className="text-gray-400">Current health of IronTrack Project Pulse services</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">System Status</h1>
+          <p className="text-[color:var(--text-secondary)]">Current health of IronTrack Project Pulse services</p>
         </div>
 
         {/* Overall Status Banner */}
@@ -105,21 +105,21 @@ export default function StatusPage() {
             <p className={`font-semibold text-lg ${allOperational ? "text-green-400" : "text-yellow-400"}`}>
               {allOperational ? "All Systems Operational" : "Some Systems Degraded"}
             </p>
-            <p className="text-sm text-gray-400">99.9% uptime last 30 days</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">99.9% uptime last 30 days</p>
           </div>
         </div>
 
         {/* Service List */}
         <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-[#1F1F25]">
-            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Services</h2>
+            <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">Services</h2>
           </div>
           <div className="divide-y divide-[#1F1F25]">
             {services.map((service) => (
               <div key={service.name} className="flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors">
                 <div>
-                  <p className="text-white font-medium">{service.name}</p>
-                  <p className="text-sm text-gray-500 mt-0.5">{service.description}</p>
+                  <p className="text-[color:var(--text-primary)] font-medium">{service.name}</p>
+                  <p className="text-sm text-[color:var(--text-muted)] mt-0.5">{service.description}</p>
                 </div>
                 <StatusBadge status={service.status as ServiceStatus} />
               </div>
@@ -128,7 +128,7 @@ export default function StatusPage() {
         </div>
 
         {/* Last Checked */}
-        <div className="flex items-center gap-2 text-sm text-gray-500">
+        <div className="flex items-center gap-2 text-sm text-[color:var(--text-muted)]">
           <Clock className="w-4 h-4" />
           <span>Last checked: {lastChecked}</span>
         </div>
@@ -139,14 +139,14 @@ export default function StatusPage() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />
-            <span className="text-sm text-gray-500">© 2026 IronTrack Development LLC. All rights reserved.</span>
+            <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-gray-500 hover:text-[#F97316] transition-colors">Terms</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-gray-500 hover:text-[#F97316] transition-colors">Privacy</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/release-notes" className="text-gray-500 hover:text-[#F97316] transition-colors">Release Notes</Link>
+            <Link href="/release-notes" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Release Notes</Link>
           </div>
         </div>
       </footer>

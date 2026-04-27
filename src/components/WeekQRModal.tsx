@@ -79,13 +79,13 @@ export default function WeekQRModal({ projectId, weekNumber, onClose }: Props) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <QrCode size={16} className="text-[#F97316]" />
-            <span className="text-sm font-bold text-white">
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">
               Week {weekNumber} QR Code
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <X size={16} />
           </button>
@@ -96,7 +96,7 @@ export default function WeekQRModal({ projectId, weekNumber, onClose }: Props) {
           {loading && (
             <div className="flex flex-col items-center gap-3 py-8">
               <Loader2 size={24} className="text-[#F97316] animate-spin" />
-              <span className="text-sm text-gray-500">Generating QR code…</span>
+              <span className="text-sm text-[color:var(--text-muted)]">Generating QR code…</span>
             </div>
           )}
 
@@ -122,8 +122,8 @@ export default function WeekQRModal({ projectId, weekNumber, onClose }: Props) {
 
               {/* Info */}
               <div className="text-center mb-4">
-                <p className="text-white font-semibold text-sm">{projectName}</p>
-                <p className="text-gray-500 text-xs mt-0.5">
+                <p className="text-[color:var(--text-primary)] font-semibold text-sm">{projectName}</p>
+                <p className="text-[color:var(--text-muted)] text-xs mt-0.5">
                   Week {weekNumber} Lookahead
                 </p>
                 {expiresAt && (
@@ -135,14 +135,14 @@ export default function WeekQRModal({ projectId, weekNumber, onClose }: Props) {
 
               {/* URL display */}
               <div className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
-                <p className="text-[10px] text-gray-400 truncate font-mono">{shareUrl}</p>
+                <p className="text-[10px] text-[color:var(--text-secondary)] truncate font-mono">{shareUrl}</p>
               </div>
 
               {/* Actions */}
               <div className="flex gap-2 w-full">
                 <button
                   onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-semibold transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-semibold transition-colors"
                 >
                   {copied ? (
                     <>
@@ -158,7 +158,7 @@ export default function WeekQRModal({ projectId, weekNumber, onClose }: Props) {
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
                 >
                   <Share2 size={14} />
                   Share

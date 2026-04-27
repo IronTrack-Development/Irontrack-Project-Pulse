@@ -54,7 +54,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
-  closed:       { label: "Closed",       color: "#374151", bg: "bg-gray-800/50" },
+  closed:       { label: "Closed",       color: "#374151", bg: "bg-[color:var(--bg-tertiary)]/50" },
 };
 
 const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
@@ -124,16 +124,16 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
         <div className="sticky top-0 bg-[#121217] px-5 py-4 border-b border-[#1F1F25] flex items-start justify-between rounded-t-3xl z-10">
           <div className="flex-1 min-w-0 mr-3">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-gray-500">{rfi.rfi_number}</span>
+              <span className="text-xs font-mono text-[color:var(--text-muted)]">{rfi.rfi_number}</span>
               {rfi.ai_drafted && (
                 <span className="text-xs px-1.5 py-0.5 rounded bg-[#F97316]/15 text-[#F97316]">✨ AI</span>
               )}
             </div>
-            <h2 className="text-sm font-semibold text-white leading-snug">{rfi.subject}</h2>
+            <h2 className="text-sm font-semibold text-[color:var(--text-primary)] leading-snug">{rfi.subject}</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-500 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
+            className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
           >
             <X size={16} />
           </button>
@@ -162,7 +162,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
 
           {/* Question */}
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-1.5 flex items-center gap-1">
+            <p className="text-xs font-medium text-[color:var(--text-muted)] mb-1.5 flex items-center gap-1">
               <FileText size={11} />Question
             </p>
             <p className="text-sm text-gray-200 leading-relaxed">{rfi.question}</p>
@@ -172,41 +172,41 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           <div className="grid grid-cols-2 gap-3 text-xs">
             {rfi.spec_section && (
               <div>
-                <p className="text-gray-500 mb-0.5">Spec Section</p>
-                <p className="text-gray-300">{rfi.spec_section}</p>
+                <p className="text-[color:var(--text-muted)] mb-0.5">Spec Section</p>
+                <p className="text-[color:var(--text-secondary)]">{rfi.spec_section}</p>
               </div>
             )}
             {rfi.drawing_reference && (
               <div>
-                <p className="text-gray-500 mb-0.5">Drawing Ref</p>
-                <p className="text-gray-300">{rfi.drawing_reference}</p>
+                <p className="text-[color:var(--text-muted)] mb-0.5">Drawing Ref</p>
+                <p className="text-[color:var(--text-secondary)]">{rfi.drawing_reference}</p>
               </div>
             )}
             {rfi.assigned_contact && (
               <div>
-                <p className="text-gray-500 mb-0.5 flex items-center gap-1"><User size={10} />Assigned To</p>
-                <p className="text-gray-300">{rfi.assigned_contact.name}</p>
-                <p className="text-gray-500">{rfi.assigned_contact.company}</p>
+                <p className="text-[color:var(--text-muted)] mb-0.5 flex items-center gap-1"><User size={10} />Assigned To</p>
+                <p className="text-[color:var(--text-secondary)]">{rfi.assigned_contact.name}</p>
+                <p className="text-[color:var(--text-muted)]">{rfi.assigned_contact.company}</p>
               </div>
             )}
             {rfi.due_date && (
               <div>
-                <p className={`mb-0.5 flex items-center gap-1 ${isOverdue ? "text-red-400" : "text-gray-500"}`}>
+                <p className={`mb-0.5 flex items-center gap-1 ${isOverdue ? "text-red-400" : "text-[color:var(--text-muted)]"}`}>
                   <Calendar size={10} />Due Date
                 </p>
-                <p className={isOverdue ? "text-red-400 font-medium" : "text-gray-300"}>{formatDate(rfi.due_date)}</p>
+                <p className={isOverdue ? "text-red-400 font-medium" : "text-[color:var(--text-secondary)]"}>{formatDate(rfi.due_date)}</p>
               </div>
             )}
             {rfi.submitted_date && (
               <div>
-                <p className="text-gray-500 mb-0.5">Submitted</p>
-                <p className="text-gray-300">{formatDate(rfi.submitted_date)}</p>
+                <p className="text-[color:var(--text-muted)] mb-0.5">Submitted</p>
+                <p className="text-[color:var(--text-secondary)]">{formatDate(rfi.submitted_date)}</p>
               </div>
             )}
             {rfi.days_open != null && (
               <div>
-                <p className="text-gray-500 mb-0.5">Days Open</p>
-                <p className={`font-medium ${(rfi.days_open || 0) > 14 ? "text-red-400" : "text-gray-300"}`}>{rfi.days_open} days</p>
+                <p className="text-[color:var(--text-muted)] mb-0.5">Days Open</p>
+                <p className={`font-medium ${(rfi.days_open || 0) > 14 ? "text-red-400" : "text-[color:var(--text-secondary)]"}`}>{rfi.days_open} days</p>
               </div>
             )}
           </div>
@@ -214,7 +214,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           {/* Photos */}
           {rfi.rfi_photos && rfi.rfi_photos.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-2 flex items-center gap-1">
+              <p className="text-xs font-medium text-[color:var(--text-muted)] mb-2 flex items-center gap-1">
                 <Camera size={11} />Photos ({rfi.rfi_photos.length})
               </p>
               <div className="grid grid-cols-3 gap-2">
@@ -234,7 +234,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           {/* Response timeline */}
           {rfi.rfi_responses && rfi.rfi_responses.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-3 flex items-center gap-1">
+              <p className="text-xs font-medium text-[color:var(--text-muted)] mb-3 flex items-center gap-1">
                 <MessageSquare size={11} />Responses ({rfi.rfi_responses.length})
               </p>
               <div className="space-y-3">
@@ -243,7 +243,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                     {resp.responded_by_name && (
                       <p className="text-xs font-medium text-[#F97316] mb-1">{resp.responded_by_name}</p>
                     )}
-                    <p className="text-sm text-gray-300 leading-relaxed">{resp.response_text}</p>
+                    <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">{resp.response_text}</p>
                     <p className="text-xs text-gray-600 mt-1.5">
                       {new Date(resp.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                     </p>
@@ -256,13 +256,13 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           {/* Add response */}
           {rfi.status !== "closed" && (
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-2">Add Response</p>
+              <p className="text-xs font-medium text-[color:var(--text-muted)] mb-2">Add Response</p>
               <input
                 type="text"
                 value={respondedByName}
                 onChange={(e) => setRespondedByName(e.target.value)}
                 placeholder="Respondent name (optional)"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 text-sm text-white
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 text-sm text-[color:var(--text-primary)]
                   placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 mb-2 min-h-[44px]"
               />
               <textarea
@@ -270,14 +270,14 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 onChange={(e) => setResponseText(e.target.value)}
                 placeholder="Enter response..."
                 rows={3}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-white
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                   placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50 mb-2"
               />
               <button
                 onClick={submitResponse}
                 disabled={!responseText.trim() || isSubmitting}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl
-                  bg-[#F97316] hover:bg-[#ea6c10] text-white font-semibold text-sm
+                  bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-semibold text-sm
                   disabled:opacity-50 transition-all min-h-[44px]"
               >
                 {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
@@ -289,7 +289,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           {/* Quick actions */}
           {rfi.status !== "closed" && (
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-2">Quick Actions</p>
+              <p className="text-xs font-medium text-[color:var(--text-muted)] mb-2">Quick Actions</p>
               <div className="flex gap-2 flex-wrap">
                 {rfi.status === "draft" && (
                   <button
@@ -314,7 +314,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 <button
                   onClick={() => updateStatus("closed")}
                   disabled={isUpdatingStatus}
-                  className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-gray-700/30 text-gray-400
+                  className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-gray-700/30 text-[color:var(--text-secondary)]
                     hover:bg-gray-700/50 text-xs font-medium transition-all min-h-[44px]"
                 >
                   <XCircle size={12} />Close

@@ -105,11 +105,11 @@ function StatCard({
 }) {
   return (
     <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 flex flex-col gap-2">
-      <div className="flex items-center gap-2 text-gray-500">
+      <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
         {icon}
         <span className="text-xs uppercase tracking-wide">{label}</span>
       </div>
-      <span className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-white"}`}>
+      <span className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </span>
     </div>
@@ -123,9 +123,9 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
     <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-5 space-y-3 hover:border-[#F97316]/30 transition-colors">
       {/* Project name + location */}
       <div>
-        <h3 className="text-base font-bold text-white leading-tight">{project.project_name}</h3>
+        <h3 className="text-base font-bold text-[color:var(--text-primary)] leading-tight">{project.project_name}</h3>
         {project.location && (
-          <p className="text-xs text-gray-500 mt-0.5">{project.location}</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{project.location}</p>
         )}
       </div>
 
@@ -144,20 +144,20 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       )}
 
       {/* Meta row */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {project.tasks_count > 0 && (
           <span>
-            <span className="text-gray-300 font-medium">{project.tasks_count}</span> tasks
+            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> tasks
           </span>
         )}
         <span>
-          <span className="text-gray-300 font-medium">{project.report_count}</span> reports
+          <span className="text-[color:var(--text-secondary)] font-medium">{project.report_count}</span> reports
         </span>
         {project.last_report_date && (
           <span>
-            Last: <span className="text-gray-300">{formatDateShort(project.last_report_date)}</span>
+            Last: <span className="text-[color:var(--text-secondary)]">{formatDateShort(project.last_report_date)}</span>
             {project.last_report_by && (
-              <> by <span className="text-gray-300">{project.last_report_by}</span></>
+              <> by <span className="text-[color:var(--text-secondary)]">{project.last_report_by}</span></>
             )}
           </span>
         )}
@@ -165,9 +165,9 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
 
       {/* Progress bar */}
       <div className="space-y-1">
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
           <span>Avg progress (last report)</span>
-          <span className="text-gray-300 font-medium">{project.avg_percent}%</span>
+          <span className="text-[color:var(--text-secondary)] font-medium">{project.avg_percent}%</span>
         </div>
         <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
           <div
@@ -194,18 +194,18 @@ function ReportRow({ report }: { report: ReportEntry }) {
       >
         <div className="flex-1 min-w-0 space-y-0.5">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-semibold text-white">
+            <span className="text-sm font-semibold text-[color:var(--text-primary)]">
               {formatDate(report.report_date)}
             </span>
-            <span className="text-xs text-gray-500">{timeAgo(report.submitted_at)}</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{timeAgo(report.submitted_at)}</span>
           </div>
           <p className="text-xs text-[#F97316] truncate">{report.project_name}</p>
-          <p className="text-xs text-gray-500">by {report.submitted_by}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">by {report.submitted_by}</p>
         </div>
 
         <div className="flex items-center gap-3 flex-shrink-0">
           {/* Quick stats */}
-          <div className="hidden sm:flex items-center gap-3 text-xs text-gray-500">
+          <div className="hidden sm:flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
             {report.manpower_count != null && (
               <span className="flex items-center gap-1">
                 <Users size={11} className="text-[#F97316]" />
@@ -221,7 +221,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
           </div>
           <ChevronDown
             size={15}
-            className={`text-gray-500 transition-transform ${expanded ? "rotate-180" : ""}`}
+            className={`text-[color:var(--text-muted)] transition-transform ${expanded ? "rotate-180" : ""}`}
           />
         </div>
       </button>
@@ -229,7 +229,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
       {expanded && (
         <div className="border-t border-[#1F1F25] px-4 py-3 space-y-3 bg-[#0B0B0D]">
           {/* Manpower + hours on mobile */}
-          <div className="flex gap-4 text-xs text-gray-400 sm:hidden">
+          <div className="flex gap-4 text-xs text-[color:var(--text-secondary)] sm:hidden">
             {report.manpower_count != null && (
               <span className="flex items-center gap-1">
                 <Users size={11} className="text-[#F97316]" /> {report.manpower_count} workers
@@ -267,8 +267,8 @@ function ReportRow({ report }: { report: ReportEntry }) {
                 return (
                   <div key={i} className="space-y-0.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400 truncate pr-2">Task {i + 1}</span>
-                      <span className="text-gray-300 flex-shrink-0">{displayPct}</span>
+                      <span className="text-[color:var(--text-secondary)] truncate pr-2">Task {i + 1}</span>
+                      <span className="text-[color:var(--text-secondary)] flex-shrink-0">{displayPct}</span>
                     </div>
                     <div className="h-1 bg-[#1F1F25] rounded-full overflow-hidden">
                       <div
@@ -284,7 +284,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
 
           {/* Notes */}
           {report.notes && (
-            <p className="text-xs text-gray-500 italic">"{report.notes}"</p>
+            <p className="text-xs text-[color:var(--text-muted)] italic">"{report.notes}"</p>
           )}
         </div>
       )}
@@ -334,7 +334,7 @@ export default function SubDashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
+        <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 className="w-8 h-8 text-[#F97316] animate-spin" />
           <p className="text-sm">Loading your dashboard…</p>
         </div>
@@ -365,8 +365,8 @@ export default function SubDashboardPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-4">
         <FolderOpen className="w-12 h-12 text-gray-600 mx-auto" />
-        <h1 className="text-xl font-bold text-white">No Sub Company Found</h1>
-        <p className="text-gray-400 text-sm">
+        <h1 className="text-xl font-bold text-[color:var(--text-primary)]">No Sub Company Found</h1>
+        <p className="text-[color:var(--text-secondary)] text-sm">
           Register your subcontractor company to access the dashboard.
         </p>
         <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
@@ -386,18 +386,18 @@ export default function SubDashboardPage() {
         {/* ── Header ── */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm text-gray-500 mb-1">Sub Dashboard</p>
-            <h1 className="text-2xl md:text-3xl font-bold text-white">
+            <p className="text-sm text-[color:var(--text-muted)] mb-1">Sub Dashboard</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-[color:var(--text-primary)]">
               <span className="text-[#F97316]">{displayName}</span>
             </h1>
             {company.contact_name && (
-              <p className="text-gray-400 text-sm mt-1">{company.contact_name}</p>
+              <p className="text-[color:var(--text-secondary)] text-sm mt-1">{company.contact_name}</p>
             )}
           </div>
           <button
             onClick={() => loadDashboard(true)}
             disabled={refreshing}
-            className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-300 transition-colors disabled:opacity-40 mt-1"
+            className="flex items-center gap-1.5 text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors disabled:opacity-40 mt-1"
           >
             <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
             Refresh
@@ -428,9 +428,9 @@ export default function SubDashboardPage() {
         <section className="space-y-4">
           <div className="flex items-center gap-2">
             <FolderOpen size={16} className="text-[#F97316]" />
-            <h2 className="text-lg font-bold text-white">Projects</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
             {projects.length > 0 && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-gray-400">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
                 {projects.length}
               </span>
             )}
@@ -439,7 +439,7 @@ export default function SubDashboardPage() {
           {projects.length === 0 ? (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center space-y-2">
               <CalendarDays size={32} className="mx-auto text-gray-700 mb-2" />
-              <p className="text-sm text-gray-400 max-w-sm mx-auto">
+              <p className="text-sm text-[color:var(--text-secondary)] max-w-sm mx-auto">
                 No projects yet. Your projects will appear here when a general contractor
                 shares a schedule with your company.
               </p>
@@ -458,8 +458,8 @@ export default function SubDashboardPage() {
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <ClipboardList size={16} className="text-[#F97316]" />
-              <h2 className="text-lg font-bold text-white">Recent Reports</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-gray-400">
+              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Reports</h2>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
                 {totalReports}
               </span>
             </div>
@@ -474,7 +474,7 @@ export default function SubDashboardPage() {
               <div className="flex justify-center pt-2">
                 <button
                   onClick={() => setVisibleReports((v) => v + 10)}
-                  className="px-5 py-2.5 bg-[#1F1F25] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-gray-300 rounded-xl transition-colors"
+                  className="px-5 py-2.5 bg-[#1F1F25] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
                 >
                   Load More
                 </button>
@@ -487,7 +487,7 @@ export default function SubDashboardPage() {
         <div className="pt-4 border-t border-[#1F1F25]">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to IronTrack Pulse

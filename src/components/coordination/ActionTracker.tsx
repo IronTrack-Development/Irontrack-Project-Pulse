@@ -92,16 +92,16 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <CheckSquare size={20} className="text-[#F97316]" />
-          <h2 className="text-lg font-bold text-white">Action Items</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Action Items</h2>
           {openCount > 0 && (
-            <span className="text-sm text-gray-400 ml-2">
+            <span className="text-sm text-[color:var(--text-secondary)] ml-2">
               {openCount} open{overdueCount > 0 && <span className="text-red-400"> · {overdueCount} overdue</span>}
             </span>
           )}
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-gray-300 hover:text-white rounded-lg text-sm transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm transition-colors min-h-[44px]"
         >
           <Filter size={14} />
           Filters
@@ -114,7 +114,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Statuses</option>
             <option value="open">Open</option>
@@ -125,7 +125,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Categories</option>
             {Object.keys(CATEGORY_COLORS).map((c) => (
@@ -135,7 +135,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-white text-xs focus:outline-none min-h-[36px]"
+            className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
             <option value="">All Priorities</option>
             <option value="high">High</option>
@@ -145,7 +145,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           {(filterStatus || filterCategory || filterPriority) && (
             <button
               onClick={() => { setFilterStatus(""); setFilterCategory(""); setFilterPriority(""); }}
-              className="px-3 py-2 text-xs text-gray-400 hover:text-white transition-colors min-h-[36px]"
+              className="px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[36px]"
             >
               Clear
             </button>
@@ -164,7 +164,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
       {!loading && items.length === 0 && (
         <div className="text-center py-16">
           <CheckSquare size={48} className="text-gray-600 mx-auto mb-4" />
-          <p className="text-gray-400 text-lg">
+          <p className="text-[color:var(--text-secondary)] text-lg">
             {filterStatus || filterCategory || filterPriority ? "No matching action items" : "No action items yet"}
           </p>
         </div>
@@ -182,7 +182,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                 <div className="flex items-start gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-white text-sm font-medium">{item.title}</span>
+                      <span className="text-[color:var(--text-primary)] text-sm font-medium">{item.title}</span>
                       <span
                         className="px-1.5 py-0.5 rounded text-[10px] font-medium"
                         style={{ backgroundColor: `${CATEGORY_COLORS[item.category]}20`, color: CATEGORY_COLORS[item.category] }}
@@ -201,7 +201,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-500 flex-wrap">
+                    <div className="flex items-center gap-2 text-xs text-[color:var(--text-muted)] flex-wrap">
                       {item.assigned_to && <span>{item.assigned_to}</span>}
                       {item.assigned_company && <span>· {item.assigned_company}</span>}
                       {item.due_date && (

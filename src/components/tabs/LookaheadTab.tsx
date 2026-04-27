@@ -17,7 +17,7 @@ function statusStyle(status: string): string {
     case "complete": return "bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20";
     case "in_progress": return "bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/20";
     case "late": return "bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20";
-    default: return "bg-[#1F1F25] text-gray-400 border border-[#1F1F25]";
+    default: return "bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#1F1F25]";
   }
 }
 
@@ -42,11 +42,11 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
       }`}
     >
       <div className="flex-1 min-w-0">
-        <div className={`text-sm font-medium truncate ${isInspection ? "text-[#F97316]" : "text-white"}`}>
+        <div className={`text-sm font-medium truncate ${isInspection ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
           {activity.activity_name}
           {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">INSPECT</span>}
         </div>
-        <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+        <div className="flex items-center gap-3 mt-0.5 text-xs text-[color:var(--text-muted)]">
           {activity.start_date && (
             <span>{new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
           )}
@@ -95,8 +95,8 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       {/* Controls */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm font-semibold text-white">{totalActivities} activities in view</div>
-          <div className="text-xs text-gray-500">Grouped by week and trade</div>
+          <div className="text-sm font-semibold text-[color:var(--text-primary)]">{totalActivities} activities in view</div>
+          <div className="text-xs text-[color:var(--text-muted)]">Grouped by week and trade</div>
         </div>
         <div className="flex items-center gap-1 bg-[#121217] border border-[#1F1F25] rounded-lg p-1">
           {DAY_OPTIONS.map((d) => (
@@ -105,8 +105,8 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
               onClick={() => setDays(d)}
               className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${
                 days === d
-                  ? "bg-[#F97316] text-white"
-                  : "text-gray-500 hover:text-white"
+                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               {d}d
@@ -154,12 +154,12 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                 >
                   <div className="flex items-center gap-3">
                     <CalendarDays size={15} className="text-[#F97316]" />
-                    <span className="font-semibold text-white text-sm">{group.weekLabel}</span>
-                    <span className="text-xs text-gray-500">{totalInWeek} activit{totalInWeek !== 1 ? "ies" : "y"}</span>
+                    <span className="font-semibold text-[color:var(--text-primary)] text-sm">{group.weekLabel}</span>
+                    <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek} activit{totalInWeek !== 1 ? "ies" : "y"}</span>
                   </div>
                   <ChevronDown
                     size={16}
-                    className={`text-gray-500 transition-transform ${isCollapsed ? "" : "rotate-180"}`}
+                    className={`text-[color:var(--text-muted)] transition-transform ${isCollapsed ? "" : "rotate-180"}`}
                   />
                 </button>
 
@@ -170,7 +170,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                       return (
                       <div key={trade}>
                         <div className="flex items-center gap-2 mb-2 px-1">
-                          <span className={`text-xs font-bold uppercase tracking-wide ${flagged ? "text-[#EAB308]" : "text-gray-400"}`}>{trade}</span>
+                          <span className={`text-xs font-bold uppercase tracking-wide ${flagged ? "text-[#EAB308]" : "text-[color:var(--text-secondary)]"}`}>{trade}</span>
                           <span className="text-xs text-gray-600">({activities.length})</span>
                           {flagged && <AlertTriangle size={10} className="text-[#EAB308]" />}
                         </div>

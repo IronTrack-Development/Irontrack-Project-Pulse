@@ -53,8 +53,8 @@ export default function PunchProgressRing({
         </svg>
         {/* Center text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-bold text-white leading-none">{closed}/{total}</span>
-          <span className="text-xs text-gray-500 mt-0.5">Done</span>
+          <span className="text-xl font-bold text-[color:var(--text-primary)] leading-none">{closed}/{total}</span>
+          <span className="text-xs text-[color:var(--text-muted)] mt-0.5">Done</span>
         </div>
       </div>
     </div>

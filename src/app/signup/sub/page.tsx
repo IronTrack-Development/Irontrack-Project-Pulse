@@ -101,7 +101,7 @@ export default function SubSignupPage() {
             </p>
             <Link
               href="/login/sub"
-              className="inline-block py-3 px-6 rounded-xl font-bold text-white transition-colors shadow-sm"
+              className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
               style={{ background: "#3B82F6" }}
             >
               Go to login
@@ -272,7 +272,7 @@ export default function SubSignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl font-bold text-white transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              className="w-full py-3 px-4 rounded-xl font-bold text-[color:var(--text-primary)] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               style={{ background: "#3B82F6" }}
             >
               {loading ? (

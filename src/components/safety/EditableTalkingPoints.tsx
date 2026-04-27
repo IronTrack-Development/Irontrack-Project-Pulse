@@ -46,7 +46,7 @@ export default function EditableTalkingPoints({
         {points.map((point, idx) => (
           <li
             key={idx}
-            className="flex gap-2.5 text-sm text-gray-300 leading-relaxed"
+            className="flex gap-2.5 text-sm text-[color:var(--text-secondary)] leading-relaxed"
           >
             <span className="text-[#F97316] font-medium shrink-0 w-5 text-right">
               {idx + 1}.
@@ -70,7 +70,7 @@ export default function EditableTalkingPoints({
             <button
               onClick={() => moveUp(idx)}
               disabled={idx === 0}
-              className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-30 disabled:cursor-default transition-colors"
+              className="p-0.5 text-gray-600 hover:text-[color:var(--text-secondary)] disabled:opacity-30 disabled:cursor-default transition-colors"
               title="Move up"
             >
               <ChevronUp size={12} />
@@ -78,7 +78,7 @@ export default function EditableTalkingPoints({
             <button
               onClick={() => moveDown(idx)}
               disabled={idx === points.length - 1}
-              className="p-0.5 text-gray-600 hover:text-gray-300 disabled:opacity-30 disabled:cursor-default transition-colors"
+              className="p-0.5 text-gray-600 hover:text-[color:var(--text-secondary)] disabled:opacity-30 disabled:cursor-default transition-colors"
               title="Move down"
             >
               <ChevronDown size={12} />
@@ -96,7 +96,7 @@ export default function EditableTalkingPoints({
             onChange={(e) => updatePoint(idx, e.target.value)}
             rows={2}
             placeholder="Talking point..."
-            className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 focus:outline-none resize-none min-h-[36px]"
+            className="flex-1 bg-transparent text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none resize-none min-h-[36px]"
           />
 
           {/* Remove button */}

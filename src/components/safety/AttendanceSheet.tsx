@@ -83,8 +83,8 @@ export default function AttendanceSheet({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Users size={14} className="text-[#F97316]" />
-          <span className="text-sm font-medium text-white">Attendance</span>
-          <span className="text-xs text-gray-500">
+          <span className="text-sm font-medium text-[color:var(--text-primary)]">Attendance</span>
+          <span className="text-xs text-[color:var(--text-muted)]">
             {signedCount} of {attendees.length} signed
           </span>
         </div>
@@ -108,34 +108,34 @@ export default function AttendanceSheet({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name *"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               placeholder="Trade"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company"
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setShowAddForm(false)}
-              className="px-3 py-1.5 text-xs text-gray-400 hover:text-white min-h-[36px]"
+              className="px-3 py-1.5 text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-h-[36px]"
             >
               Cancel
             </button>
             <button
               onClick={handleAdd}
               disabled={adding || !name.trim()}
-              className="px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-medium disabled:opacity-50 min-h-[36px]"
+              className="px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-medium disabled:opacity-50 min-h-[36px]"
             >
               {adding ? "Adding..." : "Add"}
             </button>
@@ -162,7 +162,7 @@ export default function AttendanceSheet({
                 className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 transition-colors ${
                   a.signed
                     ? "bg-[#22C55E]/20 text-[#22C55E]"
-                    : "bg-[#1F1F25] text-gray-600 hover:text-gray-400"
+                    : "bg-[#1F1F25] text-gray-600 hover:text-[color:var(--text-secondary)]"
                 } ${readOnly ? "cursor-default" : "cursor-pointer"}`}
               >
                 {a.signed && <Check size={14} />}
@@ -170,9 +170,9 @@ export default function AttendanceSheet({
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <div className="text-sm text-white truncate">{a.name}</div>
+                <div className="text-sm text-[color:var(--text-primary)] truncate">{a.name}</div>
                 {(a.trade || a.company) && (
-                  <div className="text-[10px] text-gray-500 truncate">
+                  <div className="text-[10px] text-[color:var(--text-muted)] truncate">
                     {[a.trade, a.company].filter(Boolean).join(" · ")}
                   </div>
                 )}
@@ -180,7 +180,7 @@ export default function AttendanceSheet({
 
               {/* Signed time */}
               {a.signed && a.signed_at && (
-                <span className="text-[10px] text-gray-500 shrink-0">
+                <span className="text-[10px] text-[color:var(--text-muted)] shrink-0">
                   {new Date(a.signed_at).toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",

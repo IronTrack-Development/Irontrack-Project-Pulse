@@ -15,8 +15,8 @@ const STATUS_CONFIG: Record<
 > = {
   draft: {
     label: "Draft",
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-[color:var(--bg-tertiary)]",
+    text: "text-[color:var(--text-secondary)]",
     dot: "bg-gray-500",
   },
   sent: {

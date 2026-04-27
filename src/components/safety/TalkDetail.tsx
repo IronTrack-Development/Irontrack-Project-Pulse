@@ -189,7 +189,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   if (!talk) {
     return (
       <div className="text-center py-12">
-        <p className="text-sm text-gray-500">Talk not found</p>
+        <p className="text-sm text-[color:var(--text-muted)]">Talk not found</p>
       </div>
     );
   }
@@ -203,7 +203,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
         <div className="flex items-start justify-between mb-3">
           <div className="min-w-0 flex-1">
-            <h3 className="text-base font-bold text-white">{talk.topic}</h3>
+            <h3 className="text-base font-bold text-[color:var(--text-primary)]">{talk.topic}</h3>
             <div className="flex flex-wrap gap-2 mt-1.5">
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#3B82F6]/10 text-[#3B82F6]">
                 {categoryLabel(talk.category)}
@@ -215,7 +215,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 </span>
               )}
               {talk.status === "locked" && (
-                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400">
+                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
                   <Lock size={10} />
                   Locked
                 </span>
@@ -230,7 +230,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-gray-400">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-[color:var(--text-secondary)]">
           <div className="flex items-center gap-1.5">
             <Calendar size={12} className="text-[#F97316]" />
             {talkDate.toLocaleDateString("en-US", {
@@ -248,7 +248,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 className={`ml-1 flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded transition-colors ${
                   isDefaultPresenter
                     ? "bg-[#22C55E]/10 text-[#22C55E]"
-                    : "bg-[#1F1F25] text-gray-500 hover:text-gray-300"
+                    : "bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                 }`}
                 title={isDefaultPresenter ? "Default presenter" : "Set as default presenter"}
               >
@@ -273,7 +273,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       {/* Talking Points */}
       {(isReadOnly ? (talk.talking_points || []).length > 0 : true) && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-          <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+          <h4 className="text-sm font-medium text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
             <Shield size={14} className="text-[#F97316]" />
             Talking Points
           </h4>
@@ -302,7 +302,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       {/* Notes & Corrective Actions */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-4">
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Notes</label>
+          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Notes</label>
           <textarea
             value={notes}
             onChange={(e) => {
@@ -312,12 +312,12 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={3}
             placeholder="Additional notes..."
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">
+          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
             Corrective Actions
           </label>
           <textarea
@@ -329,7 +329,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={2}
             placeholder="Any corrective actions needed..."
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
@@ -352,7 +352,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             {followUpNeeded && <AlertTriangle size={12} />}
           </button>
           <div className="flex-1">
-            <div className="text-sm text-white">Follow-up Needed</div>
+            <div className="text-sm text-[color:var(--text-primary)]">Follow-up Needed</div>
             {followUpNeeded && (
               <textarea
                 value={followUpNotes}
@@ -363,7 +363,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 disabled={isReadOnly}
                 rows={2}
                 placeholder="Follow-up details..."
-                className="w-full mt-2 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+                className="w-full mt-2 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
               />
             )}
           </div>
@@ -383,7 +383,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
           >
             <Save size={14} />
             {saving ? "Saving..." : "Save Changes"}
@@ -403,7 +403,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
 
         <button
           onClick={handleExportPdf}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px]"
         >
           <FileText size={14} />
           Export PDF

@@ -79,7 +79,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
 
     return (
       <div className="mb-6">
-        <h3 className="text-sm font-bold text-white mb-3">Daily Crew Size</h3>
+        <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Daily Crew Size</h3>
         <div className="bg-[#121217] rounded-xl p-3 overflow-x-auto">
           <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ maxHeight: 160 }}>
             <polygon points={areaPoints} fill="#F97316" opacity="0.1" />
@@ -108,7 +108,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
   const deltaLabel = (v: number, suffix = "") => {
     if (v > 0) return <span className="text-[#22C55E]">+{v.toLocaleString()}{suffix}</span>;
     if (v < 0) return <span className="text-[#EF4444]">{v.toLocaleString()}{suffix}</span>;
-    return <span className="text-gray-500">—</span>;
+    return <span className="text-[color:var(--text-muted)]">—</span>;
   };
 
   return (
@@ -117,14 +117,14 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setMonth(m => offsetMonth(m, -1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
-        <div className="text-sm font-medium text-white">{formatMonth(month)}</div>
+        <div className="text-sm font-medium text-[color:var(--text-primary)]">{formatMonth(month)}</div>
         <button
           onClick={() => setMonth(m => offsetMonth(m, 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -135,7 +135,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-gray-500 text-sm">
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
           No logs found for this month.
         </div>
       ) : (
@@ -172,18 +172,18 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Month-over-month comparison */}
           {data.monthOverMonth && (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 mb-6">
-              <h3 className="text-xs font-bold text-gray-500 uppercase mb-2">vs Previous Month</h3>
+              <h3 className="text-xs font-bold text-[color:var(--text-muted)] uppercase mb-2">vs Previous Month</h3>
               <div className="flex flex-wrap gap-6 text-sm">
                 <div>
-                  <span className="text-gray-400 mr-2">Crew-Hours:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">Crew-Hours:</span>
                   {deltaLabel(data.monthOverMonth.crewHoursDelta)}
                 </div>
                 <div>
-                  <span className="text-gray-400 mr-2">Completions:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">Completions:</span>
                   {deltaLabel(data.monthOverMonth.completionDelta)}
                 </div>
                 <div>
-                  <span className="text-gray-400 mr-2">Delay Days:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">Delay Days:</span>
                   {deltaLabel(data.monthOverMonth.delayDayDelta)}
                 </div>
               </div>
@@ -196,14 +196,14 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Activity completions by week */}
           {data.activityCompletionByWeek.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">Completions by Week</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Completions by Week</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.activityCompletionByWeek.map((w) => (
                   <div key={w.weekStart} className="bg-[#121217] rounded-lg px-3 py-2 text-center">
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-[color:var(--text-muted)]">
                       {new Date(w.weekStart + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </div>
-                    <div className="text-lg font-bold text-white">{w.completedCount}</div>
+                    <div className="text-lg font-bold text-[color:var(--text-primary)]">{w.completedCount}</div>
                   </div>
                 ))}
               </div>
@@ -213,20 +213,20 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Delay codes table */}
           {data.recurringDelayCodes.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-white mb-2">Recurring Delay Codes</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Recurring Delay Codes</h3>
               <div className="bg-[#121217] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-[#1F1F25]">
-                      <th className="text-left text-gray-500 px-3 py-2 font-medium">Code</th>
-                      <th className="text-right text-gray-500 px-3 py-2 font-medium">Occurrences</th>
+                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">Code</th>
+                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">Occurrences</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.recurringDelayCodes.map((d) => (
                       <tr key={d.code} className="border-b border-[#1F1F25] last:border-0">
-                        <td className="px-3 py-2 text-gray-300">{d.code}</td>
-                        <td className="px-3 py-2 text-gray-400 text-right">{d.count}</td>
+                        <td className="px-3 py-2 text-[color:var(--text-secondary)]">{d.code}</td>
+                        <td className="px-3 py-2 text-[color:var(--text-secondary)] text-right">{d.count}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -23,7 +23,7 @@ function statusBadge(status: string) {
       );
     case "locked":
       return (
-        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400">
+        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
           <Lock size={10} />
           Locked
         </span>
@@ -51,21 +51,21 @@ function LogCard({ log, projectId }: { log: DailyLog; projectId: string }) {
     >
       <div className="flex items-start justify-between mb-2">
         <div>
-          <div className="text-sm font-medium text-white">
+          <div className="text-sm font-medium text-[color:var(--text-primary)]">
             {date.toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
               day: "numeric",
             })}
           </div>
-          <div className="text-xs text-gray-500 mt-0.5">
+          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">
             {log.superintendent || "Superintendent"}
           </div>
         </div>
         {statusBadge(log.status)}
       </div>
 
-      <div className="flex flex-wrap gap-3 text-xs text-gray-400 mt-2">
+      <div className="flex flex-wrap gap-3 text-xs text-[color:var(--text-secondary)] mt-2">
         {(weather.high || weather.low) && (
           <span className="flex items-center gap-1">
             <Thermometer size={12} className="text-[#F97316]" />
@@ -118,22 +118,22 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
     <div>
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-bold text-white flex items-center gap-2">
+        <h2 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
           <CalendarDays size={18} className="text-[#F97316]" />
           Daily Logs
-          {total > 0 && <span className="text-xs text-gray-500 font-normal">({total})</span>}
+          {total > 0 && <span className="text-xs text-[color:var(--text-muted)] font-normal">({total})</span>}
         </h2>
         <div className="flex items-center gap-2">
           <button
             onClick={fetchLogs}
-            className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
           >
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           </button>
           <Link
             href={`/projects/${projectId}/daily-log?date=${today}`}
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10]
-              text-white rounded-xl text-sm font-medium transition-colors min-h-[40px]"
+              text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors min-h-[40px]"
           >
             <Plus size={14} />
             {hasTodayLog ? "Edit Today" : "New Log"}
@@ -149,7 +149,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
       ) : logs.length === 0 ? (
         <div className="text-center py-12">
           <CalendarDays size={32} className="mx-auto mb-3 text-gray-700" />
-          <p className="text-sm text-gray-500 mb-1">No daily logs yet</p>
+          <p className="text-sm text-[color:var(--text-muted)] mb-1">No daily logs yet</p>
           <p className="text-xs text-gray-600">Start your first daily log to track field conditions</p>
         </div>
       ) : (

@@ -80,7 +80,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     return (
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
         <CalendarDays size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-gray-400 text-sm">No activities scheduled this week</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled this week</div>
       </div>
     );
   }
@@ -184,18 +184,18 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
-            <div className="text-sm text-gray-300">Select activities to share</div>
+            <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCancel}
-                className="px-3 py-1.5 text-gray-400 hover:text-white text-xs font-medium transition-colors"
+                className="px-3 py-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-xs font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[#1F1F25] disabled:text-gray-600 text-white rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[#1F1F25] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 Share ({selectedIds.size})
@@ -205,13 +205,13 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
         ) : (
           <>
             <div>
-              <div className="text-xs text-gray-500">Week {weekNumber}</div>
-              <div className="text-sm font-medium text-white">{formatDateRange()}</div>
+              <div className="text-xs text-[color:var(--text-muted)]">Week {weekNumber}</div>
+              <div className="text-sm font-medium text-[color:var(--text-primary)]">{formatDateRange()}</div>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowQR(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
                 title="Share via QR Code"
               >
                 <QrCode size={13} />
@@ -219,7 +219,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
               </button>
               <button
                 onClick={handleShareClick}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 {shareStatus || "Share"}
@@ -240,8 +240,8 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
           return (
             <div key={dayKey} className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
               <div className="bg-[#0B0B0D] border-b border-[#1F1F25] px-4 py-2">
-                <div className="text-xs text-gray-500">{dayNames[day.getDay()]}</div>
-                <div className="text-sm font-medium text-white">
+                <div className="text-xs text-[color:var(--text-muted)]">{dayNames[day.getDay()]}</div>
+                <div className="text-sm font-medium text-[color:var(--text-primary)]">
                   {day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                 </div>
               </div>
@@ -271,8 +271,8 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         )}
                         <div className="flex items-start justify-between gap-3 flex-1">
                           <div className="flex-1 min-w-0">
-                            <div className="text-sm text-white mb-1">{activity.activity_name}</div>
-                            <div className="text-xs text-gray-500">
+                            <div className="text-sm text-[color:var(--text-primary)] mb-1">{activity.activity_name}</div>
+                            <div className="text-xs text-[color:var(--text-muted)]">
                               {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                               {" → "}
                               {new Date(activity.finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
@@ -284,7 +284,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                                 ? "text-[#22C55E]" 
                                 : (activity.percent_complete || 0) > 0 
                                 ? "text-[#F97316]" 
-                                : "text-gray-500"
+                                : "text-[color:var(--text-muted)]"
                             }`}>
                               {activity.percent_complete || 0}%
                             </div>
@@ -326,10 +326,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 {isSelecting && (
                   <th className="px-4 py-2 w-12"></th>
                 )}
-                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Activity Name</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Start Date</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Finish Date</th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">% Complete</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Activity Name</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Start Date</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Finish Date</th>
+                <th className="px-4 py-2 text-right text-xs font-medium text-[color:var(--text-muted)]">% Complete</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#1F1F25]">
@@ -357,11 +357,11 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         />
                       </td>
                     )}
-                    <td className="px-4 py-3 text-sm text-white">{activity.activity_name}</td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
+                    <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">{activity.activity_name}</td>
+                    <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
                       {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">
+                    <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
                       {new Date(activity.finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </td>
                     <td className="px-4 py-3 text-sm text-right">
@@ -370,7 +370,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                           ? "text-[#22C55E]" 
                           : (activity.percent_complete || 0) > 0 
                           ? "text-[#F97316]" 
-                          : "text-gray-500"
+                          : "text-[color:var(--text-muted)]"
                       }`}>
                         {activity.percent_complete || 0}%
                       </span>

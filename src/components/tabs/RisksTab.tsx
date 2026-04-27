@@ -10,7 +10,7 @@ function severityStyle(severity: string) {
   switch (severity) {
     case "high": return { badge: "bg-[#EF4444]/15 text-[#EF4444] border-[#EF4444]/30", border: "border-l-[#EF4444]", icon: "#EF4444" };
     case "medium": return { badge: "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/30", border: "border-l-[#EAB308]", icon: "#EAB308" };
-    default: return { badge: "bg-gray-800 text-gray-400 border-gray-700", border: "border-l-gray-600", icon: "#6B7280" };
+    default: return { badge: "bg-[color:var(--bg-tertiary)] text-[color:var(--text-secondary)] border-gray-700", border: "border-l-gray-600", icon: "#6B7280" };
   }
 }
 
@@ -49,25 +49,25 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
             </span>
             <span className="text-[10px] text-gray-600 uppercase tracking-wide">{riskTypeLabel(risk.risk_type)}</span>
           </div>
-          <h4 className="text-sm font-bold text-white leading-tight">{risk.title}</h4>
+          <h4 className="text-sm font-bold text-[color:var(--text-primary)] leading-tight">{risk.title}</h4>
         </div>
         <AlertTriangle size={16} style={{ color: style.icon }} className="shrink-0 mt-0.5" />
       </div>
 
       {risk.description && (
-        <p className="text-xs text-gray-400 mb-3 leading-relaxed">{risk.description}</p>
+        <p className="text-xs text-[color:var(--text-secondary)] mb-3 leading-relaxed">{risk.description}</p>
       )}
 
       {risk.suggested_action && (
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-3">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Recommended Action</div>
-          <div className="text-xs text-gray-300">{risk.suggested_action}</div>
+          <div className="text-xs text-[color:var(--text-secondary)]">{risk.suggested_action}</div>
         </div>
       )}
 
       {activity?.activity_name && (
         <div className="text-xs text-gray-600 mb-3">
-          Source: <span className="text-gray-400">{activity.activity_name}</span>
+          Source: <span className="text-[color:var(--text-secondary)]">{activity.activity_name}</span>
           {activity.trade && <span className="ml-2 text-[#F97316]">{activity.trade}</span>}
         </div>
       )}
@@ -82,7 +82,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
         </button>
         <button
           onClick={onSnooze}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
         >
           <Clock size={12} />
           Snooze
@@ -133,11 +133,11 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
         {[
           { label: "High", count: highCount, color: "text-[#EF4444]", bg: "bg-[#EF4444]/10" },
           { label: "Medium", count: medCount, color: "text-[#EAB308]", bg: "bg-[#EAB308]/10" },
-          { label: "Low", count: lowCount, color: "text-gray-400", bg: "bg-gray-800" },
+          { label: "Low", count: lowCount, color: "text-[color:var(--text-secondary)]", bg: "bg-[color:var(--bg-tertiary)]" },
         ].map(({ label, count, color, bg }) => (
           <div key={label} className={`rounded-xl p-4 ${bg} text-center`}>
             <div className={`text-2xl font-bold ${color}`}>{count}</div>
-            <div className="text-xs text-gray-500 mt-0.5">{label} Risk{count !== 1 ? "s" : ""}</div>
+            <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{label} Risk{count !== 1 ? "s" : ""}</div>
           </div>
         ))}
       </div>
@@ -150,14 +150,14 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
               key={f}
               onClick={() => setFilter(f)}
               className={`px-3 py-1 rounded text-xs font-semibold capitalize transition-colors ${
-                filter === f ? "bg-[#F97316] text-white" : "text-gray-500 hover:text-white"
+                filter === f ? "bg-[#F97316] text-[color:var(--text-primary)]" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               {f === "all" ? "All Open" : f}
             </button>
           ))}
         </div>
-        <button onClick={fetchRisks} className="p-2 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors">
+        <button onClick={fetchRisks} className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
           <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
         </button>
       </div>
@@ -170,7 +170,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
       ) : filtered.length === 0 ? (
         <div className="text-center py-12">
           <CheckCircle size={32} className="mx-auto text-[#22C55E] mb-3" />
-          <p className="text-white font-semibold">No {filter !== "all" ? filter + " " : ""}risks detected</p>
+          <p className="text-[color:var(--text-primary)] font-semibold">No {filter !== "all" ? filter + " " : ""}risks detected</p>
           <p className="text-gray-600 text-sm mt-1">
             {openRisks.length === 0
               ? "All clear — no open risks on this project."

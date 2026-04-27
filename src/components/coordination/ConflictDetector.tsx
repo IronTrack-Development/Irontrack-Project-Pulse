@@ -45,13 +45,13 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                   <span className="text-xs font-medium px-1.5 py-0.5 rounded bg-red-500/10 text-red-400">
                     {conflict.activity_a.trade}
                   </span>
-                  <span className="text-gray-500 text-xs">vs</span>
+                  <span className="text-[color:var(--text-muted)] text-xs">vs</span>
                   <span className="text-xs font-medium px-1.5 py-0.5 rounded bg-red-500/10 text-red-400">
                     {conflict.activity_b.trade}
                   </span>
                   <span className="text-gray-600 text-xs">in {conflict.activity_a.area}</span>
                 </div>
-                <div className="text-xs text-gray-500 space-y-0.5">
+                <div className="text-xs text-[color:var(--text-muted)] space-y-0.5">
                   <p className="truncate">{conflict.activity_a.name} ({conflict.activity_a.start} → {conflict.activity_a.finish})</p>
                   <p className="truncate">{conflict.activity_b.name} ({conflict.activity_b.start} → {conflict.activity_b.finish})</p>
                   <p className="text-red-400/70">Overlap: {conflict.overlap_start} – {conflict.overlap_end}</p>
@@ -69,7 +69,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 )}
                 <button
                   onClick={() => dismiss(conflict)}
-                  className="p-2 rounded-lg hover:bg-[#1F1F25] text-gray-500 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                  className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-muted)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                   title="Dismiss"
                 >
                   <X size={14} />

@@ -75,7 +75,7 @@ interface Props {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  draft: "bg-gray-700/60 text-gray-300",
+  draft: "bg-gray-700/60 text-[color:var(--text-secondary)]",
   submitted: "bg-yellow-900/60 text-yellow-300",
   approved: "bg-green-900/60 text-green-300",
   disputed: "bg-red-900/60 text-red-300",
@@ -224,16 +224,16 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
             <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-bold">{ticket.ticket_number}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[ticket.status] ?? "bg-gray-700/60 text-gray-300"}`}>
+                  <span className="text-[color:var(--text-primary)] font-bold">{ticket.ticket_number}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[ticket.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
                     {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mt-0.5">{fmtDate(ticket.date)}</p>
+                <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{fmtDate(ticket.date)}</p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -242,10 +242,10 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
             <div className="p-4 space-y-5">
               {/* Description */}
               <div>
-                <p className="text-xs text-gray-500 mb-1">Description</p>
-                <p className="text-white text-sm">{ticket.description}</p>
+                <p className="text-xs text-[color:var(--text-muted)] mb-1">Description</p>
+                <p className="text-[color:var(--text-primary)] text-sm">{ticket.description}</p>
                 {ticket.sub_contact && (
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-[color:var(--text-secondary)] mt-1">
                     Sub: {ticket.sub_contact.name}
                     {ticket.sub_contact.company ? ` · ${ticket.sub_contact.company}` : ""}
                   </p>
@@ -261,10 +261,10 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                   { label: "Total", val: ticket.total_cost, accent: true },
                 ].map(({ label, val, accent }) => (
                   <div key={label} className={`p-3 rounded-xl border text-center ${accent ? "bg-[#1a1208] border-[#F97316]/30" : "bg-[#0B0B0D] border-[#1F1F25]"}`}>
-                    <p className={`text-base font-bold ${accent ? "text-[#F97316]" : "text-white"}`}>
+                    <p className={`text-base font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
                       {fmtCurrency(val ?? 0)}
                     </p>
-                    <p className="text-[10px] text-gray-500 mt-0.5">{label}</p>
+                    <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{label}</p>
                   </div>
                 ))}
               </div>
@@ -274,14 +274,14 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <HardHat size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-white">Labor</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Labor</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.labor_items.map((l) => (
                       <div key={l.id} className="flex items-center justify-between py-2 px-3 bg-[#0B0B0D] rounded-lg border border-[#1F1F25]">
                         <div>
-                          <span className="text-sm text-white">{l.trade}</span>
-                          <span className="text-xs text-gray-500 ml-2">
+                          <span className="text-sm text-[color:var(--text-primary)]">{l.trade}</span>
+                          <span className="text-xs text-[color:var(--text-muted)] ml-2">
                             {l.workers}× · {l.hours}h
                             {l.rate != null ? ` @ $${l.rate}/hr` : ""}
                           </span>
@@ -298,15 +298,15 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Package size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-white">Materials</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Materials</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.material_items.map((m) => (
                       <div key={m.id} className="py-2 px-3 bg-[#0B0B0D] rounded-lg border border-[#1F1F25]">
                         <div className="flex items-center justify-between">
                           <div>
-                            <span className="text-sm text-white">{m.item}</span>
-                            <span className="text-xs text-gray-500 ml-2">
+                            <span className="text-sm text-[color:var(--text-primary)]">{m.item}</span>
+                            <span className="text-xs text-[color:var(--text-muted)] ml-2">
                               {m.quantity} {m.unit} @ ${m.unit_cost}/{m.unit}
                             </span>
                           </div>
@@ -337,14 +337,14 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Truck size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-white">Equipment</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Equipment</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.equipment_items.map((e) => (
                       <div key={e.id} className="flex items-center justify-between py-2 px-3 bg-[#0B0B0D] rounded-lg border border-[#1F1F25]">
                         <div>
-                          <span className="text-sm text-white">{e.equipment_type}</span>
-                          <span className="text-xs text-gray-500 ml-2">
+                          <span className="text-sm text-[color:var(--text-primary)]">{e.equipment_type}</span>
+                          <span className="text-xs text-[color:var(--text-muted)] ml-2">
                             {e.hours}h @ ${e.rate}/hr
                           </span>
                         </div>
@@ -358,8 +358,8 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {/* Notes */}
               {ticket.notes && (
                 <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
-                  <p className="text-xs text-gray-500 mb-1">Notes</p>
-                  <p className="text-sm text-gray-300">{ticket.notes}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Notes</p>
+                  <p className="text-sm text-[color:var(--text-secondary)]">{ticket.notes}</p>
                 </div>
               )}
 
@@ -376,11 +376,11 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
 
               {/* Signatures */}
               <div>
-                <h4 className="text-sm font-semibold text-white mb-3">Signatures</h4>
+                <h4 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3">Signatures</h4>
                 <div className="grid grid-cols-2 gap-3">
                   {/* GC signature */}
                   <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
-                    <p className="text-xs text-gray-500 mb-2">GC / Owner</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">GC / Owner</p>
                     {ticket.gc_signature_path ? (
                       <div>
                         <img
@@ -388,7 +388,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                           alt="GC Signature"
                           className="w-full h-16 object-contain rounded-lg bg-[#1A1A22] mb-1"
                         />
-                        <p className="text-[10px] text-gray-500">
+                        <p className="text-[10px] text-[color:var(--text-muted)]">
                           {ticket.gc_signed_by}
                           {ticket.gc_signed_at ? ` · ${fmtTs(ticket.gc_signed_at)}` : ""}
                         </p>
@@ -401,7 +401,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                         </div>
                         <button
                           onClick={() => startSign("gc")}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
+                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
                         >
                           <PenLine size={12} />
                           Sign as GC
@@ -412,7 +412,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
 
                   {/* Sub signature */}
                   <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
-                    <p className="text-xs text-gray-500 mb-2">Subcontractor</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">Subcontractor</p>
                     {ticket.sub_signature_path ? (
                       <div>
                         <img
@@ -420,7 +420,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                           alt="Sub Signature"
                           className="w-full h-16 object-contain rounded-lg bg-[#1A1A22] mb-1"
                         />
-                        <p className="text-[10px] text-gray-500">
+                        <p className="text-[10px] text-[color:var(--text-muted)]">
                           {ticket.sub_signed_by}
                           {ticket.sub_signed_at ? ` · ${fmtTs(ticket.sub_signed_at)}` : ""}
                         </p>
@@ -433,7 +433,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                         </div>
                         <button
                           onClick={() => startSign("sub")}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
+                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
                         >
                           <PenLine size={12} />
                           Sign as Sub
@@ -467,7 +467,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {/* Status transitions */}
               {nextStatuses.length > 0 && (
                 <div>
-                  <h4 className="text-xs text-gray-500 mb-2">Change Status</h4>
+                  <h4 className="text-xs text-[color:var(--text-muted)] mb-2">Change Status</h4>
                   <div className="flex gap-2 flex-wrap">
                     {nextStatuses.map((s) => (
                       <button
@@ -500,17 +500,17 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                     onChange={(e) => setDisputeReason(e.target.value)}
                     rows={2}
                     placeholder="Describe the dispute..."
-                    className="w-full px-3 py-2 bg-[#0B0B0D] border border-red-800/40 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none resize-none"
+                    className="w-full px-3 py-2 bg-[#0B0B0D] border border-red-800/40 rounded-lg text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none resize-none"
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowDisputeInput(false)}
-                      className="flex-1 py-2 px-3 bg-[#1F1F25] text-gray-400 rounded-lg text-xs min-h-[44px]"
+                      className="flex-1 py-2 px-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[44px]"
                     >Cancel</button>
                     <button
                       onClick={confirmDispute}
                       disabled={updatingStatus}
-                      className="flex-1 py-2 px-3 bg-red-700 hover:bg-red-600 text-white rounded-lg text-xs font-semibold min-h-[44px]"
+                      className="flex-1 py-2 px-3 bg-red-700 hover:bg-red-600 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[44px]"
                     >Mark Disputed</button>
                   </div>
                 </div>
@@ -536,11 +536,11 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       {showSignedByPrompt && (
         <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4">
           <div className="w-full max-w-sm bg-[#121217] rounded-2xl border border-[#1F1F25] p-5 space-y-4">
-            <h3 className="text-white font-semibold text-sm">
+            <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">
               {pendingRole === "gc" ? "Sign as GC / Owner" : "Sign as Subcontractor"}
             </h3>
             <div>
-              <label className="block text-xs text-gray-400 mb-1.5">Your Name</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5">Your Name</label>
               <input
                 type="text"
                 value={signedByInput}
@@ -548,18 +548,18 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 onKeyDown={(e) => e.key === "Enter" && proceedToSign()}
                 placeholder="Full name..."
                 autoFocus
-                className="w-full px-3 py-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                className="w-full px-3 py-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowSignedByPrompt(false)}
-                className="flex-1 py-3 bg-[#1F1F25] text-gray-300 rounded-xl text-sm min-h-[44px]"
+                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm min-h-[44px]"
               >Cancel</button>
               <button
                 onClick={proceedToSign}
                 disabled={!signedByInput.trim()}
-                className="flex-1 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 text-white rounded-xl text-sm font-bold min-h-[44px]"
+                className="flex-1 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 text-[color:var(--text-primary)] rounded-xl text-sm font-bold min-h-[44px]"
               >Continue</button>
             </div>
           </div>

@@ -40,7 +40,7 @@ const ROLE_STYLES: Record<string, string> = {
   helper: "bg-purple-500/20 text-purple-300",
   superintendent: "bg-yellow-500/20 text-yellow-300",
   project_manager: "bg-pink-500/20 text-pink-300",
-  other: "bg-gray-700 text-gray-300",
+  other: "bg-gray-700 text-[color:var(--text-secondary)]",
 };
 
 interface Props {
@@ -190,10 +190,10 @@ export default function CrewManager({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Users size={20} /> Crew Roster
           </h2>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
             {filtered.length} crew member{filtered.length !== 1 ? "s" : ""}
           </p>
         </div>
@@ -208,18 +208,18 @@ export default function CrewManager({ projectId }: Props) {
       {/* Filters */}
       <div className="flex flex-wrap gap-2">
         <div className="relative flex-1 min-w-[180px]">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
           <input
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
             placeholder="Search crew…"
-            className="w-full pl-8 pr-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+            className="w-full pl-8 pr-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
           />
         </div>
         <select
           value={filterDept}
           onChange={e => setFilterDept(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
+          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="">All Departments</option>
           {departments.map(d => (
@@ -229,7 +229,7 @@ export default function CrewManager({ projectId }: Props) {
         <select
           value={filterRole}
           onChange={e => setFilterRole(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
+          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="">All Roles</option>
           {ROLE_OPTIONS.map(r => (
@@ -239,7 +239,7 @@ export default function CrewManager({ projectId }: Props) {
         <select
           value={filterStatus}
           onChange={e => setFilterStatus(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
+          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -249,7 +249,7 @@ export default function CrewManager({ projectId }: Props) {
       {/* Add/Edit Form */}
       {showForm && (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-white">
+          <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">
             {editingId ? "Edit Crew Member" : "New Crew Member"}
           </h3>
           {error && (
@@ -260,12 +260,12 @@ export default function CrewManager({ projectId }: Props) {
               value={formName}
               onChange={e => setFormName(e.target.value)}
               placeholder="Full name"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <select
               value={formRole}
               onChange={e => setFormRole(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
               {ROLE_OPTIONS.map(r => (
                 <option key={r.value} value={r.value}>{r.label}</option>
@@ -274,7 +274,7 @@ export default function CrewManager({ projectId }: Props) {
             <select
               value={formDept}
               onChange={e => setFormDept(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-gray-300 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
               <option value="">No Department</option>
               {departments.map(d => (
@@ -285,14 +285,14 @@ export default function CrewManager({ projectId }: Props) {
               value={formPhone}
               onChange={e => setFormPhone(e.target.value)}
               placeholder="Phone"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formEmail}
               onChange={e => setFormEmail(e.target.value)}
               placeholder="Email"
               type="email"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formRate}
@@ -300,20 +300,20 @@ export default function CrewManager({ projectId }: Props) {
               placeholder="Hourly rate"
               type="number"
               step="0.01"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-white placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
           </div>
           <div className="flex gap-2">
             <button
               onClick={handleSubmit}
               disabled={saving}
-              className="px-4 py-2 bg-[#F97316] text-white rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
+              className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
             >
               {saving ? "Saving…" : editingId ? "Update" : "Add Crew Member"}
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
-              className="px-4 py-2 bg-[#1F1F25] text-gray-400 rounded-lg text-xs min-h-[40px]"
+              className="px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
             >
               Cancel
             </button>
@@ -325,8 +325,8 @@ export default function CrewManager({ projectId }: Props) {
       {filtered.length === 0 ? (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <Users size={32} className="mx-auto text-gray-600 mb-3" />
-          <p className="text-gray-400 text-sm">No crew members found</p>
-          <p className="text-gray-500 text-xs mt-1">Add crew members to manage your team roster</p>
+          <p className="text-[color:var(--text-secondary)] text-sm">No crew members found</p>
+          <p className="text-[color:var(--text-muted)] text-xs mt-1">Add crew members to manage your team roster</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -336,17 +336,17 @@ export default function CrewManager({ projectId }: Props) {
               className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 flex items-center justify-between gap-3"
             >
               <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-9 h-9 rounded-full bg-[#1F1F25] flex items-center justify-center text-sm font-bold text-gray-400 shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#1F1F25] flex items-center justify-center text-sm font-bold text-[color:var(--text-secondary)] shrink-0">
                   {member.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-medium text-white truncate">{member.name}</span>
+                    <span className="text-sm font-medium text-[color:var(--text-primary)] truncate">{member.name}</span>
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${ROLE_STYLES[member.role] || ROLE_STYLES.other}`}>
                       {ROLE_OPTIONS.find(r => r.value === member.role)?.label || member.role}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-gray-500 mt-0.5">
+                  <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)] mt-0.5">
                     {member.department_name && <span>{member.department_name}</span>}
                     {member.phone && <span>{member.phone}</span>}
                     {member.hourly_rate && <span>${member.hourly_rate}/hr</span>}
@@ -356,14 +356,14 @@ export default function CrewManager({ projectId }: Props) {
               <div className="flex items-center gap-1 shrink-0">
                 <button
                   onClick={() => openEditForm(member)}
-                  className="p-2 text-gray-500 hover:text-white transition-colors"
+                  className="p-2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
                   title="Edit"
                 >
                   <Edit2 size={14} />
                 </button>
                 <button
                   onClick={() => toggleStatus(member)}
-                  className={`p-2 transition-colors ${member.status === "active" ? "text-gray-500 hover:text-red-400" : "text-gray-500 hover:text-green-400"}`}
+                  className={`p-2 transition-colors ${member.status === "active" ? "text-[color:var(--text-muted)] hover:text-red-400" : "text-[color:var(--text-muted)] hover:text-green-400"}`}
                   title={member.status === "active" ? "Deactivate" : "Reactivate"}
                 >
                   {member.status === "active" ? <UserX size={14} /> : <UserCheck size={14} />}

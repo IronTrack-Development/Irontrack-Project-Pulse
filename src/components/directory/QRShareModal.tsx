@@ -91,11 +91,11 @@ export default function QRShareModal({ projectId, onClose }: Props) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <QrCode size={16} className="text-[#F97316]" />
-            <span className="text-sm font-bold text-white">Directory QR Code</span>
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">Directory QR Code</span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[#1F1F25] text-gray-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <X size={16} />
           </button>
@@ -106,7 +106,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
           {loading && (
             <div className="flex flex-col items-center gap-3 py-8">
               <Loader2 size={24} className="text-[#F97316] animate-spin" />
-              <span className="text-sm text-gray-500">Generating QR code…</span>
+              <span className="text-sm text-[color:var(--text-muted)]">Generating QR code…</span>
             </div>
           )}
 
@@ -125,7 +125,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
           {qrData && !loading && !error && (
             <>
               {/* Description */}
-              <p className="text-xs text-gray-400 text-center mb-4 leading-relaxed">
+              <p className="text-xs text-[color:var(--text-secondary)] text-center mb-4 leading-relaxed">
                 Share at your next meeting — anyone who scans adds themselves to the project directory.
               </p>
 
@@ -143,8 +143,8 @@ export default function QRShareModal({ projectId, onClose }: Props) {
 
               {/* Info */}
               <div className="text-center mb-4 w-full">
-                <p className="text-white font-semibold text-sm">{qrData.project_name}</p>
-                <p className="text-gray-500 text-xs mt-0.5">Project Directory</p>
+                <p className="text-[color:var(--text-primary)] font-semibold text-sm">{qrData.project_name}</p>
+                <p className="text-[color:var(--text-muted)] text-xs mt-0.5">Project Directory</p>
                 {qrData.expires_at && (
                   <p className="text-gray-600 text-[10px] mt-1">
                     QR code expires {new Date(qrData.expires_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
@@ -154,14 +154,14 @@ export default function QRShareModal({ projectId, onClose }: Props) {
 
               {/* URL display */}
               <div className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
-                <p className="text-[10px] text-gray-400 truncate font-mono">{qrData.url}</p>
+                <p className="text-[10px] text-[color:var(--text-secondary)] truncate font-mono">{qrData.url}</p>
               </div>
 
               {/* Actions */}
               <div className="flex gap-2 w-full mb-3">
                 <button
                   onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-gray-300 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
                 >
                   {copied ? (
                     <>
@@ -177,7 +177,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-white rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
                 >
                   <Share2 size={14} />
                   Share
@@ -188,7 +188,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               <button
                 onClick={handleRefresh}
                 disabled={refreshing}
-                className="flex items-center gap-1.5 text-[10px] text-gray-600 hover:text-gray-400 transition-colors"
+                className="flex items-center gap-1.5 text-[10px] text-gray-600 hover:text-[color:var(--text-secondary)] transition-colors"
               >
                 <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />
                 Generate new QR code (invalidates old)

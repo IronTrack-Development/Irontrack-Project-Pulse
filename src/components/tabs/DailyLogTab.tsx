@@ -21,8 +21,8 @@ export default function DailyLogTab({ projectId }: DailyLogTabProps) {
           onClick={() => setSubView("logs")}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
             subView === "logs"
-              ? "bg-[#F97316] text-white"
-              : "text-gray-400 hover:text-white"
+              ? "bg-[#F97316] text-[color:var(--text-primary)]"
+              : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
           }`}
         >
           Logs
@@ -31,8 +31,8 @@ export default function DailyLogTab({ projectId }: DailyLogTabProps) {
           onClick={() => setSubView("rollups")}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
             subView === "rollups"
-              ? "bg-[#F97316] text-white"
-              : "text-gray-400 hover:text-white"
+              ? "bg-[#F97316] text-[color:var(--text-primary)]"
+              : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
           }`}
         >
           Rollups
