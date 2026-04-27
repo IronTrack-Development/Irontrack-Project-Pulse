@@ -16,6 +16,9 @@ import {
   Phone,
 } from "lucide-react";
 import type { ParsedActivity, ReadyCheck, ReadyCheckContact, ReadyCheckType } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   generateReadyCheckMessage,
   generateFollowUpMessage,
@@ -44,20 +47,20 @@ const CHECK_TYPES: {
 }[] = [
   {
     value: "standard",
-    label: "Standard",
-    description: "Confirm manpower, materials & constraints",
+    label: t('ui.standard'),
+    description: t('ui.confirm.manpower.materials.and.constraints'),
     icon: <Send size={14} />,
   },
   {
     value: "critical_path",
-    label: "Critical Path",
-    description: "Urgent — any slip impacts the whole schedule",
+    label: t('ui.critical.path.ca1e55'),
+    description: t('ui.urgent.any.slip.impacts.the.whole.schedule'),
     icon: <AlertTriangle size={14} />,
   },
   {
     value: "friendly_reminder",
-    label: "Friendly Reminder",
-    description: "Low-pressure heads-up for upcoming work",
+    label: t('ui.friendly.reminder'),
+    description: t('ui.low.pressure.heads.up.for.upcoming.work'),
     icon: <MessageSquare size={14} />,
   },
 ];
@@ -247,17 +250,15 @@ export default function ReadyCheckModal({
         {/* Follow-up notice */}
         {isFollowUp && (
           <div className="bg-[#F97316]/10 border border-[#F97316]/30 rounded-xl px-3 py-2">
-            <div className="text-xs font-semibold text-[#F97316]">
-              Follow-up #{(existingCheck?.follow_up_count ?? 0) + 1}
+            <div className="text-xs font-semibold text-[#F97316]">{t('ui.follow.up.d32311')}{(existingCheck?.follow_up_count ?? 0) + 1}
             </div>
-            <div className="text-xs text-[color:var(--text-secondary)] mt-0.5">
-              Original sent{" "}
+            <div className="text-xs text-[color:var(--text-secondary)] mt-0.5">{t('ui.original.sent')}{" "}
               {existingCheck?.sent_at
                 ? new Date(existingCheck.sent_at).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })
-                : "earlier"}
+                : t('ui.earlier')}
             </div>
           </div>
         )}
@@ -267,8 +268,7 @@ export default function ReadyCheckModal({
         {/* Check type selector (hidden for follow-ups) */}
         {!isFollowUp && (
           <div className="space-y-2">
-            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">
-              Check Type
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">{t('ui.check.type')}
             </div>
             <div className="space-y-2">
               {CHECK_TYPES.map((ct) => {
@@ -309,8 +309,7 @@ export default function ReadyCheckModal({
         {/* Message preview */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">
-              Message Preview
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">{t('ui.message.preview')}
             </div>
             <button
               onClick={() => {
@@ -319,7 +318,7 @@ export default function ReadyCheckModal({
               }}
               className="text-xs text-[#F97316] hover:text-[#ea6c10] transition-colors"
             >
-              {isEditingMessage ? "Use Template" : "Edit"}
+              {isEditingMessage ? t('ui.use.template') : t('action.edit')}
             </button>
           </div>
 
@@ -345,7 +344,7 @@ export default function ReadyCheckModal({
           className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold rounded-xl py-3.5 text-sm transition-colors"
         >
           <Send size={16} />
-          {isFollowUp ? "Send Follow-Up" : "Send Ready Check"}
+          {isFollowUp ? t('ui.send.follow.up') : t('ui.send.ready.check')}
         </button>
       </div>
     </div>
@@ -357,7 +356,7 @@ export default function ReadyCheckModal({
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4 space-y-4">
         <div className="text-center">
-          <div className="text-base font-bold text-[color:var(--text-primary)] mb-1">How do you want to share it?</div>
+          <div className="text-base font-bold text-[color:var(--text-primary)] mb-1">{t('ui.how.do.you.want.to.share.it')}</div>
           <div className="text-xs text-[color:var(--text-muted)]">
             {activity.activity_name}
           </div>
@@ -384,9 +383,9 @@ export default function ReadyCheckModal({
             </div>
             <div>
               <div className="text-sm font-bold text-[color:var(--text-primary)]">
-                {copied ? "Copied!" : "Copy Message"}
+                {copied ? t('ui.copied') : t('ui.copy.message')}
               </div>
-              <div className="text-xs text-[color:var(--text-muted)]">Paste into any app</div>
+              <div className="text-xs text-[color:var(--text-muted)]">{t('ui.paste.into.any.app')}</div>
             </div>
           </button>
 
@@ -406,8 +405,8 @@ export default function ReadyCheckModal({
                 <Send size={20} className="text-[#3B82F6]" />
               </div>
               <div>
-                <div className="text-sm font-bold text-[color:var(--text-primary)]">Share</div>
-                <div className="text-xs text-[color:var(--text-muted)]">Text, email, or any app</div>
+                <div className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.share')}</div>
+                <div className="text-xs text-[color:var(--text-muted)]">{t('ui.text.email.or.any.app')}</div>
               </div>
             </button>
           )}
@@ -419,8 +418,7 @@ export default function ReadyCheckModal({
           onClick={() => setStep("setup")}
           className="w-full flex items-center justify-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] text-sm py-2 transition-colors"
         >
-          <ArrowLeft size={14} />
-          Back
+          <ArrowLeft size={14} />{t('action.back')}
         </button>
       </div>
     </div>
@@ -437,7 +435,7 @@ export default function ReadyCheckModal({
 
       <div>
         <div className="text-xl font-bold text-[color:var(--text-primary)] mb-1">
-          {isFollowUp ? "Follow-Up Sent" : "Ready Check Sent"}
+          {isFollowUp ? t('ui.follow.up.sent') : t('ui.ready.check.sent')}
         </div>
         <div className="text-sm text-[color:var(--text-secondary)]">
           {activity.activity_name}
@@ -449,12 +447,11 @@ export default function ReadyCheckModal({
 
       <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 inline-flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-[#EAB308] shrink-0" />
-        <span className="text-xs font-semibold text-[#EAB308]">Awaiting Response</span>
+        <span className="text-xs font-semibold text-[#EAB308]">{t('ui.awaiting.response.0131b9')}</span>
       </div>
 
       {sentCheck && (
-        <div className="text-xs text-gray-600">
-          Activity: {sentCheck.activity_name}
+        <div className="text-xs text-gray-600">{t('ui.activity')} {sentCheck.activity_name}
         </div>
       )}
 
@@ -462,8 +459,7 @@ export default function ReadyCheckModal({
         <button
           onClick={onClose}
           className="w-full bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-primary)] font-semibold rounded-xl py-3.5 text-sm transition-colors"
-        >
-          Back to Schedule
+        >{t('ui.back.to.schedule')}
         </button>
       </div>
     </div>
@@ -495,10 +491,10 @@ export default function ReadyCheckModal({
               )}
               <div className="text-sm font-bold text-[color:var(--text-primary)]">
                 {isFollowUp
-                  ? "Send Follow-Up"
+                  ? t('ui.send.follow.up')
                   : step === "confirmation"
-                  ? "Sent"
-                  : "Ready Check"}
+                  ? t('ui.sent.35f49d')
+                  : t('ui.ready.check')}
               </div>
               {trade && step !== "confirmation" && (
                 <span className="text-[10px] font-semibold bg-[#F97316]/15 text-[#F97316] px-2 py-0.5 rounded-full">

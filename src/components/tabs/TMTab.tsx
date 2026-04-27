@@ -4,6 +4,9 @@ import { useEffect, useState, useCallback } from "react";
 import { Plus, RefreshCw, Receipt, DollarSign, Clock, AlertTriangle, CheckCircle2 } from "lucide-react";
 import TMTicketForm from "@/components/tm/TMTicketForm";
 import TMTicketDetail from "@/components/tm/TMTicketDetail";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Contact {
   id: string;
@@ -42,12 +45,12 @@ interface Props {
 }
 
 const FILTERS = [
-  { value: "all", label: "All" },
-  { value: "draft", label: "Draft" },
-  { value: "submitted", label: "Submitted" },
-  { value: "approved", label: "Approved" },
-  { value: "disputed", label: "Disputed" },
-  { value: "invoiced", label: "Invoiced" },
+  { value: "all", label: t('ui.all.6a7208') },
+  { value: "draft", label: t('status.draft') },
+  { value: "submitted", label: t('ui.submitted') },
+  { value: "approved", label: t('ui.approved.41b81e') },
+  { value: "disputed", label: t('ui.disputed') },
+  { value: "invoiced", label: t('ui.invoiced') },
 ];
 
 const STATUS_STYLES: Record<string, string> = {
@@ -69,9 +72,9 @@ function fmtDate(d: string): string {
 }
 
 function SigBadge({ gc, sub }: { gc: string | null; sub: string | null }) {
-  if (gc && sub) return <span className="text-green-400 text-xs" title="Both signed">✓✓</span>;
-  if (gc || sub) return <span className="text-yellow-400 text-xs" title="1 of 2 signed">✓</span>;
-  return <span className="text-gray-600 text-xs" title="Unsigned">○</span>;
+  if (gc && sub) return <span className="text-green-400 text-xs" title={t('ui.both.signed')}>✓✓</span>;
+  if (gc || sub) return <span className="text-yellow-400 text-xs" title={t('ui.1.of.2.signed')}>✓</span>;
+  return <span className="text-gray-600 text-xs" title={t('ui.unsigned')}>○</span>;
 }
 
 export default function TMTab({ projectId }: Props) {
@@ -147,9 +150,9 @@ export default function TMTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">T&amp;M Tickets</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.t.and.m.tickets')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {totalTickets} ticket{totalTickets !== 1 ? "s" : ""} on this project
+              {totalTickets}{t('ui.ticket')}{totalTickets !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -164,8 +167,8 @@ export default function TMTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">New T&amp;M Ticket</span>
-              <span className="sm:hidden">New</span>
+              <span className="hidden sm:inline">{t('ui.new.t.and.m.ticket')}</span>
+              <span className="sm:hidden">{t('ui.new.6403f2')}</span>
             </button>
           </div>
         </div>
@@ -175,23 +178,23 @@ export default function TMTab({ projectId }: Props) {
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-[color:var(--text-primary)]">{totalTickets}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Tickets</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.tickets')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-sm font-bold text-[#F97316]">{fmtCurrency(totalCost)}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Total</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.total')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingApproval > 0 ? "text-yellow-400" : "text-[color:var(--text-primary)]"}`}>
                 {pendingApproval}
               </p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Pending</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('status.pending')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${disputed > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>
                 {disputed}
               </p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Disputed</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.disputed')}</p>
             </div>
           </div>
         )}
@@ -232,11 +235,11 @@ export default function TMTab({ projectId }: Props) {
               <Receipt size={28} className="text-gray-600" />
             </div>
             <h3 className="text-[color:var(--text-primary)] font-semibold mb-1">
-              {filter === "all" ? "No T&M Tickets Yet" : `No ${filter} tickets`}
+              {filter === "all" ? t('ui.no.t.and.m.tickets.yet') : `No ${filter} tickets`}
             </h3>
             <p className="text-[color:var(--text-muted)] text-sm max-w-xs">
               {filter === "all"
-                ? "Create a ticket to track time & material costs on this project."
+                ? t('ui.create.a.ticket.to.track.time.and.material.costs.on')
                 : `No tickets with "${filter}" status.`}
             </p>
             {filter === "all" && (
@@ -244,8 +247,7 @@ export default function TMTab({ projectId }: Props) {
                 onClick={() => setShowForm(true)}
                 className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
               >
-                <Plus size={15} />
-                New T&amp;M Ticket
+                <Plus size={15} />{t('ui.new.t.and.m.ticket')}
               </button>
             )}
           </div>

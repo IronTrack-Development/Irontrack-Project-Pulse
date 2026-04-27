@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Bell, BellOff } from 'lucide-react';
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export default function NotificationBell({ projectId }: { projectId: string }) {
   const [enabled, setEnabled] = useState<boolean | null>(null);
@@ -43,7 +46,7 @@ export default function NotificationBell({ projectId }: { projectId: string }) {
 
     if (Notification.permission === 'denied') {
       // Can't re-request — tell user to fix in browser settings
-      alert('Notifications are blocked. Enable them in your browser settings for this site.');
+      alert(t('ui.notifications.are.blocked.enable.them.in.your.browser.settings.for'));
       return;
     }
 
@@ -58,7 +61,7 @@ export default function NotificationBell({ projectId }: { projectId: string }) {
   return (
     <button
       onClick={handleClick}
-      title={enabled ? 'Notifications on' : 'Turn on notifications'}
+      title={enabled ? t('ui.notifications.on') : t('ui.turn.on.notifications')}
       className={`p-2.5 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center ${
         enabled
           ? 'bg-[#1F1F25] text-[#F97316] hover:bg-[#2a2a35]'

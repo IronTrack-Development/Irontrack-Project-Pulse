@@ -9,6 +9,9 @@ import {
   ClipboardList,
 } from "lucide-react";
 import SheetOrganizer from "@/components/drawings/SheetOrganizer";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface DrawingSheet {
   id: string;
@@ -209,7 +212,7 @@ export default function SheetBrowser({
         <div className="flex-1 min-w-0">
           <h2 className="text-[color:var(--text-primary)] font-semibold truncate">{drawingSet.name}</h2>
           <p className="text-[color:var(--text-muted)] text-xs">
-            {drawingSet.revision} · {drawingSet.sheet_count} sheets
+            {drawingSet.revision} · {drawingSet.sheet_count}{t('ui.sheets')}
           </p>
         </div>
         {/* Organize button */}
@@ -217,12 +220,10 @@ export default function SheetBrowser({
           onClick={() => setShowOrganizer(true)}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2A2A30] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium min-h-[44px] transition-colors shrink-0"
         >
-          <ClipboardList size={14} />
-          Organize
+          <ClipboardList size={14} />{t('ui.organize')}
         </button>
         {drawingSet.is_current && (
-          <span className="px-2 py-0.5 bg-green-500/15 text-green-400 rounded text-xs font-medium border border-green-500/20 shrink-0">
-            Current
+          <span className="px-2 py-0.5 bg-green-500/15 text-green-400 rounded text-xs font-medium border border-green-500/20 shrink-0">{t('ui.current')}
           </span>
         )}
       </div>
@@ -231,7 +232,7 @@ export default function SheetBrowser({
       {sheets.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <FileImage size={40} className="text-gray-700 mb-3" />
-          <p className="text-[color:var(--text-muted)] text-sm">No sheets in this set</p>
+          <p className="text-[color:var(--text-muted)] text-sm">{t('ui.no.sheets.in.this.set')}</p>
         </div>
       ) : (
         <>
@@ -239,14 +240,13 @@ export default function SheetBrowser({
           {allUnclassified && (
             <div className="mb-4 p-3 bg-[#1F1F25] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
               <ClipboardList size={16} className="text-[#F97316] shrink-0" />
-              <p className="text-[color:var(--text-secondary)] text-sm flex-1">
-                Sheets haven&apos;t been organized yet.
+              <p className="text-[color:var(--text-secondary)] text-sm flex-1">{t('ui.sheets.haven.t.been.organized.yet')}
               </p>
               <button
                 onClick={() => setShowOrganizer(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
               >
-                <ClipboardList size={12} /> Organize Sheets
+                <ClipboardList size={12} />{t('ui.organize.sheets')}
               </button>
             </div>
           )}

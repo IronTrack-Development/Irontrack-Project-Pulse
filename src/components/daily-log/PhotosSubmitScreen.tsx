@@ -8,6 +8,9 @@ import {
 } from "lucide-react";
 import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import type {
   DailyLogPhoto, DailyLogWeather, DailyLogCrewEntry,
   DailyLogProgress, DelayCode, ParsedActivity,
@@ -112,7 +115,7 @@ export default function PhotosSubmitScreen({
         router.push(`/projects/${projectId}`);
       }, 1500);
     } else {
-      setToast({ type: "error", message: "Failed to save log. Please try again." });
+      setToast({ type: "error", message: t('ui.failed.to.save.log.please.try.again') });
       // Clear error toast after 4 seconds
       setTimeout(() => setToast(null), 4000);
     }
@@ -141,8 +144,7 @@ export default function PhotosSubmitScreen({
             <button
               onClick={() => router.push(`/projects/${projectId}`)}
               className="text-xs underline underline-offset-2 hover:no-underline whitespace-nowrap"
-            >
-              View Log
+            >{t('ui.view.log')}
             </button>
           )}
         </div>
@@ -151,21 +153,20 @@ export default function PhotosSubmitScreen({
       {/* Camera / Photo Capture — BIG prominent button */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <Camera size={16} className="text-[#F97316]" />
-          Photos
+          <Camera size={16} className="text-[#F97316]" />{t('ui.photos')}
         </h3>
 
         {/* Quick tag selector */}
         {activities.length > 0 && (
           <div className="mb-3">
-            <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Auto-tag photos to activity:</label>
+            <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">{t('ui.auto.tag.photos.to.activity')}</label>
             <select
               value={selectedTag || ""}
               onChange={(e) => setSelectedTag(e.target.value || null)}
               className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             >
-              <option value="">No tag (general)</option>
+              <option value="">{t('ui.no.tag.general')}</option>
               {activities
                 .filter((a) => a.status === "in_progress" || a.status === "not_started")
                 .map((a) => (
@@ -187,7 +188,7 @@ export default function PhotosSubmitScreen({
               text-[#F97316] hover:bg-[#F97316]/15 active:scale-[0.98] transition-all min-h-[100px]"
           >
             <Camera size={28} />
-            <span className="text-sm font-medium">Take Photo</span>
+            <span className="text-sm font-medium">{t('ui.take.photo')}</span>
           </button>
           <button
             type="button"
@@ -197,7 +198,7 @@ export default function PhotosSubmitScreen({
               text-[#3B82F6] hover:bg-[#3B82F6]/15 active:scale-[0.98] transition-all min-h-[100px]"
           >
             <ImagePlus size={28} />
-            <span className="text-sm font-medium">Gallery</span>
+            <span className="text-sm font-medium">{t('ui.gallery')}</span>
           </button>
         </div>
 
@@ -233,7 +234,7 @@ export default function PhotosSubmitScreen({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
-                    alt={photo.caption || "Photo"}
+                    alt={photo.caption || t('ui.photo')}
                     className="w-full h-full object-cover"
                   />
                   {/* Activity tag */}
@@ -252,7 +253,7 @@ export default function PhotosSubmitScreen({
                       onClick={() => setMarkupPhotoId(photo.id)}
                       className="absolute top-1 left-1 w-7 h-7 rounded-full bg-purple-700/80 flex items-center justify-center
                         opacity-0 group-hover:opacity-100 transition-opacity"
-                      title="Annotate photo"
+                      title={t('ui.annotate.photo')}
                     >
                       <Pencil size={12} className="text-[color:var(--text-primary)]" />
                     </button>
@@ -275,13 +276,13 @@ export default function PhotosSubmitScreen({
 
       {/* Summary Card */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Log Summary</h3>
+        <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.log.summary')}</h3>
 
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <Thermometer size={14} className="text-[#F97316]" />
             <span>
-              {weather.current_temp ?? weather.high ?? "--"}°F
+              {weather.current_temp ?? weather.high ?? "--"}{t('ui.f')}
               {(weather.conditions || []).length > 0 && (
                 <span className="text-gray-600"> · {weather.conditions.join(", ")}</span>
               )}
@@ -289,19 +290,19 @@ export default function PhotosSubmitScreen({
           </div>
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <Users size={14} className="text-[#3B82F6]" />
-            <span>{totalHeadcount} workers · {totalCrewHours} hrs</span>
+            <span>{totalHeadcount}{t('ui.workers')} {totalCrewHours}{t('ui.hrs')}</span>
           </div>
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <TrendingUp size={14} className="text-[#22C55E]" />
-            <span>{activitiesAdvanced} activities advanced</span>
+            <span>{activitiesAdvanced}{t('ui.activities.advanced')}</span>
           </div>
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <AlertTriangle size={14} className="text-[#EAB308]" />
-            <span>{delayCodes.length} delay codes</span>
+            <span>{delayCodes.length}{t('ui.delay.codes')}</span>
           </div>
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
             <ImageIcon size={14} className="text-purple-400" />
-            <span>{photos.length} photos</span>
+            <span>{photos.length}{t('ui.photos.2e58e0')}</span>
           </div>
         </div>
       </div>
@@ -320,10 +321,10 @@ export default function PhotosSubmitScreen({
           }`}
       >
         {logStatus === "submitted"
-          ? "✅ Submitted"
+          ? t('ui.submitted.b7757a')
           : isSubmitting
-            ? "Submitting..."
-            : "Complete Daily Log ✅"}
+            ? t('ui.submitting')
+            : t('ui.complete.daily.log')}
       </button>
     </div>
 

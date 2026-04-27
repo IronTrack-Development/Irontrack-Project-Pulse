@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import AddProjectModal from "@/components/AddProjectModal";
 import { HelpIcon } from "@/components/help-icon";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface ProjectWithStats {
   id: string;
@@ -121,7 +124,7 @@ export default function Dashboard() {
       <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-6 py-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div>
-            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">Command Center</h1>
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.command.center')}</h1>
             <p className="text-sm text-[color:var(--text-muted)] mt-0.5">
               {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
             </p>
@@ -138,8 +141,7 @@ export default function Dashboard() {
               onClick={() => setShowAdd(true)}
               className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
-              <Plus size={16} />
-              Add Project
+              <Plus size={16} />{t('ui.add.project')}
             </button>
           </div>
         </div>
@@ -150,11 +152,10 @@ export default function Dashboard() {
         {dbError && (
           <div className="bg-[#EAB308]/10 border border-[#EAB308]/30 rounded-xl px-5 py-4 mb-6 flex items-center justify-between">
             <div>
-              <div className="text-[#EAB308] font-semibold text-sm">Database Setup Required</div>
-              <div className="text-[color:var(--text-secondary)] text-xs mt-0.5">Run the SQL migration in Supabase to create tables.</div>
+              <div className="text-[#EAB308] font-semibold text-sm">{t('ui.database.setup.required')}</div>
+              <div className="text-[color:var(--text-secondary)] text-xs mt-0.5">{t('ui.run.the.sql.migration.in.supabase.to.create.tables')}</div>
             </div>
-            <Link href="/setup" className="text-xs px-3 py-1.5 bg-[#EAB308]/20 text-[#EAB308] rounded-lg font-semibold hover:bg-[#EAB308]/30 transition-colors">
-              View Setup
+            <Link href="/setup" className="text-xs px-3 py-1.5 bg-[#EAB308]/20 text-[#EAB308] rounded-lg font-semibold hover:bg-[#EAB308]/30 transition-colors">{t('ui.view.setup')}
             </Link>
           </div>
         )}
@@ -162,23 +163,23 @@ export default function Dashboard() {
         {projects.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Active Projects</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">{t('ui.active.projects')}</div>
               <div className="text-2xl font-bold text-[color:var(--text-primary)]">{projects.length}</div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">High Risks</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">{t('ui.high.risks')}</div>
               <div className="text-2xl font-bold text-[#EF4444]">
                 {projects.reduce((s, p) => s + p.stats.highRisks, 0)}
               </div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Overdue Activities</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">{t('ui.overdue.activities')}</div>
               <div className="text-2xl font-bold text-[#EAB308]">
                 {projects.reduce((s, p) => s + p.stats.lateActivities, 0)}
               </div>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
-              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">Avg Completion</div>
+              <div className="text-xs text-[color:var(--text-muted)] mb-1 uppercase tracking-wide">{t('ui.avg.completion')}</div>
               <div className="text-2xl font-bold text-[#22C55E]">
                 {projects.length > 0
                   ? Math.round(projects.reduce((s, p) => s + p.stats.completionPercent, 0) / projects.length)
@@ -193,7 +194,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-center h-64">
             <div className="flex flex-col items-center gap-3">
               <RefreshCw size={24} className="text-[#F97316] animate-spin" />
-              <span className="text-[color:var(--text-muted)] text-sm">Loading projects...</span>
+              <span className="text-[color:var(--text-muted)] text-sm">{t('ui.loading.projects')}</span>
             </div>
           </div>
         )}
@@ -204,16 +205,14 @@ export default function Dashboard() {
             <div className="w-16 h-16 rounded-2xl bg-[#F97316]/10 border border-[#F97316]/20 flex items-center justify-center mb-4">
               <Building2 size={28} className="text-[#F97316]" />
             </div>
-            <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">No projects yet</h2>
-            <p className="text-[color:var(--text-muted)] text-sm max-w-sm mb-6">
-              Create your first project and upload a schedule to start tracking field intelligence.
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.no.projects.yet')}</h2>
+            <p className="text-[color:var(--text-muted)] text-sm max-w-sm mb-6">{t('ui.create.your.first.project.and.upload.a.schedule.to.start')}
             </p>
             <button
               onClick={() => setShowAdd(true)}
               className="flex items-center gap-2 px-6 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg font-semibold transition-colors"
             >
-              <Plus size={18} />
-              Create Your First Project
+              <Plus size={18} />{t('ui.create.your.first.project')}
             </button>
           </div>
         )}
@@ -236,10 +235,10 @@ export default function Dashboard() {
                       if (!confirm(`Delete "${project.name}"? This will remove all activities, risks, and briefs for this project.`)) return;
                       const res = await fetch(`/api/projects?id=${project.id}`, { method: 'DELETE' });
                       if (res.ok) fetchProjects();
-                      else alert('Failed to delete project');
+                      else alert(t('ui.failed.to.delete.project'));
                     }}
                     className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-[#1F1F25] hover:bg-red-500/20 flex items-center justify-center text-gray-600 hover:text-red-400 transition-all opacity-0 group-hover:opacity-100 z-10"
-                    title="Delete project"
+                    title={t('ui.delete.project')}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
                   </button>
@@ -268,7 +267,7 @@ export default function Dashboard() {
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between text-xs mb-1.5">
-                      <span className="text-[color:var(--text-muted)]">Schedule Progress</span>
+                      <span className="text-[color:var(--text-muted)]">{t('ui.schedule.progress')}</span>
                       <span className="text-[color:var(--text-secondary)] font-semibold">{project.stats.completionPercent}%</span>
                     </div>
                     <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
@@ -282,7 +281,7 @@ export default function Dashboard() {
                   {/* Today's activity */}
                   {project.stats.todayActivity && (
                     <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-4">
-                      <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Today</div>
+                      <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.today')}</div>
                       <div className="text-xs text-[color:var(--text-secondary)] truncate">{project.stats.todayActivity.activity_name}</div>
                       <div className="text-[10px] text-[#F97316] mt-0.5">{project.stats.todayActivity.trade}</div>
                     </div>
@@ -295,14 +294,14 @@ export default function Dashboard() {
                         <AlertTriangle size={11} className="text-[#EF4444]" />
                         <span className="text-sm font-bold text-[color:var(--text-primary)]">{project.stats.highRisks}</span>
                       </div>
-                      <div className="text-[10px] text-gray-600">Risks</div>
+                      <div className="text-[10px] text-gray-600">{t('ui.risks')}</div>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 mb-0.5">
                         <TrendingDown size={11} className="text-[#EAB308]" />
                         <span className="text-sm font-bold text-[color:var(--text-primary)]">{project.stats.lateActivities}</span>
                       </div>
-                      <div className="text-[10px] text-gray-600">Overdue</div>
+                      <div className="text-[10px] text-gray-600">{t('ui.overdue.07217c')}</div>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 mb-0.5">
@@ -315,7 +314,7 @@ export default function Dashboard() {
                             : "—"}
                         </span>
                       </div>
-                      <div className="text-[10px] text-gray-600">To finish</div>
+                      <div className="text-[10px] text-gray-600">{t('ui.to.finish')}</div>
                     </div>
                   </div>
 

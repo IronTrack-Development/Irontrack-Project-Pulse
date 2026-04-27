@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, TrendingUp, Calendar, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface ActivityActual {
   activityId: string;
@@ -27,9 +30,9 @@ interface ProgressTabProps {
 }
 
 function DeltaBadge({ delta }: { delta: number }) {
-  if (delta === 0) return <span className="text-xs text-[color:var(--text-muted)]">On track</span>;
-  if (delta > 0) return <span className="text-xs text-[#22C55E] font-semibold">+{delta}% ahead</span>;
-  return <span className="text-xs text-[#EF4444] font-semibold">{delta}% behind</span>;
+  if (delta === 0) return <span className="text-xs text-[color:var(--text-muted)]">{t('ui.on.track.38350e')}</span>;
+  if (delta > 0) return <span className="text-xs text-[#22C55E] font-semibold">+{delta}{t('ui.ahead')}</span>;
+  return <span className="text-xs text-[#EF4444] font-semibold">{delta}{t('ui.behind')}</span>;
 }
 
 function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
@@ -60,7 +63,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
         {/* Dual progress bars */}
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-gray-600 w-14 shrink-0">Planned</span>
+            <span className="text-[10px] text-gray-600 w-14 shrink-0">{t('ui.planned')}</span>
             <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gray-600 transition-all duration-500"
@@ -70,7 +73,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
             <span className="text-[10px] font-mono text-[color:var(--text-muted)] w-8 text-right">{activity.plannedPercent}%</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-gray-600 w-14 shrink-0">Actual</span>
+            <span className="text-[10px] text-gray-600 w-14 shrink-0">{t('ui.actual')}</span>
             <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-[#F97316] transition-all duration-500"
@@ -85,7 +88,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
       {/* History drawer */}
       {expanded && activity.history.length > 0 && (
         <div className="border-t border-[#1F1F25] px-4 py-3 space-y-2">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Log History</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.log.history')}</div>
           {activity.history.map((h, i) => {
             const delta = h.pctAfter - h.pctBefore;
             const dateLabel = new Date(h.logDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -99,7 +102,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
                   </span>
                 </span>
                 {h.note && (
-                  <span className="text-gray-600 italic truncate">&ldquo;{h.note}&rdquo;</span>
+                  <span className="text-gray-600 italic truncate">{t('ui.and.ldquo')}{h.note}{t('ui.and.rdquo')}</span>
                 )}
               </div>
             );
@@ -144,7 +147,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
   if (!data) {
     return (
       <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
-        <div className="text-[color:var(--text-secondary)] text-sm">Unable to load progress data</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">{t('ui.unable.to.load.progress.data')}</div>
       </div>
     );
   }
@@ -165,14 +168,14 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
         <div className="text-6xl font-bold mb-2" style={{ color: progressColor }}>
           {data.percentComplete}%
         </div>
-        <div className="text-sm text-[color:var(--text-muted)]">Project Complete</div>
+        <div className="text-sm text-[color:var(--text-muted)]">{t('ui.project.complete')}</div>
       </div>
 
       {/* Progress bar visualization */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-[color:var(--text-muted)]">Progress</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{t('ui.progress.1b9027')}</span>
             <span className="text-xs font-mono text-[color:var(--text-secondary)]">{data.percentComplete}%</span>
           </div>
           <div className="w-full bg-[#0B0B0D] rounded-full h-3 overflow-hidden">
@@ -190,12 +193,12 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
           <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-4">
             <CheckCircle2 size={16} className="text-[#22C55E] mb-2" />
             <div className="text-2xl font-bold text-[color:var(--text-primary)]">{data.completeActivities}</div>
-            <div className="text-xs text-[color:var(--text-muted)]">Complete</div>
+            <div className="text-xs text-[color:var(--text-muted)]">{t('ui.complete.1f5a1a')}</div>
           </div>
           <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-4">
             <CheckCircle2 size={16} className="text-gray-600 mb-2" />
             <div className="text-2xl font-bold text-[color:var(--text-primary)]">{data.totalActivities - data.completeActivities}</div>
-            <div className="text-xs text-[color:var(--text-muted)]">Remaining</div>
+            <div className="text-xs text-[color:var(--text-muted)]">{t('ui.remaining')}</div>
           </div>
         </div>
       </div>
@@ -205,15 +208,15 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp size={15} className="text-[#F97316]" />
-            <h3 className="font-semibold text-[color:var(--text-primary)]">Actual vs Planned</h3>
+            <h3 className="font-semibold text-[color:var(--text-primary)]">{t('ui.actual.vs.planned')}</h3>
             <span className="text-xs text-[color:var(--text-muted)]">({data.activityActuals.length} tracked)</span>
           </div>
           <div className="flex items-center gap-4 mb-3 text-[10px] text-gray-600">
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-1.5 rounded-full bg-gray-600" /> Planned
+              <div className="w-3 h-1.5 rounded-full bg-gray-600" />{t('ui.planned')}
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-1.5 rounded-full bg-[#F97316]" /> Actual (from logs)
+              <div className="w-3 h-1.5 rounded-full bg-[#F97316]" />{t('ui.actual.from.logs')}
             </div>
           </div>
           <div className="space-y-2">
@@ -226,18 +229,18 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
 
       {/* Breakdown */}
       <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
-        <div className="text-sm font-semibold text-[color:var(--text-primary)] mb-4">Activity Breakdown</div>
+        <div className="text-sm font-semibold text-[color:var(--text-primary)] mb-4">{t('ui.activity.breakdown')}</div>
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
-            <span className="text-[color:var(--text-secondary)]">Total Activities</span>
+            <span className="text-[color:var(--text-secondary)]">{t('ui.total.activities')}</span>
             <span className="font-semibold text-[color:var(--text-primary)]">{data.totalActivities}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-[color:var(--text-secondary)]">Complete</span>
+            <span className="text-[color:var(--text-secondary)]">{t('ui.complete.1f5a1a')}</span>
             <span className="font-semibold text-[#22C55E]">{data.completeActivities}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-[color:var(--text-secondary)]">In Progress</span>
+            <span className="text-[color:var(--text-secondary)]">{t('status.inProgress')}</span>
             <span className="font-semibold text-[#F97316]">{data.totalActivities - data.completeActivities}</span>
           </div>
         </div>
@@ -248,7 +251,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <Calendar size={20} className="text-[#F97316]" />
-            <div className="text-sm font-semibold text-[color:var(--text-primary)]">Target Completion</div>
+            <div className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.target.completion')}</div>
           </div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)] mb-1">
             {new Date(data.targetFinishDate).toLocaleDateString("en-US", {

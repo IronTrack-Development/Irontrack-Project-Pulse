@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { Sun, Moon, Globe } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export default function AppearanceSettings() {
   const [currentTheme, setCurrentTheme] = useState<Theme>("dark");
@@ -30,7 +33,7 @@ export default function AppearanceSettings() {
     <div className="space-y-6">
       {/* Theme */}
       <div>
-        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">Theme</p>
+        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">{t('settings.theme')}</p>
         <div className="flex gap-2">
           <button
             onClick={() => handleThemeChange("dark")}
@@ -40,8 +43,7 @@ export default function AppearanceSettings() {
               color: currentTheme === "dark" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >
-            <Moon size={16} />
-            Dark
+            <Moon size={16} />{t('settings.dark')}
           </button>
           <button
             onClick={() => handleThemeChange("light")}
@@ -51,15 +53,14 @@ export default function AppearanceSettings() {
               color: currentTheme === "light" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >
-            <Sun size={16} />
-            Light
+            <Sun size={16} />{t('settings.light')}
           </button>
         </div>
       </div>
 
       {/* Language */}
       <div>
-        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">Language</p>
+        <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">{t('settings.language')}</p>
         <div className="flex gap-2">
           <button
             onClick={() => handleLangChange("en")}
@@ -68,8 +69,7 @@ export default function AppearanceSettings() {
               backgroundColor: currentLang === "en" ? "#F97316" : "var(--bg-tertiary)",
               color: currentLang === "en" ? "#FFFFFF" : "var(--text-secondary)",
             }}
-          >
-            🇺🇸 English
+          >{t('ui.english')}
           </button>
           <button
             onClick={() => handleLangChange("es")}
@@ -78,12 +78,10 @@ export default function AppearanceSettings() {
               backgroundColor: currentLang === "es" ? "#F97316" : "var(--bg-tertiary)",
               color: currentLang === "es" ? "#FFFFFF" : "var(--text-secondary)",
             }}
-          >
-            🇲🇽 Español
+          >{t('ui.espanol')}
           </button>
         </div>
-        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
-          Field-facing features will display in the selected language.
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>{t('ui.field.facing.features.will.display.in.the.selected.language')}
         </p>
       </div>
     </div>

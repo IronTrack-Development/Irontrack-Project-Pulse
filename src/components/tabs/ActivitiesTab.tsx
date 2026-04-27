@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { Search, SlidersHorizontal, RefreshCw, ChevronUp, ChevronDown, Building2 } from "lucide-react";
 import type { ParsedActivity } from "@/types";
 import ActivityDrawer from "@/components/ActivityDrawer";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 function statusStyle(status: string) {
   switch (status) {
@@ -127,7 +130,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search activities..."
+            placeholder={t('ui.search.activities')}
             className="flex-1 bg-transparent text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none"
           />
         </div>
@@ -136,18 +139,18 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
         >
-          <option value="">All Statuses</option>
-          <option value="not_started">Not Started</option>
-          <option value="in_progress">In Progress</option>
-          <option value="complete">Complete</option>
-          <option value="late">Overdue</option>
+          <option value="">{t('ui.all.statuses')}</option>
+          <option value="not_started">{t('ui.not.started')}</option>
+          <option value="in_progress">{t('status.inProgress')}</option>
+          <option value="complete">{t('ui.complete.1f5a1a')}</option>
+          <option value="late">{t('ui.overdue.07217c')}</option>
         </select>
         <select
           value={tradeFilter}
           onChange={(e) => setTradeFilter(e.target.value)}
           className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
         >
-          <option value="">All Trades</option>
+          <option value="">{t('ui.all.trades')}</option>
           {trades.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
 
@@ -158,7 +161,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
             onChange={(e) => setBuildingFilter(e.target.value)}
             className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
           >
-            <option value="">All Buildings</option>
+            <option value="">{t('ui.all.buildings')}</option>
             {buildings.map((b) => (
               <option key={b} value={b}>{fmtNormalized(b)}</option>
             ))}
@@ -172,7 +175,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
             onChange={(e) => setPhaseFilter(e.target.value)}
             className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
           >
-            <option value="">All Phases</option>
+            <option value="">{t('ui.all.phases')}</option>
             {phases.map((p) => (
               <option key={p} value={p}>{fmtNormalized(p)}</option>
             ))}
@@ -180,7 +183,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
         )}
 
         <div className="text-xs text-[color:var(--text-muted)]">
-          {activities.length} activit{activities.length !== 1 ? "ies" : "y"}
+          {activities.length}{t('ui.activit')}{activities.length !== 1 ? t('ui.ies') : t('ui.y')}
         </div>
       </div>
 
@@ -192,8 +195,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           </div>
         ) : activities.length === 0 ? (
           <div className="text-center py-12 text-gray-600 text-sm">
-            <SlidersHorizontal size={28} className="mx-auto mb-3 opacity-30" />
-            No activities match your filters.
+            <SlidersHorizontal size={28} className="mx-auto mb-3 opacity-30" />{t('ui.no.activities.match.your.filters')}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -202,13 +204,13 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                 <tr className="border-b border-[#1F1F25]">
                   {[
                     { label: "ID", col: "activity_id" },
-                    { label: "Activity", col: "activity_name" },
-                    ...(hasHierarchy ? [{ label: "Building", col: "normalized_building" }] : []),
-                    { label: "Trade", col: "trade" },
-                    { label: "Start", col: "start_date" },
-                    { label: "Finish", col: "finish_date" },
-                    { label: "Dur", col: "original_duration" },
-                    { label: "Status", col: "status" },
+                    { label: t('ui.activity.81c0d9'), col: "activity_name" },
+                    ...(hasHierarchy ? [{ label: t('ui.building'), col: "normalized_building" }] : []),
+                    { label: t('ui.trade'), col: "trade" },
+                    { label: t('ui.start.952f37'), col: "start_date" },
+                    { label: t('ui.finish.b74bde'), col: "finish_date" },
+                    { label: t('ui.dur'), col: "original_duration" },
+                    { label: t('ui.status'), col: "status" },
                     { label: "%", col: "percent_complete" },
                   ].map(({ label, col }) => (
                     <th
@@ -236,7 +238,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                     <td className="px-4 py-3 text-xs text-[color:var(--text-muted)] font-mono">{a.activity_id || "—"}</td>
                     <td className="px-4 py-3">
                       <div className="font-medium text-[color:var(--text-primary)] max-w-xs truncate">{a.activity_name}</div>
-                      {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">MILESTONE</span>}
+                      {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">{t('ui.milestone').toUpperCase()}</span>}
                     </td>
                     {/* Building column — only rendered when hierarchy data exists */}
                     {hasHierarchy && (
@@ -256,7 +258,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                     <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.trade || "—"}</td>
                     <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{fmt(a.start_date)}</td>
                     <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{fmt(a.finish_date)}</td>
-                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.original_duration ?? "—"}d</td>
+                    <td className="px-4 py-3 text-xs text-[color:var(--text-secondary)]">{a.original_duration ?? "—"}{t('ui.d')}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded font-medium ${statusStyle(a.status)}`}>
                         {statusLabel(a.status)}

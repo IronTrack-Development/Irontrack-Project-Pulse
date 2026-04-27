@@ -3,6 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   LayoutDashboard,
   FolderOpen,
@@ -13,10 +16,10 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/projects", label: "Projects", icon: FolderOpen },
-  { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard", label: t('ui.dashboard'), icon: LayoutDashboard },
+  { href: "/projects", label: t('ui.projects'), icon: FolderOpen },
+  { href: "/upload", label: t('ui.upload'), icon: Upload },
+  { href: "/settings", label: t('settings.title'), icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -29,15 +32,15 @@ export default function Sidebar() {
         <div className="relative w-8 h-8">
           <Image
             src="/icon-192.png"
-            alt="IronTrack Pulse Logo"
+            alt={t('ui.irontrack.pulse.logo')}
             fill
             className="object-contain"
             onError={() => {}}
           />
         </div>
         <div>
-          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
-          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">Run Your Job. Don&apos;t Chase It.</div>
+          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">{t('ui.irontrack')} <span className="text-[#F97316]">{t('ui.pulse')}</span></div>
+          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">{t('ui.run.your.job.don.t.chase.it')}</div>
         </div>
       </div>
 
@@ -45,14 +48,14 @@ export default function Sidebar() {
       <div className="px-4 py-3">
         <div className="flex items-center gap-2 bg-[var(--bg-primary)] rounded-lg px-3 py-2 border border-[var(--border-primary)]">
           <Zap size={13} className="text-[#F97316]" />
-          <span className="text-xs text-[color:var(--text-secondary)]">Field Intelligence</span>
+          <span className="text-xs text-[color:var(--text-secondary)]">{t('ui.field.intelligence')}</span>
           <span className="ml-auto w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-2">
-        <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-2 mb-2">Navigation</div>
+        <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-2 mb-2">{t('ui.navigation')}</div>
         {navItems.map(({ href, label, icon: Icon }) => {
           const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
@@ -78,10 +81,9 @@ export default function Sidebar() {
           href="/"
           className="flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
         >
-          <Home size={14} />
-          Landing Page
+          <Home size={14} />{t('ui.landing.page')}
         </Link>
-        <div className="text-xs text-gray-600">v1.4.0</div>
+        <div className="text-xs text-gray-600">{t('ui.v1.4.0')}</div>
       </div>
     </aside>
   );

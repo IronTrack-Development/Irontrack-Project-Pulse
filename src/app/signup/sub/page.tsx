@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export default function SubSignupPage() {
   const router = useRouter();
@@ -25,7 +28,7 @@ export default function SubSignupPage() {
     setLoading(true);
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      setError(t('ui.password.must.be.at.least.8.characters'));
       setLoading(false);
       return;
     }
@@ -48,7 +51,7 @@ export default function SubSignupPage() {
     }
 
     if (!data.user) {
-      setError("Account creation failed. Please try again.");
+      setError(t('ui.account.creation.failed.please.try.again'));
       setLoading(false);
       return;
     }
@@ -93,18 +96,15 @@ export default function SubSignupPage() {
             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(34,197,94,0.1)" }}>
               <CheckCircle className="w-8 h-8" style={{ color: "#22C55E" }} />
             </div>
-            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-              You're in!
+            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>{t('ui.you.re.in')}
             </h1>
-            <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Welcome to IronTrack Pulse. Check your email to confirm your account.
+            <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.welcome.to.irontrack.pulse.check.your.email.to.confirm.your')}
             </p>
             <Link
               href="/login/sub"
               className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
               style={{ background: "#3B82F6" }}
-            >
-              Go to login
+            >{t('ui.go.to.login')}
             </Link>
           </div>
         </div>
@@ -121,19 +121,17 @@ export default function SubSignupPage() {
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
+          <ArrowLeft className="w-4 h-4" />{t('ui.back.to.home')}
         </Link>
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <img
             src="/irontrack-app-icon.svg"
-            alt="IronTrack"
+            alt={t('ui.irontrack')}
             className="h-10 w-auto mr-3"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
+          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>{t('ui.iron')}<span style={{ color: "#E85D1C" }}>{t('ui.track')}</span>
           </span>
         </Link>
 
@@ -144,11 +142,9 @@ export default function SubSignupPage() {
               <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                Subcontractor
+              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>{t('ui.subcontractor')}
               </h1>
-              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                Track schedules & report progress
+              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>{t('ui.track.schedules.and.report.progress')}
               </p>
             </div>
           </div>
@@ -161,8 +157,7 @@ export default function SubSignupPage() {
             )}
 
             <div>
-              <label htmlFor="companyName" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Company Name <span style={{ color: "#DC2626" }}>*</span>
+              <label htmlFor="companyName" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.company.name.8599f5')} <span style={{ color: "#DC2626" }}>*</span>
               </label>
               <input
                 id="companyName"
@@ -176,13 +171,12 @@ export default function SubSignupPage() {
                   borderColor: "rgba(13,13,13,0.12)",
                   color: "#0D0D0D"
                 }}
-                placeholder="Apex Electrical LLC"
+                placeholder={t('ui.apex.electrical.llc')}
               />
             </div>
 
             <div>
-              <label htmlFor="contactName" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Your Name <span style={{ color: "#DC2626" }}>*</span>
+              <label htmlFor="contactName" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.your.name.f48db7')} <span style={{ color: "#DC2626" }}>*</span>
               </label>
               <input
                 id="contactName"
@@ -196,13 +190,12 @@ export default function SubSignupPage() {
                   borderColor: "rgba(13,13,13,0.12)",
                   color: "#0D0D0D"
                 }}
-                placeholder="Jane Smith"
+                placeholder={t('ui.jane.smith')}
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Email <span style={{ color: "#DC2626" }}>*</span>
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.email')} <span style={{ color: "#DC2626" }}>*</span>
               </label>
               <input
                 id="email"
@@ -221,8 +214,7 @@ export default function SubSignupPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Password <span style={{ color: "#DC2626" }}>*</span>
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.password')} <span style={{ color: "#DC2626" }}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -251,8 +243,7 @@ export default function SubSignupPage() {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Phone <span style={{ color: "rgba(13,13,13,0.35)" }}>(optional)</span>
+              <label htmlFor="phone" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.phone')} <span style={{ color: "rgba(13,13,13,0.35)" }}>(optional)</span>
               </label>
               <input
                 id="phone"
@@ -277,50 +268,39 @@ export default function SubSignupPage() {
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating account...
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />{t('ui.creating.account')}
                 </>
               ) : (
-                "Create Subcontractor Account"
+                t('ui.create.subcontractor.account')
               )}
             </button>
 
-            <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>
-              By creating an account, you agree to our{" "}
-              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#3B82F6" }}>
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#3B82F6" }}>
-                Privacy Policy
+            <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>{t('ui.by.creating.an.account.you.agree.to.our')}{" "}
+              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#3B82F6" }}>{t('ui.terms.of.service')}
+              </Link>{" "}{t('ui.and')}{" "}
+              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#3B82F6" }}>{t('ui.privacy.policy')}
               </Link>.
             </p>
           </form>
 
           {/* Pricing note */}
-          <div className="mt-5 rounded-xl px-4 py-3 text-sm border" style={{ background: "rgba(59,130,246,0.05)", borderColor: "rgba(59,130,246,0.15)", color: "rgba(13,13,13,0.65)" }}>
-            📊 Schedule views are free. Progress Reports are $10/month during beta.
+          <div className="mt-5 rounded-xl px-4 py-3 text-sm border" style={{ background: "rgba(59,130,246,0.05)", borderColor: "rgba(59,130,246,0.15)", color: "rgba(13,13,13,0.65)" }}>{t('ui.schedule.views.are.free.progress.reports.are.10.month.during')}
           </div>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Already have an account?{" "}
-              <Link href="/login/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
-                Sign in
+            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.already.have.an.account')}{" "}
+              <Link href="/login/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>{t('ui.sign.in')}
               </Link>
             </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              General Contractor?{" "}
-              <Link href="/signup" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                Sign up here
+            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.general.contractor.1629e4')}{" "}
+              <Link href="/signup" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>{t('ui.sign.up.here')}
               </Link>
             </p>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>
-          © 2026 IronTrack Development LLC
+        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>{t('ui.2026.irontrack.development.llc')}
         </p>
       </div>
     </div>

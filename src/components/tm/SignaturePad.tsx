@@ -2,6 +2,9 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { X, RotateCcw, Check } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface SignaturePadProps {
   onDone: (base64Png: string) => void;
@@ -123,8 +126,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
         </div>
 
         {/* Instruction */}
-        <p className="text-xs text-[color:var(--text-muted)] text-center pt-3 pb-1 px-4">
-          Sign with your finger in the box below
+        <p className="text-xs text-[color:var(--text-muted)] text-center pt-3 pb-1 px-4">{t('ui.sign.with.your.finger.in.the.box.below')}
         </p>
 
         {/* Canvas */}
@@ -149,16 +151,14 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
             onClick={clear}
             className="flex items-center gap-1.5 px-4 py-3 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px] flex-1 justify-center"
           >
-            <RotateCcw size={15} />
-            Clear
+            <RotateCcw size={15} />{t('ui.clear')}
           </button>
           <button
             onClick={done}
             disabled={isEmpty}
             className="flex items-center gap-1.5 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex-1 justify-center"
           >
-            <Check size={15} />
-            Done
+            <Check size={15} />{t('ui.done.e9b450')}
           </button>
         </div>
       </div>

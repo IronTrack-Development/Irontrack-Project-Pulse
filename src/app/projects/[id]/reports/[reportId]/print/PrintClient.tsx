@@ -5,6 +5,9 @@ import Link from "next/link";
 import MarkupCanvas from "@/components/markup/MarkupCanvas";
 import type { MarkupAction } from "@/components/markup/MarkupCanvas";
 import type { IssueReport, ReportIssue, IssuePriority, IssueCategory } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface IssueWithPhotos extends ReportIssue {
   photoUrls: string[];
@@ -164,8 +167,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             fontWeight: 600, color: "white", textDecoration: "none",
             background: "rgba(255,255,255,0.15)",
           }}
-        >
-          ← Back
+        >{t('ui.back')}
         </Link>
         <button
           onClick={() => window.print()}
@@ -175,8 +177,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             fontWeight: 600, color: "white", cursor: "pointer",
             background: "#F97316", border: "none",
           }}
-        >
-          🖨 Print PDF
+        >{t('ui.print.pdf.1d5c5c')}
         </button>
         <button
           onClick={startMarkup}
@@ -191,7 +192,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             opacity: markupCapturing ? 0.6 : 1,
           }}
         >
-          {markupCapturing ? "⏳ Capturing…" : markedUpUrl ? "✏️ Re-markup" : "✏️ Markup"}
+          {markupCapturing ? t('ui.capturing') : markedUpUrl ? t('ui.re.markup') : t('ui.markup')}
         </button>
         {markedUpUrl && (
           <a
@@ -203,8 +204,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
               fontWeight: 600, color: "white", textDecoration: "none",
               background: "#16A34A", border: "none",
             }}
-          >
-            ⬇ Save Markup
+          >{t('ui.save.markup')}
           </a>
         )}
         <button
@@ -234,8 +234,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             fontWeight: 600, color: "white", cursor: "pointer",
             background: "#3B82F6", border: "none",
           }}
-        >
-          🔗 Share
+        >{t('ui.share.e4a193')}
         </button>
       </div>
 
@@ -245,13 +244,12 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           background: "#f5f3ff", borderBottom: "3px solid #7C3AED",
           padding: "12px 16px",
         }}>
-          <div style={{ fontSize: "12px", color: "#7C3AED", fontWeight: 700, marginBottom: "8px" }}>
-            ✏️ Markup applied — download or print below
+          <div style={{ fontSize: "12px", color: "#7C3AED", fontWeight: 700, marginBottom: "8px" }}>{t('ui.markup.applied.download.or.print.below')}
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={markedUpUrl}
-            alt="Marked-up report"
+            alt={t('ui.marked.up.report')}
             style={{ maxWidth: "100%", borderRadius: "4px", border: "1px solid #c4b5fd" }}
           />
         </div>
@@ -272,8 +270,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             borderRadius: "2px",
           }}
         >
-          <h1 style={{ fontSize: "16pt", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: 0 }}>
-            Field Observation Report
+          <h1 style={{ fontSize: "16pt", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: 0 }}>{t('ui.field.observation.report')}
           </h1>
           <span style={{ fontSize: "10pt", color: "#93c5fd", fontWeight: 600 }}>
             {report.report_number}
@@ -282,7 +279,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
 
         {/* Project title */}
         <div style={{ fontSize: "16pt", fontWeight: 700, color: "#1a1a1a", marginBottom: "16px" }}>
-          {report.project_name ? `${report.project_name} Project` : "Project Field Observation"}
+          {report.project_name ? `${report.project_name} ${t('ui.project')}` : t('ui.project.field.observation')}
         </div>
 
         {/* Info box */}
@@ -298,13 +295,13 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           }}
         >
           {[
-            ["Schedule Item", report.activity_name],
-            ["Report Number", report.report_number],
-            ["Date", reportDate],
-            report.trade ? ["Trade", report.trade] : null,
-            report.prepared_by ? ["Prepared By", report.prepared_by] : null,
-            report.normalized_building ? ["Location", fmtNorm(report.normalized_building)] : null,
-            ["Summary", `${report.issue_count} Issue${report.issue_count !== 1 ? "s" : ""} Identified`],
+            [t('ui.schedule.item'), report.activity_name],
+            [t('ui.report.number'), report.report_number],
+            [t('ui.date'), reportDate],
+            report.trade ? [t('ui.trade'), report.trade] : null,
+            report.prepared_by ? [t('ui.prepared.by'), report.prepared_by] : null,
+            report.normalized_building ? [t('ui.location'), fmtNorm(report.normalized_building)] : null,
+            [t('ui.summary'), `${report.issue_count} ${report.issue_count === 1 ? t('ui.issue.identified') : t('ui.issues.identified')}`],
           ].filter(Boolean).map((row, i) => (
             <div key={i} style={{ display: "flex", gap: "8px", alignItems: "baseline", fontSize: "10pt" }}>
               <span style={{ color: "#4b5563", fontWeight: 600, minWidth: "90px", whiteSpace: "nowrap" }}>
@@ -325,8 +322,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         {/* Issue Summary Table */}
         {issues.length > 0 && (
           <>
-            <div style={{ fontSize: "12pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px", borderBottom: "2px solid #1e3a5f", paddingBottom: "4px" }}>
-              Issue Summary
+            <div style={{ fontSize: "12pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px", borderBottom: "2px solid #1e3a5f", paddingBottom: "4px" }}>{t('ui.issue.summary')}
             </div>
             <table
               style={{
@@ -338,7 +334,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             >
               <thead>
                 <tr>
-                  {["#", "Issue", "Location", "Priority"].map((h) => (
+                  {["#", t('ui.issue'), t('ui.location'), t('ui.priority')].map((h) => (
                     <th
                       key={h}
                       style={{
@@ -394,8 +390,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         {/* Issue Detail Cards */}
         {issues.length > 0 && (
           <>
-            <div style={{ fontSize: "12pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px", borderBottom: "2px solid #1e3a5f", paddingBottom: "4px" }}>
-              Issue Details
+            <div style={{ fontSize: "12pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px", borderBottom: "2px solid #1e3a5f", paddingBottom: "4px" }}>{t('ui.issue.details')}
             </div>
 
             {issues.map((issue) => (
@@ -420,8 +415,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                     textTransform: "uppercase",
                     letterSpacing: "0.5px",
                   }}
-                >
-                  Issue {String(issue.issue_number).padStart(2, "0")}: {issue.title}
+                >{t('ui.issue')} {String(issue.issue_number).padStart(2, "0")}: {issue.title}
                 </div>
 
                 {/* Card body */}
@@ -431,35 +425,35 @@ export default function PrintClient({ report, issues, projectId }: Props) {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 20px", marginBottom: "12px" }}>
                       {issue.location && (
                         <div>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Location</div>
+                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('ui.location')}</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.location}</div>
                         </div>
                       )}
                       {issue.trade && (
                         <div>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Trade</div>
+                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('ui.trade')}</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.trade}</div>
                         </div>
                       )}
                       <div>
-                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Priority</div>
+                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('ui.priority')}</div>
                         <div style={{ fontSize: "10.5pt", color: priorityColor(issue.priority), fontWeight: 700 }}>
                           {issue.priority.charAt(0).toUpperCase() + issue.priority.slice(1)}
                         </div>
                       </div>
                       <div>
-                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Category</div>
+                        <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('blocker.category')}</div>
                         <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{categoryLabel(issue.category)}</div>
                       </div>
                       {issue.potential_impact && (
                         <div style={{ gridColumn: "1 / -1" }}>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Potential Impact</div>
+                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('ui.potential.impact')}</div>
                           <div style={{ fontSize: "10.5pt", color: "#1a1a1a", fontWeight: 500 }}>{issue.potential_impact}</div>
                         </div>
                       )}
                       {issue.action_needed && (
                         <div style={{ gridColumn: "1 / -1" }}>
-                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Action Needed</div>
+                          <div style={{ fontSize: "8.5pt", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>{t('ui.action.needed')}</div>
                           <div style={{ fontSize: "10.5pt", color: "#DC2626", fontWeight: 600 }}>{issue.action_needed}</div>
                         </div>
                       )}
@@ -525,8 +519,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
               background: "#fffbeb",
             }}
           >
-            <div style={{ fontSize: "10pt", fontWeight: 700, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-              Overall Assessment
+            <div style={{ fontSize: "10pt", fontWeight: 700, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>{t('ui.overall.assessment')}
             </div>
             <div style={{ fontSize: "10.5pt", color: "#374151", lineHeight: 1.6 }}>
               {report.overall_assessment}
@@ -544,10 +537,9 @@ export default function PrintClient({ report, issues, projectId }: Props) {
           }}
         />
         <div style={{ textAlign: "center", color: "#9ca3af", fontSize: "8.5pt" }}>
-          <p>
-            Generated by: {report.prepared_by || "Field Superintendent"} &nbsp;·&nbsp; Date: {generatedAt}
+          <p>{t('ui.generated.by')} {report.prepared_by || t('ui.field.superintendent')}{t('ui.and.nbsp.and.nbsp.date')} {generatedAt}
           </p>
-          <p style={{ marginTop: "4px" }}>Powered by IronTrack Project Pulse</p>
+          <p style={{ marginTop: "4px" }}>{t('ui.powered.by.irontrack.project.pulse')}</p>
         </div>
       </div>
     </div>
