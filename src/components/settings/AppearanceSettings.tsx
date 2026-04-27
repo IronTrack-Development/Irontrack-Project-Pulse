@@ -22,6 +22,8 @@ export default function AppearanceSettings() {
 
   const handleLangChange = (lang: Language) => {
     setLanguage(lang);
+    // Reload to ensure all components pick up the new language
+    setTimeout(() => window.location.reload(), 100);
   };
 
   return (
