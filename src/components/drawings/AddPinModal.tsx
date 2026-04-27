@@ -122,19 +122,19 @@ export default function AddPinModal({
             <div className="grid grid-cols-5 gap-2">
               {PIN_TYPES.map((item) => (
                 <button
-                  key={t.value}
-                  onClick={() => { setPinType(t.value); setReferenceId(""); }}
+                  key={item.value}
+                  onClick={() => { setPinType(item.value); setReferenceId(""); }}
                   className={`flex flex-col items-center gap-1 py-2 rounded-lg border transition-all min-h-[60px] ${
-                    pinType === t.value
+                    pinType === item.value
                       ? "border-[#F97316] bg-[#F97316]/10"
                       : "border-[var(--border-primary)] bg-[var(--bg-primary)]"
                   }`}
                 >
                   <div
                     className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: t.color }}
+                    style={{ backgroundColor: item.color }}
                   />
-                  <span className="text-xs text-[color:var(--text-secondary)]">{t.label}</span>
+                  <span className="text-xs text-[color:var(--text-secondary)]">{item.label}</span>
                 </button>
               ))}
             </div>

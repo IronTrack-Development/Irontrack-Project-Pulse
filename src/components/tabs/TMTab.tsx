@@ -148,7 +148,7 @@ export default function TMTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.t.and.m.tickets')}</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.item.and.m.tickets')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
               {totalTickets}{t('ui.ticket')}{totalTickets !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
             </p>
@@ -165,7 +165,7 @@ export default function TMTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">{t('ui.new.t.and.m.ticket')}</span>
+              <span className="hidden sm:inline">{t('ui.new.item.and.m.ticket')}</span>
               <span className="sm:hidden">{t('ui.new.6403f2')}</span>
             </button>
           </div>
@@ -233,7 +233,7 @@ export default function TMTab({ projectId }: Props) {
               <Receipt size={28} className="text-gray-600" />
             </div>
             <h3 className="text-[color:var(--text-primary)] font-semibold mb-1">
-              {filter === "all" ? t('ui.no.t.and.m.tickets.yet') : `No ${filter} tickets`}
+              {filter === "all" ? t('ui.no.item.and.m.tickets.yet') : `No ${filter} tickets`}
             </h3>
             <p className="text-[color:var(--text-muted)] text-sm max-w-xs">
               {filter === "all"
@@ -245,7 +245,7 @@ export default function TMTab({ projectId }: Props) {
                 onClick={() => setShowForm(true)}
                 className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
               >
-                <Plus size={15} />{t('ui.new.t.and.m.ticket')}
+                <Plus size={15} />{t('ui.new.item.and.m.ticket')}
               </button>
             )}
           </div>
@@ -253,30 +253,30 @@ export default function TMTab({ projectId }: Props) {
           <div className="space-y-2">
             {filtered.map((item) => (
               <button
-                key={t.id}
-                onClick={() => openDetail(t)}
+                key={item.id}
+                onClick={() => openDetail(item)}
                 className="w-full text-left p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-[#F97316]/40 transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[color:var(--text-primary)] font-semibold text-sm">{t.ticket_number}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[t.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
-                        {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
+                      <span className="text-[color:var(--text-primary)] font-semibold text-sm">{item.ticket_number}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[item.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
+                        {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                       </span>
-                      <SigBadge gc={t.gc_signature_path} sub={t.sub_signature_path} />
+                      <SigBadge gc={item.gc_signature_path} sub={item.sub_signature_path} />
                     </div>
-                    <p className="text-[color:var(--text-secondary)] text-xs mt-1 truncate">{t.description}</p>
-                    {t.sub_contact && (
+                    <p className="text-[color:var(--text-secondary)] text-xs mt-1 truncate">{item.description}</p>
+                    {item.sub_contact && (
                       <p className="text-gray-600 text-xs mt-0.5">
-                        {t.sub_contact.name}
-                        {t.sub_contact.company ? ` · ${t.sub_contact.company}` : ""}
+                        {item.sub_contact.name}
+                        {item.sub_contact.company ? ` · ${item.sub_contact.company}` : ""}
                       </p>
                     )}
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-[#F97316] font-bold text-sm">{fmtCurrency(t.total_cost ?? 0)}</p>
-                    <p className="text-gray-600 text-[10px] mt-0.5">{fmtDate(t.date)}</p>
+                    <p className="text-[#F97316] font-bold text-sm">{fmtCurrency(item.total_cost ?? 0)}</p>
+                    <p className="text-gray-600 text-[10px] mt-0.5">{fmtDate(item.date)}</p>
                   </div>
                 </div>
               </button>

@@ -87,7 +87,7 @@ const DISCIPLINE_COLOR: Record<Discipline, string> = {
 // Natural sort for sheet numbers like A1.01, A1.02, A2.01, S1.1, S2.1
 function naturalSheetSort(a: DrawingSheet, b: DrawingSheet): number {
   const tokenize = (s: string) =>
-    s.split(/(\d+)/).map((item) => (isNaN(Number(t)) ? t : parseInt(t, 10)));
+    s.split(/(\d+)/).map((item) => (isNaN(Number(item)) ? item : parseInt(item, 10)));
   const ta = tokenize(a.sheet_number);
   const tb = tokenize(b.sheet_number);
   for (let i = 0; i < Math.max(ta.length, tb.length); i++) {
@@ -238,7 +238,7 @@ export default function SheetBrowser({
           {allUnclassified && (
             <div className="mb-4 p-3 bg-[var(--bg-tertiary)] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
               <ClipboardList size={16} className="text-[#F97316] shrink-0" />
-              <p className="text-[color:var(--text-secondary)] text-sm flex-1">{t('ui.sheets.haven.t.been.organized.yet')}
+              <p className="text-[color:var(--text-secondary)] text-sm flex-1">{t('ui.sheets.haven.item.been.organized.yet')}
               </p>
               <button
                 onClick={() => setShowOrganizer(true)}

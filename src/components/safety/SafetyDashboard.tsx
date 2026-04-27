@@ -141,11 +141,11 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
   const avgAttendance =
     talks.length > 0
       ? Math.round(
-          talks.reduce((sum, t) => sum + (t.attendee_count || 0), 0) / talks.length
+          talks.reduce((sum, talk) => sum + (talk.attendee_count || 0), 0) / talks.length
         )
       : 0;
   const followUps = talks.filter(
-    (item) => item.follow_up_needed && t.status !== "locked"
+    (item) => item.follow_up_needed && item.status !== "locked"
   ).length;
 
   // If viewing a specific talk detail

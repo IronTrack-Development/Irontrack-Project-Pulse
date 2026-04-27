@@ -149,7 +149,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
           className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-[color:var(--text-secondary)] focus:outline-none"
         >
           <option value="">{t('ui.all.trades')}</option>
-          {trades.map((item) => <option key={t} value={t}>{t}</option>)}
+          {trades.map((item) => <option key={item} value={item}>{item}</option>)}
         </select>
 
         {/* Building filter — only shown when hierarchy data is present */}

@@ -261,7 +261,7 @@ export default function PunchListTab({ projectId }: Props) {
                   className="w-full bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-xs text-[color:var(--text-secondary)] appearance-none focus:outline-none min-h-[40px]"
                 >
                   <option value="">{t('ui.all.trades')}</option>
-                  {trades.map((item) => <option key={t} value={t}>{t}</option>)}
+                  {trades.map((item) => <option key={item} value={item}>{item}</option>)}
                 </select>
                 <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
               </div>

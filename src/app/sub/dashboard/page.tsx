@@ -136,10 +136,10 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
         <div className="flex flex-wrap gap-1.5">
           {project.trades.map((item) => (
             <span
-              key={t}
+              key={item}
               className="text-xs px-2 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316]"
             >
-              {t}
+              {item}
             </span>
           ))}
         </div>

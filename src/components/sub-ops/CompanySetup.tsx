@@ -107,7 +107,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
             >
               <option value="">{t('ui.select.a.trade')}</option>
               {TRADES.map((item) => (
-                <option key={t.value} value={t.value}>{t.label}</option>
+                <option key={item.value} value={item.value}>{item.label}</option>
               ))}
             </select>
           </div>

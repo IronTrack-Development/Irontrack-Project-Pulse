@@ -246,7 +246,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             >
               <option value="">{t('ui.select.trade')}</option>
               {TRADES.map((item) => (
-                <option key={t} value={t}>{t}</option>
+                <option key={item} value={item}>{item}</option>
               ))}
             </select>
           </div>

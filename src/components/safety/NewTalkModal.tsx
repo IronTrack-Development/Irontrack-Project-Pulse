@@ -146,8 +146,8 @@ export default function NewTalkModal({
   // Group templates by category
   const templatesByCategory: Record<string, ToolboxTalkTemplate[]> = {};
   templates.forEach((item) => {
-    if (!templatesByCategory[t.category]) templatesByCategory[t.category] = [];
-    templatesByCategory[t.category].push(t);
+    if (!templatesByCategory[item.category]) templatesByCategory[item.category] = [];
+    templatesByCategory[item.category].push(item);
   });
 
   return (

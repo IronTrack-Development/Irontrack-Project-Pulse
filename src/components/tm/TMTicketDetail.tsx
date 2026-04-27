@@ -134,7 +134,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       });
       if (res.ok) {
         const updated = await res.json();
-        setTicket((item) => ({ ...t, status: updated.status }));
+        setTicket((prev) => ({ ...prev, status: updated.status }));
         onUpdated();
       }
     } finally {
@@ -152,7 +152,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       });
       if (res.ok) {
         const updated = await res.json();
-        setTicket((item) => ({ ...t, status: updated.status, dispute_reason: updated.dispute_reason }));
+        setTicket((prev) => ({ ...prev, status: updated.status, dispute_reason: updated.dispute_reason }));
         setShowDisputeInput(false);
         onUpdated();
       }
@@ -188,8 +188,8 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       });
       if (res.ok) {
         const updated = await res.json();
-        setTicket((item) => ({
-          ...t,
+        setTicket((prev) => ({
+          ...prev,
           gc_signature_path: updated.gc_signature_path,
           gc_signed_by: updated.gc_signed_by,
           gc_signed_at: updated.gc_signed_at,

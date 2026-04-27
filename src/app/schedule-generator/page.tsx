@@ -215,7 +215,7 @@ export default function ScheduleGeneratorPage() {
   // Toggle a single trade
   const toggleTrade = (trade: string) => {
     setSelectedTrades((prev) =>
-      prev.includes(trade) ? prev.filter((item) => t !== trade) : [...prev, trade]
+      prev.includes(trade) ? prev.filter((item) => item !== trade) : [...prev, trade]
     );
   };
 
