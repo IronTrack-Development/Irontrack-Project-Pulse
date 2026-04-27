@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle, AlertTriangle, XCircle, Clock } from "lucide-react";
 import Link from "next/link";
 import { Building2 } from "lucide-react";

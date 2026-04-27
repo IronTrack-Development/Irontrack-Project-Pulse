@@ -55,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
@@ -64,7 +64,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3" />
         <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=3" />
       </head>
-      <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden">
+      <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden" suppressHydrationWarning>
         <ManifestLoader />
         <ThemeProvider>
           {children}

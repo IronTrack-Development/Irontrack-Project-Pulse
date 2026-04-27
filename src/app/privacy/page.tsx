@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Building2, ArrowLeft } from "lucide-react";
 import { t } from "@/lib/i18n";
