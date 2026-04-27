@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Loader2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -381,7 +379,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
+              className="flex-1 py-3 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
             >{t('action.cancel')}
             </button>
             <button

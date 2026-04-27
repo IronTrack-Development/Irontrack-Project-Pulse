@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Phone, CheckCircle } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Jurisdiction {
   id: string;
@@ -398,7 +396,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={permitNumber}
               onChange={(e) => setPermitNumber(e.target.value)}
               placeholder={t('ui.enter.permit.number')}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -421,7 +419,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactName}
               onChange={(e) => setContactName(e.target.value)}
               placeholder={t('ui.your.name')}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
@@ -433,7 +431,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
               placeholder={t('ui.your.phone.number')}
-              className="w-full px-3 py-3 bg-[#121217] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 

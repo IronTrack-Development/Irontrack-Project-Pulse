@@ -2,9 +2,7 @@
 
 import { useState, useRef } from "react";
 import { ArrowLeft, X, ImagePlus } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface PhotoItem {
   file: File;

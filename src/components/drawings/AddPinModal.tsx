@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface RFI {
   id: string;
@@ -150,7 +148,7 @@ export default function AddPinModal({
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder={t('ui.short.label')}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
             />
           </div>
 
@@ -206,7 +204,7 @@ export default function AddPinModal({
         <div className="px-4 py-4 border-t border-[var(--border-primary)] flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
+            className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
           >{t('action.cancel')}
           </button>
           <button

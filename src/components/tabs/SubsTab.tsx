@@ -7,9 +7,7 @@ import {
   ListChecks, Search, ChevronsUpDown, FileText, QrCode, Printer, ExternalLink
 } from "lucide-react";
 import { extractPhotoTimestamp } from "@/lib/photo-utils";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ─── Interfaces ───────────────────────────────────────────────────────────────
 
@@ -202,7 +200,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder={t('ui.search.activities.or.trades')}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
             {search && (
               <button
@@ -315,7 +313,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
             >{t('action.cancel')}
             </button>
             <button
@@ -676,7 +674,7 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => { setCompanyCode(e.target.value); setCodeLookupStatus("idle"); }}
                   onBlur={e => handleCodeLookup(e.target.value)}
                   placeholder={t('ui.e.g.it.482916')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
                 />
                 {codeLookupStatus === "loading" && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
@@ -701,7 +699,7 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => setNewName(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddSub()}
                   placeholder={t('ui.e.g.abc.plumbing')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -710,7 +708,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newContact}
                   onChange={e => setNewContact(e.target.value)}
                   placeholder={t('ui.e.g.joe.martinez')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -1104,7 +1102,7 @@ export default function SubsTab({ projectId }: Props) {
                   </div>
 
                   {/* Join URL */}
-                  <div className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
+                  <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
                     <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">{t('ui.registration.link')}</p>
                     <p className="text-xs text-[color:var(--text-secondary)] break-all font-mono leading-relaxed">{qrData.url}</p>
                   </div>

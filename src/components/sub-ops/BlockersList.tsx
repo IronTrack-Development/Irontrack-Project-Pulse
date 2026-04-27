@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   AlertTriangle, Plus, X, Check, ChevronDown, ChevronUp,
   Filter, Clock, CheckCircle, Camera,
@@ -311,7 +310,7 @@ export default function BlockersList({ projectId }: Props) {
                           <img
                             src={b.photo_url}
                             alt={t('ui.blocker.photo')}
-                            className="w-32 h-32 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
+                            className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
                             loading="lazy"
                           />
                         </a>

@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw, Users, CloudRain, Sun, CloudSun, Cloud, CloudLightning, Wind, Snowflake, Thermometer, Activity } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface YesterdayRecap {
   logDate: string;
@@ -124,7 +122,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
     <div className="space-y-6">
       {/* Yesterday Recap */}
       {data.yesterdayRecap && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5">
           <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-widest mb-2">{t('ui.yesterday')} {data.yesterdayRecap.dateLabel}</div>
           <div className="grid grid-cols-2 gap-3">
             {/* Crew */}
@@ -221,7 +219,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
           <span className="text-xs text-[color:var(--text-muted)]">({data.happeningToday.length})</span>
         </div>
         {data.happeningToday.length === 0 ? (
-          <p className="text-gray-600 text-sm bg-[#121217] border border-[#1F1F25] rounded-xl p-4">{t('ui.no.activities.scheduled.for.today')}
+          <p className="text-gray-600 text-sm bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">{t('ui.no.activities.scheduled.for.today')}
           </p>
         ) : (
           <div className="space-y-2">

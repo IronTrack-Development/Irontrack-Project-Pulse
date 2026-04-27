@@ -9,9 +9,7 @@ import {
 } from "lucide-react";
 import AddPinModal from "./AddPinModal";
 import RevisionBanner from "./RevisionBanner";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -415,7 +413,7 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
             disabled={sheetIndex === sheets.length - 1}
-            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
+            className="flex items-center gap-1 px-3 py-2 bg-[var(--bg-tertiary)] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
           >{t('ui.next')} <ChevronRight size={16} />
           </button>
         </div>

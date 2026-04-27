@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   Loader2,
   AlertCircle,
@@ -455,7 +454,7 @@ export default function SubDashboardPage() {
             <div className="flex items-center gap-2">
               <ClipboardList size={16} className="text-[#F97316]" />
               <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.recent.reports')}</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {totalReports}
               </span>
             </div>
@@ -470,7 +469,7 @@ export default function SubDashboardPage() {
               <div className="flex justify-center pt-2">
                 <button
                   onClick={() => setVisibleReports((v) => v + 10)}
-                  className="px-5 py-2.5 bg-[#1F1F25] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
+                  className="px-5 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
                 >{t('ui.load.more')}
                 </button>
               </div>

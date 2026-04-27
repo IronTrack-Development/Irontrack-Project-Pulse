@@ -1,9 +1,7 @@
 "use client";
 
 import { CheckCircle, AlertTriangle, TrendingDown, Clock, Flag, Activity, Zap } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Project {
   id: string;
@@ -165,13 +163,13 @@ export default function OverviewTab({ project }: { project: Project }) {
       </div>
 
       {/* Activity breakdown */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
         <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">{t('ui.activity.status.breakdown')}</h3>
         <div className="space-y-3">
           {[
             { label: t('ui.complete.1f5a1a'), value: stats.completeActivities, color: "#22C55E" },
             { label: t('status.inProgress'), value: stats.inProgressActivities, color: "#3B82F6" },
-            { label: t('ui.not.started'), value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "#6B7280" },
+            { label: t('ui.not.started'), value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "var(--text-muted)" },
             { label: t('ui.overdue.07217c'), value: stats.lateActivities, color: "#EAB308" },
           ].map(({ label, value, color }) => (
             <div key={label}>

@@ -1,8 +1,6 @@
 import { getServiceClient } from "@/lib/supabase";
 import { notFound } from "next/navigation";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface PageProps {
   params: Promise<{ token: string }>;

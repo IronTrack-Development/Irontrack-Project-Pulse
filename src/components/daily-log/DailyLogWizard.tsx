@@ -7,9 +7,8 @@ import SnapshotScreen from "./SnapshotScreen";
 import WorkIssuesScreen from "./WorkIssuesScreen";
 import PhotosSubmitScreen from "./PhotosSubmitScreen";
 import { saveDraft, loadDraft, deleteDraft } from "@/lib/daily-log-offline";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import type {
   DailyLog, DailyLogWeather, DailyLogCrewEntry, DailyLogProgress,
   DailyLogPhoto, DelayCode, ParsedActivity,

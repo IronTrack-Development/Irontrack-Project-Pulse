@@ -3,9 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   LayoutDashboard,
   FolderOpen,

@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, FolderOpen, Upload, Home, ClipboardList } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 const navItems = [
   { href: "/dashboard", label: t('ui.dashboard'), icon: LayoutDashboard },

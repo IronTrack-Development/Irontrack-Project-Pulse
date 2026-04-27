@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   X, Plus, Trash2, Loader2, HardHat, Package, Truck,
 } from "lucide-react";
@@ -151,7 +150,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
       <div className="min-h-full flex items-start justify-center py-4 px-4">
         <div className="w-full max-w-2xl bg-[var(--bg-secondary)] rounded-2xl border border-[var(--border-primary)] overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
             <h2 className="text-[color:var(--text-primary)] font-bold text-base">{t('ui.new.t.and.m.ticket')}</h2>
             <button
               onClick={onCancel}
@@ -197,7 +196,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 placeholder={t('ui.brief.description.of.work.performed')}
-                className="w-full px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
+                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
               />
             </div>
 
@@ -206,7 +205,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
               <div className="flex items-center gap-2 mb-3">
                 <HardHat size={16} className="text-[#F97316]" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.labor')}</h3>
-                <div className="flex-1 h-px bg-[#1F1F25]" />
+                <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(laborTotal)}</span>
               </div>
 
@@ -293,7 +292,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
               <div className="flex items-center gap-2 mb-3">
                 <Package size={16} className="text-[#F97316]" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.materials.2402ea')}</h3>
-                <div className="flex-1 h-px bg-[#1F1F25]" />
+                <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(materialTotal)}</span>
               </div>
 
@@ -377,7 +376,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
               <div className="flex items-center gap-2 mb-3">
                 <Truck size={16} className="text-[#F97316]" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.equipment')}</h3>
-                <div className="flex-1 h-px bg-[#1F1F25]" />
+                <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(equipmentTotal)}</span>
               </div>
 
@@ -451,12 +450,12 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
                 placeholder={t('ui.any.additional.notes.7d5952')}
-                className="w-full px-3 py-2.5 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
+                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
               />
             </div>
 
             {/* Grand total */}
-            <div className="flex items-center justify-between p-4 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+            <div className="flex items-center justify-between p-4 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
               <span className="text-[color:var(--text-secondary)] font-medium text-sm">{t('ui.grand.total')}</span>
               <span className="text-2xl font-bold text-[#F97316]">{fmtCurrency(grandTotal)}</span>
             </div>
@@ -469,7 +468,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             <div className="flex gap-2 pb-2">
               <button
                 onClick={onCancel}
-                className="flex-1 py-3 px-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                className="flex-1 py-3 px-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px]"
               >{t('action.cancel')}
               </button>
               <button

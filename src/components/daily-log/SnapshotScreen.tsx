@@ -7,9 +7,7 @@ import {
   Check, RefreshCw,
 } from "lucide-react";
 import type { DailyLogWeather, DailyLogCrewEntry, WeatherCondition, WeatherImpact } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 /* ── Weather code → label + icon mapping ── */
 function weatherCodeToInfo(code: number): { label: string; emoji: string } {
@@ -234,7 +232,7 @@ export default function SnapshotScreen({
             <span className="text-sm text-[color:var(--text-secondary)]">{t('ui.fetching.weather')}</span>
           </div>
         ) : weatherError ? (
-          <div className="bg-[#121217] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
+          <div className="bg-[var(--bg-secondary)] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
             <p className="text-sm text-[#EAB308] mb-1">{t('ui.weather.unavailable.enter.manually')}</p>
             <p className="text-xs text-[color:var(--text-muted)]">{t('ui.could.not.reach.weather.service')}</p>
           </div>
@@ -442,7 +440,7 @@ export default function SnapshotScreen({
               value={newCompany}
               onChange={(e) => setNewCompany(e.target.value)}
               placeholder={t('ui.company.name.optional')}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
             <div className="flex gap-2">
@@ -457,8 +455,8 @@ export default function SnapshotScreen({
               <button
                 type="button"
                 onClick={() => { setShowAddTrade(false); setNewTrade(""); setNewCompany(""); }}
-                className="flex-1 py-2.5 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] text-sm
-                  hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="flex-1 py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-sm
+                  hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
               >{t('action.cancel')}
               </button>
             </div>

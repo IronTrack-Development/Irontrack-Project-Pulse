@@ -1,9 +1,7 @@
 "use client";
 
 import { Mail, Phone, Pencil, Trash2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export interface CompanyContact {
   id: string;
@@ -128,14 +126,14 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
         <div className="flex items-center gap-1.5 flex-none">
           <button
             onClick={() => onEdit(contact)}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
             title={t('ui.edit.contact.857c28')}
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => onRemove(contact)}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-red-400 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-red-400 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
             title={t('ui.remove.from.project')}
           >
             <Trash2 size={13} />

@@ -6,9 +6,7 @@ import { FieldReport, FieldReportStatus } from "@/types";
 import FieldReportDetail from "./FieldReportDetail";
 import AddReportModal from "./AddReportModal";
 import MultiAddFlow from "./MultiAddFlow";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -94,7 +92,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.reports')}</h2>
-          <span className="px-2 py-0.5 bg-[#1F1F25] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
+          <span className="px-2 py-0.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
             {count}
           </span>
         </div>

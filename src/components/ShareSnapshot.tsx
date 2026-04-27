@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Share2, Copy, Check, X, Loader2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface ShareSnapshotProps {
   projectId: string;

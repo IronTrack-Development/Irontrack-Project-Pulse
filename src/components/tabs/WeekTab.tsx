@@ -5,9 +5,7 @@ import { CalendarDays, Loader2, Share2, QrCode } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
 import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Activity {
   id: string;
@@ -212,7 +210,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowQR(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
                 title={t('ui.share.via.qr.code')}
               >
                 <QrCode size={13} />

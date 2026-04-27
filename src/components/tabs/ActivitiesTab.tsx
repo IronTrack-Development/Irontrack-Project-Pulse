@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { Search, SlidersHorizontal, RefreshCw, ChevronUp, ChevronDown, Building2 } from "lucide-react";
 import type { ParsedActivity } from "@/types";
 import ActivityDrawer from "@/components/ActivityDrawer";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 function statusStyle(status: string) {
   switch (status) {

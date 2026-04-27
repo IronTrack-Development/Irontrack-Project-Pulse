@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Phone, X, ChevronDown, ChevronUp } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Inspection {
   id: string;
@@ -79,9 +77,9 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
   return (
     <div>
       <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-3">{t('ui.inspection.history')}</h3>
-      <div className="space-y-1 rounded-xl border border-[#1F1F25] bg-[#121217] overflow-hidden">
+      <div className="space-y-1 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] overflow-hidden">
         {/* Header row — desktop only */}
-        <div className="hidden md:grid grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-2 bg-[#0B0B0D] text-[10px] font-medium text-[color:var(--text-muted)] uppercase tracking-wider">
+        <div className="hidden md:grid grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-2 bg-[var(--bg-primary)] text-[10px] font-medium text-[color:var(--text-muted)] uppercase tracking-wider">
           <span>{t('ui.type')}</span>
           <span>{t('ui.date')}</span>
           <span>{t('ui.permit')}</span>
@@ -174,7 +172,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                 </div>
 
                 {/* Status update buttons */}
-                <div className="flex gap-2 flex-wrap pt-2 border-t border-[#1F1F25]">
+                <div className="flex gap-2 flex-wrap pt-2 border-t border-[var(--border-primary)]">
                   <span className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider self-center mr-1">{t('ui.update')}
                   </span>
                   {["completed", "failed"].filter(s => s !== insp.status).map((s) => (

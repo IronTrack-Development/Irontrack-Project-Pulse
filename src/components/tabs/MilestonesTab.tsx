@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Flag, Loader2, CheckCircle, Clock, AlertTriangle, Users } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface ContextEntry {
   logDate: string;
@@ -153,7 +151,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
 
             {/* Context strip */}
             {isExpanded && hasContext && (
-              <div className="border-t border-[#1F1F25] px-4 py-3">
+              <div className="border-t border-[var(--border-primary)] px-4 py-3">
                 <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">{t('ui.daily.log.context.2.days')}</div>
                 <div className="space-y-1.5">
                   {milestone.contextStrip!.map((entry, i) => {

@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { ChevronDown, ChevronUp, Clock, CheckCircle2, XCircle, RotateCcw, Send, Loader2, Trash2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Revision {
   id: string;
@@ -187,7 +185,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             {/* Details grid */}
             <div className="grid grid-cols-2 gap-3 text-sm">
               {submittal.required_by && (
-                <div className="bg-[#0B0B0D] rounded-xl p-3">
+                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
                   <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.required.by')}</p>
                   <p className={`font-medium ${
                     new Date(submittal.required_by) < new Date() && submittal.status !== "approved" && submittal.status !== "approved_as_noted"
@@ -198,19 +196,19 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
                 </div>
               )}
               {submittal.lead_time_days != null && (
-                <div className="bg-[#0B0B0D] rounded-xl p-3">
+                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
                   <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.lead.time')}</p>
                   <p className="font-medium text-[color:var(--text-primary)]">{submittal.lead_time_days}{t('ui.days')}</p>
                 </div>
               )}
               {submittal.submitted_date && (
-                <div className="bg-[#0B0B0D] rounded-xl p-3">
+                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
                   <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.submitted')}</p>
                   <p className="font-medium text-[color:var(--text-primary)]">{formatDate(submittal.submitted_date)}</p>
                 </div>
               )}
               {submittal.returned_date && (
-                <div className="bg-[#0B0B0D] rounded-xl p-3">
+                <div className="bg-[var(--bg-primary)] rounded-xl p-3">
                   <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.returned')}</p>
                   <p className="font-medium text-[color:var(--text-primary)]">{formatDate(submittal.returned_date)}</p>
                 </div>
@@ -345,7 +343,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
             <div className="flex gap-3 pt-1 border-t border-[var(--border-primary)]">
               <button
                 onClick={onEdit}
-                className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
+                className="flex-1 py-3 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
               >{t('action.edit')}
               </button>
               <button

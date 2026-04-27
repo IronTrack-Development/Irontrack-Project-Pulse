@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { HardHat, Building2, Save } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 const TRADES = [
   { value: "electrical", label: t('ui.electrical') },
@@ -95,7 +93,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder={t('ui.e.g.martinez.electric.llc')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
@@ -121,7 +119,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
                 placeholder={t('ui.your.name')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>

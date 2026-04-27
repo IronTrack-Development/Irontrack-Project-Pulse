@@ -3,9 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, Search, Plus, Loader2, Check } from "lucide-react";
 import type { CompanyContact, ProjectContact } from "./ContactCard";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 const ROLE_OPTIONS = [
   { value: "architect", label: t('ui.architect') },
@@ -299,7 +297,7 @@ export default function AddContactModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t('ui.full.name')}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -310,7 +308,7 @@ export default function AddContactModal({
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     placeholder={t('ui.company.name')}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -337,7 +335,7 @@ export default function AddContactModal({
                       value={trade}
                       onChange={(e) => setTrade(e.target.value)}
                       placeholder={t('ui.e.g.electrical.plumbing.hvac')}
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -350,7 +348,7 @@ export default function AddContactModal({
                       value={discipline}
                       onChange={(e) => setDiscipline(e.target.value)}
                       placeholder={t('ui.e.g.structural.mep.civil')}
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -395,7 +393,7 @@ export default function AddContactModal({
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
+                className="flex-1 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
               >{t('action.cancel')}
               </button>
               <button

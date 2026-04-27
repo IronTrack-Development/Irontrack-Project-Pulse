@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   LayoutGrid, Folder, Upload, Home, ClipboardList,
   ChevronRight, AlertTriangle, Clock, Flag,

@@ -1,9 +1,7 @@
 import { CheckCircle, AlertTriangle, XCircle, Clock } from "lucide-react";
 import Link from "next/link";
 import { Building2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 const services = [
   { name: t('ui.web.application'), status: "operational", description: t('ui.irontrackpulse.com') },
@@ -107,8 +105,8 @@ export default function StatusPage() {
         </div>
 
         {/* Service List */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl overflow-hidden mb-8">
-          <div className="px-6 py-4 border-b border-[#1F1F25]">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden mb-8">
+          <div className="px-6 py-4 border-b border-[var(--border-primary)]">
             <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">{t('ui.services')}</h2>
           </div>
           <div className="divide-y divide-[#1F1F25]">

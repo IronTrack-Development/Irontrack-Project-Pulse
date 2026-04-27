@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { X, CalendarDays, Loader2 } from "lucide-react";
 import type { CoordinationMeetingType } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface NewMeetingModalProps {
   projectId: string;
@@ -103,7 +101,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
               placeholder={t('ui.meeting.title')}
             />
           </div>
@@ -127,7 +125,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={facilitator}
                 onChange={(e) => setFacilitator(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
                 placeholder={t('ui.optional')}
               />
             </div>
@@ -137,7 +135,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
                 placeholder={t('ui.optional')}
               />
             </div>

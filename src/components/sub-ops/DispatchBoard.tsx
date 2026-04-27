@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   Send, Plus, X, ChevronDown, ChevronUp, Calendar, MapPin,
   Clock, Users, FileText, Filter, CheckCircle,
@@ -233,7 +232,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.project_name}
                 onChange={(e) => setForm({ ...form, project_name: e.target.value })}
                 placeholder={t('ui.e.g.building.a.phase.2')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -242,7 +241,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.project_location}
                 onChange={(e) => setForm({ ...form, project_location: e.target.value })}
                 placeholder={t('ui.e.g.3rd.floor.east.wing')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -314,7 +313,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.expected_crew_size}
                 onChange={(e) => setForm({ ...form, expected_crew_size: e.target.value })}
                 placeholder={t('ui.e.g.4')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -325,7 +324,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.expected_hours}
                 onChange={(e) => setForm({ ...form, expected_hours: e.target.value })}
                 placeholder={t('ui.e.g.8')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>

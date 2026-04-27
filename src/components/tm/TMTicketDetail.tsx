@@ -6,9 +6,7 @@ import {
   PenLine, RefreshCw, Trash2,
 } from "lucide-react";
 import SignaturePad from "@/components/tm/SignaturePad";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -324,7 +322,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                             <img
                               src={m.receipt_photo_path}
                               alt={t('ui.receipt')}
-                              className="h-16 w-auto rounded-lg border border-[#1F1F25] object-cover"
+                              className="h-16 w-auto rounded-lg border border-[var(--border-primary)] object-cover"
                             />
                           </a>
                         )}
@@ -359,7 +357,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
 
               {/* Notes */}
               {ticket.notes && (
-                <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
                   <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.notes')}</p>
                   <p className="text-sm text-[color:var(--text-secondary)]">{ticket.notes}</p>
                 </div>
@@ -381,7 +379,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <h4 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3">{t('ui.signatures')}</h4>
                 <div className="grid grid-cols-2 gap-3">
                   {/* GC signature */}
-                  <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                  <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
                     <p className="text-xs text-[color:var(--text-muted)] mb-2">{t('ui.gc.owner')}</p>
                     {ticket.gc_signature_path ? (
                       <div>
@@ -412,7 +410,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                   </div>
 
                   {/* Sub signature */}
-                  <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                  <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
                     <p className="text-xs text-[color:var(--text-muted)] mb-2">{t('ui.subcontractor')}</p>
                     {ticket.sub_signature_path ? (
                       <div>
@@ -500,12 +498,12 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                     onChange={(e) => setDisputeReason(e.target.value)}
                     rows={2}
                     placeholder={t('ui.describe.the.dispute')}
-                    className="w-full px-3 py-2 bg-[#0B0B0D] border border-red-800/40 rounded-lg text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none resize-none"
+                    className="w-full px-3 py-2 bg-[var(--bg-primary)] border border-red-800/40 rounded-lg text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none resize-none"
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowDisputeInput(false)}
-                      className="flex-1 py-2 px-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[44px]"
+                      className="flex-1 py-2 px-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[44px]"
                     >{t('action.cancel')}</button>
                     <button
                       onClick={confirmDispute}
@@ -554,7 +552,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
             <div className="flex gap-2">
               <button
                 onClick={() => setShowSignedByPrompt(false)}
-                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm min-h-[44px]"
+                className="flex-1 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm min-h-[44px]"
               >{t('action.cancel')}</button>
               <button
                 onClick={proceedToSign}

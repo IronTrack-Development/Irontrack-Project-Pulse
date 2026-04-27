@@ -16,9 +16,8 @@ import {
   Phone,
 } from "lucide-react";
 import type { ParsedActivity, ReadyCheck, ReadyCheckContact, ReadyCheckType } from "@/types";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   generateReadyCheckMessage,
   generateFollowUpMessage,
@@ -458,7 +457,7 @@ export default function ReadyCheckModal({
       <div className="w-full mt-4">
         <button
           onClick={onClose}
-          className="w-full bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-primary)] font-semibold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-primary)] font-semibold rounded-xl py-3.5 text-sm transition-colors"
         >{t('ui.back.to.schedule')}
         </button>
       </div>

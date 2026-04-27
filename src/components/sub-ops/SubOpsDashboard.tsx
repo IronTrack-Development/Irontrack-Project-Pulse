@@ -6,9 +6,7 @@ import {
   ChevronRight, Plus, Clock, CheckCircle,
 } from "lucide-react";
 import CompanySetup from "./CompanySetup";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;

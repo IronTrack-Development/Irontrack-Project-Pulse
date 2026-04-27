@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Settings, Save } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface SafetySettingsProps {
   projectId: string;
@@ -65,7 +63,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder={t('ui.your.company.name.for.pdf.headers')}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">{t('ui.used.in.exported.pdf.headers')}
             </p>
@@ -79,7 +77,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={defaultPresenter}
               onChange={(e) => setDefaultPresenter(e.target.value)}
               placeholder={t('ui.auto.fill.presenter.name.on.new.talks')}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">{t('ui.pre.fills.the.presenter.field.when.creating.new.talks')}
             </p>
@@ -90,7 +88,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         <div className="p-4 border-t border-[var(--border-primary)] flex gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
           >{t('action.cancel')}
           </button>
           <button

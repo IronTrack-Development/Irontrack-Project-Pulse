@@ -3,9 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw, Clock, Users, CloudRain, AlertTriangle } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface MonthlySummary {
   month: string;
@@ -83,7 +81,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
     return (
       <div className="mb-6">
         <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.daily.crew.size')}</h3>
-        <div className="bg-[#121217] rounded-xl p-3 overflow-x-auto">
+        <div className="bg-[var(--bg-secondary)] rounded-xl p-3 overflow-x-auto">
           <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ maxHeight: 160 }}>
             <polygon points={areaPoints} fill="#F97316" opacity="0.1" />
             <polyline points={points.join(" ")} fill="none" stroke="#F97316" strokeWidth="2" />
@@ -173,7 +171,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
 
           {/* Month-over-month comparison */}
           {data.monthOverMonth && (
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 mb-6">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 mb-6">
               <h3 className="text-xs font-bold text-[color:var(--text-muted)] uppercase mb-2">{t('ui.vs.previous.month')}</h3>
               <div className="flex flex-wrap gap-6 text-sm">
                 <div>
@@ -216,10 +214,10 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {data.recurringDelayCodes.length > 0 && (
             <div className="mb-6">
               <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.recurring.delay.codes')}</h3>
-              <div className="bg-[#121217] rounded-xl overflow-hidden">
+              <div className="bg-[var(--bg-secondary)] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-[#1F1F25]">
+                    <tr className="border-b border-[var(--border-primary)]">
                       <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.code')}</th>
                       <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.occurrences')}</th>
                     </tr>

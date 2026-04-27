@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   CheckCircle, Camera, Plus, X, AlertTriangle, Send, Clock,
   Users, Shield, Package, FileText,
@@ -288,7 +287,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
                 placeholder={t('ui.e.g.4')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -300,7 +299,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={hoursWorked}
                 onChange={(e) => setHoursWorked(e.target.value)}
                 placeholder={t('ui.e.g.8')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -374,7 +373,7 @@ export default function CheckInView({ projectId }: Props) {
                   value={entry.description}
                   onChange={(e) => updateEntry(idx, "description", e.target.value)}
                   placeholder={t('ui.e.g.ran.conduit.on.3rd.floor.east.wing')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -404,7 +403,7 @@ export default function CheckInView({ projectId }: Props) {
                     value={entry.area}
                     onChange={(e) => updateEntry(idx, "area", e.target.value)}
                     placeholder={t('ui.3rd.floor')}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
               </div>

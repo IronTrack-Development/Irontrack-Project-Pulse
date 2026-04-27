@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   Flag, Truck, Search, HardHat, ClipboardCheck,
   Calendar, ChevronDown, ChevronUp, AlertTriangle, CheckCircle
@@ -80,7 +79,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#1F1F25] text-[color:var(--text-muted)] border border-[#2a2a33]">{t('ui.upcoming')}
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[#2a2a33]">{t('ui.upcoming')}
     </span>
   );
 }

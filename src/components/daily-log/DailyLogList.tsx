@@ -7,9 +7,7 @@ import {
   Thermometer, Users, AlertTriangle, Image as ImageIcon,
 } from "lucide-react";
 import type { DailyLog, DailyLogWeather, DailyLogCrewEntry } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface DailyLogListProps {
   projectId: string;

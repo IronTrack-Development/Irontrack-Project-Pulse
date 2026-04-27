@@ -3,9 +3,7 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
 import { Plus, RefreshCw, FileImage, Calendar, Layers, Upload, Trash2, X } from "lucide-react";
 import SheetBrowser from "@/components/drawings/SheetBrowser";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // Lazy-load SheetViewer to avoid SSR issues with react-pdf
 const SheetViewer = lazy(() => import("@/components/drawings/SheetViewer"));
@@ -400,7 +398,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
         <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4">
           <div className="w-full sm:max-w-md bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl border border-[var(--border-primary)] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
               <h2 className="text-[color:var(--text-primary)] font-semibold">{t('ui.upload.drawing.set')}</h2>
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
@@ -465,7 +463,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.name}
                   onChange={(e) => setUploadForm((p) => ({ ...p, name: e.target.value }))}
                   placeholder={t('ui.e.g.architectural.drawings')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
@@ -478,7 +476,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.revision}
                   onChange={(e) => setUploadForm((p) => ({ ...p, revision: e.target.value }))}
                   placeholder={t('ui.rev.0')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
@@ -491,7 +489,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                   value={uploadForm.description}
                   onChange={(e) => setUploadForm((p) => ({ ...p, description: e.target.value }))}
                   placeholder={t('ui.brief.description')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
@@ -527,7 +525,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             <div className="px-4 py-4 border-t border-[var(--border-primary)] flex gap-3">
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
-                className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
               >{t('action.cancel')}
               </button>
               <button

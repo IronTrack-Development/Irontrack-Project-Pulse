@@ -1,8 +1,7 @@
 "use client";
 
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   CalendarDays,
   ClipboardList,

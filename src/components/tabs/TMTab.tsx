@@ -4,9 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Plus, RefreshCw, Receipt, DollarSign, Clock, AlertTriangle, CheckCircle2 } from "lucide-react";
 import TMTicketForm from "@/components/tm/TMTicketForm";
 import TMTicketDetail from "@/components/tm/TMTicketDetail";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;

@@ -14,9 +14,7 @@ import type { CoordinationMeeting } from "@/types";
 import NewMeetingModal from "./NewMeetingModal";
 import MeetingDetail from "./MeetingDetail";
 import ActionTracker from "./ActionTracker";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface CoordinationDashboardProps {
   projectId: string;

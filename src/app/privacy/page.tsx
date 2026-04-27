@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Building2, ArrowLeft } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function PrivacyPage() {
   return (
@@ -69,7 +67,7 @@ export default function PrivacyPage() {
           {/* Aggregate Data */}
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.3.aggregate.data.and.intelligence')}</h2>
-            <p className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-6">
+            <p className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-6">
               <strong className="text-[color:var(--text-primary)]">{t('ui.we.analyze.uploaded.schedules.in.anonymized.aggregate.form.to.improve')}</strong>{t('ui.this.aggregate.data.contains.no.personally.identifiable.information.and.cannot')}
             </p>
             <p className="mt-4">{t('ui.here.s.what.that.means.in.practice')}

@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Building2, ArrowLeft } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function TermsPage() {
   return (
@@ -88,7 +86,7 @@ export default function TermsPage() {
           {/* Data Usage */}
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.5.data.usage.and.intelligence')}</h2>
-            <p className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-6">
+            <p className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-6">
               <strong className="text-[color:var(--text-primary)]">{t('ui.we.may.use.anonymized.aggregate.data.from.uploaded.schedules.to')}</strong>{t('ui.individual.project.data.is.never.shared.sold.or.identified.your')}
             </p>
             <p className="mt-4">{t('ui.this.means.we.analyze.patterns.across.many.schedules.without.identifying')}

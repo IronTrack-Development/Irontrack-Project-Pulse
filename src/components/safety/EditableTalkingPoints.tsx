@@ -1,9 +1,7 @@
 "use client";
 
 import { Plus, X, ChevronUp, ChevronDown } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface EditableTalkingPointsProps {
   points: string[];

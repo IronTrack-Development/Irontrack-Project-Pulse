@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   X, Clock, DollarSign, User, FileText, Calendar, ChevronRight,
   Send, CheckCircle2, XCircle, Loader2, MessageSquare, Camera,
@@ -54,7 +53,7 @@ interface RFIDetailProps {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: t('status.draft'),        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: t('status.draft'),        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: t('ui.submitted'),    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: t('ui.under.review'), color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: t('ui.answered'),     color: "#22C55E", bg: "bg-green-500/15" },
@@ -281,7 +280,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 value={respondedByName}
                 onChange={(e) => setRespondedByName(e.target.value)}
                 placeholder={t('ui.respondent.name.optional')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-2.5 text-sm text-[color:var(--text-primary)]
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-2.5 text-sm text-[color:var(--text-primary)]
                   placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 mb-2 min-h-[44px]"
               />
               <textarea

@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   CheckCircle2,
   Loader2,
@@ -226,7 +225,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
                   <div>
                     <p className="text-sm text-gray-200 font-medium">{t('ui.tap.the.share.button')}</p>
                     <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.look.for.the')}{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">□↑</span>{" "}{t('ui.icon.at.the.bottom.of.safari')}
+                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">□↑</span>{" "}{t('ui.icon.at.the.bottom.of.safari')}
                     </p>
                   </div>
                 </li>
@@ -255,7 +254,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
                   <div>
                     <p className="text-sm text-gray-200 font-medium">{t('ui.tap.the.three.dots')}</p>
                     <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.find.the')}{" "}
-                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">⋮</span>{" "}{t('ui.menu.in.the.top.right.of.chrome')}
+                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">⋮</span>{" "}{t('ui.menu.in.the.top.right.of.chrome')}
                     </p>
                   </div>
                 </li>
@@ -301,7 +300,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
           </button>
           <button
             onClick={onSkip}
-            className="w-full px-4 py-3.5 bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
+            className="w-full px-4 py-3.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
           >{t('ui.skip.for.now')}
           </button>
         </div>
@@ -414,7 +413,7 @@ function WaitingScreen({
         </div>
 
         {/* Confirmation Card */}
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-3">
           <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.registration.confirmed')}
           </p>
           <div className="space-y-2">
@@ -446,7 +445,7 @@ function WaitingScreen({
         </div>
 
         {/* What happens next */}
-        <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-4 space-y-2">
+        <div className="bg-[#0d0d11] border border-[var(--border-primary)] rounded-xl px-4 py-4 space-y-2">
           <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">{t('ui.what.happens.next')}</p>
           <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
             <li className="flex items-start gap-2">

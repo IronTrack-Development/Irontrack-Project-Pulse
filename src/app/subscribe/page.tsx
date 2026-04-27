@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Building2, Loader2, CheckCircle } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function SubscribePage() {
   const router = useRouter();
@@ -50,7 +48,7 @@ export default function SubscribePage() {
         </div>
 
         {/* Subscription Card */}
-        <div className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-8">
+        <div className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-8">
           <h1 className="text-2xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.subscribe.to.project.pulse')}</h1>
           <p className="text-[color:var(--text-secondary)] mb-6">{t('ui.get.instant.schedule.intelligence.for.your.construction.projects')}
           </p>

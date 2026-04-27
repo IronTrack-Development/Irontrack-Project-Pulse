@@ -2,9 +2,7 @@
 
 import { useRef, useCallback } from "react";
 import { Camera, ImagePlus, X } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export interface RFIPhoto {
   id: string;

@@ -5,9 +5,7 @@ import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { SupportButton } from "@/components/support-button";
 import AppearanceSettings from "@/components/settings/AppearanceSettings";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default async function SettingsPage() {
   const supabase = await createClient();

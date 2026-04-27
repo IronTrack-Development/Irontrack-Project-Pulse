@@ -8,9 +8,8 @@ import {
 } from "lucide-react";
 import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import { useRouter } from "next/navigation";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import type {
   DailyLogPhoto, DailyLogWeather, DailyLogCrewEntry,
   DailyLogProgress, DelayCode, ParsedActivity,
@@ -275,7 +274,7 @@ export default function PhotosSubmitScreen({
       </div>
 
       {/* Summary Card */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-4 space-y-3">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.log.summary')}</h3>
 
         <div className="grid grid-cols-2 gap-3 text-xs">

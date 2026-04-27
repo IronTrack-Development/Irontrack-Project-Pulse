@@ -8,9 +8,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import type { CoordinationActionItem, ActionItemCategory, ActionItemPriority, ActionItemStatus } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface ActionTrackerProps {
   projectId: string;

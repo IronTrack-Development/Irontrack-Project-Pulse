@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, TrendingUp, Calendar, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface ActivityActual {
   activityId: string;
@@ -64,7 +62,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-gray-600 w-14 shrink-0">{t('ui.planned')}</span>
-            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+            <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gray-600 transition-all duration-500"
                 style={{ width: `${plannedClamped}%` }}
@@ -74,7 +72,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-gray-600 w-14 shrink-0">{t('ui.actual')}</span>
-            <div className="flex-1 bg-[#0B0B0D] rounded-full h-2 overflow-hidden">
+            <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
                 className="h-full rounded-full bg-[#F97316] transition-all duration-500"
                 style={{ width: `${actualClamped}%` }}
@@ -87,7 +85,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
 
       {/* History drawer */}
       {expanded && activity.history.length > 0 && (
-        <div className="border-t border-[#1F1F25] px-4 py-3 space-y-2">
+        <div className="border-t border-[var(--border-primary)] px-4 py-3 space-y-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.log.history')}</div>
           {activity.history.map((h, i) => {
             const delta = h.pctAfter - h.pctBefore;
@@ -146,7 +144,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
 
   if (!data) {
     return (
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <div className="text-[color:var(--text-secondary)] text-sm">{t('ui.unable.to.load.progress.data')}</div>
       </div>
     );
@@ -228,7 +226,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       )}
 
       {/* Breakdown */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-6">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
         <div className="text-sm font-semibold text-[color:var(--text-primary)] mb-4">{t('ui.activity.breakdown')}</div>
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">

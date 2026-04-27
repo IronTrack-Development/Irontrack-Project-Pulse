@@ -2,9 +2,7 @@
 
 import { useState, useRef } from "react";
 import { X, Camera, Trash2, Edit3, Loader2, CheckSquare, PlayCircle, Eye, AlertTriangle } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Photo {
   id: string;
@@ -50,7 +48,7 @@ interface PunchItemDetailProps {
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   life_safety: { label: t('ui.life.safety'), color: "#EF4444", bg: "bg-red-500/15" },
   code:        { label: t('ui.code'),        color: "#F97316", bg: "bg-orange-500/15" },
-  standard:    { label: t('ui.standard'),    color: "#6B7280", bg: "bg-gray-500/15" },
+  standard:    { label: t('ui.standard'),    color: "var(--text-muted)", bg: "bg-gray-500/15" },
   cosmetic:    { label: t('ui.cosmetic'),    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
 
@@ -197,13 +195,13 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
           {/* Meta */}
           <div className="grid grid-cols-2 gap-2 text-xs">
             {locationParts.length > 0 && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.location')}</p>
                 <p className="text-[color:var(--text-primary)] font-medium">{locationParts.join(" · ")}</p>
               </div>
             )}
             {item.assigned_contact && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.assigned.to.d00c2e')}</p>
                 <p className="text-[color:var(--text-primary)] font-medium truncate">{item.assigned_contact.name}</p>
                 {item.assigned_contact.company && (
@@ -212,13 +210,13 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
               </div>
             )}
             {item.due_date && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.due.date')}</p>
                 <p className="text-[color:var(--text-primary)] font-medium">{new Date(item.due_date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
             )}
             {item.closed_date && (
-              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
                 <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.closed')}</p>
                 <p className="text-green-400 font-medium">{new Date(item.closed_date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
@@ -328,7 +326,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   placeholder={t('ui.add.notes')}
                 />
                 <div className="flex gap-2">
-                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-[color:var(--text-secondary)] rounded-lg bg-[#1F1F25]">{t('action.cancel')}</button>
+                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-[color:var(--text-secondary)] rounded-lg bg-[var(--bg-tertiary)]">{t('action.cancel')}</button>
                   <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-[color:var(--text-primary)] rounded-lg bg-[#F97316]">
                     {saving ? t('ui.saving') : t('ui.save.notes')}
                   </button>
@@ -340,7 +338,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
           </div>
 
           {/* Status action buttons */}
-          <div className="border-t border-[#1F1F25] pt-4 space-y-2">
+          <div className="border-t border-[var(--border-primary)] pt-4 space-y-2">
             <p className="text-xs text-[color:var(--text-muted)] font-medium mb-2">{t('ui.update.status')}</p>
             <div className="grid grid-cols-1 gap-2">
               {item.status === "open" && (
@@ -377,8 +375,8 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                 <button
                   onClick={() => updateStatus("open")}
                   disabled={saving}
-                  className="w-full py-3.5 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] font-medium text-sm
-                    hover:bg-[#2a2a35] transition-all min-h-[52px]"
+                  className="w-full py-3.5 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] font-medium text-sm
+                    hover:bg-[var(--bg-hover)] transition-all min-h-[52px]"
                 >{t('ui.reopen.item')}
                 </button>
               )}

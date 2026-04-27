@@ -22,9 +22,7 @@ import type {
   ScheduleConflict,
 } from "@/types";
 import ConflictDetector from "./ConflictDetector";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface MeetingDetailProps {
   projectId: string;
@@ -413,7 +411,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAgendaTitle(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAgendaItem()}
               placeholder={t('ui.add.agenda.item')}
-              className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAgendaItem}
@@ -427,7 +425,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       </div>
 
       {/* Action Items Section */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <h3 className="text-[color:var(--text-primary)] font-semibold mb-3">{t('ui.action.items')}</h3>
 
         {actionItems.length === 0 && (
@@ -490,7 +488,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 onChange={(e) => setNewActionTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addActionItem()}
                 placeholder={t('ui.action.item.title')}
-                className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
               />
               <button
                 onClick={addActionItem}
@@ -507,7 +505,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   value={newActionAssignee}
                   onChange={(e) => setNewActionAssignee(e.target.value)}
                   placeholder={t('ui.assigned.to')}
-                  className="px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-xs focus:border-[#F97316] focus:outline-none min-h-[36px] w-36"
+                  className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-[#F97316] focus:outline-none min-h-[36px] w-36"
                 />
                 <select
                   value={newActionCategory}
@@ -584,7 +582,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder={t('ui.name')}
-              className="flex-1 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <input
               type="text"
@@ -592,7 +590,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeCompany(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder={t('ui.company')}
-              className="w-32 px-3 py-2 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-32 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAttendee}
@@ -606,7 +604,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
       </div>
 
       {/* Meeting Notes */}
-      <div className="mb-6 p-4 rounded-xl bg-[#121217] border border-[#1F1F25]">
+      <div className="mb-6 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)]">
         <h3 className="text-[color:var(--text-primary)] font-semibold mb-3">{t('ui.meeting.notes')}</h3>
         <textarea
           value={notes}
@@ -615,7 +613,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           disabled={!isEditable}
           rows={6}
           placeholder={t('ui.meeting.notes.624c4b')}
-          className="w-full px-3 py-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none resize-y disabled:opacity-50"
+          className="w-full px-3 py-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none resize-y disabled:opacity-50"
         />
         {savingNotes && (
           <p className="text-xs text-[color:var(--text-muted)] mt-1 flex items-center gap-1">

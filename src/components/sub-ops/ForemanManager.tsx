@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   Users, Plus, X, ArrowLeft, Phone, Mail, Award, Calendar, Clock,
   Send, CheckCircle, TrendingUp, FileText, Edit3, UserMinus, UserPlus,
@@ -320,7 +319,7 @@ export default function ForemanManager({ projectId }: Props) {
 
       {/* Add Form */}
       {showAdd && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.new.foreman')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -329,7 +328,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder={t('ui.e.g.mike.rodriguez')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -338,7 +337,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.trade}
                 onChange={(e) => setForm({ ...form, trade: e.target.value })}
                 placeholder={t('ui.e.g.electrical')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -365,7 +364,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.certifications}
                 onChange={(e) => setForm({ ...form, certifications: e.target.value })}
                 placeholder={t('ui.osha.30.first.aid.comma.separated')}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>

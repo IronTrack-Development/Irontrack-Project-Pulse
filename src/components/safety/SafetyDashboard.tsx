@@ -11,9 +11,7 @@ import NewTalkModal from "./NewTalkModal";
 import TalkDetail from "./TalkDetail";
 import SafetySettings from "./SafetySettings";
 import TemplateManager from "./TemplateManager";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface SafetyDashboardProps {
   projectId: string;
@@ -220,19 +218,19 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
           <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.this.month')}
           </div>
           <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">
             {thisMonthTalks.length}
           </div>
         </div>
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
           <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.avg.attendance')}
           </div>
           <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">{avgAttendance}</div>
         </div>
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
           <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.follow.ups')}
           </div>
           <div

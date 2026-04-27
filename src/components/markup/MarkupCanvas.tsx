@@ -1,9 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -561,7 +559,7 @@ export default function MarkupCanvas({
             onClick={() => setActions((prev) => prev.slice(0, -1))}
             disabled={actions.length === 0}
             title={t('ui.undo')}
-            className="rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
+            className="rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ↩
@@ -573,7 +571,7 @@ export default function MarkupCanvas({
               setTextOverlay(null);
             }}
             title={t('ui.clear.all')}
-            className="rounded-xl bg-[#1F1F25] text-[#EF4444] transition-all flex items-center justify-center text-base"
+            className="rounded-xl bg-[var(--bg-tertiary)] text-[#EF4444] transition-all flex items-center justify-center text-base"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             🗑
@@ -581,7 +579,7 @@ export default function MarkupCanvas({
           <button
             onClick={onCancel}
             title={t('action.cancel')}
-            className="rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-all flex items-center justify-center text-base font-bold"
+            className="rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-all flex items-center justify-center text-base font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
             ✕

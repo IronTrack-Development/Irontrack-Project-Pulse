@@ -3,9 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw, Clock, AlertTriangle, Flag } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface QuarterlySummary {
   quarter: string;
@@ -146,7 +144,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {data.milestoneHitRate !== null && (
             <div className="mb-6">
               <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.milestone.performance')}</h3>
-              <div className="bg-[#121217] rounded-xl p-4">
+              <div className="bg-[var(--bg-secondary)] rounded-xl p-4">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16">
                     <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">

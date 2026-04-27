@@ -4,9 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Building2, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function SubLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

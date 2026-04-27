@@ -4,9 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Camera, Pencil, X, Loader2 } from "lucide-react";
 import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import VoiceTextArea from "@/components/daily-log/VoiceTextArea";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -145,7 +143,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
     <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="w-full sm:max-w-lg bg-[var(--bg-secondary)] rounded-t-3xl sm:rounded-3xl border border-[var(--border-primary)] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-primary)]">
           <h2 className="text-base font-bold text-[color:var(--text-primary)]">{t('ui.add.punch.item')}</h2>
           <button
             onClick={onCancel}

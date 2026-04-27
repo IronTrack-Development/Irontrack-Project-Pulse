@@ -8,9 +8,7 @@ import {
   Users, CloudRain, Activity, Printer
 } from "lucide-react";
 import type { IssueReport, ReportStatus } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -120,7 +118,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div className="flex gap-2">
           <button
             onClick={generate}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
             title={t('action.refresh')}
           >
             <RefreshCw size={14} />
@@ -273,7 +271,7 @@ export default function ReportsTab({ projectId }: Props) {
                           href={`/projects/${projectId}/reports/${report.id}/print`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
+                          className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
                           title={t('ui.view.pdf')}
                         >
                           <ExternalLink size={14} />
@@ -282,7 +280,7 @@ export default function ReportsTab({ projectId }: Props) {
                       <button
                         onClick={() => handleDelete(report.id)}
                         disabled={deletingId === report.id}
-                        className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
+                        className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
                         title={t('ui.delete.observation')}
                       >
                         {deletingId === report.id ? (
@@ -316,7 +314,7 @@ export default function ReportsTab({ projectId }: Props) {
                   href={`/projects/${projectId}/reports/${report.id}/print`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
                 >{t('ui.view.observation')}
                   <ChevronRight size={12} />
                 </a>

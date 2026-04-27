@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Search, Lock, AlertTriangle, X } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Jurisdiction {
   id: string;
@@ -179,7 +177,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirming(null)}
-                className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
               >{t('action.cancel')}
               </button>
               <button

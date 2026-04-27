@@ -2,9 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -14,7 +12,7 @@ export default function MobileMenu() {
         {open ? <X size={20} /> : <Menu size={20} />}
       </button>
       {open && (
-        <div className="absolute top-full left-0 right-0 bg-[#0B0B0D] border-b border-[#1F1F25] px-4 py-4 flex flex-col gap-4 z-50">
+        <div className="absolute top-full left-0 right-0 bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-4 flex flex-col gap-4 z-50">
           <a href="#about" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">{t('ui.about.us')}</a>
           <a href="#who-we-serve" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">{t('ui.who.we.serve')}</a>
           <a href="#features" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">{t('ui.features')}</a>

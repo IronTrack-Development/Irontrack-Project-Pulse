@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation";
 import type { ParsedActivity, DailyRisk, ReadyCheck } from "@/types";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 function fmt(d?: string) {
   if (!d) return "—";
@@ -175,7 +173,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
         <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom)+80px)] md:pb-6 space-y-6">
           {/* Trade + Area */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
+            <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
               <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.trade')}</div>
               <div className="text-sm font-semibold text-[#F97316]">{activity.trade || t('ui.general')}</div>
             </div>

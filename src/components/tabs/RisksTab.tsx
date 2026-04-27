@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle, Clock, RefreshCw } from "lucide-react";
 import type { DailyRisk } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 const SEVERITY_FILTERS = ["all", "high", "medium", "low"] as const;
 
@@ -62,7 +60,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
       )}
 
       {risk.suggested_action && (
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-3">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-3">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.recommended.action')}</div>
           <div className="text-xs text-[color:var(--text-secondary)]">{risk.suggested_action}</div>
         </div>

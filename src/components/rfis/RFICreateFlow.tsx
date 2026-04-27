@@ -7,9 +7,7 @@ import {
 } from "lucide-react";
 import VoiceTextArea from "@/components/daily-log/VoiceTextArea";
 import RFIPhotoCapture, { type RFIPhoto } from "@/components/rfis/RFIPhotoCapture";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -136,7 +134,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
     { value: "critical", label: t('ui.critical'), color: "#EF4444" },
     { value: "high", label: t('ui.high'), color: "#F97316" },
     { value: "normal", label: t('ui.normal'), color: "#3B82F6" },
-    { value: "low", label: t('ui.low'), color: "#6B7280" },
+    { value: "low", label: t('ui.low'), color: "var(--text-muted)" },
   ];
 
   const architectContacts = contacts.filter(

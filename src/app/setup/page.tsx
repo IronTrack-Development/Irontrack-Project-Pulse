@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, AlertTriangle, Database, ExternalLink, Copy, RefreshCw } from "lucide-react";
 import { readFileSync } from "fs";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function SetupPage() {
   const [status, setStatus] = useState<{
@@ -104,7 +102,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
 
         {/* Instructions */}
         {status && !status.ready && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
             <h2 className="font-semibold text-[color:var(--text-primary)] mb-3">{t('ui.run.migration')}</h2>
             <ol className="space-y-3 text-sm text-[color:var(--text-secondary)] mb-5">
               <li className="flex gap-2">
@@ -118,7 +116,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
                 </a>
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">2.</span>{t('ui.open.the.file.at')} <code className="text-[color:var(--text-secondary)] font-mono bg-[#0B0B0D] px-1 rounded">{t('ui.src.migrations.001.irontrack.daily.sql')}</code>
+                <span className="text-[#F97316] font-bold shrink-0">2.</span>{t('ui.open.the.file.at')} <code className="text-[color:var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1 rounded">{t('ui.src.migrations.001.irontrack.daily.sql')}</code>
               </li>
               <li className="flex gap-2">
                 <span className="text-[#F97316] font-bold shrink-0">3.</span>{t('ui.paste.the.full.sql.and.click.run')}
@@ -127,7 +125,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
                 <span className="text-[#F97316] font-bold shrink-0">4.</span>{t('ui.come.back.here.and.click.refresh.to.confirm.tables.were')}
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">5.</span>{t('ui.run.the.seed')} <code className="text-[color:var(--text-secondary)] font-mono bg-[#0B0B0D] px-1 rounded">{t('ui.npx.tsx.src.seed.seed.demo.ts')}</code>
+                <span className="text-[#F97316] font-bold shrink-0">5.</span>{t('ui.run.the.seed')} <code className="text-[color:var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1 rounded">{t('ui.npx.tsx.src.seed.seed.demo.ts')}</code>
               </li>
             </ol>
 

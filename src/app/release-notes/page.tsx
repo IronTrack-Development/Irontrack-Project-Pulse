@@ -3,9 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Building2 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 type Platform = "Web" | "iOS" | "Android";
 

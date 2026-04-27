@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
-const { t } = useTranslation();
 import {
   TrendingUp, Calendar, Users, Filter, Clock,
 } from "lucide-react";
@@ -140,7 +139,7 @@ export default function ProductionTracker({ projectId }: Props) {
           value={filterProject}
           onChange={(e) => setFilterProject(e.target.value)}
           placeholder={t('ui.filter.by.project')}
-          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none placeholder-gray-600 min-h-[36px]"
+          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none placeholder-gray-600 min-h-[36px]"
         />
       </div>
 

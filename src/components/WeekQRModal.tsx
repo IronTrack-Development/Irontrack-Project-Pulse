@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Copy, Check, Share2, Loader2, QrCode } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;

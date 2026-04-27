@@ -12,9 +12,7 @@ import ProjectNav from "@/components/navigation/ProjectNav";
 import { SupportButton } from "@/components/support-button";
 import NotificationBell from "@/components/NotificationBell";
 import { ProjectDataProvider } from "@/lib/ProjectDataContext";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ---------------------------------------------------------------------------
 // Lazy-loaded tab components — only fetched when the user navigates to them

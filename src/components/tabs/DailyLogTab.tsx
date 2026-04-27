@@ -3,9 +3,7 @@
 import { useState } from "react";
 import DailyLogList from "@/components/daily-log/DailyLogList";
 import RollupDashboard from "@/components/daily-log/RollupDashboard";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 type SubView = "logs" | "rollups";
 

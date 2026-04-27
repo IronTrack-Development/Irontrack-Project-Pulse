@@ -31,9 +31,7 @@ import {
   ArrowRightLeft,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ─── Group & Tab Definitions ──────────────────────────────────────────────────
 

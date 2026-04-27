@@ -8,9 +8,7 @@ import {
 } from "lucide-react";
 import ProgressUpdateModal from "@/components/ProgressUpdateModal";
 import type { ParsedActivity, ScheduleSnapshot } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -231,7 +229,7 @@ export default function ReforecastTab({ projectId }: Props) {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.completion')}</div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)]">{stats.avg_completion}%</div>
           <div className="mt-1.5 h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
@@ -239,7 +237,7 @@ export default function ReforecastTab({ projectId }: Props) {
           </div>
         </div>
 
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.forecast.delta')}</div>
           <div className="text-2xl font-bold flex items-center gap-1" style={{ color: deltaColor(delta) }}>
             {delta > 0 ? <ArrowUpRight size={20} /> : delta < 0 ? <ArrowDownRight size={20} /> : <Minus size={16} />}
@@ -249,14 +247,14 @@ export default function ReforecastTab({ projectId }: Props) {
           </div>
         </div>
 
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.critical.path.ca1e55')}</div>
           <div className="text-2xl font-bold text-[#EF4444]">{stats.critical_activities}</div>
           <div className="text-[10px] text-gray-600 mt-1">{t('ui.of')} {stats.total_activities}{t('ui.total.tasks')}
           </div>
         </div>
 
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.at.risk')}</div>
           <div className="text-2xl font-bold" style={{ color: stats.at_risk_activities > 0 ? "#EAB308" : "#22C55E" }}>
             {stats.at_risk_activities}

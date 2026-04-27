@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { Sun, Moon, Globe } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function AppearanceSettings() {
   const [currentTheme, setCurrentTheme] = useState<Theme>("dark");

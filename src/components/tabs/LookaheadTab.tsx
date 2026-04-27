@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, RefreshCw, ChevronDown, AlertTriangle } from "lucide-react";
 import type { LookaheadGroup, ParsedActivity } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface TradeFlag {
   trade: string;

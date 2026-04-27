@@ -5,9 +5,7 @@ import { UserPlus, QrCode, Search, Users, X, RefreshCw } from "lucide-react";
 import ContactCard, { type ProjectContact } from "@/components/directory/ContactCard";
 import AddContactModal from "@/components/directory/AddContactModal";
 import QRShareModal from "@/components/directory/QRShareModal";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -144,7 +142,7 @@ export default function DirectoryTab({ projectId }: Props) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('ui.search.contacts')}
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
             {search && (
               <button

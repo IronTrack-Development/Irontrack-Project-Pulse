@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Bell, BellOff } from 'lucide-react';
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 export default function NotificationBell({ projectId }: { projectId: string }) {
   const [enabled, setEnabled] = useState<boolean | null>(null);

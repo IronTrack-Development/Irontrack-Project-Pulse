@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Plus, Trash2, Save, BookOpen, RefreshCw } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
 import EditableTalkingPoints from "./EditableTalkingPoints";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface TemplateManagerProps {
   projectId: string;
@@ -188,7 +186,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
                   placeholder={t('ui.template.title')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -225,7 +223,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formOsha}
                   onChange={(e) => setFormOsha(e.target.value)}
                   placeholder={t('ui.e.g.29.cfr.1926.501')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -252,7 +250,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                     {temps.map((template) => (
                       <div
                         key={template.id}
-                        className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 flex items-center justify-between gap-2"
+                        className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 flex items-center justify-between gap-2"
                       >
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
@@ -304,7 +302,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <>
               <button
                 onClick={resetForm}
-                className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
               >{t('action.cancel')}
               </button>
               <button
@@ -320,7 +318,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <>
               <button
                 onClick={onClose}
-                className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+                className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
               >{t('ui.close')}
               </button>
               <button

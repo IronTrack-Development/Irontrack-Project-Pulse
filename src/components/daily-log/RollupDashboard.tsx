@@ -5,9 +5,7 @@ import WeeklyRollup from "./WeeklyRollup";
 import MonthlyRollup from "./MonthlyRollup";
 import QuarterlyRollup from "./QuarterlyRollup";
 import YearlyRollup from "./YearlyRollup";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 type RollupView = "weekly" | "monthly" | "quarterly" | "yearly";
 

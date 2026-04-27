@@ -5,9 +5,7 @@ import Link from "next/link";
 import MarkupCanvas from "@/components/markup/MarkupCanvas";
 import type { MarkupAction } from "@/components/markup/MarkupCanvas";
 import type { IssueReport, ReportIssue, IssuePriority, IssueCategory } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface IssueWithPhotos extends ReportIssue {
   photoUrls: string[];

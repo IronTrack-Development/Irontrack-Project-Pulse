@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Shield, ChevronRight, Plus, Minus, BookOpen } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
 import EditableTalkingPoints from "./EditableTalkingPoints";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface NewTalkModalProps {
   projectId: string;
@@ -206,7 +204,7 @@ export default function NewTalkModal({
                       <button
                         key={template.id}
                         onClick={() => selectTemplate(template)}
-                        className="w-full flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
+                        className="w-full flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
                       >
                         <div className="text-left min-w-0 flex-1">
                           <div className="text-sm text-[color:var(--text-primary)] truncate">
@@ -238,7 +236,7 @@ export default function NewTalkModal({
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder={t('ui.safety.topic.for.today.s.talk')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
@@ -297,7 +295,7 @@ export default function NewTalkModal({
                     value={presenter}
                     onChange={(e) => setPresenter(e.target.value)}
                     placeholder={t('ui.name.709a23')}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -308,7 +306,7 @@ export default function NewTalkModal({
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder={t('ui.where')}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -332,7 +330,7 @@ export default function NewTalkModal({
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   placeholder={t('ui.additional.notes')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
                 />
               </div>
             </div>
@@ -350,13 +348,13 @@ export default function NewTalkModal({
                   setTalkingPoints([""]);
                 }
               }}
-              className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+              className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
             >{t('action.back')}
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
           >{t('action.cancel')}
           </button>
           {mode !== "choose" && (

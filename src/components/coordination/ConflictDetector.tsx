@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { AlertTriangle, X, Plus } from "lucide-react";
 import type { ScheduleConflict } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface ConflictDetectorProps {
   conflicts: ScheduleConflict[];
@@ -64,7 +62,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 {onCreateAction && (
                   <button
                     onClick={() => onCreateAction(conflict)}
-                    className="p-2 rounded-lg hover:bg-[#1F1F25] text-[#F97316] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[#F97316] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                     title={t('ui.create.action.item')}
                   >
                     <Plus size={14} />
@@ -72,7 +70,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 )}
                 <button
                   onClick={() => dismiss(conflict)}
-                  className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-muted)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                  className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                   title={t('ui.dismiss')}
                 >
                   <X size={14} />

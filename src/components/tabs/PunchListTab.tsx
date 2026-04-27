@@ -7,9 +7,7 @@ import {
 import PunchProgressRing from "@/components/punch/PunchProgressRing";
 import PunchItemForm from "@/components/punch/PunchItemForm";
 import PunchItemDetail from "@/components/punch/PunchItemDetail";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -72,7 +70,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; pulse: boolean }> = {
   life_safety: { label: t('ui.life.safety'), color: "#EF4444", pulse: true },
   code:        { label: t('ui.code'),        color: "#F97316", pulse: false },
-  standard:    { label: t('ui.standard'),    color: "#6B7280", pulse: false },
+  standard:    { label: t('ui.standard'),    color: "var(--text-muted)", pulse: false },
   cosmetic:    { label: t('ui.cosmetic'),    color: "#3B82F6", pulse: false },
 };
 
@@ -218,7 +216,7 @@ export default function PunchListTab({ projectId }: Props) {
 
       {/* Bulk actions */}
       {selectedIds.size > 0 && (
-        <div className="flex items-center gap-3 bg-[#1F1F25] rounded-2xl px-4 py-3">
+        <div className="flex items-center gap-3 bg-[var(--bg-tertiary)] rounded-2xl px-4 py-3">
           <span className="text-sm text-[color:var(--text-secondary)] flex-1">{selectedIds.size}{t('ui.selected')}</span>
           <button onClick={() => setSelectedIds(new Set())} className="text-xs text-[color:var(--text-muted)] min-h-[40px] px-3">{t('ui.clear')}
           </button>

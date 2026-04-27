@@ -6,9 +6,7 @@ import ActivityDrawer from "@/components/ActivityDrawer";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import type { ParsedActivity, ReadyCheck } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -118,7 +116,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
 
       {/* Grid: successor + milestone + impact */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.next.critical.successor')}
           </div>
           <div className="text-xs text-gray-200 font-medium">
@@ -126,7 +124,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
           </div>
         </div>
 
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.nearest.critical.milestone')}
           </div>
           {data.nearestMilestone ? (
@@ -156,7 +154,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
       )}
 
       {/* Impact statement */}
-      <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2">
+      <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('blocker.impact')}</div>
         <div className="text-xs text-[color:var(--text-secondary)]">{data.impactStatement}</div>
       </div>
@@ -286,7 +284,7 @@ function LateTasksSection({
           <div className="text-xs text-[color:var(--text-muted)] mb-3">{t('ui.planned.finish.321b9d')} <span className="text-[color:var(--text-secondary)]">{formatDate(task.plannedFinish)}</span>
           </div>
 
-          <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-2">
+          <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-2">
             <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('blocker.impact')}</div>
             <div className="text-xs text-[color:var(--text-secondary)]">{task.impactStatement}</div>
           </div>
@@ -382,7 +380,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
         <p className="text-[color:var(--text-primary)] font-semibold">{t('ui.failed.to.load.priority.data')}</p>
         <button
           onClick={fetchData}
-          className="mt-3 px-4 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs transition-colors"
+          className="mt-3 px-4 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs transition-colors"
         >{t('ui.retry')}
         </button>
       </div>

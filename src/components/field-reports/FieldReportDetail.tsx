@@ -3,9 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowLeft, Pencil, Trash2, ChevronDown, ChevronUp, ImageOff } from "lucide-react";
 import { FieldReport } from "@/types";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -152,7 +150,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           onChange={(e) => handleFieldChange("assigned_to", e.target.value)}
           onBlur={() => handleBlurSave("assigned_to")}
           placeholder={t('ui.name.or.company')}
-          className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
         />
       </div>
 
@@ -188,7 +186,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("location", e.target.value)}
               onBlur={() => handleBlurSave("location")}
               placeholder={t('ui.building.floor.area')}
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
@@ -235,7 +233,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("trade", e.target.value)}
               onBlur={() => handleBlurSave("trade")}
               placeholder={t('ui.e.g.electrical.plumbing')}
-              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 

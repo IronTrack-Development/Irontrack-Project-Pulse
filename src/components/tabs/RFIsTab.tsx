@@ -7,9 +7,7 @@ import {
 } from "lucide-react";
 import RFICreateFlow from "@/components/rfis/RFICreateFlow";
 import RFIDetail from "@/components/rfis/RFIDetail";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface RFI {
   id: string;
@@ -56,7 +54,7 @@ const STATUS_FILTERS = [
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: t('status.draft'),        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: t('status.draft'),        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: t('ui.submitted'),    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: t('ui.under.review'), color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: t('ui.answered'),     color: "#22C55E", bg: "bg-green-500/15" },

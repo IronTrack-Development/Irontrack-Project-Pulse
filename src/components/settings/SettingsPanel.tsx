@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Sun, Moon } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface SettingsPanelProps {
   open: boolean;

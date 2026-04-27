@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Printer, RefreshCw } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

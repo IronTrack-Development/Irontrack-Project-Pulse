@@ -10,9 +10,7 @@ import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import { SupportButton } from "@/components/support-button";
 import { createClient } from "@/lib/supabase-browser";
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 interface Project { id: string; name: string; }
 
@@ -315,7 +313,7 @@ function UploadContent() {
         {step === "select" && (
           <>
             {/* Project selector */}
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
               <h2 className="font-semibold text-[color:var(--text-primary)] mb-4">{t('ui.1.select.project')}</h2>
               {showNewProject ? (
                 <div className="flex gap-2">
@@ -323,7 +321,7 @@ function UploadContent() {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder={t('ui.new.project.name')}
-                    className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                     onKeyDown={(e) => e.key === "Enter" && createProject()}
                   />
                   <button onClick={createProject} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">{t('ui.create.6e157c')}

@@ -26,9 +26,7 @@ import {
   BUILDING_TYPE_DEFAULT_STRUCTURE,
 } from '@/lib/production-rates';
 import { GeneratedSchedule, ScheduleActivity } from '@/lib/schedule-engine';
-import { useTranslation } from "@/lib/i18n";
-
-const { t } = useTranslation();
+import { t } from "@/lib/i18n";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -397,7 +395,7 @@ export default function ScheduleGeneratorPage() {
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder={t('ui.e.g.downtown.office.ti.suite.400')}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
 
@@ -462,7 +460,7 @@ export default function ScheduleGeneratorPage() {
               {/* Ground-Up / TI Toggle */}
               <div className="space-y-1.5">
                 <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.project.type')}</label>
-                <div className="flex rounded-lg overflow-hidden border border-[#1F1F25]">
+                <div className="flex rounded-lg overflow-hidden border border-[var(--border-primary)]">
                   <button
                     onClick={() => setIsGroundUp(false)}
                     className={`flex-1 py-2 text-sm font-medium transition-colors ${
@@ -510,12 +508,12 @@ export default function ScheduleGeneratorPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setSelectedTrades([...ALL_TRADES])}
-                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[var(--bg-tertiary)]"
                   >{t('ui.all.6a7208')}
                   </button>
                   <button
                     onClick={() => setSelectedTrades([])}
-                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[var(--bg-tertiary)]"
                   >{t('ui.none.6eef66')}
                   </button>
                   <button
@@ -573,7 +571,7 @@ export default function ScheduleGeneratorPage() {
               </button>
 
               {showQuantities && (
-                <div className="border-t border-[#1F1F25]">
+                <div className="border-t border-[var(--border-primary)]">
                   <p className="text-xs text-[color:var(--text-muted)] px-5 pt-4 pb-3">{t('ui.enter.actual.take.off.quantities.to.improve.accuracy.leave.blank')}
                   </p>
 
@@ -696,7 +694,7 @@ export default function ScheduleGeneratorPage() {
             </div>
 
             {/* Phase Summary Bar */}
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl p-5">
               <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">{t('ui.phase.breakdown')}</h3>
               <div className="space-y-2">
                 {schedule.summary.phases.map((phase) => {
