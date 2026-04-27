@@ -4,6 +4,7 @@ import "./globals.css";
 import MobileNav from "@/components/MobileNav";
 import ManifestLoader from "@/components/ManifestLoader";
 import ThemeProvider from "@/components/ThemeProvider";
+import I18nProvider from "@/components/I18nProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -67,8 +68,10 @@ export default function RootLayout({
       <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden">
         <ManifestLoader />
         <ThemeProvider>
-          {children}
-          <MobileNav />
+          <I18nProvider>
+            {children}
+            <MobileNav />
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

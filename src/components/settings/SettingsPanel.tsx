@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { X, Sun, Moon } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
-import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
+import { setLanguage, type Language } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
+import { useLanguage } from "@/components/I18nProvider";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -13,12 +14,11 @@ interface SettingsPanelProps {
 
 export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const [currentTheme, setCurrentTheme] = useState<Theme>("dark");
-  const [currentLang, setCurrentLang] = useState<Language>("en");
+  const currentLang = useLanguage();
   const [companyName, setCompanyName] = useState<string | null>(null);
 
   useEffect(() => {
     setCurrentTheme(getTheme());
-    setCurrentLang(getLanguage());
     // Check for company info
     const companyId = localStorage.getItem("sub_ops_company_id");
     if (companyId) {
@@ -33,7 +33,6 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
 
   const handleLangChange = (lang: Language) => {
     setLanguage(lang);
-    setCurrentLang(lang);
   };
 
   if (!open) return null;

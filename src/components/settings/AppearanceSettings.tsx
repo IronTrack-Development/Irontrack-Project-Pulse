@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import { Sun, Moon, Globe } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
-import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
+import { setLanguage, type Language } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
+import { useLanguage } from "@/components/I18nProvider";
 
 export default function AppearanceSettings() {
   const [currentTheme, setCurrentTheme] = useState<Theme>("dark");
-  const [currentLang, setCurrentLang] = useState<Language>("en");
+  const currentLang = useLanguage();
 
   useEffect(() => {
     setCurrentTheme(getTheme());
-    setCurrentLang(getLanguage());
   }, []);
 
   const handleThemeChange = (theme: Theme) => {
@@ -22,9 +22,6 @@ export default function AppearanceSettings() {
 
   const handleLangChange = (lang: Language) => {
     setLanguage(lang);
-    setCurrentLang(lang);
-    // Reload to apply translations across the app
-    window.location.reload();
   };
 
   return (
