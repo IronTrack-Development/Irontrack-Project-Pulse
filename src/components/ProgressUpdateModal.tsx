@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { X, Clock, CheckCircle, Play, AlertTriangle } from "lucide-react";
 import type { ParsedActivity } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Props {
   task: ParsedActivity;
@@ -32,8 +35,8 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
     if (!manualOverride && task.original_duration) {
       setRemainingDuration(Math.ceil(task.original_duration * (1 - val / 100)));
     }
-    if (val > 0 && status === "not_started") setStatus("in_progress");
-    if (val >= 100) setStatus("complete");
+    if (val > 0 && status === "not_started") setStatus(t('ui.in.progress'));
+    if (val >= 100) setStatus(t('ui.complete'));
   };
 
   const handleSave = async () => {
@@ -89,7 +92,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
         {/* Header */}
         <div className="sticky top-0 bg-[#121217] flex items-start justify-between gap-3 px-5 py-4 border-b border-[#1F1F25] z-10">
           <div className="flex-1 min-w-0">
-            <h3 className="text-[color:var(--text-primary)] font-bold text-base leading-tight">Update Progress</h3>
+            <h3 className="text-[color:var(--text-primary)] font-bold text-base leading-tight">{t('ui.update.progress')}</h3>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5 truncate">{task.activity_name}</p>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors shrink-0">
@@ -102,25 +105,24 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-3">
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div>
-                <span className="text-gray-600">Trade:</span>{" "}
-                <span className="text-[#F97316] font-medium">{task.trade || "General"}</span>
+                <span className="text-gray-600">{t('ui.trade.cb1a14')}</span>{" "}
+                <span className="text-[#F97316] font-medium">{task.trade || t('ui.general')}</span>
               </div>
               <div>
-                <span className="text-gray-600">Duration:</span>{" "}
-                <span className="text-[color:var(--text-primary)] font-medium">{task.original_duration || 0}d</span>
+                <span className="text-gray-600">{t('ui.duration')}</span>{" "}
+                <span className="text-[color:var(--text-primary)] font-medium">{task.original_duration || 0}{t('ui.d')}</span>
               </div>
               <div>
-                <span className="text-gray-600">Start:</span>{" "}
+                <span className="text-gray-600">{t('ui.start')}</span>{" "}
                 <span className="text-[color:var(--text-primary)]">{fmt(task.start_date)}</span>
               </div>
               <div>
-                <span className="text-gray-600">Finish:</span>{" "}
+                <span className="text-gray-600">{t('ui.finish')}</span>{" "}
                 <span className="text-[color:var(--text-primary)]">{fmt(task.finish_date)}</span>
               </div>
               {task.is_critical && (
                 <div className="col-span-2">
-                  <span className="text-[10px] bg-[#EF4444]/15 text-[#EF4444] px-2 py-0.5 rounded font-bold">
-                    ⚠ CRITICAL PATH
+                  <span className="text-[10px] bg-[#EF4444]/15 text-[#EF4444] px-2 py-0.5 rounded font-bold">{t('ui.critical.path')}
                   </span>
                 </div>
               )}
@@ -129,8 +131,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
 
           {/* Percent Complete */}
           <div>
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">
-              Percent Complete: <span className="text-[color:var(--text-primary)] text-sm">{percentComplete}%</span>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.percent.complete')} <span className="text-[color:var(--text-primary)] text-sm">{percentComplete}%</span>
             </label>
             <input
               type="range"
@@ -161,8 +162,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           {/* Remaining Duration */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-                Remaining Duration
+              <label className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.remaining.duration')}
               </label>
               <button
                 onClick={() => setManualOverride(!manualOverride)}
@@ -172,7 +172,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                     : "bg-[#1F1F25] text-[color:var(--text-muted)]"
                 }`}
               >
-                {manualOverride ? "Manual Override ✓" : "Auto-calculated"}
+                {manualOverride ? t('ui.manual.override') : t('ui.auto.calculated')}
               </button>
             </div>
             <div className="flex items-center gap-2">
@@ -187,19 +187,19 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 disabled={!manualOverride}
                 className="w-24 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
               />
-              <span className="text-xs text-[color:var(--text-muted)]">business days</span>
+              <span className="text-xs text-[color:var(--text-muted)]">{t('ui.business.days')}</span>
             </div>
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Status</label>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.status')}</label>
             <div className="grid grid-cols-4 gap-2">
               {[
-                { val: "not_started", label: "Not Started", icon: Clock, color: "gray" },
-                { val: "in_progress", label: "In Progress", icon: Play, color: "#3B82F6" },
-                { val: "complete", label: "Complete", icon: CheckCircle, color: "#22C55E" },
-                { val: "late", label: "Delayed", icon: AlertTriangle, color: "#EF4444" },
+                { val: "not_started", label: t('ui.not.started'), icon: Clock, color: "gray" },
+                { val: "in_progress", label: t('status.inProgress'), icon: Play, color: "#3B82F6" },
+                { val: "complete", label: t('ui.complete.1f5a1a'), icon: CheckCircle, color: "#22C55E" },
+                { val: "late", label: t('ui.delayed'), icon: AlertTriangle, color: "#EF4444" },
               ].map(({ val, label, icon: Icon, color }) => (
                 <button
                   key={val}
@@ -220,7 +220,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           {/* Actual Dates */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Actual Start</label>
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.actual.start')}</label>
               <input
                 type="date"
                 value={actualStart}
@@ -229,7 +229,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Actual Finish</label>
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.actual.finish')}</label>
               <input
                 type="date"
                 value={actualFinish}
@@ -241,10 +241,10 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Notes (optional)</label>
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.notes.optional')}</label>
             <textarea
               rows={2}
-              placeholder="e.g. Weather delay, crew size reduced..."
+              placeholder={t('ui.e.g.weather.delay.crew.size.reduced')}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
@@ -259,7 +259,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
             disabled={saving}
             className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
           >
-            {saving ? "Saving & Recalculating…" : "Save & Reforecast"}
+            {saving ? t('ui.saving.and.recalculating') : t('ui.save.and.reforecast')}
           </button>
         </div>
       </div>

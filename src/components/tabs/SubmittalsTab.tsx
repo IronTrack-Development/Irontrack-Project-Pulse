@@ -4,6 +4,9 @@ import { useEffect, useState, useCallback } from "react";
 import { Plus, RefreshCw, FileCheck, AlertCircle, Clock, CheckCircle2 } from "lucide-react";
 import SubmittalForm from "@/components/submittals/SubmittalForm";
 import SubmittalDetail from "@/components/submittals/SubmittalDetail";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Contact {
   id: string;
@@ -62,13 +65,13 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const FILTER_OPTIONS = [
-  { value: "all", label: "All" },
-  { value: "not_started", label: "Not Started" },
-  { value: "in_preparation", label: "In Prep" },
-  { value: "submitted", label: "Submitted" },
-  { value: "under_review", label: "Under Review" },
-  { value: "approved", label: "Approved" },
-  { value: "rejected", label: "Rejected" },
+  { value: "all", label: t('ui.all.6a7208') },
+  { value: "not_started", label: t('ui.not.started') },
+  { value: "in_preparation", label: t('ui.in.prep') },
+  { value: "submitted", label: t('ui.submitted') },
+  { value: "under_review", label: t('ui.under.review') },
+  { value: "approved", label: t('ui.approved.41b81e') },
+  { value: "rejected", label: t('ui.rejected.27eeb7') },
 ];
 
 function isOverdue(s: Submittal): boolean {
@@ -127,9 +130,9 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Submittals</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.submittals')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {total} submittal{total !== 1 ? "s" : ""} on this project
+              {total}{t('ui.submittal.1ae838')}{total !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -144,7 +147,7 @@ export default function SubmittalsTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">New Submittal</span>
+              <span className="hidden sm:inline">{t('ui.new.submittal')}</span>
             </button>
           </div>
         </div>
@@ -154,19 +157,19 @@ export default function SubmittalsTab({ projectId }: Props) {
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-[color:var(--text-primary)]">{total}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Total</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.total')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingReview > 0 ? "text-purple-400" : "text-[color:var(--text-primary)]"}`}>{pendingReview}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Pending</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('status.pending')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${overdue > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>{overdue}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Overdue</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.overdue.07217c')}</p>
             </div>
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${approved > 0 ? "text-green-400" : "text-[color:var(--text-primary)]"}`}>{approved}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Approved</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.approved.41b81e')}</p>
             </div>
           </div>
         )}
@@ -203,16 +206,14 @@ export default function SubmittalsTab({ projectId }: Props) {
         {total === 0 && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
             <FileCheck size={36} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No submittals yet</p>
-            <p className="text-gray-600 text-xs mb-5">
-              Tap + to create your first submittal
+            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">{t('ui.no.submittals.yet')}</p>
+            <p className="text-gray-600 text-xs mb-5">{t('ui.tap.to.create.your.first.submittal')}
             </p>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
-              <Plus size={14} />
-              New Submittal
+              <Plus size={14} />{t('ui.new.submittal')}
             </button>
           </div>
         )}
@@ -253,19 +254,17 @@ export default function SubmittalsTab({ projectId }: Props) {
                           🏀 {s.ball_in_court}
                         </span>
                         {s.revision_count > 1 && (
-                          <span className="text-xs text-gray-600">Rev {s.revision_count}</span>
+                          <span className="text-xs text-gray-600">{t('ui.rev')} {s.revision_count}</span>
                         )}
                       </div>
                       {(s.assigned_contact || s.reviewer_contact) && (
                         <div className="flex flex-wrap gap-3 mt-2">
                           {s.assigned_contact && (
-                            <span className="text-xs text-[color:var(--text-muted)]">
-                              Sub: <span className="text-[color:var(--text-secondary)]">{s.assigned_contact.name}</span>
+                            <span className="text-xs text-[color:var(--text-muted)]">{t('ui.sub.3360cb')} <span className="text-[color:var(--text-secondary)]">{s.assigned_contact.name}</span>
                             </span>
                           )}
                           {s.reviewer_contact && (
-                            <span className="text-xs text-[color:var(--text-muted)]">
-                              Review: <span className="text-[color:var(--text-secondary)]">{s.reviewer_contact.name}</span>
+                            <span className="text-xs text-[color:var(--text-muted)]">{t('ui.review')} <span className="text-[color:var(--text-secondary)]">{s.reviewer_contact.name}</span>
                             </span>
                           )}
                         </div>
@@ -275,7 +274,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                       {s.required_by && (
                         <div className={`flex items-center gap-1 text-xs font-medium ${overdueSub ? "text-red-400" : "text-[color:var(--text-muted)]"}`}>
                           {overdueSub ? <AlertCircle size={12} /> : <Clock size={12} />}
-                          {new Date(s.required_by + "T00:00:00").toLocaleDateString("en-US", {
+                          {new Date(s.required_by + t('ui.t00.00.00')).toLocaleDateString("en-US", {
                             month: "short", day: "numeric",
                           })}
                         </div>
@@ -294,7 +293,7 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Filtered empty */}
         {total > 0 && filtered.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-[color:var(--text-muted)] text-sm">No submittals match this filter</p>
+            <p className="text-[color:var(--text-muted)] text-sm">{t('ui.no.submittals.match.this.filter')}</p>
           </div>
         )}
       </div>

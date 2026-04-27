@@ -26,6 +26,9 @@ import {
   BUILDING_TYPE_DEFAULT_STRUCTURE,
 } from '@/lib/production-rates';
 import { GeneratedSchedule, ScheduleActivity } from '@/lib/schedule-engine';
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -49,55 +52,55 @@ interface QuantityGroup { id: string; label: string; items: QuantityItem[] }
 const QUANTITY_GROUPS: QuantityGroup[] = [
   {
     id: 'interior',
-    label: 'Interior Finishes',
+    label: t('ui.interior.finishes'),
     items: [
-      { key: 'drywall_sf',       label: 'Drywall',             unit: 'SF'   },
-      { key: 'paint_sf',         label: 'Paint',               unit: 'SF'   },
-      { key: 'ceiling_grid_sf',  label: 'Ceiling Grid / ACT',  unit: 'SF'   },
-      { key: 'carpet_sf',        label: 'Carpet',              unit: 'SF'   },
+      { key: 'drywall_sf',       label: t('ui.drywall'),             unit: 'SF'   },
+      { key: 'paint_sf',         label: t('ui.paint'),               unit: 'SF'   },
+      { key: 'ceiling_grid_sf',  label: t('ui.ceiling.grid.act'),  unit: 'SF'   },
+      { key: 'carpet_sf',        label: t('ui.carpet'),              unit: 'SF'   },
       { key: 'lvt_sf',           label: 'LVT',                 unit: 'SF'   },
-      { key: 'tile_sf',          label: 'Ceramic Tile',        unit: 'SF'   },
+      { key: 'tile_sf',          label: t('ui.ceramic.tile'),        unit: 'SF'   },
     ],
   },
   {
     id: 'mep',
     label: 'MEP',
     items: [
-      { key: 'ductwork_lbs',           label: 'Ductwork',          unit: 'lbs'  },
-      { key: 'sprinkler_heads',        label: 'Sprinkler Heads',   unit: 'each' },
-      { key: 'plumbing_fixtures',      label: 'Plumbing Fixtures', unit: 'each' },
-      { key: 'electrical_panels_each', label: 'Electrical Panels', unit: 'each' },
-      { key: 'conduit_lf',             label: 'Conduit',           unit: 'LF'   },
-      { key: 'pipe_lf',                label: 'Pipe',              unit: 'LF'   },
+      { key: 'ductwork_lbs',           label: t('ui.ductwork'),          unit: 'lbs'  },
+      { key: 'sprinkler_heads',        label: t('ui.sprinkler.heads'),   unit: 'each' },
+      { key: 'plumbing_fixtures',      label: t('ui.plumbing.fixtures'), unit: 'each' },
+      { key: 'electrical_panels_each', label: t('ui.electrical.panels'), unit: 'each' },
+      { key: 'conduit_lf',             label: t('ui.conduit'),           unit: 'LF'   },
+      { key: 'pipe_lf',                label: t('ui.pipe'),              unit: 'LF'   },
     ],
   },
   {
     id: 'envelope',
-    label: 'Building Envelope',
+    label: t('ui.building.envelope'),
     items: [
-      { key: 'doors_each',    label: 'Doors',               unit: 'each' },
-      { key: 'storefront_sf', label: 'Windows / Storefront', unit: 'SF'   },
-      { key: 'roofing_sf',    label: 'Roofing',             unit: 'SF'   },
+      { key: 'doors_each',    label: t('ui.doors'),               unit: 'each' },
+      { key: 'storefront_sf', label: t('ui.windows.storefront'), unit: 'SF'   },
+      { key: 'roofing_sf',    label: t('ui.roofing'),             unit: 'SF'   },
     ],
   },
   {
     id: 'sitework',
-    label: 'Sitework / Utilities',
+    label: t('ui.sitework.utilities'),
     items: [
-      { key: 'wet_water_lf',        label: 'Water Line',         unit: 'LF' },
-      { key: 'wet_sewer_lf',        label: 'Sewer Line',         unit: 'LF' },
-      { key: 'wet_storm_lf',        label: 'Storm Drain',        unit: 'LF' },
-      { key: 'dry_elec_conduit_lf', label: 'Electrical Conduit', unit: 'LF' },
-      { key: 'dry_telecom_lf',      label: 'Telecom',            unit: 'LF' },
-      { key: 'dry_gas_lf',          label: 'Gas Line',           unit: 'LF' },
+      { key: 'wet_water_lf',        label: t('ui.water.line'),         unit: 'LF' },
+      { key: 'wet_sewer_lf',        label: t('ui.sewer.line'),         unit: 'LF' },
+      { key: 'wet_storm_lf',        label: t('ui.storm.drain'),        unit: 'LF' },
+      { key: 'dry_elec_conduit_lf', label: t('ui.electrical.conduit'), unit: 'LF' },
+      { key: 'dry_telecom_lf',      label: t('ui.telecom'),            unit: 'LF' },
+      { key: 'dry_gas_lf',          label: t('ui.gas.line'),           unit: 'LF' },
     ],
   },
   {
     id: 'other',
-    label: 'Other',
+    label: t('ui.other'),
     items: [
-      { key: 'elevator_cars', label: 'Elevator Cars', unit: 'each' },
-      { key: 'demo_sf',       label: 'Demolition',    unit: 'SF'   },
+      { key: 'elevator_cars', label: t('ui.elevator.cars'), unit: 'each' },
+      { key: 'demo_sf',       label: t('ui.demolition'),    unit: 'SF'   },
     ],
   },
 ];
@@ -226,15 +229,15 @@ export default function ScheduleGeneratorPage() {
   // Submit
   const handleGenerate = useCallback(async () => {
     if (!projectName.trim()) {
-      setError('Please enter a project name');
+      setError(t('ui.please.enter.a.project.name'));
       return;
     }
     if (!totalSF || parseInt(totalSF) <= 0) {
-      setError('Please enter a valid square footage');
+      setError(t('ui.please.enter.a.valid.square.footage'));
       return;
     }
     if (selectedTrades.length === 0) {
-      setError('Please select at least one trade');
+      setError(t('ui.please.select.at.least.one.trade'));
       return;
     }
 
@@ -350,11 +353,9 @@ export default function ScheduleGeneratorPage() {
               <BarChart3 size={16} className="text-[#F97316]" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-100 leading-tight">
-                Schedule Simulator
+              <h1 className="text-lg font-bold text-gray-100 leading-tight">{t('ui.schedule.simulator')}
               </h1>
-              <p className="text-xs text-[color:var(--text-muted)]">
-                Generate baseline CPM schedules from project parameters
+              <p className="text-xs text-[color:var(--text-muted)]">{t('ui.generate.baseline.cpm.schedules.from.project.parameters')}
               </p>
             </div>
           </div>
@@ -371,8 +372,7 @@ export default function ScheduleGeneratorPage() {
                 onClick={handleExportMSP}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F25] border border-[#2A2A35] hover:border-[#F97316]/40 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
               >
-                <Download size={14} />
-                MS Project XML
+                <Download size={14} />{t('ui.ms.project.xml')}
               </button>
             </div>
           )}
@@ -386,25 +386,24 @@ export default function ScheduleGeneratorPage() {
           <div className="lg:col-span-1 space-y-5">
             <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5 space-y-4">
               <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider flex items-center gap-2">
-                <Building2 size={14} className="text-[#F97316]" />
-                Project Details
+                <Building2 size={14} className="text-[#F97316]" />{t('ui.project.details')}
               </h2>
 
               {/* Project Name */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Project Name</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.project.name')}</label>
                 <input
                   type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
-                  placeholder="e.g. Downtown Office TI — Suite 400"
+                  placeholder={t('ui.e.g.downtown.office.ti.suite.400')}
                   className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
 
               {/* Building Type */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Building Type</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.building.type')}</label>
                 <select
                   value={buildingType}
                   onChange={(e) => handleBuildingTypeChange(e.target.value)}
@@ -420,7 +419,7 @@ export default function ScheduleGeneratorPage() {
 
               {/* Structure Type */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Structure Type</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.structure.type')}</label>
                 <select
                   value={structureType}
                   onChange={(e) => setStructureType(e.target.value)}
@@ -436,7 +435,7 @@ export default function ScheduleGeneratorPage() {
 
               {/* Total SF */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Total Square Footage</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.total.square.footage')}</label>
                 <input
                   type="number"
                   value={totalSF}
@@ -449,7 +448,7 @@ export default function ScheduleGeneratorPage() {
 
               {/* Stories */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Number of Stories</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.number.of.stories')}</label>
                 <input
                   type="number"
                   value={stories}
@@ -462,7 +461,7 @@ export default function ScheduleGeneratorPage() {
 
               {/* Ground-Up / TI Toggle */}
               <div className="space-y-1.5">
-                <label className="text-xs text-[color:var(--text-secondary)] font-medium">Project Type</label>
+                <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.project.type')}</label>
                 <div className="flex rounded-lg overflow-hidden border border-[#1F1F25]">
                   <button
                     onClick={() => setIsGroundUp(false)}
@@ -471,8 +470,7 @@ export default function ScheduleGeneratorPage() {
                         ? 'bg-[#F97316] text-[color:var(--text-primary)]'
                         : 'bg-[#0B0B0D] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
                     }`}
-                  >
-                    Tenant Improvement
+                  >{t('ui.tenant.improvement')}
                   </button>
                   <button
                     onClick={() => setIsGroundUp(true)}
@@ -481,8 +479,7 @@ export default function ScheduleGeneratorPage() {
                         ? 'bg-[#F97316] text-[color:var(--text-primary)]'
                         : 'bg-[#0B0B0D] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
                     }`}
-                  >
-                    Ground-Up
+                  >{t('ui.ground.up')}
                   </button>
                 </div>
               </div>
@@ -490,8 +487,7 @@ export default function ScheduleGeneratorPage() {
               {/* Start Date */}
               <div className="space-y-1.5">
                 <label className="text-xs text-[color:var(--text-secondary)] font-medium flex items-center gap-1.5">
-                  <Calendar size={12} className="text-[#F97316]" />
-                  Construction Start Date
+                  <Calendar size={12} className="text-[#F97316]" />{t('ui.construction.start.date')}
                 </label>
                 <input
                   type="date"
@@ -509,29 +505,25 @@ export default function ScheduleGeneratorPage() {
             <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider flex items-center gap-2">
-                  <Layers size={14} className="text-[#F97316]" />
-                  Scope of Work
+                  <Layers size={14} className="text-[#F97316]" />{t('dispatch.scopeOfWork')}
                 </h2>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setSelectedTrades([...ALL_TRADES])}
                     className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
-                  >
-                    All
+                  >{t('ui.all.6a7208')}
                   </button>
                   <button
                     onClick={() => setSelectedTrades([])}
                     className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
-                  >
-                    None
+                  >{t('ui.none.6eef66')}
                   </button>
                   <button
                     onClick={() =>
                       setSelectedTrades(BUILDING_TYPE_DEFAULTS[buildingType] ?? [])
                     }
                     className="text-xs text-[#F97316] hover:text-orange-300 transition-colors px-2 py-1 rounded hover:bg-[#F97316]/10"
-                  >
-                    Reset to Type
+                  >{t('ui.reset.to.type')}
                   </button>
                 </div>
               </div>
@@ -568,11 +560,9 @@ export default function ScheduleGeneratorPage() {
                 className="w-full flex items-center justify-between p-5 hover:bg-[#151519] transition-colors"
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">
-                    Optional: Override Quantities
+                  <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">{t('ui.optional.override.quantities')}
                   </h2>
-                  <span className="text-xs text-gray-600 font-normal normal-case">
-                    (pre-filled from SF estimates)
+                  <span className="text-xs text-gray-600 font-normal normal-case">{t('ui.pre.filled.from.sf.estimates')}
                   </span>
                 </div>
                 {showQuantities ? (
@@ -584,8 +574,7 @@ export default function ScheduleGeneratorPage() {
 
               {showQuantities && (
                 <div className="border-t border-[#1F1F25]">
-                  <p className="text-xs text-[color:var(--text-muted)] px-5 pt-4 pb-3">
-                    Enter actual take-off quantities to improve accuracy. Leave blank to use SF-based estimates.
+                  <p className="text-xs text-[color:var(--text-muted)] px-5 pt-4 pb-3">{t('ui.enter.actual.take.off.quantities.to.improve.accuracy.leave.blank')}
                   </p>
 
                   {QUANTITY_GROUPS.map((group) => {
@@ -653,13 +642,11 @@ export default function ScheduleGeneratorPage() {
             >
               {loading ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
-                  Generating Schedule…
+                  <Loader2 size={18} className="animate-spin" />{t('ui.generating.schedule')}
                 </>
               ) : (
                 <>
-                  <BarChart3 size={18} />
-                  Generate Baseline CPM Schedule
+                  <BarChart3 size={18} />{t('ui.generate.baseline.cpm.schedule')}
                 </>
               )}
             </button>
@@ -679,28 +666,28 @@ export default function ScheduleGeneratorPage() {
             {/* Summary Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <StatCard
-                label="Calendar Duration"
+                label={t('ui.calendar.duration')}
                 value={`${schedule.totalDuration} days`}
                 sub={`~${Math.round(schedule.totalDuration / 30.5)} months`}
                 color="text-[#F97316]"
                 icon={<Clock size={16} />}
               />
               <StatCard
-                label="Working Days"
+                label={t('ui.working.days')}
                 value={schedule.summary.totalDuration}
                 sub="5-day work week"
                 color="text-blue-400"
                 icon={<Calendar size={16} />}
               />
               <StatCard
-                label="Total Activities"
+                label={t('ui.total.activities')}
                 value={schedule.summary.totalActivities}
                 sub={`${schedule.criticalPath.length} on critical path`}
                 color="text-purple-400"
                 icon={<Layers size={16} />}
               />
               <StatCard
-                label="Est. Completion"
+                label={t('ui.est.completion')}
                 value={formatDate(schedule.endDate)}
                 sub={`Start: ${formatDate(schedule.startDate)}`}
                 color="text-green-400"
@@ -710,7 +697,7 @@ export default function ScheduleGeneratorPage() {
 
             {/* Phase Summary Bar */}
             <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
-              <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">Phase Breakdown</h3>
+              <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">{t('ui.phase.breakdown')}</h3>
               <div className="space-y-2">
                 {schedule.summary.phases.map((phase) => {
                   const pct = Math.round(
@@ -741,7 +728,7 @@ export default function ScheduleGeneratorPage() {
                           />
                         </div>
                         <span className="text-xs text-[color:var(--text-muted)] w-20 text-right">
-                          {phase.duration}d ({pct}%)
+                          {phase.duration}{t('ui.d.5635a7')}{pct}%)
                         </span>
                       </div>
                     </button>
@@ -752,8 +739,7 @@ export default function ScheduleGeneratorPage() {
                 <button
                   onClick={() => setActivePhaseFilter(null)}
                   className="mt-3 text-xs text-[#F97316] hover:text-orange-300 transition-colors"
-                >
-                  ← Show all phases
+                >{t('ui.show.all.phases')}
                 </button>
               )}
             </div>
@@ -763,8 +749,7 @@ export default function ScheduleGeneratorPage() {
               {/* Table controls */}
               <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-sm font-semibold text-[color:var(--text-secondary)]">
-                    Activities
+                  <h3 className="text-sm font-semibold text-[color:var(--text-secondary)]">{t('ui.activities.e58f7f')}
                     {activePhaseFilter && (
                       <span className="ml-2 text-xs text-[color:var(--text-muted)]">
                         — {activePhaseFilter.replace(/Phase \d+: /, '')}
@@ -772,7 +757,7 @@ export default function ScheduleGeneratorPage() {
                     )}
                   </h3>
                   <span className="text-xs text-gray-600">
-                    {filteredActivities.length} activities
+                    {filteredActivities.length}{t('ui.activities.053a51')}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -784,17 +769,14 @@ export default function ScheduleGeneratorPage() {
                         : 'border-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]'
                     }`}
                   >
-                    <Flag size={11} />
-                    Critical Only
+                    <Flag size={11} />{t('ui.critical.only')}
                   </button>
                   <div className="flex gap-3 text-xs text-gray-600">
                     <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-sm bg-red-500/60 inline-block" />
-                      Critical
+                      <span className="w-2 h-2 rounded-sm bg-red-500/60 inline-block" />{t('ui.critical')}
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-sm bg-[#F97316]/40 inline-block" />
-                      Float
+                      <span className="w-2 h-2 rounded-sm bg-[#F97316]/40 inline-block" />{t('ui.float.64435f')}
                     </span>
                   </div>
                 </div>
@@ -806,13 +788,13 @@ export default function ScheduleGeneratorPage() {
                   <thead>
                     <tr className="border-b border-[#1F1F25] text-[color:var(--text-muted)]">
                       <th className="text-left px-3 py-2.5 font-medium w-10">#</th>
-                      <th className="text-left px-3 py-2.5 font-medium">Activity</th>
-                      <th className="text-left px-3 py-2.5 font-medium w-28">Trade</th>
-                      <th className="text-right px-3 py-2.5 font-medium w-16">Days</th>
-                      <th className="text-left px-3 py-2.5 font-medium w-24">Start</th>
-                      <th className="text-left px-3 py-2.5 font-medium w-24">Finish</th>
-                      <th className="text-right px-3 py-2.5 font-medium w-16">Float</th>
-                      <th className="px-3 py-2.5 font-medium w-48">Timeline</th>
+                      <th className="text-left px-3 py-2.5 font-medium">{t('ui.activity.81c0d9')}</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-28">{t('ui.trade')}</th>
+                      <th className="text-right px-3 py-2.5 font-medium w-16">{t('ui.days.f6bb0f')}</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-24">{t('ui.start.952f37')}</th>
+                      <th className="text-left px-3 py-2.5 font-medium w-24">{t('ui.finish.b74bde')}</th>
+                      <th className="text-right px-3 py-2.5 font-medium w-16">{t('ui.float.64435f')}</th>
+                      <th className="px-3 py-2.5 font-medium w-48">{t('ui.timeline')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -859,7 +841,7 @@ export default function ScheduleGeneratorPage() {
                           <td className="px-3 py-2 text-[color:var(--text-secondary)]">{act.earlyStart ?? '—'}</td>
                           <td className="px-3 py-2 text-[color:var(--text-secondary)]">{act.earlyFinish ?? '—'}</td>
                           <td className={`px-3 py-2 text-right ${float === 0 ? 'text-red-400' : 'text-[color:var(--text-secondary)]'}`}>
-                            {float}d
+                            {float}{t('ui.d')}
                           </td>
                           <td className="px-3 py-2">
                             {/* Mini Gantt bar */}
@@ -902,15 +884,13 @@ export default function ScheduleGeneratorPage() {
                 onClick={handleExportXLSX}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
               >
-                <Download size={16} />
-                Download XLSX Schedule
+                <Download size={16} />{t('ui.download.xlsx.schedule')}
               </button>
               <button
                 onClick={handleExportMSP}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
               >
-                <Download size={16} />
-                Download MS Project XML
+                <Download size={16} />{t('ui.download.ms.project.xml')}
               </button>
             </div>
           </div>

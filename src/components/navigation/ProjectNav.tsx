@@ -31,6 +31,9 @@ import {
   ArrowRightLeft,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // ─── Group & Tab Definitions ──────────────────────────────────────────────────
 
@@ -50,91 +53,91 @@ interface GroupDef {
 const NAV_GROUPS: GroupDef[] = [
   {
     id: "schedule",
-    label: "Schedule",
+    label: t('nav.schedule'),
     icon: CalendarDays,
     tabs: [
-      { id: "priority", label: "Priority", icon: Zap },
-      { id: "today", label: "Today", icon: CalendarCheck },
-      { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
-      { id: "week1", label: "Week 1", icon: CalendarDays },
-      { id: "week2", label: "Week 2", icon: CalendarDays },
-      { id: "week3", label: "Week 3", icon: CalendarDays },
-      { id: "6week", label: "6-Week", icon: Binoculars },
-      { id: "milestones", label: "Milestones", icon: Flag },
-      { id: "reforecast", label: "Reforecast", icon: GitBranch },
+      { id: "priority", label: t('ui.priority'), icon: Zap },
+      { id: "today", label: t('ui.today'), icon: CalendarCheck },
+      { id: "tomorrow", label: t('ui.tomorrow'), icon: CalendarPlus },
+      { id: "week1", label: t('ui.week.1'), icon: CalendarDays },
+      { id: "week2", label: t('ui.week.2'), icon: CalendarDays },
+      { id: "week3", label: t('ui.week.3'), icon: CalendarDays },
+      { id: "6week", label: t('ui.6.week'), icon: Binoculars },
+      { id: "milestones", label: t('ui.milestones'), icon: Flag },
+      { id: "reforecast", label: t('ui.reforecast'), icon: GitBranch },
     ],
   },
   {
     id: "fieldops",
-    label: "Field Ops",
+    label: t('nav.fieldOps'),
     icon: ClipboardList,
     tabs: [
-      { id: "dailylog", label: "Daily Log", icon: ClipboardList },
-      { id: "inspections", label: "Inspections", icon: ShieldCheck },
-      { id: "field-reports", label: "Reports", icon: Camera },
-      { id: "punch", label: "Punch List", icon: CheckSquare },
-      { id: "reports", label: "Observations", icon: Eye },
+      { id: "dailylog", label: t('ui.daily.log'), icon: ClipboardList },
+      { id: "inspections", label: t('ui.inspections'), icon: ShieldCheck },
+      { id: "field-reports", label: t('ui.reports'), icon: Camera },
+      { id: "punch", label: t('ui.punch.list'), icon: CheckSquare },
+      { id: "reports", label: t('ui.observations'), icon: Eye },
     ],
   },
   {
     id: "coordination",
-    label: "Coordination",
+    label: t('nav.coordination'),
     icon: Handshake,
     tabs: [
-      { id: "coordination", label: "Meetings", icon: Handshake },
-      { id: "action-tracker", label: "Action Items", icon: CheckSquare },
+      { id: "coordination", label: t('ui.meetings.b23a19'), icon: Handshake },
+      { id: "action-tracker", label: t('ui.action.items'), icon: CheckSquare },
     ],
   },
   {
     id: "documents",
-    label: "Documents",
+    label: t('nav.documents'),
     icon: FileText,
     tabs: [
-      { id: "submittals", label: "Submittals", icon: FileCheck },
-      { id: "rfis", label: "RFIs", icon: MessageCircleQuestion },
-      { id: "drawings", label: "Drawings", icon: Layers },
+      { id: "submittals", label: t('ui.submittals'), icon: FileCheck },
+      { id: "rfis", label: t('ui.rfis'), icon: MessageCircleQuestion },
+      { id: "drawings", label: t('ui.drawings'), icon: Layers },
     ],
   },
   {
     id: "money",
-    label: "Money",
+    label: t('nav.money'),
     icon: Receipt,
     tabs: [
-      { id: "tm", label: "T&M", icon: Receipt },
+      { id: "tm", label: t('ui.t.and.m'), icon: Receipt },
     ],
   },
   {
     id: "safety",
-    label: "Safety",
+    label: t('nav.safety'),
     icon: Shield,
     tabs: [
-      { id: "safety", label: "Toolbox Talks", icon: Shield },
+      { id: "safety", label: t('safety.toolboxTalks'), icon: Shield },
     ],
   },
   {
     id: "project",
-    label: "Project",
+    label: t('nav.project'),
     icon: BarChart3,
     tabs: [
-      { id: "progress", label: "Progress", icon: TrendingUp },
-      { id: "directory", label: "Directory", icon: Users },
-      { id: "subs", label: "Subs", icon: Users },
+      { id: "progress", label: t('ui.progress.1b9027'), icon: TrendingUp },
+      { id: "directory", label: t('ui.directory'), icon: Users },
+      { id: "subs", label: t('ui.subs'), icon: Users },
     ],
   },
   {
     id: "subops",
-    label: "Sub Ops",
+    label: t('nav.subOps'),
     icon: HardHat,
     tabs: [
-      { id: "sub-dashboard", label: "Dashboard", icon: BarChart3 },
-      { id: "sub-dispatch", label: "Dispatch", icon: Send },
-      { id: "sub-foremen", label: "Foremen", icon: Users },
-      { id: "sub-checkins", label: "Check-Ins", icon: CheckCircle },
-      { id: "sub-production", label: "Production", icon: TrendingUp },
-      { id: "sub-blockers", label: "Blockers", icon: AlertTriangle },
-      { id: "sub-handoffs", label: "Handoffs", icon: ArrowRightLeft },
-      { id: "sub-crew", label: "Crew", icon: HardHat },
-      { id: "sub-sops", label: "SOPs", icon: FileText },
+      { id: "sub-dashboard", label: t('ui.dashboard'), icon: BarChart3 },
+      { id: "sub-dispatch", label: t('ui.dispatch'), icon: Send },
+      { id: "sub-foremen", label: t('ui.foremen'), icon: Users },
+      { id: "sub-checkins", label: t('ui.check.ins'), icon: CheckCircle },
+      { id: "sub-production", label: t('ui.production'), icon: TrendingUp },
+      { id: "sub-blockers", label: t('ui.blockers'), icon: AlertTriangle },
+      { id: "sub-handoffs", label: t('ui.handoffs'), icon: ArrowRightLeft },
+      { id: "sub-crew", label: t('ui.crew.de463b'), icon: HardHat },
+      { id: "sub-sops", label: t('ui.sops'), icon: FileText },
     ],
   },
 ];

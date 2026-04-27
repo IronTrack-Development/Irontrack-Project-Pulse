@@ -5,6 +5,9 @@ import { UserPlus, QrCode, Search, Users, X, RefreshCw } from "lucide-react";
 import ContactCard, { type ProjectContact } from "@/components/directory/ContactCard";
 import AddContactModal from "@/components/directory/AddContactModal";
 import QRShareModal from "@/components/directory/QRShareModal";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Props {
   projectId: string;
@@ -12,12 +15,12 @@ interface Props {
 
 // Groups for display
 const ROLE_GROUPS: { id: string; label: string; roles: string[] }[] = [
-  { id: "design", label: "Design Team", roles: ["architect", "engineer"] },
-  { id: "owner", label: "Owner", roles: ["owner", "owners_rep"] },
-  { id: "subs", label: "Subcontractors & Suppliers", roles: ["subcontractor", "supplier"] },
-  { id: "inspections", label: "Inspectors", roles: ["inspector"] },
-  { id: "internal", label: "Internal", roles: ["internal"] },
-  { id: "other", label: "Other", roles: ["other"] },
+  { id: "design", label: t('ui.design.team'), roles: ["architect", "engineer"] },
+  { id: "owner", label: t('ui.owner'), roles: ["owner", "owners_rep"] },
+  { id: "subs", label: t('ui.subcontractors.and.suppliers'), roles: ["subcontractor", "supplier"] },
+  { id: "inspections", label: t('ui.inspectors'), roles: ["inspector"] },
+  { id: "internal", label: t('ui.internal'), roles: ["internal"] },
+  { id: "other", label: t('ui.other'), roles: ["other"] },
 ];
 
 export default function DirectoryTab({ projectId }: Props) {
@@ -104,9 +107,9 @@ export default function DirectoryTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Project Directory</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.project.directory')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {contacts.length} contact{contacts.length !== 1 ? "s" : ""} on this project
+              {contacts.length}{t('ui.contact.1a73af')}{contacts.length !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -121,14 +124,14 @@ export default function DirectoryTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <QrCode size={14} />
-              <span className="hidden sm:inline">Share QR</span>
+              <span className="hidden sm:inline">{t('ui.share.qr')}</span>
             </button>
             <button
               onClick={() => { setEditContact(null); setShowAddModal(true); }}
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <UserPlus size={14} />
-              <span className="hidden sm:inline">Add Contact</span>
+              <span className="hidden sm:inline">{t('ui.add.contact')}</span>
             </button>
           </div>
         </div>
@@ -140,7 +143,7 @@ export default function DirectoryTab({ projectId }: Props) {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search contacts…"
+              placeholder={t('ui.search.contacts')}
               className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
             {search && (
@@ -158,24 +161,21 @@ export default function DirectoryTab({ projectId }: Props) {
         {contacts.length === 0 && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
             <Users size={36} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No contacts yet</p>
-            <p className="text-gray-600 text-xs mb-5">
-              Share the QR code at your next meeting to get everyone in here fast
+            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">{t('ui.no.contacts.yet')}</p>
+            <p className="text-gray-600 text-xs mb-5">{t('ui.share.the.qr.code.at.your.next.meeting.to.get')}
             </p>
             <div className="flex items-center justify-center gap-3">
               <button
                 onClick={() => setShowQRModal(true)}
                 className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
               >
-                <QrCode size={14} />
-                Share QR Code
+                <QrCode size={14} />{t('ui.share.qr.code')}
               </button>
               <button
                 onClick={() => setShowAddModal(true)}
                 className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
               >
-                <UserPlus size={14} />
-                Add Manually
+                <UserPlus size={14} />{t('ui.add.manually')}
               </button>
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function DirectoryTab({ projectId }: Props) {
         {/* No search results */}
         {contacts.length > 0 && filtered.length === 0 && search && (
           <div className="text-center py-8">
-            <p className="text-[color:var(--text-muted)] text-sm">No contacts match &quot;{search}&quot;</p>
+            <p className="text-[color:var(--text-muted)] text-sm">{t('ui.no.contacts.match')}{search}&quot;</p>
           </div>
         )}
 

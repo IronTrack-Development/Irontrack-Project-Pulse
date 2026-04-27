@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle, Clock, RefreshCw } from "lucide-react";
 import type { DailyRisk } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 const SEVERITY_FILTERS = ["all", "high", "medium", "low"] as const;
 
@@ -60,14 +63,13 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
 
       {risk.suggested_action && (
         <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 mb-3">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Recommended Action</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.recommended.action')}</div>
           <div className="text-xs text-[color:var(--text-secondary)]">{risk.suggested_action}</div>
         </div>
       )}
 
       {activity?.activity_name && (
-        <div className="text-xs text-gray-600 mb-3">
-          Source: <span className="text-[color:var(--text-secondary)]">{activity.activity_name}</span>
+        <div className="text-xs text-gray-600 mb-3">{t('ui.source')} <span className="text-[color:var(--text-secondary)]">{activity.activity_name}</span>
           {activity.trade && <span className="ml-2 text-[#F97316]">{activity.trade}</span>}
         </div>
       )}
@@ -77,15 +79,13 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
           onClick={onResolve}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-[#22C55E]/10 hover:bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/20 rounded-lg text-xs font-semibold transition-colors"
         >
-          <CheckCircle size={12} />
-          Resolve
+          <CheckCircle size={12} />{t('ui.resolve')}
         </button>
         <button
           onClick={onSnooze}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
         >
-          <Clock size={12} />
-          Snooze
+          <Clock size={12} />{t('ui.snooze')}
         </button>
         <span className="ml-auto text-[10px] text-gray-600">
           {new Date(risk.detected_at).toLocaleDateString()}
@@ -131,13 +131,13 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
       {/* Summary */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: "High", count: highCount, color: "text-[#EF4444]", bg: "bg-[#EF4444]/10" },
-          { label: "Medium", count: medCount, color: "text-[#EAB308]", bg: "bg-[#EAB308]/10" },
-          { label: "Low", count: lowCount, color: "text-[color:var(--text-secondary)]", bg: "bg-[color:var(--bg-tertiary)]" },
+          { label: t('ui.high'), count: highCount, color: "text-[#EF4444]", bg: "bg-[#EF4444]/10" },
+          { label: t('ui.medium'), count: medCount, color: "text-[#EAB308]", bg: "bg-[#EAB308]/10" },
+          { label: t('ui.low'), count: lowCount, color: "text-[color:var(--text-secondary)]", bg: "bg-[color:var(--bg-tertiary)]" },
         ].map(({ label, count, color, bg }) => (
           <div key={label} className={`rounded-xl p-4 ${bg} text-center`}>
             <div className={`text-2xl font-bold ${color}`}>{count}</div>
-            <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{label} Risk{count !== 1 ? "s" : ""}</div>
+            <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{label}{t('ui.risk')}{count !== 1 ? t('ui.s') : ""}</div>
           </div>
         ))}
       </div>
@@ -153,7 +153,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
                 filter === f ? "bg-[#F97316] text-[color:var(--text-primary)]" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
-              {f === "all" ? "All Open" : f}
+              {f === "all" ? t('ui.all.open') : f}
             </button>
           ))}
         </div>
@@ -170,10 +170,10 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
       ) : filtered.length === 0 ? (
         <div className="text-center py-12">
           <CheckCircle size={32} className="mx-auto text-[#22C55E] mb-3" />
-          <p className="text-[color:var(--text-primary)] font-semibold">No {filter !== "all" ? filter + " " : ""}risks detected</p>
+          <p className="text-[color:var(--text-primary)] font-semibold">{t('ui.no')} {filter !== "all" ? filter + " " : ""}{t('ui.risks.detected')}</p>
           <p className="text-gray-600 text-sm mt-1">
             {openRisks.length === 0
-              ? "All clear — no open risks on this project."
+              ? t('ui.all.clear.no.open.risks.on.this.project')
               : `Showing ${filter} risks only. ${openRisks.length - filtered.length} other risks exist.`}
           </p>
         </div>
@@ -194,7 +194,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
       {risks.filter((r) => r.status !== "open").length > 0 && (
         <div className="pt-4 border-t border-[#1F1F25]">
           <div className="text-xs text-gray-600 mb-3">
-            {risks.filter((r) => r.status !== "open").length} resolved/snoozed risks
+            {risks.filter((r) => r.status !== "open").length}{t('ui.resolved.snoozed.risks')}
           </div>
         </div>
       )}

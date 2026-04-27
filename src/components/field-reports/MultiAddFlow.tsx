@@ -2,6 +2,9 @@
 
 import { useState, useRef } from "react";
 import { ArrowLeft, X, ImagePlus } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface PhotoItem {
   file: File;
@@ -131,11 +134,10 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
         onClick={onBack}
         className="flex items-center gap-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm mb-4 min-h-[44px] transition-colors"
       >
-        <ArrowLeft size={16} />
-        Reports
+        <ArrowLeft size={16} />{t('ui.reports')}
       </button>
 
-      <h2 className="text-lg font-bold text-[color:var(--text-primary)] mb-4">Multi-Add Reports</h2>
+      <h2 className="text-lg font-bold text-[color:var(--text-primary)] mb-4">{t('ui.multi.add.reports')}</h2>
 
       {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
 
@@ -153,7 +155,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
         className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
       >
         <ImagePlus size={18} />
-        {photos.length === 0 ? "Select Photos" : "Add More Photos"}
+        {photos.length === 0 ? t('ui.select.photos') : t('ui.add.more.photos')}
       </button>
 
       {/* Grid preview */}
@@ -192,8 +194,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
           >
             {creating ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Creating {photos.length} reports...
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />{t('ui.creating.92bf11')} {photos.length}{t('ui.reports.77e615')}
               </>
             ) : (
               `Create All (${photos.length})`

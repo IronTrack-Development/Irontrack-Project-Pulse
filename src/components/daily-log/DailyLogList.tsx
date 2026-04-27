@@ -7,6 +7,9 @@ import {
   Thermometer, Users, AlertTriangle, Image as ImageIcon,
 } from "lucide-react";
 import type { DailyLog, DailyLogWeather, DailyLogCrewEntry } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface DailyLogListProps {
   projectId: string;
@@ -17,22 +20,19 @@ function statusBadge(status: string) {
     case "submitted":
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#22C55E]/10 text-[#22C55E]">
-          <CheckCircle2 size={10} />
-          Submitted
+          <CheckCircle2 size={10} />{t('ui.submitted')}
         </span>
       );
     case "locked":
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
-          <Lock size={10} />
-          Locked
+          <Lock size={10} />{t('ui.locked')}
         </span>
       );
     default:
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
-          <Edit3 size={10} />
-          Draft
+          <Edit3 size={10} />{t('status.draft')}
         </span>
       );
   }
@@ -59,7 +59,7 @@ function LogCard({ log, projectId }: { log: DailyLog; projectId: string }) {
             })}
           </div>
           <div className="text-xs text-[color:var(--text-muted)] mt-0.5">
-            {log.superintendent || "Superintendent"}
+            {log.superintendent || t('ui.superintendent')}
           </div>
         </div>
         {statusBadge(log.status)}
@@ -75,13 +75,13 @@ function LogCard({ log, projectId }: { log: DailyLog; projectId: string }) {
         {totalHeadcount > 0 && (
           <span className="flex items-center gap-1">
             <Users size={12} className="text-[#3B82F6]" />
-            {totalHeadcount} crew
+            {totalHeadcount}{t('ui.crew')}
           </span>
         )}
         {(log.delay_codes || []).length > 0 && (
           <span className="flex items-center gap-1">
             <AlertTriangle size={12} className="text-[#EAB308]" />
-            {log.delay_codes.length} delays
+            {log.delay_codes.length}{t('ui.delays')}
           </span>
         )}
       </div>
@@ -119,8 +119,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-          <CalendarDays size={18} className="text-[#F97316]" />
-          Daily Logs
+          <CalendarDays size={18} className="text-[#F97316]" />{t('ui.daily.logs')}
           {total > 0 && <span className="text-xs text-[color:var(--text-muted)] font-normal">({total})</span>}
         </h2>
         <div className="flex items-center gap-2">
@@ -136,7 +135,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
               text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors min-h-[40px]"
           >
             <Plus size={14} />
-            {hasTodayLog ? "Edit Today" : "New Log"}
+            {hasTodayLog ? t('ui.edit.today') : t('ui.new.log')}
           </Link>
         </div>
       </div>
@@ -149,8 +148,8 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
       ) : logs.length === 0 ? (
         <div className="text-center py-12">
           <CalendarDays size={32} className="mx-auto mb-3 text-gray-700" />
-          <p className="text-sm text-[color:var(--text-muted)] mb-1">No daily logs yet</p>
-          <p className="text-xs text-gray-600">Start your first daily log to track field conditions</p>
+          <p className="text-sm text-[color:var(--text-muted)] mb-1">{t('ui.no.daily.logs.yet')}</p>
+          <p className="text-xs text-gray-600">{t('ui.start.your.first.daily.log.to.track.field.conditions')}</p>
         </div>
       ) : (
         <div className="space-y-2">

@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw, Clock, Users, CloudRain, AlertTriangle } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface MonthlySummary {
   month: string;
@@ -79,7 +82,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
 
     return (
       <div className="mb-6">
-        <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Daily Crew Size</h3>
+        <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.daily.crew.size')}</h3>
         <div className="bg-[#121217] rounded-xl p-3 overflow-x-auto">
           <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ maxHeight: 160 }}>
             <polygon points={areaPoints} fill="#F97316" opacity="0.1" />
@@ -135,36 +138,35 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
-          No logs found for this month.
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">{t('ui.no.logs.found.for.this.month')}
         </div>
       ) : (
         <>
           {/* Stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-6">
             <RollupStatCard
-              label="Total Crew-Hours"
+              label={t('ui.total.crew.hours')}
               value={data.totalCrewHours.toLocaleString()}
               icon={<Clock size={16} />}
               accent
             />
             <RollupStatCard
-              label="Avg Daily Crew"
+              label={t('ui.avg.daily.crew')}
               value={data.avgDailyCrewSize}
               icon={<Users size={16} />}
             />
             <RollupStatCard
-              label="Weather Impact"
+              label={t('ui.weather.impact')}
               value={`${data.weatherImpactDays} (${data.weatherImpactPercent}%)`}
               icon={<CloudRain size={16} />}
             />
             <RollupStatCard
-              label="Delay Days"
+              label={t('ui.delay.days')}
               value={data.totalDelayDays}
               icon={<AlertTriangle size={16} />}
             />
             <RollupStatCard
-              label="Days Logged"
+              label={t('ui.days.logged')}
               value={data.totalLogDays}
             />
           </div>
@@ -172,18 +174,18 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Month-over-month comparison */}
           {data.monthOverMonth && (
             <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 mb-6">
-              <h3 className="text-xs font-bold text-[color:var(--text-muted)] uppercase mb-2">vs Previous Month</h3>
+              <h3 className="text-xs font-bold text-[color:var(--text-muted)] uppercase mb-2">{t('ui.vs.previous.month')}</h3>
               <div className="flex flex-wrap gap-6 text-sm">
                 <div>
-                  <span className="text-[color:var(--text-secondary)] mr-2">Crew-Hours:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">{t('ui.crew.hours')}</span>
                   {deltaLabel(data.monthOverMonth.crewHoursDelta)}
                 </div>
                 <div>
-                  <span className="text-[color:var(--text-secondary)] mr-2">Completions:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">{t('ui.completions')}</span>
                   {deltaLabel(data.monthOverMonth.completionDelta)}
                 </div>
                 <div>
-                  <span className="text-[color:var(--text-secondary)] mr-2">Delay Days:</span>
+                  <span className="text-[color:var(--text-secondary)] mr-2">{t('ui.delay.days.2bfdfb')}</span>
                   {deltaLabel(data.monthOverMonth.delayDayDelta)}
                 </div>
               </div>
@@ -196,12 +198,12 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Activity completions by week */}
           {data.activityCompletionByWeek.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Completions by Week</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.completions.by.week')}</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.activityCompletionByWeek.map((w) => (
                   <div key={w.weekStart} className="bg-[#121217] rounded-lg px-3 py-2 text-center">
                     <div className="text-xs text-[color:var(--text-muted)]">
-                      {new Date(w.weekStart + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      {new Date(w.weekStart + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </div>
                     <div className="text-lg font-bold text-[color:var(--text-primary)]">{w.completedCount}</div>
                   </div>
@@ -213,13 +215,13 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
           {/* Delay codes table */}
           {data.recurringDelayCodes.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Recurring Delay Codes</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.recurring.delay.codes')}</h3>
               <div className="bg-[#121217] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-[#1F1F25]">
-                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">Code</th>
-                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">Occurrences</th>
+                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.code')}</th>
+                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.occurrences')}</th>
                     </tr>
                   </thead>
                   <tbody>

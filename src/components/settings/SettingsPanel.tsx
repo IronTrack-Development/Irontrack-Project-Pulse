@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import { X, Sun, Moon } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
-import { getLanguage, setLanguage, t, type Language } from "@/lib/i18n";
+import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface SettingsPanelProps {
   open: boolean;
@@ -58,7 +61,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           className="flex items-center justify-between px-5 py-4 border-b"
           style={{ borderColor: "var(--border-primary)" }}
         >
-          <h2 className="text-lg font-bold">{t("settings.title", currentLang)}</h2>
+          <h2 className="text-lg font-bold">{t('ui.settings.title')}</h2>
           <button
             onClick={onClose}
             className="p-2 rounded-lg transition-colors"
@@ -75,13 +78,13 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t("settings.appearance", currentLang)}
+              {t('ui.settings.appearance')}
             </h3>
             <div
               className="rounded-xl p-4"
               style={{ backgroundColor: "var(--bg-tertiary)" }}
             >
-              <p className="text-sm font-medium mb-3">{t("settings.theme", currentLang)}</p>
+              <p className="text-sm font-medium mb-3">{t('ui.settings.theme')}</p>
               <div className="flex gap-2">
                 <button
                   onClick={() => handleThemeChange("dark")}
@@ -93,7 +96,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   }}
                 >
                   <Moon size={16} />
-                  {t("settings.dark", currentLang)}
+                  {t('ui.settings.dark')}
                 </button>
                 <button
                   onClick={() => handleThemeChange("light")}
@@ -105,7 +108,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   }}
                 >
                   <Sun size={16} />
-                  {t("settings.light", currentLang)}
+                  {t('ui.settings.light')}
                 </button>
               </div>
             </div>
@@ -117,7 +120,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t("settings.language", currentLang)}
+              {t('ui.settings.language')}
             </h3>
             <div
               className="rounded-xl p-4"
@@ -133,7 +136,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     color: currentLang === "en" ? "#FFFFFF" : "var(--text-secondary)",
                   }}
                 >
-                  🇺🇸 {t("settings.english", currentLang)}
+                  ðŸ‡ºðŸ‡¸ {t('ui.settings.english')}
                 </button>
                 <button
                   onClick={() => handleLangChange("es")}
@@ -144,11 +147,11 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     color: currentLang === "es" ? "#FFFFFF" : "var(--text-secondary)",
                   }}
                 >
-                  🇲🇽 {t("settings.spanish", currentLang)}
+                  ðŸ‡²ðŸ‡½ {t('ui.settings.spanish')}
                 </button>
               </div>
               <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                {t("settings.fieldNote", currentLang)}
+                {t('ui.settings.fieldnote')}
               </p>
             </div>
           </section>
@@ -160,7 +163,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                 className="text-xs font-semibold uppercase tracking-wider mb-3"
                 style={{ color: "var(--text-muted)" }}
               >
-                {t("settings.company", currentLang)}
+                {t('ui.settings.company')}
               </h3>
               <div
                 className="rounded-xl p-4"
@@ -177,24 +180,21 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t("settings.about", currentLang)}
+              {t('ui.settings.about')}
             </h3>
             <div
               className="rounded-xl p-4 space-y-3"
               style={{ backgroundColor: "var(--bg-tertiary)" }}
             >
-              <p className="text-sm font-medium">IronTrack Pulse v2.0</p>
+              <p className="text-sm font-medium">{t('ui.irontrack.pulse.v2.0')}</p>
               <div className="flex flex-wrap gap-3 text-xs" style={{ color: "var(--text-muted)" }}>
-                <a href="mailto:support@irontrack.tech" className="hover:underline" style={{ color: "var(--accent)" }}>
-                  Support
+                <a href="mailto:support@irontrack.tech" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.support')}
                 </a>
-                <span>·</span>
-                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>
-                  Privacy Policy
+                <span>Â·</span>
+                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.privacy.policy')}
                 </a>
-                <span>·</span>
-                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>
-                  Terms of Service
+                <span>Â·</span>
+                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.terms.of.service')}
                 </a>
               </div>
             </div>

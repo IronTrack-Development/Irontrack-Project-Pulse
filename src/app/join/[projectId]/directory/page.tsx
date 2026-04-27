@@ -3,17 +3,20 @@
 import { useEffect, useState, use } from "react";
 import { useSearchParams } from "next/navigation";
 import { Loader2, CheckCircle2, ChevronRight, Users } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 const ROLE_OPTIONS = [
-  { value: "architect", label: "Architect" },
-  { value: "engineer", label: "Engineer" },
-  { value: "subcontractor", label: "Subcontractor" },
-  { value: "supplier", label: "Supplier" },
-  { value: "owner", label: "Owner" },
-  { value: "owners_rep", label: "Owner's Rep" },
-  { value: "inspector", label: "Inspector" },
-  { value: "internal", label: "Internal" },
-  { value: "other", label: "Other" },
+  { value: "architect", label: t('ui.architect') },
+  { value: "engineer", label: t('ui.engineer') },
+  { value: "subcontractor", label: t('ui.subcontractor') },
+  { value: "supplier", label: t('ui.supplier') },
+  { value: "owner", label: t('ui.owner') },
+  { value: "owners_rep", label: t('ui.owner.s.rep') },
+  { value: "inspector", label: t('ui.inspector') },
+  { value: "internal", label: t('ui.internal') },
+  { value: "other", label: t('ui.other') },
 ];
 
 type Step = "loading" | "error" | "form" | "success";
@@ -124,7 +127,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
             <Users size={28} className="text-red-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">Link Error</h1>
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.link.error')}</h1>
             <p className="text-sm text-[color:var(--text-secondary)]">{errorMsg}</p>
           </div>
         </div>
@@ -143,11 +146,9 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               <CheckCircle2 size={40} className="text-[#22C55E]" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
-                You&apos;re in the directory!
+              <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">{t('ui.you.re.in.the.directory')}
               </h1>
-              <p className="text-sm text-[color:var(--text-secondary)] mt-2">
-                You&apos;ve been added to{" "}
+              <p className="text-sm text-[color:var(--text-secondary)] mt-2">{t('ui.you.ve.been.added.to')}{" "}
                 <span className="text-[color:var(--text-primary)] font-semibold">{projectName}</span>
               </p>
             </div>
@@ -155,27 +156,22 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Info */}
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-3">
-            <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
-              What&apos;s Next
+            <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.what.s.next')}
             </p>
             <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
-                Your contact info is now in the project directory
+                <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.your.contact.info.is.now.in.the.project.directory')}
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
-                The project team can reach you directly from the directory
+                <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.the.project.team.can.reach.you.directly.from.the.directory')}
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
-                You can close this page — you&apos;re all set
+                <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.you.can.close.this.page.you.re.all.set')}
               </li>
             </ul>
           </div>
 
-          <p className="text-[11px] text-gray-600 text-center">
-            Powered by IronTrack Pulse
+          <p className="text-[11px] text-gray-600 text-center">{t('ui.powered.by.irontrack.pulse')}
           </p>
         </div>
       </div>
@@ -191,21 +187,18 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-192.png"
-            alt="IronTrack Pulse"
+            alt={t('ui.irontrack.pulse')}
             className="w-14 h-14 rounded-2xl object-contain shadow-lg shadow-black/30"
           />
-          <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">
-            IronTrack Pulse
+          <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">{t('ui.irontrack.pulse')}
           </p>
         </div>
 
         {/* Title */}
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
-            Join {projectName}
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">{t('ui.join')} {projectName}
           </h1>
-          <p className="text-sm text-[color:var(--text-secondary)] mt-1">
-            Add yourself to the project directory
+          <p className="text-sm text-[color:var(--text-secondary)] mt-1">{t('ui.add.yourself.to.the.project.directory')}
           </p>
         </div>
 
@@ -213,14 +206,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Your Name *
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.your.name.60e93b')}
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Full name"
+              placeholder={t('ui.full.name')}
               required
               autoComplete="name"
               className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
@@ -229,14 +221,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Company */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Company
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('settings.company')}
             </label>
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company name"
+              placeholder={t('ui.company.name')}
               autoComplete="organization"
               className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             />
@@ -244,8 +235,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Role */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Your Role *
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.your.role')}
             </label>
             <select
               value={role}
@@ -253,7 +243,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               required
               className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
             >
-              <option value="" disabled>Select your role…</option>
+              <option value="" disabled>{t('ui.select.your.role')}</option>
               {ROLE_OPTIONS.map((r) => (
                 <option key={r.value} value={r.value}>{r.label}</option>
               ))}
@@ -263,14 +253,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           {/* Trade — subcontractor only */}
           {role === "subcontractor" && (
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-                Trade
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.trade')}
               </label>
               <input
                 type="text"
                 value={trade}
                 onChange={(e) => setTrade(e.target.value)}
-                placeholder="e.g., Electrical, Plumbing, HVAC"
+                placeholder={t('ui.e.g.electrical.plumbing.hvac')}
                 className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
@@ -279,14 +268,13 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           {/* Discipline — engineer only */}
           {role === "engineer" && (
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-                Discipline
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.discipline')}
               </label>
               <input
                 type="text"
                 value={discipline}
                 onChange={(e) => setDiscipline(e.target.value)}
-                placeholder="e.g., Structural, MEP, Civil"
+                placeholder={t('ui.e.g.structural.mep.civil')}
                 className="w-full bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
               />
             </div>
@@ -294,8 +282,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Email */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Email
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.email')}
             </label>
             <input
               type="email"
@@ -309,8 +296,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Phone */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Phone
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.phone')}
             </label>
             <input
               type="tel"
@@ -336,16 +322,14 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />
             ) : (
-              <>
-                Add Me to Directory
+              <>{t('ui.add.me.to.directory')}
                 <ChevronRight size={18} />
               </>
             )}
           </button>
         </form>
 
-        <p className="text-[11px] text-gray-600 text-center">
-          Your contact info will be visible to the project team only.
+        <p className="text-[11px] text-gray-600 text-center">{t('ui.your.contact.info.will.be.visible.to.the.project.team')}
         </p>
       </div>
     </div>

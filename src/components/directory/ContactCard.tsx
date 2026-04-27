@@ -1,6 +1,9 @@
 "use client";
 
 import { Mail, Phone, Pencil, Trash2 } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export interface CompanyContact {
   id: string;
@@ -91,7 +94,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
           )}
 
           {contact.joined_at && (
-            <p className="text-[10px] text-[#F97316] mb-2">✓ Joined via QR</p>
+            <p className="text-[10px] text-[#F97316] mb-2">{t('ui.joined.via.qr')}</p>
           )}
 
           {/* Action buttons */}
@@ -104,7 +107,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
               >
                 <Mail size={12} className="text-[#F97316]" />
                 <span className="hidden sm:inline truncate max-w-[120px]">{cc.email}</span>
-                <span className="sm:hidden">Email</span>
+                <span className="sm:hidden">{t('ui.email')}</span>
               </a>
             )}
             {cc.phone && (
@@ -115,7 +118,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
               >
                 <Phone size={12} className="text-[#F97316]" />
                 <span className="hidden sm:inline">{cc.phone}</span>
-                <span className="sm:hidden">Call</span>
+                <span className="sm:hidden">{t('ui.call')}</span>
               </a>
             )}
           </div>
@@ -126,14 +129,14 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
           <button
             onClick={() => onEdit(contact)}
             className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
-            title="Edit contact"
+            title={t('ui.edit.contact.857c28')}
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => onRemove(contact)}
             className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-muted)] hover:text-red-400 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
-            title="Remove from project"
+            title={t('ui.remove.from.project')}
           >
             <Trash2 size={13} />
           </button>

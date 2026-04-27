@@ -22,6 +22,9 @@ import {
 } from "lucide-react";
 
 import { extractPhotoTimestamp } from "@/lib/photo-utils";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -127,27 +130,26 @@ function statusChip(status: string, pct: number) {
   if (status === "complete" || pct >= 100) {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-900/40 text-green-400 border border-green-700/40">
-        <CheckCircle2 size={11} /> Complete
+        <CheckCircle2 size={11} />{t('ui.complete.1f5a1a')}
       </span>
     );
   }
   if (status === "late") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-red-900/40 text-red-400 border border-red-700/40">
-        <AlertTriangle size={11} /> Late
+        <AlertTriangle size={11} />{t('ui.late')}
       </span>
     );
   }
   if (status === "in_progress") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-orange-900/40 text-orange-400 border border-orange-700/40">
-        <Clock size={11} /> In Progress
+        <Clock size={11} />{t('status.inProgress')}
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#2a2a33]">
-      On Track
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#2a2a33]">{t('ui.on.track')}
     </span>
   );
 }
@@ -394,20 +396,18 @@ function ReportPreviewCard({
       {/* Header */}
       <div className="bg-[#13131A] border border-[#1F1F25] rounded-2xl p-5 space-y-4">
         <div className="space-y-1">
-          <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
-            📋 Daily Report Preview
+          <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.daily.report.preview')}
           </p>
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{formatDate(reportDate)}</h2>
           <p className="text-sm text-[color:var(--text-secondary)]">{projectName}</p>
           <p className="text-sm text-[#F97316]">{subName}</p>
-          <p className="text-xs text-[color:var(--text-muted)]">Submitted by: {submittedBy}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">{t('ui.submitted.by')} {submittedBy}</p>
         </div>
 
         {/* Tasks */}
         {workedActivities.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Tasks Worked On
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.tasks.worked.on')}
             </p>
             {workedActivities.map((act) => {
               const pct = parseInt(activityStatuses[act.id] ?? "0", 10);
@@ -438,7 +438,7 @@ function ReportPreviewCard({
               );
             })}
             {selectedActivityIds.length === 0 && (
-              <p className="text-xs text-gray-600 italic">No tasks selected</p>
+              <p className="text-xs text-gray-600 italic">{t('ui.no.tasks.selected')}</p>
             )}
           </div>
         )}
@@ -448,13 +448,13 @@ function ReportPreviewCard({
           <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
             <Users size={15} className="text-[#F97316]" />
             <span>
-              <span className="font-bold text-[color:var(--text-primary)]">{manpowerCount}</span> workers
+              <span className="font-bold text-[color:var(--text-primary)]">{manpowerCount}</span>{t('ui.workers.f74e09')}
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
             <Timer size={15} className="text-[#F97316]" />
             <span>
-              <span className="font-bold text-[color:var(--text-primary)]">{totalHours}</span>h total
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHours}</span>{t('ui.h.total')}
             </span>
           </div>
         </div>
@@ -462,8 +462,7 @@ function ReportPreviewCard({
         {/* Delays */}
         {activeDelays.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Delays / Issues
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.delays.issues')}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {activeDelays.map((d) => (
@@ -481,8 +480,7 @@ function ReportPreviewCard({
         {/* Notes */}
         {notes.trim() && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Notes
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.notes')}
             </p>
             <p className="text-sm text-[color:var(--text-secondary)] italic">"{notes}"</p>
           </div>
@@ -491,8 +489,7 @@ function ReportPreviewCard({
         {/* Photos */}
         {allPhotoUrls.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Photos ({allPhotoUrls.length})
+            <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.photos.9d5a0c')}{allPhotoUrls.length})
             </p>
             <div className="grid grid-cols-3 gap-2">
               {allPhotoUrls.map((url, i) => {
@@ -534,8 +531,7 @@ function ReportPreviewCard({
               onClick={onEdit}
               className="flex-1 bg-[#13131A] border border-[#1F1F25] hover:border-gray-500 text-[color:var(--text-secondary)] font-semibold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2"
             >
-              <ArrowLeft size={18} />
-              Edit Report
+              <ArrowLeft size={18} />{t('ui.edit.report')}
             </button>
           )}
           {onConfirm && (
@@ -548,8 +544,7 @@ function ReportPreviewCard({
                 <Loader2 size={20} className="animate-spin" />
               ) : (
                 <>
-                  <CheckCircle2 size={18} />
-                  Submit Report
+                  <CheckCircle2 size={18} />{t('ui.submit.report')}
                 </>
               )}
             </button>
@@ -598,7 +593,7 @@ function ActivityCard({
       );
     } else {
       trendNode = (
-        <span className="text-[color:var(--text-muted)] text-xs font-bold" title="No change since last report">
+        <span className="text-[color:var(--text-muted)] text-xs font-bold" title={t('ui.no.change.since.last.report')}>
           →
         </span>
       );
@@ -614,20 +609,20 @@ function ActivityCard({
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {activity.start_date && (
-          <span>Start: <span className="text-[color:var(--text-secondary)]">{formatDate(activity.start_date)}</span></span>
+          <span>{t('ui.start')} <span className="text-[color:var(--text-secondary)]">{formatDate(activity.start_date)}</span></span>
         )}
         {activity.finish_date && (
-          <span>Finish: <span className="text-[color:var(--text-secondary)]">{formatDate(activity.finish_date)}</span></span>
+          <span>{t('ui.finish')} <span className="text-[color:var(--text-secondary)]">{formatDate(activity.finish_date)}</span></span>
         )}
         {activity.trade && (
-          <span>Trade: <span className="text-[color:var(--text-secondary)]">{activity.trade}</span></span>
+          <span>{t('ui.trade.cb1a14')} <span className="text-[color:var(--text-secondary)]">{activity.trade}</span></span>
         )}
       </div>
 
       {/* Progress bar */}
       <div className="space-y-1">
         <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
-          <span>Progress</span>
+          <span>{t('ui.progress.1b9027')}</span>
           <span className="flex items-center gap-1">
             {trendNode}
             <span className="text-[color:var(--text-secondary)]">{trendPct != null ? trendPct : pct}%</span>
@@ -759,13 +754,13 @@ function FullScopeTab({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-[color:var(--text-secondary)]">
-          <span className="text-[color:var(--text-primary)] font-semibold">{total}</span> tasks assigned to your scope
+          <span className="text-[color:var(--text-primary)] font-semibold">{total}</span>{t('ui.tasks.assigned.to.your.scope')}
         </p>
       </div>
 
       {overdue.length > 0 && (
         <ScopeGroup
-          label="Overdue"
+          label={t('ui.overdue.07217c')}
           count={overdue.length}
           accentClass="text-red-400"
           borderClass="border-red-800/40"
@@ -779,7 +774,7 @@ function FullScopeTab({
 
       {inProgress.length > 0 && (
         <ScopeGroup
-          label="In Progress"
+          label={t('status.inProgress')}
           count={inProgress.length}
           accentClass="text-orange-400"
           borderClass="border-orange-800/40"
@@ -793,7 +788,7 @@ function FullScopeTab({
 
       {notStarted.length > 0 && (
         <ScopeGroup
-          label="Not Started"
+          label={t('ui.not.started')}
           count={notStarted.length}
           accentClass="text-[color:var(--text-secondary)]"
           borderClass="border-[#1F1F25]"
@@ -807,7 +802,7 @@ function FullScopeTab({
 
       {complete.length > 0 && (
         <ScopeGroup
-          label="Complete"
+          label={t('ui.complete.1f5a1a')}
           count={complete.length}
           accentClass="text-green-400"
           borderClass="border-green-800/40"
@@ -932,8 +927,7 @@ function PastReportsSection({
           >
             <ArrowLeft size={18} />
           </button>
-          <span className="text-sm font-semibold text-gray-200">
-            Full Report — {formatDate(fullReport.report_date)}
+          <span className="text-sm font-semibold text-gray-200">{t('ui.full.report')} {formatDate(fullReport.report_date)}
           </span>
         </div>
         <div className="bg-[#0B0B0D] p-4">
@@ -966,7 +960,7 @@ function PastReportsSection({
         className="w-full flex items-center justify-between px-4 py-3 bg-[#13131A]"
       >
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-200">📋 Past Reports</span>
+          <span className="text-sm font-semibold text-gray-200">{t('ui.past.reports')}</span>
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
             {reports.length}
           </span>
@@ -986,7 +980,7 @@ function PastReportsSection({
                 <span className="text-sm font-semibold text-gray-100">
                   {formatDate(report.report_date)}
                 </span>
-                <span className="text-xs text-[color:var(--text-muted)]">by {report.submitted_by}</span>
+                <span className="text-xs text-[color:var(--text-muted)]">{t('ui.by.408158')} {report.submitted_by}</span>
               </div>
 
               {/* Manpower + hours */}
@@ -994,20 +988,20 @@ function PastReportsSection({
                 {report.manpower_count != null && (
                   <span className="flex items-center gap-1">
                     <Users size={11} className="text-[#F97316]" />
-                    {report.manpower_count} workers
+                    {report.manpower_count}{t('ui.workers.f74e09')}
                   </span>
                 )}
                 {report.total_hours != null && (
                   <span className="flex items-center gap-1">
                     <Timer size={11} className="text-[#F97316]" />
-                    {report.total_hours}h total
+                    {report.total_hours}{t('ui.h.total')}
                   </span>
                 )}
               </div>
 
               {/* Delay chips */}
               {report.delay_reasons.length > 0 &&
-                !report.delay_reasons.includes("None") && (
+                !report.delay_reasons.includes(t('ui.none.6eef66')) && (
                   <div className="flex flex-wrap gap-1.5">
                     {report.delay_reasons.map((d) => (
                       <span
@@ -1030,7 +1024,7 @@ function PastReportsSection({
                     return (
                       <div key={i} className="flex items-center justify-between text-xs">
                         <span className="text-[color:var(--text-muted)] truncate pr-2 flex-1">
-                          {act?.activity_name ?? "Task"}
+                          {act?.activity_name ?? t('ui.task')}
                         </span>
                         <span className="text-[color:var(--text-secondary)] flex-shrink-0">{displayPct}</span>
                       </div>
@@ -1044,7 +1038,7 @@ function PastReportsSection({
                 <div className="space-y-1.5">
                   <p className="text-xs text-gray-600 flex items-center gap-1">
                     <Camera size={11} />
-                    {report.photo_urls.length} photo{report.photo_urls.length !== 1 ? "s" : ""}
+                    {report.photo_urls.length}{t('ui.photo.eeb35d')}{report.photo_urls.length !== 1 ? t('ui.s') : ""}
                   </p>
                   <PhotoStrip urls={report.photo_urls} />
                 </div>
@@ -1059,8 +1053,7 @@ function PastReportsSection({
               <button
                 onClick={() => setFullReportId(report.id)}
                 className="w-full text-xs text-[#F97316] border border-[#F97316]/30 rounded-xl py-2 hover:bg-[#F97316]/10 transition-colors"
-              >
-                View Full Report →
+              >{t('ui.view.full.report')}
               </button>
             </div>
           ))}
@@ -1313,7 +1306,7 @@ function ProgressReportTab({
           <CheckCircle2 size={32} className="text-green-400" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Report Submitted</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.report.submitted')}</h2>
           <p className="text-sm text-[color:var(--text-secondary)] mt-1">
             {new Date(submitResult.submitted_at).toLocaleString("en-US", {
               weekday: "short",
@@ -1324,8 +1317,7 @@ function ProgressReportTab({
             })}
           </p>
         </div>
-        <p className="text-xs text-gray-600 max-w-xs">
-          Your foreman report has been recorded. The GC can view it in their IronTrack dashboard.
+        <p className="text-xs text-gray-600 max-w-xs">{t('ui.your.foreman.report.has.been.recorded.the.gc.can.view')}
         </p>
         <button
           onClick={() => {
@@ -1344,8 +1336,7 @@ function ProgressReportTab({
             setSubmitError(null);
           }}
           className="mt-4 text-sm text-[#F97316] underline underline-offset-2"
-        >
-          Submit another report
+        >{t('ui.submit.another.report')}
         </button>
       </div>
     );
@@ -1356,8 +1347,7 @@ function ProgressReportTab({
     return (
       <div className="space-y-5 pb-8">
         <div className="bg-[#1A1620] border border-purple-800/30 rounded-xl px-4 py-3">
-          <p className="text-xs text-purple-300">
-            Review your report before sending. Tap <strong>Submit Report</strong> to send it to the office.
+          <p className="text-xs text-purple-300">{t('ui.review.your.report.before.sending.tap')} <strong>{t('ui.submit.report')}</strong>{t('ui.to.send.it.to.the.office')}
           </p>
         </div>
 
@@ -1404,19 +1394,17 @@ function ProgressReportTab({
       <div className="bg-[#1A1620] border border-purple-800/30 rounded-xl px-4 py-3 flex items-center gap-3">
         <span className="text-base">📊</span>
         <p className="text-xs text-purple-300 leading-snug">
-          <span className="font-semibold">Progress Reports — Free during beta.</span>{" "}
-          Coming soon: $10/month for your whole team.
+          <span className="font-semibold">{t('ui.progress.reports.free.during.beta')}</span>{" "}{t('ui.coming.soon.10.month.for.your.whole.team')}
         </p>
       </div>
 
       {/* Section 1: Tasks */}
       <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-gray-200">What did you work on today?</h3>
-        <p className="text-xs text-[color:var(--text-muted)]">Tap to select tasks you worked on</p>
+        <h3 className="text-sm font-semibold text-gray-200">{t('ui.what.did.you.work.on.today')}</h3>
+        <p className="text-xs text-[color:var(--text-muted)]">{t('ui.tap.to.select.tasks.you.worked.on')}</p>
 
         {reportableActivities.length === 0 ? (
-          <p className="text-xs text-gray-600 py-4 text-center">
-            No active tasks in your scope right now.
+          <p className="text-xs text-gray-600 py-4 text-center">{t('ui.no.active.tasks.in.your.scope.right.now')}
           </p>
         ) : (
           <div className="space-y-2">
@@ -1447,8 +1435,7 @@ function ProgressReportTab({
                       </div>
                     </div>
                     {act.finish_date && (
-                      <p className="text-xs text-[color:var(--text-muted)] mt-1">
-                        Due: {formatDate(act.finish_date)}
+                      <p className="text-xs text-[color:var(--text-muted)] mt-1">{t('ui.due.7513f9')} {formatDate(act.finish_date)}
                       </p>
                     )}
                   </button>
@@ -1501,12 +1488,11 @@ function ProgressReportTab({
       {/* Section 2: Manpower */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-          <Users size={15} className="text-[#F97316]" />
-          Manpower
+          <Users size={15} className="text-[#F97316]" />{t('ui.manpower')}
         </h3>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="text-xs text-[color:var(--text-muted)]">Workers on site today</label>
+            <label className="text-xs text-[color:var(--text-muted)]">{t('ui.workers.on.site.today')}</label>
             <input
               type="number"
               min={0}
@@ -1518,7 +1504,7 @@ function ProgressReportTab({
           </div>
           <div className="space-y-1.5">
             <label className="text-xs text-[color:var(--text-muted)] flex items-center gap-1">
-              <Timer size={11} /> Total hours worked
+              <Timer size={11} />{t('ui.total.hours.worked')}
             </label>
             <input
               type="number"
@@ -1543,8 +1529,8 @@ function ProgressReportTab({
       {/* Section 3: Delays */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-200">Delays / Issues</h3>
-          <span className="text-xs text-gray-600">Optional</span>
+          <h3 className="text-sm font-semibold text-gray-200">{t('ui.delays.issues')}</h3>
+          <span className="text-xs text-gray-600">{t('ui.optional')}</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {DELAY_CHIPS.map((chip) => {
@@ -1569,7 +1555,7 @@ function ProgressReportTab({
         <textarea
           value={report.notes}
           onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
-          placeholder="Additional notes… (optional)"
+          placeholder={t('ui.additional.notes.optional.08b2df')}
           rows={3}
           className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
         />
@@ -1581,15 +1567,14 @@ function ProgressReportTab({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-            <Camera size={15} className="text-[#F97316]" />
-            Photos
+            <Camera size={15} className="text-[#F97316]" />{t('ui.photos')}
             {photos.length > 0 && (
               <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#F97316]/20 border border-[#F97316]/30 text-[#F97316]">
                 {photos.length}
               </span>
             )}
           </h3>
-          <span className="text-xs text-gray-600">Optional · max {MAX_PHOTOS}</span>
+          <span className="text-xs text-gray-600">{t('ui.optional.max')} {MAX_PHOTOS}</span>
         </div>
 
         {/* Hidden file input */}
@@ -1609,8 +1594,7 @@ function ProgressReportTab({
             className="w-full flex items-center justify-center gap-3 bg-[#13131A] border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 hover:bg-[#F97316]/5 rounded-2xl py-5 transition-colors group"
           >
             <Camera size={22} className="text-[color:var(--text-muted)] group-hover:text-[#F97316] transition-colors" />
-            <span className="text-sm text-[color:var(--text-secondary)] group-hover:text-gray-200 font-medium transition-colors">
-              Add Photo
+            <span className="text-sm text-[color:var(--text-secondary)] group-hover:text-gray-200 font-medium transition-colors">{t('ui.add.photo')}
             </span>
           </button>
         )}
@@ -1641,7 +1625,7 @@ function ProgressReportTab({
                 {/* Size warning */}
                 {photo.oversized && (
                   <div className="absolute bottom-0 left-0 right-0 bg-yellow-900/80 rounded-b-xl px-1 py-0.5 text-center">
-                    <span className="text-[9px] text-yellow-300 leading-none">will compress</span>
+                    <span className="text-[9px] text-yellow-300 leading-none">{t('ui.will.compress')}</span>
                   </div>
                 )}
               </div>
@@ -1654,7 +1638,7 @@ function ProgressReportTab({
                 className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[#2a2a35] hover:border-[#F97316]/50 flex flex-col items-center justify-center gap-1 transition-colors group"
               >
                 <Camera size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors" />
-                <span className="text-[10px] text-gray-600 group-hover:text-[color:var(--text-secondary)] transition-colors">Add</span>
+                <span className="text-[10px] text-gray-600 group-hover:text-[color:var(--text-secondary)] transition-colors">{t('action.add')}</span>
               </button>
             )}
           </div>
@@ -1675,12 +1659,12 @@ function ProgressReportTab({
       {/* Section 5: Submit */}
       <div className="space-y-3">
         <div className="space-y-1.5">
-          <label className="text-xs text-[color:var(--text-muted)]">Submitted by</label>
+          <label className="text-xs text-[color:var(--text-muted)]">{t('ui.submitted.by.046485')}</label>
           <input
             type="text"
             value={report.submittedBy}
             onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
-            placeholder="Your name"
+            placeholder={t('ui.your.name')}
             className="w-full bg-[#13131A] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
           />
         </div>
@@ -1691,12 +1675,10 @@ function ProgressReportTab({
           disabled={!report.submittedBy.trim()}
           className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-900/30"
         >
-          <Send size={18} />
-          Review Report
+          <Send size={18} />{t('ui.review.report')}
         </button>
 
-        <p className="text-xs text-gray-600 text-center">
-          You&apos;ll review before it sends. One report per day — submitting again today updates the previous.
+        <p className="text-xs text-gray-600 text-center">{t('ui.you.ll.review.before.it.sends.one.report.per.day')}
         </p>
       </div>
     </div>
@@ -1775,7 +1757,7 @@ export default function SubScheduleViewPage() {
       const json: ViewData = await res.json();
       setData(json);
     } catch {
-      setError("Network error — please try again");
+      setError(t('ui.network.error.please.try.again.fb26c8'));
     } finally {
       setLoading(false);
     }
@@ -1854,7 +1836,7 @@ export default function SubScheduleViewPage() {
       <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 className="animate-spin text-[#F97316]" size={32} />
-          <p className="text-sm">Loading your schedule…</p>
+          <p className="text-sm">{t('ui.loading.your.schedule')}</p>
         </div>
       </div>
     );
@@ -1865,9 +1847,9 @@ export default function SubScheduleViewPage() {
       <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center px-4">
         <div className="text-center space-y-3 max-w-sm">
           <XCircle className="text-red-500 mx-auto" size={40} />
-          <h1 className="text-lg font-semibold text-gray-100">Schedule Unavailable</h1>
-          <p className="text-sm text-[color:var(--text-secondary)]">{error ?? "This link is invalid or has expired."}</p>
-          <p className="text-xs text-gray-600">Contact your general contractor for an updated link.</p>
+          <h1 className="text-lg font-semibold text-gray-100">{t('ui.schedule.unavailable')}</h1>
+          <p className="text-sm text-[color:var(--text-secondary)]">{error ?? t('ui.this.link.is.invalid.or.has.expired')}</p>
+          <p className="text-xs text-gray-600">{t('ui.contact.your.general.contractor.for.an.updated.link')}</p>
         </div>
       </div>
     );
@@ -1876,11 +1858,11 @@ export default function SubScheduleViewPage() {
   const { project, sub, stats, activities } = data;
 
   const tabs: { key: TabKey; label: string; count?: number }[] = [
-    { key: "today", label: "Today", count: activities.today.length + activities.overdue.length },
-    { key: "full_scope", label: "My Full Scope", count: stats.total_tasks },
-    { key: "this_week", label: "This Week", count: activities.this_week.length },
-    { key: "next_two_weeks", label: "Next 2 Weeks", count: activities.next_two_weeks.length },
-    { key: "progress_report", label: "Progress Report" },
+    { key: "today", label: t('ui.today'), count: activities.today.length + activities.overdue.length },
+    { key: "full_scope", label: t('ui.my.full.scope'), count: stats.total_tasks },
+    { key: "this_week", label: t('ui.this.week'), count: activities.this_week.length },
+    { key: "next_two_weeks", label: t('ui.next.2.weeks'), count: activities.next_two_weeks.length },
+    { key: "progress_report", label: t('ui.progress.report') },
   ];
 
   // Gate screen
@@ -1889,9 +1871,8 @@ export default function SubScheduleViewPage() {
       <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center px-4">
         <div className="w-full max-w-sm space-y-6">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/icon-192.png" alt="IronTrack" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="text-sm font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">
-              IronTrack Pulse
+            <img src="/icon-192.png" alt={t('ui.irontrack')} className="w-8 h-8 rounded-lg object-contain" />
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">{t('ui.irontrack.pulse')}
             </span>
           </div>
 
@@ -1904,26 +1885,24 @@ export default function SubScheduleViewPage() {
           <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 space-y-4">
             <div className="text-center">
               <CalendarDays size={28} className="mx-auto text-[#F97316] mb-2" />
-              <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">
-                You&apos;ve been shared a filtered schedule view for your trades on this project.
+              <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">{t('ui.you.ve.been.shared.a.filtered.schedule.view.for.your')}
               </p>
             </div>
 
             <div>
-              <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Your full name</label>
+              <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">{t('ui.your.full.name.d90476')}</label>
               <input
                 type="text"
                 value={ackName}
                 onChange={(e) => setAckName(e.target.value)}
-                placeholder="e.g., Joe Martinez"
+                placeholder={t('ui.e.g.joe.martinez')}
                 className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
                 onKeyDown={(e) => { if (e.key === "Enter") handleAcknowledge(); }}
                 autoFocus
               />
             </div>
 
-            <p className="text-xs text-[color:var(--text-muted)] text-center leading-snug">
-              By continuing, I confirm I have received and reviewed the schedule for my trades on this project.
+            <p className="text-xs text-[color:var(--text-muted)] text-center leading-snug">{t('ui.by.continuing.i.confirm.i.have.received.and.reviewed.the')}
             </p>
 
             {ackError && (
@@ -1939,15 +1918,14 @@ export default function SubScheduleViewPage() {
                 <Loader2 size={16} className="animate-spin" />
               ) : (
                 <>
-                  <CheckCircle2 size={16} />
-                  Acknowledge {"&"} View Schedule
+                  <CheckCircle2 size={16} />{t('ui.acknowledge')} {"&"}{t('ui.view.schedule')}
                 </>
               )}
             </button>
           </div>
 
           <p className="text-[10px] text-gray-700 text-center">
-            {"©"} {new Date().getFullYear()} IronTrack Development LLC
+            {"©"} {new Date().getFullYear()}{t('ui.irontrack.development.llc')}
           </p>
         </div>
       </div>
@@ -1961,9 +1939,8 @@ export default function SubScheduleViewPage() {
         <div className="max-w-2xl mx-auto px-4 py-3">
           <div className="flex items-center gap-2 mb-2">
             <div className="flex items-center gap-1.5">
-              <img src="/icon-192.png" alt="IronTrack" className="w-6 h-6 rounded-md object-contain" />
-              <span className="text-xs font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">
-                IronTrack Pulse
+              <img src="/icon-192.png" alt={t('ui.irontrack')} className="w-6 h-6 rounded-md object-contain" />
+              <span className="text-xs font-semibold text-[color:var(--text-secondary)] tracking-wide uppercase">{t('ui.irontrack.pulse')}
               </span>
             </div>
           </div>
@@ -1977,8 +1954,7 @@ export default function SubScheduleViewPage() {
             )}
           </div>
           {project.schedule_updated_at && (
-            <p className="text-xs text-gray-600 mt-1">
-              Schedule as of {formatDate(project.schedule_updated_at.split("T")[0])}
+            <p className="text-xs text-gray-600 mt-1">{t('ui.schedule.as.of')} {formatDate(project.schedule_updated_at.split("T")[0])}
             </p>
           )}
         </div>
@@ -1987,10 +1963,10 @@ export default function SubScheduleViewPage() {
       <div className="max-w-2xl mx-auto px-4">
         {/* Stats Bar */}
         <div className="grid grid-cols-4 gap-2 mt-4">
-          <StatCard label="Total Tasks" value={stats.total_tasks} />
-          <StatCard label="This Week" value={stats.this_week} accent />
-          <StatCard label="Overdue" value={stats.overdue} danger={stats.overdue > 0} />
-          <StatCard label="% Done" value={`${stats.pct_complete}%`} accent />
+          <StatCard label={t('ui.total.tasks.e5cefb')} value={stats.total_tasks} />
+          <StatCard label={t('ui.this.week')} value={stats.this_week} accent />
+          <StatCard label={t('ui.overdue.07217c')} value={stats.overdue} danger={stats.overdue > 0} />
+          <StatCard label={t('ui.done.e1a57f')} value={`${stats.pct_complete}%`} accent />
         </div>
 
         {/* Tabs */}
@@ -2029,7 +2005,7 @@ export default function SubScheduleViewPage() {
               {activities.overdue.length > 0 && (
                 <div className="bg-red-950/30 border border-red-800/40 rounded-xl p-3 mb-2">
                   <p className="text-xs font-semibold text-red-400 mb-2 flex items-center gap-1.5">
-                    <AlertTriangle size={13} /> {activities.overdue.length} Overdue Task{activities.overdue.length !== 1 ? "s" : ""}
+                    <AlertTriangle size={13} /> {activities.overdue.length}{t('ui.overdue.task')}{activities.overdue.length !== 1 ? t('ui.s') : ""}
                   </p>
                   <div className="space-y-2">
                     {activities.overdue.map((act) => (
@@ -2120,8 +2096,7 @@ export default function SubScheduleViewPage() {
         <div className="fixed bottom-0 left-0 right-0 z-40 bg-green-950/60 border-t border-green-700/40 safe-bottom">
           <div className="max-w-2xl mx-auto px-4 py-2 flex items-center gap-2">
             <CheckCircle2 className="text-green-400 flex-shrink-0" size={16} />
-            <p className="text-xs text-green-400">
-              Acknowledged by{" "}
+            <p className="text-xs text-green-400">{t('ui.acknowledged.by')}{" "}
               <span className="font-semibold text-green-300">{ackName}</span>
               {ackTimestamp && (
                 <>

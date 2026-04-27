@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   FileText, Plus, X, Trash2, Edit2, ArrowRightLeft,
 } from "lucide-react";
@@ -111,7 +114,7 @@ export default function HandoffTemplates({ companyId }: Props) {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this template?")) return;
+    if (!confirm(t('ui.delete.this.template'))) return;
     try {
       await fetch(`/api/sub-ops/companies/${companyId}/handoffs/templates/${id}`, { method: "DELETE" });
       await fetchData();
@@ -147,15 +150,15 @@ export default function HandoffTemplates({ companyId }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-            <FileText size={16} /> Checklist Templates
+            <FileText size={16} />{t('ui.checklist.templates')}
           </h3>
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Reusable checklists for department handoffs</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.reusable.checklists.for.department.handoffs')}</p>
         </div>
         <button
           onClick={() => { resetForm(); setShowForm(!showForm); }}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-semibold transition-colors min-h-[36px]"
         >
-          {showForm ? <><X size={14} /> Cancel</> : <><Plus size={14} /> New Template</>}
+          {showForm ? <><X size={14} />{t('action.cancel')}</> : <><Plus size={14} />{t('ui.new.template')}</>}
         </button>
       </div>
 
@@ -164,7 +167,7 @@ export default function HandoffTemplates({ companyId }: Props) {
           <input
             value={formTitle}
             onChange={e => setFormTitle(e.target.value)}
-            placeholder="Template title"
+            placeholder={t('ui.template.title')}
             className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -173,7 +176,7 @@ export default function HandoffTemplates({ companyId }: Props) {
               onChange={e => setFormFrom(e.target.value)}
               className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
-              <option value="">From: Any Department</option>
+              <option value="">{t('ui.from.any.department')}</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
             <select
@@ -181,12 +184,12 @@ export default function HandoffTemplates({ companyId }: Props) {
               onChange={e => setFormTo(e.target.value)}
               className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
-              <option value="">To: Any Department</option>
+              <option value="">{t('ui.to.any.department')}</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-xs text-[color:var(--text-secondary)]">Checklist Items</label>
+            <label className="text-xs text-[color:var(--text-secondary)]">{t('ui.checklist.items')}</label>
             {formItems.map((item, idx) => (
               <div key={idx} className="flex gap-2">
                 <input
@@ -205,8 +208,7 @@ export default function HandoffTemplates({ companyId }: Props) {
             <button
               onClick={addItemField}
               className="text-xs text-[#F97316] hover:underline"
-            >
-              + Add another item
+            >{t('ui.add.another.item')}
             </button>
           </div>
           <div className="flex gap-2">
@@ -215,13 +217,12 @@ export default function HandoffTemplates({ companyId }: Props) {
               disabled={saving}
               className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
             >
-              {saving ? "Saving…" : editingId ? "Update Template" : "Create Template"}
+              {saving ? t('ui.saving.56a228') : editingId ? t('ui.update.template') : t('ui.create.template')}
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
               className="px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
-            >
-              Cancel
+            >{t('action.cancel')}
             </button>
           </div>
         </div>
@@ -230,8 +231,8 @@ export default function HandoffTemplates({ companyId }: Props) {
       {Object.keys(grouped).length === 0 ? (
         <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
           <FileText size={32} className="mx-auto text-gray-600 mb-3" />
-          <p className="text-[color:var(--text-secondary)] text-sm">No templates yet</p>
-          <p className="text-[color:var(--text-muted)] text-xs mt-1">Create templates to speed up handoff checklists</p>
+          <p className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.templates.yet')}</p>
+          <p className="text-[color:var(--text-muted)] text-xs mt-1">{t('ui.create.templates.to.speed.up.handoff.checklists')}</p>
         </div>
       ) : (
         Object.entries(grouped).map(([key, temps]) => (

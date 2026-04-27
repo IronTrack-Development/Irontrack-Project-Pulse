@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export default function SignupPage() {
   const router = useRouter();
@@ -23,13 +26,13 @@ export default function SignupPage() {
     setLoading(true);
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t('ui.passwords.do.not.match'));
       setLoading(false);
       return;
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      setError(t('ui.password.must.be.at.least.8.characters'));
       setLoading(false);
       return;
     }
@@ -78,18 +81,15 @@ export default function SignupPage() {
             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(34,197,94,0.1)" }}>
               <CheckCircle className="w-8 h-8" style={{ color: "#22C55E" }} />
             </div>
-            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-              Account created!
+            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>{t('ui.account.created')}
             </h1>
-            <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Check your email to confirm your account, then sign in.
+            <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.check.your.email.to.confirm.your.account.then.sign.in')}
             </p>
             <Link
               href="/login"
               className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
               style={{ background: "#E85D1C" }}
-            >
-              Go to login
+            >{t('ui.go.to.login')}
             </Link>
           </div>
         </div>
@@ -106,19 +106,17 @@ export default function SignupPage() {
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
+          <ArrowLeft className="w-4 h-4" />{t('ui.back.to.home')}
         </Link>
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <img
             src="/irontrack-app-icon.svg"
-            alt="IronTrack"
+            alt={t('ui.irontrack')}
             className="h-10 w-auto mr-3"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
+          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>{t('ui.iron')}<span style={{ color: "#E85D1C" }}>{t('ui.track')}</span>
           </span>
         </Link>
 
@@ -129,11 +127,9 @@ export default function SignupPage() {
               <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                General Contractor
+              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>{t('ui.general.contractor')}
               </h1>
-              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                $19.99/month — schedule intelligence
+              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>{t('ui.19.99.month.schedule.intelligence')}
               </p>
             </div>
           </div>
@@ -146,8 +142,7 @@ export default function SignupPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Email
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.email')}
               </label>
               <input
                 id="email"
@@ -166,8 +161,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Password
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.password')}
               </label>
               <div className="relative">
                 <input
@@ -196,8 +190,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Confirm Password
+              <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.confirm.password')}
               </label>
               <input
                 id="confirmPassword"
@@ -223,45 +216,35 @@ export default function SignupPage() {
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating account...
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />{t('ui.creating.account')}
                 </>
               ) : (
-                "Create Account"
+                t('ui.create.account')
               )}
             </button>
 
-            <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>
-              By creating an account, you agree to our{" "}
-              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
-                Privacy Policy
+            <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>{t('ui.by.creating.an.account.you.agree.to.our')}{" "}
+              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>{t('ui.terms.of.service')}
+              </Link>{" "}{t('ui.and')}{" "}
+              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>{t('ui.privacy.policy')}
               </Link>.
             </p>
           </form>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Already have an account?{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                Sign in
+            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.already.have.an.account')}{" "}
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>{t('ui.sign.in')}
               </Link>
             </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Subcontractor?{" "}
-              <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
-                Sign up here
+            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.subcontractor.ee9e7d')}{" "}
+              <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>{t('ui.sign.up.here')}
               </Link>
             </p>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>
-          © 2026 IronTrack Development LLC
+        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>{t('ui.2026.irontrack.development.llc')}
         </p>
       </div>
     </div>

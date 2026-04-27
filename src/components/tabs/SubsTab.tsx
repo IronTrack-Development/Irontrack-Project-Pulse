@@ -7,6 +7,9 @@ import {
   ListChecks, Search, ChevronsUpDown, FileText, QrCode, Printer, ExternalLink
 } from "lucide-react";
 import { extractPhotoTimestamp } from "@/lib/photo-utils";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // ─── Interfaces ───────────────────────────────────────────────────────────────
 
@@ -83,12 +86,12 @@ function formatDateTime(dateStr: string | null): string {
 function activityStatusChip(status: string) {
   const s = status?.toLowerCase() ?? "";
   const map: Record<string, { label: string; cls: string }> = {
-    "not started": { label: "Not Started", cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
-    "in progress":  { label: "In Progress",  cls: "bg-blue-500/20 text-blue-300" },
-    "complete":     { label: "Complete",      cls: "bg-green-500/20 text-green-300" },
-    "completed":    { label: "Complete",      cls: "bg-green-500/20 text-green-300" },
-    "delayed":      { label: "Delayed",       cls: "bg-red-500/20 text-red-300" },
-    "on hold":      { label: "On Hold",       cls: "bg-yellow-500/20 text-yellow-300" },
+    "not started": { label: t('ui.not.started'), cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
+    "in progress":  { label: t('status.inProgress'),  cls: "bg-blue-500/20 text-blue-300" },
+    "complete":     { label: t('ui.complete.1f5a1a'),      cls: "bg-green-500/20 text-green-300" },
+    "completed":    { label: t('ui.complete.1f5a1a'),      cls: "bg-green-500/20 text-green-300" },
+    "delayed":      { label: t('ui.delayed'),       cls: "bg-red-500/20 text-red-300" },
+    "on hold":      { label: t('ui.on.hold'),       cls: "bg-yellow-500/20 text-yellow-300" },
   };
   const hit = map[s] ?? { label: status ?? "Unknown", cls: "bg-gray-700 text-[color:var(--text-secondary)]" };
   return (
@@ -182,15 +185,15 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <ListChecks size={18} className="text-[#F97316]" />
-              <h2 className="text-sm font-bold text-[color:var(--text-primary)]">Select Tasks</h2>
+              <h2 className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.select.tasks')}</h2>
             </div>
             <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors">
               <X size={18} />
             </button>
           </div>
           <p className="text-xs text-[color:var(--text-muted)] mb-3">
-            <span className="text-[#F97316] font-semibold">{selected.size}</span> of{" "}
-            <span className="font-semibold text-[color:var(--text-secondary)]">{activities.length}</span> activities selected
+            <span className="text-[#F97316] font-semibold">{selected.size}</span>{t('ui.of')}{" "}
+            <span className="font-semibold text-[color:var(--text-secondary)]">{activities.length}</span>{t('ui.activities.selected')}
           </p>
           {/* Search */}
           <div className="relative">
@@ -198,7 +201,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search activities or trades..."
+              placeholder={t('ui.search.activities.or.trades')}
               className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
             {search && (
@@ -211,7 +214,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
             )}
           </div>
           {search && (
-            <p className="text-[10px] text-gray-600 mt-1.5">{totalFiltered} matching activities</p>
+            <p className="text-[10px] text-gray-600 mt-1.5">{totalFiltered}{t('ui.matching.activities')}</p>
           )}
         </div>
 
@@ -219,7 +222,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
         <div className="flex-1 overflow-y-auto">
           {grouped.size === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-center px-6">
-              <p className="text-[color:var(--text-muted)] text-sm">No activities match your search</p>
+              <p className="text-[color:var(--text-muted)] text-sm">{t('ui.no.activities.match.your.search')}</p>
             </div>
           ) : (
             [...grouped.entries()].map(([trade, acts]) => {
@@ -256,7 +259,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                           : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
-                      {allSelected ? "Deselect All" : "Select All"}
+                      {allSelected ? t('ui.deselect.all') : t('ui.select.all')}
                     </button>
                   </div>
 
@@ -313,8 +316,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
             <button
               onClick={onClose}
               className="flex-1 px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
-            >
-              Cancel
+            >{t('action.cancel')}
             </button>
             <button
               onClick={handleSave}
@@ -322,7 +324,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Check size={14} />
-              {saving ? "Saving…" : `Save Selection (${selected.size})`}
+              {saving ? t('ui.saving.56a228') : `Save Selection (${selected.size})`}
             </button>
           </div>
         </div>
@@ -571,7 +573,7 @@ export default function SubsTab({ projectId }: Props) {
 
   const handleDeleteSub = async (subId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm("Delete this subcontractor? This will also remove their share links.")) return;
+    if (!confirm(t('ui.delete.this.subcontractor.this.will.also.remove.their.share.links'))) return;
     setDeleting(subId);
     await fetch(`/api/projects/${projectId}/subs/${subId}`, { method: "DELETE" });
     await fetchData();
@@ -587,28 +589,27 @@ export default function SubsTab({ projectId }: Props) {
     if (!status || status.status === "not_sent") {
       return (
         <span className="flex items-center gap-1 text-xs text-[color:var(--text-muted)]">
-          <Clock size={12} /> No link sent
+          <Clock size={12} />{t('ui.no.link.sent')}
         </span>
       );
     }
     if (status.status === "acknowledged") {
       return (
         <span className="flex items-center gap-1 text-xs text-[#22C55E]">
-          <CheckCircle size={12} />
-          Acknowledged{status.acknowledged_by ? ` by ${status.acknowledged_by}` : ""}
+          <CheckCircle size={12} />{t('dispatch.acknowledged')}{status.acknowledged_by ? ` by ${status.acknowledged_by}` : ""}
         </span>
       );
     }
     if (status.status === "viewed") {
       return (
         <span className="flex items-center gap-1 text-xs text-[#F97316]">
-          <Eye size={12} /> Viewed, not acknowledged
+          <Eye size={12} />{t('ui.viewed.not.acknowledged')}
         </span>
       );
     }
     return (
       <span className="flex items-center gap-1 text-xs text-yellow-500">
-        <AlertTriangle size={12} /> Link sent, not opened
+        <AlertTriangle size={12} />{t('ui.link.sent.not.opened')}
       </span>
     );
   };
@@ -632,9 +633,9 @@ export default function SubsTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Subcontractors</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.subcontractors')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {subs.length} sub{subs.length !== 1 ? "s" : ""} on this project
+              {subs.length}{t('ui.sub.5d8561')}{subs.length !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -642,15 +643,13 @@ export default function SubsTab({ projectId }: Props) {
               onClick={handleOpenQrModal}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
             >
-              <QrCode size={14} />
-              QR Code
+              <QrCode size={14} />{t('ui.qr.code')}
             </button>
             <button
               onClick={() => setShowAddForm(!showAddForm)}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
-              <UserPlus size={14} />
-              Add Sub
+              <UserPlus size={14} />{t('ui.add.sub')}
             </button>
           </div>
         </div>
@@ -659,7 +658,7 @@ export default function SubsTab({ projectId }: Props) {
         {showAddForm && (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Add Subcontractor</h3>
+              <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.add.subcontractor')}</h3>
               <button
                 onClick={() => { setShowAddForm(false); setAddError(""); }}
                 className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
@@ -670,13 +669,13 @@ export default function SubsTab({ projectId }: Props) {
 
             {/* Company Code field (Fix 2) */}
             <div className="space-y-1">
-              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block font-medium">Company Code <span className="text-gray-600 font-normal">(optional)</span></label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block font-medium">{t('ui.company.code')} <span className="text-gray-600 font-normal">(optional)</span></label>
               <div className="relative">
                 <input
                   value={companyCode}
                   onChange={e => { setCompanyCode(e.target.value); setCodeLookupStatus("idle"); }}
                   onBlur={e => handleCodeLookup(e.target.value)}
-                  placeholder="e.g., IT-482916"
+                  placeholder={t('ui.e.g.it.482916')}
                   className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
                 />
                 {codeLookupStatus === "loading" && (
@@ -684,38 +683,38 @@ export default function SubsTab({ projectId }: Props) {
                 )}
                 {codeLookupStatus === "found" && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-green-400 font-semibold flex items-center gap-1">
-                    <Check size={10} /> Found
+                    <Check size={10} />{t('ui.found.bbba84')}
                   </span>
                 )}
               </div>
-              <p className="text-[10px] text-gray-600">Ask your sub for their IronTrack code for instant matching</p>
+              <p className="text-[10px] text-gray-600">{t('ui.ask.your.sub.for.their.irontrack.code.for.instant.matching')}</p>
               {codeLookupStatus === "not_found" && (
-                <p className="text-[10px] text-red-400">No company found with this code</p>
+                <p className="text-[10px] text-red-400">{t('ui.no.company.found.with.this.code')}</p>
               )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Company Name *</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.company.name.02b29e')}</label>
                 <input
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddSub()}
-                  placeholder="e.g., ABC Plumbing"
+                  placeholder={t('ui.e.g.abc.plumbing')}
                   className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Contact Name</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.contact.name')}</label>
                 <input
                   value={newContact}
                   onChange={e => setNewContact(e.target.value)}
-                  placeholder="e.g., Joe Martinez"
+                  placeholder={t('ui.e.g.joe.martinez')}
                   className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Phone</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.phone')}</label>
                 <input
                   value={newPhone}
                   onChange={e => setNewPhone(e.target.value)}
@@ -724,7 +723,7 @@ export default function SubsTab({ projectId }: Props) {
                 />
               </div>
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Email</label>
+                <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.email')}</label>
                 <input
                   value={newEmail}
                   onChange={e => setNewEmail(e.target.value)}
@@ -734,8 +733,7 @@ export default function SubsTab({ projectId }: Props) {
               </div>
             </div>
 
-            <p className="text-[11px] text-gray-600">
-              You can assign specific schedule tasks after adding the sub.
+            <p className="text-[11px] text-gray-600">{t('ui.you.can.assign.specific.schedule.tasks.after.adding.the.sub')}
             </p>
 
             {addError && (
@@ -750,7 +748,7 @@ export default function SubsTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Plus size={14} />
-              {adding ? "Adding…" : "Add Subcontractor"}
+              {adding ? t('ui.adding.ffb2e6') : t('ui.add.subcontractor')}
             </button>
           </div>
         )}
@@ -759,8 +757,8 @@ export default function SubsTab({ projectId }: Props) {
         {subs.length === 0 ? (
           <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
             <UserPlus size={32} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-[color:var(--text-secondary)] text-sm mb-1">No subcontractors added yet</p>
-            <p className="text-gray-600 text-xs">Add a sub to share their filtered schedule view</p>
+            <p className="text-[color:var(--text-secondary)] text-sm mb-1">{t('ui.no.subcontractors.added.yet')}</p>
+            <p className="text-gray-600 text-xs">{t('ui.add.a.sub.to.share.their.filtered.schedule.view')}</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -799,7 +797,7 @@ export default function SubsTab({ projectId }: Props) {
                             : "bg-[#1F1F25] text-[color:var(--text-muted)]"
                         }`}>
                           <ListChecks size={10} />
-                          {activityCount > 0 ? `${activityCount} task${activityCount !== 1 ? "s" : ""} assigned` : "No tasks assigned"}
+                          {activityCount > 0 ? `${activityCount} task${activityCount !== 1 ? t('ui.s') : ""} assigned` : t('ui.no.tasks.assigned')}
                         </span>
                       </div>
 
@@ -819,7 +817,7 @@ export default function SubsTab({ projectId }: Props) {
                           }`}
                         >
                           {copiedId === sub.id ? <Check size={12} /> : <Copy size={12} />}
-                          {copiedId === sub.id ? "Copied!" : "Copy Link"}
+                          {copiedId === sub.id ? t('ui.copied') : t('ui.copy.link')}
                         </button>
                       ) : (
                         <button
@@ -828,7 +826,7 @@ export default function SubsTab({ projectId }: Props) {
                           className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
                         >
                           <Send size={12} />
-                          {generating === sub.id ? "…" : "Generate Link"}
+                          {generating === sub.id ? "…" : t('ui.generate.link')}
                         </button>
                       )}
                       {isExpanded
@@ -845,15 +843,15 @@ export default function SubsTab({ projectId }: Props) {
                       {/* Contact Info */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                         <div>
-                          <span className="text-[color:var(--text-muted)]">Contact:</span>
+                          <span className="text-[color:var(--text-muted)]">{t('ui.contact')}</span>
                           <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_name || "—"}</span>
                         </div>
                         <div>
-                          <span className="text-[color:var(--text-muted)]">Phone:</span>
+                          <span className="text-[color:var(--text-muted)]">{t('ui.phone.daeea4')}</span>
                           <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_phone || "—"}</span>
                         </div>
                         <div>
-                          <span className="text-[color:var(--text-muted)]">Email:</span>
+                          <span className="text-[color:var(--text-muted)]">{t('ui.email.4c4e6b')}</span>
                           <span className="text-[color:var(--text-secondary)] ml-1">{sub.contact_email || "—"}</span>
                         </div>
                       </div>
@@ -870,7 +868,7 @@ export default function SubsTab({ projectId }: Props) {
                           ) : (
                             <ListChecks size={13} className="text-[#F97316]" />
                           )}
-                          {activitiesLoading ? "Loading…" : "Select Tasks"}
+                          {activitiesLoading ? t('ui.loading') : t('ui.select.tasks')}
                           {activityCount > 0 && (
                             <span className="ml-0.5 bg-[#F97316]/20 text-[#F97316] text-[10px] font-bold px-1.5 py-0.5 rounded">
                               {activityCount}
@@ -879,8 +877,8 @@ export default function SubsTab({ projectId }: Props) {
                         </button>
                         <p className="text-[10px] text-gray-600">
                           {activityCount > 0
-                            ? "Sub sees only their assigned tasks"
-                            : "Assign tasks for this sub to see in their shared link"
+                            ? t('ui.sub.sees.only.their.assigned.tasks')
+                            : t('ui.assign.tasks.for.this.sub.to.see.in.their.shared')
                           }
                         </p>
                       </div>
@@ -890,25 +888,25 @@ export default function SubsTab({ projectId }: Props) {
                         <div className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 space-y-1.5 text-xs">
                           <div className="flex items-center gap-2">
                             <Link2 size={11} className="text-[color:var(--text-muted)] flex-none" />
-                            <span className="text-[color:var(--text-muted)]">Link sent:</span>
+                            <span className="text-[color:var(--text-muted)]">{t('ui.link.sent')}</span>
                             <span className="text-[color:var(--text-secondary)]">
                               {formatDateTime(status.latest_active_link?.created_at ?? null)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <Eye size={11} className="text-[color:var(--text-muted)] flex-none" />
-                            <span className="text-[color:var(--text-muted)]">Last viewed:</span>
+                            <span className="text-[color:var(--text-muted)]">{t('ui.last.viewed')}</span>
                             <span className={status.last_viewed_at ? "text-[#F97316]" : "text-gray-600"}>
-                              {status.last_viewed_at ? formatDateTime(status.last_viewed_at) : "Not yet"}
+                              {status.last_viewed_at ? formatDateTime(status.last_viewed_at) : t('ui.not.yet')}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <CheckCircle size={11} className="text-[color:var(--text-muted)] flex-none" />
-                            <span className="text-[color:var(--text-muted)]">Acknowledged:</span>
+                            <span className="text-[color:var(--text-muted)]">{t('ui.acknowledged.281ce9')}</span>
                             <span className={status.acknowledged_at ? "text-[#22C55E]" : "text-gray-600"}>
                               {status.acknowledged_at
                                 ? `${formatDateTime(status.acknowledged_at)}${status.acknowledged_by ? ` by ${status.acknowledged_by}` : ""}`
-                                : "Not yet"
+                                : t('ui.not.yet')
                               }
                             </span>
                           </div>
@@ -927,8 +925,7 @@ export default function SubsTab({ projectId }: Props) {
                               onClick={() => setReportsOpen(prev => ({ ...prev, [sub.id]: !isOpen }))}
                             >
                               <span className="flex items-center gap-1.5">
-                                <FileText size={12} className="text-[#F97316]" />
-                                Recent Reports
+                                <FileText size={12} className="text-[#F97316]" />{t('ui.recent.reports')}
                                 {reports && reports.length > 0 && (
                                   <span className="ml-1 bg-[#F97316]/20 text-[#F97316] text-[10px] font-bold px-1.5 py-0.5 rounded">
                                     {reports.length}
@@ -947,7 +944,7 @@ export default function SubsTab({ projectId }: Props) {
                                     <div className="w-4 h-4 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
                                   </div>
                                 ) : !reports || reports.length === 0 ? (
-                                  <div className="px-3 py-4 text-center text-xs text-gray-600">No reports yet</div>
+                                  <div className="px-3 py-4 text-center text-xs text-gray-600">{t('ui.no.reports.yet')}</div>
                                 ) : (
                                   reports.slice(0, 5).map(report => (
                                     <div key={report.id} className="px-3 py-3 space-y-1.5">
@@ -957,8 +954,8 @@ export default function SubsTab({ projectId }: Props) {
                                       </div>
                                       {(report.manpower_count != null || report.total_hours != null) && (
                                         <div className="flex items-center gap-3 text-[10px] text-[color:var(--text-secondary)]">
-                                          {report.manpower_count != null && <span>👷 {report.manpower_count} worker{report.manpower_count !== 1 ? "s" : ""}</span>}
-                                          {report.total_hours != null && <span>⏱ {report.total_hours}h</span>}
+                                          {report.manpower_count != null && <span>👷 {report.manpower_count}{t('ui.worker')}{report.manpower_count !== 1 ? t('ui.s') : ""}</span>}
+                                          {report.total_hours != null && <span>⏱ {report.total_hours}{t('ui.h')}</span>}
                                         </div>
                                       )}
                                       {report.delay_reasons && report.delay_reasons.length > 0 && (
@@ -972,7 +969,7 @@ export default function SubsTab({ projectId }: Props) {
                                         <div className="space-y-1 mt-1">
                                           {report.worked_on_activities.map((wa) => (
                                             <div key={wa.activity_id} className="flex items-center justify-between text-[10px]">
-                                              <span className="text-[color:var(--text-secondary)] truncate flex-1 mr-2">{wa.activity_name ?? "Unknown"}</span>
+                                              <span className="text-[color:var(--text-secondary)] truncate flex-1 mr-2">{wa.activity_name ?? t('ui.unknown')}</span>
                                               <span className={`flex-none px-1.5 py-0.5 rounded font-medium ${
                                                 wa.status === "100" ? "bg-green-500/15 text-green-400" :
                                                 wa.status === "75"  ? "bg-blue-500/15 text-blue-400" :
@@ -1027,7 +1024,7 @@ export default function SubsTab({ projectId }: Props) {
                             className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs transition-colors disabled:opacity-50"
                           >
                             <Link2 size={12} />
-                            {generating === sub.id ? "…" : "Regenerate Link"}
+                            {generating === sub.id ? "…" : t('ui.regenerate.link')}
                           </button>
                         )}
                         <button
@@ -1036,7 +1033,7 @@ export default function SubsTab({ projectId }: Props) {
                           className="flex items-center gap-1 px-2.5 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg text-xs transition-colors ml-auto disabled:opacity-50"
                         >
                           <Trash2 size={12} />
-                          {deleting === sub.id ? "…" : "Remove"}
+                          {deleting === sub.id ? "…" : t('ui.remove')}
                         </button>
                       </div>
                     </div>
@@ -1069,7 +1066,7 @@ export default function SubsTab({ projectId }: Props) {
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] bg-[#121217]">
               <div className="flex items-center gap-2">
                 <QrCode size={16} className="text-[#F97316]" />
-                <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Sub Self-Registration QR</h3>
+                <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.sub.self.registration.qr')}</h3>
               </div>
               <button
                 onClick={() => setShowQrModal(false)}
@@ -1088,8 +1085,7 @@ export default function SubsTab({ projectId }: Props) {
               ) : qrData ? (
                 <>
                   {/* Description */}
-                  <p className="text-xs text-[color:var(--text-secondary)] text-center leading-relaxed">
-                    Post this in the job trailer. Subs scan to self-register and see their schedule.
+                  <p className="text-xs text-[color:var(--text-secondary)] text-center leading-relaxed">{t('ui.post.this.in.the.job.trailer.subs.scan.to.self')}
                   </p>
 
                   {/* QR Code Image */}
@@ -1098,7 +1094,7 @@ export default function SubsTab({ projectId }: Props) {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(qrData.url)}&bgcolor=ffffff&color=000000&margin=4`}
-                        alt="QR Code for sub registration"
+                        alt={t('ui.qr.code.for.sub.registration')}
                         width={260}
                         height={260}
                         className="rounded-lg"
@@ -1109,7 +1105,7 @@ export default function SubsTab({ projectId }: Props) {
 
                   {/* Join URL */}
                   <div className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">Registration Link</p>
+                    <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">{t('ui.registration.link')}</p>
                     <p className="text-xs text-[color:var(--text-secondary)] break-all font-mono leading-relaxed">{qrData.url}</p>
                   </div>
 
@@ -1124,25 +1120,23 @@ export default function SubsTab({ projectId }: Props) {
                       }`}
                     >
                       {qrCopied ? <Check size={13} /> : <ExternalLink size={13} />}
-                      {qrCopied ? "Copied!" : "Copy Link"}
+                      {qrCopied ? t('ui.copied') : t('ui.copy.link')}
                     </button>
                     <button
                       onClick={() => window.print()}
                       className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
                     >
-                      <Printer size={13} />
-                      Print
+                      <Printer size={13} />{t('action.print')}
                     </button>
                   </div>
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-sm text-red-400">Failed to load QR code. Please try again.</p>
+                  <p className="text-sm text-red-400">{t('ui.failed.to.load.qr.code.please.try.again')}</p>
                   <button
                     onClick={() => { setQrData(null); handleOpenQrModal(); }}
                     className="mt-3 text-xs text-[#F97316] underline"
-                  >
-                    Retry
+                  >{t('ui.retry')}
                   </button>
                 </div>
               )}

@@ -1,5 +1,8 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 interface RevisionBannerProps {
   currentRevision: string;
   viewingRevision: string;
@@ -16,14 +19,12 @@ export default function RevisionBanner({
   return (
     <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/15 border border-yellow-500/30 rounded-lg text-sm">
       <span className="text-yellow-400">⚠</span>
-      <span className="text-yellow-200 flex-1">
-        You are viewing <strong>{viewingRevision}</strong> — <strong>{currentRevision}</strong> is current
+      <span className="text-yellow-200 flex-1">{t('ui.you.are.viewing')} <strong>{viewingRevision}</strong> — <strong>{currentRevision}</strong>{t('ui.is.current')}
       </span>
       <button
         onClick={onViewCurrent}
         className="text-yellow-400 hover:text-yellow-300 font-medium underline underline-offset-2 min-h-[44px] flex items-center"
-      >
-        View Current
+      >{t('ui.view.current')}
       </button>
     </div>
   );

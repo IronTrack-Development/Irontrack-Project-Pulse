@@ -7,6 +7,9 @@ import {
 import PunchProgressRing from "@/components/punch/PunchProgressRing";
 import PunchItemForm from "@/components/punch/PunchItemForm";
 import PunchItemDetail from "@/components/punch/PunchItemDetail";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Contact {
   id: string;
@@ -50,27 +53,27 @@ interface Props {
 }
 
 const STATUS_FILTERS = [
-  { value: "", label: "All" },
-  { value: "open", label: "Open" },
-  { value: "in_progress", label: "In Progress" },
-  { value: "ready_for_reinspect", label: "Re-inspect" },
-  { value: "closed", label: "Closed" },
-  { value: "disputed", label: "Disputed" },
+  { value: "", label: t('ui.all.6a7208') },
+  { value: "open", label: t('status.open') },
+  { value: "in_progress", label: t('status.inProgress') },
+  { value: "ready_for_reinspect", label: t('ui.re.inspect') },
+  { value: "closed", label: t('ui.closed') },
+  { value: "disputed", label: t('ui.disputed') },
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  open:               { label: "Open",        color: "#EF4444", bg: "bg-red-500/15" },
-  in_progress:        { label: "In Progress", color: "#EAB308", bg: "bg-yellow-500/15" },
-  ready_for_reinspect:{ label: "Re-inspect",  color: "#A855F7", bg: "bg-purple-500/15" },
-  closed:             { label: "Closed",      color: "#22C55E", bg: "bg-green-500/15" },
-  disputed:           { label: "Disputed",    color: "#F97316", bg: "bg-orange-500/15" },
+  open:               { label: t('status.open'),        color: "#EF4444", bg: "bg-red-500/15" },
+  in_progress:        { label: t('status.inProgress'), color: "#EAB308", bg: "bg-yellow-500/15" },
+  ready_for_reinspect:{ label: t('ui.re.inspect'),  color: "#A855F7", bg: "bg-purple-500/15" },
+  closed:             { label: t('ui.closed'),      color: "#22C55E", bg: "bg-green-500/15" },
+  disputed:           { label: t('ui.disputed'),    color: "#F97316", bg: "bg-orange-500/15" },
 };
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; pulse: boolean }> = {
-  life_safety: { label: "Life Safety", color: "#EF4444", pulse: true },
-  code:        { label: "Code",        color: "#F97316", pulse: false },
-  standard:    { label: "Standard",    color: "#6B7280", pulse: false },
-  cosmetic:    { label: "Cosmetic",    color: "#3B82F6", pulse: false },
+  life_safety: { label: t('ui.life.safety'), color: "#EF4444", pulse: true },
+  code:        { label: t('ui.code'),        color: "#F97316", pulse: false },
+  standard:    { label: t('ui.standard'),    color: "#6B7280", pulse: false },
+  cosmetic:    { label: t('ui.cosmetic'),    color: "#3B82F6", pulse: false },
 };
 
 export default function PunchListTab({ projectId }: Props) {
@@ -198,10 +201,10 @@ export default function PunchListTab({ projectId }: Props) {
             <PunchProgressRing total={summary.total} closed={summary.closed} size={100} />
             <div className="flex-1 grid grid-cols-2 gap-2">
               {[
-                { label: "Open", value: summary.open, color: "#EF4444" },
-                { label: "In Progress", value: summary.in_progress, color: "#EAB308" },
-                { label: "Re-inspect", value: summary.ready_for_reinspect, color: "#A855F7" },
-                { label: "Closed", value: summary.closed, color: "#22C55E" },
+                { label: t('status.open'), value: summary.open, color: "#EF4444" },
+                { label: t('status.inProgress'), value: summary.in_progress, color: "#EAB308" },
+                { label: t('ui.re.inspect'), value: summary.ready_for_reinspect, color: "#A855F7" },
+                { label: t('ui.closed'), value: summary.closed, color: "#22C55E" },
               ].map(({ label, value, color }) => (
                 <div key={label} className="bg-[#0B0B0D] rounded-xl p-2.5 text-center">
                   <p className="text-lg font-bold leading-none" style={{ color }}>{value}</p>
@@ -216,9 +219,8 @@ export default function PunchListTab({ projectId }: Props) {
       {/* Bulk actions */}
       {selectedIds.size > 0 && (
         <div className="flex items-center gap-3 bg-[#1F1F25] rounded-2xl px-4 py-3">
-          <span className="text-sm text-[color:var(--text-secondary)] flex-1">{selectedIds.size} selected</span>
-          <button onClick={() => setSelectedIds(new Set())} className="text-xs text-[color:var(--text-muted)] min-h-[40px] px-3">
-            Clear
+          <span className="text-sm text-[color:var(--text-secondary)] flex-1">{selectedIds.size}{t('ui.selected')}</span>
+          <button onClick={() => setSelectedIds(new Set())} className="text-xs text-[color:var(--text-muted)] min-h-[40px] px-3">{t('ui.clear')}
           </button>
           <button
             onClick={bulkClose}
@@ -226,8 +228,7 @@ export default function PunchListTab({ projectId }: Props) {
             className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-green-500/20 text-green-400
               text-xs font-semibold hover:bg-green-500/30 transition-all min-h-[44px]"
           >
-            {bulkClosing ? <RefreshCw size={12} className="animate-spin" /> : <CheckSquare size={12} />}
-            Close Selected
+            {bulkClosing ? <RefreshCw size={12} className="animate-spin" /> : <CheckSquare size={12} />}{t('ui.close.selected')}
           </button>
         </div>
       )}
@@ -261,7 +262,7 @@ export default function PunchListTab({ projectId }: Props) {
                   onChange={(e) => setTradeFilter(e.target.value)}
                   className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-[color:var(--text-secondary)] appearance-none focus:outline-none min-h-[40px]"
                 >
-                  <option value="">All Trades</option>
+                  <option value="">{t('ui.all.trades')}</option>
                   {trades.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
                 <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
@@ -274,7 +275,7 @@ export default function PunchListTab({ projectId }: Props) {
                   onChange={(e) => setSubFilter(e.target.value)}
                   className="w-full bg-[#1F1F25] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-xs text-[color:var(--text-secondary)] appearance-none focus:outline-none min-h-[40px]"
                 >
-                  <option value="">All Subs</option>
+                  <option value="">{t('ui.all.subs')}</option>
                   {subs.map((s) => <option key={s.name} value={contacts.find((c) => c.name === s.name)?.id || ""}>{s.name}</option>)}
                 </select>
                 <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)] pointer-events-none" />
@@ -289,10 +290,10 @@ export default function PunchListTab({ projectId }: Props) {
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <CheckSquare size={44} className="text-gray-700 mb-4" />
           <p className="text-sm font-semibold text-[color:var(--text-muted)] mb-1">
-            {statusFilter || tradeFilter || subFilter ? "No items match the filter" : "No punch items yet"}
+            {statusFilter || tradeFilter || subFilter ? t('ui.no.items.match.the.filter') : t('ui.no.punch.items.yet')}
           </p>
           <p className="text-xs text-gray-600 mb-6">
-            {!(statusFilter || tradeFilter || subFilter) && "Start your punch walk — tap + to add the first item"}
+            {!(statusFilter || tradeFilter || subFilter) && t('ui.start.your.punch.walk.tap.to.add.the.first.item')}
           </p>
         </div>
       ) : (
@@ -384,7 +385,7 @@ export default function PunchListTab({ projectId }: Props) {
         className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[#F97316] text-[color:var(--text-primary)]
           shadow-lg shadow-[#F97316]/30 flex items-center justify-center
           hover:bg-[#ea6c10] active:scale-95 transition-all z-40"
-        aria-label="Add punch item"
+        aria-label={t('ui.add.punch.item.338c9f')}
       >
         <Plus size={24} />
       </button>

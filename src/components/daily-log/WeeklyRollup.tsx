@@ -6,6 +6,9 @@ import {
   TrendingUp, AlertTriangle, FileText,
 } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface WeeklySummary {
   week: string;
@@ -101,8 +104,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           rel="noopener noreferrer"
           className="ml-auto flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-xs font-medium transition-colors min-h-[40px]"
         >
-          <FileText size={14} />
-          Export PDF
+          <FileText size={14} />{t('ui.export.pdf')}
         </a>
       </div>
 
@@ -111,8 +113,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
-          No logs found for this week.
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">{t('ui.no.logs.found.for.this.week')}
         </div>
       ) : (
         <>
@@ -124,28 +125,28 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-6">
             <RollupStatCard
-              label="Total Crew-Hours"
+              label={t('ui.total.crew.hours')}
               value={data.totalCrewHours.toLocaleString()}
               icon={<Clock size={16} />}
               accent
             />
             <RollupStatCard
-              label="Avg Daily Crew"
+              label={t('ui.avg.daily.crew')}
               value={data.avgDailyCrew}
               icon={<Users size={16} />}
             />
             <RollupStatCard
-              label="Weather Impact"
+              label={t('ui.weather.impact')}
               value={`${data.weatherImpactDays} day${data.weatherImpactDays !== 1 ? "s" : ""}`}
               icon={<CloudRain size={16} />}
             />
             <RollupStatCard
-              label="Activities Advanced"
+              label={t('ui.activities.advanced.0f40f0')}
               value={data.activitiesAdvanced.length}
               icon={<TrendingUp size={16} />}
             />
             <RollupStatCard
-              label="Lost Hours"
+              label={t('ui.lost.hours')}
               value={data.totalLostCrewHours}
               icon={<AlertTriangle size={16} />}
             />
@@ -154,7 +155,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Crew-hours by trade bar chart */}
           {Object.keys(data.crewHoursByTrade).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Crew-Hours by Trade</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.crew.hours.by.trade')}</h3>
               <div className="space-y-2">
                 {Object.entries(data.crewHoursByTrade)
                   .sort((a, b) => b[1] - a[1])
@@ -179,8 +180,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Activities completed */}
           {data.activitiesCompleted.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">
-                ✅ Activities Completed ({data.activitiesCompleted.length})
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.activities.completed')}{data.activitiesCompleted.length})
               </h3>
               <div className="space-y-1">
                 {data.activitiesCompleted.map((a, i) => (
@@ -196,8 +196,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Activities advanced */}
           {data.activitiesAdvanced.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">
-                📈 Activities Advanced ({data.activitiesAdvanced.length})
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.activities.advanced.c91fe1')}{data.activitiesAdvanced.length})
               </h3>
               <div className="space-y-1">
                 {data.activitiesAdvanced.map((a, i) => (
@@ -213,13 +212,13 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Delay breakdown */}
           {Object.keys(data.delayBreakdown).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Delay Breakdown</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.delay.breakdown')}</h3>
               <div className="bg-[#121217] rounded-xl overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-[#1F1F25]">
-                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">Reason</th>
-                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">Occurrences</th>
+                      <th className="text-left text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.reason')}</th>
+                      <th className="text-right text-[color:var(--text-muted)] px-3 py-2 font-medium">{t('ui.occurrences')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -235,7 +234,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                 </table>
               </div>
               <div className="text-[11px] text-[color:var(--text-muted)] mt-2">
-                {data.totalDelayDays} delay day{data.totalDelayDays !== 1 ? "s" : ""} · {data.totalLostCrewHours} lost crew-hours · {data.photoCount} photos
+                {data.totalDelayDays}{t('ui.delay.day')}{data.totalDelayDays !== 1 ? t('ui.s') : ""} · {data.totalLostCrewHours}{t('ui.lost.crew.hours')} {data.photoCount}{t('ui.photos.2e58e0')}
               </div>
             </div>
           )}
@@ -243,11 +242,11 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
           {/* Open issues */}
           {data.openIssues.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">⚠️ Open Issues</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.open.issues')}</h3>
               <div className="space-y-1">
                 {data.openIssues.map((issue, i) => (
                   <div key={i} className="text-xs text-[color:var(--text-secondary)] bg-[#121217] rounded-lg px-3 py-2">
-                    <span className="text-[color:var(--text-muted)] mr-2">{new Date(issue.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                    <span className="text-[color:var(--text-muted)] mr-2">{new Date(issue.date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                     {issue.narrative}
                   </div>
                 ))}

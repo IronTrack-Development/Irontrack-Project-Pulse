@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { X, Copy, Check, Share2, Loader2, QrCode, RefreshCw } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Props {
   projectId: string;
@@ -30,10 +33,10 @@ export default function QRShareModal({ projectId, onClose }: Props) {
       if (res.ok) {
         setQrData(await res.json());
       } else {
-        setError("Failed to generate QR code");
+        setError(t('ui.failed.to.generate.qr.code'));
       }
     } catch {
-      setError("Failed to generate QR code");
+      setError(t('ui.failed.to.generate.qr.code'));
     }
     setLoading(false);
   };
@@ -50,10 +53,10 @@ export default function QRShareModal({ projectId, onClose }: Props) {
       if (res.ok) {
         setQrData(await res.json());
       } else {
-        setError("Failed to refresh QR code");
+        setError(t('ui.failed.to.refresh.qr.code'));
       }
     } catch {
-      setError("Failed to refresh QR code");
+      setError(t('ui.failed.to.refresh.qr.code'));
     }
     setRefreshing(false);
   };
@@ -91,7 +94,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25]">
           <div className="flex items-center gap-2">
             <QrCode size={16} className="text-[#F97316]" />
-            <span className="text-sm font-bold text-[color:var(--text-primary)]">Directory QR Code</span>
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.directory.qr.code')}</span>
           </div>
           <button
             onClick={onClose}
@@ -106,7 +109,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
           {loading && (
             <div className="flex flex-col items-center gap-3 py-8">
               <Loader2 size={24} className="text-[#F97316] animate-spin" />
-              <span className="text-sm text-[color:var(--text-muted)]">Generating QR code…</span>
+              <span className="text-sm text-[color:var(--text-muted)]">{t('ui.generating.qr.code')}</span>
             </div>
           )}
 
@@ -116,8 +119,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               <button
                 onClick={load}
                 className="text-xs text-[#F97316] underline"
-              >
-                Try Again
+              >{t('ui.try.again')}
               </button>
             </div>
           )}
@@ -125,8 +127,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
           {qrData && !loading && !error && (
             <>
               {/* Description */}
-              <p className="text-xs text-[color:var(--text-secondary)] text-center mb-4 leading-relaxed">
-                Share at your next meeting — anyone who scans adds themselves to the project directory.
+              <p className="text-xs text-[color:var(--text-secondary)] text-center mb-4 leading-relaxed">{t('ui.share.at.your.next.meeting.anyone.who.scans.adds.themselves')}
               </p>
 
               {/* QR Code */}
@@ -134,7 +135,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData.url)}&bgcolor=ffffff&color=000000&margin=4`}
-                  alt="Directory join QR code"
+                  alt={t('ui.directory.join.qr.code')}
                   width={200}
                   height={200}
                   className="w-[200px] h-[200px]"
@@ -144,10 +145,9 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               {/* Info */}
               <div className="text-center mb-4 w-full">
                 <p className="text-[color:var(--text-primary)] font-semibold text-sm">{qrData.project_name}</p>
-                <p className="text-[color:var(--text-muted)] text-xs mt-0.5">Project Directory</p>
+                <p className="text-[color:var(--text-muted)] text-xs mt-0.5">{t('ui.project.directory')}</p>
                 {qrData.expires_at && (
-                  <p className="text-gray-600 text-[10px] mt-1">
-                    QR code expires {new Date(qrData.expires_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  <p className="text-gray-600 text-[10px] mt-1">{t('ui.qr.code.expires')} {new Date(qrData.expires_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </p>
                 )}
               </div>
@@ -165,13 +165,11 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                 >
                   {copied ? (
                     <>
-                      <Check size={14} className="text-[#22C55E]" />
-                      Copied!
+                      <Check size={14} className="text-[#22C55E]" />{t('ui.copied')}
                     </>
                   ) : (
                     <>
-                      <Copy size={14} />
-                      Copy Link
+                      <Copy size={14} />{t('ui.copy.link')}
                     </>
                   )}
                 </button>
@@ -179,8 +177,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                   onClick={handleShare}
                   className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
                 >
-                  <Share2 size={14} />
-                  Share
+                  <Share2 size={14} />{t('ui.share')}
                 </button>
               </div>
 
@@ -190,12 +187,10 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                 disabled={refreshing}
                 className="flex items-center gap-1.5 text-[10px] text-gray-600 hover:text-[color:var(--text-secondary)] transition-colors"
               >
-                <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />
-                Generate new QR code (invalidates old)
+                <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />{t('ui.generate.new.qr.code.invalidates.old')}
               </button>
 
-              <p className="text-[10px] text-gray-600 mt-2 text-center">
-                Anyone with this link can add themselves. No login required.
+              <p className="text-[10px] text-gray-600 mt-2 text-center">{t('ui.anyone.with.this.link.can.add.themselves.no.login.required')}
               </p>
             </>
           )}
