@@ -5,7 +5,6 @@ import { Lock, Phone, ExternalLink, RefreshCw } from "lucide-react";
 import JurisdictionSelector from "@/components/inspections/JurisdictionSelector";
 import InspectionForm from "@/components/inspections/InspectionForm";
 import InspectionHistory from "@/components/inspections/InspectionHistory";
-import { t } from "@/lib/i18n";
 
 interface Jurisdiction {
   id: string;
@@ -110,7 +109,8 @@ export default function InspectionsTab({ projectId }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[36px]"
-            >{t('ui.portal')} <ExternalLink size={12} />
+            >
+              Portal <ExternalLink size={12} />
             </a>
           )}
           {jurisdiction.phone && (
@@ -118,7 +118,7 @@ export default function InspectionsTab({ projectId }: Props) {
               href={`tel:${jurisdiction.phone}`}
               className="inline-flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[36px]"
             >
-              <Phone size={12} />{t('ui.call')}
+              <Phone size={12} /> Call
             </a>
           )}
         </div>

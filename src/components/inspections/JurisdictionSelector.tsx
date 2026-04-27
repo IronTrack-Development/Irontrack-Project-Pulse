@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Search, Lock, AlertTriangle, X } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface Jurisdiction {
   id: string;
@@ -25,15 +24,15 @@ interface Props {
 function providerBadge(provider: string | null) {
   switch (provider) {
     case "accela":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400">{t('ui.accela')}</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400">🔵 Accela</span>;
     case "energov":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-purple-500/20 text-purple-400">{t('ui.energov')}</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-purple-500/20 text-purple-400">🟣 EnerGov</span>;
     case "citizenserve":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400">{t('ui.citizenserve')}</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400">🟢 Citizenserve</span>;
     case "url":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">{t('ui.url')}</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">⬜ URL</span>;
     case "offline":
-      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/20 text-red-400">{t('ui.offline.a8777a')}</span>;
+      return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/20 text-red-400">🔴 Offline</span>;
     default:
       return null;
   }
@@ -100,8 +99,9 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.select.jurisdiction')}</h2>
-        <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.choose.the.municipality.for.this.project.this.locks.permanently')}
+        <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-2">Select Jurisdiction</h2>
+        <p className="text-sm text-[color:var(--text-secondary)]">
+          Choose the municipality for this project. This locks permanently.
         </p>
       </div>
 
@@ -110,7 +110,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
         <input
           type="text"
-          placeholder={t('ui.search.arizona.cities.towns.counties')}
+          placeholder="Search Arizona cities, towns, counties..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full pl-10 pr-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
@@ -119,7 +119,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
 
       {/* Results count */}
       <p className="text-xs text-[color:var(--text-muted)] mb-2">
-        {filtered.length}{t('ui.jurisdiction')}{filtered.length !== 1 ? t('ui.s') : ""}
+        {filtered.length} jurisdiction{filtered.length !== 1 ? "s" : ""}
       </p>
 
       {/* Scrollable list */}
@@ -136,19 +136,20 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
                 {providerBadge(j.portal_provider)}
                 {j.portal_url && !j.portal_verified && (
                   <span className="inline-flex items-center gap-0.5 text-[10px] text-yellow-500">
-                    <AlertTriangle size={10} />{t('ui.unverified')}
+                    <AlertTriangle size={10} />
+                    Unverified
                   </span>
                 )}
               </div>
               <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-                {j.county}{t('ui.county')}{j.phone ? ` · ${j.phone}` : ""}
+                {j.county} County{j.phone ? ` · ${j.phone}` : ""}
               </p>
             </div>
             <Lock size={14} className="text-gray-600 group-hover:text-[#F97316] transition-colors shrink-0 ml-2" />
           </button>
         ))}
         {filtered.length === 0 && (
-          <p className="text-center py-8 text-[color:var(--text-muted)] text-sm">{t('ui.no.jurisdictions.match.your.search')}</p>
+          <p className="text-center py-8 text-[color:var(--text-muted)] text-sm">No jurisdictions match your search.</p>
         )}
       </div>
 
@@ -157,7 +158,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 max-w-md w-full shadow-xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.confirm.jurisdiction')}</h3>
+              <h3 className="text-lg font-bold text-[color:var(--text-primary)]">Confirm Jurisdiction</h3>
               <button onClick={() => setConfirming(null)} className="p-1 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                 <X size={18} />
               </button>
@@ -168,24 +169,26 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
                 <span className="text-[color:var(--text-primary)] font-medium">{confirming.name}</span>
               </div>
               <p className="text-xs text-[color:var(--text-muted)] mt-1 ml-6">
-                {confirming.county}{t('ui.county')}
+                {confirming.county} County
                 {confirming.phone ? ` · ${confirming.phone}` : ""}
               </p>
             </div>
-            <p className="text-sm text-yellow-500 mb-4">{t('ui.lock')} <strong>{confirming.name}</strong>{t('ui.as.the.jurisdiction.for.this.project.this.can.t.be')}
+            <p className="text-sm text-yellow-500 mb-4">
+              ⚠️ Lock <strong>{confirming.name}</strong> as the jurisdiction for this project? This can&apos;t be changed later.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirming(null)}
                 className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
               <button
                 onClick={handleConfirm}
                 disabled={saving}
                 className="flex-1 px-4 py-3 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-50 min-h-[44px]"
               >
-                {saving ? t('ui.locking') : t('ui.lock.jurisdiction')}
+                {saving ? "Locking..." : "Lock Jurisdiction"}
               </button>
             </div>
           </div>

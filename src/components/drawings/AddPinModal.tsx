@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface RFI {
   id: string;
@@ -38,10 +37,10 @@ interface AddPinModalProps {
 
 const PIN_TYPES: { value: PinType; label: string; color: string }[] = [
   { value: "rfi", label: "RFI", color: "#A855F7" },
-  { value: "punch", label: t('ui.punch'), color: "#EF4444" },
-  { value: "submittal", label: t('ui.submittal'), color: "#3B82F6" },
-  { value: "note", label: t('ui.note'), color: "#EAB308" },
-  { value: "photo", label: t('ui.photo'), color: "#22C55E" },
+  { value: "punch", label: "Punch", color: "#EF4444" },
+  { value: "submittal", label: "Submittal", color: "#3B82F6" },
+  { value: "note", label: "Note", color: "#EAB308" },
+  { value: "photo", label: "Photo", color: "#22C55E" },
 ];
 
 export default function AddPinModal({
@@ -94,7 +93,7 @@ export default function AddPinModal({
     });
   };
 
-  const selectedType = PIN_TYPES.find((item) => item.value === pinType)!;
+  const selectedType = PIN_TYPES.find((t) => t.value === pinType)!;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -102,8 +101,9 @@ export default function AddPinModal({
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
           <div>
-            <h2 className="text-[color:var(--text-primary)] font-semibold">{t('ui.add.pin')}</h2>
-            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.position')} {xPercent.toFixed(1)}%, {yPercent.toFixed(1)}%
+            <h2 className="text-[color:var(--text-primary)] font-semibold">Add Pin</h2>
+            <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
+              Position: {xPercent.toFixed(1)}%, {yPercent.toFixed(1)}%
             </p>
           </div>
           <button
@@ -118,23 +118,23 @@ export default function AddPinModal({
         <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
           {/* Pin type */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">{t('ui.pin.type')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">Pin Type</label>
             <div className="grid grid-cols-5 gap-2">
-              {PIN_TYPES.map((item) => (
+              {PIN_TYPES.map((t) => (
                 <button
-                  key={item.value}
-                  onClick={() => { setPinType(item.value); setReferenceId(""); }}
+                  key={t.value}
+                  onClick={() => { setPinType(t.value); setReferenceId(""); }}
                   className={`flex flex-col items-center gap-1 py-2 rounded-lg border transition-all min-h-[60px] ${
-                    pinType === item.value
+                    pinType === t.value
                       ? "border-[#F97316] bg-[#F97316]/10"
                       : "border-[var(--border-primary)] bg-[var(--bg-primary)]"
                   }`}
                 >
                   <div
                     className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: item.color }}
+                    style={{ backgroundColor: t.color }}
                   />
-                  <span className="text-xs text-[color:var(--text-secondary)]">{item.label}</span>
+                  <span className="text-xs text-[color:var(--text-secondary)]">{t.label}</span>
                 </button>
               ))}
             </div>
@@ -142,12 +142,12 @@ export default function AddPinModal({
 
           {/* Label */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">{t('ui.label.optional')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">Label (optional)</label>
             <input
               type="text"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
-              placeholder={t('ui.short.label')}
+              placeholder="Short label"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
             />
           </div>
@@ -155,14 +155,15 @@ export default function AddPinModal({
           {/* Reference dropdown for RFI / Punch / Submittal */}
           {(pinType === "rfi" || pinType === "punch" || pinType === "submittal") && (
             <div>
-              <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">{t('ui.link.to')} {selectedType.label}
+              <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
+                Link to {selectedType.label}
               </label>
               <select
                 value={referenceId}
                 onChange={(e) => setReferenceId(e.target.value)}
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm min-h-[44px]"
               >
-                <option value="">{t('ui.none')}</option>
+                <option value="">— None —</option>
                 {pinType === "rfi" &&
                   rfis.map((r) => (
                     <option key={r.id} value={r.id}>
@@ -188,12 +189,12 @@ export default function AddPinModal({
           {/* Notes */}
           <div>
             <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
-              {pinType === "note" ? t('ui.note') : t('ui.additional.notes.optional')}
+              {pinType === "note" ? "Note" : "Additional Notes (optional)"}
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder={pinType === "note" ? t('ui.enter.note.text') : t('ui.optional.notes')}
+              placeholder={pinType === "note" ? "Enter note text..." : "Optional notes..."}
               rows={3}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm resize-none"
             />
@@ -205,7 +206,8 @@ export default function AddPinModal({
           <button
             onClick={onClose}
             className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
-          >{t('action.cancel')}
+          >
+            Cancel
           </button>
           <button
             onClick={handleSave}
@@ -213,7 +215,7 @@ export default function AddPinModal({
             className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
             style={{ backgroundColor: selectedType.color }}
           >
-            {loading ? t('ui.saving') : t('ui.add.pin')}
+            {loading ? "Saving..." : "Add Pin"}
           </button>
         </div>
       </div>

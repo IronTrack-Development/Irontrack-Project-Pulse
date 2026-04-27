@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { t } from "@/lib/i18n";
-
 import {
   FileText, Plus, X, Trash2, Edit2, ArrowRightLeft,
 } from "lucide-react";
@@ -113,7 +111,7 @@ export default function HandoffTemplates({ companyId }: Props) {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm(t('ui.delete.this.template'))) return;
+    if (!confirm("Delete this template?")) return;
     try {
       await fetch(`/api/sub-ops/companies/${companyId}/handoffs/templates/${id}`, { method: "DELETE" });
       await fetchData();
@@ -130,10 +128,10 @@ export default function HandoffTemplates({ companyId }: Props) {
 
   // Group templates by department transition
   const grouped: Record<string, Template[]> = {};
-  templates.forEach((template) => {
-    const key = [template.from_department_name || "Any", template.to_department_name || "Any"].join(" → ");
+  templates.forEach(t => {
+    const key = [t.from_department_name || "Any", t.to_department_name || "Any"].join(" → ");
     if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(template);
+    grouped[key].push(t);
   });
 
   if (loading) {
@@ -149,15 +147,15 @@ export default function HandoffTemplates({ companyId }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-            <FileText size={16} />{t('ui.checklist.templates')}
+            <FileText size={16} /> Checklist Templates
           </h3>
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.reusable.checklists.for.department.handoffs')}</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Reusable checklists for department handoffs</p>
         </div>
         <button
           onClick={() => { resetForm(); setShowForm(!showForm); }}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-semibold transition-colors min-h-[36px]"
         >
-          {showForm ? <><X size={14} />{t('action.cancel')}</> : <><Plus size={14} />{t('ui.new.template')}</>}
+          {showForm ? <><X size={14} /> Cancel</> : <><Plus size={14} /> New Template</>}
         </button>
       </div>
 
@@ -166,7 +164,7 @@ export default function HandoffTemplates({ companyId }: Props) {
           <input
             value={formTitle}
             onChange={e => setFormTitle(e.target.value)}
-            placeholder={t('ui.template.title')}
+            placeholder="Template title"
             className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -175,7 +173,7 @@ export default function HandoffTemplates({ companyId }: Props) {
               onChange={e => setFormFrom(e.target.value)}
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
-              <option value="">{t('ui.from.any.department')}</option>
+              <option value="">From: Any Department</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
             <select
@@ -183,12 +181,12 @@ export default function HandoffTemplates({ companyId }: Props) {
               onChange={e => setFormTo(e.target.value)}
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
-              <option value="">{t('ui.to.any.department')}</option>
+              <option value="">To: Any Department</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-xs text-[color:var(--text-secondary)]">{t('ui.checklist.items')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)]">Checklist Items</label>
             {formItems.map((item, idx) => (
               <div key={idx} className="flex gap-2">
                 <input
@@ -207,7 +205,8 @@ export default function HandoffTemplates({ companyId }: Props) {
             <button
               onClick={addItemField}
               className="text-xs text-[#F97316] hover:underline"
-            >{t('ui.add.another.item')}
+            >
+              + Add another item
             </button>
           </div>
           <div className="flex gap-2">
@@ -216,12 +215,13 @@ export default function HandoffTemplates({ companyId }: Props) {
               disabled={saving}
               className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
             >
-              {saving ? t('ui.saving.56a228') : editingId ? t('ui.update.template') : t('ui.create.template')}
+              {saving ? "Saving…" : editingId ? "Update Template" : "Create Template"}
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
               className="px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
-            >{t('action.cancel')}
+            >
+              Cancel
             </button>
           </div>
         </div>
@@ -230,8 +230,8 @@ export default function HandoffTemplates({ companyId }: Props) {
       {Object.keys(grouped).length === 0 ? (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <FileText size={32} className="mx-auto text-gray-600 mb-3" />
-          <p className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.templates.yet')}</p>
-          <p className="text-[color:var(--text-muted)] text-xs mt-1">{t('ui.create.templates.to.speed.up.handoff.checklists')}</p>
+          <p className="text-[color:var(--text-secondary)] text-sm">No templates yet</p>
+          <p className="text-[color:var(--text-muted)] text-xs mt-1">Create templates to speed up handoff checklists</p>
         </div>
       ) : (
         Object.entries(grouped).map(([key, temps]) => (
@@ -241,21 +241,21 @@ export default function HandoffTemplates({ companyId }: Props) {
               <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{key}</span>
             </div>
             <div className="space-y-2">
-              {temps.map((template) => (
-                <div key={template.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3">
+              {temps.map(t => (
+                <div key={t.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-[color:var(--text-primary)]">{template.title}</span>
+                    <span className="text-sm font-medium text-[color:var(--text-primary)]">{t.title}</span>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => openEdit(template)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
+                      <button onClick={() => openEdit(t)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                         <Edit2 size={13} />
                       </button>
-                      <button onClick={() => handleDelete(template.id)} className="p-1.5 text-red-400/50 hover:text-red-400">
+                      <button onClick={() => handleDelete(t.id)} className="p-1.5 text-red-400/50 hover:text-red-400">
                         <Trash2 size={13} />
                       </button>
                     </div>
                   </div>
                   <ul className="mt-1.5 space-y-0.5">
-                    {template.items.map((item, i) => (
+                    {t.items.map((item, i) => (
                       <li key={i} className="text-xs text-[color:var(--text-muted)] flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-gray-600" />
                         {item}

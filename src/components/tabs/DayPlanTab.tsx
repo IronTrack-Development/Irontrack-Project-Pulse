@@ -6,8 +6,6 @@ import ActivityDrawer from "@/components/ActivityDrawer";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import type { ParsedActivity, ReadyCheck } from "@/types";
-import { t } from "@/lib/i18n";
-import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
   id: string;
@@ -45,13 +43,6 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
   const [readyChecks, setReadyChecks] = useState<ReadyCheck[]>([]);
   const [readyCheckActivity, setReadyCheckActivity] = useState<ParsedActivity | null>(null);
-
-  // Collect all activity names (inspections + tasks) for translation
-  const allActivityNames = [
-    ...(data?.inspections ?? []),
-    ...(data?.activeTasks ?? []),
-  ].map((a) => a.activity_name);
-  const { translations, isSpanish } = useActivityTranslations(allActivityNames);
 
   useEffect(() => {
     const fetchDayPlan = async () => {
@@ -203,7 +194,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <CalendarCheck size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.activities.scheduled')}</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled</div>
       </div>
     );
   }
@@ -228,26 +219,28 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
-            <div className="text-sm text-[color:var(--text-secondary)]">{t('ui.select.activities.to.share')}</div>
+            <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCancel}
                 className="px-3 py-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-xs font-medium transition-colors"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
-                <Share2 size={13} />{t('ui.share.2ed068')}{selectedIds.size})
+                <Share2 size={13} />
+                Share ({selectedIds.size})
               </button>
             </div>
           </>
         ) : (
           <>
             <div>
-              <div className="text-xs text-[color:var(--text-muted)]">{day === "today" ? t('ui.today') : t('ui.tomorrow')}</div>
+              <div className="text-xs text-[color:var(--text-muted)]">{day === "today" ? "Today" : "Tomorrow"}</div>
               <div className="text-sm font-medium text-[color:var(--text-primary)]">{formattedDate}</div>
             </div>
             <button
@@ -255,7 +248,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
             >
               <Share2 size={13} />
-              {shareStatus || t('ui.share')}
+              {shareStatus || "Share"}
             </button>
           </>
         )}
@@ -266,7 +259,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
         <div className="bg-[var(--bg-secondary)] border border-[#F97316]/30 rounded-xl overflow-hidden">
           <div className="bg-[#F97316]/10 border-b border-[#F97316]/30 px-4 py-2.5 flex items-center gap-2">
             <AlertTriangle size={16} className="text-[#F97316]" />
-            <div className="text-sm font-semibold text-[#F97316]">{t('ui.inspections')}</div>
+            <div className="text-sm font-semibold text-[#F97316]">Inspections</div>
           </div>
           <div className="divide-y divide-[#1F1F25]">
             {data.inspections.map((inspection) => {
@@ -293,14 +286,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       />
                     )}
                     <div className="flex-1">
-                      <div className="text-sm text-[color:var(--text-primary)]">
-                        {isSpanish && translations[inspection.activity_name]
-                          ? translations[inspection.activity_name]
-                          : inspection.activity_name}
-                      </div>
-                      {isSpanish && translations[inspection.activity_name] && (
-                        <div className="text-xs text-[color:var(--text-muted)]">{inspection.activity_name}</div>
-                      )}
+                      <div className="text-sm text-[color:var(--text-primary)]">{inspection.activity_name}</div>
                       {inspection.trade && (
                         <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{inspection.trade}</div>
                       )}
@@ -312,7 +298,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                             onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === inspection.id); if (full) setReadyCheckActivity(full); }}
                             className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
                           >
-                            <Send size={10} />{t('ui.ready.check')}
+                            <Send size={10} />
+                            Ready Check
                           </button>
                         );
                         return null;
@@ -330,7 +317,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
       {data.activeTasks.length > 0 && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
           <div className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-2">
-            <div className="text-xs text-[color:var(--text-muted)]">{t('ui.active.tasks')}</div>
+            <div className="text-xs text-[color:var(--text-muted)]">Active Tasks</div>
           </div>
           <div className="divide-y divide-[#1F1F25]">
             {data.activeTasks.map((task) => {
@@ -360,14 +347,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm text-[color:var(--text-primary)] mb-0.5">
-                            {isSpanish && translations[task.activity_name]
-                              ? translations[task.activity_name]
-                              : task.activity_name}
-                          </div>
-                          {isSpanish && translations[task.activity_name] && (
-                            <div className="text-xs text-[color:var(--text-muted)]">{task.activity_name}</div>
-                          )}
+                          <div className="text-sm text-[color:var(--text-primary)] mb-0.5">{task.activity_name}</div>
                           {task.trade && (
                             <div className="text-xs text-[color:var(--text-muted)]">{task.trade}</div>
                           )}
@@ -379,7 +359,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                                 onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === task.id); if (full) setReadyCheckActivity(full); }}
                                 className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
                               >
-                                <Send size={10} />{t('ui.ready.check')}
+                                <Send size={10} />
+                                Ready Check
                               </button>
                             );
                             return null;
@@ -411,7 +392,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
             })}
           </div>
           {data.totalActivities > 10 && (
-            <div className="px-4 py-2 text-center text-xs text-[color:var(--text-muted)] border-t border-[var(--border-primary)]">{t('ui.view.all')} {data.totalActivities}{t('ui.activities')}
+            <div className="px-4 py-2 text-center text-xs text-[color:var(--text-muted)] border-t border-[var(--border-primary)]">
+              View all {data.totalActivities} activities →
             </div>
           )}
         </div>
@@ -440,9 +422,9 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
           <div className="text-xs text-[color:var(--text-muted)] mb-1">{nextLabel}</div>
           <div className="text-sm text-[color:var(--text-secondary)]">
-            {nextFormattedDate}: {data.previewNext.activityCount}{t('ui.activit')}{data.previewNext.activityCount !== 1 ? t('ui.ies') : t('ui.y')}
+            {nextFormattedDate}: {data.previewNext.activityCount} activit{data.previewNext.activityCount !== 1 ? "ies" : "y"}
             {data.previewNext.inspectionCount > 0 && (
-              <>, {data.previewNext.inspectionCount}{t('ui.inspection')}{data.previewNext.inspectionCount !== 1 ? t('ui.s') : ""}</>
+              <>, {data.previewNext.inspectionCount} inspection{data.previewNext.inspectionCount !== 1 ? "s" : ""}</>
             )}
           </div>
         </div>

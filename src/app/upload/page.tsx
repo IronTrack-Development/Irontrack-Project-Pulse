@@ -10,7 +10,6 @@ import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import { SupportButton } from "@/components/support-button";
 import { createClient } from "@/lib/supabase-browser";
-import { t } from "@/lib/i18n";
 
 interface Project { id: string; name: string; }
 
@@ -57,7 +56,7 @@ function UploadContent() {
     const f = e.dataTransfer.files[0];
     if (f) {
       if (f.size > 100 * 1024 * 1024) {
-        setError(t('ui.file.too.large.maximum.file.size.is.100mb'));
+        setError("File too large. Maximum file size is 100MB.");
         return;
       }
       setFile(f);
@@ -149,7 +148,7 @@ function UploadContent() {
   };
 
   const handleUpload = async () => {
-    if (!file || !selectedProjectId) return setError(t('ui.select.a.project.and.file'));
+    if (!file || !selectedProjectId) return setError("Select a project and file.");
     setUploading(true);
     setStep("uploading");
     setError("");
@@ -186,7 +185,7 @@ function UploadContent() {
       // Get current user
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        setError(t('ui.please.log.in.to.upload.files'));
+        setError("Please log in to upload files.");
         setUploading(false);
         setStep("select");
         return;
@@ -224,7 +223,7 @@ function UploadContent() {
 
         if (!uploadRes.ok) {
           console.error('Storage upload error:', uploadRes.status, await uploadRes.text());
-          setError(t('ui.file.upload.failed.check.your.connection.and.try.again'));
+          setError('File upload failed. Check your connection and try again.');
           setUploading(false);
           setStep("select");
           return;
@@ -289,9 +288,9 @@ function UploadContent() {
       setUploading(false);
       const msg = err instanceof Error ? err.message : "Unknown error";
       if (msg.includes("abort")) {
-        setError(t('ui.upload.timed.out.check.your.connection.or.try.a.smaller'));
+        setError("Upload timed out. Check your connection, or try a smaller file / .xlsx format.");
       } else if (msg.includes("NetworkError") || msg.includes("Failed to fetch") || msg.includes("network")) {
-        setError(t('ui.network.error.check.your.connection.and.try.again.if.on'));
+        setError("Network error — check your connection and try again. If on cellular, try switching to Wi-Fi.");
       } else {
         setError(`Upload failed: ${msg}`);
       }
@@ -303,8 +302,8 @@ function UploadContent() {
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-4 md:px-6 py-3 md:py-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">{t('ui.upload.schedule')}</h1>
-          <p className="text-xs md:text-sm text-[color:var(--text-muted)] mt-0.5">{isMobile ? t('ui.select.your.schedule.file.below') : t('ui.drop.your.schedule.file.and.we.ll.handle.the.rest')}</p>
+          <h1 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">Upload Schedule</h1>
+          <p className="text-xs md:text-sm text-[color:var(--text-muted)] mt-0.5">{isMobile ? "Select your schedule file below" : "Drop your schedule file and we'll handle the rest"}</p>
         </div>
       </div>
 
@@ -314,17 +313,18 @@ function UploadContent() {
           <>
             {/* Project selector */}
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
-              <h2 className="font-semibold text-[color:var(--text-primary)] mb-4">{t('ui.1.select.project')}</h2>
+              <h2 className="font-semibold text-[color:var(--text-primary)] mb-4">1. Select Project</h2>
               {showNewProject ? (
                 <div className="flex gap-2">
                   <input
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
-                    placeholder={t('ui.new.project.name')}
+                    placeholder="New project name"
                     className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                     onKeyDown={(e) => e.key === "Enter" && createProject()}
                   />
-                  <button onClick={createProject} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">{t('ui.create.6e157c')}
+                  <button onClick={createProject} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
+                    Create
                   </button>
                   <button onClick={() => setShowNewProject(false)} className="px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg">
                     <X size={16} />
@@ -337,7 +337,7 @@ function UploadContent() {
                     onChange={(e) => setSelectedProjectId(e.target.value)}
                     className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                   >
-                    <option value="">{t('ui.select.a.project')}</option>
+                    <option value="">— Select a project —</option>
                     {projects.map((p) => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     ))}
@@ -346,7 +346,8 @@ function UploadContent() {
                     onClick={() => setShowNewProject(true)}
                     className="flex items-center gap-1.5 px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm transition-colors"
                   >
-                    <Plus size={14} />{t('ui.new.6403f2')}
+                    <Plus size={14} />
+                    New
                   </button>
                 </div>
               )}
@@ -365,21 +366,21 @@ function UploadContent() {
                 <>
                   <CheckCircle size={isMobile ? 32 : 40} className="mx-auto text-[#22C55E] mb-3" />
                   <div className="text-[color:var(--text-primary)] font-semibold mb-1 text-sm md:text-base break-all px-2">{file.name}</div>
-                  <div className="text-xs md:text-sm text-[color:var(--text-muted)]">{(file.size / (1024 * 1024)).toFixed(1)}{t('ui.mb.tap.to.change')}</div>
+                  <div className="text-xs md:text-sm text-[color:var(--text-muted)]">{(file.size / (1024 * 1024)).toFixed(1)} MB — Tap to change</div>
                 </>
               ) : (
                 <>
                   {isMobile ? (
                     <>
                       <Upload size={36} className="mx-auto text-[#F97316]/70 mb-3" />
-                      <div className="text-[color:var(--text-primary)] font-semibold mb-1">{t('ui.tap.to.select.schedule')}</div>
-                      <div className="text-sm text-[color:var(--text-muted)] mb-3">{t('ui.browse.files.on.your.device')}</div>
+                      <div className="text-[color:var(--text-primary)] font-semibold mb-1">Tap to Select Schedule</div>
+                      <div className="text-sm text-[color:var(--text-muted)] mb-3">Browse files on your device</div>
                     </>
                   ) : (
                     <>
                       <FileSpreadsheet size={40} className="mx-auto text-gray-700 group-hover:text-[#F97316]/60 mb-4 transition-colors" />
-                      <div className="text-[color:var(--text-primary)] font-semibold mb-1">{t('ui.drop.your.schedule.file.here')}</div>
-                      <div className="text-sm text-[color:var(--text-muted)] mb-4">{t('ui.or.click.to.browse')}</div>
+                      <div className="text-[color:var(--text-primary)] font-semibold mb-1">Drop your schedule file here</div>
+                      <div className="text-sm text-[color:var(--text-muted)] mb-4">or click to browse</div>
                     </>
                   )}
                   <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
@@ -400,11 +401,11 @@ function UploadContent() {
                   const f = e.target.files?.[0];
                   if (f) {
                     if (f.size > 100 * 1024 * 1024) {
-                      setError(t('ui.file.too.large.maximum.file.size.is.100mb'));
+                      setError("File too large. Maximum file size is 100MB.");
                       return;
                     }
                     if (!isValidFileType(f)) {
-                      setError(t('ui.unsupported.file.type.accepted.xlsx.xls.csv.mpp.xml.xer'));
+                      setError(`Unsupported file type. Accepted: .xlsx, .xls, .csv, .mpp, .xml, .xer, .pdf`);
                       return;
                     }
                     setFile(f);
@@ -427,7 +428,8 @@ function UploadContent() {
               disabled={!file || !selectedProjectId}
               className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
             >
-              <Upload size={16} />{t('ui.parse.schedule')}
+              <Upload size={16} />
+              Parse Schedule
             </button>
           </>
         )}
@@ -436,13 +438,13 @@ function UploadContent() {
         {step === "uploading" && (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 md:p-12 text-center">
             <Loader2 size={isMobile ? 36 : 48} className="mx-auto text-[#F97316] animate-spin mb-4" />
-            <h2 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.analyzing.schedule')}</h2>
+            <h2 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)] mb-2">Analyzing Schedule...</h2>
             <p className="text-[color:var(--text-muted)] text-sm">
-              {uploadProgress < 10 ? t('ui.preparing.upload') :
-               uploadProgress < 30 ? t('ui.uploading.file') :
-               uploadProgress < 50 ? t('ui.uploading') :
-               uploadProgress < 90 ? t('ui.parsing.activities.and.detecting.columns') :
-               t('ui.almost.done')}
+              {uploadProgress < 10 ? "Preparing upload..." :
+               uploadProgress < 30 ? "Uploading file..." :
+               uploadProgress < 50 ? "Uploading..." :
+               uploadProgress < 90 ? "Parsing activities & detecting columns..." :
+               "Almost done..."}
             </p>
             <div className="mt-4">
               <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-2.5 overflow-hidden">
@@ -454,7 +456,7 @@ function UploadContent() {
               <p className="text-xs text-[color:var(--text-muted)] mt-2">{uploadProgress}%</p>
             </div>
             {isMobile && (
-              <p className="text-xs text-gray-600 mt-4">{t('ui.keep.this.screen.open.while.uploading')}</p>
+              <p className="text-xs text-gray-600 mt-4">Keep this screen open while uploading</p>
             )}
           </div>
         )}
@@ -463,24 +465,25 @@ function UploadContent() {
         {step === "done" && result && (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 text-center">
             <CheckCircle size={48} className="mx-auto text-[#22C55E] mb-4" />
-            <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-1">{t('ui.schedule.imported')}</h2>
-            <p className="text-[color:var(--text-muted)] text-sm mb-6">{t('ui.your.project.intelligence.is.ready')}</p>
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-1">Schedule Imported!</h2>
+            <p className="text-[color:var(--text-muted)] text-sm mb-6">Your project intelligence is ready.</p>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4">
                 <div className="text-2xl font-bold text-[color:var(--text-primary)]">{result.activities_parsed}</div>
-                <div className="text-xs text-[color:var(--text-muted)]">{t('ui.activities.e58f7f')}</div>
+                <div className="text-xs text-[color:var(--text-muted)]">Activities</div>
               </div>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4">
                 <div className="text-2xl font-bold text-[#F97316]">{result.milestones_found}</div>
-                <div className="text-xs text-[color:var(--text-muted)]">{t('ui.milestones')}</div>
+                <div className="text-xs text-[color:var(--text-muted)]">Milestones</div>
               </div>
             </div>
 
             <button
               onClick={() => router.push(`/projects/${result.project_id}`)}
               className="flex items-center justify-center gap-2 w-full py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-xl font-semibold transition-colors"
-            >{t('ui.view.project')}
+            >
+              View Project
               <ArrowRight size={16} />
             </button>
           </div>
@@ -492,7 +495,7 @@ function UploadContent() {
 
 export default function UploadPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-[color:var(--text-muted)]">{t('ui.loading.b04ba4')}</div>}>
+    <Suspense fallback={<div className="p-8 text-[color:var(--text-muted)]">Loading...</div>}>
       <UploadContent />
     </Suspense>
   );

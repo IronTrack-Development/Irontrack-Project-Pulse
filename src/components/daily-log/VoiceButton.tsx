@@ -1,7 +1,6 @@
 "use client";
 
 import { Mic, MicOff } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface VoiceButtonProps {
   isListening: boolean;
@@ -41,7 +40,7 @@ export default function VoiceButton({
         }
         ${className}
       `}
-      aria-label={isListening ? t('ui.stop.recording') : t('ui.start.voice.input')}
+      aria-label={isListening ? "Stop recording" : "Start voice input"}
     >
       {isListening ? (
         <MicOff size={iconSizes[size]} />

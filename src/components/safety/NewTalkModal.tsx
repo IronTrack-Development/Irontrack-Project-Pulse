@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { X, Shield, ChevronRight, Plus, Minus, BookOpen } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
 import EditableTalkingPoints from "./EditableTalkingPoints";
-import { t } from "@/lib/i18n";
 
 interface NewTalkModalProps {
   projectId: string;
@@ -13,27 +12,27 @@ interface NewTalkModalProps {
 }
 
 const CATEGORIES: { value: ToolboxTalkCategory; label: string }[] = [
-  { value: "falls", label: t('ui.falls') },
-  { value: "electrical", label: t('ui.electrical') },
-  { value: "excavation", label: t('ui.excavation') },
-  { value: "confined_space", label: t('ui.confined.space') },
-  { value: "scaffolding", label: t('ui.scaffolding') },
+  { value: "falls", label: "Falls" },
+  { value: "electrical", label: "Electrical" },
+  { value: "excavation", label: "Excavation" },
+  { value: "confined_space", label: "Confined Space" },
+  { value: "scaffolding", label: "Scaffolding" },
   { value: "ppe", label: "PPE" },
-  { value: "heat_illness", label: t('ui.heat.illness') },
-  { value: "cold_stress", label: t('ui.cold.stress') },
-  { value: "fire_prevention", label: t('ui.fire.prevention') },
-  { value: "hazcom", label: t('ui.hazcom') },
-  { value: "lockout_tagout", label: t('ui.lockout.tagout') },
-  { value: "crane_rigging", label: t('ui.crane.and.rigging') },
-  { value: "housekeeping", label: t('ui.housekeeping') },
-  { value: "hand_power_tools", label: t('ui.hand.and.power.tools') },
-  { value: "ladders", label: t('ui.ladders') },
-  { value: "silica", label: t('ui.silica') },
-  { value: "struck_by", label: t('ui.struck.by') },
-  { value: "caught_between", label: t('ui.caught.in.between') },
-  { value: "traffic_control", label: t('ui.traffic.control') },
-  { value: "general", label: t('ui.general') },
-  { value: "custom", label: t('ui.custom') },
+  { value: "heat_illness", label: "Heat Illness" },
+  { value: "cold_stress", label: "Cold Stress" },
+  { value: "fire_prevention", label: "Fire Prevention" },
+  { value: "hazcom", label: "HazCom" },
+  { value: "lockout_tagout", label: "Lockout/Tagout" },
+  { value: "crane_rigging", label: "Crane & Rigging" },
+  { value: "housekeeping", label: "Housekeeping" },
+  { value: "hand_power_tools", label: "Hand & Power Tools" },
+  { value: "ladders", label: "Ladders" },
+  { value: "silica", label: "Silica" },
+  { value: "struck_by", label: "Struck-By" },
+  { value: "caught_between", label: "Caught In/Between" },
+  { value: "traffic_control", label: "Traffic Control" },
+  { value: "general", label: "General" },
+  { value: "custom", label: "Custom" },
 ];
 
 export default function NewTalkModal({
@@ -145,9 +144,9 @@ export default function NewTalkModal({
 
   // Group templates by category
   const templatesByCategory: Record<string, ToolboxTalkTemplate[]> = {};
-  templates.forEach((item) => {
-    if (!templatesByCategory[item.category]) templatesByCategory[item.category] = [];
-    templatesByCategory[item.category].push(item);
+  templates.forEach((t) => {
+    if (!templatesByCategory[t.category]) templatesByCategory[t.category] = [];
+    templatesByCategory[t.category].push(t);
   });
 
   return (
@@ -158,10 +157,10 @@ export default function NewTalkModal({
           <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Shield size={18} className="text-[#F97316]" />
             {mode === "choose"
-              ? t('ui.new.toolbox.talk')
+              ? "New Toolbox Talk"
               : mode === "template"
-              ? t('ui.from.template')
-              : t('ui.custom.talk')}
+              ? "From Template"
+              : "Custom Talk"}
           </h3>
           <button
             onClick={onClose}
@@ -180,19 +179,23 @@ export default function NewTalkModal({
                 className="w-full flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[#F97316]/50 transition-colors min-h-[44px]"
               >
                 <div className="text-left">
-                  <div className="text-sm font-medium text-[color:var(--text-primary)]">{t('ui.custom.talk')}
+                  <div className="text-sm font-medium text-[color:var(--text-primary)]">
+                    Custom Talk
                   </div>
-                  <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.start.from.scratch.with.your.own.topic')}
+                  <div className="text-xs text-[color:var(--text-muted)] mt-0.5">
+                    Start from scratch with your own topic
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-[color:var(--text-muted)]" />
               </button>
 
-              <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-wider mt-4 mb-2">{t('ui.or.start.from.a.template')}
+              <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-wider mt-4 mb-2">
+                Or start from a template
               </div>
 
               {loadingTemplates ? (
-                <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">{t('ui.loading.templates')}
+                <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">
+                  Loading templates...
                 </div>
               ) : (
                 Object.entries(templatesByCategory).map(([cat, temps]) => (
@@ -200,20 +203,20 @@ export default function NewTalkModal({
                     <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider mb-1.5 px-1">
                       {cat.replace(/_/g, " ")}
                     </div>
-                    {temps.map((template) => (
+                    {temps.map((t) => (
                       <button
-                        key={template.id}
-                        onClick={() => selectTemplate(template)}
+                        key={t.id}
+                        onClick={() => selectTemplate(t)}
                         className="w-full flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 hover:border-[#3B82F6]/50 transition-colors mb-1.5 min-h-[44px]"
                       >
                         <div className="text-left min-w-0 flex-1">
                           <div className="text-sm text-[color:var(--text-primary)] truncate">
-                            {template.title}
+                            {t.title}
                           </div>
                           <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
-                            {template.talking_points.length}{t('ui.talking.points')}{" "}
-                            {template.duration_minutes}{t('ui.min')}
-                            {template.osha_reference ? ` Â· ${template.osha_reference}` : ""}
+                            {t.talking_points.length} talking points ·{" "}
+                            {t.duration_minutes} min
+                            {t.osha_reference ? ` · ${t.osha_reference}` : ""}
                           </div>
                         </div>
                         <ChevronRight size={14} className="text-[color:var(--text-muted)] ml-2 shrink-0" />
@@ -229,20 +232,22 @@ export default function NewTalkModal({
             <div className="space-y-4">
               {/* Topic */}
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.topic')}
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                  Topic *
                 </label>
                 <input
                   type="text"
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  placeholder={t('ui.safety.topic.for.today.s.talk')}
+                  placeholder="Safety topic for today's talk"
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               {/* Category */}
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.category')}
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                  Category *
                 </label>
                 <select
                   value={category}
@@ -262,7 +267,8 @@ export default function NewTalkModal({
               {/* Date + Duration row */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.date')}
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                    Date
                   </label>
                   <input
                     type="date"
@@ -272,7 +278,8 @@ export default function NewTalkModal({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.duration.min')}
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                    Duration (min)
                   </label>
                   <input
                     type="number"
@@ -288,24 +295,26 @@ export default function NewTalkModal({
               {/* Presenter + Location */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('safety.presenter')}
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                    Presenter
                   </label>
                   <input
                     type="text"
                     value={presenter}
                     onChange={(e) => setPresenter(e.target.value)}
-                    placeholder={t('ui.name.709a23')}
+                    placeholder="Name"
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.location')}
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                    Location
                   </label>
                   <input
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder={t('ui.where')}
+                    placeholder="Where"
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                   />
                 </div>
@@ -313,7 +322,8 @@ export default function NewTalkModal({
 
               {/* Talking Points */}
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">{t('safety.talkingPoints')}
+                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">
+                  Talking Points
                 </label>
                 <EditableTalkingPoints
                   points={talkingPoints}
@@ -323,13 +333,14 @@ export default function NewTalkModal({
 
               {/* Notes */}
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.notes')}
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+                  Notes
                 </label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
-                  placeholder={t('ui.additional.notes')}
+                  placeholder="Additional notes..."
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none"
                 />
               </div>
@@ -349,13 +360,15 @@ export default function NewTalkModal({
                 }
               }}
               className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-            >{t('action.back')}
+            >
+              Back
             </button>
           )}
           <button
             onClick={onClose}
             className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-          >{t('action.cancel')}
+          >
+            Cancel
           </button>
           {mode !== "choose" && (
             <button
@@ -363,7 +376,7 @@ export default function NewTalkModal({
               disabled={creating || !topic.trim()}
               className="flex-1 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
             >
-              {creating ? t('ui.creating') : t('ui.create.talk')}
+              {creating ? "Creating..." : "Create Talk"}
             </button>
           )}
         </div>

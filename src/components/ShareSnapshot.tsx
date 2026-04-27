@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Share2, Copy, Check, X, Loader2 } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface ShareSnapshotProps {
   projectId: string;
@@ -77,7 +76,8 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
         onClick={handleOpen}
         className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
       >
-        <Share2 size={13} />{t('ui.share')}
+        <Share2 size={13} />
+        Share
       </button>
 
       {/* Modal backdrop */}
@@ -94,7 +94,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
             <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)]">
               <div className="flex items-center gap-2">
                 <Share2 size={15} className="text-[#F97316]" />
-                <span className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.executive.snapshot')}</span>
+                <span className="text-sm font-semibold text-[color:var(--text-primary)]">Executive Snapshot</span>
               </div>
               <button
                 onClick={handleClose}
@@ -109,7 +109,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               {loading && (
                 <div className="flex items-center justify-center py-10 gap-2 text-[color:var(--text-muted)]">
                   <Loader2 size={18} className="animate-spin text-[#F97316]" />
-                  <span className="text-sm">{t('ui.generating.snapshot')}</span>
+                  <span className="text-sm">Generating snapshot…</span>
                 </div>
               )}
 
@@ -131,7 +131,8 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               <button
                 onClick={handleClose}
                 className="px-3 py-1.5 text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
-              >{t('ui.close')}
+              >
+                Close
               </button>
 
               {canShare && snapshotText && (
@@ -139,7 +140,8 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
                   onClick={handleShare}
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
                 >
-                  <Share2 size={13} />{t('ui.share')}
+                  <Share2 size={13} />
+                  Share
                 </button>
               )}
 
@@ -150,11 +152,13 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               >
                 {copied ? (
                   <>
-                    <Check size={13} />{t('ui.copied')}
+                    <Check size={13} />
+                    Copied!
                   </>
                 ) : (
                   <>
-                    <Copy size={13} />{t('ui.copy')}
+                    <Copy size={13} />
+                    Copy
                   </>
                 )}
               </button>

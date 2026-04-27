@@ -8,7 +8,6 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import type { CoordinationActionItem, ActionItemCategory, ActionItemPriority, ActionItemStatus } from "@/types";
-import { t } from "@/lib/i18n";
 
 interface ActionTrackerProps {
   projectId: string;
@@ -93,10 +92,10 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <CheckSquare size={20} className="text-[#F97316]" />
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.action.items')}</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Action Items</h2>
           {openCount > 0 && (
             <span className="text-sm text-[color:var(--text-secondary)] ml-2">
-              {openCount}{t('ui.open')}{overdueCount > 0 && <span className="text-red-400"> · {overdueCount}{t('ui.overdue')}</span>}
+              {openCount} open{overdueCount > 0 && <span className="text-red-400"> · {overdueCount} overdue</span>}
             </span>
           )}
         </div>
@@ -104,7 +103,8 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
           onClick={() => setShowFilters(!showFilters)}
           className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm transition-colors min-h-[44px]"
         >
-          <Filter size={14} />{t('ui.filters')}
+          <Filter size={14} />
+          Filters
         </button>
       </div>
 
@@ -116,18 +116,18 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
             onChange={(e) => setFilterStatus(e.target.value)}
             className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
-            <option value="">{t('ui.all.statuses')}</option>
-            <option value="open">{t('status.open')}</option>
-            <option value="in_progress">{t('status.inProgress')}</option>
-            <option value="resolved">{t('status.resolved')}</option>
-            <option value="cancelled">{t('status.cancelled')}</option>
+            <option value="">All Statuses</option>
+            <option value="open">Open</option>
+            <option value="in_progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+            <option value="cancelled">Cancelled</option>
           </select>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
             className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
-            <option value="">{t('ui.all.categories')}</option>
+            <option value="">All Categories</option>
             {Object.keys(CATEGORY_COLORS).map((c) => (
               <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
             ))}
@@ -137,16 +137,17 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
             onChange={(e) => setFilterPriority(e.target.value)}
             className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:outline-none min-h-[36px]"
           >
-            <option value="">{t('ui.all.priorities')}</option>
-            <option value="high">{t('ui.high')}</option>
-            <option value="medium">{t('ui.medium')}</option>
-            <option value="low">{t('ui.low')}</option>
+            <option value="">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
           {(filterStatus || filterCategory || filterPriority) && (
             <button
               onClick={() => { setFilterStatus(""); setFilterCategory(""); setFilterPriority(""); }}
               className="px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[36px]"
-            >{t('ui.clear')}
+            >
+              Clear
             </button>
           )}
         </div>
@@ -164,7 +165,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
         <div className="text-center py-16">
           <CheckSquare size={48} className="text-gray-600 mx-auto mb-4" />
           <p className="text-[color:var(--text-secondary)] text-lg">
-            {filterStatus || filterCategory || filterPriority ? t('ui.no.matching.action.items') : t('ui.no.action.items.yet')}
+            {filterStatus || filterCategory || filterPriority ? "No matching action items" : "No action items yet"}
           </p>
         </div>
       )}
@@ -196,7 +197,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                       </span>
                       {isOverdue && (
                         <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400">
-                          <AlertTriangle size={9} />{t('ui.overdue')}
+                          <AlertTriangle size={9} /> overdue
                         </span>
                       )}
                     </div>
@@ -204,11 +205,12 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                       {item.assigned_to && <span>{item.assigned_to}</span>}
                       {item.assigned_company && <span>· {item.assigned_company}</span>}
                       {item.due_date && (
-                        <span className={isOverdue ? "text-red-400" : ""}>{t('ui.due')} {new Date(item.due_date + t('ui.t00.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                        <span className={isOverdue ? "text-red-400" : ""}>
+                          · Due {new Date(item.due_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                         </span>
                       )}
                       {item.meeting_title && (
-                        <span>{t('ui.from')} {item.meeting_title}</span>
+                        <span>· from {item.meeting_title}</span>
                       )}
                     </div>
                   </div>
@@ -218,10 +220,10 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
                     className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px] shrink-0"
                     style={{ color: STATUS_COLORS[item.status] }}
                   >
-                    <option value="open">{t('status.open')}</option>
-                    <option value="in_progress">{t('status.inProgress')}</option>
-                    <option value="resolved">{t('status.resolved')}</option>
-                    <option value="cancelled">{t('status.cancelled')}</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
               </div>

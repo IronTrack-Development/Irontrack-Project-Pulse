@@ -2,7 +2,6 @@
 
 import { useRef, useCallback } from "react";
 import { Camera, ImagePlus, X } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 export interface RFIPhoto {
   id: string;
@@ -50,7 +49,8 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]
               hover:text-[color:var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors text-xs min-h-[44px]"
           >
-            <Camera size={14} />{t('ui.camera')}
+            <Camera size={14} />
+            Camera
           </button>
           <button
             type="button"
@@ -58,7 +58,8 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]
               hover:text-[color:var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors text-xs min-h-[44px]"
           >
-            <ImagePlus size={14} />{t('ui.gallery')}
+            <ImagePlus size={14} />
+            Gallery
           </button>
         </div>
         <input ref={cameraRef} type="file" accept="image/*" capture="environment"
@@ -70,7 +71,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             {photos.map((photo) => (
               <div key={photo.id} className="relative w-16 h-16 rounded-lg overflow-hidden group">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.localUrl} alt={t('ui.rfi.photo')} className="w-full h-full object-cover" loading="lazy" />
+                <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" loading="lazy" />
                 <button
                   type="button"
                   onClick={() => removePhoto(photo.id)}
@@ -98,7 +99,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             text-[#F97316] hover:bg-[#F97316]/15 active:scale-[0.98] transition-all min-h-[90px]"
         >
           <Camera size={24} />
-          <span className="text-xs font-medium">{t('ui.take.photo')}</span>
+          <span className="text-xs font-medium">Take Photo</span>
         </button>
         <button
           type="button"
@@ -108,7 +109,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
             text-[#3B82F6] hover:bg-[#3B82F6]/15 active:scale-[0.98] transition-all min-h-[90px]"
         >
           <ImagePlus size={24} />
-          <span className="text-xs font-medium">{t('ui.gallery')}</span>
+          <span className="text-xs font-medium">Gallery</span>
         </button>
       </div>
       <input ref={cameraRef} type="file" accept="image/*" capture="environment"
@@ -121,7 +122,7 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
           {photos.map((photo) => (
             <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.localUrl} alt={t('ui.rfi.photo')} className="w-full h-full object-cover" loading="lazy" />
+              <img src={photo.localUrl} alt="RFI photo" className="w-full h-full object-cover" loading="lazy" />
               <button
                 type="button"
                 onClick={() => removePhoto(photo.id)}

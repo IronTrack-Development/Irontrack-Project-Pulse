@@ -11,7 +11,6 @@ import NewTalkModal from "./NewTalkModal";
 import TalkDetail from "./TalkDetail";
 import SafetySettings from "./SafetySettings";
 import TemplateManager from "./TemplateManager";
-import { t } from "@/lib/i18n";
 
 interface SafetyDashboardProps {
   projectId: string;
@@ -26,19 +25,22 @@ function statusBadge(status: string) {
     case "completed":
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#22C55E]/10 text-[#22C55E]">
-          <ShieldCheck size={10} />{t('status.completed')}
+          <ShieldCheck size={10} />
+          Completed
         </span>
       );
     case "locked":
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
-          <Lock size={10} />{t('ui.locked')}
+          <Lock size={10} />
+          Locked
         </span>
       );
     default:
       return (
         <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
-          <Edit3 size={10} />{t('status.draft')}
+          <Edit3 size={10} />
+          Draft
         </span>
       );
   }
@@ -88,17 +90,18 @@ function TalkCard({
         {(talk.attendee_count ?? 0) > 0 && (
           <span className="flex items-center gap-1 text-[10px] text-[color:var(--text-secondary)]">
             <Users size={10} />
-            {talk.signed_count || 0}/{talk.attendee_count}{t('ui.signed')}
+            {talk.signed_count || 0}/{talk.attendee_count} signed
           </span>
         )}
         {talk.duration_minutes && (
           <span className="text-[10px] text-[color:var(--text-muted)]">
-            {talk.duration_minutes}{t('ui.min')}
+            {talk.duration_minutes} min
           </span>
         )}
         {talk.follow_up_needed && (
           <span className="flex items-center gap-1 text-[10px] text-[#EAB308]">
-            <AlertTriangle size={10} />{t('ui.follow.up.a931af')}
+            <AlertTriangle size={10} />
+            Follow-up
           </span>
         )}
       </div>
@@ -137,15 +140,15 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
     .toISOString()
     .split("T")[0];
-  const thisMonthTalks = talks.filter((item) => item.talk_date >= monthStart);
+  const thisMonthTalks = talks.filter((t) => t.talk_date >= monthStart);
   const avgAttendance =
     talks.length > 0
       ? Math.round(
-          talks.reduce((sum, talk) => sum + (talk.attendee_count || 0), 0) / talks.length
+          talks.reduce((sum, t) => sum + (t.attendee_count || 0), 0) / talks.length
         )
       : 0;
   const followUps = talks.filter(
-    (item) => item.follow_up_needed && item.status !== "locked"
+    (t) => t.follow_up_needed && t.status !== "locked"
   ).length;
 
   // If viewing a specific talk detail
@@ -159,7 +162,8 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
           }}
           className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px] mb-4"
         >
-          <ArrowLeft size={16} />{t('ui.back.to.safety')}
+          <ArrowLeft size={16} />
+          Back to Safety
         </button>
         <TalkDetail
           projectId={projectId}
@@ -178,7 +182,8 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-          <Shield size={18} className="text-[#F97316]" />{t('nav.safety')}
+          <Shield size={18} className="text-[#F97316]" />
+          Safety
           {total > 0 && (
             <span className="text-xs text-[color:var(--text-muted)] font-normal">({total})</span>
           )}
@@ -187,7 +192,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
           <button
             onClick={() => setShowSettings(true)}
             className="p-2 rounded-lg text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
-            title={t('ui.safety.settings')}
+            title="Safety Settings"
           >
             <Settings size={14} />
           </button>
@@ -201,7 +206,8 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
             onClick={() => setShowNewModal(true)}
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors min-h-[40px]"
           >
-            <Plus size={14} />{t('safety.newTalk')}
+            <Plus size={14} />
+            New Talk
           </button>
         </div>
       </div>
@@ -212,26 +218,30 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
           onClick={() => setShowTemplates(true)}
           className="flex items-center gap-1.5 text-xs text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
         >
-          <BookOpen size={12} />{t('ui.manage.templates')}
+          <BookOpen size={12} />
+          Manage Templates
         </button>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
-          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.this.month')}
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
+            This Month
           </div>
           <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">
             {thisMonthTalks.length}
           </div>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
-          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.avg.attendance')}
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
+            Avg Attendance
           </div>
           <div className="text-lg font-bold text-[color:var(--text-primary)] mt-1">{avgAttendance}</div>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
-          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">{t('ui.follow.ups')}
+          <div className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider">
+            Follow-ups
           </div>
           <div
             className={`text-lg font-bold mt-1 ${
@@ -251,8 +261,9 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
       ) : talks.length === 0 ? (
         <div className="text-center py-12">
           <Shield size={32} className="mx-auto mb-3 text-gray-700" />
-          <p className="text-sm text-[color:var(--text-muted)] mb-1">{t('ui.no.toolbox.talks.yet')}</p>
-          <p className="text-xs text-gray-600">{t('ui.start.your.first.safety.talk.to.document.compliance')}
+          <p className="text-sm text-[color:var(--text-muted)] mb-1">No toolbox talks yet</p>
+          <p className="text-xs text-gray-600">
+            Start your first safety talk to document compliance
           </p>
         </div>
       ) : (

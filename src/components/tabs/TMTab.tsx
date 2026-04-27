@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { Plus, RefreshCw, Receipt, DollarSign, Clock, AlertTriangle, CheckCircle2 } from "lucide-react";
 import TMTicketForm from "@/components/tm/TMTicketForm";
 import TMTicketDetail from "@/components/tm/TMTicketDetail";
-import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -43,12 +42,12 @@ interface Props {
 }
 
 const FILTERS = [
-  { value: "all", label: t('ui.all.6a7208') },
-  { value: "draft", label: t('status.draft') },
-  { value: "submitted", label: t('ui.submitted') },
-  { value: "approved", label: t('ui.approved.41b81e') },
-  { value: "disputed", label: t('ui.disputed') },
-  { value: "invoiced", label: t('ui.invoiced') },
+  { value: "all", label: "All" },
+  { value: "draft", label: "Draft" },
+  { value: "submitted", label: "Submitted" },
+  { value: "approved", label: "Approved" },
+  { value: "disputed", label: "Disputed" },
+  { value: "invoiced", label: "Invoiced" },
 ];
 
 const STATUS_STYLES: Record<string, string> = {
@@ -70,9 +69,9 @@ function fmtDate(d: string): string {
 }
 
 function SigBadge({ gc, sub }: { gc: string | null; sub: string | null }) {
-  if (gc && sub) return <span className="text-green-400 text-xs" title={t('ui.both.signed')}>✓✓</span>;
-  if (gc || sub) return <span className="text-yellow-400 text-xs" title={t('ui.1.of.2.signed')}>✓</span>;
-  return <span className="text-gray-600 text-xs" title={t('ui.unsigned')}>○</span>;
+  if (gc && sub) return <span className="text-green-400 text-xs" title="Both signed">✓✓</span>;
+  if (gc || sub) return <span className="text-yellow-400 text-xs" title="1 of 2 signed">✓</span>;
+  return <span className="text-gray-600 text-xs" title="Unsigned">○</span>;
 }
 
 export default function TMTab({ projectId }: Props) {
@@ -114,12 +113,12 @@ export default function TMTab({ projectId }: Props) {
   }, [fetchTickets, fetchContacts]);
 
   const filtered =
-    filter === "all" ? tickets : tickets.filter((item) => item.status === filter);
+    filter === "all" ? tickets : tickets.filter((t) => t.status === filter);
 
   const totalTickets = tickets.length;
-  const totalCost = tickets.reduce((s, ticket) => s + (ticket.total_cost ?? 0), 0);
-  const pendingApproval = tickets.filter((item) => item.status === "submitted").length;
-  const disputed = tickets.filter((item) => item.status === "disputed").length;
+  const totalCost = tickets.reduce((s, t) => s + (t.total_cost ?? 0), 0);
+  const pendingApproval = tickets.filter((t) => t.status === "submitted").length;
+  const disputed = tickets.filter((t) => t.status === "disputed").length;
 
   const openDetail = async (t: TMTicket) => {
     // Fetch full ticket with line items
@@ -148,9 +147,9 @@ export default function TMTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.item.and.m.tickets')}</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">T&amp;M Tickets</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {totalTickets}{t('ui.ticket')}{totalTickets !== 1 ? t('ui.s') : ""}{t('ui.on.this.project')}
+              {totalTickets} ticket{totalTickets !== 1 ? "s" : ""} on this project
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -165,8 +164,8 @@ export default function TMTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">{t('ui.new.item.and.m.ticket')}</span>
-              <span className="sm:hidden">{t('ui.new.6403f2')}</span>
+              <span className="hidden sm:inline">New T&amp;M Ticket</span>
+              <span className="sm:hidden">New</span>
             </button>
           </div>
         </div>
@@ -176,23 +175,23 @@ export default function TMTab({ projectId }: Props) {
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-[color:var(--text-primary)]">{totalTickets}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.tickets')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Tickets</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className="text-sm font-bold text-[#F97316]">{fmtCurrency(totalCost)}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.total')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Total</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingApproval > 0 ? "text-yellow-400" : "text-[color:var(--text-primary)]"}`}>
                 {pendingApproval}
               </p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('status.pending')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Pending</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${disputed > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>
                 {disputed}
               </p>
-              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('ui.disputed')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">Disputed</p>
             </div>
           </div>
         )}
@@ -203,7 +202,7 @@ export default function TMTab({ projectId }: Props) {
             {FILTERS.map((f) => {
               const count = f.value === "all"
                 ? tickets.length
-                : tickets.filter((item) => item.status === f.value).length;
+                : tickets.filter((t) => t.status === f.value).length;
               return (
                 <button
                   key={f.value}
@@ -233,11 +232,11 @@ export default function TMTab({ projectId }: Props) {
               <Receipt size={28} className="text-gray-600" />
             </div>
             <h3 className="text-[color:var(--text-primary)] font-semibold mb-1">
-              {filter === "all" ? t('ui.no.item.and.m.tickets.yet') : `No ${filter} tickets`}
+              {filter === "all" ? "No T&M Tickets Yet" : `No ${filter} tickets`}
             </h3>
             <p className="text-[color:var(--text-muted)] text-sm max-w-xs">
               {filter === "all"
-                ? t('ui.create.a.ticket.to.track.time.and.material.costs.on')
+                ? "Create a ticket to track time & material costs on this project."
                 : `No tickets with "${filter}" status.`}
             </p>
             {filter === "all" && (
@@ -245,38 +244,39 @@ export default function TMTab({ projectId }: Props) {
                 onClick={() => setShowForm(true)}
                 className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
               >
-                <Plus size={15} />{t('ui.new.item.and.m.ticket')}
+                <Plus size={15} />
+                New T&amp;M Ticket
               </button>
             )}
           </div>
         ) : (
           <div className="space-y-2">
-            {filtered.map((item) => (
+            {filtered.map((t) => (
               <button
-                key={item.id}
-                onClick={() => openDetail(item)}
+                key={t.id}
+                onClick={() => openDetail(t)}
                 className="w-full text-left p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-[#F97316]/40 transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[color:var(--text-primary)] font-semibold text-sm">{item.ticket_number}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[item.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
-                        {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                      <span className="text-[color:var(--text-primary)] font-semibold text-sm">{t.ticket_number}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_STYLES[t.status] ?? "bg-gray-700/60 text-[color:var(--text-secondary)]"}`}>
+                        {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
                       </span>
-                      <SigBadge gc={item.gc_signature_path} sub={item.sub_signature_path} />
+                      <SigBadge gc={t.gc_signature_path} sub={t.sub_signature_path} />
                     </div>
-                    <p className="text-[color:var(--text-secondary)] text-xs mt-1 truncate">{item.description}</p>
-                    {item.sub_contact && (
+                    <p className="text-[color:var(--text-secondary)] text-xs mt-1 truncate">{t.description}</p>
+                    {t.sub_contact && (
                       <p className="text-gray-600 text-xs mt-0.5">
-                        {item.sub_contact.name}
-                        {item.sub_contact.company ? ` · ${item.sub_contact.company}` : ""}
+                        {t.sub_contact.name}
+                        {t.sub_contact.company ? ` · ${t.sub_contact.company}` : ""}
                       </p>
                     )}
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-[#F97316] font-bold text-sm">{fmtCurrency(item.total_cost ?? 0)}</p>
-                    <p className="text-gray-600 text-[10px] mt-0.5">{fmtDate(item.date)}</p>
+                    <p className="text-[#F97316] font-bold text-sm">{fmtCurrency(t.total_cost ?? 0)}</p>
+                    <p className="text-gray-600 text-[10px] mt-0.5">{fmtDate(t.date)}</p>
                   </div>
                 </div>
               </button>

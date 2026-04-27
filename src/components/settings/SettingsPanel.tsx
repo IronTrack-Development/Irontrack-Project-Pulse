@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Sun, Moon } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
-import { getLanguage, setLanguage, type Language } from "@/lib/i18n";
-import { t } from "@/lib/i18n";
+import { getLanguage, setLanguage, t, type Language } from "@/lib/i18n";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -59,7 +58,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           className="flex items-center justify-between px-5 py-4 border-b"
           style={{ borderColor: "var(--border-primary)" }}
         >
-          <h2 className="text-lg font-bold">{t('ui.settings.title')}</h2>
+          <h2 className="text-lg font-bold">{t("settings.title", currentLang)}</h2>
           <button
             onClick={onClose}
             className="p-2 rounded-lg transition-colors"
@@ -76,13 +75,13 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t('ui.settings.appearance')}
+              {t("settings.appearance", currentLang)}
             </h3>
             <div
               className="rounded-xl p-4"
               style={{ backgroundColor: "var(--bg-tertiary)" }}
             >
-              <p className="text-sm font-medium mb-3">{t('ui.settings.theme')}</p>
+              <p className="text-sm font-medium mb-3">{t("settings.theme", currentLang)}</p>
               <div className="flex gap-2">
                 <button
                   onClick={() => handleThemeChange("dark")}
@@ -94,7 +93,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   }}
                 >
                   <Moon size={16} />
-                  {t('ui.settings.dark')}
+                  {t("settings.dark", currentLang)}
                 </button>
                 <button
                   onClick={() => handleThemeChange("light")}
@@ -106,7 +105,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                   }}
                 >
                   <Sun size={16} />
-                  {t('ui.settings.light')}
+                  {t("settings.light", currentLang)}
                 </button>
               </div>
             </div>
@@ -118,7 +117,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t('ui.settings.language')}
+              {t("settings.language", currentLang)}
             </h3>
             <div
               className="rounded-xl p-4"
@@ -134,7 +133,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     color: currentLang === "en" ? "#FFFFFF" : "var(--text-secondary)",
                   }}
                 >
-                  ðŸ‡ºðŸ‡¸ {t('ui.settings.english')}
+                  🇺🇸 {t("settings.english", currentLang)}
                 </button>
                 <button
                   onClick={() => handleLangChange("es")}
@@ -145,11 +144,11 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                     color: currentLang === "es" ? "#FFFFFF" : "var(--text-secondary)",
                   }}
                 >
-                  ðŸ‡²ðŸ‡½ {t('ui.settings.spanish')}
+                  🇲🇽 {t("settings.spanish", currentLang)}
                 </button>
               </div>
               <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                {t('ui.settings.fieldnote')}
+                {t("settings.fieldNote", currentLang)}
               </p>
             </div>
           </section>
@@ -161,7 +160,7 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
                 className="text-xs font-semibold uppercase tracking-wider mb-3"
                 style={{ color: "var(--text-muted)" }}
               >
-                {t('ui.settings.company')}
+                {t("settings.company", currentLang)}
               </h3>
               <div
                 className="rounded-xl p-4"
@@ -178,21 +177,24 @@ export default function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               className="text-xs font-semibold uppercase tracking-wider mb-3"
               style={{ color: "var(--text-muted)" }}
             >
-              {t('ui.settings.about')}
+              {t("settings.about", currentLang)}
             </h3>
             <div
               className="rounded-xl p-4 space-y-3"
               style={{ backgroundColor: "var(--bg-tertiary)" }}
             >
-              <p className="text-sm font-medium">{t('ui.irontrack.pulse.v2.0')}</p>
+              <p className="text-sm font-medium">IronTrack Pulse v2.0</p>
               <div className="flex flex-wrap gap-3 text-xs" style={{ color: "var(--text-muted)" }}>
-                <a href="mailto:support@irontrack.tech" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.support')}
+                <a href="mailto:support@irontrack.tech" className="hover:underline" style={{ color: "var(--accent)" }}>
+                  Support
                 </a>
-                <span>Â·</span>
-                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.privacy.policy')}
+                <span>·</span>
+                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>
+                  Privacy Policy
                 </a>
-                <span>Â·</span>
-                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>{t('ui.terms.of.service')}
+                <span>·</span>
+                <a href="#" className="hover:underline" style={{ color: "var(--accent)" }}>
+                  Terms of Service
                 </a>
               </div>
             </div>

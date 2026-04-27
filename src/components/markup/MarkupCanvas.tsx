@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { t } from "@/lib/i18n";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -33,12 +32,12 @@ export interface MarkupAction {
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 export const MARKUP_COLORS: { name: string; value: string }[] = [
-  { name: t('ui.red'), value: "#EF4444" },
-  { name: t('ui.orange'), value: "#F97316" },
-  { name: t('ui.yellow'), value: "#EAB308" },
-  { name: t('ui.blue'), value: "#3B82F6" },
-  { name: t('ui.white'), value: "#FFFFFF" },
-  { name: t('ui.black'), value: "#000000" },
+  { name: "Red", value: "#EF4444" },
+  { name: "Orange", value: "#F97316" },
+  { name: "Yellow", value: "#EAB308" },
+  { name: "Blue", value: "#3B82F6" },
+  { name: "White", value: "#FFFFFF" },
+  { name: "Black", value: "#000000" },
 ];
 
 const PEN_STROKE = { thin: 2, medium: 5, thick: 10 } as const;
@@ -414,7 +413,7 @@ export default function MarkupCanvas({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={backgroundImageUrl}
-            alt={t('ui.markup.background')}
+            alt="markup background"
             className="absolute inset-0 w-full h-full object-contain pointer-events-none"
             draggable={false}
           />
@@ -471,7 +470,7 @@ export default function MarkupCanvas({
                 borderColor: color,
               }}
               className="border-2 rounded-lg px-3 py-2 text-sm font-bold focus:outline-none min-w-[160px] placeholder-gray-500"
-              placeholder={t('ui.type.and.press.enter')}
+              placeholder="Type & press Enter…"
               autoFocus
             />
           </div>
@@ -487,26 +486,26 @@ export default function MarkupCanvas({
         <div className="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1 scrollbar-hide">
           {(
             [
-              { id: "pen" as MarkupTool, labelKey: "ui.pen.cf6c07", emoji: "✏️" },
-              { id: "arrow" as MarkupTool, labelKey: "ui.arrow.3a4758", emoji: "➡️" },
-              { id: "circle" as MarkupTool, labelKey: "ui.circle.1cc782", emoji: "⭕" },
-              { id: "rectangle" as MarkupTool, labelKey: "ui.rect", emoji: "▭" },
-              { id: "text" as MarkupTool, labelKey: "ui.text.c3328c", emoji: "T" },
-              { id: "highlighter" as MarkupTool, labelKey: "ui.hi.lite", emoji: "🖌️" },
+              { id: "pen" as MarkupTool, label: "Pen", emoji: "✏️" },
+              { id: "arrow" as MarkupTool, label: "Arrow", emoji: "➡️" },
+              { id: "circle" as MarkupTool, label: "Circle", emoji: "⭕" },
+              { id: "rectangle" as MarkupTool, label: "Rect", emoji: "▭" },
+              { id: "text" as MarkupTool, label: "Text", emoji: "T" },
+              { id: "highlighter" as MarkupTool, label: "Hi-lite", emoji: "🖌️" },
             ] as const
-          ).map((toolOption) => (
+          ).map((t) => (
             <button
-              key={toolOption.id}
-              onClick={() => setTool(toolOption.id)}
+              key={t.id}
+              onClick={() => setTool(t.id)}
               className={`flex flex-col items-center justify-center gap-0.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
-                tool === toolOption.id
+                tool === t.id
                   ? "bg-[#F97316] text-[color:var(--text-primary)]"
                   : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] active:bg-[var(--bg-hover)]"
               }`}
               style={{ minWidth: 52, minHeight: 52, padding: "6px 10px" }}
             >
-              <span className="text-lg leading-none">{toolOption.emoji}</span>
-              <span className="text-[10px] leading-none mt-0.5">{t(toolOption.labelKey)}</span>
+              <span className="text-lg leading-none">{t.emoji}</span>
+              <span className="text-[10px] leading-none mt-0.5">{t.label}</span>
             </button>
           ))}
         </div>
@@ -558,7 +557,7 @@ export default function MarkupCanvas({
           <button
             onClick={() => setActions((prev) => prev.slice(0, -1))}
             disabled={actions.length === 0}
-            title={t('ui.undo')}
+            title="Undo"
             className="rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] disabled:opacity-30 transition-all flex items-center justify-center text-lg font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
@@ -570,7 +569,7 @@ export default function MarkupCanvas({
               setCurrent(null);
               setTextOverlay(null);
             }}
-            title={t('ui.clear.all')}
+            title="Clear all"
             className="rounded-xl bg-[var(--bg-tertiary)] text-[#EF4444] transition-all flex items-center justify-center text-base"
             style={{ minWidth: 44, minHeight: 44 }}
           >
@@ -578,7 +577,7 @@ export default function MarkupCanvas({
           </button>
           <button
             onClick={onCancel}
-            title={t('action.cancel')}
+            title="Cancel"
             className="rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-all flex items-center justify-center text-base font-bold"
             style={{ minWidth: 44, minHeight: 44 }}
           >
@@ -588,7 +587,8 @@ export default function MarkupCanvas({
             onClick={handleDone}
             className="rounded-xl bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm px-4 transition-all"
             style={{ minHeight: 44 }}
-          >{t('ui.done')}
+          >
+            Done ✓
           </button>
         </div>
       </div>

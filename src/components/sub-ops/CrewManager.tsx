@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { t } from "@/lib/i18n";
-
 import {
   Users, Plus, X, Search, Filter, Edit2, UserX, UserCheck,
 } from "lucide-react";
@@ -26,13 +24,13 @@ interface CrewMember {
 }
 
 const ROLE_OPTIONS = [
-  { value: "foreman", label: t('ui.foreman') },
-  { value: "journeyman", label: t('ui.journeyman') },
-  { value: "apprentice", label: t('ui.apprentice') },
-  { value: "helper", label: t('ui.helper') },
-  { value: "superintendent", label: t('ui.superintendent') },
-  { value: "project_manager", label: t('ui.project.manager') },
-  { value: "other", label: t('ui.other') },
+  { value: "foreman", label: "Foreman" },
+  { value: "journeyman", label: "Journeyman" },
+  { value: "apprentice", label: "Apprentice" },
+  { value: "helper", label: "Helper" },
+  { value: "superintendent", label: "Superintendent" },
+  { value: "project_manager", label: "Project Manager" },
+  { value: "other", label: "Other" },
 ];
 
 const ROLE_STYLES: Record<string, string> = {
@@ -121,7 +119,7 @@ export default function CrewManager({ projectId }: Props) {
   };
 
   const handleSubmit = async () => {
-    if (!formName.trim()) { setError(t('ui.name.is.required')); return; }
+    if (!formName.trim()) { setError("Name is required"); return; }
     if (!companyId) return;
     setSaving(true);
     setError("");
@@ -155,7 +153,7 @@ export default function CrewManager({ projectId }: Props) {
         setError(d.error || "Failed to save");
       }
     } catch {
-      setError(t('ui.network.error'));
+      setError("Network error");
     }
     setSaving(false);
   };
@@ -193,17 +191,17 @@ export default function CrewManager({ projectId }: Props) {
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
           <h2 className="text-lg font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Users size={20} />{t('ui.crew.roster')}
+            <Users size={20} /> Crew Roster
           </h2>
           <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-            {filtered.length}{t('ui.crew.member')}{filtered.length !== 1 ? t('ui.s') : ""}
+            {filtered.length} crew member{filtered.length !== 1 ? "s" : ""}
           </p>
         </div>
         <button
           onClick={() => { resetForm(); setShowForm(!showForm); }}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-semibold transition-colors min-h-[40px]"
         >
-          {showForm ? <><X size={14} />{t('action.cancel')}</> : <><Plus size={14} />{t('ui.add.crew')}</>}
+          {showForm ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Crew</>}
         </button>
       </div>
 
@@ -214,7 +212,7 @@ export default function CrewManager({ projectId }: Props) {
           <input
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            placeholder={t('ui.search.crew')}
+            placeholder="Search crew…"
             className="w-full pl-8 pr-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
           />
         </div>
@@ -223,7 +221,7 @@ export default function CrewManager({ projectId }: Props) {
           onChange={e => setFilterDept(e.target.value)}
           className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
-          <option value="">{t('ui.all.departments')}</option>
+          <option value="">All Departments</option>
           {departments.map(d => (
             <option key={d.id} value={d.id}>{d.name}</option>
           ))}
@@ -233,7 +231,7 @@ export default function CrewManager({ projectId }: Props) {
           onChange={e => setFilterRole(e.target.value)}
           className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
-          <option value="">{t('ui.all.roles')}</option>
+          <option value="">All Roles</option>
           {ROLE_OPTIONS.map(r => (
             <option key={r.value} value={r.value}>{r.label}</option>
           ))}
@@ -243,8 +241,8 @@ export default function CrewManager({ projectId }: Props) {
           onChange={e => setFilterStatus(e.target.value)}
           className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
-          <option value="active">{t('status.active')}</option>
-          <option value="inactive">{t('status.inactive')}</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
         </select>
       </div>
 
@@ -252,7 +250,7 @@ export default function CrewManager({ projectId }: Props) {
       {showForm && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">
-            {editingId ? t('ui.edit.crew.member') : t('ui.new.crew.member')}
+            {editingId ? "Edit Crew Member" : "New Crew Member"}
           </h3>
           {error && (
             <div className="text-xs text-red-400 bg-red-500/10 px-3 py-2 rounded-lg">{error}</div>
@@ -261,7 +259,7 @@ export default function CrewManager({ projectId }: Props) {
             <input
               value={formName}
               onChange={e => setFormName(e.target.value)}
-              placeholder={t('ui.full.name')}
+              placeholder="Full name"
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <select
@@ -278,7 +276,7 @@ export default function CrewManager({ projectId }: Props) {
               onChange={e => setFormDept(e.target.value)}
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
-              <option value="">{t('ui.no.department')}</option>
+              <option value="">No Department</option>
               {departments.map(d => (
                 <option key={d.id} value={d.id}>{d.name}</option>
               ))}
@@ -286,20 +284,20 @@ export default function CrewManager({ projectId }: Props) {
             <input
               value={formPhone}
               onChange={e => setFormPhone(e.target.value)}
-              placeholder={t('ui.phone')}
+              placeholder="Phone"
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formEmail}
               onChange={e => setFormEmail(e.target.value)}
-              placeholder={t('ui.email')}
+              placeholder="Email"
               type="email"
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formRate}
               onChange={e => setFormRate(e.target.value)}
-              placeholder={t('ui.hourly.rate')}
+              placeholder="Hourly rate"
               type="number"
               step="0.01"
               className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
@@ -311,12 +309,13 @@ export default function CrewManager({ projectId }: Props) {
               disabled={saving}
               className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
             >
-              {saving ? t('ui.saving.56a228') : editingId ? t('ui.update.fb91e2') : t('ui.add.crew.member')}
+              {saving ? "Saving…" : editingId ? "Update" : "Add Crew Member"}
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
               className="px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
-            >{t('action.cancel')}
+            >
+              Cancel
             </button>
           </div>
         </div>
@@ -326,8 +325,8 @@ export default function CrewManager({ projectId }: Props) {
       {filtered.length === 0 ? (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <Users size={32} className="mx-auto text-gray-600 mb-3" />
-          <p className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.crew.members.found')}</p>
-          <p className="text-[color:var(--text-muted)] text-xs mt-1">{t('ui.add.crew.members.to.manage.your.team.roster')}</p>
+          <p className="text-[color:var(--text-secondary)] text-sm">No crew members found</p>
+          <p className="text-[color:var(--text-muted)] text-xs mt-1">Add crew members to manage your team roster</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -358,14 +357,14 @@ export default function CrewManager({ projectId }: Props) {
                 <button
                   onClick={() => openEditForm(member)}
                   className="p-2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
-                  title={t('action.edit')}
+                  title="Edit"
                 >
                   <Edit2 size={14} />
                 </button>
                 <button
                   onClick={() => toggleStatus(member)}
                   className={`p-2 transition-colors ${member.status === "active" ? "text-[color:var(--text-muted)] hover:text-red-400" : "text-[color:var(--text-muted)] hover:text-green-400"}`}
-                  title={member.status === "active" ? t('ui.deactivate') : t('ui.reactivate')}
+                  title={member.status === "active" ? "Deactivate" : "Reactivate"}
                 >
                   {member.status === "active" ? <UserX size={14} /> : <UserCheck size={14} />}
                 </button>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ExternalLink, Phone, X, ChevronDown, ChevronUp } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface Inspection {
   id: string;
@@ -34,15 +33,15 @@ interface Props {
 function statusBadge(status: string) {
   switch (status) {
     case "scheduled":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">{t('ui.scheduled').toUpperCase()}</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">SCHEDULED</span>;
     case "redirected":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#F97316]/20 text-[#F97316]">{t('ui.redirected').toUpperCase()}</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#F97316]/20 text-[#F97316]">REDIRECTED</span>;
     case "called":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400">{t('ui.called').toUpperCase()}</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400">CALLED</span>;
     case "completed":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400">{t('ui.completed').toUpperCase()}</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400">COMPLETED</span>;
     case "failed":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/20 text-red-400">{t('ui.failed').toUpperCase()}</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/20 text-red-400">FAILED</span>;
     default:
       return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">{status.toUpperCase()}</span>;
   }
@@ -55,7 +54,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
   if (inspections.length === 0) {
     return (
       <div className="text-center py-12 text-[color:var(--text-muted)]">
-        <p className="text-sm">{t('ui.no.inspection.requests.yet')}</p>
+        <p className="text-sm">No inspection requests yet.</p>
       </div>
     );
   }
@@ -76,15 +75,15 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-3">{t('ui.inspection.history')}</h3>
+      <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-3">Inspection History</h3>
       <div className="space-y-1 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] overflow-hidden">
         {/* Header row — desktop only */}
         <div className="hidden md:grid grid-cols-[1fr_100px_120px_100px_80px] gap-2 px-4 py-2 bg-[var(--bg-primary)] text-[10px] font-medium text-[color:var(--text-muted)] uppercase tracking-wider">
-          <span>{t('ui.type')}</span>
-          <span>{t('ui.date')}</span>
-          <span>{t('ui.permit')}</span>
-          <span>{t('ui.status')}</span>
-          <span>{t('ui.action')}</span>
+          <span>Type</span>
+          <span>Date</span>
+          <span>Permit #</span>
+          <span>Status</span>
+          <span>Action</span>
         </div>
 
         {inspections.map((insp) => (
@@ -109,7 +108,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     className="p-1.5 text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
-                    title={t('ui.open.portal')}
+                    title="Open Portal"
                   >
                     <ExternalLink size={14} />
                   </a>
@@ -118,7 +117,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                     href={`tel:${jurisdiction.phone}`}
                     onClick={(e) => e.stopPropagation()}
                     className="p-1.5 text-[color:var(--text-muted)] hover:text-blue-400 transition-colors"
-                    title={t('ui.call')}
+                    title="Call"
                   >
                     <Phone size={14} />
                   </a>
@@ -136,35 +135,35 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
               <div className="px-4 pb-4 bg-[var(--bg-primary)] border-t border-[var(--border-primary)]">
                 <div className="grid grid-cols-2 gap-3 py-3 text-xs">
                   <div>
-                    <span className="text-[color:var(--text-muted)]">{t('ui.date.81b7d2')}</span>
-                    <span className="text-[color:var(--text-secondary)] ml-1">{insp.requested_date || t('ui.not.set')}</span>
+                    <span className="text-[color:var(--text-muted)]">Date:</span>
+                    <span className="text-[color:var(--text-secondary)] ml-1">{insp.requested_date || "Not set"}</span>
                   </div>
                   <div>
-                    <span className="text-[color:var(--text-muted)]">{t('ui.permit.9119db')}</span>
+                    <span className="text-[color:var(--text-muted)]">Permit:</span>
                     <span className="text-[color:var(--text-secondary)] ml-1">{insp.permit_number || "—"}</span>
                   </div>
                   <div>
-                    <span className="text-[color:var(--text-muted)]">{t('ui.time')}</span>
+                    <span className="text-[color:var(--text-muted)]">Time:</span>
                     <span className="text-[color:var(--text-secondary)] ml-1">{insp.time_window}</span>
                   </div>
                   <div>
-                    <span className="text-[color:var(--text-muted)]">{t('ui.contact')}</span>
+                    <span className="text-[color:var(--text-muted)]">Contact:</span>
                     <span className="text-[color:var(--text-secondary)] ml-1">{insp.contact_name || "—"}</span>
                   </div>
                   {insp.contact_phone && (
                     <div>
-                      <span className="text-[color:var(--text-muted)]">{t('ui.phone.daeea4')}</span>
+                      <span className="text-[color:var(--text-muted)]">Phone:</span>
                       <span className="text-[color:var(--text-secondary)] ml-1">{insp.contact_phone}</span>
                     </div>
                   )}
                   {insp.notes && (
                     <div className="col-span-2">
-                      <span className="text-[color:var(--text-muted)]">{t('ui.notes.9c3bef')}</span>
+                      <span className="text-[color:var(--text-muted)]">Notes:</span>
                       <p className="text-[color:var(--text-secondary)] mt-1">{insp.notes}</p>
                     </div>
                   )}
                   <div className="col-span-2">
-                    <span className="text-[color:var(--text-muted)]">{t('ui.created')}</span>
+                    <span className="text-[color:var(--text-muted)]">Created:</span>
                     <span className="text-[color:var(--text-secondary)] ml-1">
                       {new Date(insp.created_at).toLocaleString("en-US", { timeZone: "America/Phoenix" })}
                     </span>
@@ -173,7 +172,8 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
 
                 {/* Status update buttons */}
                 <div className="flex gap-2 flex-wrap pt-2 border-t border-[var(--border-primary)]">
-                  <span className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider self-center mr-1">{t('ui.update')}
+                  <span className="text-[10px] text-[color:var(--text-muted)] uppercase tracking-wider self-center mr-1">
+                    Update:
                   </span>
                   {["completed", "failed"].filter(s => s !== insp.status).map((s) => (
                     <button
@@ -186,7 +186,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                           : "bg-red-500/20 text-red-400 hover:bg-red-500/30"
                       } disabled:opacity-50`}
                     >
-                      {s === "completed" ? t('ui.mark.completed') : t('ui.mark.failed')}
+                      {s === "completed" ? "Mark Completed" : "Mark Failed"}
                     </button>
                   ))}
                 </div>

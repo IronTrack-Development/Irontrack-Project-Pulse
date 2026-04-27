@@ -3,18 +3,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, Search, Plus, Loader2, Check } from "lucide-react";
 import type { CompanyContact, ProjectContact } from "./ContactCard";
-import { t } from "@/lib/i18n";
 
 const ROLE_OPTIONS = [
-  { value: "architect", label: t('ui.architect') },
-  { value: "engineer", label: t('ui.engineer') },
-  { value: "subcontractor", label: t('ui.subcontractor') },
-  { value: "supplier", label: t('ui.supplier') },
-  { value: "owner", label: t('ui.owner') },
-  { value: "owners_rep", label: t('ui.owner.s.rep') },
-  { value: "inspector", label: t('ui.inspector') },
-  { value: "internal", label: t('ui.internal') },
-  { value: "other", label: t('ui.other') },
+  { value: "architect", label: "Architect" },
+  { value: "engineer", label: "Engineer" },
+  { value: "subcontractor", label: "Subcontractor" },
+  { value: "supplier", label: "Supplier" },
+  { value: "owner", label: "Owner" },
+  { value: "owners_rep", label: "Owner's Rep" },
+  { value: "inspector", label: "Inspector" },
+  { value: "internal", label: "Internal" },
+  { value: "other", label: "Other" },
 ];
 
 interface SearchResult extends CompanyContact {
@@ -106,14 +105,14 @@ export default function AddContactModal({
         setError(d.error ?? "Failed to add contact");
       }
     } catch {
-      setError(t('ui.network.error'));
+      setError("Network error");
     }
     setSaving(false);
   };
 
   const handleSave = async () => {
-    if (!name.trim()) { setError(t('ui.name.is.required')); return; }
-    if (!role) { setError(t('ui.role.is.required')); return; }
+    if (!name.trim()) { setError("Name is required"); return; }
+    if (!role) { setError("Role is required"); return; }
 
     setSaving(true);
     setError("");
@@ -169,7 +168,7 @@ export default function AddContactModal({
         }
       }
     } catch {
-      setError(t('ui.network.error'));
+      setError("Network error");
     }
 
     setSaving(false);
@@ -183,7 +182,7 @@ export default function AddContactModal({
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)] flex-none">
           <h2 className="text-sm font-bold text-[color:var(--text-primary)]">
-            {isEdit ? t('ui.edit.contact') : t('ui.add.contact')}
+            {isEdit ? "Edit Contact" : "Add Contact"}
           </h2>
           <button
             onClick={onClose}
@@ -203,7 +202,8 @@ export default function AddContactModal({
                   ? "text-[#F97316] border-b-2 border-[#F97316]"
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
-            >{t('ui.search.existing')}
+            >
+              Search Existing
             </button>
             <button
               onClick={() => setMode("new")}
@@ -212,7 +212,8 @@ export default function AddContactModal({
                   ? "text-[#F97316] border-b-2 border-[#F97316]"
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
-            >{t('ui.create.new')}
+            >
+              Create New
             </button>
           </div>
         )}
@@ -226,7 +227,7 @@ export default function AddContactModal({
                 <input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t('ui.search.by.name.or.email')}
+                  placeholder="Search by name or email…"
                   autoFocus
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
@@ -240,12 +241,13 @@ export default function AddContactModal({
 
               {!searching && searchQuery && searchResults.length === 0 && (
                 <div className="text-center py-6">
-                  <p className="text-sm text-[color:var(--text-muted)] mb-3">{t('ui.no.contacts.found')}</p>
+                  <p className="text-sm text-[color:var(--text-muted)] mb-3">No contacts found</p>
                   <button
                     onClick={() => setMode("new")}
                     className="flex items-center gap-1.5 mx-auto px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold"
                   >
-                    <Plus size={13} />{t('ui.create.new.contact')}
+                    <Plus size={13} />
+                    Create New Contact
                   </button>
                 </div>
               )}
@@ -264,14 +266,16 @@ export default function AddContactModal({
                       </div>
                       {c.already_on_project ? (
                         <span className="flex items-center gap-1 text-[10px] text-[#22C55E] ml-3 flex-none">
-                          <Check size={11} />{t('ui.added')}
+                          <Check size={11} />
+                          Added
                         </span>
                       ) : (
                         <button
                           onClick={() => handleAddExisting(c.id)}
                           disabled={saving}
                           className="ml-3 flex-none px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
-                        >{t('action.add')}
+                        >
+                          Add
                         </button>
                       )}
                     </div>
@@ -280,7 +284,8 @@ export default function AddContactModal({
               )}
 
               {!searching && !searchQuery && (
-                <p className="text-xs text-gray-600 text-center pt-2">{t('ui.type.a.name.or.email.to.search.your.company.contacts')}
+                <p className="text-xs text-gray-600 text-center pt-2">
+                  Type a name or email to search your company contacts
                 </p>
               )}
             </div>
@@ -292,35 +297,35 @@ export default function AddContactModal({
               <div className="grid grid-cols-1 gap-3">
                 {/* Name */}
                 <div>
-                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.name.d145bb')}</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Name *</label>
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder={t('ui.full.name')}
+                    placeholder="Full name"
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
                 {/* Company */}
                 <div>
-                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('settings.company')}</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Company</label>
                   <input
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    placeholder={t('ui.company.name')}
+                    placeholder="Company name"
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
                 {/* Role */}
                 <div>
-                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.role')}</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Role *</label>
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                   >
-                    <option value="" disabled>{t('ui.select.role')}</option>
+                    <option value="" disabled>Select role…</option>
                     {ROLE_OPTIONS.map((r) => (
                       <option key={r.value} value={r.value}>{r.label}</option>
                     ))}
@@ -330,11 +335,11 @@ export default function AddContactModal({
                 {/* Conditional: trade (subcontractor) */}
                 {role === "subcontractor" && (
                   <div>
-                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.trade')}</label>
+                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Trade</label>
                     <input
                       value={trade}
                       onChange={(e) => setTrade(e.target.value)}
-                      placeholder={t('ui.e.g.electrical.plumbing.hvac')}
+                      placeholder="e.g., Electrical, Plumbing, HVAC"
                       className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
@@ -343,11 +348,11 @@ export default function AddContactModal({
                 {/* Conditional: discipline (engineer) */}
                 {role === "engineer" && (
                   <div>
-                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.discipline')}</label>
+                    <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Discipline</label>
                     <input
                       value={discipline}
                       onChange={(e) => setDiscipline(e.target.value)}
-                      placeholder={t('ui.e.g.structural.mep.civil')}
+                      placeholder="e.g., Structural, MEP, Civil"
                       className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
@@ -355,7 +360,7 @@ export default function AddContactModal({
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.email')}</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Email</label>
                   <input
                     type="email"
                     value={email}
@@ -367,7 +372,7 @@ export default function AddContactModal({
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">{t('ui.phone')}</label>
+                  <label className="block text-xs text-[color:var(--text-secondary)] mb-1 font-medium">Phone</label>
                   <input
                     type="tel"
                     value={phone}
@@ -394,7 +399,8 @@ export default function AddContactModal({
               <button
                 onClick={onClose}
                 className="flex-1 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
               <button
                 onClick={handleSave}
@@ -406,7 +412,7 @@ export default function AddContactModal({
                 ) : (
                   <Check size={15} />
                 )}
-                {saving ? t('ui.saving.56a228') : isEdit ? t('ui.save.changes') : t('ui.add.contact')}
+                {saving ? "Saving…" : isEdit ? "Save Changes" : "Add Contact"}
               </button>
             </div>
           </div>

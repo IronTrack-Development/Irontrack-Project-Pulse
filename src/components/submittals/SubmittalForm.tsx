@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { X, Loader2 } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -35,29 +34,29 @@ interface Props {
 }
 
 const BALL_IN_COURT_OPTIONS = [
-  { value: "contractor", label: t('ui.contractor') },
-  { value: "architect", label: t('ui.architect') },
-  { value: "engineer", label: t('ui.engineer') },
-  { value: "owner", label: t('ui.owner') },
-  { value: "sub", label: t('ui.sub') },
+  { value: "contractor", label: "Contractor" },
+  { value: "architect", label: "Architect" },
+  { value: "engineer", label: "Engineer" },
+  { value: "owner", label: "Owner" },
+  { value: "sub", label: "Sub" },
 ];
 
 const STATUS_OPTIONS = [
-  { value: "not_started", label: t('ui.not.started') },
-  { value: "in_preparation", label: t('ui.in.preparation') },
-  { value: "submitted", label: t('ui.submitted') },
-  { value: "under_review", label: t('ui.under.review') },
-  { value: "approved", label: t('ui.approved.41b81e') },
-  { value: "approved_as_noted", label: t('ui.approved.as.noted') },
-  { value: "revise_resubmit", label: t('ui.revise.and.resubmit') },
-  { value: "rejected", label: t('ui.rejected.27eeb7') },
+  { value: "not_started", label: "Not Started" },
+  { value: "in_preparation", label: "In Preparation" },
+  { value: "submitted", label: "Submitted" },
+  { value: "under_review", label: "Under Review" },
+  { value: "approved", label: "Approved" },
+  { value: "approved_as_noted", label: "Approved as Noted" },
+  { value: "revise_resubmit", label: "Revise & Resubmit" },
+  { value: "rejected", label: "Rejected" },
 ];
 
 const PRIORITY_OPTIONS = [
-  { value: "critical", label: t('ui.critical') },
-  { value: "high", label: t('ui.high') },
-  { value: "normal", label: t('ui.normal') },
-  { value: "low", label: t('ui.low') },
+  { value: "critical", label: "Critical" },
+  { value: "high", label: "High" },
+  { value: "normal", label: "Normal" },
+  { value: "low", label: "Low" },
 ];
 
 export default function SubmittalForm({ projectId, editSubmittal, onClose, onSaved }: Props) {
@@ -164,7 +163,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
       onSaved();
       onClose();
     } catch {
-      setError(t('ui.network.error'));
+      setError("Network error");
       setSaving(false);
     }
   };
@@ -175,7 +174,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
         {/* Header */}
         <div className="sticky top-0 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] px-5 py-4 flex items-center justify-between z-10">
           <h2 className="text-base font-bold text-[color:var(--text-primary)]">
-            {isEdit ? t('ui.edit.submittal') : t('ui.new.submittal')}
+            {isEdit ? "Edit Submittal" : "New Submittal"}
           </h2>
           <button
             onClick={onClose}
@@ -189,17 +188,17 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
           {/* Number + Spec Section */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.number')}</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Number *</label>
               <input
                 value={form.submittal_number}
                 onChange={(e) => setForm((f) => ({ ...f, submittal_number: e.target.value }))}
-                placeholder={t('ui.s.001')}
+                placeholder="S-001"
                 required
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.spec.section')}</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Spec Section</label>
               <input
                 value={form.spec_section}
                 onChange={(e) => setForm((f) => ({ ...f, spec_section: e.target.value }))}
@@ -211,11 +210,11 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Title */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.title.961697')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Title *</label>
             <input
               value={form.title}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-              placeholder={t('ui.concrete.mix.design')}
+              placeholder="Concrete Mix Design"
               required
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
@@ -223,11 +222,11 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Description */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('blocker.description')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Description</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-              placeholder={t('ui.optional.details')}
+              placeholder="Optional details…"
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -235,7 +234,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Priority */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.priority')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Priority</label>
             <div className="flex gap-2 flex-wrap">
               {PRIORITY_OPTIONS.map((p) => (
                 <button
@@ -257,7 +256,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
           {/* Required By + Lead Time */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.required.by')}</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Required By</label>
               <input
                 type="date"
                 value={form.required_by}
@@ -266,7 +265,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               />
             </div>
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.lead.time.days')}</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Lead Time (days)</label>
               <input
                 type="number"
                 min={0}
@@ -280,13 +279,13 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Assigned To */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.assigned.to.sub.supplier')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Assigned To (Sub/Supplier)</label>
             <select
               value={form.assigned_to}
               onChange={(e) => setForm((f) => ({ ...f, assigned_to: e.target.value }))}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
             >
-              <option value="">{t('ui.none')}</option>
+              <option value="">— None —</option>
               {subs.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}{c.company ? ` · ${c.company}` : ""}
@@ -297,13 +296,13 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Reviewer */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.reviewer.architect.engineer')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Reviewer (Architect/Engineer)</label>
             <select
               value={form.reviewer_id}
               onChange={(e) => setForm((f) => ({ ...f, reviewer_id: e.target.value }))}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
             >
-              <option value="">{t('ui.none')}</option>
+              <option value="">— None —</option>
               {reviewers.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}{c.company ? ` · ${c.company}` : ""}
@@ -314,7 +313,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Ball in Court */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.ball.in.court')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Ball in Court</label>
             <div className="flex gap-2 flex-wrap">
               {BALL_IN_COURT_OPTIONS.map((b) => (
                 <button
@@ -336,7 +335,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
           {/* Status (edit only) */}
           {isEdit && (
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.status')}</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Status</label>
               <div className="flex gap-2 flex-wrap">
                 {STATUS_OPTIONS.map((s) => (
                   <button
@@ -358,11 +357,11 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
           {/* Notes */}
           <div>
-            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">{t('ui.notes')}</label>
+            <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5 font-medium">Notes</label>
             <textarea
               value={form.notes}
               onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
-              placeholder={t('ui.any.additional.notes')}
+              placeholder="Any additional notes…"
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -380,7 +379,8 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               type="button"
               onClick={onClose}
               className="flex-1 py-3 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
-            >{t('action.cancel')}
+            >
+              Cancel
             </button>
             <button
               type="submit"
@@ -388,7 +388,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               className="flex-1 py-3 rounded-xl bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] text-sm font-bold transition-colors min-h-[44px] flex items-center justify-center gap-2"
             >
               {saving ? <Loader2 size={16} className="animate-spin" /> : null}
-              {isEdit ? t('ui.save.changes') : t('ui.create.submittal')}
+              {isEdit ? "Save Changes" : "Create Submittal"}
             </button>
           </div>
         </form>

@@ -6,7 +6,6 @@ import { FieldReport, FieldReportStatus } from "@/types";
 import FieldReportDetail from "./FieldReportDetail";
 import AddReportModal from "./AddReportModal";
 import MultiAddFlow from "./MultiAddFlow";
-import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -91,7 +90,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.reports')}</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Reports</h2>
           <span className="px-2 py-0.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
             {count}
           </span>
@@ -111,7 +110,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
                 color: filter === s ? "#fff" : "var(--text-secondary)",
               }}
             >
-              {s === "all" ? t('ui.all.6a7208') : s === "open" ? t('status.open') : t('status.resolved')}
+              {s === "all" ? "All" : s === "open" ? "Open" : "Resolved"}
             </button>
           ))}
         </div>
@@ -120,13 +119,15 @@ export default function FieldReportsDashboard({ projectId }: Props) {
           onClick={() => setShowAddModal(true)}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
         >
-          <Plus size={14} />{t('action.add')}
+          <Plus size={14} />
+          Add
         </button>
         <button
           onClick={() => setShowMultiAdd(true)}
           className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
         >
-          <ImagePlus size={14} />{t('ui.multi.add')}
+          <ImagePlus size={14} />
+          Multi-add
         </button>
       </div>
 
@@ -138,8 +139,8 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       ) : reports.length === 0 ? (
         <div className="text-center py-16">
           <ImageOff size={40} className="mx-auto mb-3 text-gray-600" />
-          <p className="text-[color:var(--text-muted)] text-sm">{t('ui.no.reports.yet')}</p>
-          <p className="text-gray-600 text-xs mt-1">{t('ui.tap.add.to.snap.a.photo.and.create.your.first')}</p>
+          <p className="text-[color:var(--text-muted)] text-sm">No reports yet</p>
+          <p className="text-gray-600 text-xs mt-1">Tap "Add" to snap a photo and create your first report</p>
         </div>
       ) : (
         <div className="space-y-2">

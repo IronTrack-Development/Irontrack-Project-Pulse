@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { X, Plus, Trash2, Save, BookOpen, RefreshCw } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
 import EditableTalkingPoints from "./EditableTalkingPoints";
-import { t } from "@/lib/i18n";
 
 interface TemplateManagerProps {
   projectId: string;
@@ -12,27 +11,27 @@ interface TemplateManagerProps {
 }
 
 const CATEGORIES: { value: ToolboxTalkCategory; label: string }[] = [
-  { value: "falls", label: t('ui.falls') },
-  { value: "electrical", label: t('ui.electrical') },
-  { value: "excavation", label: t('ui.excavation') },
-  { value: "confined_space", label: t('ui.confined.space') },
-  { value: "scaffolding", label: t('ui.scaffolding') },
+  { value: "falls", label: "Falls" },
+  { value: "electrical", label: "Electrical" },
+  { value: "excavation", label: "Excavation" },
+  { value: "confined_space", label: "Confined Space" },
+  { value: "scaffolding", label: "Scaffolding" },
   { value: "ppe", label: "PPE" },
-  { value: "heat_illness", label: t('ui.heat.illness') },
-  { value: "cold_stress", label: t('ui.cold.stress') },
-  { value: "fire_prevention", label: t('ui.fire.prevention') },
-  { value: "hazcom", label: t('ui.hazcom') },
-  { value: "lockout_tagout", label: t('ui.lockout.tagout') },
-  { value: "crane_rigging", label: t('ui.crane.and.rigging') },
-  { value: "housekeeping", label: t('ui.housekeeping') },
-  { value: "hand_power_tools", label: t('ui.hand.and.power.tools') },
-  { value: "ladders", label: t('ui.ladders') },
-  { value: "silica", label: t('ui.silica') },
-  { value: "struck_by", label: t('ui.struck.by') },
-  { value: "caught_between", label: t('ui.caught.in.between') },
-  { value: "traffic_control", label: t('ui.traffic.control') },
-  { value: "general", label: t('ui.general') },
-  { value: "custom", label: t('ui.custom') },
+  { value: "heat_illness", label: "Heat Illness" },
+  { value: "cold_stress", label: "Cold Stress" },
+  { value: "fire_prevention", label: "Fire Prevention" },
+  { value: "hazcom", label: "HazCom" },
+  { value: "lockout_tagout", label: "Lockout/Tagout" },
+  { value: "crane_rigging", label: "Crane & Rigging" },
+  { value: "housekeeping", label: "Housekeeping" },
+  { value: "hand_power_tools", label: "Hand & Power Tools" },
+  { value: "ladders", label: "Ladders" },
+  { value: "silica", label: "Silica" },
+  { value: "struck_by", label: "Struck-By" },
+  { value: "caught_between", label: "Caught In/Between" },
+  { value: "traffic_control", label: "Traffic Control" },
+  { value: "general", label: "General" },
+  { value: "custom", label: "Custom" },
 ];
 
 function categoryLabel(cat: string) {
@@ -130,7 +129,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm(t('ui.delete.this.template'))) return;
+    if (!confirm("Delete this template?")) return;
     setDeleting(id);
     try {
       const res = await fetch(`/api/projects/${projectId}/safety/templates`, {
@@ -147,9 +146,9 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
 
   // Group by category
   const grouped: Record<string, ToolboxTalkTemplate[]> = {};
-  templates.forEach((item) => {
-    if (!grouped[item.category]) grouped[item.category] = [];
-    grouped[item.category].push(item);
+  templates.forEach((t) => {
+    if (!grouped[t.category]) grouped[t.category] = [];
+    grouped[t.category].push(t);
   });
 
   const showForm = showCreate || editingId;
@@ -163,9 +162,9 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             <BookOpen size={16} className="text-[#F97316]" />
             {showForm
               ? editingId
-                ? t('ui.edit.template')
-                : t('ui.new.template')
-              : t('ui.manage.templates')}
+                ? "Edit Template"
+                : "New Template"
+              : "Manage Templates"}
           </h3>
           <button
             onClick={showForm ? resetForm : onClose}
@@ -180,19 +179,19 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
           {showForm ? (
             <div className="space-y-4">
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.title.961697')}</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Title *</label>
                 <input
                   type="text"
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
-                  placeholder={t('ui.template.title')}
+                  placeholder="Template title"
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('blocker.category')}</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Category</label>
                   <select
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value as ToolboxTalkCategory)}
@@ -204,7 +203,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.duration.min')}</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Duration (min)</label>
                   <input
                     type="number"
                     value={formDuration}
@@ -217,18 +216,18 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               </div>
 
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.osha.reference')}</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-1 block">OSHA Reference</label>
                 <input
                   type="text"
                   value={formOsha}
                   onChange={(e) => setFormOsha(e.target.value)}
-                  placeholder={t('ui.e.g.29.cfr.1926.501')}
+                  placeholder="e.g. 29 CFR 1926.501"
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">{t('safety.talkingPoints')}</label>
+                <label className="text-xs text-[color:var(--text-muted)] mb-2 block">Talking Points</label>
                 <EditableTalkingPoints points={formPoints} onChange={setFormPoints} />
               </div>
             </div>
@@ -237,7 +236,8 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               <RefreshCw size={20} className="text-[#F97316] animate-spin" />
             </div>
           ) : templates.length === 0 ? (
-            <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">{t('ui.no.templates.yet.create.one.to.get.started')}
+            <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">
+              No templates yet. Create one to get started.
             </div>
           ) : (
             <div className="space-y-4">
@@ -247,41 +247,43 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                     {categoryLabel(cat)}
                   </div>
                   <div className="space-y-1.5">
-                    {temps.map((template) => (
+                    {temps.map((t) => (
                       <div
-                        key={template.id}
+                        key={t.id}
                         className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 flex items-center justify-between gap-2"
                       >
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-[color:var(--text-primary)] truncate">{template.title}</span>
-                            {template.is_system ? (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#3B82F6]/10 text-[#3B82F6] shrink-0">{t('ui.system')}
+                            <span className="text-sm text-[color:var(--text-primary)] truncate">{t.title}</span>
+                            {t.is_system ? (
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#3B82F6]/10 text-[#3B82F6] shrink-0">
+                                System
                               </span>
                             ) : (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#F97316]/10 text-[#F97316] shrink-0">{t('ui.custom')}
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#F97316]/10 text-[#F97316] shrink-0">
+                                Custom
                               </span>
                             )}
                           </div>
                           <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
-                            {template.talking_points.length}{t('ui.points')} {template.duration_minutes}{t('ui.min')}
-                            {template.osha_reference ? ` Â· ${template.osha_reference}` : ""}
+                            {t.talking_points.length} points · {t.duration_minutes} min
+                            {t.osha_reference ? ` · ${t.osha_reference}` : ""}
                           </div>
                         </div>
-                        {!template.is_system && (
+                        {!t.is_system && (
                           <div className="flex items-center gap-1 shrink-0">
                             <button
-                              onClick={() => startEdit(template)}
+                              onClick={() => startEdit(t)}
                               className="p-2 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
-                              title={t('action.edit')}
+                              title="Edit"
                             >
                               <Save size={13} />
                             </button>
                             <button
-                              onClick={() => handleDelete(template.id)}
-                              disabled={deleting === template.id}
+                              onClick={() => handleDelete(t.id)}
+                              disabled={deleting === t.id}
                               className="p-2 text-[color:var(--text-muted)] hover:text-red-400 transition-colors disabled:opacity-50 min-w-[36px] min-h-[36px] flex items-center justify-center"
-                              title={t('action.delete')}
+                              title="Delete"
                             >
                               <Trash2 size={13} />
                             </button>
@@ -303,7 +305,8 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               <button
                 onClick={resetForm}
                 className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
               <button
                 onClick={handleSave}
@@ -311,7 +314,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                 className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 <Save size={14} />
-                {saving ? t('ui.saving') : editingId ? t('ui.update.template') : t('ui.create.template')}
+                {saving ? "Saving..." : editingId ? "Update Template" : "Create Template"}
               </button>
             </>
           ) : (
@@ -319,13 +322,15 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               <button
                 onClick={onClose}
                 className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-              >{t('ui.close')}
+              >
+                Close
               </button>
               <button
                 onClick={() => setShowCreate(true)}
                 className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
               >
-                <Plus size={14} />{t('ui.create.new.template')}
+                <Plus size={14} />
+                Create New Template
               </button>
             </>
           )}

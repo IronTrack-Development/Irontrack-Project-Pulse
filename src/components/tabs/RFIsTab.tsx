@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import RFICreateFlow from "@/components/rfis/RFICreateFlow";
 import RFIDetail from "@/components/rfis/RFIDetail";
-import { t } from "@/lib/i18n";
 
 interface RFI {
   id: string;
@@ -45,20 +44,20 @@ interface RFIsTabProps {
 }
 
 const STATUS_FILTERS = [
-  { value: "", label: t('ui.all.6a7208') },
-  { value: "draft", label: t('status.draft') },
-  { value: "submitted", label: t('ui.submitted') },
-  { value: "under_review", label: t('ui.under.review') },
-  { value: "answered", label: t('ui.answered') },
-  { value: "closed", label: t('ui.closed') },
+  { value: "", label: "All" },
+  { value: "draft", label: "Draft" },
+  { value: "submitted", label: "Submitted" },
+  { value: "under_review", label: "Under Review" },
+  { value: "answered", label: "Answered" },
+  { value: "closed", label: "Closed" },
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: t('status.draft'),        color: "var(--text-muted)", bg: "bg-gray-700/30" },
-  submitted:    { label: t('ui.submitted'),    color: "#EAB308", bg: "bg-yellow-500/15" },
-  under_review: { label: t('ui.under.review'), color: "#A855F7", bg: "bg-purple-500/15" },
-  answered:     { label: t('ui.answered'),     color: "#22C55E", bg: "bg-green-500/15" },
-  closed:       { label: t('ui.closed'),       color: "#4B5563", bg: "bg-[color:var(--bg-tertiary)]/40" },
+  draft:        { label: "Draft",        color: "var(--text-muted)", bg: "bg-gray-700/30" },
+  submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
+  under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
+  answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
+  closed:       { label: "Closed",       color: "#4B5563", bg: "bg-[color:var(--bg-tertiary)]/40" },
 };
 
 const PRIORITY_CONFIG: Record<string, { color: string }> = {
@@ -152,10 +151,10 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
       {/* Summary bar */}
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: t('ui.total'), value: totalRFIs, color: "#F97316" },
-          { label: t('status.open'), value: openRFIs, color: "#EAB308" },
-          { label: t('ui.overdue.07217c'), value: overdueRFIs, color: "#EF4444" },
-          { label: t('ui.answered'), value: answeredRFIs, color: "#22C55E" },
+          { label: "Total", value: totalRFIs, color: "#F97316" },
+          { label: "Open", value: openRFIs, color: "#EAB308" },
+          { label: "Overdue", value: overdueRFIs, color: "#EF4444" },
+          { label: "Answered", value: answeredRFIs, color: "#22C55E" },
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-3 text-center">
             <p className="text-xl font-bold" style={{ color }}>{value}</p>
@@ -186,7 +185,8 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
             text-xs font-bold hover:bg-[#ea6c10] transition-all min-h-[44px] shrink-0"
         >
-          <Plus size={14} />{t('ui.new.rfi')}
+          <Plus size={14} />
+          New RFI
         </button>
       </div>
 
@@ -194,9 +194,9 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
       {rfis.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <FileQuestion size={40} className="text-gray-700 mb-4" />
-          <p className="text-sm font-medium text-[color:var(--text-muted)] mb-1">{t('ui.no.rfis.yet')}</p>
+          <p className="text-sm font-medium text-[color:var(--text-muted)] mb-1">No RFIs yet</p>
           <p className="text-xs text-gray-600 mb-6">
-            {statusFilter ? `No ${statusFilter.replace("_", " ")} RFIs` : t('ui.create.your.first.rfi.with.ai.assistance')}
+            {statusFilter ? `No ${statusFilter.replace("_", " ")} RFIs` : "Create your first RFI with AI assistance"}
           </p>
           {!statusFilter && (
             <button
@@ -204,7 +204,8 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
                 text-sm font-semibold hover:bg-[#ea6c10] transition-all min-h-[44px]"
             >
-              <Plus size={16} />{t('ui.new.rfi')}
+              <Plus size={16} />
+              New RFI
             </button>
           )}
         </div>
@@ -260,22 +261,23 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
                   {rfi.days_open != null && (
                     <span className={`flex items-center gap-1 ${overdue ? "text-red-400 font-medium" : ""}`}>
                       <Clock size={10} />
-                      {rfi.days_open}{t('ui.d.open')}
+                      {rfi.days_open}d open
                     </span>
                   )}
                   {rfi.due_date && (
                     <span className={`flex items-center gap-1 ${overdue ? "text-red-400 font-medium" : ""}`}>
-                      <Calendar size={10} />{t('ui.due.145caf')} {new Date(rfi.due_date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      <Calendar size={10} />
+                      Due {new Date(rfi.due_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </span>
                   )}
                   {rfi.cost_impact && (
                     <span className="flex items-center gap-0.5 text-yellow-500">
-                      <DollarSign size={10} />{t('ui.cost')}
+                      <DollarSign size={10} />Cost
                     </span>
                   )}
                   {rfi.schedule_impact && (
                     <span className="flex items-center gap-0.5 text-red-400">
-                      <Clock size={10} />{t('nav.schedule')}
+                      <Clock size={10} />Schedule
                     </span>
                   )}
                 </div>

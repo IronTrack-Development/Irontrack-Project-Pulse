@@ -1,18 +1,15 @@
-"use client";
-
 import { CheckCircle, AlertTriangle, XCircle, Clock } from "lucide-react";
 import Link from "next/link";
 import { Building2 } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 const services = [
-  { name: t('ui.web.application'), status: "operational", description: t('ui.irontrackpulse.com') },
-  { name: t('ui.schedule.upload.and.processing'), status: "operational", description: t('ui.file.parsing.column.mapping.data.import') },
-  { name: t('ui.risk.detection.engine'), status: "operational", description: t('ui.automated.risk.scanning.and.alerts') },
-  { name: t('ui.database.supabase'), status: "operational", description: t('ui.data.storage.and.real.time.sync') },
-  { name: t('ui.authentication.ee1acf'), status: "operational", description: t('ui.sign.up.sign.in.session.management') },
-  { name: t('ui.ios.app'), status: "coming_soon", description: t('ui.native.ios.application') },
-  { name: t('ui.android.app'), status: "coming_soon", description: t('ui.native.android.application') },
+  { name: "Web Application", status: "operational", description: "irontrackpulse.com" },
+  { name: "Schedule Upload & Processing", status: "operational", description: "File parsing, column mapping, data import" },
+  { name: "Risk Detection Engine", status: "operational", description: "Automated risk scanning and alerts" },
+  { name: "Database (Supabase)", status: "operational", description: "Data storage and real-time sync" },
+  { name: "Authentication", status: "operational", description: "Sign up, sign in, session management" },
+  { name: "iOS App", status: "coming_soon", description: "Native iOS application" },
+  { name: "Android App", status: "coming_soon", description: "Native Android application" },
 ];
 
 type ServiceStatus = "operational" | "degraded" | "offline" | "coming_soon";
@@ -22,7 +19,8 @@ function StatusBadge({ status }: { status: ServiceStatus }) {
     return (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20"
         style={{ boxShadow: "0 0 8px rgba(34,197,94,0.15)" }}>
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400" style={{ boxShadow: "0 0 4px rgba(34,197,94,0.8)" }} />{t('ui.operational')}
+        <span className="w-1.5 h-1.5 rounded-full bg-green-400" style={{ boxShadow: "0 0 4px rgba(34,197,94,0.8)" }} />
+        Operational
       </span>
     );
   }
@@ -30,21 +28,24 @@ function StatusBadge({ status }: { status: ServiceStatus }) {
     return (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
         style={{ boxShadow: "0 0 8px rgba(234,179,8,0.15)" }}>
-        <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" style={{ boxShadow: "0 0 4px rgba(234,179,8,0.8)" }} />{t('ui.degraded')}
+        <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" style={{ boxShadow: "0 0 4px rgba(234,179,8,0.8)" }} />
+        Degraded
       </span>
     );
   }
   if (status === "offline") {
     return (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
-        <span className="w-1.5 h-1.5 rounded-full bg-red-400" />{t('ui.offline')}
+        <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+        Offline
       </span>
     );
   }
   // coming_soon
   return (
     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-[color:var(--text-secondary)] border border-gray-500/20">
-      <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />{t('ui.coming.soon')}
+      <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+      Coming Soon
     </span>
   );
 }
@@ -70,15 +71,17 @@ export default function StatusPage() {
             <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
               <img
                 src="/logo-irontrack.png"
-                alt={t('ui.irontrack.logo')}
+                alt="IronTrack Logo"
                 className="h-10 md:h-20 w-auto object-contain"
                 style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
               />
             </div>
-            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">{t('ui.irontrack')}<span className="hidden md:inline">{t('ui.project.pulse')}</span>
+            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
+              IronTrack<span className="hidden md:inline"> Project Pulse</span>
             </span>
           </Link>
-          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors flex items-center gap-1">{t('ui.back.to.home.054e10')}
+          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors flex items-center gap-1">
+            ← Back to home
           </Link>
         </div>
       </header>
@@ -86,8 +89,8 @@ export default function StatusPage() {
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
         {/* Page Title */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.system.status')}</h1>
-          <p className="text-[color:var(--text-secondary)]">{t('ui.current.health.of.irontrack.project.pulse.services')}</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">System Status</h1>
+          <p className="text-[color:var(--text-secondary)]">Current health of IronTrack Project Pulse services</p>
         </div>
 
         {/* Overall Status Banner */}
@@ -100,16 +103,16 @@ export default function StatusPage() {
           <OverallStatusIcon allOperational={allOperational} />
           <div>
             <p className={`font-semibold text-lg ${allOperational ? "text-green-400" : "text-yellow-400"}`}>
-              {allOperational ? t('ui.all.systems.operational') : t('ui.some.systems.degraded')}
+              {allOperational ? "All Systems Operational" : "Some Systems Degraded"}
             </p>
-            <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.99.9.uptime.last.30.days')}</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">99.9% uptime last 30 days</p>
           </div>
         </div>
 
         {/* Service List */}
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-[var(--border-primary)]">
-            <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">{t('ui.services')}</h2>
+            <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider">Services</h2>
           </div>
           <div className="divide-y divide-[#1F1F25]">
             {services.map((service) => (
@@ -127,7 +130,7 @@ export default function StatusPage() {
         {/* Last Checked */}
         <div className="flex items-center gap-2 text-sm text-[color:var(--text-muted)]">
           <Clock className="w-4 h-4" />
-          <span>{t('ui.last.checked')} {lastChecked}</span>
+          <span>Last checked: {lastChecked}</span>
         </div>
       </main>
 
@@ -136,14 +139,14 @@ export default function StatusPage() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />
-            <span className="text-sm text-[color:var(--text-muted)]">{t('ui.2026.irontrack.development.llc.all.rights.reserved')}</span>
+            <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.terms')}</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.privacy')}</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/release-notes" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.release.notes')}</Link>
+            <Link href="/release-notes" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Release Notes</Link>
           </div>
         </div>
       </footer>

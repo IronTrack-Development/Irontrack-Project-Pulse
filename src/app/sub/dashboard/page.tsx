@@ -2,8 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { t } from "@/lib/i18n";
-
 import {
   Loader2,
   AlertCircle,
@@ -134,12 +132,12 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       {/* Trades */}
       {project.trades.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
-          {project.trades.map((item) => (
+          {project.trades.map((t) => (
             <span
-              key={item}
+              key={t}
               className="text-xs px-2 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316]"
             >
-              {item}
+              {t}
             </span>
           ))}
         </div>
@@ -149,16 +147,17 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {project.tasks_count > 0 && (
           <span>
-            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span>{t('ui.tasks')}
+            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> tasks
           </span>
         )}
         <span>
-          <span className="text-[color:var(--text-secondary)] font-medium">{project.report_count}</span>{t('ui.reports.0b7ec6')}
+          <span className="text-[color:var(--text-secondary)] font-medium">{project.report_count}</span> reports
         </span>
         {project.last_report_date && (
-          <span>{t('ui.last')} <span className="text-[color:var(--text-secondary)]">{formatDateShort(project.last_report_date)}</span>
+          <span>
+            Last: <span className="text-[color:var(--text-secondary)]">{formatDateShort(project.last_report_date)}</span>
             {project.last_report_by && (
-              <>{t('ui.by.408158')} <span className="text-[color:var(--text-secondary)]">{project.last_report_by}</span></>
+              <> by <span className="text-[color:var(--text-secondary)]">{project.last_report_by}</span></>
             )}
           </span>
         )}
@@ -167,7 +166,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       {/* Progress bar */}
       <div className="space-y-1">
         <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
-          <span>{t('ui.avg.progress.last.report')}</span>
+          <span>Avg progress (last report)</span>
           <span className="text-[color:var(--text-secondary)] font-medium">{project.avg_percent}%</span>
         </div>
         <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
@@ -201,7 +200,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
             <span className="text-xs text-[color:var(--text-muted)]">{timeAgo(report.submitted_at)}</span>
           </div>
           <p className="text-xs text-[#F97316] truncate">{report.project_name}</p>
-          <p className="text-xs text-[color:var(--text-muted)]">{t('ui.by.408158')} {report.submitted_by}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">by {report.submitted_by}</p>
         </div>
 
         <div className="flex items-center gap-3 flex-shrink-0">
@@ -216,7 +215,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
             {report.total_hours != null && (
               <span className="flex items-center gap-1">
                 <Timer size={11} className="text-[#F97316]" />
-                {report.total_hours}{t('ui.h')}
+                {report.total_hours}h
               </span>
             )}
           </div>
@@ -233,18 +232,18 @@ function ReportRow({ report }: { report: ReportEntry }) {
           <div className="flex gap-4 text-xs text-[color:var(--text-secondary)] sm:hidden">
             {report.manpower_count != null && (
               <span className="flex items-center gap-1">
-                <Users size={11} className="text-[#F97316]" /> {report.manpower_count}{t('ui.workers.f74e09')}
+                <Users size={11} className="text-[#F97316]" /> {report.manpower_count} workers
               </span>
             )}
             {report.total_hours != null && (
               <span className="flex items-center gap-1">
-                <Timer size={11} className="text-[#F97316]" /> {report.total_hours}{t('ui.h.total')}
+                <Timer size={11} className="text-[#F97316]" /> {report.total_hours}h total
               </span>
             )}
           </div>
 
           {/* Delay chips */}
-          {report.delay_reasons.length > 0 && !report.delay_reasons.includes(t('ui.none.6eef66')) && (
+          {report.delay_reasons.length > 0 && !report.delay_reasons.includes("None") && (
             <div className="flex flex-wrap gap-1.5">
               {report.delay_reasons.map((d) => (
                 <span
@@ -260,7 +259,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
           {/* Task progress */}
           {report.worked_on_activities.length > 0 && (
             <div className="space-y-1">
-              <p className="text-xs text-gray-600 uppercase tracking-wide">{t('ui.tasks.090ec5')}</p>
+              <p className="text-xs text-gray-600 uppercase tracking-wide">Tasks</p>
               {report.worked_on_activities.map((task, i) => {
                 const pct = parseInt(task.status, 10);
                 const displayPct = isNaN(pct) ? task.status : `${pct}%`;
@@ -268,7 +267,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
                 return (
                   <div key={i} className="space-y-0.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-[color:var(--text-secondary)] truncate pr-2">{t('ui.task')} {i + 1}</span>
+                      <span className="text-[color:var(--text-secondary)] truncate pr-2">Task {i + 1}</span>
                       <span className="text-[color:var(--text-secondary)] flex-shrink-0">{displayPct}</span>
                     </div>
                     <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
@@ -310,7 +309,7 @@ export default function SubDashboardPage() {
       const res = await fetch("/api/sub/dashboard");
       if (!res.ok) {
         if (res.status === 401) {
-          setError(t('ui.not.authenticated.please.sign.in'));
+          setError("Not authenticated. Please sign in.");
         } else {
           const json = await res.json().catch(() => ({}));
           setError(json.error ?? "Could not load dashboard. Please try again.");
@@ -320,7 +319,7 @@ export default function SubDashboardPage() {
       const json: DashboardData = await res.json();
       setDashData(json);
     } catch {
-      setError(t('ui.an.unexpected.error.occurred'));
+      setError("An unexpected error occurred.");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -337,7 +336,7 @@ export default function SubDashboardPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 className="w-8 h-8 text-[#F97316] animate-spin" />
-          <p className="text-sm">{t('ui.loading.your.dashboard')}</p>
+          <p className="text-sm">Loading your dashboard…</p>
         </div>
       </div>
     );
@@ -349,7 +348,8 @@ export default function SubDashboardPage() {
       <div className="max-w-2xl mx-auto px-6 py-16 text-center space-y-4">
         <AlertCircle className="w-12 h-12 text-red-400 mx-auto" />
         <p className="text-red-400">{error}</p>
-        <Link href="/login" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">{t('ui.return.to.login')}
+        <Link href="/login" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+          Return to login
         </Link>
       </div>
     );
@@ -365,10 +365,12 @@ export default function SubDashboardPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-4">
         <FolderOpen className="w-12 h-12 text-gray-600 mx-auto" />
-        <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.no.sub.company.found')}</h1>
-        <p className="text-[color:var(--text-secondary)] text-sm">{t('ui.register.your.subcontractor.company.to.access.the.dashboard')}
+        <h1 className="text-xl font-bold text-[color:var(--text-primary)]">No Sub Company Found</h1>
+        <p className="text-[color:var(--text-secondary)] text-sm">
+          Register your subcontractor company to access the dashboard.
         </p>
-        <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">{t('ui.register.your.company')}
+        <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+          Register your company
         </Link>
       </div>
     );
@@ -384,7 +386,7 @@ export default function SubDashboardPage() {
         {/* ── Header ── */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm text-[color:var(--text-muted)] mb-1">{t('ui.sub.dashboard.186daf')}</p>
+            <p className="text-sm text-[color:var(--text-muted)] mb-1">Sub Dashboard</p>
             <h1 className="text-2xl md:text-3xl font-bold text-[color:var(--text-primary)]">
               <span className="text-[#F97316]">{displayName}</span>
             </h1>
@@ -397,25 +399,26 @@ export default function SubDashboardPage() {
             disabled={refreshing}
             className="flex items-center gap-1.5 text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors disabled:opacity-40 mt-1"
           >
-            <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />{t('action.refresh')}
+            <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
+            Refresh
           </button>
         </div>
 
         {/* ── Stats Row ── */}
         <div className="grid grid-cols-3 gap-3">
           <StatCard
-            label={t('ui.active.projects')}
+            label="Active Projects"
             value={stats.activeProjects}
             icon={<FolderOpen size={14} />}
             accent
           />
           <StatCard
-            label={t('ui.reports.this.week.332496')}
+            label="Reports This Week"
             value={stats.reportsThisWeek}
             icon={<BarChart3 size={14} />}
           />
           <StatCard
-            label={t('ui.foremen')}
+            label="Foremen"
             value={stats.uniqueForemen}
             icon={<Users size={14} />}
           />
@@ -425,7 +428,7 @@ export default function SubDashboardPage() {
         <section className="space-y-4">
           <div className="flex items-center gap-2">
             <FolderOpen size={16} className="text-[#F97316]" />
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.projects')}</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
             {projects.length > 0 && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {projects.length}
@@ -436,7 +439,9 @@ export default function SubDashboardPage() {
           {projects.length === 0 ? (
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center space-y-2">
               <CalendarDays size={32} className="mx-auto text-gray-700 mb-2" />
-              <p className="text-sm text-[color:var(--text-secondary)] max-w-sm mx-auto">{t('ui.no.projects.yet.your.projects.will.appear.here.when.a')}
+              <p className="text-sm text-[color:var(--text-secondary)] max-w-sm mx-auto">
+                No projects yet. Your projects will appear here when a general contractor
+                shares a schedule with your company.
               </p>
             </div>
           ) : (
@@ -453,7 +458,7 @@ export default function SubDashboardPage() {
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <ClipboardList size={16} className="text-[#F97316]" />
-              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.recent.reports')}</h2>
+              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Reports</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {totalReports}
               </span>
@@ -470,7 +475,8 @@ export default function SubDashboardPage() {
                 <button
                   onClick={() => setVisibleReports((v) => v + 10)}
                   className="px-5 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
-                >{t('ui.load.more')}
+                >
+                  Load More
                 </button>
               </div>
             )}
@@ -483,7 +489,8 @@ export default function SubDashboardPage() {
             href="/"
             className="inline-flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />{t('ui.back.to.irontrack.pulse')}
+            <ArrowLeft className="w-4 h-4" />
+            Back to IronTrack Pulse
           </Link>
         </div>
       </div>

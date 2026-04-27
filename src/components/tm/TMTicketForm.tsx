@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { t } from "@/lib/i18n";
-
 import {
   X, Plus, Trash2, Loader2, HardHat, Package, Truck,
 } from "lucide-react";
@@ -107,7 +105,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
 
   const handleSave = async () => {
     if (!description.trim()) {
-      setError(t('ui.description.is.required.763630'));
+      setError("Description is required.");
       return;
     }
     setSaving(true);
@@ -133,7 +131,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
         onCreated();
       }
     } catch {
-      setError(t('ui.network.error.please.try.again'));
+      setError("Network error. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -151,7 +149,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
         <div className="w-full max-w-2xl bg-[var(--bg-secondary)] rounded-2xl border border-[var(--border-primary)] overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
-            <h2 className="text-[color:var(--text-primary)] font-bold text-base">{t('ui.new.t.and.m.ticket')}</h2>
+            <h2 className="text-[color:var(--text-primary)] font-bold text-base">New T&amp;M Ticket</h2>
             <button
               onClick={onCancel}
               className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -164,7 +162,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             {/* Ticket info */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className={labelClass}>{t('ui.date')}</label>
+                <label className={labelClass}>Date</label>
                 <input
                   type="date"
                   value={date}
@@ -173,13 +171,13 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 />
               </div>
               <div>
-                <label className={labelClass}>{t('ui.sub.contact')}</label>
+                <label className={labelClass}>Sub / Contact</label>
                 <select
                   value={subContactId}
                   onChange={(e) => setSubContactId(e.target.value)}
                   className={inputClass}
                 >
-                  <option value="">{t('ui.none')}</option>
+                  <option value="">— None —</option>
                   {contacts.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}{c.company ? ` (${c.company})` : ""}
@@ -190,12 +188,12 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             </div>
 
             <div>
-              <label className={labelClass}>{t('ui.description')}</label>
+              <label className={labelClass}>Description *</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
-                placeholder={t('ui.brief.description.of.work.performed')}
+                placeholder="Brief description of work performed..."
                 className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
               />
             </div>
@@ -204,7 +202,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <HardHat size={16} className="text-[#F97316]" />
-                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.labor')}</h3>
+                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Labor</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(laborTotal)}</span>
               </div>
@@ -214,21 +212,21 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                   <div className="grid grid-cols-12 gap-2 items-start">
                     {/* Trade */}
                     <div className="col-span-12 sm:col-span-4">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.trade')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Trade</label>
                       <select
                         value={row.trade}
                         onChange={(e) => updateLabor(i, "trade", e.target.value)}
                         className={inputClass}
                       >
-                        <option value="">{t('ui.select')}</option>
-                        {TRADE_OPTIONS.map((item) => (
-                          <option key={item} value={item}>{item}</option>
+                        <option value="">Select...</option>
+                        {TRADE_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
                         ))}
                       </select>
                     </div>
                     {/* Workers */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.workers.b6ef3a')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Workers</label>
                       <input
                         type="number"
                         min={1}
@@ -239,7 +237,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Hours */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.hours')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Hours</label>
                       <input
                         type="number"
                         min={0}
@@ -251,7 +249,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Rate */}
                     <div className="col-span-4 sm:col-span-3">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.rate.hr')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Rate/hr</label>
                       <input
                         type="number"
                         min={0}
@@ -283,7 +281,8 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onClick={addLabor}
                 className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
-                <Plus size={13} />{t('ui.add.labor')}
+                <Plus size={13} />
+                Add Labor
               </button>
             </div>
 
@@ -291,7 +290,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Package size={16} className="text-[#F97316]" />
-                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.materials.2402ea')}</h3>
+                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Materials</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(materialTotal)}</span>
               </div>
@@ -301,18 +300,18 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                   <div className="grid grid-cols-12 gap-2 items-start">
                     {/* Item */}
                     <div className="col-span-12 sm:col-span-5">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.item')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Item</label>
                       <input
                         type="text"
                         value={row.item}
                         onChange={(e) => updateMaterial(i, "item", e.target.value)}
-                        placeholder={t('ui.material.description')}
+                        placeholder="Material description"
                         className={inputClass}
                       />
                     </div>
                     {/* Qty */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.qty')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Qty</label>
                       <input
                         type="number"
                         min={0}
@@ -324,7 +323,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Unit */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('production.unit')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Unit</label>
                       <select
                         value={row.unit}
                         onChange={(e) => updateMaterial(i, "unit", e.target.value)}
@@ -337,7 +336,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Unit cost */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.unit.cost')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Unit Cost</label>
                       <input
                         type="number"
                         min={0}
@@ -367,7 +366,8 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onClick={addMaterial}
                 className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
-                <Plus size={13} />{t('ui.add.material')}
+                <Plus size={13} />
+                Add Material
               </button>
             </div>
 
@@ -375,7 +375,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Truck size={16} className="text-[#F97316]" />
-                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{t('ui.equipment')}</h3>
+                <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Equipment</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(equipmentTotal)}</span>
               </div>
@@ -385,18 +385,18 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                   <div className="grid grid-cols-12 gap-2 items-start">
                     {/* Type */}
                     <div className="col-span-12 sm:col-span-5">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.equipment.type')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Equipment Type</label>
                       <input
                         type="text"
                         value={row.equipment_type}
                         onChange={(e) => updateEquipment(i, "equipment_type", e.target.value)}
-                        placeholder={t('ui.e.g.excavator.forklift')}
+                        placeholder="e.g. Excavator, Forklift..."
                         className={inputClass}
                       />
                     </div>
                     {/* Hours */}
                     <div className="col-span-4 sm:col-span-2">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.hours')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Hours</label>
                       <input
                         type="number"
                         min={0}
@@ -408,7 +408,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Rate */}
                     <div className="col-span-4 sm:col-span-3">
-                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">{t('ui.rate.hr')}</label>
+                      <label className="block text-[10px] text-[color:var(--text-muted)] mb-1">Rate/hr</label>
                       <input
                         type="number"
                         min={0}
@@ -438,25 +438,26 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onClick={addEquipment}
                 className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
-                <Plus size={13} />{t('ui.add.equipment')}
+                <Plus size={13} />
+                Add Equipment
               </button>
             </div>
 
             {/* Notes */}
             <div>
-              <label className={labelClass}>{t('ui.notes.optional')}</label>
+              <label className={labelClass}>Notes (optional)</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
-                placeholder={t('ui.any.additional.notes.7d5952')}
+                placeholder="Any additional notes..."
                 className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
               />
             </div>
 
             {/* Grand total */}
             <div className="flex items-center justify-between p-4 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
-              <span className="text-[color:var(--text-secondary)] font-medium text-sm">{t('ui.grand.total')}</span>
+              <span className="text-[color:var(--text-secondary)] font-medium text-sm">Grand Total</span>
               <span className="text-2xl font-bold text-[#F97316]">{fmtCurrency(grandTotal)}</span>
             </div>
 
@@ -469,7 +470,8 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
               <button
                 onClick={onCancel}
                 className="flex-1 py-3 px-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px]"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
               <button
                 onClick={handleSave}
@@ -477,7 +479,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 className="flex-1 py-3 px-4 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex items-center justify-center gap-2"
               >
                 {saving && <Loader2 size={15} className="animate-spin" />}
-                {saving ? t('ui.saving') : t('ui.save.ticket')}
+                {saving ? "Saving..." : "Save Ticket"}
               </button>
             </div>
           </div>

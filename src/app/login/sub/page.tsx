@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 function SubLoginForm() {
   const router = useRouter();
@@ -56,17 +55,19 @@ function SubLoginForm() {
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
-          <ArrowLeft className="w-4 h-4" />{t('ui.back.to.home')}
+          <ArrowLeft className="w-4 h-4" />
+          Back to home
         </Link>
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <img
             src="/irontrack-app-icon.svg"
-            alt={t('ui.irontrack')}
+            alt="IronTrack"
             className="h-10 w-auto mr-3"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>{t('ui.iron')}<span style={{ color: "#E85D1C" }}>{t('ui.track')}</span>
+          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
+            Iron<span style={{ color: "#E85D1C" }}>Track</span>
           </span>
         </Link>
 
@@ -77,9 +78,11 @@ function SubLoginForm() {
               <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>{t('ui.subcontractor')}
+              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
+                Subcontractor
               </h1>
-              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>{t('ui.sign.in.to.your.sub.account')}
+              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
+                Sign in to your sub account
               </p>
             </div>
           </div>
@@ -92,7 +95,8 @@ function SubLoginForm() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.email')}
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+                Email
               </label>
               <input
                 id="email"
@@ -111,7 +115,8 @@ function SubLoginForm() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>{t('ui.password')}
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+                Password
               </label>
               <div className="relative">
                 <input
@@ -147,28 +152,34 @@ function SubLoginForm() {
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />{t('ui.signing.in')}
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Signing in...
                 </>
               ) : (
-                t('ui.sign.in')
+                "Sign in"
               )}
             </button>
           </form>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.don.t.have.an.account')}{" "}
-              <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>{t('ui.sign.up')}
+            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
+              Don't have an account?{" "}
+              <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
+                Sign up
               </Link>
             </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>{t('ui.general.contractor.1629e4')}{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>{t('ui.sign.in.here')}
+            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
+              General Contractor?{" "}
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
+                Sign in here
               </Link>
             </p>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>{t('ui.2026.irontrack.development.llc')}
+        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>
+          © 2026 IronTrack Development LLC
         </p>
       </div>
     </div>

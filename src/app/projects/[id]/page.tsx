@@ -12,7 +12,6 @@ import ProjectNav from "@/components/navigation/ProjectNav";
 import { SupportButton } from "@/components/support-button";
 import NotificationBell from "@/components/NotificationBell";
 import { ProjectDataProvider } from "@/lib/ProjectDataContext";
-import { t } from "@/lib/i18n";
 
 // ---------------------------------------------------------------------------
 // Lazy-loaded tab components — only fetched when the user navigates to them
@@ -144,8 +143,9 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   if (!project) {
     return (
       <div className="p-8 text-center">
-        <p className="text-[color:var(--text-muted)] mb-4">{t('ui.project.not.found')}{" "}
-          <Link href="/dashboard" className="text-[#F97316]">{t('ui.go.back')}</Link>
+        <p className="text-[color:var(--text-muted)] mb-4">
+          Project not found.{" "}
+          <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
         </p>
         <SupportButton context="Project not found error" variant="inline" />
       </div>
@@ -178,7 +178,8 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               href="/dashboard"
               className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
             >
-              <ArrowLeft size={16} />{t('action.back')}
+              <ArrowLeft size={16} />
+              Back
             </Link>
             <div className="flex items-center gap-1.5 md:gap-3">
               <button
@@ -199,19 +200,20 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
                 className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
               >
                 <FileBarChart2 size={14} />
-                <span>{t('ui.weekly.summary')}</span>
+                <span>Weekly Summary</span>
               </Link>
               <Link
                 href={`/projects/${id}/report`}
                 className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
                 <ClipboardList size={14} />
-                <span className="hidden sm:inline">{t('ui.observe')}</span>
+                <span className="hidden sm:inline">Observe</span>
               </Link>
               <Link
                 href={`/upload?project=${id}`}
                 className="hidden md:flex px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
-              >{t('ui.upload.schedule')}
+              >
+                Upload Schedule
               </Link>
             </div>
           </div>

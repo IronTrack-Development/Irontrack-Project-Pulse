@@ -64,7 +64,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3" />
         <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=3" />
       </head>
-      <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden" suppressHydrationWarning>
+      <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden">
         <ManifestLoader />
         <ThemeProvider>
           {children}

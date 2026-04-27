@@ -6,7 +6,6 @@ import {
   ChevronRight, Plus, Clock, CheckCircle,
 } from "lucide-react";
 import CompanySetup from "./CompanySetup";
-import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -27,9 +26,9 @@ interface DashboardData {
 }
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
-  checked_in: <span title={t('ui.checked.in')}>✅</span>,
-  not_yet: <span title={t('ui.not.yet')}>⏳</span>,
-  off: <span title={t('ui.off')}>🔴</span>,
+  checked_in: <span title="Checked in">✅</span>,
+  not_yet: <span title="Not yet">⏳</span>,
+  off: <span title="Off">🔴</span>,
 };
 
 export default function SubOpsDashboard({ projectId }: Props) {
@@ -101,7 +100,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
             <HardHat size={20} className="text-[#F97316]" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{company?.company_name ?? t('nav.subOps')}</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{company?.company_name ?? "Sub Ops"}</h2>
             {company?.primary_trade && (
               <p className="text-xs text-[color:var(--text-muted)] capitalize">{company.primary_trade.replace(/_/g, " ")}</p>
             )}
@@ -117,25 +116,26 @@ export default function SubOpsDashboard({ projectId }: Props) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Send size={14} className="text-[#F97316]" />
-              <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{t('ui.today.s.dispatches')}</span>
+              <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Today&apos;s Dispatches</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-[color:var(--text-primary)]">{dispatches.total}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)]">{t('ui.sent.35f49d')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Sent</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-green-400">{dispatches.acknowledged}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)]">{t('dispatch.acknowledged')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Acknowledged</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-orange-400">{dispatches.pending}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)]">{t('status.pending')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Pending</p>
             </div>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
-            <Plus size={14} />{t('ui.create.dispatch')}
+            <Plus size={14} />
+            Create Dispatch
           </button>
         </div>
 
@@ -143,15 +143,15 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <AlertTriangle size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{t('ui.open.blockers')}</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Open Blockers</span>
           </div>
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{blockers.open_count}</p>
           {blockers.open_count > 0 ? (
             <p className="text-xs text-orange-400">
-              {blockers.open_count}{t('ui.blocker')}{blockers.open_count !== 1 ? t('ui.s') : ""}{t('ui.need.attention')}
+              {blockers.open_count} blocker{blockers.open_count !== 1 ? "s" : ""} need attention
             </p>
           ) : (
-            <p className="text-xs text-green-400">{t('ui.all.clear.no.open.blockers.3a1718')}</p>
+            <p className="text-xs text-green-400">All clear — no open blockers</p>
           )}
         </div>
 
@@ -159,16 +159,16 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <TrendingUp size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{t('ui.this.week.s.production')}</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">This Week&apos;s Production</span>
           </div>
           <div className="flex items-center gap-4">
             <div>
               <p className="text-2xl font-bold text-[color:var(--text-primary)]">{production.total_crew_hours}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)]">{t('ui.crew.hours.5131d4')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Crew Hours</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-[color:var(--text-primary)]">{production.total_entries}</p>
-              <p className="text-[10px] text-[color:var(--text-muted)]">{t('ui.entries')}</p>
+              <p className="text-[10px] text-[color:var(--text-muted)]">Entries</p>
             </div>
           </div>
         </div>
@@ -177,11 +177,11 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <FileText size={14} className="text-[#F97316]" />
-            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{t('ui.sop.compliance')}</span>
+            <span className="text-xs font-semibold text-[color:var(--text-secondary)]">SOP Compliance</span>
           </div>
           <p className="text-sm text-[color:var(--text-secondary)]">
-            <span className="text-[color:var(--text-primary)] font-bold">{sops.compliant_foremen}</span>{t('ui.of')}{" "}
-            <span className="text-[color:var(--text-primary)] font-bold">{sops.total_foremen}</span>{t('ui.foremen.have.acknowledged.all.required.sops')}
+            <span className="text-[color:var(--text-primary)] font-bold">{sops.compliant_foremen}</span> of{" "}
+            <span className="text-[color:var(--text-primary)] font-bold">{sops.total_foremen}</span> foremen have acknowledged all required SOPs
           </p>
         </div>
       </div>
@@ -191,16 +191,16 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Users size={14} className="text-[#F97316]" />
-            <span className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.foreman.status')}</span>
+            <span className="text-sm font-semibold text-[color:var(--text-primary)]">Foreman Status</span>
           </div>
-          <span className="text-xs text-[color:var(--text-muted)]">{foremen.length}{t('ui.foremen.7bd3b0')}</span>
+          <span className="text-xs text-[color:var(--text-muted)]">{foremen.length} foremen</span>
         </div>
 
         {foremen.length === 0 ? (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6 text-center">
             <Users size={24} className="mx-auto text-gray-600 mb-2" />
-            <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.no.foremen.added.yet')}</p>
-            <p className="text-xs text-gray-600 mt-1">{t('ui.add.foremen.from.the.foremen.tab.to.get.started')}</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">No foremen added yet</p>
+            <p className="text-xs text-gray-600 mt-1">Add foremen from the Foremen tab to get started</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">

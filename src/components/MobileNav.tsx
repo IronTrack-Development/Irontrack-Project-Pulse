@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, FolderOpen, Upload, Home, ClipboardList } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 const navItems = [
-  { href: "/dashboard", label: t('ui.dashboard'), icon: LayoutDashboard },
-  { href: "/projects", label: t('ui.projects'), icon: FolderOpen },
-  { href: "/upload", label: t('ui.upload'), icon: Upload },
-  { href: "/", label: t('ui.home'), icon: Home },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/projects", label: "Projects", icon: FolderOpen },
+  { href: "/upload", label: "Upload", icon: Upload },
+  { href: "/", label: "Home", icon: Home },
 ];
 
 export default function MobileNav() {
@@ -28,7 +27,7 @@ export default function MobileNav() {
   const items = [
     ...navItems,
     ...(projectId && !isOnReportFlow
-      ? [{ href: `/projects/${projectId}/report`, label: t('ui.report'), icon: ClipboardList }]
+      ? [{ href: `/projects/${projectId}/report`, label: "Report", icon: ClipboardList }]
       : []),
   ];
 

@@ -7,38 +7,37 @@ import {
   Check, RefreshCw,
 } from "lucide-react";
 import type { DailyLogWeather, DailyLogCrewEntry, WeatherCondition, WeatherImpact } from "@/types";
-import { t } from "@/lib/i18n";
 
 /* ── Weather code → label + icon mapping ── */
 function weatherCodeToInfo(code: number): { label: string; emoji: string } {
-  if (code === 0) return { label: t('ui.clear.sky'), emoji: "☀️" };
-  if (code <= 3) return { label: t('ui.partly.cloudy'), emoji: "⛅" };
-  if (code <= 49) return { label: t('ui.foggy'), emoji: "🌫️" };
-  if (code <= 59) return { label: t('ui.drizzle'), emoji: "🌦️" };
-  if (code <= 69) return { label: t('ui.rain'), emoji: "🌧️" };
-  if (code <= 79) return { label: t('ui.snow'), emoji: "❄️" };
-  if (code <= 84) return { label: t('ui.rain.showers'), emoji: "🌧️" };
-  if (code <= 86) return { label: t('ui.snow.showers'), emoji: "🌨️" };
-  if (code <= 99) return { label: t('ui.thunderstorm'), emoji: "⛈️" };
-  return { label: t('ui.unknown'), emoji: "❓" };
+  if (code === 0) return { label: "Clear Sky", emoji: "☀️" };
+  if (code <= 3) return { label: "Partly Cloudy", emoji: "⛅" };
+  if (code <= 49) return { label: "Foggy", emoji: "🌫️" };
+  if (code <= 59) return { label: "Drizzle", emoji: "🌦️" };
+  if (code <= 69) return { label: "Rain", emoji: "🌧️" };
+  if (code <= 79) return { label: "Snow", emoji: "❄️" };
+  if (code <= 84) return { label: "Rain Showers", emoji: "🌧️" };
+  if (code <= 86) return { label: "Snow Showers", emoji: "🌨️" };
+  if (code <= 99) return { label: "Thunderstorm", emoji: "⛈️" };
+  return { label: "Unknown", emoji: "❓" };
 }
 
-const CONDITION_CHIPS: { label: WeatherCondition; labelKey: string; icon: typeof Sun }[] = [
-  { label: "Sunny", labelKey: "ui.sunny", icon: Sun },
-  { label: "Partly Cloudy", labelKey: "ui.partly.cloudy", icon: Cloud },
-  { label: "Overcast", labelKey: "ui.overcast", icon: Cloud },
-  { label: "Rain", labelKey: "ui.rain", icon: CloudRain },
-  { label: "Storm", labelKey: "ui.storm", icon: CloudLightning },
-  { label: "High Wind", labelKey: "ui.high.wind", icon: Wind },
-  { label: "Freeze", labelKey: "ui.freeze", icon: Snowflake },
-  { label: "Heat Advisory", labelKey: "ui.heat.advisory", icon: AlertTriangle },
+const CONDITION_CHIPS: { label: WeatherCondition; icon: typeof Sun }[] = [
+  { label: "Sunny", icon: Sun },
+  { label: "Partly Cloudy", icon: Cloud },
+  { label: "Overcast", icon: Cloud },
+  { label: "Rain", icon: CloudRain },
+  { label: "Storm", icon: CloudLightning },
+  { label: "High Wind", icon: Wind },
+  { label: "Freeze", icon: Snowflake },
+  { label: "Heat Advisory", icon: AlertTriangle },
 ];
 
 const IMPACT_BUTTONS: { value: WeatherImpact; label: string; emoji: string }[] = [
-  { value: "none", label: t('ui.no.impact'), emoji: "☀️" },
-  { value: "minor_slowdown", label: t('ui.slowed.us'), emoji: "🌧️" },
-  { value: "partial_stop", label: t('ui.partial.stop'), emoji: "⛈️" },
-  { value: "full_stop", label: t('ui.full.stop'), emoji: "🚫" },
+  { value: "none", label: "No Impact", emoji: "☀️" },
+  { value: "minor_slowdown", label: "Slowed Us", emoji: "🌧️" },
+  { value: "partial_stop", label: "Partial Stop", emoji: "⛈️" },
+  { value: "full_stop", label: "Full Stop", emoji: "🚫" },
 ];
 
 function impactColor(value: WeatherImpact, active: boolean): string {
@@ -223,18 +222,19 @@ export default function SnapshotScreen({
       {/* ─── WEATHER SECTION ─── */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <Thermometer size={16} className="text-[#F97316]" />{t('ui.weather')}
+          <Thermometer size={16} className="text-[#F97316]" />
+          Weather
         </h3>
 
         {weatherLoading ? (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 flex items-center justify-center gap-3">
             <RefreshCw size={18} className="text-[#F97316] animate-spin" />
-            <span className="text-sm text-[color:var(--text-secondary)]">{t('ui.fetching.weather')}</span>
+            <span className="text-sm text-[color:var(--text-secondary)]">Fetching weather…</span>
           </div>
         ) : weatherError ? (
           <div className="bg-[var(--bg-secondary)] border border-[#EAB308]/30 rounded-2xl p-4 mb-3">
-            <p className="text-sm text-[#EAB308] mb-1">{t('ui.weather.unavailable.enter.manually')}</p>
-            <p className="text-xs text-[color:var(--text-muted)]">{t('ui.could.not.reach.weather.service')}</p>
+            <p className="text-sm text-[#EAB308] mb-1">Weather unavailable — enter manually</p>
+            <p className="text-xs text-[color:var(--text-muted)]">Could not reach weather service</p>
           </div>
         ) : (
           <>
@@ -249,12 +249,12 @@ export default function SnapshotScreen({
                 <span className="text-4xl">{weatherInfo?.emoji || "🌤️"}</span>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-[color:var(--text-primary)]">
-                    {weather.current_temp ?? "--"}{t('ui.f')}
+                    {weather.current_temp ?? "--"}°F
                   </div>
                   <div className="text-sm text-[color:var(--text-secondary)]">
-                    {weatherInfo?.label || t('ui.conditions.unknown')}
+                    {weatherInfo?.label || "Conditions unknown"}
                     {weather.wind_speed != null && (
-                      <span className="text-[color:var(--text-muted)]"> · {weather.wind_speed}{t('ui.mph.wind')}</span>
+                      <span className="text-[color:var(--text-muted)]"> · {weather.wind_speed} mph wind</span>
                     )}
                   </div>
                 </div>
@@ -265,7 +265,8 @@ export default function SnapshotScreen({
             </button>
 
             {usingDefaultLocation && (
-              <p className="text-xs text-[#EAB308]/70 mt-1.5 ml-1">{t('ui.using.phoenix.weather.set.project.location.for.accuracy')}
+              <p className="text-xs text-[#EAB308]/70 mt-1.5 ml-1">
+                📍 Using Phoenix weather — set project location for accuracy
               </p>
             )}
 
@@ -274,7 +275,7 @@ export default function SnapshotScreen({
               <div className="mt-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.high.f')}</label>
+                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">High °F</label>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -286,7 +287,7 @@ export default function SnapshotScreen({
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.low.f')}</label>
+                    <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Low °F</label>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -300,9 +301,9 @@ export default function SnapshotScreen({
                 </div>
                 {/* Condition chips */}
                 <div>
-                  <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">{t('ui.conditions')}</label>
+                  <label className="text-xs text-[color:var(--text-muted)] mb-1.5 block">Conditions</label>
                   <div className="flex flex-wrap gap-2">
-                    {CONDITION_CHIPS.map(({ label, labelKey, icon: Icon }) => {
+                    {CONDITION_CHIPS.map(({ label, icon: Icon }) => {
                       const active = (weather.conditions || []).includes(label);
                       return (
                         <button
@@ -317,7 +318,7 @@ export default function SnapshotScreen({
                             }`}
                         >
                           <Icon size={14} />
-                          {t(labelKey)}
+                          {label}
                         </button>
                       );
                     })}
@@ -336,13 +337,15 @@ export default function SnapshotScreen({
                   active:scale-[0.98] transition-all min-h-[48px]
                   flex items-center justify-center gap-2"
               >
-                <Check size={18} />{t('ui.looks.right')}
+                <Check size={18} />
+                Looks right ✓
               </button>
             )}
             {weather.confirmed && (
               <div className="mt-3 w-full py-2.5 rounded-xl bg-[#22C55E]/10 border border-[#22C55E]/20
                 text-[#22C55E]/70 text-sm text-center flex items-center justify-center gap-2">
-                <Check size={16} />{t('ui.weather.confirmed')}
+                <Check size={16} />
+                Weather confirmed
               </div>
             )}
           </>
@@ -350,7 +353,7 @@ export default function SnapshotScreen({
 
         {/* Weather Impact buttons — always visible */}
         <div className="mt-4">
-          <label className="text-xs text-[color:var(--text-muted)] mb-2 block">{t('ui.weather.impact.on.work')}</label>
+          <label className="text-xs text-[color:var(--text-muted)] mb-2 block">Weather Impact on Work</label>
           <div className="grid grid-cols-4 gap-2">
             {IMPACT_BUTTONS.map(({ value, label, emoji }) => {
               const active = weather.impact === value;
@@ -376,7 +379,8 @@ export default function SnapshotScreen({
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Users size={16} className="text-[#3B82F6]" />{t('ui.crew.on.site')}
+            <Users size={16} className="text-[#3B82F6]" />
+            Crew on Site
           </h3>
         </div>
 
@@ -400,7 +404,7 @@ export default function SnapshotScreen({
 
               {/* Trade + Company */}
               <div className="mb-3 pr-8">
-                <div className="text-sm font-bold text-[color:var(--text-primary)]">{entry.trade || t('ui.untitled.trade')}</div>
+                <div className="text-sm font-bold text-[color:var(--text-primary)]">{entry.trade || "Untitled Trade"}</div>
                 {entry.company && (
                   <div className="text-xs text-[color:var(--text-muted)]">{entry.company}</div>
                 )}
@@ -409,12 +413,12 @@ export default function SnapshotScreen({
               {/* Steppers row */}
               <div className="flex items-center justify-around">
                 <Stepper
-                  label={t('ui.headcount')}
+                  label="Headcount"
                   value={entry.headcount || 0}
                   onChange={(v) => updateCrewEntry(i, "headcount", v)}
                 />
                 <Stepper
-                  label={t('ui.hours')}
+                  label="Hours"
                   value={entry.hours || 0}
                   onChange={(v) => updateCrewEntry(i, "hours", v)}
                 />
@@ -430,7 +434,7 @@ export default function SnapshotScreen({
               type="text"
               value={newTrade}
               onChange={(e) => setNewTrade(e.target.value)}
-              placeholder={t('ui.trade.name.e.g.electrical')}
+              placeholder="Trade name (e.g. Electrical)"
               autoFocus
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
@@ -439,7 +443,7 @@ export default function SnapshotScreen({
               type="text"
               value={newCompany}
               onChange={(e) => setNewCompany(e.target.value)}
-              placeholder={t('ui.company.name.optional')}
+              placeholder="Company name (optional)"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
             />
@@ -450,14 +454,16 @@ export default function SnapshotScreen({
                 disabled={!newTrade.trim()}
                 className="flex-1 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-medium
                   hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed transition-all min-h-[44px]"
-              >{t('action.add')}
+              >
+                Add
               </button>
               <button
                 type="button"
                 onClick={() => { setShowAddTrade(false); setNewTrade(""); setNewCompany(""); }}
                 className="flex-1 py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-sm
                   hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-              >{t('action.cancel')}
+              >
+                Cancel
               </button>
             </div>
           </div>
@@ -467,7 +473,8 @@ export default function SnapshotScreen({
             onClick={() => setShowAddTrade(true)}
             className="mt-3 w-full py-3 rounded-xl border border-dashed border-[var(--border-primary)] text-sm
               text-[color:var(--text-muted)] hover:text-[#F97316] hover:border-[#F97316]/30 transition-colors min-h-[44px]"
-          >{t('ui.add.trade')}
+          >
+            + Add Trade
           </button>
         )}
 
@@ -476,11 +483,11 @@ export default function SnapshotScreen({
           <div className="mt-3 flex items-center justify-center gap-6 py-2.5 rounded-xl
             bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-sm">
             <span className="text-[color:var(--text-secondary)]">
-              <span className="font-bold text-[color:var(--text-primary)]">{totalHeadcount}</span>{t('ui.workers.f74e09')}
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHeadcount}</span> workers
             </span>
             <span className="text-[#1F1F25]">|</span>
             <span className="text-[color:var(--text-secondary)]">
-              <span className="font-bold text-[color:var(--text-primary)]">{totalHours.toLocaleString()}</span>{t('ui.crew.hours.e2ddc1')}
+              <span className="font-bold text-[color:var(--text-primary)]">{totalHours.toLocaleString()}</span> crew-hours
             </span>
           </div>
         )}

@@ -11,7 +11,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import MarkupCanvas, { type MarkupAction } from "./MarkupCanvas";
-import { t } from "@/lib/i18n";
 
 interface MarkupWrapperProps {
   children: React.ReactNode;
@@ -100,7 +99,7 @@ export default function MarkupWrapper({
         <div className="fixed inset-0 z-[9998] bg-black/60 flex items-center justify-center">
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl px-6 py-5 flex items-center gap-3">
             <div className="w-5 h-5 rounded-full border-2 border-[#F97316] border-t-transparent animate-spin" />
-            <span className="text-[color:var(--text-primary)] text-sm font-semibold">{t('ui.preparing.markup')}</span>
+            <span className="text-[color:var(--text-primary)] text-sm font-semibold">Preparing markup…</span>
           </div>
         </div>
       )}

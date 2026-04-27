@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Camera, Pencil, X, Loader2 } from "lucide-react";
 import PhotoMarkup from "@/components/markup/PhotoMarkup";
 import VoiceTextArea from "@/components/daily-log/VoiceTextArea";
-import { t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -27,10 +26,10 @@ const TRADES = [
 ];
 
 const PRIORITIES = [
-  { value: "life_safety", label: t('ui.life.safety'), color: "bg-red-600 text-[color:var(--text-primary)]" },
-  { value: "code", label: t('ui.code'), color: "bg-orange-500 text-[color:var(--text-primary)]" },
-  { value: "standard", label: t('ui.standard'), color: "bg-gray-600 text-[color:var(--text-primary)]" },
-  { value: "cosmetic", label: t('ui.cosmetic'), color: "bg-blue-500 text-[color:var(--text-primary)]" },
+  { value: "life_safety", label: "Life Safety", color: "bg-red-600 text-[color:var(--text-primary)]" },
+  { value: "code", label: "Code", color: "bg-orange-500 text-[color:var(--text-primary)]" },
+  { value: "standard", label: "Standard", color: "bg-gray-600 text-[color:var(--text-primary)]" },
+  { value: "cosmetic", label: "Cosmetic", color: "bg-blue-500 text-[color:var(--text-primary)]" },
 ];
 
 // Persistent last-used values across form resets (kept in module scope)
@@ -76,7 +75,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
   };
 
   const handleSave = async (saveAndAdd: boolean) => {
-    if (!description.trim()) { setError(t('ui.description.is.required')); return; }
+    if (!description.trim()) { setError("Description is required"); return; }
     setSaving(true);
     setError(null);
 
@@ -144,7 +143,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
       <div className="w-full sm:max-w-lg bg-[var(--bg-secondary)] rounded-t-3xl sm:rounded-3xl border border-[var(--border-primary)] overflow-y-auto max-h-[95dvh]">
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-primary)]">
-          <h2 className="text-base font-bold text-[color:var(--text-primary)]">{t('ui.add.punch.item')}</h2>
+          <h2 className="text-base font-bold text-[color:var(--text-primary)]">Add Punch Item</h2>
           <button
             onClick={onCancel}
             className="p-2 rounded-xl text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -166,12 +165,12 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
           {photoPreview ? (
             <div className="relative rounded-2xl overflow-hidden aspect-video w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photoPreview} alt={t('ui.issue.photo')} className="w-full h-full object-cover" />
+              <img src={photoPreview} alt="Issue photo" className="w-full h-full object-cover" />
               {/* Markup button */}
               <button
                 onClick={() => setShowPhotoMarkup(true)}
                 className="absolute top-2 left-2 p-2 bg-black/60 hover:bg-purple-600/80 rounded-full text-[color:var(--text-primary)] transition-colors"
-                title={t('ui.annotate.photo')}
+                title="Annotate photo"
               >
                 <Pencil size={14} />
               </button>
@@ -190,17 +189,17 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 hover:bg-[#F97316]/10 transition-all min-h-[96px] active:scale-[0.98]"
             >
               <Camera size={28} />
-              <span className="text-sm font-semibold">{t('ui.take.photo')}</span>
+              <span className="text-sm font-semibold">Take Photo</span>
             </button>
           )}
 
           {/* Description */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">{t('ui.description')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Description *</label>
             <VoiceTextArea
               value={description}
               onChange={setDescription}
-              placeholder={t('ui.describe.the.deficiency')}
+              placeholder="Describe the deficiency..."
               rows={2}
             />
           </div>
@@ -208,7 +207,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
           {/* Location: Building / Floor / Room */}
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.building')}</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Building</label>
               <input
                 value={building}
                 onChange={(e) => setBuilding(e.target.value)}
@@ -217,7 +216,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               />
             </div>
             <div>
-              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.floor')}</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Floor</label>
               <input
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
@@ -226,7 +225,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               />
             </div>
             <div>
-              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">{t('ui.room')}</label>
+              <label className="text-xs text-[color:var(--text-secondary)] mb-1 block">Room</label>
               <input
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
@@ -238,28 +237,28 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Trade */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">{t('ui.trade')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Trade</label>
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
-              <option value="">{t('ui.select.trade')}</option>
-              {TRADES.map((item) => (
-                <option key={item} value={item}>{item}</option>
+              <option value="">Select trade...</option>
+              {TRADES.map((t) => (
+                <option key={t} value={t}>{t}</option>
               ))}
             </select>
           </div>
 
           {/* Assigned To */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">{t('ui.assign.to')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Assign To</label>
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
-              <option value="">{t('ui.unassigned')}</option>
+              <option value="">Unassigned</option>
               {contacts.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}{c.company ? ` — ${c.company}` : ""}</option>
               ))}
@@ -268,7 +267,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Priority chips */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">{t('ui.priority')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Priority</label>
             <div className="flex gap-2 flex-wrap">
               {PRIORITIES.map((p) => (
                 <button
@@ -288,7 +287,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
 
           {/* Due date */}
           <div>
-            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">{t('ui.due.date.optional')}</label>
+            <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block font-medium">Due Date (optional)</label>
             <input
               type="date"
               value={dueDate}
@@ -309,7 +308,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               className="flex-1 py-3.5 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-primary)] text-sm font-semibold
                 hover:bg-[var(--bg-hover)] transition-all min-h-[52px] disabled:opacity-50"
             >
-              {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : t('action.save')}
+              {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save"}
             </button>
             <button
               onClick={() => handleSave(true)}
@@ -317,7 +316,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               className="flex-[2] py-3.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-bold
                 hover:bg-[#ea6c10] transition-all min-h-[52px] disabled:opacity-50 active:scale-[0.98]"
             >
-              {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : t('ui.save.and.add.another')}
+              {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save & Add Another"}
             </button>
           </div>
         </div>

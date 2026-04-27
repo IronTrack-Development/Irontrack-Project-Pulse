@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { X, Settings, Save } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 interface SafetySettingsProps {
   projectId: string;
@@ -43,7 +42,8 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Settings size={16} className="text-[#F97316]" />{t('ui.safety.settings')}
+            <Settings size={16} className="text-[#F97316]" />
+            Safety Settings
           </h3>
           <button
             onClick={onClose}
@@ -56,30 +56,34 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         {/* Body */}
         <div className="p-4 space-y-4">
           <div>
-            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.company.name.8599f5')}
+            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+              Company Name
             </label>
             <input
               type="text"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              placeholder={t('ui.your.company.name.for.pdf.headers')}
+              placeholder="Your company name (for PDF headers)"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
-            <p className="text-[10px] text-gray-600 mt-1">{t('ui.used.in.exported.pdf.headers')}
+            <p className="text-[10px] text-gray-600 mt-1">
+              Used in exported PDF headers
             </p>
           </div>
 
           <div>
-            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.default.presenter')}
+            <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
+              Default Presenter
             </label>
             <input
               type="text"
               value={defaultPresenter}
               onChange={(e) => setDefaultPresenter(e.target.value)}
-              placeholder={t('ui.auto.fill.presenter.name.on.new.talks')}
+              placeholder="Auto-fill presenter name on new talks"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
-            <p className="text-[10px] text-gray-600 mt-1">{t('ui.pre.fills.the.presenter.field.when.creating.new.talks')}
+            <p className="text-[10px] text-gray-600 mt-1">
+              Pre-fills the presenter field when creating new talks
             </p>
           </div>
         </div>
@@ -89,13 +93,15 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
           <button
             onClick={onClose}
             className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
-          >{t('action.cancel')}
+          >
+            Cancel
           </button>
           <button
             onClick={handleSave}
             className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
           >
-            <Save size={14} />{t('ui.save.settings')}
+            <Save size={14} />
+            Save Settings
           </button>
         </div>
       </div>

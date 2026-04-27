@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import ProgressUpdateModal from "@/components/ProgressUpdateModal";
 import type { ParsedActivity, ScheduleSnapshot } from "@/types";
-import { t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -131,7 +130,7 @@ export default function ReforecastTab({ projectId }: Props) {
         } else {
           const json = await res.json();
           if (json.service_required) {
-            alert(t('ui.mspdi.export.service.not.configured.yet.the.reforecast.data.is'));
+            alert("MSPDI export service not configured yet. The reforecast data is saved — export will work once the service is deployed.");
           }
         }
       }
@@ -169,7 +168,7 @@ export default function ReforecastTab({ projectId }: Props) {
   if (!data) {
     return (
       <div className="text-center py-16 text-[color:var(--text-muted)]">
-        <p>{t('ui.no.schedule.data.available.upload.a.schedule.first')}</p>
+        <p>No schedule data available. Upload a schedule first.</p>
       </div>
     );
   }
@@ -182,12 +181,12 @@ export default function ReforecastTab({ projectId }: Props) {
 
   // Critical path tasks
   const criticalTasks = (data.tasks || []).filter(
-    (task: any) => task.is_critical && task.status !== "complete"
+    (t: any) => t.is_critical && t.status !== "complete"
   );
 
   // In-progress tasks (for progress update)
   const inProgressTasks = (data.tasks || []).filter(
-    (task: any) => task.status === "in_progress" || task.status === "not_started"
+    (t: any) => t.status === "in_progress" || t.status === "not_started"
   );
 
   return (
@@ -196,9 +195,11 @@ export default function ReforecastTab({ projectId }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-[color:var(--text-primary)] font-bold text-lg flex items-center gap-2">
-            <TrendingUp size={18} className="text-[#F97316]" />{t('ui.schedule.reforecast')}
+            <TrendingUp size={18} className="text-[#F97316]" />
+            Schedule Reforecast
           </h2>
-          <p className="text-[color:var(--text-muted)] text-sm mt-0.5">{t('ui.deterministic.cpm.engine.zero.ai')}
+          <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
+            Deterministic CPM engine — zero AI
           </p>
         </div>
         <div className="flex gap-2">
@@ -206,7 +207,8 @@ export default function ReforecastTab({ projectId }: Props) {
             onClick={fetchSnapshots}
             className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
           >
-            <History size={14} />{t('ui.history')}
+            <History size={14} />
+            History
           </button>
           <button
             onClick={handleExport}
@@ -214,7 +216,7 @@ export default function ReforecastTab({ projectId }: Props) {
             className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors disabled:opacity-40"
           >
             <Download size={14} />
-            {exporting ? t('ui.exporting') : t('ui.export.mspdi')}
+            {exporting ? "Exporting…" : "Export MSPDI"}
           </button>
           <button
             onClick={handleRecalculate}
@@ -222,7 +224,7 @@ export default function ReforecastTab({ projectId }: Props) {
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-60"
           >
             <RefreshCw size={14} className={recalculating ? "animate-spin" : ""} />
-            {recalculating ? t('ui.recalculating') : t('ui.reforecast')}
+            {recalculating ? "Recalculating…" : "Reforecast"}
           </button>
         </div>
       </div>
@@ -230,7 +232,7 @@ export default function ReforecastTab({ projectId }: Props) {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.completion')}</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Completion</div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)]">{stats.avg_completion}%</div>
           <div className="mt-1.5 h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[#F97316] to-[#22C55E] rounded-full" style={{ width: `${stats.avg_completion}%` }} />
@@ -238,29 +240,31 @@ export default function ReforecastTab({ projectId }: Props) {
         </div>
 
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.forecast.delta')}</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Forecast Delta</div>
           <div className="text-2xl font-bold flex items-center gap-1" style={{ color: deltaColor(delta) }}>
             {delta > 0 ? <ArrowUpRight size={20} /> : delta < 0 ? <ArrowDownRight size={20} /> : <Minus size={16} />}
             {deltaLabel(delta)}
           </div>
-          <div className="text-[10px] text-gray-600 mt-1">{t('ui.finish')} {fmt(data.forecast_finish_date)}
+          <div className="text-[10px] text-gray-600 mt-1">
+            Finish: {fmt(data.forecast_finish_date)}
           </div>
         </div>
 
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.critical.path.ca1e55')}</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Critical Path</div>
           <div className="text-2xl font-bold text-[#EF4444]">{stats.critical_activities}</div>
-          <div className="text-[10px] text-gray-600 mt-1">{t('ui.of')} {stats.total_activities}{t('ui.total.tasks')}
+          <div className="text-[10px] text-gray-600 mt-1">
+            of {stats.total_activities} total tasks
           </div>
         </div>
 
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
-          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('ui.at.risk')}</div>
+          <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">At Risk</div>
           <div className="text-2xl font-bold" style={{ color: stats.at_risk_activities > 0 ? "#EAB308" : "#22C55E" }}>
             {stats.at_risk_activities}
           </div>
           <div className="text-[10px] text-gray-600 mt-1">
-            {stats.complete_activities}{t('ui.complete.395fc9')} {stats.in_progress_activities}{t('ui.in.progress.d6e91b')}
+            {stats.complete_activities} complete / {stats.in_progress_activities} in progress
           </div>
         </div>
       </div>
@@ -274,7 +278,7 @@ export default function ReforecastTab({ projectId }: Props) {
           >
             <div className="flex items-center gap-2">
               <AlertTriangle size={14} className="text-[#EAB308]" />
-              <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.schedule.impacts')}</span>
+              <span className="text-sm font-bold text-[color:var(--text-primary)]">Schedule Impacts</span>
               <span className="text-[10px] bg-[#EAB308]/15 text-[#EAB308] px-2 py-0.5 rounded-full font-bold">{impacts.length}</span>
             </div>
             {showImpacts ? <ChevronUp size={14} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={14} className="text-[color:var(--text-muted)]" />}
@@ -286,7 +290,7 @@ export default function ReforecastTab({ projectId }: Props) {
                   <div className="text-xs font-bold">{impact.task_name}</div>
                   <div className="text-[11px] mt-0.5 opacity-80">{impact.description}</div>
                   {impact.delta_days > 0 && (
-                    <div className="text-[10px] mt-1 font-semibold">+{impact.delta_days}{t('ui.day')}{impact.delta_days !== 1 ? t('ui.s') : ""}</div>
+                    <div className="text-[10px] mt-1 font-semibold">+{impact.delta_days} day{impact.delta_days !== 1 ? "s" : ""}</div>
                   )}
                 </div>
               ))}
@@ -300,7 +304,7 @@ export default function ReforecastTab({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
           <div className="flex items-center gap-2 px-4 py-3">
             <Shield size={14} className="text-[#EF4444]" />
-            <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.risk.flags')}</span>
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">Risk Flags</span>
             <span className="text-[10px] bg-[#EF4444]/15 text-[#EF4444] px-2 py-0.5 rounded-full font-bold">{risks.length}</span>
           </div>
           <div className="px-4 pb-4 space-y-2">
@@ -323,7 +327,7 @@ export default function ReforecastTab({ projectId }: Props) {
           >
             <div className="flex items-center gap-2">
               <Zap size={14} className="text-[#F97316]" />
-              <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.recovery.actions')}</span>
+              <span className="text-sm font-bold text-[color:var(--text-primary)]">Recovery Actions</span>
               <span className="text-[10px] bg-[#F97316]/15 text-[#F97316] px-2 py-0.5 rounded-full font-bold">{recoveryActions.length}</span>
             </div>
             {showRecovery ? <ChevronUp size={14} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={14} className="text-[color:var(--text-muted)]" />}
@@ -335,7 +339,7 @@ export default function ReforecastTab({ projectId }: Props) {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#F97316] bg-[#F97316]/15 px-2 py-0.5 rounded uppercase">{action.category}</span>
                     {action.potential_days_recovered > 0 && (
-                      <span className="text-[10px] text-[#22C55E] font-semibold">~{action.potential_days_recovered}{t('ui.d.recovery')}</span>
+                      <span className="text-[10px] text-[#22C55E] font-semibold">~{action.potential_days_recovered}d recovery</span>
                     )}
                   </div>
                   <div className="text-xs text-[color:var(--text-secondary)]">{action.description}</div>
@@ -354,7 +358,7 @@ export default function ReforecastTab({ projectId }: Props) {
         >
           <div className="flex items-center gap-2">
             <Target size={14} className="text-[#EF4444]" />
-            <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.critical.path.ca1e55')}</span>
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">Critical Path</span>
             <span className="text-[10px] bg-[#EF4444]/15 text-[#EF4444] px-2 py-0.5 rounded-full font-bold">{criticalTasks.length}</span>
           </div>
           {showCritical ? <ChevronUp size={14} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={14} className="text-[color:var(--text-muted)]" />}
@@ -362,7 +366,8 @@ export default function ReforecastTab({ projectId }: Props) {
         {showCritical && (
           <div className="px-4 pb-4 space-y-2">
             {criticalTasks.length === 0 ? (
-              <div className="text-xs text-gray-600 py-3 text-center">{t('ui.no.critical.tasks.found.run.a.reforecast.to.calculate.the')}
+              <div className="text-xs text-gray-600 py-3 text-center">
+                No critical tasks found. Run a reforecast to calculate the critical path.
               </div>
             ) : (
               criticalTasks.map((task: any) => (
@@ -380,7 +385,7 @@ export default function ReforecastTab({ projectId }: Props) {
                           {fmtShort(task.forecast_start || task.start_date)} → {fmtShort(task.forecast_finish || task.finish_date)}
                         </span>
                         {task.remaining_duration !== null && (
-                          <span className="text-[10px] text-[color:var(--text-muted)]">{task.remaining_duration}{t('ui.d.remaining')}</span>
+                          <span className="text-[10px] text-[color:var(--text-muted)]">{task.remaining_duration}d remaining</span>
                         )}
                       </div>
                     </div>
@@ -388,7 +393,7 @@ export default function ReforecastTab({ projectId }: Props) {
                       <div className="text-sm font-bold text-[#EF4444]">{task.percent_complete}%</div>
                       {task.total_float !== null && task.total_float !== undefined && (
                         <div className="text-[10px] font-semibold" style={{ color: task.total_float < 0 ? "#EF4444" : task.total_float === 0 ? "#EAB308" : "#22C55E" }}>
-                          {task.total_float}{t('ui.d.float')}
+                          {task.total_float}d float
                         </div>
                       )}
                     </div>
@@ -407,12 +412,12 @@ export default function ReforecastTab({ projectId }: Props) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border-primary)]">
           <Clock size={14} className="text-[#3B82F6]" />
-          <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.update.progress')}</span>
-          <span className="text-[10px] text-[color:var(--text-muted)] ml-auto">{t('ui.tap.a.task.to.update')}</span>
+          <span className="text-sm font-bold text-[color:var(--text-primary)]">Update Progress</span>
+          <span className="text-[10px] text-[color:var(--text-muted)] ml-auto">Tap a task to update</span>
         </div>
         <div className="max-h-80 overflow-y-auto">
           {inProgressTasks.length === 0 ? (
-            <div className="text-xs text-gray-600 py-6 text-center">{t('ui.no.in.progress.or.pending.tasks')}</div>
+            <div className="text-xs text-gray-600 py-6 text-center">No in-progress or pending tasks.</div>
           ) : (
             inProgressTasks.slice(0, 20).map((task: any) => (
               <button
@@ -449,19 +454,19 @@ export default function ReforecastTab({ projectId }: Props) {
           <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-primary)]">
             <div className="flex items-center gap-2">
               <History size={14} className="text-[color:var(--text-secondary)]" />
-              <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.reforecast.history')}</span>
+              <span className="text-sm font-bold text-[color:var(--text-primary)]">Reforecast History</span>
             </div>
-            <button onClick={() => setShowSnapshots(false)} className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">{t('ui.close')}</button>
+            <button onClick={() => setShowSnapshots(false)} className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">Close</button>
           </div>
           <div className="max-h-60 overflow-y-auto">
             {snapshots.length === 0 ? (
-              <div className="text-xs text-gray-600 py-6 text-center">{t('ui.no.snapshots.yet.run.a.reforecast')}</div>
+              <div className="text-xs text-gray-600 py-6 text-center">No snapshots yet. Run a reforecast.</div>
             ) : (
               snapshots.map((snap) => (
                 <div key={snap.id} className="px-4 py-2.5 border-b border-[var(--border-primary)]">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-xs font-semibold text-[color:var(--text-primary)]">{snap.trigger_description || t('ui.reforecast')}</div>
+                      <div className="text-xs font-semibold text-[color:var(--text-primary)]">{snap.trigger_description || "Reforecast"}</div>
                       <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
                         {new Date(snap.created_at).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}
                       </div>
@@ -471,7 +476,7 @@ export default function ReforecastTab({ projectId }: Props) {
                         {deltaLabel(snap.completion_delta_days)}
                       </div>
                       <div className="text-[10px] text-[color:var(--text-muted)]">
-                        {snap.critical_activities}{t('ui.critical.7067e9')} {snap.at_risk_activities}{t('ui.at.risk.39ec48')}
+                        {snap.critical_activities} critical · {snap.at_risk_activities} at risk
                       </div>
                     </div>
                   </div>

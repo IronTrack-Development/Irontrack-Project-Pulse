@@ -8,7 +8,6 @@ import {
   MapPin, Calendar, AlertTriangle, Wrench
 } from "lucide-react";
 import type { ParsedActivity, IssuePriority, IssueCategory } from "@/types";
-import { t } from "@/lib/i18n";
 
 interface LocalPhoto {
   file: File;
@@ -367,7 +366,7 @@ export default function GenerateReportPage({
       await navigator.share({ title: `Field Observation ${doneReportNum}`, url });
     } else {
       await navigator.clipboard.writeText(url);
-      alert(t('ui.link.copied.to.clipboard'));
+      alert("Link copied to clipboard!");
     }
   };
 
@@ -387,12 +386,13 @@ export default function GenerateReportPage({
           </button>
           <div className="flex-1">
             <h1 className="text-[color:var(--text-primary)] font-bold flex items-center gap-2">
-              <ClipboardList size={18} className="text-[#F97316]" />{t('ui.new.observation')}
+              <ClipboardList size={18} className="text-[#F97316]" />
+              New Observation
             </h1>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {step === "select" && t('ui.step.1.select.schedule.item')}
+              {step === "select" && "Step 1: Select Schedule Item"}
               {step === "issues" && `Step 2: Add Issues${selectedActivity ? ` — ${selectedActivity.activity_name}` : ""}`}
-              {step === "done" && t('ui.observation.generated')}
+              {step === "done" && "Observation Generated ✅"}
             </p>
           </div>
         </div>
@@ -424,7 +424,7 @@ export default function GenerateReportPage({
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
               <input
                 type="text"
-                placeholder={t('ui.search.activities.trades.locations')}
+                placeholder="Search activities, trades, locations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-10 pr-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -432,7 +432,8 @@ export default function GenerateReportPage({
             </div>
 
             {loadingActivities ? (
-              <div className="flex items-center justify-center py-12 text-[color:var(--text-muted)] text-sm">{t('ui.loading.activities')}
+              <div className="flex items-center justify-center py-12 text-[color:var(--text-muted)] text-sm">
+                Loading activities…
               </div>
             ) : (
               <div className="space-y-6">
@@ -489,7 +490,8 @@ export default function GenerateReportPage({
                   )
                 )}
                 {filtered.length === 0 && (
-                  <div className="text-center py-12 text-gray-600 text-sm">{t('ui.no.activities.found')}
+                  <div className="text-center py-12 text-gray-600 text-sm">
+                    No activities found.
                   </div>
                 )}
               </div>
@@ -502,7 +504,7 @@ export default function GenerateReportPage({
           <div>
             {/* Selected activity card */}
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 mb-6">
-              <div className="text-xs font-bold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">{t('ui.schedule.item')}</div>
+              <div className="text-xs font-bold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">Schedule Item</div>
               <div className="text-[color:var(--text-primary)] font-bold text-base leading-tight mb-2">
                 {selectedActivity.activity_name}
               </div>
@@ -527,17 +529,18 @@ export default function GenerateReportPage({
 
             {/* Prepared by */}
             <div className="mb-6">
-              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.prepared.by.your.name')}
+              <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">
+                Prepared By (your name)
               </label>
               <input
                 type="text"
-                placeholder={t('ui.e.g.john.smith.superintendent')}
+                placeholder="e.g. John Smith, Superintendent"
                 value={preparedBy}
                 onChange={(e) => setPreparedBy(e.target.value)}
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
               />
               {showPreparedByPrompt && !preparedBy.trim() && (
-                <p className="text-xs text-[#EF4444] mt-1">{t('ui.please.enter.your.name.before.generating.the.observation')}</p>
+                <p className="text-xs text-[#EF4444] mt-1">Please enter your name before generating the observation.</p>
               )}
             </div>
 
@@ -586,7 +589,7 @@ export default function GenerateReportPage({
                       )}
                       {issue.photos.length > 0 && (
                         <div className="text-[10px] text-gray-600 mt-1">
-                          {issue.photos.length}{t('ui.photo.eeb35d')}{issue.photos.length !== 1 ? t('ui.s') : ""}
+                          {issue.photos.length} photo{issue.photos.length !== 1 ? "s" : ""}
                         </div>
                       )}
                     </div>
@@ -595,7 +598,8 @@ export default function GenerateReportPage({
                       <button
                         onClick={() => openEditIssue(issue)}
                         className="text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] px-2 py-1 rounded bg-[var(--bg-tertiary)] transition-colors"
-                      >{t('action.edit')}
+                      >
+                        Edit
                       </button>
                       <button
                         onClick={() => removeIssue(issue.id)}
@@ -614,7 +618,8 @@ export default function GenerateReportPage({
               onClick={openNewIssue}
               className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] border border-[var(--border-primary)] hover:border-[#F97316]/30 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-semibold transition-all mb-6"
             >
-              <Plus size={18} className="text-[#F97316]" />{t('ui.add.issue')}
+              <Plus size={18} className="text-[#F97316]" />
+              Add Issue
             </button>
 
             {/* Generate button */}
@@ -624,15 +629,16 @@ export default function GenerateReportPage({
               className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-bold transition-all"
             >
               {submitting ? (
-                t('ui.generating')
+                "Generating…"
               ) : (
                 <>
-                  <ClipboardList size={18} />{t('ui.generate.observation')}{issues.length > 0 ? ` (${issues.length} issue${issues.length !== 1 ? t('ui.s') : ""})` : ""}
+                  <ClipboardList size={18} />
+                  Generate Observation{issues.length > 0 ? ` (${issues.length} issue${issues.length !== 1 ? "s" : ""})` : ""}
                 </>
               )}
             </button>
             {issues.length === 0 && (
-              <p className="text-center text-xs text-gray-600 mt-2">{t('ui.add.at.least.one.issue.to.generate.the.observation')}</p>
+              <p className="text-center text-xs text-gray-600 mt-2">Add at least one issue to generate the observation.</p>
             )}
           </div>
         )}
@@ -643,15 +649,17 @@ export default function GenerateReportPage({
             <div className="w-16 h-16 rounded-full bg-[#22C55E]/15 flex items-center justify-center mb-4">
               <CheckCircle size={36} className="text-[#22C55E]" />
             </div>
-            <h2 className="text-[color:var(--text-primary)] font-bold text-2xl mb-1">{t('ui.observation.generated.28d3fc')}</h2>
+            <h2 className="text-[color:var(--text-primary)] font-bold text-2xl mb-1">Observation Generated!</h2>
             <p className="text-[color:var(--text-muted)] text-sm mb-6">{doneReportNum}</p>
 
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-5 w-full text-left mb-6">
-              <div className="text-xs font-bold text-[color:var(--text-muted)] uppercase tracking-wide mb-1">{t('ui.schedule.item')}</div>
+              <div className="text-xs font-bold text-[color:var(--text-muted)] uppercase tracking-wide mb-1">Schedule Item</div>
               <div className="text-[color:var(--text-primary)] font-semibold mb-1">{selectedActivity?.activity_name}</div>
-              <div className="text-[color:var(--text-muted)] text-sm mb-3">{t('ui.field.observation')} {issues.length}{t('ui.issue.00819c')}{issues.length !== 1 ? t('ui.s') : ""}
+              <div className="text-[color:var(--text-muted)] text-sm mb-3">
+                Field Observation — {issues.length} issue{issues.length !== 1 ? "s" : ""}
               </div>
-              <div className="text-xs text-gray-600">{t('ui.generated')} {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              <div className="text-xs text-gray-600">
+                Generated {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
               </div>
             </div>
 
@@ -662,18 +670,21 @@ export default function GenerateReportPage({
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
               >
-                <ExternalLink size={16} />{t('ui.preview.and.print.pdf')}
+                <ExternalLink size={16} />
+                Preview & Print PDF
               </a>
               <button
                 onClick={handleShare}
                 className="flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-semibold transition-all"
               >
-                <Share2 size={16} />{t('ui.share.observation.link')}
+                <Share2 size={16} />
+                Share Observation Link
               </button>
               <button
                 onClick={() => router.push(`/projects/${id}`)}
                 className="flex items-center justify-center gap-2 bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] rounded-xl py-3.5 text-sm font-semibold transition-all hover:text-[color:var(--text-primary)]"
-              >{t('ui.back.to.project')}
+              >
+                Back to Project
               </button>
             </div>
           </div>
@@ -691,7 +702,7 @@ export default function GenerateReportPage({
             {/* Modal header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)] shrink-0">
               <h3 className="text-[color:var(--text-primary)] font-bold text-base">
-                {editingIssue ? t('ui.edit.issue') : t('ui.add.issue')}
+                {editingIssue ? "Edit Issue" : "Add Issue"}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
@@ -705,7 +716,8 @@ export default function GenerateReportPage({
             <div className="overflow-y-auto flex-1 px-5 py-4 space-y-5">
               {/* Photos */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-3">{t('ui.photos')}
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-3">
+                  Photos
                 </label>
 
                 {/* Photo thumbnails */}
@@ -727,7 +739,7 @@ export default function GenerateReportPage({
                         </button>
                         <input
                           type="text"
-                          placeholder={t('ui.caption.optional')}
+                          placeholder="Caption (optional)"
                           value={photo.caption}
                           onChange={(e) => {
                             const photos = [...modalIssue.photos];
@@ -756,19 +768,20 @@ export default function GenerateReportPage({
                 >
                   <Camera size={28} className="text-[#F97316]" />
                   <span className="text-sm font-semibold text-[color:var(--text-secondary)]">
-                    {modalIssue.photos.length > 0 ? t('ui.add.more.photos') : t('ui.take.photo.choose.from.library')}
+                    {modalIssue.photos.length > 0 ? "Add More Photos" : "Take Photo / Choose from Library"}
                   </span>
-                  <span className="text-[11px] text-gray-600">{t('ui.tap.to.open.camera')}</span>
+                  <span className="text-[11px] text-gray-600">Tap to open camera</span>
                 </button>
               </div>
 
               {/* Title */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.issue.title')} <span className="text-[#EF4444]">*</span>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">
+                  Issue Title <span className="text-[#EF4444]">*</span>
                 </label>
                 <input
                   type="text"
-                  placeholder={t('ui.e.g.missing.backing.for.grab.bars')}
+                  placeholder="e.g. Missing backing for grab bars"
                   value={modalIssue.title}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, title: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -777,7 +790,7 @@ export default function GenerateReportPage({
 
               {/* Priority */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.priority')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Priority</label>
                 <div className="grid grid-cols-3 gap-2">
                   {(["high", "medium", "low"] as IssuePriority[]).map((p) => (
                     <button
@@ -801,7 +814,7 @@ export default function GenerateReportPage({
 
               {/* Category */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('blocker.category')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Category</label>
                 <div className="grid grid-cols-3 gap-2">
                   {(["qa_qc", "safety", "schedule"] as IssueCategory[]).map((c) => (
                     <button
@@ -825,10 +838,10 @@ export default function GenerateReportPage({
 
               {/* Location */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.location')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Location</label>
                 <input
                   type="text"
-                  placeholder={t('ui.e.g.corridor.2.room.102')}
+                  placeholder="e.g. Corridor 2, Room 102"
                   value={modalIssue.location}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, location: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -837,10 +850,10 @@ export default function GenerateReportPage({
 
               {/* Note */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.note.optional')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Note (optional)</label>
                 <textarea
                   rows={3}
-                  placeholder={t('ui.describe.the.issue.in.detail')}
+                  placeholder="Describe the issue in detail..."
                   value={modalIssue.note}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, note: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
@@ -849,10 +862,10 @@ export default function GenerateReportPage({
 
               {/* Trade */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.trade')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Trade</label>
                 <input
                   type="text"
-                  placeholder={t('ui.e.g.framing.electrical')}
+                  placeholder="e.g. Framing, Electrical"
                   value={modalIssue.trade}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, trade: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -861,10 +874,10 @@ export default function GenerateReportPage({
 
               {/* Potential impact */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.potential.impact.optional')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Potential Impact (optional)</label>
                 <input
                   type="text"
-                  placeholder={t('ui.e.g.delays.drywall.install')}
+                  placeholder="e.g. Delays Drywall Install"
                   value={modalIssue.potential_impact}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, potential_impact: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -873,10 +886,10 @@ export default function GenerateReportPage({
 
               {/* Action needed */}
               <div>
-                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">{t('ui.action.needed.optional')}</label>
+                <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide mb-2">Action Needed (optional)</label>
                 <input
                   type="text"
-                  placeholder={t('ui.e.g.install.backing.asap')}
+                  placeholder="e.g. Install backing ASAP"
                   value={modalIssue.action_needed}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, action_needed: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
@@ -891,7 +904,7 @@ export default function GenerateReportPage({
                 disabled={!modalIssue.title.trim()}
                 className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-base font-bold transition-all"
               >
-                ✓ {editingIssue ? t('ui.update.issue') : t('ui.save.issue')}
+                ✓ {editingIssue ? "Update Issue" : "Save Issue"}
               </button>
             </div>
           </div>

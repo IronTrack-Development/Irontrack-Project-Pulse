@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Bell, BellOff, Loader2 } from 'lucide-react';
-import { t } from "@/lib/i18n";
-
 import {
   registerPushNotifications,
   unregisterPushNotifications,
@@ -72,7 +70,8 @@ export default function NotificationToggle() {
       <div className="flex items-start gap-3 p-4 bg-[var(--bg-primary)] border border-[color:var(--border-primary)] rounded-lg">
         <BellOff size={18} className="text-gray-600 mt-0.5 shrink-0" />
         <div>
-          <p className="text-sm text-[color:var(--text-muted)]">{t('ui.push.notifications.are.not.supported.in.your.browser')}
+          <p className="text-sm text-[color:var(--text-muted)]">
+            Push notifications are not supported in your browser.
           </p>
         </div>
       </div>
@@ -90,14 +89,14 @@ export default function NotificationToggle() {
             <BellOff size={18} className="text-[color:var(--text-muted)] shrink-0" />
           )}
           <div>
-            <p className="text-sm font-medium text-[color:var(--text-primary)]">{t('ui.push.notifications')}</p>
+            <p className="text-sm font-medium text-[color:var(--text-primary)]">Push Notifications</p>
             <p className="text-xs mt-0.5">
               {loading ? (
-                <span className="text-[color:var(--text-muted)]">{t('ui.checking.status')}</span>
+                <span className="text-[color:var(--text-muted)]">Checking status…</span>
               ) : enabled ? (
-                <span className="text-green-400">{t('ui.enabled')}</span>
+                <span className="text-green-400">Enabled</span>
               ) : (
-                <span className="text-[color:var(--text-muted)]">{t('ui.disabled')}</span>
+                <span className="text-[color:var(--text-muted)]">Disabled</span>
               )}
             </p>
           </div>
@@ -110,7 +109,7 @@ export default function NotificationToggle() {
           className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed ${
             enabled ? 'bg-[#F97316]' : 'bg-gray-700'
           }`}
-          aria-label={enabled ? t('ui.disable.notifications') : t('ui.enable.notifications')}
+          aria-label={enabled ? 'Disable notifications' : 'Enable notifications'}
         >
           <span
             className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
@@ -126,14 +125,17 @@ export default function NotificationToggle() {
       </div>
 
       {/* Description */}
-      <p className="text-xs text-[color:var(--text-muted)] leading-relaxed">{t('ui.get.notified.when.inspections.are.approaching.with.incomplete.predecessors.or')}
+      <p className="text-xs text-[color:var(--text-muted)] leading-relaxed">
+        Get notified when inspections are approaching with incomplete predecessors, or when
+        activities fall behind schedule.
       </p>
 
       {/* Permission denied warning */}
       {permissionDenied && (
         <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
           <p className="text-xs text-yellow-300">
-            <strong>{t('ui.notifications.blocked')}</strong>{t('ui.to.enable.click.the.lock.icon.in.your.browser.s')}
+            <strong>Notifications blocked.</strong> To enable, click the lock icon in your
+            browser's address bar and allow notifications for this site, then reload the page.
           </p>
         </div>
       )}

@@ -5,7 +5,6 @@ import { ChevronDown, ChevronUp, TrendingUp, AlertTriangle } from "lucide-react"
 import VoiceTextArea from "./VoiceTextArea";
 import type { DailyLogProgress, DelayCode } from "@/types";
 import type { ParsedActivity } from "@/types";
-import { t } from "@/lib/i18n";
 
 const DELAY_CHIPS: DelayCode[] = [
   "Weather", "Manpower", "RFI", "Inspection",
@@ -68,7 +67,8 @@ function ActivityProgressCard({
         <div className="px-4 pb-4 space-y-3 border-t border-[var(--border-primary)] pt-3">
           {/* Percent complete slider */}
           <div>
-            <label className="text-xs text-[color:var(--text-muted)] mb-2 block">{t('ui.update.complete')} <span className="text-[color:var(--text-primary)] font-medium">{pctAfter}%</span>
+            <label className="text-xs text-[color:var(--text-muted)] mb-2 block">
+              Update % Complete: <span className="text-[color:var(--text-primary)] font-medium">{pctAfter}%</span>
             </label>
             <input
               type="range"
@@ -98,7 +98,7 @@ function ActivityProgressCard({
           <VoiceTextArea
             value={progressEntry?.note || ""}
             onChange={(text) => onUpdate({ note: text })}
-            placeholder={t('ui.activity.note.tap.mic.or.type')}
+            placeholder="Activity note — tap mic or type..."
             rows={2}
           />
         </div>
@@ -162,12 +162,13 @@ export default function WorkIssuesScreen({
       {/* Activity Progress */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <TrendingUp size={16} className="text-[#22C55E]" />{t('ui.work.performed')}
+          <TrendingUp size={16} className="text-[#22C55E]" />
+          Work Performed
           <span className="text-xs text-[color:var(--text-muted)] font-normal">({inProgress.length} activities)</span>
         </h3>
 
         {inProgress.length === 0 ? (
-          <p className="text-sm text-gray-600 py-4 text-center">{t('ui.no.active.activities.found')}</p>
+          <p className="text-sm text-gray-600 py-4 text-center">No active activities found</p>
         ) : (
           <div className="space-y-2">
             {inProgress.map((activity) => (
@@ -185,7 +186,8 @@ export default function WorkIssuesScreen({
       {/* Delays & Issues */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <AlertTriangle size={16} className="text-[#EAB308]" />{t('ui.delays.and.issues')}
+          <AlertTriangle size={16} className="text-[#EAB308]" />
+          Delays & Issues
         </h3>
 
         {/* Delay code chips */}
@@ -213,14 +215,14 @@ export default function WorkIssuesScreen({
         <VoiceTextArea
           value={delayNarrative}
           onChange={onDelayNarrativeChange}
-          placeholder={t('ui.describe.delays.tap.mic.or.type')}
-          label={t('ui.delay.details')}
+          placeholder="Describe delays — tap mic or type..."
+          label="Delay Details"
           rows={3}
         />
 
         {/* Lost crew hours */}
         <div className="mt-3">
-          <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.lost.crew.hours.3c3956')}</label>
+          <label className="text-xs text-[color:var(--text-secondary)] mb-1.5 block">Lost Crew Hours</label>
           <input
             type="number"
             inputMode="decimal"

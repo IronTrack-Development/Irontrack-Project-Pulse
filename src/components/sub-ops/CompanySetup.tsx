@@ -2,24 +2,23 @@
 
 import { useState } from "react";
 import { HardHat, Building2, Save } from "lucide-react";
-import { t } from "@/lib/i18n";
 
 const TRADES = [
-  { value: "electrical", label: t('ui.electrical') },
-  { value: "mechanical", label: t('ui.mechanical') },
-  { value: "plumbing", label: t('ui.plumbing') },
-  { value: "fire_protection", label: t('ui.fire.protection') },
-  { value: "concrete", label: t('ui.concrete') },
-  { value: "structural_steel", label: t('ui.structural.steel') },
-  { value: "framing", label: t('ui.framing') },
-  { value: "drywall", label: t('ui.drywall') },
-  { value: "painting", label: t('ui.painting') },
-  { value: "flooring", label: t('ui.flooring') },
-  { value: "roofing", label: t('ui.roofing') },
-  { value: "glazing", label: t('ui.glazing') },
-  { value: "landscaping", label: t('ui.landscaping') },
-  { value: "earthwork", label: t('ui.earthwork') },
-  { value: "other", label: t('ui.other') },
+  { value: "electrical", label: "Electrical" },
+  { value: "mechanical", label: "Mechanical" },
+  { value: "plumbing", label: "Plumbing" },
+  { value: "fire_protection", label: "Fire Protection" },
+  { value: "concrete", label: "Concrete" },
+  { value: "structural_steel", label: "Structural Steel" },
+  { value: "framing", label: "Framing" },
+  { value: "drywall", label: "Drywall" },
+  { value: "painting", label: "Painting" },
+  { value: "flooring", label: "Flooring" },
+  { value: "roofing", label: "Roofing" },
+  { value: "glazing", label: "Glazing" },
+  { value: "landscaping", label: "Landscaping" },
+  { value: "earthwork", label: "Earthwork" },
+  { value: "other", label: "Other" },
 ];
 
 interface CompanySetupProps {
@@ -37,7 +36,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
 
   const handleSave = async () => {
     if (!companyName.trim()) {
-      setError(t('ui.company.name.is.required'));
+      setError("Company name is required");
       return;
     }
     setSaving(true);
@@ -64,7 +63,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         setError(data.error || "Failed to create company");
       }
     } catch {
-      setError(t('ui.network.error.please.try.again'));
+      setError("Network error. Please try again.");
     }
     setSaving(false);
   };
@@ -77,53 +76,55 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F97316]/10 mb-2">
             <HardHat size={28} className="text-[#F97316]" />
           </div>
-          <h2 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.set.up.your.company')}</h2>
-          <p className="text-sm text-[color:var(--text-muted)]">{t('ui.create.your.sub.ops.company.to.manage.foremen.dispatches.and')}
+          <h2 className="text-xl font-bold text-[color:var(--text-primary)]">Set Up Your Company</h2>
+          <p className="text-sm text-[color:var(--text-muted)]">
+            Create your sub ops company to manage foremen, dispatches, and production tracking.
           </p>
         </div>
 
         {/* Form */}
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.company.name.8599f5')} <span className="text-red-400">*</span>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
+              Company Name <span className="text-red-400">*</span>
             </label>
             <div className="relative">
               <Building2 size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
               <input
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                placeholder={t('ui.e.g.martinez.electric.llc')}
+                placeholder="e.g., Martinez Electric LLC"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.primary.trade')}</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Primary Trade</label>
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
             >
-              <option value="">{t('ui.select.a.trade')}</option>
-              {TRADES.map((item) => (
-                <option key={item.value} value={item.value}>{item.label}</option>
+              <option value="">Select a trade...</option>
+              {TRADES.map((t) => (
+                <option key={t.value} value={t.value}>{t.label}</option>
               ))}
             </select>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.contact.name')}</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Contact Name</label>
               <input
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
-                placeholder={t('ui.your.name')}
+                placeholder="Your name"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.phone')}</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Phone</label>
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -134,7 +135,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.email')}</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Email</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -156,7 +157,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors min-h-[44px]"
         >
           <Save size={16} />
-          {saving ? t('ui.creating') : t('ui.create.company')}
+          {saving ? "Creating..." : "Create Company"}
         </button>
       </div>
     </div>

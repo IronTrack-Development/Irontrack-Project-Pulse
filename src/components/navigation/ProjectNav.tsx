@@ -31,7 +31,6 @@ import {
   ArrowRightLeft,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
-import { t } from "@/lib/i18n";
 
 // ─── Group & Tab Definitions ──────────────────────────────────────────────────
 
@@ -51,91 +50,91 @@ interface GroupDef {
 const NAV_GROUPS: GroupDef[] = [
   {
     id: "schedule",
-    label: t('nav.schedule'),
+    label: "Schedule",
     icon: CalendarDays,
     tabs: [
-      { id: "priority", label: t('ui.priority'), icon: Zap },
-      { id: "today", label: t('ui.today'), icon: CalendarCheck },
-      { id: "tomorrow", label: t('ui.tomorrow'), icon: CalendarPlus },
-      { id: "week1", label: t('ui.week.1'), icon: CalendarDays },
-      { id: "week2", label: t('ui.week.2'), icon: CalendarDays },
-      { id: "week3", label: t('ui.week.3'), icon: CalendarDays },
-      { id: "6week", label: t('ui.6.week'), icon: Binoculars },
-      { id: "milestones", label: t('ui.milestones'), icon: Flag },
-      { id: "reforecast", label: t('ui.reforecast'), icon: GitBranch },
+      { id: "priority", label: "Priority", icon: Zap },
+      { id: "today", label: "Today", icon: CalendarCheck },
+      { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
+      { id: "week1", label: "Week 1", icon: CalendarDays },
+      { id: "week2", label: "Week 2", icon: CalendarDays },
+      { id: "week3", label: "Week 3", icon: CalendarDays },
+      { id: "6week", label: "6-Week", icon: Binoculars },
+      { id: "milestones", label: "Milestones", icon: Flag },
+      { id: "reforecast", label: "Reforecast", icon: GitBranch },
     ],
   },
   {
     id: "fieldops",
-    label: t('nav.fieldOps'),
+    label: "Field Ops",
     icon: ClipboardList,
     tabs: [
-      { id: "dailylog", label: t('ui.daily.log'), icon: ClipboardList },
-      { id: "inspections", label: t('ui.inspections'), icon: ShieldCheck },
-      { id: "field-reports", label: t('ui.reports'), icon: Camera },
-      { id: "punch", label: t('ui.punch.list'), icon: CheckSquare },
-      { id: "reports", label: t('ui.observations'), icon: Eye },
+      { id: "dailylog", label: "Daily Log", icon: ClipboardList },
+      { id: "inspections", label: "Inspections", icon: ShieldCheck },
+      { id: "field-reports", label: "Reports", icon: Camera },
+      { id: "punch", label: "Punch List", icon: CheckSquare },
+      { id: "reports", label: "Observations", icon: Eye },
     ],
   },
   {
     id: "coordination",
-    label: t('nav.coordination'),
+    label: "Coordination",
     icon: Handshake,
     tabs: [
-      { id: "coordination", label: t('ui.meetings.b23a19'), icon: Handshake },
-      { id: "action-tracker", label: t('ui.action.items'), icon: CheckSquare },
+      { id: "coordination", label: "Meetings", icon: Handshake },
+      { id: "action-tracker", label: "Action Items", icon: CheckSquare },
     ],
   },
   {
     id: "documents",
-    label: t('nav.documents'),
+    label: "Documents",
     icon: FileText,
     tabs: [
-      { id: "submittals", label: t('ui.submittals'), icon: FileCheck },
-      { id: "rfis", label: t('ui.rfis'), icon: MessageCircleQuestion },
-      { id: "drawings", label: t('ui.drawings'), icon: Layers },
+      { id: "submittals", label: "Submittals", icon: FileCheck },
+      { id: "rfis", label: "RFIs", icon: MessageCircleQuestion },
+      { id: "drawings", label: "Drawings", icon: Layers },
     ],
   },
   {
     id: "money",
-    label: t('nav.money'),
+    label: "Money",
     icon: Receipt,
     tabs: [
-      { id: "tm", label: t('ui.t.and.m'), icon: Receipt },
+      { id: "tm", label: "T&M", icon: Receipt },
     ],
   },
   {
     id: "safety",
-    label: t('nav.safety'),
+    label: "Safety",
     icon: Shield,
     tabs: [
-      { id: "safety", label: t('safety.toolboxTalks'), icon: Shield },
+      { id: "safety", label: "Toolbox Talks", icon: Shield },
     ],
   },
   {
     id: "project",
-    label: t('nav.project'),
+    label: "Project",
     icon: BarChart3,
     tabs: [
-      { id: "progress", label: t('ui.progress.1b9027'), icon: TrendingUp },
-      { id: "directory", label: t('ui.directory'), icon: Users },
-      { id: "subs", label: t('ui.subs'), icon: Users },
+      { id: "progress", label: "Progress", icon: TrendingUp },
+      { id: "directory", label: "Directory", icon: Users },
+      { id: "subs", label: "Subs", icon: Users },
     ],
   },
   {
     id: "subops",
-    label: t('nav.subOps'),
+    label: "Sub Ops",
     icon: HardHat,
     tabs: [
-      { id: "sub-dashboard", label: t('ui.dashboard'), icon: BarChart3 },
-      { id: "sub-dispatch", label: t('ui.dispatch'), icon: Send },
-      { id: "sub-foremen", label: t('ui.foremen'), icon: Users },
-      { id: "sub-checkins", label: t('ui.check.ins'), icon: CheckCircle },
-      { id: "sub-production", label: t('ui.production'), icon: TrendingUp },
-      { id: "sub-blockers", label: t('ui.blockers'), icon: AlertTriangle },
-      { id: "sub-handoffs", label: t('ui.handoffs'), icon: ArrowRightLeft },
-      { id: "sub-crew", label: t('ui.crew.de463b'), icon: HardHat },
-      { id: "sub-sops", label: t('ui.sops'), icon: FileText },
+      { id: "sub-dashboard", label: "Dashboard", icon: BarChart3 },
+      { id: "sub-dispatch", label: "Dispatch", icon: Send },
+      { id: "sub-foremen", label: "Foremen", icon: Users },
+      { id: "sub-checkins", label: "Check-Ins", icon: CheckCircle },
+      { id: "sub-production", label: "Production", icon: TrendingUp },
+      { id: "sub-blockers", label: "Blockers", icon: AlertTriangle },
+      { id: "sub-handoffs", label: "Handoffs", icon: ArrowRightLeft },
+      { id: "sub-crew", label: "Crew", icon: HardHat },
+      { id: "sub-sops", label: "SOPs", icon: FileText },
     ],
   },
 ];
@@ -143,7 +142,7 @@ const NAV_GROUPS: GroupDef[] = [
 // Helper: find which group owns a given tab id
 function findGroupForTab(tabId: string): string {
   for (const group of NAV_GROUPS) {
-    if (group.tabs.some((item) => item.id === tabId)) return group.id;
+    if (group.tabs.some((t) => t.id === tabId)) return group.id;
   }
   return "schedule";
 }
@@ -192,7 +191,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
     const group = NAV_GROUPS.find((g) => g.id === groupId)!;
     const remembered = lastTabPerGroup.current[groupId];
     const target =
-      remembered && group.tabs.some((item) => item.id === remembered)
+      remembered && group.tabs.some((t) => t.id === remembered)
         ? remembered
         : group.tabs[0].id;
     onTabChange(target);

@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw, Users, CloudRain, Sun, CloudSun, Cloud, CloudLightning, Wind, Snowflake, Thermometer, Activity } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
-import { t } from "@/lib/i18n";
-import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface YesterdayRecap {
   logDate: string;
@@ -48,27 +46,11 @@ function statusLabel(status: string) {
   }
 }
 
-function ActivityCard({
-  activity,
-  translations = {},
-  isSpanish = false,
-}: {
-  activity: ParsedActivity;
-  translations?: Record<string, string>;
-  isSpanish?: boolean;
-}) {
-  const displayName =
-    isSpanish && translations[activity.activity_name]
-      ? translations[activity.activity_name]
-      : activity.activity_name;
-
+function ActivityCard({ activity }: { activity: ParsedActivity }) {
   return (
     <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center gap-3">
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{displayName}</div>
-        {isSpanish && translations[activity.activity_name] && (
-          <div className="text-xs text-[color:var(--text-muted)] truncate">{activity.activity_name}</div>
-        )}
+        <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{activity.activity_name}</div>
         <div className="flex items-center gap-3 mt-1">
           {activity.trade && (
             <span className="text-xs text-[#F97316]">{activity.trade}</span>
@@ -77,7 +59,7 @@ function ActivityCard({
             <span className="text-xs text-[color:var(--text-muted)]">{activity.area}</span>
           )}
           {activity.percent_complete > 0 && (
-            <span className="text-xs text-[color:var(--text-secondary)]">{activity.percent_complete}{t('ui.done.ef9750')}</span>
+            <span className="text-xs text-[color:var(--text-secondary)]">{activity.percent_complete}% done</span>
           )}
         </div>
       </div>
@@ -91,15 +73,6 @@ function ActivityCard({
 export default function TodayTab({ projectId }: { projectId: string }) {
   const [data, setData] = useState<TodayData | null>(null);
   const [loading, setLoading] = useState(true);
-
-  // Collect all activity names across all sections for translation
-  const allActivityNames = [
-    ...(data?.happeningToday ?? []),
-    ...(data?.recentStarts ?? []),
-    ...(data?.finishingSoon ?? []),
-    ...(data?.atRisk ?? []),
-  ].map((a) => a.activity_name);
-  const { translations, isSpanish } = useActivityTranslations(allActivityNames);
 
   const fetchData = async () => {
     setLoading(true);
@@ -119,7 +92,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
     );
   }
 
-  if (!data) return <div className="text-[color:var(--text-muted)] text-center py-12">{t('ui.no.data.available')}</div>;
+  if (!data) return <div className="text-[color:var(--text-muted)] text-center py-12">No data available.</div>;
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
@@ -149,13 +122,13 @@ export default function TodayTab({ projectId }: { projectId: string }) {
       {/* Yesterday Recap */}
       {data.yesterdayRecap && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5">
-          <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-widest mb-2">{t('ui.yesterday')} {data.yesterdayRecap.dateLabel}</div>
+          <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-widest mb-2">Yesterday — {data.yesterdayRecap.dateLabel}</div>
           <div className="grid grid-cols-2 gap-3">
             {/* Crew */}
             <div className="flex items-center gap-2">
               <Users size={14} className="text-[#F97316] shrink-0" />
               <span className="text-sm text-[color:var(--text-secondary)]">
-                {data.yesterdayRecap.totalWorkers}{t('ui.workers')} {data.yesterdayRecap.totalCrewHours}{t('ui.crew.hours.e2ddc1')}
+                {data.yesterdayRecap.totalWorkers} workers · {data.yesterdayRecap.totalCrewHours} crew-hours
               </span>
             </div>
             {/* Weather */}
@@ -177,7 +150,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
             <div className="flex items-center gap-2">
               <Activity size={14} className="text-[#3B82F6] shrink-0" />
               <span className="text-sm text-[color:var(--text-secondary)]">
-                {data.yesterdayRecap.activitiesAdvanced}{t('ui.advanced')}{data.yesterdayRecap.activitiesCompleted > 0 ? `, ${data.yesterdayRecap.activitiesCompleted} completed` : ""}
+                {data.yesterdayRecap.activitiesAdvanced} advanced{data.yesterdayRecap.activitiesCompleted > 0 ? `, ${data.yesterdayRecap.activitiesCompleted} completed` : ""}
               </span>
             </div>
             {/* Issues */}
@@ -187,7 +160,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
                   <AlertTriangle size={14} className="text-[#EF4444] shrink-0" />
                   <span className="text-sm text-[color:var(--text-secondary)]">
                     {data.yesterdayRecap.delayCodes.length > 0
-                      ? `${data.yesterdayRecap.delayCodes.length} delay${data.yesterdayRecap.delayCodes.length > 1 ? t('ui.s') : ""} (${data.yesterdayRecap.delayCodes[0]})`
+                      ? `${data.yesterdayRecap.delayCodes.length} delay${data.yesterdayRecap.delayCodes.length > 1 ? "s" : ""} (${data.yesterdayRecap.delayCodes[0]})`
                       : ""}
                     {data.yesterdayRecap.lostCrewHours > 0
                       ? `${data.yesterdayRecap.delayCodes.length > 0 ? " · " : ""}${data.yesterdayRecap.lostCrewHours} lost crew-hours`
@@ -197,7 +170,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
               ) : (
                 <>
                   <CheckCircle2 size={14} className="text-[#22C55E] shrink-0" />
-                  <span className="text-sm text-[#22C55E]">{t('ui.no.issues')}</span>
+                  <span className="text-sm text-[#22C55E]">No issues</span>
                 </>
               )}
             </div>
@@ -208,7 +181,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
       {/* Date header */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-widest mb-0.5">{t('ui.today.is')}</div>
+          <div className="text-xs text-[color:var(--text-muted)] uppercase tracking-widest mb-0.5">Today is</div>
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{today}</div>
         </div>
         <button onClick={fetchData} className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
@@ -221,7 +194,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
         <div className="bg-[#F97316]/10 border border-[#F97316]/20 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">
             <Zap size={16} className="text-[#F97316]" />
-            <h3 className="font-bold text-[color:var(--text-primary)]">{t('ui.action.items')}</h3>
+            <h3 className="font-bold text-[color:var(--text-primary)]">Action Items</h3>
             <span className="bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold px-1.5 py-0.5 rounded-full">
               {data.actionItems.length}
             </span>
@@ -241,15 +214,16 @@ export default function TodayTab({ projectId }: { projectId: string }) {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Zap size={15} className="text-[#3B82F6]" />
-          <h3 className="font-semibold text-[color:var(--text-primary)]">{t('ui.happening.today')}</h3>
+          <h3 className="font-semibold text-[color:var(--text-primary)]">Happening Today</h3>
           <span className="text-xs text-[color:var(--text-muted)]">({data.happeningToday.length})</span>
         </div>
         {data.happeningToday.length === 0 ? (
-          <p className="text-gray-600 text-sm bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">{t('ui.no.activities.scheduled.for.today')}
+          <p className="text-gray-600 text-sm bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
+            No activities scheduled for today.
           </p>
         ) : (
           <div className="space-y-2">
-            {data.happeningToday.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
+            {data.happeningToday.map((a) => <ActivityCard key={a.id} activity={a} />)}
           </div>
         )}
       </div>
@@ -259,11 +233,11 @@ export default function TodayTab({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle size={15} className="text-[#EF4444]" />
-            <h3 className="font-semibold text-[color:var(--text-primary)]">{t('ui.at.risk')}</h3>
+            <h3 className="font-semibold text-[color:var(--text-primary)]">At Risk</h3>
             <span className="text-xs text-[color:var(--text-muted)]">({data.atRisk.length})</span>
           </div>
           <div className="space-y-2">
-            {data.atRisk.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
+            {data.atRisk.map((a) => <ActivityCard key={a.id} activity={a} />)}
           </div>
         </div>
       )}
@@ -273,11 +247,11 @@ export default function TodayTab({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle2 size={15} className="text-[#22C55E]" />
-            <h3 className="font-semibold text-[color:var(--text-primary)]">{t('ui.started.recently')}</h3>
-            <span className="text-xs text-[color:var(--text-muted)]">{t('ui.last.3.days')}</span>
+            <h3 className="font-semibold text-[color:var(--text-primary)]">Started Recently</h3>
+            <span className="text-xs text-[color:var(--text-muted)]">(last 3 days)</span>
           </div>
           <div className="space-y-2">
-            {data.recentStarts.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
+            {data.recentStarts.map((a) => <ActivityCard key={a.id} activity={a} />)}
           </div>
         </div>
       )}
@@ -287,11 +261,11 @@ export default function TodayTab({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Clock size={15} className="text-[#EAB308]" />
-            <h3 className="font-semibold text-[color:var(--text-primary)]">{t('ui.should.finish.soon')}</h3>
-            <span className="text-xs text-[color:var(--text-muted)]">{t('ui.next.3.days')}</span>
+            <h3 className="font-semibold text-[color:var(--text-primary)]">Should Finish Soon</h3>
+            <span className="text-xs text-[color:var(--text-muted)]">(next 3 days)</span>
           </div>
           <div className="space-y-2">
-            {data.finishingSoon.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
+            {data.finishingSoon.map((a) => <ActivityCard key={a.id} activity={a} />)}
           </div>
         </div>
       )}
@@ -299,7 +273,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
       {data.happeningToday.length === 0 && data.atRisk.length === 0 && data.recentStarts.length === 0 && data.finishingSoon.length === 0 && (
         <div className="text-center py-12 text-gray-600">
           <Zap size={32} className="mx-auto mb-3 opacity-30" />
-          <p>{t('ui.no.field.activity.data.for.today.upload.a.schedule.to')}</p>
+          <p>No field activity data for today. Upload a schedule to get started.</p>
         </div>
       )}
     </div>

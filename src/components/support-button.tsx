@@ -2,7 +2,6 @@
 
 import { Mail } from 'lucide-react';
 import { openSupportEmail } from '@/lib/support-email';
-import { t } from "@/lib/i18n";
 
 interface SupportButtonProps {
   context?: string;
@@ -15,7 +14,8 @@ export function SupportButton({ context, variant = 'default' }: SupportButtonPro
       <button
         onClick={() => openSupportEmail(context)}
         className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)] underline"
-      >{t('ui.report.this.error')}
+      >
+        Report this error →
       </button>
     );
   }
@@ -25,7 +25,8 @@ export function SupportButton({ context, variant = 'default' }: SupportButtonPro
       onClick={() => openSupportEmail(context)}
       className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg text-[color:var(--text-secondary)] hover:bg-[#1A1A20] hover:border-[#2A2A30] transition-colors"
     >
-      <Mail className="w-4 h-4" />{t('ui.report.a.problem.acbda9')}
+      <Mail className="w-4 h-4" />
+      Report a Problem
     </button>
   );
 }
