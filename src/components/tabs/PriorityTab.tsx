@@ -7,6 +7,7 @@ import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import type { ParsedActivity, ReadyCheck } from "@/types";
 import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -82,7 +83,17 @@ function formatDate(dateStr: string | null | undefined): string {
 
 // ── Section: Critical Path ────────────────────────────────────────────────────
 
-function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | null; onOpenDrawer: (id: string) => void }) {
+function CriticalPathSection({
+  data,
+  onOpenDrawer,
+  translations,
+  isSpanish,
+}: {
+  data: CriticalPathData | null;
+  onOpenDrawer: (id: string) => void;
+  translations: Record<string, string>;
+  isSpanish: boolean;
+}) {
   if (!data) {
     return (
       <div className="text-center py-10">
@@ -103,7 +114,14 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
       >
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.current.critical.activity')}
         </div>
-        <div className="text-[color:var(--text-primary)] font-bold text-sm hover:text-[#F97316] transition-colors">{data.currentActivity.activity_name}</div>
+        <div className="text-[color:var(--text-primary)] font-bold text-sm hover:text-[#F97316] transition-colors">
+          {isSpanish && translations[data.currentActivity.activity_name]
+            ? translations[data.currentActivity.activity_name]
+            : data.currentActivity.activity_name}
+        </div>
+        {isSpanish && translations[data.currentActivity.activity_name] && (
+          <div className="text-xs text-[color:var(--text-muted)]">{data.currentActivity.activity_name}</div>
+        )}
         <div className="flex items-center gap-3 mt-1">
           <span className="text-xs text-[color:var(--text-muted)]">
             {formatDate(data.currentActivity.start_date)} → {formatDate(data.currentActivity.finish_date)}
@@ -120,7 +138,11 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('ui.next.critical.successor')}
           </div>
           <div className="text-xs text-gray-200 font-medium">
-            {data.nextSuccessor?.activity_name ?? t('ui.none.identified')}
+            {data.nextSuccessor
+              ? (isSpanish && translations[data.nextSuccessor.activity_name]
+                  ? translations[data.nextSuccessor.activity_name]
+                  : data.nextSuccessor.activity_name)
+              : t('ui.none.identified')}
           </div>
         </div>
 
@@ -130,7 +152,9 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
           {data.nearestMilestone ? (
             <>
               <div className="text-xs text-gray-200 font-medium truncate">
-                {data.nearestMilestone.activity_name}
+                {isSpanish && translations[data.nearestMilestone.activity_name]
+                  ? translations[data.nearestMilestone.activity_name]
+                  : data.nearestMilestone.activity_name}
               </div>
               <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
                 {formatDate(data.nearestMilestone.finish_date)}
@@ -169,11 +193,15 @@ function InspectionsSection({
   onOpenDrawer,
   readyChecks,
   onReadyCheck,
+  translations,
+  isSpanish,
 }: {
   items: Inspection[];
   onOpenDrawer: (id: string) => void;
   readyChecks: ReadyCheck[];
   onReadyCheck: (id: string) => void;
+  translations: Record<string, string>;
+  isSpanish: boolean;
 }) {
   if (items.length === 0) {
     return (
@@ -207,7 +235,12 @@ function InspectionsSection({
                   </span>
                 )}
               </div>
-              <h4 className="text-sm font-bold text-[color:var(--text-primary)] leading-tight">{insp.name}</h4>
+              <h4 className="text-sm font-bold text-[color:var(--text-primary)] leading-tight">
+                {isSpanish && translations[insp.name] ? translations[insp.name] : insp.name}
+              </h4>
+              {isSpanish && translations[insp.name] && (
+                <div className="text-xs text-[color:var(--text-muted)]">{insp.name}</div>
+              )}
             </div>
             <Shield size={15} className="text-[#3B82F6] shrink-0 mt-0.5" />
           </div>
@@ -244,11 +277,15 @@ function LateTasksSection({
   onOpenDrawer,
   readyChecks,
   onReadyCheck,
+  translations,
+  isSpanish,
 }: {
   items: LateTask[];
   onOpenDrawer: (id: string) => void;
   readyChecks: ReadyCheck[];
   onReadyCheck: (id: string) => void;
+  translations: Record<string, string>;
+  isSpanish: boolean;
 }) {
   if (items.length === 0) {
     return (
@@ -276,7 +313,12 @@ function LateTasksSection({
                 </span>
                 <span className="text-[10px] text-gray-600">{task.percentComplete}{t('ui.done.ef9750')}</span>
               </div>
-              <h4 className="text-sm font-bold text-[color:var(--text-primary)] leading-tight">{task.name}</h4>
+              <h4 className="text-sm font-bold text-[color:var(--text-primary)] leading-tight">
+                {isSpanish && translations[task.name] ? translations[task.name] : task.name}
+              </h4>
+              {isSpanish && translations[task.name] && (
+                <div className="text-xs text-[color:var(--text-muted)]">{task.name}</div>
+              )}
             </div>
             <Clock size={15} className="text-[#EF4444] shrink-0 mt-0.5" />
           </div>
@@ -390,6 +432,16 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
   const { summary, criticalPath, inspections, lateTasks } = data;
   const pressStyle = pressureStyle(summary.criticalPressure);
 
+  // Collect all activity names for translation
+  const allActivityNames = [
+    criticalPath?.currentActivity.activity_name,
+    criticalPath?.nextSuccessor?.activity_name,
+    criticalPath?.nearestMilestone?.activity_name,
+    ...inspections.map((i) => i.name),
+    ...lateTasks.map((t) => t.name),
+  ].filter(Boolean) as string[];
+  const { translations, isSpanish } = useActivityTranslations(allActivityNames);
+
   return (
     <div className="space-y-6">
       {/* Summary Strip */}
@@ -424,7 +476,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
           <AlertTriangle size={16} className="text-[#F97316]" />
           <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">{t('ui.critical.path.ahead')}</h3>
         </div>
-        <CriticalPathSection data={criticalPath} onOpenDrawer={openDrawer} />
+        <CriticalPathSection data={criticalPath} onOpenDrawer={openDrawer} translations={translations} isSpanish={isSpanish} />
       </section>
 
       {/* Section 2: Upcoming Inspections */}
@@ -439,7 +491,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <InspectionsSection items={inspections} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} />
+        <InspectionsSection items={inspections} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} translations={translations} isSpanish={isSpanish} />
       </section>
 
       {/* Section 3: Behind Schedule */}
@@ -454,7 +506,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
             )}
           </h3>
         </div>
-        <LateTasksSection items={lateTasks} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} />
+        <LateTasksSection items={lateTasks} onOpenDrawer={openDrawer} readyChecks={readyChecks} onReadyCheck={openReadyCheck} translations={translations} isSpanish={isSpanish} />
       </section>
 
       {drawerActivity && (

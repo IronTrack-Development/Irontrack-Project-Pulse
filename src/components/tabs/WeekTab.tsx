@@ -6,6 +6,7 @@ import ActivityDrawer from "@/components/ActivityDrawer";
 import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
 import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
   id: string;
@@ -37,6 +38,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
   const [showQR, setShowQR] = useState(false);
+
+  // Collect all activity names for translation
+  const allActivityNames = data?.activities.map((a) => a.activity_name) ?? [];
+  const { translations, loading: translating, isSpanish } = useActivityTranslations(allActivityNames);
 
   useEffect(() => {
     const fetchWeekData = async () => {
@@ -270,7 +275,14 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         )}
                         <div className="flex items-start justify-between gap-3 flex-1">
                           <div className="flex-1 min-w-0">
-                            <div className="text-sm text-[color:var(--text-primary)] mb-1">{activity.activity_name}</div>
+                            <div className="text-sm text-[color:var(--text-primary)] mb-1">
+                              {isSpanish && translations[activity.activity_name]
+                                ? translations[activity.activity_name]
+                                : activity.activity_name}
+                            </div>
+                            {isSpanish && translations[activity.activity_name] && (
+                              <div className="text-xs text-[color:var(--text-muted)] mb-0.5">{activity.activity_name}</div>
+                            )}
                             <div className="text-xs text-[color:var(--text-muted)]">
                               {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                               {" → "}
@@ -356,7 +368,12 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         />
                       </td>
                     )}
-                    <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">{activity.activity_name}</td>
+                    <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">
+                      <div>{isSpanish && translations[activity.activity_name] ? translations[activity.activity_name] : activity.activity_name}</div>
+                      {isSpanish && translations[activity.activity_name] && (
+                        <div className="text-xs text-[color:var(--text-muted)]">{activity.activity_name}</div>
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
                       {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </td>

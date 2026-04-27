@@ -7,6 +7,7 @@ import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import type { ParsedActivity, ReadyCheck } from "@/types";
 import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
   id: string;
@@ -44,6 +45,13 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
   const [readyChecks, setReadyChecks] = useState<ReadyCheck[]>([]);
   const [readyCheckActivity, setReadyCheckActivity] = useState<ParsedActivity | null>(null);
+
+  // Collect all activity names (inspections + tasks) for translation
+  const allActivityNames = [
+    ...(data?.inspections ?? []),
+    ...(data?.activeTasks ?? []),
+  ].map((a) => a.activity_name);
+  const { translations, isSpanish } = useActivityTranslations(allActivityNames);
 
   useEffect(() => {
     const fetchDayPlan = async () => {
@@ -285,7 +293,14 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       />
                     )}
                     <div className="flex-1">
-                      <div className="text-sm text-[color:var(--text-primary)]">{inspection.activity_name}</div>
+                      <div className="text-sm text-[color:var(--text-primary)]">
+                        {isSpanish && translations[inspection.activity_name]
+                          ? translations[inspection.activity_name]
+                          : inspection.activity_name}
+                      </div>
+                      {isSpanish && translations[inspection.activity_name] && (
+                        <div className="text-xs text-[color:var(--text-muted)]">{inspection.activity_name}</div>
+                      )}
                       {inspection.trade && (
                         <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{inspection.trade}</div>
                       )}
@@ -345,7 +360,14 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm text-[color:var(--text-primary)] mb-0.5">{task.activity_name}</div>
+                          <div className="text-sm text-[color:var(--text-primary)] mb-0.5">
+                            {isSpanish && translations[task.activity_name]
+                              ? translations[task.activity_name]
+                              : task.activity_name}
+                          </div>
+                          {isSpanish && translations[task.activity_name] && (
+                            <div className="text-xs text-[color:var(--text-muted)]">{task.activity_name}</div>
+                          )}
                           {task.trade && (
                             <div className="text-xs text-[color:var(--text-muted)]">{task.trade}</div>
                           )}

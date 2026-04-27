@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Zap, Clock, CheckCircle2, AlertTriangle, ChevronRight, RefreshCw, Users, CloudRain, Sun, CloudSun, Cloud, CloudLightning, Wind, Snowflake, Thermometer, Activity } from "lucide-react";
 import type { ParsedActivity, DailyRisk } from "@/types";
 import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface YesterdayRecap {
   logDate: string;
@@ -47,11 +48,27 @@ function statusLabel(status: string) {
   }
 }
 
-function ActivityCard({ activity }: { activity: ParsedActivity }) {
+function ActivityCard({
+  activity,
+  translations = {},
+  isSpanish = false,
+}: {
+  activity: ParsedActivity;
+  translations?: Record<string, string>;
+  isSpanish?: boolean;
+}) {
+  const displayName =
+    isSpanish && translations[activity.activity_name]
+      ? translations[activity.activity_name]
+      : activity.activity_name;
+
   return (
     <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center gap-3">
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{activity.activity_name}</div>
+        <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{displayName}</div>
+        {isSpanish && translations[activity.activity_name] && (
+          <div className="text-xs text-[color:var(--text-muted)] truncate">{activity.activity_name}</div>
+        )}
         <div className="flex items-center gap-3 mt-1">
           {activity.trade && (
             <span className="text-xs text-[#F97316]">{activity.trade}</span>
@@ -74,6 +91,15 @@ function ActivityCard({ activity }: { activity: ParsedActivity }) {
 export default function TodayTab({ projectId }: { projectId: string }) {
   const [data, setData] = useState<TodayData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Collect all activity names across all sections for translation
+  const allActivityNames = [
+    ...(data?.happeningToday ?? []),
+    ...(data?.recentStarts ?? []),
+    ...(data?.finishingSoon ?? []),
+    ...(data?.atRisk ?? []),
+  ].map((a) => a.activity_name);
+  const { translations, isSpanish } = useActivityTranslations(allActivityNames);
 
   const fetchData = async () => {
     setLoading(true);
@@ -223,7 +249,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
           </p>
         ) : (
           <div className="space-y-2">
-            {data.happeningToday.map((a) => <ActivityCard key={a.id} activity={a} />)}
+            {data.happeningToday.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
           </div>
         )}
       </div>
@@ -237,7 +263,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
             <span className="text-xs text-[color:var(--text-muted)]">({data.atRisk.length})</span>
           </div>
           <div className="space-y-2">
-            {data.atRisk.map((a) => <ActivityCard key={a.id} activity={a} />)}
+            {data.atRisk.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
           </div>
         </div>
       )}
@@ -251,7 +277,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
             <span className="text-xs text-[color:var(--text-muted)]">{t('ui.last.3.days')}</span>
           </div>
           <div className="space-y-2">
-            {data.recentStarts.map((a) => <ActivityCard key={a.id} activity={a} />)}
+            {data.recentStarts.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
           </div>
         </div>
       )}
@@ -265,7 +291,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
             <span className="text-xs text-[color:var(--text-muted)]">{t('ui.next.3.days')}</span>
           </div>
           <div className="space-y-2">
-            {data.finishingSoon.map((a) => <ActivityCard key={a.id} activity={a} />)}
+            {data.finishingSoon.map((a) => <ActivityCard key={a.id} activity={a} translations={translations} isSpanish={isSpanish} />)}
           </div>
         </div>
       )}

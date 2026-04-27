@@ -7,6 +7,7 @@ import type { ParsedActivity, DailyRisk, ReadyCheck } from "@/types";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 function fmt(d?: string) {
   if (!d) return "—";
@@ -66,6 +67,7 @@ interface Props {
 
 export default function ActivityDrawer({ activity, projectId, onClose, onActivityChange }: Props) {
   const router = useRouter();
+  const { translations, isSpanish } = useActivityTranslations([activity.activity_name]);
   const [risks, setRisks] = useState<DailyRisk[]>([]);
   const [predecessors, setPredecessors] = useState<RelationshipActivity[]>([]);
   const [successors, setSuccessors] = useState<RelationshipActivity[]>([]);
@@ -163,7 +165,14 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {statusLabel(activity.status)}
               </span>
             </div>
-            <h2 className="font-bold text-[color:var(--text-primary)] text-base leading-tight">{activity.activity_name}</h2>
+            <h2 className="font-bold text-[color:var(--text-primary)] text-base leading-tight">
+              {isSpanish && translations[activity.activity_name]
+                ? translations[activity.activity_name]
+                : activity.activity_name}
+            </h2>
+            {isSpanish && translations[activity.activity_name] && (
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{activity.activity_name}</p>
+            )}
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors shrink-0">
             <X size={18} />
