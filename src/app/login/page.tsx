@@ -1,21 +1,28 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
-import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft, HardHat, Briefcase } from "lucide-react";
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/dashboard";
+  const redirectParam = searchParams.get("redirect");
 
+  const [role, setRole] = useState<"gc" | "sub">(
+    redirectParam?.startsWith("/sub") ? "sub" : "gc"
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const isGC = role === "gc";
+  const accentColor = isGC ? "#E85D1C" : "#3B82F6";
+  const defaultRedirect = isGC ? "/dashboard" : "/sub/dashboard";
+  const redirect = redirectParam || defaultRedirect;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,12 +43,8 @@ function LoginForm() {
     }
 
     if (data.user) {
-      // Sign out all other sessions — single session enforcement
       await supabase.auth.signOut({ scope: "others" });
-
-      // Wait briefly for the auth cookie to propagate before navigating
       await new Promise(resolve => setTimeout(resolve, 300));
-      
       window.location.href = redirect;
     }
   };
@@ -50,8 +53,8 @@ function LoginForm() {
     <div className="min-h-screen flex items-center justify-center p-4 md:p-6" style={{ background: "#F5F3EE" }}>
       <div className="w-full max-w-md">
         {/* Back to Home */}
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
@@ -71,18 +74,52 @@ function LoginForm() {
           </span>
         </Link>
 
+        {/* Role Toggle */}
+        <div className="flex gap-2 mb-6">
+          <button
+            onClick={() => setRole("gc")}
+            className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all"
+            style={{
+              background: isGC ? "#E85D1C" : "white",
+              color: isGC ? "white" : "rgba(13,13,13,0.55)",
+              border: isGC ? "2px solid #E85D1C" : "2px solid rgba(13,13,13,0.12)",
+            }}
+          >
+            <HardHat size={18} />
+            General Contractor
+          </button>
+          <button
+            onClick={() => setRole("sub")}
+            className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all"
+            style={{
+              background: !isGC ? "#3B82F6" : "white",
+              color: !isGC ? "white" : "rgba(13,13,13,0.55)",
+              border: !isGC ? "2px solid #3B82F6" : "2px solid rgba(13,13,13,0.12)",
+            }}
+          >
+            <Briefcase size={18} />
+            Subcontractor
+          </button>
+        </div>
+
         {/* Login Card */}
         <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(232,93,28,0.1)" }}>
-              <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ background: isGC ? "rgba(232,93,28,0.1)" : "rgba(59,130,246,0.1)" }}
+            >
+              {isGC
+                ? <HardHat size={24} style={{ color: "#E85D1C" }} />
+                : <Briefcase size={24} style={{ color: "#3B82F6" }} />
+              }
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                General Contractor
+                {isGC ? "General Contractor" : "Subcontractor"}
               </h1>
               <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                Sign in to your GC account
+                {isGC ? "Sign in to your GC account" : "Sign in to your Sub account"}
               </p>
             </div>
           </div>
@@ -105,10 +142,10 @@ function LoginForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                style={{ 
+                style={{
                   background: "#F5F3EE",
                   borderColor: "rgba(13,13,13,0.12)",
-                  color: "#0D0D0D"
+                  color: "#0D0D0D",
                 }}
                 placeholder="you@example.com"
               />
@@ -126,10 +163,10 @@ function LoginForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full px-4 py-3 pr-12 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{ 
+                  style={{
                     background: "#F5F3EE",
                     borderColor: "rgba(13,13,13,0.12)",
-                    color: "#0D0D0D"
+                    color: "#0D0D0D",
                   }}
                   placeholder="••••••••"
                 />
@@ -147,8 +184,8 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl font-bold text-[color:var(--text-primary)] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              style={{ background: "#E85D1C" }}
+              className="w-full py-3 px-4 rounded-xl font-bold text-white transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              style={{ background: accentColor }}
             >
               {loading ? (
                 <>
@@ -163,15 +200,13 @@ function LoginForm() {
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Don't have an account?{" "}
-              <Link href="/signup" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
+              Don&apos;t have an account?{" "}
+              <Link
+                href={isGC ? "/signup" : "/signup/sub"}
+                className="font-bold transition-colors"
+                style={{ color: accentColor }}
+              >
                 Sign up
-              </Link>
-            </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Subcontractor?{" "}
-              <Link href="/login/sub" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                Sign in here
               </Link>
             </p>
           </div>
@@ -188,11 +223,13 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F3EE" }}>
-        <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#E85D1C" }} />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F3EE" }}>
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#E85D1C" }} />
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );
