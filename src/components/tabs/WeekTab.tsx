@@ -40,7 +40,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [showQR, setShowQR] = useState(false);
 
   // Collect all activity names for translation
-  const allActivityNames = data?.activities.map((a) => a.activity_name) ?? [];
+  const allActivityNames = (data?.activities ?? []).map((a) => a.activity_name);
   const { translations, loading: translating, isSpanish } = useActivityTranslations(allActivityNames);
 
   useEffect(() => {
