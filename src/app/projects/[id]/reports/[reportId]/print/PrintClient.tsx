@@ -21,7 +21,7 @@ function priorityColor(priority: IssuePriority): string {
     case "high": return "#DC2626";
     case "medium": return "#D97706";
     case "low": return "#16A34A";
-    default: return "#6B7280";
+    default: return "var(--text-muted)";
   }
 }
 

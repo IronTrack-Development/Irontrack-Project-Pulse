@@ -148,7 +148,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16">
                     <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">
-                      <circle cx="18" cy="18" r="16" fill="none" stroke="#1F1F25" strokeWidth="3" />
+                      <circle cx="18" cy="18" r="16" fill="none" stroke="var(--bg-tertiary)" strokeWidth="3" />
                       <circle
                         cx="18" cy="18" r="16" fill="none"
                         stroke={data.milestoneHitRate >= 80 ? "#22C55E" : data.milestoneHitRate >= 50 ? "#EAB308" : "#EF4444"}

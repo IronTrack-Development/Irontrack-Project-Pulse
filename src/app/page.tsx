@@ -173,7 +173,7 @@ export default function LandingPage() {
                     { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#E85D1C" },
                     { task: "Rough-In Electrical - Tower 2", pct: "60%", color: "#3B82F6" },
                     { task: "Pour Foundation North Wing", pct: "100%", color: "#22C55E" },
-                    { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "#6B7280" },
+                    { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "var(--text-muted)" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                       <div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
@@ -299,7 +299,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "#6B7280" : "#E85D1C" }}>
+                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "var(--text-muted)" : "#E85D1C" }}>
                         {i === 4 ? "+14" : ["JR", "MS", "DT"][i - 1]}
                       </div>
                     ))}

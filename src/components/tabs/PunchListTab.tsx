@@ -69,7 +69,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; pulse: boolean }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", pulse: true },
   code:        { label: "Code",        color: "#F97316", pulse: false },
-  standard:    { label: "Standard",    color: "#6B7280", pulse: false },
+  standard:    { label: "Standard",    color: "var(--text-muted)", pulse: false },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", pulse: false },
 };
 

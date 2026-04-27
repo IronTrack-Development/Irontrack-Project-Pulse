@@ -21,7 +21,7 @@ const STATUS_COLORS: Record<string, string> = {
 const PRIORITY_COLORS: Record<string, string> = {
   high: "#EF4444",
   medium: "#EAB308",
-  low: "#6B7280",
+  low: "var(--text-muted)",
 };
 
 type FilterStatus = "all" | FieldReportStatus;
@@ -106,8 +106,8 @@ export default function FieldReportsDashboard({ projectId }: Props) {
               onClick={() => setFilter(s)}
               className="px-3 py-1.5 rounded-full text-xs font-medium transition-all min-h-[36px]"
               style={{
-                background: filter === s ? "#F97316" : "#1F1F25",
-                color: filter === s ? "#fff" : "#9CA3AF",
+                background: filter === s ? "#F97316" : "var(--bg-tertiary)",
+                color: filter === s ? "#fff" : "var(--text-secondary)",
               }}
             >
               {s === "all" ? "All" : s === "open" ? "Open" : "Resolved"}

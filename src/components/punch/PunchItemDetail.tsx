@@ -47,7 +47,7 @@ interface PunchItemDetailProps {
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
   code:        { label: "Code",        color: "#F97316", bg: "bg-orange-500/15" },
-  standard:    { label: "Standard",    color: "#6B7280", bg: "bg-gray-500/15" },
+  standard:    { label: "Standard",    color: "var(--text-muted)", bg: "bg-gray-500/15" },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
 

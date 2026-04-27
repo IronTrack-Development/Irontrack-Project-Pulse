@@ -42,7 +42,7 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 flex flex-col items-center justify-center">
           <div className="relative w-28 h-28 mb-4">
             <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="#1F1F25" strokeWidth="8" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="var(--bg-tertiary)" strokeWidth="8" />
               <circle
                 cx="50"
                 cy="50"
@@ -169,7 +169,7 @@ export default function OverviewTab({ project }: { project: Project }) {
           {[
             { label: "Complete", value: stats.completeActivities, color: "#22C55E" },
             { label: "In Progress", value: stats.inProgressActivities, color: "#3B82F6" },
-            { label: "Not Started", value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "#6B7280" },
+            { label: "Not Started", value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "var(--text-muted)" },
             { label: "Overdue", value: stats.lateActivities, color: "#EAB308" },
           ].map(({ label, value, color }) => (
             <div key={label}>

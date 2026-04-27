@@ -53,7 +53,7 @@ interface SheetOrganizerProps {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const DISCIPLINE_COLORS: Record<string, string> = {
-  general: "#6B7280",
+  general: "var(--text-muted)",
   civil: "#A16207",
   landscape: "#22C55E",
   architectural: "#3B82F6",
@@ -62,7 +62,7 @@ const DISCIPLINE_COLORS: Record<string, string> = {
   electrical: "#EAB308",
   plumbing: "#22D3EE",
   fire_protection: "#EF4444",
-  other: "#6B7280",
+  other: "var(--text-muted)",
 };
 
 const DISCIPLINE_PREFIX: Record<string, string> = {
@@ -277,7 +277,7 @@ export default function SheetOrganizer({
       id: `custom_${Date.now()}`,
       name: newCategoryName.trim(),
       discipline: "other",
-      color: "#6B7280",
+      color: "var(--text-muted)",
       isCustom: true,
       sort_order: categories.length,
       assignedPages: [],

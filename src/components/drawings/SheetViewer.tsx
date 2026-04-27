@@ -65,8 +65,8 @@ const DISCIPLINE_COLORS: Record<string, string> = {
   civil: "#8B5CF6",
   landscape: "#10B981",
   fire_protection: "#F43F5E",
-  general: "#6B7280",
-  other: "#6B7280",
+  general: "var(--text-muted)",
+  other: "var(--text-muted)",
 };
 
 interface SheetViewerProps {
@@ -233,8 +233,8 @@ export default function SheetViewer({
               <span
                 className="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide shrink-0"
                 style={{
-                  backgroundColor: (DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280") + "25",
-                  color: DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280",
+                  backgroundColor: (DISCIPLINE_COLORS[currentSheet.discipline] || "var(--text-muted)") + "25",
+                  color: DISCIPLINE_COLORS[currentSheet.discipline] || "var(--text-muted)",
                 }}
               >
                 {currentSheet.discipline.replace("_", " ")}
@@ -390,7 +390,7 @@ export default function SheetViewer({
           <div className="flex items-center justify-center gap-1.5 py-1 border-b border-[var(--border-primary)]/50">
             <span
               className="text-[10px] font-semibold uppercase tracking-widest"
-              style={{ color: DISCIPLINE_COLORS[currentSheet.discipline] || "#6B7280" }}
+              style={{ color: DISCIPLINE_COLORS[currentSheet.discipline] || "var(--text-muted)" }}
             >
               {currentSheet.discipline.replace("_", " ")}
             </span>

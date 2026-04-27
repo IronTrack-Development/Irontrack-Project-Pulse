@@ -50,7 +50,7 @@ interface RFIDetailProps {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: "Draft",        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: "Draft",        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
@@ -61,7 +61,7 @@ const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   critical: { color: "#EF4444", bg: "bg-red-500/20" },
   high:     { color: "#F97316", bg: "bg-orange-500/20" },
   normal:   { color: "#3B82F6", bg: "bg-blue-500/20" },
-  low:      { color: "#6B7280", bg: "bg-gray-700/30" },
+  low:      { color: "var(--text-muted)", bg: "bg-gray-700/30" },
 };
 
 export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabaseUrl }: RFIDetailProps) {
@@ -125,9 +125,6 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
           <div className="flex-1 min-w-0 mr-3">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-mono text-[color:var(--text-muted)]">{rfi.rfi_number}</span>
-              {rfi.ai_drafted && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[#F97316]/15 text-[#F97316]">✨ AI</span>
-              )}
             </div>
             <h2 className="text-sm font-semibold text-[color:var(--text-primary)] leading-snug">{rfi.subject}</h2>
           </div>

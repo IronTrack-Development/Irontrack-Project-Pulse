@@ -133,7 +133,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
     { value: "critical", label: "Critical", color: "#EF4444" },
     { value: "high", label: "High", color: "#F97316" },
     { value: "normal", label: "Normal", color: "#3B82F6" },
-    { value: "low", label: "Low", color: "#6B7280" },
+    { value: "low", label: "Low", color: "var(--text-muted)" },
   ];
 
   const architectContacts = contacts.filter(

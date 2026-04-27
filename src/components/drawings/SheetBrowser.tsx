@@ -77,8 +77,8 @@ const DISCIPLINE_COLOR: Record<Discipline, string> = {
   civil: "#A16207",           // brown/earth
   landscape: "#22C55E",       // green
   fire_protection: "#EF4444", // red
-  general: "#6B7280",         // gray
-  other: "#6B7280",           // gray
+  general: "var(--text-muted)",         // gray
+  other: "var(--text-muted)",           // gray
 };
 
 

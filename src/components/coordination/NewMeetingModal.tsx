@@ -82,8 +82,8 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                   onClick={() => handleTypeChange(mt.name)}
                   className="px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
                   style={{
-                    background: selectedType === mt.name ? "#F97316" : "#1F1F25",
-                    color: selectedType === mt.name ? "#fff" : "#9CA3AF",
+                    background: selectedType === mt.name ? "#F97316" : "var(--bg-tertiary)",
+                    color: selectedType === mt.name ? "#fff" : "var(--text-secondary)",
                   }}
                 >
                   {mt.name}

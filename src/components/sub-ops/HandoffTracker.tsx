@@ -79,7 +79,7 @@ interface Template {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; abbrev: string; color: string; bg: string }> = {
-  not_started: { label: "Not Started", abbrev: "NS", color: "#6B7280", bg: "rgba(107,114,128,0.2)" },
+  not_started: { label: "Not Started", abbrev: "NS", color: "var(--text-muted)", bg: "rgba(107,114,128,0.2)" },
   in_progress: { label: "In Progress", abbrev: "IP", color: "#3B82F6", bg: "rgba(59,130,246,0.2)" },
   ready_for_handoff: { label: "Ready", abbrev: "RDY", color: "#EAB308", bg: "rgba(234,179,8,0.2)" },
   handed_off: { label: "Handed Off", abbrev: "HO", color: "#F97316", bg: "rgba(249,115,22,0.2)" },
@@ -656,8 +656,8 @@ export default function HandoffTracker({ projectId }: Props) {
                           onClick={() => updateHandoffStatus(s)}
                           className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-h-[32px]"
                           style={{
-                            backgroundColor: active ? cfg.bg : "#1F1F25",
-                            color: active ? cfg.color : "#6B7280",
+                            backgroundColor: active ? cfg.bg : "var(--bg-tertiary)",
+                            color: active ? cfg.color : "var(--text-muted)",
                             borderWidth: 1,
                             borderColor: active ? cfg.color : "transparent",
                           }}

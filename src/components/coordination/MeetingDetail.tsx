@@ -33,7 +33,7 @@ const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
   in_progress: "#F97316",
   completed: "#22C55E",
-  cancelled: "#6B7280",
+  cancelled: "var(--text-muted)",
 };
 
 const AGENDA_STATUS_COLORS: Record<string, string> = {
@@ -46,11 +46,11 @@ const AGENDA_STATUS_COLORS: Record<string, string> = {
 const PRIORITY_COLORS: Record<string, string> = {
   high: "#EF4444",
   medium: "#EAB308",
-  low: "#6B7280",
+  low: "var(--text-muted)",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  general: "#6B7280",
+  general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
   manpower: "#F97316",
@@ -60,7 +60,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   drawing: "#EC4899",
   submittal: "#06B6D4",
   inspection: "#14B8A6",
-  custom: "#9CA3AF",
+  custom: "var(--text-secondary)",
 };
 
 export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingDetailProps) {
@@ -470,7 +470,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   onChange={(e) => updateActionStatus(item.id, e.target.value)}
                   className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px]"
                   style={{
-                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F97316" : item.status === "resolved" ? "#22C55E" : "#6B7280",
+                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F97316" : item.status === "resolved" ? "#22C55E" : "var(--text-muted)",
                   }}
                 >
                   <option value="open">Open</option>

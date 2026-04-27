@@ -23,7 +23,7 @@ function statusColor(pct: number, status: string) {
   if (status === "complete" || pct >= 100) return "#22C55E";
   if (status === "late") return "#EF4444";
   if (pct > 0) return "#3B82F6";
-  return "#6B7280";
+  return "var(--text-muted)";
 }
 
 export default async function PublicWeekView({ params }: PageProps) {

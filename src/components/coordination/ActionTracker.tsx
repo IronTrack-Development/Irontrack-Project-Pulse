@@ -17,17 +17,17 @@ const STATUS_COLORS: Record<string, string> = {
   open: "#3B82F6",
   in_progress: "#F97316",
   resolved: "#22C55E",
-  cancelled: "#6B7280",
+  cancelled: "var(--text-muted)",
 };
 
 const PRIORITY_COLORS: Record<string, string> = {
   high: "#EF4444",
   medium: "#EAB308",
-  low: "#6B7280",
+  low: "var(--text-muted)",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  general: "#6B7280",
+  general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
   manpower: "#F97316",
@@ -37,7 +37,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   drawing: "#EC4899",
   submittal: "#06B6D4",
   inspection: "#14B8A6",
-  custom: "#9CA3AF",
+  custom: "var(--text-secondary)",
 };
 
 type ActionItemWithMeeting = CoordinationActionItem & { meeting_title?: string; meeting_date?: string };

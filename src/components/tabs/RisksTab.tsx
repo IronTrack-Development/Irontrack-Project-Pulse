@@ -10,7 +10,7 @@ function severityStyle(severity: string) {
   switch (severity) {
     case "high": return { badge: "bg-[#EF4444]/15 text-[#EF4444] border-[#EF4444]/30", border: "border-l-[#EF4444]", icon: "#EF4444" };
     case "medium": return { badge: "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/30", border: "border-l-[#EAB308]", icon: "#EAB308" };
-    default: return { badge: "bg-[color:var(--bg-tertiary)] text-[color:var(--text-secondary)] border-gray-700", border: "border-l-gray-600", icon: "#6B7280" };
+    default: return { badge: "bg-[color:var(--bg-tertiary)] text-[color:var(--text-secondary)] border-gray-700", border: "border-l-gray-600", icon: "var(--text-muted)" };
   }
 }
 

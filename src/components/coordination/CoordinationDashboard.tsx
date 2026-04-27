@@ -24,7 +24,7 @@ const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
   in_progress: "#F97316",
   completed: "#22C55E",
-  cancelled: "#6B7280",
+  cancelled: "var(--text-muted)",
 };
 
 export default function CoordinationDashboard({ projectId, defaultView = "meetings" }: CoordinationDashboardProps) {

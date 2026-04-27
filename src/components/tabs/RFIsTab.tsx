@@ -53,7 +53,7 @@ const STATUS_FILTERS = [
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft:        { label: "Draft",        color: "#6B7280", bg: "bg-gray-700/30" },
+  draft:        { label: "Draft",        color: "var(--text-muted)", bg: "bg-gray-700/30" },
   submitted:    { label: "Submitted",    color: "#EAB308", bg: "bg-yellow-500/15" },
   under_review: { label: "Under Review", color: "#A855F7", bg: "bg-purple-500/15" },
   answered:     { label: "Answered",     color: "#22C55E", bg: "bg-green-500/15" },
@@ -64,7 +64,7 @@ const PRIORITY_CONFIG: Record<string, { color: string }> = {
   critical: { color: "#EF4444" },
   high:     { color: "#F97316" },
   normal:   { color: "#3B82F6" },
-  low:      { color: "#6B7280" },
+  low:      { color: "var(--text-muted)" },
 };
 
 export default function RFIsTab({ projectId }: RFIsTabProps) {
