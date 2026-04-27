@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getLanguage } from "@/lib/i18n";
 
 /**
@@ -11,17 +11,24 @@ export function useActivityTranslations(activityNames: string[]) {
   const [translations, setTranslations] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const lang = getLanguage();
+  const lastFetchKey = useRef("");
 
-  // Stable key: number of unique names + language
-  // (using activityNames.length as dep keeps the hook simple; deduplication is done inside)
   useEffect(() => {
     if (lang !== "es" || activityNames.length === 0) {
-      setTranslations({});
+      // Only clear if we had translations before
+      if (Object.keys(translations).length > 0) {
+        setTranslations({});
+      }
       return;
     }
 
     const uniqueNames = [...new Set(activityNames.filter(Boolean))];
     if (uniqueNames.length === 0) return;
+
+    // Avoid re-fetching the same set
+    const fetchKey = uniqueNames.sort().join("|");
+    if (fetchKey === lastFetchKey.current) return;
+    lastFetchKey.current = fetchKey;
 
     setLoading(true);
 
@@ -38,7 +45,7 @@ export function useActivityTranslations(activityNames: string[]) {
         // Silent fail — components will show English fallback
       })
       .finally(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, activityNames.length]);
 
   return { translations, loading, isSpanish: lang === "es" };
