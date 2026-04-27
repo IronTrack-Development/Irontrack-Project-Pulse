@@ -97,7 +97,7 @@ export default function MarkupWrapper({
       {/* Capturing spinner */}
       {capturing && (
         <div className="fixed inset-0 z-[9998] bg-black/60 flex items-center justify-center">
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl px-6 py-5 flex items-center gap-3">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl px-6 py-5 flex items-center gap-3">
             <div className="w-5 h-5 rounded-full border-2 border-[#F97316] border-t-transparent animate-spin" />
             <span className="text-[color:var(--text-primary)] text-sm font-semibold">Preparing markup…</span>
           </div>

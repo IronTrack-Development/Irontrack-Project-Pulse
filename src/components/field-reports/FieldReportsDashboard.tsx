@@ -91,7 +91,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Reports</h2>
-          <span className="px-2 py-0.5 bg-[#1F1F25] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
+          <span className="px-2 py-0.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
             {count}
           </span>
         </div>
@@ -124,7 +124,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
         </button>
         <button
           onClick={() => setShowMultiAdd(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
         >
           <ImagePlus size={14} />
           Multi-add
@@ -148,7 +148,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
             <button
               key={report.id}
               onClick={() => setSelectedReport(report)}
-              className="w-full flex items-center gap-3 p-3 bg-[#121217] border border-[#1F1F25] rounded-xl hover:border-[#2a2a35] transition-colors min-h-[44px]"
+              className="w-full flex items-center gap-3 p-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-[var(--border-secondary)] transition-colors min-h-[44px]"
             >
               {/* Photo thumbnail */}
               {report.photo_path ? (
@@ -158,7 +158,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
                   className="w-[60px] h-[60px] rounded-xl object-cover shrink-0"
                 />
               ) : (
-                <div className="w-[60px] h-[60px] rounded-xl bg-[#1F1F25] flex items-center justify-center shrink-0">
+                <div className="w-[60px] h-[60px] rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center shrink-0">
                   <ImageOff size={20} className="text-gray-600" />
                 </div>
               )}

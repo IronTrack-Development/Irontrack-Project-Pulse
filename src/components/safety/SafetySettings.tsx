@@ -38,9 +38,9 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
-      <div className="bg-[#121217] w-full max-w-sm rounded-2xl border border-[#1F1F25] flex flex-col">
+      <div className="bg-[var(--bg-secondary)] w-full max-w-sm rounded-2xl border border-[var(--border-primary)] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Settings size={16} className="text-[#F97316]" />
             Safety Settings
@@ -64,7 +64,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Your company name (for PDF headers)"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Used in exported PDF headers
@@ -80,7 +80,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={defaultPresenter}
               onChange={(e) => setDefaultPresenter(e.target.value)}
               placeholder="Auto-fill presenter name on new talks"
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Pre-fills the presenter field when creating new talks
@@ -89,10 +89,10 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[#1F1F25] flex gap-2">
+        <div className="p-4 border-t border-[var(--border-primary)] flex gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[#2a2a35] transition-colors min-h-[44px]"
+            className="px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium hover:bg-[var(--bg-hover)] transition-colors min-h-[44px]"
           >
             Cancel
           </button>

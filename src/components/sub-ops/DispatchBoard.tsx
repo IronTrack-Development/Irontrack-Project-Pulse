@@ -191,7 +191,7 @@ export default function DispatchBoard({ projectId }: Props) {
 
       {view === "create" ? (
         /* ── Create Dispatch Form ── */
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 md:p-6 space-y-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
           <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
             <Send size={14} className="text-[#F97316]" /> New Dispatch
           </h3>
@@ -204,7 +204,7 @@ export default function DispatchBoard({ projectId }: Props) {
               <select
                 value={form.foreman_id}
                 onChange={(e) => setForm({ ...form, foreman_id: e.target.value })}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 <option value="">Select foreman...</option>
                 {foremen.map((f) => (
@@ -218,7 +218,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 type="date"
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -232,7 +232,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.project_name}
                 onChange={(e) => setForm({ ...form, project_name: e.target.value })}
                 placeholder="e.g., Building A - Phase 2"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -241,7 +241,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.project_location}
                 onChange={(e) => setForm({ ...form, project_location: e.target.value })}
                 placeholder="e.g., 3rd Floor, East Wing"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -255,7 +255,7 @@ export default function DispatchBoard({ projectId }: Props) {
               onChange={(e) => setForm({ ...form, scope_of_work: e.target.value })}
               placeholder="What are they doing today?"
               rows={3}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -267,7 +267,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 onChange={(e) => setForm({ ...form, priority_notes: e.target.value })}
                 placeholder="What should they watch out for?"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
             <div>
@@ -277,7 +277,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 onChange={(e) => setForm({ ...form, safety_focus: e.target.value })}
                 placeholder="Today's safety topic"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 onChange={(e) => setForm({ ...form, material_notes: e.target.value })}
                 placeholder="What's being delivered, what to verify"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
             <div>
@@ -300,7 +300,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 onChange={(e) => setForm({ ...form, special_instructions: e.target.value })}
                 placeholder="Any other notes"
                 rows={2}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
               />
             </div>
           </div>
@@ -314,7 +314,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.expected_crew_size}
                 onChange={(e) => setForm({ ...form, expected_crew_size: e.target.value })}
                 placeholder="e.g., 4"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -325,7 +325,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 value={form.expected_hours}
                 onChange={(e) => setForm({ ...form, expected_hours: e.target.value })}
                 placeholder="e.g., 8"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -345,7 +345,7 @@ export default function DispatchBoard({ projectId }: Props) {
                       className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
                         selected
                           ? "bg-[#F97316]/20 text-[#F97316] border border-[#F97316]/30"
-                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] border border-[#1F1F25] hover:text-[color:var(--text-primary)]"
+                          : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] border border-[var(--border-primary)] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
                       <FileText size={12} />
@@ -377,7 +377,7 @@ export default function DispatchBoard({ projectId }: Props) {
         <>
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1.5 bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-1.5">
+            <div className="flex items-center gap-1.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-1.5">
               <Calendar size={12} className="text-[color:var(--text-muted)]" />
               <input
                 type="date"
@@ -389,7 +389,7 @@ export default function DispatchBoard({ projectId }: Props) {
             <select
               value={filterForeman}
               onChange={(e) => setFilterForeman(e.target.value)}
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
             >
               <option value="">All Foremen</option>
               {foremen.map((f) => (
@@ -399,7 +399,7 @@ export default function DispatchBoard({ projectId }: Props) {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
             >
               <option value="">All Status</option>
               <option value="pending">Pending</option>
@@ -411,7 +411,7 @@ export default function DispatchBoard({ projectId }: Props) {
 
           {/* Dispatch Cards */}
           {dispatches.length === 0 ? (
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
               <Send size={28} className="mx-auto text-gray-600 mb-2" />
               <p className="text-sm text-[color:var(--text-secondary)]">No dispatches for this date</p>
               <p className="text-xs text-gray-600 mt-1">Create a dispatch to send work assignments to your foremen</p>
@@ -424,7 +424,7 @@ export default function DispatchBoard({ projectId }: Props) {
                 return (
                   <div
                     key={d.id}
-                    className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden"
+                    className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden"
                   >
                     <div
                       className="flex items-center justify-between p-4 cursor-pointer hover:bg-[#1a1a20] transition-colors"
@@ -447,7 +447,7 @@ export default function DispatchBoard({ projectId }: Props) {
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-[#1F1F25] p-4 space-y-3 bg-[#0e0e12] text-xs">
+                      <div className="border-t border-[var(--border-primary)] p-4 space-y-3 bg-[#0e0e12] text-xs">
                         {d.project_location && (
                           <div className="flex items-start gap-2">
                             <MapPin size={12} className="text-[color:var(--text-muted)] mt-0.5 flex-none" />

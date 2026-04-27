@@ -25,7 +25,7 @@ export default function RollupDashboard({ projectId }: RollupDashboardProps) {
   return (
     <div>
       {/* View toggle */}
-      <div className="flex gap-1 mb-4 bg-[#121217] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-4 bg-[var(--bg-secondary)] rounded-xl p-1 w-fit">
         {VIEWS.map((v) => (
           <button
             key={v.id}

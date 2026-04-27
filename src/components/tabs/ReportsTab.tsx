@@ -82,7 +82,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
 
   if (!generated) {
     return (
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 mb-6">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <CalendarDays size={16} className="text-[#F97316]" />
           <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
@@ -107,7 +107,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
   const weekLabel = `${new Date(data.weekStart + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${new Date(data.weekEnd + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
 
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6 mb-6">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -119,7 +119,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div className="flex gap-2">
           <button
             onClick={generate}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
             title="Refresh"
           >
             <RefreshCw size={14} />
@@ -135,22 +135,22 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Users size={14} className="mx-auto text-[#F97316] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.totalCrewHours}</div>
           <div className="text-[10px] text-[color:var(--text-muted)]">Crew-Hours</div>
         </div>
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Activity size={14} className="mx-auto text-[#22C55E] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.activitiesCompleted}</div>
           <div className="text-[10px] text-[color:var(--text-muted)]">Completed</div>
         </div>
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <CloudRain size={14} className="mx-auto text-[#3B82F6] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.weatherImpactDays}</div>
           <div className="text-[10px] text-[color:var(--text-muted)]">Weather Days</div>
         </div>
-        <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <AlertTriangle size={14} className="mx-auto text-[#EF4444] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.lostCrewHours}</div>
           <div className="text-[10px] text-[color:var(--text-muted)]">Lost Hours</div>
@@ -220,7 +220,7 @@ export default function ReportsTab({ projectId }: Props) {
         <div className="flex gap-2">
           <button
             onClick={fetchReports}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <RefreshCw size={15} />
           </button>
@@ -236,7 +236,7 @@ export default function ReportsTab({ projectId }: Props) {
 
       {reports.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="w-14 h-14 rounded-full bg-[#1F1F25] flex items-center justify-center mb-4">
+          <div className="w-14 h-14 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center mb-4">
             <FileText size={24} className="text-gray-600" />
           </div>
           <p className="text-[color:var(--text-secondary)] font-semibold mb-1">No observations yet</p>
@@ -256,7 +256,7 @@ export default function ReportsTab({ projectId }: Props) {
           {reports.map((report) => (
             <div
               key={report.id}
-              className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden"
             >
               <div className="p-4 flex items-start gap-3">
                 {/* Icon */}
@@ -277,7 +277,7 @@ export default function ReportsTab({ projectId }: Props) {
                           href={`/projects/${projectId}/reports/${report.id}/print`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
+                          className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
                           title="View PDF"
                         >
                           <ExternalLink size={14} />
@@ -286,7 +286,7 @@ export default function ReportsTab({ projectId }: Props) {
                       <button
                         onClick={() => handleDelete(report.id)}
                         disabled={deletingId === report.id}
-                        className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
+                        className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
                         title="Delete observation"
                       >
                         {deletingId === report.id ? (
@@ -320,7 +320,7 @@ export default function ReportsTab({ projectId }: Props) {
                   href={`/projects/${projectId}/reports/${report.id}/print`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
                 >
                   View Observation
                   <ChevronRight size={12} />

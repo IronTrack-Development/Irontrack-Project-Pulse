@@ -47,7 +47,7 @@ function LogCard({ log, projectId }: { log: DailyLog; projectId: string }) {
   return (
     <Link
       href={`/projects/${projectId}/daily-log?date=${log.log_date}&logId=${log.id}`}
-      className="block bg-[#121217] border border-[#1F1F25] rounded-xl p-4 hover:border-[#2a2a35] transition-colors"
+      className="block bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[var(--border-secondary)] transition-colors"
     >
       <div className="flex items-start justify-between mb-2">
         <div>
@@ -126,7 +126,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={fetchLogs}
-            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
           >
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           </button>

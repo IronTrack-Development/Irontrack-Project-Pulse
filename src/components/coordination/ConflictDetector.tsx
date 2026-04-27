@@ -37,7 +37,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
         {visibleConflicts.map((conflict, i) => (
           <div
             key={`${conflict.activity_a.id}-${conflict.activity_b.id}`}
-            className="p-3 rounded-lg bg-[#0B0B0D] border border-[#1F1F25]"
+            className="p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)]"
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
@@ -61,7 +61,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 {onCreateAction && (
                   <button
                     onClick={() => onCreateAction(conflict)}
-                    className="p-2 rounded-lg hover:bg-[#1F1F25] text-[#F97316] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[#F97316] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                     title="Create action item"
                   >
                     <Plus size={14} />
@@ -69,7 +69,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 )}
                 <button
                   onClick={() => dismiss(conflict)}
-                  className="p-2 rounded-lg hover:bg-[#1F1F25] text-[color:var(--text-muted)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                  className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                   title="Dismiss"
                 >
                   <X size={14} />

@@ -204,7 +204,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
       {/* ── Desktop: two-row nav (hidden on mobile) ─────────────────────────── */}
       <div className="hidden md:block">
         {/* Row 1: Group pills */}
-        <div className="flex items-center gap-2 pb-2 border-b border-[#1F1F25]">
+        <div className="flex items-center gap-2 pb-2 border-b border-[var(--border-primary)]">
           {NAV_GROUPS.map(({ id, label, icon: Icon }) => {
             const isActive = activeGroupId === id;
             return (
@@ -274,7 +274,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
 
         {/* Sub-tab strip for active group (skip if only 1 tab) */}
         {activeGroup.tabs.length > 1 && (
-          <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1 border-b border-[#1F1F25]">
+          <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1 border-b border-[var(--border-primary)]">
             {activeGroup.tabs.map(({ id: tabId, label, icon: Icon }) => {
               const isActive = activeTab === tabId;
               return (

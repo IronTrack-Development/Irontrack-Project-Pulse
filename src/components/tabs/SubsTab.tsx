@@ -175,10 +175,10 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       {/* Panel */}
-      <div className="flex flex-col w-full max-w-lg bg-[#0B0B0D] border-l border-[#1F1F25] h-full shadow-2xl">
+      <div className="flex flex-col w-full max-w-lg bg-[var(--bg-primary)] border-l border-[var(--border-primary)] h-full shadow-2xl">
 
         {/* Header */}
-        <div className="flex-none px-5 py-4 border-b border-[#1F1F25] bg-[#121217]">
+        <div className="flex-none px-5 py-4 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <ListChecks size={18} className="text-[#F97316]" />
@@ -199,7 +199,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search activities or trades..."
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
             />
             {search && (
               <button
@@ -230,9 +230,9 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
               const someSelected = selectedCount > 0 && selectedCount < acts.length;
 
               return (
-                <div key={trade} className="border-b border-[#1F1F25]">
+                <div key={trade} className="border-b border-[var(--border-primary)]">
                   {/* Trade header */}
-                  <div className="flex items-center gap-2 px-4 py-2.5 bg-[#121217] sticky top-0 z-10">
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-secondary)] sticky top-0 z-10">
                     <button
                       onClick={() => toggleTradeCollapse(trade)}
                       className="flex items-center gap-2 flex-1 min-w-0 text-left hover:text-[color:var(--text-primary)] transition-colors"
@@ -252,8 +252,8 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                         allSelected
                           ? "bg-[#F97316]/20 text-[#F97316] hover:bg-[#F97316]/10"
                           : someSelected
-                          ? "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
-                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                          ? "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                          : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
                       {allSelected ? "Deselect All" : "Select All"}
@@ -276,7 +276,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                             <div className={`flex-none mt-0.5 w-4 h-4 rounded border transition-colors flex items-center justify-center ${
                               checked
                                 ? "bg-[#F97316] border-[#F97316]"
-                                : "border-[#3a3a45] bg-[#0B0B0D]"
+                                : "border-[#3a3a45] bg-[var(--bg-primary)]"
                             }`}>
                               {checked && <Check size={10} className="text-[color:var(--text-primary)]" strokeWidth={3} />}
                             </div>
@@ -308,11 +308,11 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
         </div>
 
         {/* Footer — pb-20 to clear MobileNav on phones */}
-        <div className="flex-none px-5 py-4 pb-20 md:pb-4 border-t border-[#1F1F25] bg-[#121217]">
+        <div className="flex-none px-5 py-4 pb-20 md:pb-4 border-t border-[var(--border-primary)] bg-[var(--bg-secondary)]">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm font-medium transition-colors"
             >
               Cancel
             </button>
@@ -640,7 +640,7 @@ export default function SubsTab({ projectId }: Props) {
           <div className="flex items-center gap-2">
             <button
               onClick={handleOpenQrModal}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] rounded-lg text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <QrCode size={14} />
               QR Code
@@ -657,7 +657,7 @@ export default function SubsTab({ projectId }: Props) {
 
         {/* Add Sub Form */}
         {showAddForm && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">Add Subcontractor</h3>
               <button
@@ -677,7 +677,7 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => { setCompanyCode(e.target.value); setCodeLookupStatus("idle"); }}
                   onBlur={e => handleCodeLookup(e.target.value)}
                   placeholder="e.g., IT-482916"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
                 />
                 {codeLookupStatus === "loading" && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
@@ -702,7 +702,7 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => setNewName(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddSub()}
                   placeholder="e.g., ABC Plumbing"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -711,7 +711,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newContact}
                   onChange={e => setNewContact(e.target.value)}
                   placeholder="e.g., Joe Martinez"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -720,7 +720,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newPhone}
                   onChange={e => setNewPhone(e.target.value)}
                   placeholder="602-555-1234"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -729,7 +729,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newEmail}
                   onChange={e => setNewEmail(e.target.value)}
                   placeholder="joe@abcplumbing.com"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
             </div>
@@ -757,7 +757,7 @@ export default function SubsTab({ projectId }: Props) {
 
         {/* Sub List */}
         {subs.length === 0 ? (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
             <UserPlus size={32} className="mx-auto text-gray-600 mb-3" />
             <p className="text-[color:var(--text-secondary)] text-sm mb-1">No subcontractors added yet</p>
             <p className="text-gray-600 text-xs">Add a sub to share their filtered schedule view</p>
@@ -772,7 +772,7 @@ export default function SubsTab({ projectId }: Props) {
               return (
                 <div
                   key={sub.id}
-                  className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden"
+                  className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden"
                 >
                   {/* Sub Header Row */}
                   <div
@@ -796,7 +796,7 @@ export default function SubsTab({ projectId }: Props) {
                         <span className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded ${
                           activityCount > 0
                             ? "bg-[#F97316]/15 text-[#F97316]"
-                            : "bg-[#1F1F25] text-[color:var(--text-muted)]"
+                            : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)]"
                         }`}>
                           <ListChecks size={10} />
                           {activityCount > 0 ? `${activityCount} task${activityCount !== 1 ? "s" : ""} assigned` : "No tasks assigned"}
@@ -815,7 +815,7 @@ export default function SubsTab({ projectId }: Props) {
                           className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                             copiedId === sub.id
                               ? "bg-[#22C55E]/20 text-[#22C55E]"
-                              : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[#2a2a35]"
+                              : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[var(--bg-hover)]"
                           }`}
                         >
                           {copiedId === sub.id ? <Check size={12} /> : <Copy size={12} />}
@@ -840,7 +840,7 @@ export default function SubsTab({ projectId }: Props) {
 
                   {/* Expanded Detail */}
                   {isExpanded && (
-                    <div className="border-t border-[#1F1F25] p-4 space-y-3 bg-[#0e0e12]">
+                    <div className="border-t border-[var(--border-primary)] p-4 space-y-3 bg-[#0e0e12]">
 
                       {/* Contact Info */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
@@ -863,7 +863,7 @@ export default function SubsTab({ projectId }: Props) {
                         <button
                           onClick={(e) => openActivityPicker(sub.id, e)}
                           disabled={activitiesLoading}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-[#1F1F25] hover:bg-[#2a2a35] disabled:opacity-50 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors border border-[#2a2a35] hover:border-[#F97316]/30"
+                          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-50 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors border border-[var(--border-secondary)] hover:border-[#F97316]/30"
                         >
                           {activitiesLoading ? (
                             <div className="w-3 h-3 border border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -887,7 +887,7 @@ export default function SubsTab({ projectId }: Props) {
 
                       {/* Link Tracking Info */}
                       {status && status.status !== "not_sent" && (
-                        <div className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 space-y-1.5 text-xs">
+                        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 space-y-1.5 text-xs">
                           <div className="flex items-center gap-2">
                             <Link2 size={11} className="text-[color:var(--text-muted)] flex-none" />
                             <span className="text-[color:var(--text-muted)]">Link sent:</span>
@@ -921,7 +921,7 @@ export default function SubsTab({ projectId }: Props) {
                         const isLoadingReports = reportsLoading.has(sub.id);
                         const isOpen = reportsOpen[sub.id] ?? false;
                         return (
-                          <div className="bg-[#121217] border border-[#1F1F25] rounded-lg overflow-hidden">
+                          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg overflow-hidden">
                             <button
                               className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
                               onClick={() => setReportsOpen(prev => ({ ...prev, [sub.id]: !isOpen }))}
@@ -941,7 +941,7 @@ export default function SubsTab({ projectId }: Props) {
                               }
                             </button>
                             {isOpen && (
-                              <div className="border-t border-[#1F1F25] divide-y divide-[#1F1F25]">
+                              <div className="border-t border-[var(--border-primary)] divide-y divide-[#1F1F25]">
                                 {isLoadingReports ? (
                                   <div className="flex items-center justify-center py-5">
                                     <div className="w-4 h-4 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
@@ -996,7 +996,7 @@ export default function SubsTab({ projectId }: Props) {
                                                 <img
                                                   src={url}
                                                   alt={`Report photo ${i + 1}`}
-                                                  className="w-14 h-14 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
+                                                  className="w-14 h-14 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
                                                   loading="lazy"
                                                 />
                                                 {ts && (
@@ -1024,7 +1024,7 @@ export default function SubsTab({ projectId }: Props) {
                           <button
                             onClick={(e) => handleGenerateLink(sub.id, e)}
                             disabled={generating === sub.id}
-                            className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs transition-colors disabled:opacity-50"
+                            className="flex items-center gap-1 px-2.5 py-1.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs transition-colors disabled:opacity-50"
                           >
                             <Link2 size={12} />
                             {generating === sub.id ? "…" : "Regenerate Link"}
@@ -1064,9 +1064,9 @@ export default function SubsTab({ projectId }: Props) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
           onClick={(e) => { if (e.target === e.currentTarget) setShowQrModal(false); }}
         >
-          <div className="w-full max-w-sm bg-[#0B0B0D] border border-[#1F1F25] rounded-2xl shadow-2xl overflow-hidden">
+          <div className="w-full max-w-sm bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-2xl shadow-2xl overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] bg-[#121217]">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]">
               <div className="flex items-center gap-2">
                 <QrCode size={16} className="text-[#F97316]" />
                 <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Sub Self-Registration QR</h3>
@@ -1108,7 +1108,7 @@ export default function SubsTab({ projectId }: Props) {
                   </div>
 
                   {/* Join URL */}
-                  <div className="bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2">
+                  <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
                     <p className="text-[10px] text-gray-600 mb-1 uppercase tracking-wide font-medium">Registration Link</p>
                     <p className="text-xs text-[color:var(--text-secondary)] break-all font-mono leading-relaxed">{qrData.url}</p>
                   </div>
@@ -1120,7 +1120,7 @@ export default function SubsTab({ projectId }: Props) {
                       className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                         qrCopied
                           ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                          : "bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] hover:border-[#F97316]/30"
+                          : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-[#F97316]/30"
                       }`}
                     >
                       {qrCopied ? <Check size={13} /> : <ExternalLink size={13} />}
@@ -1128,7 +1128,7 @@ export default function SubsTab({ projectId }: Props) {
                     </button>
                     <button
                       onClick={() => window.print()}
-                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[#2a2a35] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <Printer size={13} />
                       Print

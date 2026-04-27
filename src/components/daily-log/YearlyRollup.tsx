@@ -66,14 +66,14 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
       <div className="flex items-center gap-3 mb-4">
         <button
           onClick={() => setYear(y => String(parseInt(y) - 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronLeft size={16} />
         </button>
         <div className="text-sm font-medium text-[color:var(--text-primary)]">{year}</div>
         <button
           onClick={() => setYear(y => String(parseInt(y) + 1))}
-          className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+          className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         >
           <ChevronRight size={16} />
         </button>
@@ -131,8 +131,8 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
               {data.quarterlySummaries.map((q) => (
                 <div
                   key={q.quarter}
-                  className={`bg-[#121217] border rounded-xl p-4 ${
-                    q.logDays > 0 ? "border-[#1F1F25]" : "border-[#1F1F25]/50 opacity-50"
+                  className={`bg-[var(--bg-secondary)] border rounded-xl p-4 ${
+                    q.logDays > 0 ? "border-[var(--border-primary)]" : "border-[var(--border-primary)]/50 opacity-50"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -142,7 +142,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                   {q.logDays > 0 ? (
                     <>
                       {/* Mini bar for crew-hours relative to max quarter */}
-                      <div className="h-2 bg-[#1F1F25] rounded-full mb-3 overflow-hidden">
+                      <div className="h-2 bg-[var(--bg-tertiary)] rounded-full mb-3 overflow-hidden">
                         <div
                           className="h-full bg-[#F97316] rounded-full transition-all duration-500"
                           style={{ width: `${(q.crewHours / maxQCrewHours) * 100}%` }}
@@ -187,7 +187,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
               <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Top Delay Reasons (Annual)</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.topDelays.map((d, i) => (
-                  <div key={d.code} className="bg-[#121217] border border-[#1F1F25] rounded-lg px-4 py-3 text-center">
+                  <div key={d.code} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-center">
                     <div className="text-lg font-bold text-[color:var(--text-primary)]">#{i + 1}</div>
                     <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
                     <div className="text-xs text-[color:var(--text-muted)]">{d.count} occurrences</div>
@@ -209,7 +209,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                     return (
                       <div key={trade} className="flex items-center gap-3">
                         <div className="w-24 text-xs text-[color:var(--text-secondary)] text-right truncate shrink-0">{trade}</div>
-                        <div className="flex-1 h-6 bg-[#1F1F25] rounded-md overflow-hidden">
+                        <div className="flex-1 h-6 bg-[var(--bg-tertiary)] rounded-md overflow-hidden">
                           <div
                             className="h-full bg-[#F97316] rounded-md transition-all duration-500"
                             style={{ width: `${Math.max((hours / maxTrade) * 100, 2)}%` }}

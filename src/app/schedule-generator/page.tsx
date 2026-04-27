@@ -335,9 +335,9 @@ export default function ScheduleGeneratorPage() {
   const totalWorkingDays = schedule?.summary.totalDuration ?? 1;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] text-gray-100">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-gray-100">
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <header className="border-b border-[#1F1F25] bg-[#0B0B0D] sticky top-0 z-30">
+      <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
           <Link
             href="/dashboard"
@@ -362,14 +362,14 @@ export default function ScheduleGeneratorPage() {
             <div className="ml-auto flex items-center gap-2">
               <button
                 onClick={handleExportXLSX}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F25] border border-[#2A2A35] hover:border-[#F97316]/40 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] hover:border-[#F97316]/40 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
               >
                 <Download size={14} />
                 XLSX
               </button>
               <button
                 onClick={handleExportMSP}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F25] border border-[#2A2A35] hover:border-[#F97316]/40 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] hover:border-[#F97316]/40 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
               >
                 <Download size={14} />
                 MS Project XML
@@ -384,7 +384,7 @@ export default function ScheduleGeneratorPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column: Project basics */}
           <div className="lg:col-span-1 space-y-5">
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5 space-y-4">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl p-5 space-y-4">
               <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider flex items-center gap-2">
                 <Building2 size={14} className="text-[#F97316]" />
                 Project Details
@@ -398,7 +398,7 @@ export default function ScheduleGeneratorPage() {
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder="e.g. Downtown Office TI — Suite 400"
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
 
@@ -408,7 +408,7 @@ export default function ScheduleGeneratorPage() {
                 <select
                   value={buildingType}
                   onChange={(e) => handleBuildingTypeChange(e.target.value)}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 >
                   {BUILDING_TYPES.map((bt) => (
                     <option key={bt} value={bt}>
@@ -424,7 +424,7 @@ export default function ScheduleGeneratorPage() {
                 <select
                   value={structureType}
                   onChange={(e) => setStructureType(e.target.value)}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 >
                   {STRUCTURE_TYPES.map((st) => (
                     <option key={st} value={st}>
@@ -443,7 +443,7 @@ export default function ScheduleGeneratorPage() {
                   onChange={(e) => setTotalSF(e.target.value)}
                   min={500}
                   step={500}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
 
@@ -456,20 +456,20 @@ export default function ScheduleGeneratorPage() {
                   onChange={(e) => setStories(e.target.value)}
                   min={1}
                   max={50}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
 
               {/* Ground-Up / TI Toggle */}
               <div className="space-y-1.5">
                 <label className="text-xs text-[color:var(--text-secondary)] font-medium">Project Type</label>
-                <div className="flex rounded-lg overflow-hidden border border-[#1F1F25]">
+                <div className="flex rounded-lg overflow-hidden border border-[var(--border-primary)]">
                   <button
                     onClick={() => setIsGroundUp(false)}
                     className={`flex-1 py-2 text-sm font-medium transition-colors ${
                       !isGroundUp
                         ? 'bg-[#F97316] text-[color:var(--text-primary)]'
-                        : 'bg-[#0B0B0D] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
+                        : 'bg-[var(--bg-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
                     }`}
                   >
                     Tenant Improvement
@@ -479,7 +479,7 @@ export default function ScheduleGeneratorPage() {
                     className={`flex-1 py-2 text-sm font-medium transition-colors ${
                       isGroundUp
                         ? 'bg-[#F97316] text-[color:var(--text-primary)]'
-                        : 'bg-[#0B0B0D] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
+                        : 'bg-[var(--bg-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-secondary)]'
                     }`}
                   >
                     Ground-Up
@@ -497,7 +497,7 @@ export default function ScheduleGeneratorPage() {
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
             </div>
@@ -506,7 +506,7 @@ export default function ScheduleGeneratorPage() {
           {/* Middle + Right: Trades + Quantities */}
           <div className="lg:col-span-2 space-y-5">
             {/* Trade Selection */}
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider flex items-center gap-2">
                   <Layers size={14} className="text-[#F97316]" />
@@ -515,13 +515,13 @@ export default function ScheduleGeneratorPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setSelectedTrades([...ALL_TRADES])}
-                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[var(--bg-tertiary)]"
                   >
                     All
                   </button>
                   <button
                     onClick={() => setSelectedTrades([])}
-                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[#1F1F25]"
+                    className="text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors px-2 py-1 rounded hover:bg-[var(--bg-tertiary)]"
                   >
                     None
                   </button>
@@ -546,7 +546,7 @@ export default function ScheduleGeneratorPage() {
                       className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm text-left transition-colors ${
                         checked
                           ? 'border-[#F97316]/40 bg-[#F97316]/10 text-gray-100'
-                          : 'border-[#1F1F25] bg-[#0B0B0D] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] hover:border-[#2A2A35]'
+                          : 'border-[var(--border-primary)] bg-[var(--bg-primary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] hover:border-[var(--border-secondary)]'
                       }`}
                     >
                       {checked ? (
@@ -562,7 +562,7 @@ export default function ScheduleGeneratorPage() {
             </div>
 
             {/* Optional Quantities Override — grouped & collapsible */}
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl overflow-hidden">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl overflow-hidden">
               <button
                 onClick={() => setShowQuantities((v) => !v)}
                 className="w-full flex items-center justify-between p-5 hover:bg-[#151519] transition-colors"
@@ -583,7 +583,7 @@ export default function ScheduleGeneratorPage() {
               </button>
 
               {showQuantities && (
-                <div className="border-t border-[#1F1F25]">
+                <div className="border-t border-[var(--border-primary)]">
                   <p className="text-xs text-[color:var(--text-muted)] px-5 pt-4 pb-3">
                     Enter actual take-off quantities to improve accuracy. Leave blank to use SF-based estimates.
                   </p>
@@ -627,7 +627,7 @@ export default function ScheduleGeneratorPage() {
                                         }))
                                       }
                                       placeholder={String(estimates[key] ?? '')}
-                                      className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded px-2 py-1.5 text-xs text-gray-100 placeholder-gray-700 focus:outline-none focus:border-[#F97316]/40"
+                                      className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded px-2 py-1.5 text-xs text-gray-100 placeholder-gray-700 focus:outline-none focus:border-[#F97316]/40"
                                     />
                                     <span className="text-xs text-gray-600 w-10 flex-shrink-0">
                                       {unit}
@@ -709,7 +709,7 @@ export default function ScheduleGeneratorPage() {
             </div>
 
             {/* Phase Summary Bar */}
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-5">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl p-5">
               <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">Phase Breakdown</h3>
               <div className="space-y-2">
                 {schedule.summary.phases.map((phase) => {
@@ -734,7 +734,7 @@ export default function ScheduleGeneratorPage() {
                         >
                           {phase.name.replace(/Phase \d+: /, '')}
                         </span>
-                        <div className="flex-1 bg-[#0B0B0D] rounded-full h-3 overflow-hidden">
+                        <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-3 overflow-hidden">
                           <div
                             className="h-full rounded-full transition-all"
                             style={{ width: `${Math.max(pct, 2)}%`, backgroundColor: color, opacity: activePhaseFilter === phase.name ? 1 : 0.7 }}
@@ -759,9 +759,9 @@ export default function ScheduleGeneratorPage() {
             </div>
 
             {/* Activity Table + Gantt */}
-            <div className="bg-[#111115] border border-[#1F1F25] rounded-xl overflow-hidden">
+            <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl overflow-hidden">
               {/* Table controls */}
-              <div className="flex items-center justify-between p-4 border-b border-[#1F1F25]">
+              <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
                 <div className="flex items-center gap-3">
                   <h3 className="text-sm font-semibold text-[color:var(--text-secondary)]">
                     Activities
@@ -781,7 +781,7 @@ export default function ScheduleGeneratorPage() {
                     className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
                       showCriticalOnly
                         ? 'border-red-500/40 bg-red-500/10 text-red-400'
-                        : 'border-[#1F1F25] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]'
+                        : 'border-[var(--border-primary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]'
                     }`}
                   >
                     <Flag size={11} />
@@ -804,7 +804,7 @@ export default function ScheduleGeneratorPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-[#1F1F25] text-[color:var(--text-muted)]">
+                    <tr className="border-b border-[var(--border-primary)] text-[color:var(--text-muted)]">
                       <th className="text-left px-3 py-2.5 font-medium w-10">#</th>
                       <th className="text-left px-3 py-2.5 font-medium">Activity</th>
                       <th className="text-left px-3 py-2.5 font-medium w-28">Trade</th>
@@ -863,7 +863,7 @@ export default function ScheduleGeneratorPage() {
                           </td>
                           <td className="px-3 py-2">
                             {/* Mini Gantt bar */}
-                            <div className="relative h-4 bg-[#0B0B0D] rounded overflow-hidden">
+                            <div className="relative h-4 bg-[var(--bg-primary)] rounded overflow-hidden">
                               {/* Float bar (behind) */}
                               {floatWidth > 0 && (
                                 <div
@@ -900,14 +900,14 @@ export default function ScheduleGeneratorPage() {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleExportXLSX}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[var(--border-primary)] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
               >
                 <Download size={16} />
                 Download XLSX Schedule
               </button>
               <button
                 onClick={handleExportMSP}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[#1F1F25] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#111115] border border-[var(--border-primary)] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] font-medium text-sm transition-colors"
               >
                 <Download size={16} />
                 Download MS Project XML
@@ -936,7 +936,7 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="bg-[#111115] border border-[#1F1F25] rounded-xl p-4">
+    <div className="bg-[#111115] border border-[var(--border-primary)] rounded-xl p-4">
       <div className={`flex items-center gap-1.5 mb-2 ${color}`}>
         {icon}
         <span className="text-xs font-medium uppercase tracking-wider">{label}</span>

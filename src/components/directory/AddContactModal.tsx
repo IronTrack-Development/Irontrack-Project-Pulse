@@ -178,15 +178,15 @@ export default function AddContactModal({
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-0 sm:px-4">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-[#121217] border border-[#1F1F25] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
+      <div className="relative bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#1F1F25] flex-none">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)] flex-none">
           <h2 className="text-sm font-bold text-[color:var(--text-primary)]">
             {isEdit ? "Edit Contact" : "Add Contact"}
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+            className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <X size={16} />
           </button>
@@ -194,7 +194,7 @@ export default function AddContactModal({
 
         {/* Mode toggle (only for new) */}
         {!isEdit && (
-          <div className="flex border-b border-[#1F1F25] flex-none">
+          <div className="flex border-b border-[var(--border-primary)] flex-none">
             <button
               onClick={() => setMode("search")}
               className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
@@ -229,7 +229,7 @@ export default function AddContactModal({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by name or email…"
                   autoFocus
-                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                 />
               </div>
 
@@ -257,7 +257,7 @@ export default function AddContactModal({
                   {searchResults.map((c) => (
                     <div
                       key={c.id}
-                      className="flex items-center justify-between bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3"
+                      className="flex items-center justify-between bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3"
                     >
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{c.name}</p>
@@ -302,7 +302,7 @@ export default function AddContactModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full name"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -313,7 +313,7 @@ export default function AddContactModal({
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     placeholder="Company name"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -323,7 +323,7 @@ export default function AddContactModal({
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                   >
                     <option value="" disabled>Select role…</option>
                     {ROLE_OPTIONS.map((r) => (
@@ -340,7 +340,7 @@ export default function AddContactModal({
                       value={trade}
                       onChange={(e) => setTrade(e.target.value)}
                       placeholder="e.g., Electrical, Plumbing, HVAC"
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -353,7 +353,7 @@ export default function AddContactModal({
                       value={discipline}
                       onChange={(e) => setDiscipline(e.target.value)}
                       placeholder="e.g., Structural, MEP, Civil"
-                      className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -366,7 +366,7 @@ export default function AddContactModal({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="email@example.com"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -378,7 +378,7 @@ export default function AddContactModal({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="602-555-1234"
-                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
                   />
                 </div>
               </div>
@@ -394,11 +394,11 @@ export default function AddContactModal({
 
         {/* Footer — only for new/edit form */}
         {(mode === "new" || isEdit) && (
-          <div className="flex-none px-5 py-4 pb-8 sm:pb-4 border-t border-[#1F1F25] bg-[#121217]">
+          <div className="flex-none px-5 py-4 pb-8 sm:pb-4 border-t border-[var(--border-primary)] bg-[var(--bg-secondary)]">
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
+                className="flex-1 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
               >
                 Cancel
               </button>

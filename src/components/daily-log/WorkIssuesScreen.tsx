@@ -38,7 +38,7 @@ function ActivityProgressCard({
   const delta = pctAfter - pctBefore;
 
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
@@ -64,7 +64,7 @@ function ActivityProgressCard({
       </button>
 
       {expanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-[#1F1F25] pt-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-[var(--border-primary)] pt-3">
           {/* Percent complete slider */}
           <div>
             <label className="text-xs text-[color:var(--text-muted)] mb-2 block">
@@ -82,7 +82,7 @@ function ActivityProgressCard({
                   pct_complete_after: parseInt(e.target.value),
                 })
               }
-              className="w-full h-2 bg-[#1F1F25] rounded-full appearance-none cursor-pointer
+              className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full appearance-none cursor-pointer
                 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#F97316]
                 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
@@ -202,7 +202,7 @@ export default function WorkIssuesScreen({
                 className={`px-3 py-2 rounded-full text-xs font-medium border transition-all min-h-[36px]
                   ${active
                     ? "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/40"
-                    : "bg-[#121217] text-[color:var(--text-secondary)] border-[#1F1F25] hover:border-[#2a2a35]"
+                    : "bg-[var(--bg-secondary)] text-[color:var(--text-secondary)] border-[var(--border-primary)] hover:border-[var(--border-secondary)]"
                   }`}
               >
                 {code}
@@ -229,7 +229,7 @@ export default function WorkIssuesScreen({
             value={lostCrewHours || ""}
             onChange={(e) => onLostCrewHoursChange(parseFloat(e.target.value) || 0)}
             placeholder="0"
-            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
+            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
               focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
           />
         </div>

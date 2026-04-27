@@ -213,13 +213,13 @@ export default function CrewManager({ projectId }: Props) {
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
             placeholder="Search crew…"
-            className="w-full pl-8 pr-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
+            className="w-full pl-8 pr-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
           />
         </div>
         <select
           value={filterDept}
           onChange={e => setFilterDept(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
+          className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="">All Departments</option>
           {departments.map(d => (
@@ -229,7 +229,7 @@ export default function CrewManager({ projectId }: Props) {
         <select
           value={filterRole}
           onChange={e => setFilterRole(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
+          className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="">All Roles</option>
           {ROLE_OPTIONS.map(r => (
@@ -239,7 +239,7 @@ export default function CrewManager({ projectId }: Props) {
         <select
           value={filterStatus}
           onChange={e => setFilterStatus(e.target.value)}
-          className="px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
+          className="px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
         >
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -248,7 +248,7 @@ export default function CrewManager({ projectId }: Props) {
 
       {/* Add/Edit Form */}
       {showForm && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 space-y-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <h3 className="text-sm font-semibold text-[color:var(--text-primary)]">
             {editingId ? "Edit Crew Member" : "New Crew Member"}
           </h3>
@@ -260,12 +260,12 @@ export default function CrewManager({ projectId }: Props) {
               value={formName}
               onChange={e => setFormName(e.target.value)}
               placeholder="Full name"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <select
               value={formRole}
               onChange={e => setFormRole(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
               {ROLE_OPTIONS.map(r => (
                 <option key={r.value} value={r.value}>{r.label}</option>
@@ -274,7 +274,7 @@ export default function CrewManager({ projectId }: Props) {
             <select
               value={formDept}
               onChange={e => setFormDept(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-secondary)] min-h-[40px]"
             >
               <option value="">No Department</option>
               {departments.map(d => (
@@ -285,14 +285,14 @@ export default function CrewManager({ projectId }: Props) {
               value={formPhone}
               onChange={e => setFormPhone(e.target.value)}
               placeholder="Phone"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formEmail}
               onChange={e => setFormEmail(e.target.value)}
               placeholder="Email"
               type="email"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
             <input
               value={formRate}
@@ -300,7 +300,7 @@ export default function CrewManager({ projectId }: Props) {
               placeholder="Hourly rate"
               type="number"
               step="0.01"
-              className="w-full px-3 py-2 bg-[#1F1F25] border border-[#2a2a35] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
+              className="w-full px-3 py-2 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] rounded-lg text-sm text-[color:var(--text-primary)] placeholder-gray-500 min-h-[40px]"
             />
           </div>
           <div className="flex gap-2">
@@ -313,7 +313,7 @@ export default function CrewManager({ projectId }: Props) {
             </button>
             <button
               onClick={() => { resetForm(); setShowForm(false); }}
-              className="px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
+              className="px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]"
             >
               Cancel
             </button>
@@ -323,7 +323,7 @@ export default function CrewManager({ projectId }: Props) {
 
       {/* Crew List */}
       {filtered.length === 0 ? (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <Users size={32} className="mx-auto text-gray-600 mb-3" />
           <p className="text-[color:var(--text-secondary)] text-sm">No crew members found</p>
           <p className="text-[color:var(--text-muted)] text-xs mt-1">Add crew members to manage your team roster</p>
@@ -333,10 +333,10 @@ export default function CrewManager({ projectId }: Props) {
           {filtered.map(member => (
             <div
               key={member.id}
-              className="bg-[#121217] border border-[#1F1F25] rounded-lg p-3 flex items-center justify-between gap-3"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 flex items-center justify-between gap-3"
             >
               <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="w-9 h-9 rounded-full bg-[#1F1F25] flex items-center justify-center text-sm font-bold text-[color:var(--text-secondary)] shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-sm font-bold text-[color:var(--text-secondary)] shrink-0">
                   {member.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">

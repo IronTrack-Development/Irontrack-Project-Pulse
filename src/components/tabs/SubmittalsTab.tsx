@@ -135,7 +135,7 @@ export default function SubmittalsTab({ projectId }: Props) {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchSubmittals}
-              className="p-2.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <RefreshCw size={15} />
             </button>
@@ -152,19 +152,19 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Summary cards */}
         {total > 0 && (
           <div className="grid grid-cols-4 gap-2">
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-[color:var(--text-primary)]">{total}</p>
               <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Total</p>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingReview > 0 ? "text-purple-400" : "text-[color:var(--text-primary)]"}`}>{pendingReview}</p>
               <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Pending</p>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${overdue > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>{overdue}</p>
               <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Overdue</p>
             </div>
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-3 text-center">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${approved > 0 ? "text-green-400" : "text-[color:var(--text-primary)]"}`}>{approved}</p>
               <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Approved</p>
             </div>
@@ -186,7 +186,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === opt.value
                       ? "bg-[#F97316] text-[color:var(--text-primary)]"
-                      : "bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                      : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {opt.label}
@@ -201,7 +201,7 @@ export default function SubmittalsTab({ projectId }: Props) {
 
         {/* Empty state */}
         {total === 0 && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-10 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-10 text-center">
             <FileCheck size={36} className="mx-auto text-gray-600 mb-3" />
             <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No submittals yet</p>
             <p className="text-gray-600 text-xs mb-5">
@@ -226,7 +226,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                 <button
                   key={s.id}
                   onClick={() => setDetailId(s.id)}
-                  className="w-full text-left bg-[#121217] border border-[#1F1F25] hover:border-[#2a2a35] rounded-xl p-4 transition-colors"
+                  className="w-full text-left bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[var(--border-secondary)] rounded-xl p-4 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
@@ -249,7 +249,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[s.status] ?? "bg-gray-700 text-[color:var(--text-secondary)]"}`}>
                           {STATUS_LABELS[s.status] ?? s.status}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#1F1F25] text-[color:var(--text-secondary)]">
+                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                           🏀 {s.ball_in_court}
                         </span>
                         {s.revision_count > 1 && (

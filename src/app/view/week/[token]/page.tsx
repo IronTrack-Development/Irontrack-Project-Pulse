@@ -43,7 +43,7 @@ export default async function PublicWeekView({ params }: PageProps) {
   // Check expiry
   if (link.expires_at && new Date(link.expires_at) < new Date()) {
     return (
-      <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="text-center">
           <p className="text-[color:var(--text-secondary)] text-lg font-semibold">This link has expired</p>
           <p className="text-gray-600 text-sm mt-2">Ask your superintendent for a new QR code.</p>
@@ -103,9 +103,9 @@ export default async function PublicWeekView({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <div className="bg-[#121217] border-b border-[#1F1F25]">
+      <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-primary)]">
         <div className="max-w-2xl mx-auto px-4 py-5">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2 h-2 rounded-full bg-[#F97316]" />
@@ -140,8 +140,8 @@ export default async function PublicWeekView({ params }: PageProps) {
           if (dayTasks.length === 0 && isWeekend) return null;
 
           return (
-            <div key={dayKey} className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
-              <div className="bg-[#0B0B0D] border-b border-[#1F1F25] px-4 py-2.5">
+            <div key={dayKey} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+              <div className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-2.5">
                 <div className="text-[10px] text-gray-600 uppercase tracking-wide">
                   {dayNames[dayDate.getDay()]}
                 </div>
@@ -181,7 +181,7 @@ export default async function PublicWeekView({ params }: PageProps) {
                           >
                             {task.percent_complete || 0}%
                           </div>
-                          <div className="w-12 h-1 bg-[#1F1F25] rounded-full mt-1 overflow-hidden">
+                          <div className="w-12 h-1 bg-[var(--bg-tertiary)] rounded-full mt-1 overflow-hidden">
                             <div
                               className="h-full rounded-full"
                               style={{

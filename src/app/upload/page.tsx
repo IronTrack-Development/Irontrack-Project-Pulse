@@ -299,8 +299,8 @@ function UploadContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D]">
-      <div className="sticky top-0 z-10 bg-[#0B0B0D]/95 backdrop-blur border-b border-[#1F1F25] px-4 md:px-6 py-3 md:py-4">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-4 md:px-6 py-3 md:py-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">Upload Schedule</h1>
           <p className="text-xs md:text-sm text-[color:var(--text-muted)] mt-0.5">{isMobile ? "Select your schedule file below" : "Drop your schedule file and we'll handle the rest"}</p>
@@ -312,7 +312,7 @@ function UploadContent() {
         {step === "select" && (
           <>
             {/* Project selector */}
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-6">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
               <h2 className="font-semibold text-[color:var(--text-primary)] mb-4">1. Select Project</h2>
               {showNewProject ? (
                 <div className="flex gap-2">
@@ -320,13 +320,13 @@ function UploadContent() {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder="New project name"
-                    className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                     onKeyDown={(e) => e.key === "Enter" && createProject()}
                   />
                   <button onClick={createProject} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
                     Create
                   </button>
-                  <button onClick={() => setShowNewProject(false)} className="px-3 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg">
+                  <button onClick={() => setShowNewProject(false)} className="px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg">
                     <X size={16} />
                   </button>
                 </div>
@@ -335,7 +335,7 @@ function UploadContent() {
                   <select
                     value={selectedProjectId}
                     onChange={(e) => setSelectedProjectId(e.target.value)}
-                    className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
                   >
                     <option value="">— Select a project —</option>
                     {projects.map((p) => (
@@ -344,7 +344,7 @@ function UploadContent() {
                   </select>
                   <button
                     onClick={() => setShowNewProject(true)}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-sm transition-colors"
                   >
                     <Plus size={14} />
                     New
@@ -359,7 +359,7 @@ function UploadContent() {
               onDrop={handleFileDrop}
               onClick={() => fileRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl ${isMobile ? 'p-8' : 'p-12'} text-center cursor-pointer transition-colors group active:scale-[0.99] ${
-                file ? "border-[#22C55E]/40 bg-[#22C55E]/5" : "border-[#1F1F25] hover:border-[#F97316]/40 active:border-[#F97316]/60"
+                file ? "border-[#22C55E]/40 bg-[#22C55E]/5" : "border-[var(--border-primary)] hover:border-[#F97316]/40 active:border-[#F97316]/60"
               }`}
             >
               {file ? (
@@ -385,7 +385,7 @@ function UploadContent() {
                   )}
                   <div className="flex items-center justify-center gap-1.5 md:gap-2 flex-wrap">
                     {[".xlsx", ".csv", ".mpp", ".xml", ".xer"].map((ext) => (
-                      <span key={ext} className="text-xs bg-[#1F1F25] text-[color:var(--text-muted)] px-2 py-1 rounded font-mono">
+                      <span key={ext} className="text-xs bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] px-2 py-1 rounded font-mono">
                         {ext}
                       </span>
                     ))}
@@ -436,7 +436,7 @@ function UploadContent() {
 
         {/* Uploading state */}
         {step === "uploading" && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 md:p-12 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 md:p-12 text-center">
             <Loader2 size={isMobile ? 36 : 48} className="mx-auto text-[#F97316] animate-spin mb-4" />
             <h2 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)] mb-2">Analyzing Schedule...</h2>
             <p className="text-[color:var(--text-muted)] text-sm">
@@ -447,7 +447,7 @@ function UploadContent() {
                "Almost done..."}
             </p>
             <div className="mt-4">
-              <div className="w-full bg-[#1F1F25] rounded-full h-2.5 overflow-hidden">
+              <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-2.5 overflow-hidden">
                 <div 
                   className="bg-[#F97316] h-2.5 transition-all duration-500 ease-out"
                   style={{ width: `${Math.max(uploadProgress, 5)}%` }}
@@ -463,17 +463,17 @@ function UploadContent() {
 
         {/* Step 3: Done */}
         {step === "done" && result && (
-          <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-8 text-center">
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 text-center">
             <CheckCircle size={48} className="mx-auto text-[#22C55E] mb-4" />
             <h2 className="text-xl font-bold text-[color:var(--text-primary)] mb-1">Schedule Imported!</h2>
             <p className="text-[color:var(--text-muted)] text-sm mb-6">Your project intelligence is ready.</p>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4">
                 <div className="text-2xl font-bold text-[color:var(--text-primary)]">{result.activities_parsed}</div>
                 <div className="text-xs text-[color:var(--text-muted)]">Activities</div>
               </div>
-              <div className="bg-[#0B0B0D] border border-[#1F1F25] rounded-xl p-4">
+              <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4">
                 <div className="text-2xl font-bold text-[#F97316]">{result.milestones_found}</div>
                 <div className="text-xs text-[color:var(--text-muted)]">Milestones</div>
               </div>

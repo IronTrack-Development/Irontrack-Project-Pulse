@@ -170,15 +170,15 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4">
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92dvh] overflow-y-auto">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92dvh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-[#121217] border-b border-[#1F1F25] px-5 py-4 flex items-center justify-between z-10">
+        <div className="sticky top-0 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] px-5 py-4 flex items-center justify-between z-10">
           <h2 className="text-base font-bold text-[color:var(--text-primary)]">
             {isEdit ? "Edit Submittal" : "New Submittal"}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[#1F1F25] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="p-2 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
           >
             <X size={18} />
           </button>
@@ -194,7 +194,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                 onChange={(e) => setForm((f) => ({ ...f, submittal_number: e.target.value }))}
                 placeholder="S-001"
                 required
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>
@@ -203,7 +203,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                 value={form.spec_section}
                 onChange={(e) => setForm((f) => ({ ...f, spec_section: e.target.value }))}
                 placeholder="03 30 00"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
               placeholder="Concrete Mix Design"
               required
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
             />
           </div>
 
@@ -228,7 +228,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               placeholder="Optional details…"
               rows={2}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -244,7 +244,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                   className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
                     form.priority === p.value
                       ? "bg-[#F97316] text-[color:var(--text-primary)]"
-                      : "bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                      : "bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {p.label}
@@ -261,7 +261,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                 type="date"
                 value={form.required_by}
                 onChange={(e) => setForm((f) => ({ ...f, required_by: e.target.value }))}
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
               />
             </div>
             <div>
@@ -272,7 +272,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                 value={form.lead_time_days}
                 onChange={(e) => setForm((f) => ({ ...f, lead_time_days: e.target.value }))}
                 placeholder="14"
-                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
             <select
               value={form.assigned_to}
               onChange={(e) => setForm((f) => ({ ...f, assigned_to: e.target.value }))}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
             >
               <option value="">— None —</option>
               {subs.map((c) => (
@@ -300,7 +300,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
             <select
               value={form.reviewer_id}
               onChange={(e) => setForm((f) => ({ ...f, reviewer_id: e.target.value }))}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
             >
               <option value="">— None —</option>
               {reviewers.map((c) => (
@@ -323,7 +323,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                   className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
                     form.ball_in_court === b.value
                       ? "bg-[#F97316] text-[color:var(--text-primary)]"
-                      : "bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                      : "bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
                   {b.label}
@@ -345,7 +345,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
                     className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
                       form.status === s.value
                         ? "bg-[#F97316] text-[color:var(--text-primary)]"
-                        : "bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+                        : "bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                     }`}
                   >
                     {s.label}
@@ -363,7 +363,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
               onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
               placeholder="Any additional notes…"
               rows={2}
-              className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -378,7 +378,7 @@ export default function SubmittalForm({ projectId, editSubmittal, onClose, onSav
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
+              className="flex-1 py-3 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm font-medium transition-colors min-h-[44px]"
             >
               Cancel
             </button>

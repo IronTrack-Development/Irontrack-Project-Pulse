@@ -12,7 +12,7 @@ interface RollupStatCardProps {
 
 export default function RollupStatCard({ label, value, icon, subtext, accent }: RollupStatCardProps) {
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 flex flex-col items-center text-center min-w-[100px]">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 flex flex-col items-center text-center min-w-[100px]">
       {icon && <div className="mb-1 text-[color:var(--text-muted)]">{icon}</div>}
       <div className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
         {value}

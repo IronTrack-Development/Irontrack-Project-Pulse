@@ -192,7 +192,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
   if (!data || data.totalActivities === 0) {
     return (
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-12 text-center">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <CalendarCheck size={40} className="mx-auto text-gray-700 mb-4" />
         <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled</div>
       </div>
@@ -216,7 +216,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   return (
     <div className="space-y-4">
       {/* Header with Share button / Selection mode */}
-      <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3 flex items-center justify-between">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
             <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
@@ -230,7 +230,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[#1F1F25] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 Share ({selectedIds.size})
@@ -245,7 +245,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
             </div>
             <button
               onClick={handleShareClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
             >
               <Share2 size={13} />
               {shareStatus || "Share"}
@@ -256,7 +256,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
       {/* Inspections section */}
       {data.inspections.length > 0 && (
-        <div className="bg-[#121217] border border-[#F97316]/30 rounded-xl overflow-hidden">
+        <div className="bg-[var(--bg-secondary)] border border-[#F97316]/30 rounded-xl overflow-hidden">
           <div className="bg-[#F97316]/10 border-b border-[#F97316]/30 px-4 py-2.5 flex items-center gap-2">
             <AlertTriangle size={16} className="text-[#F97316]" />
             <div className="text-sm font-semibold text-[#F97316]">Inspections</div>
@@ -270,8 +270,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                   onClick={() => isSelecting ? toggleActivity(inspection.id) : openDrawer(inspection.id)}
                   className={`px-4 py-3 transition-colors cursor-pointer group ${
                     isSelecting
-                      ? "hover:bg-[#1F1F25]/50"
-                      : "hover:bg-[#1F1F25]/30"
+                      ? "hover:bg-[var(--bg-tertiary)]/50"
+                      : "hover:bg-[var(--bg-tertiary)]/30"
                   } ${
                     isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
                   }`}
@@ -282,7 +282,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleActivity(inspection.id)}
-                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
                       />
                     )}
                     <div className="flex-1">
@@ -315,8 +315,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
       {/* Active tasks section */}
       {data.activeTasks.length > 0 && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
-          <div className="bg-[#0B0B0D] border-b border-[#1F1F25] px-4 py-2">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+          <div className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-2">
             <div className="text-xs text-[color:var(--text-muted)]">Active Tasks</div>
           </div>
           <div className="divide-y divide-[#1F1F25]">
@@ -329,8 +329,8 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                   onClick={() => isSelecting ? toggleActivity(task.id) : openDrawer(task.id)}
                   className={`px-4 py-3 transition-colors cursor-pointer ${
                     isSelecting
-                      ? "hover:bg-[#1F1F25]/50"
-                      : "hover:bg-[#1F1F25]/30"
+                      ? "hover:bg-[var(--bg-tertiary)]/50"
+                      : "hover:bg-[var(--bg-tertiary)]/30"
                   } ${
                     isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
                   }`}
@@ -341,7 +341,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleActivity(task.id)}
-                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[#1F1F25] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
                       />
                     )}
                     <div className="flex-1 min-w-0">
@@ -377,7 +377,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         </div>
                       </div>
                       {/* Progress bar */}
-                      <div className="w-full bg-[#1F1F25] rounded-full h-1.5 overflow-hidden">
+                      <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-1.5 overflow-hidden">
                         <div
                           className={`h-full transition-all ${
                             pct >= 100 ? "bg-[#22C55E]" : "bg-[#F97316]"
@@ -392,7 +392,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
             })}
           </div>
           {data.totalActivities > 10 && (
-            <div className="px-4 py-2 text-center text-xs text-[color:var(--text-muted)] border-t border-[#1F1F25]">
+            <div className="px-4 py-2 text-center text-xs text-[color:var(--text-muted)] border-t border-[var(--border-primary)]">
               View all {data.totalActivities} activities →
             </div>
           )}
@@ -419,7 +419,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
       {/* Preview next day */}
       {data.previewNext.activityCount > 0 && (
-        <div className="bg-[#121217] border border-[#1F1F25] rounded-xl px-4 py-3">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
           <div className="text-xs text-[color:var(--text-muted)] mb-1">{nextLabel}</div>
           <div className="text-sm text-[color:var(--text-secondary)]">
             {nextFormattedDate}: {data.previewNext.activityCount} activit{data.previewNext.activityCount !== 1 ? "ies" : "y"}

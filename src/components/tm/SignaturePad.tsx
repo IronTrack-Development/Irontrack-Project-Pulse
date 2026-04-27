@@ -110,9 +110,9 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="w-full sm:max-w-md bg-[#121217] rounded-t-2xl sm:rounded-2xl border border-[#1F1F25] overflow-hidden">
+      <div className="w-full sm:max-w-md bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl border border-[var(--border-primary)] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#1F1F25]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-primary)]">
           <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">{label}</h3>
           <button
             onClick={onCancel}
@@ -131,7 +131,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
         <div className="px-4 py-2">
           <canvas
             ref={canvasRef}
-            className="w-full rounded-xl border border-[#1F1F25] touch-none cursor-crosshair"
+            className="w-full rounded-xl border border-[var(--border-primary)] touch-none cursor-crosshair"
             style={{ height: 200, display: "block" }}
             onMouseDown={startDraw}
             onMouseMove={draw}
@@ -147,7 +147,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
         <div className="flex gap-2 px-4 pb-4 pt-2">
           <button
             onClick={clear}
-            className="flex items-center gap-1.5 px-4 py-3 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px] flex-1 justify-center"
+            className="flex items-center gap-1.5 px-4 py-3 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px] flex-1 justify-center"
           >
             <RotateCcw size={15} />
             Clear

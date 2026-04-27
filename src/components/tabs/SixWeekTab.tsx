@@ -78,7 +78,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#1F1F25] text-[color:var(--text-muted)] border border-[#2a2a33]">
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[#2a2a33]">
       Upcoming
     </span>
   );
@@ -89,7 +89,7 @@ function statusChip(status: string, pct: number) {
 function ActivityRow({ activity }: { activity: Activity }) {
   const days = daysUntil(activity.start_date);
   return (
-    <div className="flex items-start justify-between gap-3 py-3 px-4 bg-[#13131A] border border-[#1F1F25] rounded-xl">
+    <div className="flex items-start justify-between gap-3 py-3 px-4 bg-[#13131A] border border-[var(--border-primary)] rounded-xl">
       <div className="flex-1 min-w-0">
         <p className="text-sm text-gray-100 font-medium leading-snug">{activity.activity_name}</p>
         <div className="flex items-center gap-3 mt-1 flex-wrap">
@@ -97,7 +97,7 @@ function ActivityRow({ activity }: { activity: Activity }) {
             {formatDateRange(activity.start_date, activity.finish_date)}
           </span>
           {activity.trade && (
-            <span className="text-[10px] bg-[#1F1F25] text-[color:var(--text-secondary)] px-1.5 py-0.5 rounded">
+            <span className="text-[10px] bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] px-1.5 py-0.5 rounded">
               {activity.trade}
             </span>
           )}
@@ -163,7 +163,7 @@ function StatCard({ label, value, icon: Icon, color }: {
   color: string;
 }) {
   return (
-    <div className="bg-[#13131A] border border-[#1F1F25] rounded-xl p-3 flex flex-col items-center text-center">
+    <div className="bg-[#13131A] border border-[var(--border-primary)] rounded-xl p-3 flex flex-col items-center text-center">
       <Icon size={18} className={`${color} mb-1`} />
       <span className={`text-xl font-bold ${color}`}>{value}</span>
       <span className="text-[10px] text-[color:var(--text-muted)] mt-0.5 leading-tight">{label}</span>

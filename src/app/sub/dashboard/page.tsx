@@ -104,7 +104,7 @@ function StatCard({
   accent?: boolean;
 }) {
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-4 flex flex-col gap-2">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 flex flex-col gap-2">
       <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
         {icon}
         <span className="text-xs uppercase tracking-wide">{label}</span>
@@ -120,7 +120,7 @@ function StatCard({
 
 function ProjectCard({ project }: { project: ProjectSummary }) {
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-5 space-y-3 hover:border-[#F97316]/30 transition-colors">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-5 space-y-3 hover:border-[#F97316]/30 transition-colors">
       {/* Project name + location */}
       <div>
         <h3 className="text-base font-bold text-[color:var(--text-primary)] leading-tight">{project.project_name}</h3>
@@ -169,7 +169,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
           <span>Avg progress (last report)</span>
           <span className="text-[color:var(--text-secondary)] font-medium">{project.avg_percent}%</span>
         </div>
-        <div className="h-1.5 bg-[#1F1F25] rounded-full overflow-hidden">
+        <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full bg-[#F97316] transition-all"
             style={{ width: `${Math.min(project.avg_percent, 100)}%` }}
@@ -186,7 +186,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="bg-[#121217] border border-[#1F1F25] rounded-xl overflow-hidden">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
       {/* Summary row */}
       <button
         onClick={() => setExpanded((v) => !v)}
@@ -227,7 +227,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
       </button>
 
       {expanded && (
-        <div className="border-t border-[#1F1F25] px-4 py-3 space-y-3 bg-[#0B0B0D]">
+        <div className="border-t border-[var(--border-primary)] px-4 py-3 space-y-3 bg-[var(--bg-primary)]">
           {/* Manpower + hours on mobile */}
           <div className="flex gap-4 text-xs text-[color:var(--text-secondary)] sm:hidden">
             {report.manpower_count != null && (
@@ -270,7 +270,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
                       <span className="text-[color:var(--text-secondary)] truncate pr-2">Task {i + 1}</span>
                       <span className="text-[color:var(--text-secondary)] flex-shrink-0">{displayPct}</span>
                     </div>
-                    <div className="h-1 bg-[#1F1F25] rounded-full overflow-hidden">
+                    <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full bg-[#F97316]/70"
                         style={{ width: `${barWidth}%` }}
@@ -380,7 +380,7 @@ export default function SubDashboardPage() {
   const canLoadMore = visibleReports < totalReports && visibleReports < recentReports.length;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] pb-16">
+    <div className="min-h-screen bg-[var(--bg-primary)] pb-16">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
 
         {/* ── Header ── */}
@@ -430,14 +430,14 @@ export default function SubDashboardPage() {
             <FolderOpen size={16} className="text-[#F97316]" />
             <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
             {projects.length > 0 && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {projects.length}
               </span>
             )}
           </div>
 
           {projects.length === 0 ? (
-            <div className="bg-[#121217] border border-[#1F1F25] rounded-xl p-8 text-center space-y-2">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center space-y-2">
               <CalendarDays size={32} className="mx-auto text-gray-700 mb-2" />
               <p className="text-sm text-[color:var(--text-secondary)] max-w-sm mx-auto">
                 No projects yet. Your projects will appear here when a general contractor
@@ -459,7 +459,7 @@ export default function SubDashboardPage() {
             <div className="flex items-center gap-2">
               <ClipboardList size={16} className="text-[#F97316]" />
               <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Reports</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#1F1F25] text-[color:var(--text-secondary)]">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {totalReports}
               </span>
             </div>
@@ -474,7 +474,7 @@ export default function SubDashboardPage() {
               <div className="flex justify-center pt-2">
                 <button
                   onClick={() => setVisibleReports((v) => v + 10)}
-                  className="px-5 py-2.5 bg-[#1F1F25] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
+                  className="px-5 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[#2A2A33] border border-[#2A2A33] text-sm text-[color:var(--text-secondary)] rounded-xl transition-colors"
                 >
                   Load More
                 </button>
@@ -484,7 +484,7 @@ export default function SubDashboardPage() {
         )}
 
         {/* ── Back link ── */}
-        <div className="pt-4 border-t border-[#1F1F25]">
+        <div className="pt-4 border-t border-[var(--border-primary)]">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
