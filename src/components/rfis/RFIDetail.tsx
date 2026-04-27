@@ -5,6 +5,7 @@ import {
   X, Clock, DollarSign, User, FileText, Calendar, ChevronRight,
   Send, CheckCircle2, XCircle, Loader2, MessageSquare, Camera,
 } from "lucide-react";
+import SendRFIPanel from "@/components/rfis/SendRFIPanel";
 
 interface RFIPhoto {
   id: string;
@@ -207,6 +208,21 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
               </div>
             )}
           </div>
+
+          {/* Send RFI */}
+          {rfi.status !== "closed" && (
+            <SendRFIPanel
+              rfiNumber={rfi.rfi_number}
+              subject={rfi.subject}
+              question={rfi.question}
+              priority={rfi.priority}
+              specSection={rfi.spec_section}
+              drawingReference={rfi.drawing_reference}
+              dueDate={rfi.due_date}
+              costImpact={rfi.cost_impact}
+              scheduleImpact={rfi.schedule_impact}
+            />
+          )}
 
           {/* Photos */}
           {rfi.rfi_photos && rfi.rfi_photos.length > 0 && (
