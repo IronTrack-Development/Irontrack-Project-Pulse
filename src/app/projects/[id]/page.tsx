@@ -12,6 +12,9 @@ import ProjectNav from "@/components/navigation/ProjectNav";
 import { SupportButton } from "@/components/support-button";
 import NotificationBell from "@/components/NotificationBell";
 import { ProjectDataProvider } from "@/lib/ProjectDataContext";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // ---------------------------------------------------------------------------
 // Lazy-loaded tab components — only fetched when the user navigates to them
@@ -143,9 +146,8 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   if (!project) {
     return (
       <div className="p-8 text-center">
-        <p className="text-[color:var(--text-muted)] mb-4">
-          Project not found.{" "}
-          <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
+        <p className="text-[color:var(--text-muted)] mb-4">{t('ui.project.not.found')}{" "}
+          <Link href="/dashboard" className="text-[#F97316]">{t('ui.go.back')}</Link>
         </p>
         <SupportButton context="Project not found error" variant="inline" />
       </div>
@@ -178,8 +180,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               href="/dashboard"
               className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
             >
-              <ArrowLeft size={16} />
-              Back
+              <ArrowLeft size={16} />{t('action.back')}
             </Link>
             <div className="flex items-center gap-1.5 md:gap-3">
               <button
@@ -200,20 +201,19 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
                 className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px]"
               >
                 <FileBarChart2 size={14} />
-                <span>Weekly Summary</span>
+                <span>{t('ui.weekly.summary')}</span>
               </Link>
               <Link
                 href={`/projects/${id}/report`}
                 className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
                 <ClipboardList size={14} />
-                <span className="hidden sm:inline">Observe</span>
+                <span className="hidden sm:inline">{t('ui.observe')}</span>
               </Link>
               <Link
                 href={`/upload?project=${id}`}
                 className="hidden md:flex px-3 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors min-h-[44px] items-center"
-              >
-                Upload Schedule
+              >{t('ui.upload.schedule')}
               </Link>
             </div>
           </div>
@@ -243,41 +243,41 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
       <ProjectDataProvider projectId={id}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
           {/* KeepAlive tabs (stay mounted once visited) */}
-          {renderTab("priority", <PriorityTab projectId={id} />)}
-          {renderTab("dailylog", <DailyLogTab projectId={id} />)}
-          {renderTab("today", <DayPlanTab projectId={id} day="today" />)}
-          {renderTab("tomorrow", <DayPlanTab projectId={id} day="tomorrow" />)}
-          {renderTab("week1", <WeekTab projectId={id} weekNumber={1} />)}
-          {renderTab("week2", <WeekTab projectId={id} weekNumber={2} />)}
-          {renderTab("week3", <WeekTab projectId={id} weekNumber={3} />)}
-          {renderTab("progress", <ProgressTab projectId={id} />)}
+          {renderTab(t('ui.priority.334586'), <PriorityTab projectId={id} />)}
+          {renderTab(t('ui.dailylog'), <DailyLogTab projectId={id} />)}
+          {renderTab(t('ui.today.2dd2be'), <DayPlanTab projectId={id} day="today" />)}
+          {renderTab(t('ui.tomorrow.2dac81'), <DayPlanTab projectId={id} day="tomorrow" />)}
+          {renderTab(t('ui.week1'), <WeekTab projectId={id} weekNumber={1} />)}
+          {renderTab(t('ui.week2'), <WeekTab projectId={id} weekNumber={2} />)}
+          {renderTab(t('ui.week3'), <WeekTab projectId={id} weekNumber={3} />)}
+          {renderTab(t('ui.progress.5aaf89'), <ProgressTab projectId={id} />)}
 
           {/* Standard tabs (unmount when switching away) */}
-          {renderTab("inspections", <InspectionsTab projectId={id} />)}
-          {renderTab("milestones", <MilestonesTab projectId={id} />)}
-          {renderTab("reforecast", <ReforecastTab projectId={id} />)}
-          {renderTab("reports", <ReportsTab projectId={id} />)}
-          {renderTab("6week", <SixWeekTab projectId={id} />)}
-          {renderTab("subs", <SubsTab projectId={id} />)}
-          {renderTab("directory", <DirectoryTab projectId={id} />)}
-          {renderTab("submittals", <SubmittalsTab projectId={id} />)}
-          {renderTab("rfis", <RFIsTab projectId={id} />)}
-          {renderTab("tm", <TMTab projectId={id} />)}
-          {renderTab("drawings", <DrawingsTab projectId={id} />)}
-          {renderTab("punch", <PunchListTab projectId={id} />)}
-          {renderTab("safety", <SafetyTab projectId={id} />)}
-          {renderTab("field-reports", <FieldReportsTab projectId={id} />)}
-          {renderTab("coordination", <CoordinationTab projectId={id} />)}
-          {renderTab("action-tracker", <CoordinationTab projectId={id} defaultView="actions" />)}
-          {renderTab("sub-dashboard", <SubDashboardTab projectId={id} />)}
-          {renderTab("sub-dispatch", <SubDispatchTab projectId={id} />)}
-          {renderTab("sub-foremen", <SubForemenTab projectId={id} />)}
-          {renderTab("sub-checkins", <SubCheckinsTab projectId={id} />)}
-          {renderTab("sub-production", <SubProductionTab projectId={id} />)}
-          {renderTab("sub-blockers", <SubBlockersTab projectId={id} />)}
-          {renderTab("sub-handoffs", <SubHandoffsTab projectId={id} />)}
-          {renderTab("sub-crew", <SubCrewTab projectId={id} />)}
-          {renderTab("sub-sops", <SubSOPsTab projectId={id} />)}
+          {renderTab(t('ui.inspections.86d09f'), <InspectionsTab projectId={id} />)}
+          {renderTab(t('ui.milestones.98d75f'), <MilestonesTab projectId={id} />)}
+          {renderTab(t('ui.reforecast.50f2a2'), <ReforecastTab projectId={id} />)}
+          {renderTab(t('ui.reports.0b7ec6'), <ReportsTab projectId={id} />)}
+          {renderTab(t('ui.6week'), <SixWeekTab projectId={id} />)}
+          {renderTab(t('ui.subs.c78c29'), <SubsTab projectId={id} />)}
+          {renderTab(t('ui.directory.8d392f'), <DirectoryTab projectId={id} />)}
+          {renderTab(t('ui.submittals.340506'), <SubmittalsTab projectId={id} />)}
+          {renderTab(t('ui.rfis.1e9f3d'), <RFIsTab projectId={id} />)}
+          {renderTab(t('ui.tm'), <TMTab projectId={id} />)}
+          {renderTab(t('ui.drawings.dc130d'), <DrawingsTab projectId={id} />)}
+          {renderTab(t('ui.punch.408c26'), <PunchListTab projectId={id} />)}
+          {renderTab(t('ui.safety.be6c32'), <SafetyTab projectId={id} />)}
+          {renderTab(t('ui.field.reports'), <FieldReportsTab projectId={id} />)}
+          {renderTab(t('ui.coordination'), <CoordinationTab projectId={id} />)}
+          {renderTab(t('ui.action.tracker'), <CoordinationTab projectId={id} defaultView="actions" />)}
+          {renderTab(t('ui.sub.dashboard'), <SubDashboardTab projectId={id} />)}
+          {renderTab(t('ui.sub.dispatch'), <SubDispatchTab projectId={id} />)}
+          {renderTab(t('ui.sub.foremen'), <SubForemenTab projectId={id} />)}
+          {renderTab(t('ui.sub.checkins'), <SubCheckinsTab projectId={id} />)}
+          {renderTab(t('ui.sub.production'), <SubProductionTab projectId={id} />)}
+          {renderTab(t('ui.sub.blockers'), <SubBlockersTab projectId={id} />)}
+          {renderTab(t('ui.sub.handoffs'), <SubHandoffsTab projectId={id} />)}
+          {renderTab(t('ui.sub.crew'), <SubCrewTab projectId={id} />)}
+          {renderTab(t('ui.sub.sops'), <SubSOPsTab projectId={id} />)}
         </div>
       </ProjectDataProvider>
 

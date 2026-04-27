@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Plus, Building2, MapPin, Calendar, ChevronRight } from "lucide-react";
 import AddProjectModal from "@/components/AddProjectModal";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Project {
   id: string;
@@ -54,28 +57,26 @@ export default function ProjectsPage() {
       <div className="sticky top-0 z-10 bg-[var(--bg-primary)]/95 backdrop-blur border-b border-[var(--border-primary)] px-6 py-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <div>
-            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">All Projects</h1>
-            <p className="text-sm text-[color:var(--text-muted)] mt-0.5">{projects.length} active project{projects.length !== 1 ? "s" : ""}</p>
+            <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.all.projects')}</h1>
+            <p className="text-sm text-[color:var(--text-muted)] mt-0.5">{projects.length}{t('ui.active.project')}{projects.length !== 1 ? t('ui.s') : ""}</p>
           </div>
           <button
             onClick={() => setShowAdd(true)}
             className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
           >
-            <Plus size={16} />
-            Add Project
+            <Plus size={16} />{t('ui.add.project')}
           </button>
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-6">
         {loading ? (
-          <div className="flex justify-center py-20 text-[color:var(--text-muted)]">Loading projects...</div>
+          <div className="flex justify-center py-20 text-[color:var(--text-muted)]">{t('ui.loading.projects')}</div>
         ) : projects.length === 0 ? (
           <div className="text-center py-20">
             <Building2 size={40} className="mx-auto text-gray-700 mb-3" />
-            <p className="text-[color:var(--text-muted)]">No projects yet.</p>
-            <button onClick={() => setShowAdd(true)} className="mt-4 px-5 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
-              Create First Project
+            <p className="text-[color:var(--text-muted)]">{t('ui.no.projects.yet.313557')}</p>
+            <button onClick={() => setShowAdd(true)} className="mt-4 px-5 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">{t('ui.create.first.project')}
             </button>
           </div>
         ) : (
@@ -103,8 +104,7 @@ export default function ProjectsPage() {
                     )}
                     {p.target_finish_date && (
                       <span className="flex items-center gap-1">
-                        <Calendar size={10} />
-                        Target: {new Date(p.target_finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        <Calendar size={10} />{t('ui.target')} {new Date(p.target_finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                       </span>
                     )}
                   </div>
@@ -112,19 +112,19 @@ export default function ProjectsPage() {
                 <div className="hidden md:flex items-center gap-8 mr-4">
                   <div className="text-center">
                     <div className="text-sm font-bold text-[color:var(--text-primary)]">{p.stats.completionPercent}%</div>
-                    <div className="text-[10px] text-gray-600">Complete</div>
+                    <div className="text-[10px] text-gray-600">{t('ui.complete.1f5a1a')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-bold text-[#EF4444]">{p.stats.highRisks}</div>
-                    <div className="text-[10px] text-gray-600">High Risks</div>
+                    <div className="text-[10px] text-gray-600">{t('ui.high.risks')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-bold text-[#EAB308]">{p.stats.lateActivities}</div>
-                    <div className="text-[10px] text-gray-600">Overdue</div>
+                    <div className="text-[10px] text-gray-600">{t('ui.overdue.07217c')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-bold text-[color:var(--text-primary)]">{p.stats.totalActivities}</div>
-                    <div className="text-[10px] text-gray-600">Activities</div>
+                    <div className="text-[10px] text-gray-600">{t('ui.activities.e58f7f')}</div>
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors shrink-0" />

@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   Flag, Truck, Search, HardHat, ClipboardCheck,
   Calendar, ChevronDown, ChevronUp, AlertTriangle, CheckCircle
@@ -59,27 +62,25 @@ function statusChip(status: string, pct: number) {
   if (status === "complete" || pct >= 100) {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-900/40 text-green-400 border border-green-700/40">
-        <CheckCircle size={10} /> Done
+        <CheckCircle size={10} />{t('ui.done.e9b450')}
       </span>
     );
   }
   if (status === "late") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-900/40 text-red-400 border border-red-700/40">
-        <AlertTriangle size={10} /> Late
+        <AlertTriangle size={10} />{t('ui.late')}
       </span>
     );
   }
   if (status === "in_progress") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-900/40 text-orange-400 border border-orange-700/40">
-        In Progress
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-900/40 text-orange-400 border border-orange-700/40">{t('status.inProgress')}
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[var(--border-secondary)]">
-      Upcoming
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#1F1F25] text-[color:var(--text-muted)] border border-[#2a2a33]">{t('ui.upcoming')}
     </span>
   );
 }
@@ -103,7 +104,7 @@ function ActivityRow({ activity }: { activity: Activity }) {
           )}
           {days !== null && days > 0 && (
             <span className="text-[10px] text-[#F97316] font-medium">
-              {days}d away
+              {days}{t('ui.d.away')}
             </span>
           )}
         </div>
@@ -200,9 +201,9 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
   if (!data || data.stats.total === 0) {
     return (
       <div className="text-center py-16">
-        <Calendar size={36} className="mx-auto text-[color:var(--text-muted)] mb-3" />
-        <p className="text-[color:var(--text-secondary)] text-sm">No activities in the 4-6 week window</p>
-        <p className="text-[color:var(--text-muted)] text-xs mt-1">Activities starting 3-6 weeks from today will appear here</p>
+        <Calendar size={36} className="mx-auto text-gray-700 mb-3" />
+        <p className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.activities.in.the.4.6.week.window')}</p>
+        <p className="text-gray-600 text-xs mt-1">{t('ui.activities.starting.3.6.weeks.from.today.will.appear.here')}</p>
       </div>
     );
   }
@@ -212,38 +213,36 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
       {/* Window header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">6-Week Lookahead</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.6.week.lookahead')}</h2>
           <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-            {formatDate(data.window.start)} — {formatDate(data.window.end)} · {data.stats.total} activities
+            {formatDate(data.window.start)} — {formatDate(data.window.end)} · {data.stats.total}{t('ui.activities.053a51')}
           </p>
         </div>
       </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-2">
-        <StatCard label="Milestones" value={data.stats.milestones} icon={Flag} color="text-[#F97316]" />
-        <StatCard label="Inspections" value={data.stats.inspections} icon={ClipboardCheck} color="text-blue-400" />
-        <StatCard label="Procurement" value={data.stats.longLead} icon={Truck} color="text-purple-400" />
-        <StatCard label="Mobilizations" value={data.stats.mobilizations} icon={HardHat} color="text-emerald-400" />
+        <StatCard label={t('ui.milestones')} value={data.stats.milestones} icon={Flag} color="text-[#F97316]" />
+        <StatCard label={t('ui.inspections')} value={data.stats.inspections} icon={ClipboardCheck} color="text-blue-400" />
+        <StatCard label={t('ui.procurement')} value={data.stats.longLead} icon={Truck} color="text-purple-400" />
+        <StatCard label={t('ui.mobilizations')} value={data.stats.mobilizations} icon={HardHat} color="text-emerald-400" />
       </div>
 
       {/* Milestones */}
-      <Section icon={Flag} title="Upcoming Milestones" count={data.milestones.length} color="text-[#F97316]">
+      <Section icon={Flag} title={t('ui.upcoming.milestones')} count={data.milestones.length} color="text-[#F97316]">
         {data.milestones.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
 
       {/* Long-Lead / Procurement */}
-      <Section icon={Truck} title="Long-Lead & Procurement" count={data.longLead.length} color="text-purple-400">
-        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Items that need ordering/fabrication NOW to land in 4-6 weeks
+      <Section icon={Truck} title={t('ui.long.lead.and.procurement')} count={data.longLead.length} color="text-purple-400">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">{t('ui.items.that.need.ordering.fabrication.now.to.land.in.4')}
         </p>
         {data.longLead.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
 
       {/* Mobilizations by Trade */}
-      <Section icon={HardHat} title="Sub Mobilizations" count={data.mobilizations.length} color="text-emerald-400">
-        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Trades that need to be on site in weeks 4-6
+      <Section icon={HardHat} title={t('ui.sub.mobilizations')} count={data.mobilizations.length} color="text-emerald-400">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">{t('ui.trades.that.need.to.be.on.site.in.weeks.4')}
         </p>
         {Object.entries(data.mobilizationsByTrade).map(([trade, acts]) => (
           <div key={trade} className="space-y-1.5">
@@ -256,15 +255,14 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
       </Section>
 
       {/* Inspections */}
-      <Section icon={ClipboardCheck} title="Inspections & Testing" count={data.inspections.length} color="text-blue-400">
-        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Schedule these now — lead time for inspectors and testing labs
+      <Section icon={ClipboardCheck} title={t('ui.inspections.and.testing')} count={data.inspections.length} color="text-blue-400">
+        <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">{t('ui.schedule.these.now.lead.time.for.inspectors.and.testing.labs')}
         </p>
         {data.inspections.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
 
       {/* Other */}
-      <Section icon={Calendar} title="Other Activities" count={data.other.length} color="text-[color:var(--text-secondary)]" defaultOpen={false}>
+      <Section icon={Calendar} title={t('ui.other.activities')} count={data.other.length} color="text-[color:var(--text-secondary)]" defaultOpen={false}>
         {data.other.map((a) => <ActivityRow key={a.id} activity={a} />)}
       </Section>
     </div>

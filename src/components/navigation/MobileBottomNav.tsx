@@ -1,5 +1,8 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   CalendarDays,
   ClipboardList,
@@ -15,11 +18,11 @@ interface NavGroup {
 }
 
 const GROUPS: NavGroup[] = [
-  { id: "schedule", label: "Schedule", icon: CalendarDays },
-  { id: "fieldops", label: "Field Ops", icon: ClipboardList },
-  { id: "documents", label: "Documents", icon: FileText },
-  { id: "money", label: "Money", icon: Receipt },
-  { id: "project", label: "Project", icon: BarChart3 },
+  { id: "schedule", label: t('nav.schedule'), icon: CalendarDays },
+  { id: "fieldops", label: t('nav.fieldOps'), icon: ClipboardList },
+  { id: "documents", label: t('nav.documents'), icon: FileText },
+  { id: "money", label: t('nav.money'), icon: Receipt },
+  { id: "project", label: t('nav.project'), icon: BarChart3 },
 ];
 
 interface MobileBottomNavProps {

@@ -5,14 +5,17 @@ import WeeklyRollup from "./WeeklyRollup";
 import MonthlyRollup from "./MonthlyRollup";
 import QuarterlyRollup from "./QuarterlyRollup";
 import YearlyRollup from "./YearlyRollup";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 type RollupView = "weekly" | "monthly" | "quarterly" | "yearly";
 
 const VIEWS: { id: RollupView; label: string }[] = [
-  { id: "weekly", label: "Weekly" },
-  { id: "monthly", label: "Monthly" },
-  { id: "quarterly", label: "Quarterly" },
-  { id: "yearly", label: "Yearly" },
+  { id: "weekly", label: t('ui.weekly') },
+  { id: "monthly", label: t('ui.monthly') },
+  { id: "quarterly", label: t('ui.quarterly') },
+  { id: "yearly", label: t('ui.yearly') },
 ];
 
 interface RollupDashboardProps {

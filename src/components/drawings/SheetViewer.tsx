@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import AddPinModal from "./AddPinModal";
 import RevisionBanner from "./RevisionBanner";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -275,7 +278,7 @@ export default function SheetViewer({
               ? "bg-[#F97316] text-[color:var(--text-primary)]"
               : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] bg-[var(--bg-tertiary)]"
           }`}
-          title="Add Pin"
+          title={t('ui.add.pin')}
         >
           <MapPin size={16} />
         </button>
@@ -304,12 +307,11 @@ export default function SheetViewer({
       {addPinMode && (
         <div className="flex items-center justify-center gap-2 px-4 py-2 bg-[#F97316]/15 border-b border-[#F97316]/30 shrink-0">
           <MapPin size={14} className="text-[#F97316]" />
-          <span className="text-[#F97316] text-sm">Tap on the drawing to place a pin</span>
+          <span className="text-[#F97316] text-sm">{t('ui.tap.on.the.drawing.to.place.a.pin')}</span>
           <button
             onClick={() => setAddPinMode(false)}
             className="ml-auto text-[#F97316] hover:text-[color:var(--text-primary)] text-sm underline"
-          >
-            Cancel
+          >{t('action.cancel')}
           </button>
         </div>
       )}
@@ -337,12 +339,12 @@ export default function SheetViewer({
                 file={pdfPublicUrl}
                 loading={
                   <div className="flex items-center justify-center w-full h-64">
-                    <div className="text-[color:var(--text-muted)] text-sm">Loading PDF...</div>
+                    <div className="text-[color:var(--text-muted)] text-sm">{t('ui.loading.pdf')}</div>
                   </div>
                 }
                 error={
                   <div className="flex items-center justify-center w-full h-64">
-                    <div className="text-red-400 text-sm">Failed to load PDF</div>
+                    <div className="text-red-400 text-sm">{t('ui.failed.to.load.pdf')}</div>
                   </div>
                 }
               >
@@ -402,7 +404,7 @@ export default function SheetViewer({
             disabled={sheetIndex === 0}
             className="flex items-center gap-1 px-3 py-2 bg-[var(--bg-tertiary)] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
           >
-            <ChevronLeft size={16} /> Prev
+            <ChevronLeft size={16} />{t('ui.prev')}
           </button>
           <div className="text-center">
             <p className="text-[color:var(--text-secondary)] text-sm">{sheetIndex + 1} / {sheets.length}</p>
@@ -413,9 +415,8 @@ export default function SheetViewer({
           <button
             onClick={() => setSheetIndex((i) => Math.min(i + 1, sheets.length - 1))}
             disabled={sheetIndex === sheets.length - 1}
-            className="flex items-center gap-1 px-3 py-2 bg-[var(--bg-tertiary)] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
-          >
-            Next <ChevronRight size={16} />
+            className="flex items-center gap-1 px-3 py-2 bg-[#1F1F25] rounded-lg text-[color:var(--text-secondary)] disabled:opacity-30 min-h-[44px] text-sm"
+          >{t('ui.next')} <ChevronRight size={16} />
           </button>
         </div>
       </div>
@@ -450,8 +451,7 @@ export default function SheetViewer({
               <button
                 onClick={() => handleDeletePin(selectedPin.id)}
                 className="text-red-400 hover:text-red-300 text-xs px-2 py-1 border border-red-400/30 rounded min-h-[32px]"
-              >
-                Delete
+              >{t('action.delete')}
               </button>
               <button
                 onClick={() => setSelectedPin(null)}
@@ -479,7 +479,7 @@ export default function SheetViewer({
                   {currentSheet.discipline}
                 </span>
               )}
-              <p className="text-[color:var(--text-muted)] text-xs">Page {currentSheet.page_index + 1} · {pins.length} pins</p>
+              <p className="text-[color:var(--text-muted)] text-xs">{t('ui.page')} {currentSheet.page_index + 1} · {pins.length}{t('ui.pins')}</p>
             </div>
             <button onClick={() => setShowInfo(false)} className="p-1 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-h-[32px] min-w-[32px] flex items-center justify-center">
               <X size={14} />

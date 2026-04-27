@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
 import { Plus, RefreshCw, FileImage, Calendar, Layers, Upload, Trash2, X } from "lucide-react";
 import SheetBrowser from "@/components/drawings/SheetBrowser";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 // Lazy-load SheetViewer to avoid SSR issues with react-pdf
 const SheetViewer = lazy(() => import("@/components/drawings/SheetViewer"));
@@ -130,7 +133,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
         body: JSON.stringify({ filename: uploadForm.name }),
       });
       if (!urlRes.ok) {
-        alert("Failed to get upload URL");
+        alert(t('ui.failed.to.get.upload.url'));
         return;
       }
       const { signed_url, token, storage_path: storagePath } = await urlRes.json();
@@ -178,7 +181,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
       setUploadProgress("Creating drawing set...");
 
-      // Step 3: POST metadata to API (no file — just metadata + storage path)
+      // Step 3: POST metadata to API (no file â€” just metadata + storage path)
       const resp = await fetch(`/api/projects/${projectId}/drawings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -200,7 +203,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
       const data = await resp.json();
 
-      setUploadProgress(`Done — organize your sheets`);
+      setUploadProgress(`Done â€” organize your sheets`);
       setShowUpload(false);
       setUploadFile(null);
       setUploadForm({ name: "", revision: "Rev 0", description: "", mode: "new_revision" });
@@ -210,7 +213,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
       setOpenOrganizerOnMount(true);
       await handleSetSelect(data.drawing_set);
     } catch (e) {
-      alert(`Upload failed — ${e instanceof Error ? e.message : 'please try again'}`);
+      alert(`Upload failed â€” ${e instanceof Error ? e.message : 'please try again'}`);
     } finally {
       setUploading(false);
       setUploadProgress("");
@@ -219,7 +222,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
   const handleDeleteSet = async (setId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm("Delete this drawing set? This cannot be undone.")) return;
+    if (!confirm(t('ui.delete.this.drawing.set.this.cannot.be.undone'))) return;
     const resp = await fetch(`/api/projects/${projectId}/drawings/${setId}`, {
       method: "DELETE",
     });
@@ -296,9 +299,9 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-[color:var(--text-primary)] font-semibold text-base">Drawings</h2>
+          <h2 className="text-[color:var(--text-primary)] font-semibold text-base">{t('ui.drawings')}</h2>
           <p className="text-[color:var(--text-muted)] text-xs mt-0.5">
-            {drawingSets.length} set{drawingSets.length !== 1 ? "s" : ""}
+            {drawingSets.length}{t('ui.set')}{drawingSets.length !== 1 ? t('ui.s') : ""}
           </p>
         </div>
         <div className="flex gap-2">
@@ -312,8 +315,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             onClick={() => setShowUpload(true)}
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] transition-colors"
           >
-            <Plus size={16} />
-            Upload Set
+            <Plus size={16} />{t('ui.upload.set')}
           </button>
         </div>
       </div>
@@ -329,16 +331,14 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
           <div className="w-16 h-16 rounded-2xl bg-[var(--bg-tertiary)] flex items-center justify-center mb-4">
             <Layers size={28} className="text-gray-600" />
           </div>
-          <h3 className="text-[color:var(--text-primary)] font-medium mb-1">No drawings uploaded</h3>
-          <p className="text-[color:var(--text-muted)] text-sm mb-6">
-            Tap + to upload your first drawing set
+          <h3 className="text-[color:var(--text-primary)] font-medium mb-1">{t('ui.no.drawings.uploaded')}</h3>
+          <p className="text-[color:var(--text-muted)] text-sm mb-6">{t('ui.tap.to.upload.your.first.drawing.set')}
           </p>
           <button
             onClick={() => setShowUpload(true)}
             className="flex items-center gap-2 px-4 py-2.5 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px]"
           >
-            <Upload size={16} />
-            Upload Drawing Set
+            <Upload size={16} />{t('ui.upload.drawing.set')}
           </button>
         </div>
       ) : (
@@ -362,15 +362,14 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                         {set.revision}
                       </span>
                       {set.is_current && (
-                        <span className="px-2 py-0.5 bg-green-500/15 text-green-400 rounded text-xs font-medium border border-green-500/20">
-                          Current
+                        <span className="px-2 py-0.5 bg-green-500/15 text-green-400 rounded text-xs font-medium border border-green-500/20">{t('ui.current')}
                         </span>
                       )}
                     </div>
                     <div className="flex items-center gap-3 mt-1 text-xs text-[color:var(--text-muted)]">
                       <span className="flex items-center gap-1">
                         <FileImage size={11} />
-                        {set.sheet_count} sheets
+                        {set.sheet_count}{t('ui.sheets')}
                       </span>
                       <span className="flex items-center gap-1">
                         <Calendar size={11} />
@@ -401,8 +400,8 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
         <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4">
           <div className="w-full sm:max-w-md bg-[var(--bg-secondary)] rounded-t-2xl sm:rounded-2xl border border-[var(--border-primary)] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border-primary)]">
-              <h2 className="text-[color:var(--text-primary)] font-semibold">Upload Drawing Set</h2>
+            <div className="flex items-center justify-between px-4 py-4 border-b border-[#1F1F25]">
+              <h2 className="text-[color:var(--text-primary)] font-semibold">{t('ui.upload.drawing.set')}</h2>
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
                 className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -415,8 +414,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
               {/* File picker */}
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">
-                  PDF File
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">{t('ui.pdf.file')}
                 </label>
                 {uploadFile ? (
                   <div className="flex items-center gap-2 p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg">
@@ -435,7 +433,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                     className="w-full flex flex-col items-center gap-2 p-6 bg-[var(--bg-primary)] border-2 border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-lg text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[80px]"
                   >
                     <Upload size={20} />
-                    <span className="text-sm">Tap to select PDF</span>
+                    <span className="text-sm">{t('ui.tap.to.select.pdf')}</span>
                   </button>
                 )}
                 <input
@@ -460,51 +458,47 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
 
               {/* Name */}
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
-                  Set Name *
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">{t('ui.set.name')}
                 </label>
                 <input
                   type="text"
                   value={uploadForm.name}
                   onChange={(e) => setUploadForm((p) => ({ ...p, name: e.target.value }))}
-                  placeholder="e.g. Architectural Drawings"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  placeholder={t('ui.e.g.architectural.drawings')}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
               {/* Revision */}
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
-                  Revision
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">{t('ui.revision')}
                 </label>
                 <input
                   type="text"
                   value={uploadForm.revision}
                   onChange={(e) => setUploadForm((p) => ({ ...p, revision: e.target.value }))}
-                  placeholder="Rev 0"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  placeholder={t('ui.rev.0')}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">
-                  Description (optional)
+                <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-1 block">{t('ui.description.optional')}
                 </label>
                 <input
                   type="text"
                   value={uploadForm.description}
                   onChange={(e) => setUploadForm((p) => ({ ...p, description: e.target.value }))}
-                  placeholder="Brief description"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+                  placeholder={t('ui.brief.description')}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
                 />
               </div>
 
-              {/* Mode — only relevant if name matches existing */}
+              {/* Mode â€” only relevant if name matches existing */}
               {drawingSets.some((s) => s.name === uploadForm.name) && (
                 <div>
-                  <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">
-                    Existing Set Found — Upload as...
+                  <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">{t('ui.existing.set.found.upload.as')}
                   </label>
                   <div className="flex gap-2">
                     {(["new_revision", "replace"] as const).map((mode) => (
@@ -517,7 +511,7 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
                             : "border-[var(--border-primary)] text-[color:var(--text-secondary)]"
                         }`}
                       >
-                        {mode === "new_revision" ? "New Revision" : "Replace"}
+                        {mode === "new_revision" ? t('ui.new.revision') : t('ui.replace')}
                       </button>
                     ))}
                   </div>
@@ -533,16 +527,15 @@ export default function DrawingsTab({ projectId }: DrawingsTabProps) {
             <div className="px-4 py-4 border-t border-[var(--border-primary)] flex gap-3">
               <button
                 onClick={() => { setShowUpload(false); setUploadFile(null); }}
-                className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
-              >
-                Cancel
+                className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[44px]"
+              >{t('action.cancel')}
               </button>
               <button
                 onClick={handleUpload}
                 disabled={!uploadFile || !uploadForm.name.trim() || uploading}
                 className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
               >
-                {uploading ? "Uploading..." : "Upload"}
+                {uploading ? t('ui.uploading') : t('ui.upload')}
               </button>
             </div>
           </div>

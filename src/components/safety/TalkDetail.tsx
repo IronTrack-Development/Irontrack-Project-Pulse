@@ -9,6 +9,9 @@ import {
 import type { ToolboxTalk, ToolboxTalkAttendee } from "@/types";
 import AttendanceSheet from "./AttendanceSheet";
 import EditableTalkingPoints from "./EditableTalkingPoints";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface TalkDetailProps {
   projectId: string;
@@ -90,7 +93,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
         setError(data.error || "Failed to save");
       }
     } catch {
-      setError("Failed to save");
+      setError(t('ui.failed.to.save'));
     }
     setSaving(false);
   };
@@ -113,13 +116,13 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
         setError(data.error || "Failed to complete");
       }
     } catch {
-      setError("Failed to complete");
+      setError(t('ui.failed.to.complete'));
     }
     setCompleting(false);
   };
 
   const handleDelete = async () => {
-    if (!confirm("Delete this draft talk?")) return;
+    if (!confirm(t('ui.delete.this.draft.talk'))) return;
     setDeleting(true);
     try {
       const res = await fetch(`/api/projects/${projectId}/safety/${talkId}`, {
@@ -132,7 +135,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
         setError(data.error || "Failed to delete");
       }
     } catch {
-      setError("Failed to delete");
+      setError(t('ui.failed.to.delete'));
     }
     setDeleting(false);
   };
@@ -189,7 +192,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   if (!talk) {
     return (
       <div className="text-center py-12">
-        <p className="text-sm text-[color:var(--text-muted)]">Talk not found</p>
+        <p className="text-sm text-[color:var(--text-muted)]">{t('ui.talk.not.found')}</p>
       </div>
     );
   }
@@ -210,20 +213,17 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
               </span>
               {talk.status === "completed" && (
                 <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#22C55E]/10 text-[#22C55E]">
-                  <ShieldCheck size={10} />
-                  Completed
+                  <ShieldCheck size={10} />{t('status.completed')}
                 </span>
               )}
               {talk.status === "locked" && (
                 <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-secondary)]">
-                  <Lock size={10} />
-                  Locked
+                  <Lock size={10} />{t('ui.locked')}
                 </span>
               )}
               {talk.status === "draft" && (
                 <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
-                  <Edit3 size={10} />
-                  Draft
+                  <Edit3 size={10} />{t('status.draft')}
                 </span>
               )}
             </div>
@@ -250,16 +250,16 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                     ? "bg-[#22C55E]/10 text-[#22C55E]"
                     : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                 }`}
-                title={isDefaultPresenter ? "Default presenter" : "Set as default presenter"}
+                title={isDefaultPresenter ? t('ui.default.presenter.f6c095') : t('ui.set.as.default.presenter')}
               >
                 <Check size={8} />
-                {isDefaultPresenter ? "Default" : "Set default"}
+                {isDefaultPresenter ? t('ui.default') : t('ui.set.default')}
               </button>
             </div>
           )}
           <div className="flex items-center gap-1.5">
             <Clock size={12} className="text-[#F97316]" />
-            {talk.duration_minutes} min
+            {talk.duration_minutes}{t('ui.min')}
           </div>
           {talk.location && (
             <div className="flex items-center gap-1.5">
@@ -274,8 +274,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       {(isReadOnly ? (talk.talking_points || []).length > 0 : true) && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <h4 className="text-sm font-medium text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-            <Shield size={14} className="text-[#F97316]" />
-            Talking Points
+            <Shield size={14} className="text-[#F97316]" />{t('safety.talkingPoints')}
           </h4>
           <EditableTalkingPoints
             points={isReadOnly ? (talk.talking_points || []) : talkingPoints}
@@ -302,7 +301,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       {/* Notes & Corrective Actions */}
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-4">
         <div>
-          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">Notes</label>
+          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.notes')}</label>
           <textarea
             value={notes}
             onChange={(e) => {
@@ -311,14 +310,13 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             }}
             disabled={isReadOnly}
             rows={3}
-            placeholder="Additional notes..."
-            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            placeholder={t('ui.additional.notes')}
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
         <div>
-          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">
-            Corrective Actions
+          <label className="text-xs text-[color:var(--text-muted)] mb-1 block">{t('ui.corrective.actions')}
           </label>
           <textarea
             value={correctiveActions}
@@ -328,8 +326,8 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             }}
             disabled={isReadOnly}
             rows={2}
-            placeholder="Any corrective actions needed..."
-            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            placeholder={t('ui.any.corrective.actions.needed')}
+            className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
           />
         </div>
 
@@ -352,7 +350,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             {followUpNeeded && <AlertTriangle size={12} />}
           </button>
           <div className="flex-1">
-            <div className="text-sm text-[color:var(--text-primary)]">Follow-up Needed</div>
+            <div className="text-sm text-[color:var(--text-primary)]">{t('ui.follow.up.needed')}</div>
             {followUpNeeded && (
               <textarea
                 value={followUpNotes}
@@ -362,8 +360,8 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 }}
                 disabled={isReadOnly}
                 rows={2}
-                placeholder="Follow-up details..."
-                className="w-full mt-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+                placeholder={t('ui.follow.up.details')}
+                className="w-full mt-2 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
               />
             )}
           </div>
@@ -386,7 +384,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
           >
             <Save size={14} />
-            {saving ? "Saving..." : "Save Changes"}
+            {saving ? t('ui.saving') : t('ui.save.changes')}
           </button>
         )}
 
@@ -397,7 +395,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             className="flex items-center gap-1.5 px-4 py-2.5 bg-[#22C55E]/20 hover:bg-[#22C55E]/30 text-[#22C55E] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
           >
             <CheckCircle2 size={14} />
-            {completing ? "Completing..." : "Complete Talk"}
+            {completing ? t('ui.completing') : t('ui.complete.talk')}
           </button>
         )}
 
@@ -405,8 +403,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           onClick={handleExportPdf}
           className="flex items-center gap-1.5 px-4 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[44px]"
         >
-          <FileText size={14} />
-          Export PDF
+          <FileText size={14} />{t('ui.export.pdf')}
         </button>
 
         {isReadOnly && !templateSaved && (
@@ -416,13 +413,12 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             className="flex items-center gap-1.5 px-4 py-2.5 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
           >
             <BookOpen size={14} />
-            {savingTemplate ? "Saving..." : "Save as Template"}
+            {savingTemplate ? t('ui.saving') : t('ui.save.as.template')}
           </button>
         )}
         {templateSaved && (
           <span className="flex items-center gap-1.5 px-4 py-2.5 text-[#22C55E] text-sm min-h-[44px]">
-            <Check size={14} />
-            Template saved
+            <Check size={14} />{t('ui.template.saved')}
           </span>
         )}
 
@@ -433,7 +429,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             className="flex items-center gap-1.5 px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px] ml-auto"
           >
             <Trash2 size={14} />
-            {deleting ? "Deleting..." : "Delete"}
+            {deleting ? t('ui.deleting') : t('action.delete')}
           </button>
         )}
       </div>

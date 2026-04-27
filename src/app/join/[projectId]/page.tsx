@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   CheckCircle2,
   Loader2,
@@ -100,31 +103,27 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-192.png"
-            alt="IronTrack Pulse"
+            alt={t('ui.irontrack.pulse')}
             className="w-14 h-14 rounded-2xl object-contain shadow-lg shadow-black/30"
           />
           <div className="text-center">
-            <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">
-              IronTrack Pulse
+            <p className="text-xs font-semibold text-[color:var(--text-muted)] tracking-widest uppercase">{t('ui.irontrack.pulse')}
             </p>
           </div>
         </div>
 
         {/* Project + Header */}
         <div className="text-center space-y-1">
-          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">
-            Join {projectName}
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] leading-tight">{t('ui.join')} {projectName}
           </h1>
-          <p className="text-sm text-[color:var(--text-secondary)]">
-            Register to see your schedule on this project.
+          <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.register.to.see.your.schedule.on.this.project')}
           </p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Company Name
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.company.name.8599f5')}
             </label>
             <div className="relative">
               <Building2
@@ -135,7 +134,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 type="text"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                placeholder="e.g., ABC Plumbing"
+                placeholder={t('ui.e.g.abc.plumbing')}
                 required
                 autoComplete="organization"
                 className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-11 pr-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
@@ -144,8 +143,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">
-              Your Full Name
+            <label className="block text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wide">{t('ui.your.full.name')}
             </label>
             <div className="relative">
               <User
@@ -156,7 +154,7 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="e.g., Joe Martinez"
+                placeholder={t('ui.e.g.joe.martinez')}
                 required
                 autoComplete="name"
                 className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-11 pr-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
@@ -178,16 +176,14 @@ function RegisterForm({ projectName, onSubmit, loading, error }: RegisterFormPro
             {loading ? (
               <Loader2 size={20} className="animate-spin" />
             ) : (
-              <>
-                Join Project
+              <>{t('ui.join.project')}
                 <ChevronRight size={18} />
               </>
             )}
           </button>
         </form>
 
-        <p className="text-[11px] text-gray-600 text-center leading-relaxed">
-          Your GC will assign your specific schedule tasks after registration. You&apos;ll see them here once assigned.
+        <p className="text-[11px] text-gray-600 text-center leading-relaxed">{t('ui.your.gc.will.assign.your.specific.schedule.tasks.after.registration')}
         </p>
       </div>
     </div>
@@ -213,9 +209,8 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
             <Smartphone size={32} className="text-[#F97316]" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">Add to Home Screen</h2>
-            <p className="text-sm text-[color:var(--text-secondary)] mt-1">
-              Get quick access to your schedule like a native app
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.add.to.home.screen')}</h2>
+            <p className="text-sm text-[color:var(--text-secondary)] mt-1">{t('ui.get.quick.access.to.your.schedule.like.a.native.app')}
             </p>
           </div>
         </div>
@@ -224,71 +219,66 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-4">
           {os === "ios" ? (
             <>
-              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">iPhone / iPad</p>
+              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.iphone.ipad')}</p>
               <ol className="space-y-4">
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">1</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Tap the Share button</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-                      Look for the{" "}
-                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">□↑</span>{" "}
-                      icon at the bottom of Safari
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.tap.the.share.button')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.look.for.the')}{" "}
+                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">□↑</span>{" "}{t('ui.icon.at.the.bottom.of.safari')}
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">2</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Scroll down in the menu</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Find and tap <strong className="text-[color:var(--text-secondary)]">&quot;Add to Home Screen&quot;</strong></p>
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.scroll.down.in.the.menu')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.find.and.tap')} <strong className="text-[color:var(--text-secondary)]">{t('ui.add.to.home.screen.7a0091')}</strong></p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">3</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Tap &quot;Add&quot;</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">The app icon will appear on your home screen</p>
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.tap.add')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.the.app.icon.will.appear.on.your.home.screen')}</p>
                   </div>
                 </li>
               </ol>
             </>
           ) : os === "android" ? (
             <>
-              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">Android</p>
+              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.android.1928f9')}</p>
               <ol className="space-y-4">
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">1</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Tap the three dots</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-                      Find the{" "}
-                      <span className="font-mono bg-[var(--bg-tertiary)] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">⋮</span>{" "}
-                      menu in the top right of Chrome
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.tap.the.three.dots')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.find.the')}{" "}
+                      <span className="font-mono bg-[#1F1F25] px-1.5 py-0.5 rounded text-[color:var(--text-secondary)]">⋮</span>{" "}{t('ui.menu.in.the.top.right.of.chrome')}
                     </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">2</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Tap &quot;Add to Home Screen&quot;</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Or look for &quot;Install app&quot; if Chrome offers it</p>
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.tap.add.to.home.screen')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.or.look.for.install.app.if.chrome.offers.it')}</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold flex items-center justify-center mt-0.5">3</span>
                   <div>
-                    <p className="text-sm text-gray-200 font-medium">Tap &quot;Add&quot;</p>
-                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">IronTrack Pulse will appear on your home screen</p>
+                    <p className="text-sm text-gray-200 font-medium">{t('ui.tap.add')}</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.irontrack.pulse.will.appear.on.your.home.screen')}</p>
                   </div>
                 </li>
               </ol>
             </>
           ) : (
             <>
-              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">Desktop / Other</p>
-              <p className="text-sm text-[color:var(--text-secondary)]">
-                Bookmark this page for quick access to your schedule. On mobile, use Safari (iPhone) or Chrome (Android) for best results.
+              <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.desktop.other')}</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.bookmark.this.page.for.quick.access.to.your.schedule.on')}
               </p>
             </>
           )}
@@ -297,8 +287,7 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
         {/* Tip */}
         <div className="bg-[#0d0d11] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-start gap-3">
           <span className="text-lg">💡</span>
-          <p className="text-xs text-[color:var(--text-secondary)] leading-relaxed">
-            Adding to your home screen means you can open your schedule in one tap — even while on the jobsite with limited connectivity.
+          <p className="text-xs text-[color:var(--text-secondary)] leading-relaxed">{t('ui.adding.to.your.home.screen.means.you.can.open.your')}
           </p>
         </div>
 
@@ -308,14 +297,12 @@ function HomeScreenWizard({ onDone, onSkip }: HomeScreenWizardProps) {
             onClick={onDone}
             className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px]"
           >
-            <CheckCircle2 size={20} />
-            I&apos;ve Added It
+            <CheckCircle2 size={20} />{t('ui.i.ve.added.it')}
           </button>
           <button
             onClick={onSkip}
-            className="w-full px-4 py-3.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
-          >
-            Skip for Now
+            className="w-full px-4 py-3.5 bg-[#121217] border border-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors"
+          >{t('ui.skip.for.now')}
           </button>
         </div>
       </div>
@@ -420,17 +407,15 @@ function WaitingScreen({
             </div>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">You&apos;re Registered!</h2>
-            <p className="text-sm text-[color:var(--text-secondary)] mt-1">
-              Waiting for your GC to assign schedule items
+            <h2 className="text-xl font-bold text-[color:var(--text-primary)]">{t('ui.you.re.registered')}</h2>
+            <p className="text-sm text-[color:var(--text-secondary)] mt-1">{t('ui.waiting.for.your.gc.to.assign.schedule.items')}
             </p>
           </div>
         </div>
 
         {/* Confirmation Card */}
-        <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-3">
-          <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
-            Registration Confirmed
+        <div className="bg-[#121217] border border-[#1F1F25] rounded-2xl p-5 space-y-3">
+          <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">{t('ui.registration.confirmed')}
           </p>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -443,8 +428,7 @@ function WaitingScreen({
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 size={14} className="text-green-400 flex-none" />
-              <span className="text-sm text-[color:var(--text-secondary)]">
-                Added to <span className="text-[color:var(--text-primary)] font-medium">{projectName}</span>
+              <span className="text-sm text-[color:var(--text-secondary)]">{t('ui.added.to')} <span className="text-[color:var(--text-primary)] font-medium">{projectName}</span>
               </span>
             </div>
           </div>
@@ -454,29 +438,25 @@ function WaitingScreen({
         <div className="flex flex-col items-center gap-3 py-2">
           <div className="flex items-center gap-2">
             <PulseDot />
-            <p className="text-sm text-[color:var(--text-secondary)]">Checking for task assignments…</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.checking.for.task.assignments')}</p>
           </div>
-          <p className="text-xs text-gray-600 text-center">
-            This page will automatically redirect when your GC has assigned your schedule items.
-            {"\n"}You can close it and come back — your session is saved for 30 minutes.
+          <p className="text-xs text-gray-600 text-center">{t('ui.this.page.will.automatically.redirect.when.your.gc.has.assigned')}
+            {"\n"}{t('ui.you.can.close.it.and.come.back.your.session.is')}
           </p>
         </div>
 
         {/* What happens next */}
-        <div className="bg-[#0d0d11] border border-[var(--border-primary)] rounded-xl px-4 py-4 space-y-2">
-          <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">What Happens Next</p>
+        <div className="bg-[#0d0d11] border border-[#1F1F25] rounded-xl px-4 py-4 space-y-2">
+          <p className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide">{t('ui.what.happens.next')}</p>
           <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
             <li className="flex items-start gap-2">
-              <span className="text-[#F97316] flex-none mt-0.5">→</span>
-              Your GC will assign specific schedule tasks to your company
+              <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.your.gc.will.assign.specific.schedule.tasks.to.your.company')}
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#F97316] flex-none mt-0.5">→</span>
-              This page will automatically take you to your schedule
+              <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.this.page.will.automatically.take.you.to.your.schedule')}
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#F97316] flex-none mt-0.5">→</span>
-              You can submit daily progress reports directly from the app
+              <span className="text-[#F97316] flex-none mt-0.5">→</span>{t('ui.you.can.submit.daily.progress.reports.directly.from.the.app')}
             </li>
           </ul>
         </div>
@@ -615,7 +595,7 @@ export default function JoinProjectPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 size={32} className="animate-spin text-[#F97316]" />
-          <p className="text-sm">Loading project…</p>
+          <p className="text-sm">{t('ui.loading.project')}</p>
         </div>
       </div>
     );
@@ -659,7 +639,7 @@ export default function JoinProjectPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
         <Loader2 size={32} className="animate-spin text-[#F97316]" />
-        <p className="text-sm">Redirecting to your schedule…</p>
+        <p className="text-sm">{t('ui.redirecting.to.your.schedule')}</p>
       </div>
     </div>
   );

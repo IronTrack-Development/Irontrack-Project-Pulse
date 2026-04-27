@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw, Clock, AlertTriangle, Flag } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface QuarterlySummary {
   quarter: string;
@@ -45,9 +48,9 @@ function formatQuarter(q: string): string {
 
 const trendBadge = (direction: string) => {
   switch (direction) {
-    case "improving": return <span className="text-[#22C55E] text-sm font-medium">📈 Improving</span>;
-    case "declining": return <span className="text-[#EF4444] text-sm font-medium">📉 Declining</span>;
-    default: return <span className="text-[color:var(--text-secondary)] text-sm font-medium">➡️ Stable</span>;
+    case "improving": return <span className="text-[#22C55E] text-sm font-medium">{t('ui.improving')}</span>;
+    case "declining": return <span className="text-[#EF4444] text-sm font-medium">{t('ui.declining')}</span>;
+    default: return <span className="text-[color:var(--text-secondary)] text-sm font-medium">{t('ui.stable')}</span>;
   }
 };
 
@@ -101,50 +104,49 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
-          No logs found for this quarter.
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">{t('ui.no.logs.found.for.this.quarter')}
         </div>
       ) : (
         <>
           {/* Stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-6">
             <RollupStatCard
-              label="Total Crew-Hours"
+              label={t('ui.total.crew.hours')}
               value={data.totalCrewHours.toLocaleString()}
               icon={<Clock size={16} />}
               accent
             />
             <RollupStatCard
-              label="Days Logged"
+              label={t('ui.days.logged')}
               value={data.totalLogDays}
             />
             <RollupStatCard
-              label="Delay Days"
+              label={t('ui.delay.days')}
               value={data.totalDelayDays}
               icon={<AlertTriangle size={16} />}
             />
             <RollupStatCard
-              label="Lost Hours"
+              label={t('ui.lost.hours')}
               value={data.totalLostHours}
             />
             {data.milestoneHitRate !== null ? (
               <RollupStatCard
-                label="Milestone Hit Rate"
+                label={t('ui.milestone.hit.rate')}
                 value={`${data.milestoneHitRate}%`}
                 icon={<Flag size={16} />}
                 subtext={`${data.milestonesOnTime}/${data.totalMilestones}`}
                 accent
               />
             ) : (
-              <RollupStatCard label="Milestones" value="—" icon={<Flag size={16} />} subtext="None due" />
+              <RollupStatCard label={t('ui.milestones')} value="—" icon={<Flag size={16} />} subtext="None due" />
             )}
           </div>
 
           {/* Milestone hit rate visual */}
           {data.milestoneHitRate !== null && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Milestone Performance</h3>
-              <div className="bg-[var(--bg-secondary)] rounded-xl p-4">
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.milestone.performance')}</h3>
+              <div className="bg-[#121217] rounded-xl p-4">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16">
                     <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">
@@ -162,7 +164,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
                     </div>
                   </div>
                   <div className="text-xs text-[color:var(--text-secondary)]">
-                    {data.milestonesOnTime} of {data.totalMilestones} milestones completed on time
+                    {data.milestonesOnTime}{t('ui.of')} {data.totalMilestones}{t('ui.milestones.completed.on.time')}
                   </div>
                 </div>
               </div>
@@ -172,13 +174,13 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {/* Top delays */}
           {data.topDelays.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Top Delay Reasons</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.top.delay.reasons')}</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.topDelays.map((d, i) => (
                   <div key={d.code} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-center">
                     <div className="text-lg font-bold text-[color:var(--text-primary)]">#{i + 1}</div>
                     <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
-                    <div className="text-xs text-[color:var(--text-muted)]">{d.count} occurrences</div>
+                    <div className="text-xs text-[color:var(--text-muted)]">{d.count}{t('ui.occurrences.11e495')}</div>
                   </div>
                 ))}
               </div>
@@ -188,7 +190,7 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
           {/* Crew-hours by trade */}
           {Object.keys(data.crewHoursByTrade).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Crew-Hours by Trade</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.crew.hours.by.trade')}</h3>
               <div className="space-y-2">
                 {Object.entries(data.crewHoursByTrade)
                   .sort((a, b) => b[1] - a[1])
@@ -212,18 +214,18 @@ export default function QuarterlyRollup({ projectId }: { projectId: string }) {
 
           {/* Monthly breakdown */}
           <div className="mb-6">
-            <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Monthly Breakdown</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.monthly.breakdown')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {data.monthlyBreakdown.map((m) => (
                 <div key={m.month} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3">
                   <div className="text-xs text-[color:var(--text-muted)] mb-1">
-                    {new Date(m.month + "-15T12:00:00Z").toLocaleDateString("en-US", { month: "long", timeZone: "UTC" })}
+                    {new Date(m.month + t('ui.15t12.00.00z')).toLocaleDateString("en-US", { month: "long", timeZone: "UTC" })}
                   </div>
                   <div className="space-y-1 text-xs">
-                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Crew-Hours</span><span className="text-[color:var(--text-primary)] font-medium">{m.crewHours.toLocaleString()}</span></div>
-                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Delay Days</span><span className="text-[color:var(--text-primary)]">{m.delayDays}</span></div>
-                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Completed</span><span className="text-[color:var(--text-primary)]">{m.completedActivities}</span></div>
-                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">Logged Days</span><span className="text-[color:var(--text-primary)]">{m.logDays}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">{t('ui.crew.hours.648628')}</span><span className="text-[color:var(--text-primary)] font-medium">{m.crewHours.toLocaleString()}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">{t('ui.delay.days')}</span><span className="text-[color:var(--text-primary)]">{m.delayDays}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">{t('status.completed')}</span><span className="text-[color:var(--text-primary)]">{m.completedActivities}</span></div>
+                    <div className="flex justify-between"><span className="text-[color:var(--text-secondary)]">{t('ui.logged.days')}</span><span className="text-[color:var(--text-primary)]">{m.logDays}</span></div>
                   </div>
                 </div>
               ))}

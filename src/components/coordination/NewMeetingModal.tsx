@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { X, CalendarDays, Loader2 } from "lucide-react";
 import type { CoordinationMeetingType } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface NewMeetingModalProps {
   projectId: string;
@@ -63,7 +66,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2">
             <CalendarDays size={18} className="text-[#F97316]" />
-            <h3 className="text-[color:var(--text-primary)] font-semibold">New Meeting</h3>
+            <h3 className="text-[color:var(--text-primary)] font-semibold">{t('ui.new.meeting')}</h3>
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
             <X size={18} />
@@ -74,7 +77,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
         <div className="p-4 space-y-4">
           {/* Meeting Type */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Meeting Type</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.meeting.type')}</label>
             <div className="flex flex-wrap gap-2">
               {meetingTypes.map((mt) => (
                 <button
@@ -95,19 +98,19 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Title</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.title')}</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
-              placeholder="Meeting title"
+              className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              placeholder={t('ui.meeting.title')}
             />
           </div>
 
           {/* Date */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Date</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.date')}</label>
             <input
               type="date"
               value={meetingDate}
@@ -119,23 +122,23 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
           {/* Facilitator + Location */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Facilitator</label>
+              <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.facilitator')}</label>
               <input
                 type="text"
                 value={facilitator}
                 onChange={(e) => setFacilitator(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
-                placeholder="Optional"
+                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                placeholder={t('ui.optional')}
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Location</label>
+              <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.location')}</label>
               <input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
-                placeholder="Optional"
+                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0B0D] border border-[#1F1F25] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                placeholder={t('ui.optional')}
               />
             </div>
           </div>
@@ -143,8 +146,8 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
           {/* Auto-populate toggle */}
           <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)]">
             <div>
-              <p className="text-sm text-[color:var(--text-primary)] font-medium">Auto-populate from schedule</p>
-              <p className="text-xs text-[color:var(--text-muted)]">Pull Week 1 activities grouped by trade</p>
+              <p className="text-sm text-[color:var(--text-primary)] font-medium">{t('ui.auto.populate.from.schedule')}</p>
+              <p className="text-xs text-[color:var(--text-muted)]">{t('ui.pull.week.1.activities.grouped.by.trade')}</p>
             </div>
             <button
               onClick={() => setAutoPopulate(!autoPopulate)}
@@ -162,16 +165,14 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
           <button
             onClick={onClose}
             className="px-4 py-2.5 rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[44px]"
-          >
-            Cancel
+          >{t('action.cancel')}
           </button>
           <button
             onClick={handleSubmit}
             disabled={saving || !title.trim()}
             className="flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
-            {saving && <Loader2 size={14} className="animate-spin" />}
-            Create Meeting
+            {saving && <Loader2 size={14} className="animate-spin" />}{t('ui.create.meeting')}
           </button>
         </div>
       </div>

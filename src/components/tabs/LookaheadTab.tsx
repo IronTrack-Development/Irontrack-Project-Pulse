@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, RefreshCw, ChevronDown, AlertTriangle } from "lucide-react";
 import type { LookaheadGroup, ParsedActivity } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface TradeFlag {
   trade: string;
@@ -44,7 +47,7 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
       <div className="flex-1 min-w-0">
         <div className={`text-sm font-medium truncate ${isInspection ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
           {activity.activity_name}
-          {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">INSPECT</span>}
+          {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">{t('ui.inspect').toUpperCase()}</span>}
         </div>
         <div className="flex items-center gap-3 mt-0.5 text-xs text-[color:var(--text-muted)]">
           {activity.start_date && (
@@ -54,7 +57,7 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
             <span>→ {new Date(activity.finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
           )}
           {activity.original_duration && (
-            <span>{activity.original_duration}d</span>
+            <span>{activity.original_duration}{t('ui.d')}</span>
           )}
           {activity.percent_complete > 0 && (
             <span className="text-[#3B82F6]">{activity.percent_complete}%</span>
@@ -95,8 +98,8 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       {/* Controls */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm font-semibold text-[color:var(--text-primary)]">{totalActivities} activities in view</div>
-          <div className="text-xs text-[color:var(--text-muted)]">Grouped by week and trade</div>
+          <div className="text-sm font-semibold text-[color:var(--text-primary)]">{totalActivities}{t('ui.activities.in.view')}</div>
+          <div className="text-xs text-[color:var(--text-muted)]">{t('ui.grouped.by.week.and.trade')}</div>
         </div>
         <div className="flex items-center gap-1 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-1">
           {DAY_OPTIONS.map((d) => (
@@ -109,7 +112,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
-              {d}d
+              {d}{t('ui.d')}
             </button>
           ))}
         </div>
@@ -137,7 +140,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       ) : groups.length === 0 ? (
         <div className="text-center py-12 text-gray-600">
           <CalendarDays size={32} className="mx-auto mb-3 opacity-30" />
-          <p>No activities in this window.</p>
+          <p>{t('ui.no.activities.in.this.window')}</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -155,7 +158,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                   <div className="flex items-center gap-3">
                     <CalendarDays size={15} className="text-[#F97316]" />
                     <span className="font-semibold text-[color:var(--text-primary)] text-sm">{group.weekLabel}</span>
-                    <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek} activit{totalInWeek !== 1 ? "ies" : "y"}</span>
+                    <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek}{t('ui.activit')}{totalInWeek !== 1 ? t('ui.ies') : t('ui.y')}</span>
                   </div>
                   <ChevronDown
                     size={16}

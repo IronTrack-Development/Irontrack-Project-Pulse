@@ -6,6 +6,9 @@ import {
   PenLine, RefreshCw, Trash2,
 } from "lucide-react";
 import SignaturePad from "@/components/tm/SignaturePad";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Contact {
   id: string;
@@ -242,11 +245,10 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
             <div className="p-4 space-y-5">
               {/* Description */}
               <div>
-                <p className="text-xs text-[color:var(--text-muted)] mb-1">Description</p>
+                <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('blocker.description')}</p>
                 <p className="text-[color:var(--text-primary)] text-sm">{ticket.description}</p>
                 {ticket.sub_contact && (
-                  <p className="text-xs text-[color:var(--text-secondary)] mt-1">
-                    Sub: {ticket.sub_contact.name}
+                  <p className="text-xs text-[color:var(--text-secondary)] mt-1">{t('ui.sub.3360cb')} {ticket.sub_contact.name}
                     {ticket.sub_contact.company ? ` · ${ticket.sub_contact.company}` : ""}
                   </p>
                 )}
@@ -255,10 +257,10 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {/* Cost summary */}
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
-                  { label: "Labor", val: ticket.total_labor_cost },
-                  { label: "Materials", val: ticket.total_material_cost },
-                  { label: "Equipment", val: ticket.total_equipment_cost },
-                  { label: "Total", val: ticket.total_cost, accent: true },
+                  { label: t('ui.labor'), val: ticket.total_labor_cost },
+                  { label: t('ui.materials.2402ea'), val: ticket.total_material_cost },
+                  { label: t('ui.equipment'), val: ticket.total_equipment_cost },
+                  { label: t('ui.total'), val: ticket.total_cost, accent: true },
                 ].map(({ label, val, accent }) => (
                   <div key={label} className={`p-3 rounded-xl border text-center ${accent ? "bg-[#1a1208] border-[#F97316]/30" : "bg-[var(--bg-primary)] border-[var(--border-primary)]"}`}>
                     <p className={`text-base font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
@@ -274,7 +276,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <HardHat size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Labor</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.labor')}</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.labor_items.map((l) => (
@@ -282,7 +284,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                         <div>
                           <span className="text-sm text-[color:var(--text-primary)]">{l.trade}</span>
                           <span className="text-xs text-[color:var(--text-muted)] ml-2">
-                            {l.workers}× · {l.hours}h
+                            {l.workers}× · {l.hours}{t('ui.h')}
                             {l.rate != null ? ` @ $${l.rate}/hr` : ""}
                           </span>
                         </div>
@@ -298,7 +300,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Package size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Materials</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.materials.2402ea')}</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.material_items.map((m) => (
@@ -321,8 +323,8 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                           >
                             <img
                               src={m.receipt_photo_path}
-                              alt="Receipt"
-                              className="h-16 w-auto rounded-lg border border-[var(--border-primary)] object-cover"
+                              alt={t('ui.receipt')}
+                              className="h-16 w-auto rounded-lg border border-[#1F1F25] object-cover"
                             />
                           </a>
                         )}
@@ -337,7 +339,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Truck size={14} className="text-[#F97316]" />
-                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Equipment</h4>
+                    <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">{t('ui.equipment')}</h4>
                   </div>
                   <div className="space-y-1">
                     {ticket.equipment_items.map((e) => (
@@ -345,7 +347,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                         <div>
                           <span className="text-sm text-[color:var(--text-primary)]">{e.equipment_type}</span>
                           <span className="text-xs text-[color:var(--text-muted)] ml-2">
-                            {e.hours}h @ ${e.rate}/hr
+                            {e.hours}{t('ui.h.2ee8c4')}{e.rate}/hr
                           </span>
                         </div>
                         <span className="text-sm text-[#F97316] font-medium">{fmtCurrency(e.total ?? 0)}</span>
@@ -357,8 +359,8 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
 
               {/* Notes */}
               {ticket.notes && (
-                <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
-                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Notes</p>
+                <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.notes')}</p>
                   <p className="text-sm text-[color:var(--text-secondary)]">{ticket.notes}</p>
                 </div>
               )}
@@ -368,7 +370,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div className="p-3 bg-red-900/20 border border-red-800/40 rounded-xl">
                   <div className="flex items-center gap-1.5 mb-1">
                     <AlertTriangle size={13} className="text-red-400" />
-                    <p className="text-xs font-medium text-red-400">Dispute Reason</p>
+                    <p className="text-xs font-medium text-red-400">{t('ui.dispute.reason')}</p>
                   </div>
                   <p className="text-sm text-red-300">{ticket.dispute_reason}</p>
                 </div>
@@ -376,16 +378,16 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
 
               {/* Signatures */}
               <div>
-                <h4 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3">Signatures</h4>
+                <h4 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3">{t('ui.signatures')}</h4>
                 <div className="grid grid-cols-2 gap-3">
                   {/* GC signature */}
-                  <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
-                    <p className="text-xs text-[color:var(--text-muted)] mb-2">GC / Owner</p>
+                  <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">{t('ui.gc.owner')}</p>
                     {ticket.gc_signature_path ? (
                       <div>
                         <img
                           src={ticket.gc_signature_path}
-                          alt="GC Signature"
+                          alt={t('ui.gc.signature')}
                           className="w-full h-16 object-contain rounded-lg bg-[#1A1A22] mb-1"
                         />
                         <p className="text-[10px] text-[color:var(--text-muted)]">
@@ -397,27 +399,26 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                       <div>
                         <div className="flex items-center gap-1.5 mb-2">
                           <Clock size={12} className="text-gray-600" />
-                          <span className="text-xs text-gray-600">Awaiting signature</span>
+                          <span className="text-xs text-gray-600">{t('ui.awaiting.signature')}</span>
                         </div>
                         <button
                           onClick={() => startSign("gc")}
                           className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
                         >
-                          <PenLine size={12} />
-                          Sign as GC
+                          <PenLine size={12} />{t('ui.sign.as.gc')}
                         </button>
                       </div>
                     )}
                   </div>
 
                   {/* Sub signature */}
-                  <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
-                    <p className="text-xs text-[color:var(--text-muted)] mb-2">Subcontractor</p>
+                  <div className="p-3 bg-[#0B0B0D] border border-[#1F1F25] rounded-xl">
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">{t('ui.subcontractor')}</p>
                     {ticket.sub_signature_path ? (
                       <div>
                         <img
                           src={ticket.sub_signature_path}
-                          alt="Sub Signature"
+                          alt={t('ui.sub.signature')}
                           className="w-full h-16 object-contain rounded-lg bg-[#1A1A22] mb-1"
                         />
                         <p className="text-[10px] text-[color:var(--text-muted)]">
@@ -429,14 +430,13 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                       <div>
                         <div className="flex items-center gap-1.5 mb-2">
                           <Clock size={12} className="text-gray-600" />
-                          <span className="text-xs text-gray-600">Awaiting signature</span>
+                          <span className="text-xs text-gray-600">{t('ui.awaiting.signature')}</span>
                         </div>
                         <button
                           onClick={() => startSign("sub")}
                           className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
                         >
-                          <PenLine size={12} />
-                          Sign as Sub
+                          <PenLine size={12} />{t('ui.sign.as.sub')}
                         </button>
                       </div>
                     )}
@@ -448,17 +448,17 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                   {ticket.gc_signature_path && ticket.sub_signature_path ? (
                     <>
                       <CheckCircle2 size={13} className="text-green-400" />
-                      <span className="text-xs text-green-400">Both parties signed</span>
+                      <span className="text-xs text-green-400">{t('ui.both.parties.signed')}</span>
                     </>
                   ) : ticket.gc_signature_path || ticket.sub_signature_path ? (
                     <>
                       <CheckCircle2 size={13} className="text-yellow-400" />
-                      <span className="text-xs text-yellow-400">Partial — 1 signature captured</span>
+                      <span className="text-xs text-yellow-400">{t('ui.partial.1.signature.captured')}</span>
                     </>
                   ) : (
                     <>
                       <Clock size={13} className="text-gray-600" />
-                      <span className="text-xs text-gray-600">No signatures yet</span>
+                      <span className="text-xs text-gray-600">{t('ui.no.signatures.yet')}</span>
                     </>
                   )}
                 </div>
@@ -467,7 +467,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {/* Status transitions */}
               {nextStatuses.length > 0 && (
                 <div>
-                  <h4 className="text-xs text-[color:var(--text-muted)] mb-2">Change Status</h4>
+                  <h4 className="text-xs text-[color:var(--text-muted)] mb-2">{t('ui.change.status')}</h4>
                   <div className="flex gap-2 flex-wrap">
                     {nextStatuses.map((s) => (
                       <button
@@ -494,24 +494,24 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {/* Dispute input */}
               {showDisputeInput && (
                 <div className="p-3 bg-red-900/20 border border-red-800/40 rounded-xl space-y-2">
-                  <p className="text-xs text-red-400 font-medium">Dispute Reason</p>
+                  <p className="text-xs text-red-400 font-medium">{t('ui.dispute.reason')}</p>
                   <textarea
                     value={disputeReason}
                     onChange={(e) => setDisputeReason(e.target.value)}
                     rows={2}
-                    placeholder="Describe the dispute..."
-                    className="w-full px-3 py-2 bg-[var(--bg-primary)] border border-red-800/40 rounded-lg text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none resize-none"
+                    placeholder={t('ui.describe.the.dispute')}
+                    className="w-full px-3 py-2 bg-[#0B0B0D] border border-red-800/40 rounded-lg text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none resize-none"
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowDisputeInput(false)}
-                      className="flex-1 py-2 px-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[44px]"
-                    >Cancel</button>
+                      className="flex-1 py-2 px-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[44px]"
+                    >{t('action.cancel')}</button>
                     <button
                       onClick={confirmDispute}
                       disabled={updatingStatus}
                       className="flex-1 py-2 px-3 bg-red-700 hover:bg-red-600 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[44px]"
-                    >Mark Disputed</button>
+                    >{t('ui.mark.disputed')}</button>
                   </div>
                 </div>
               )}
@@ -524,7 +524,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                   className="flex items-center gap-1.5 text-xs text-gray-600 hover:text-red-400 transition-colors py-2 min-h-[44px]"
                 >
                   <Trash2 size={13} />
-                  {deleting ? "Deleting..." : "Delete Ticket"}
+                  {deleting ? t('ui.deleting') : t('ui.delete.ticket')}
                 </button>
               </div>
             </div>
@@ -537,16 +537,16 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
         <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4">
           <div className="w-full max-w-sm bg-[var(--bg-secondary)] rounded-2xl border border-[var(--border-primary)] p-5 space-y-4">
             <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">
-              {pendingRole === "gc" ? "Sign as GC / Owner" : "Sign as Subcontractor"}
+              {pendingRole === "gc" ? t('ui.sign.as.gc.owner') : t('ui.sign.as.subcontractor')}
             </h3>
             <div>
-              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5">Your Name</label>
+              <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5">{t('ui.your.name.f48db7')}</label>
               <input
                 type="text"
                 value={signedByInput}
                 onChange={(e) => setSignedByInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && proceedToSign()}
-                placeholder="Full name..."
+                placeholder={t('ui.full.name.b3d518')}
                 autoFocus
                 className="w-full px-3 py-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
               />
@@ -554,13 +554,13 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
             <div className="flex gap-2">
               <button
                 onClick={() => setShowSignedByPrompt(false)}
-                className="flex-1 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl text-sm min-h-[44px]"
-              >Cancel</button>
+                className="flex-1 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl text-sm min-h-[44px]"
+              >{t('action.cancel')}</button>
               <button
                 onClick={proceedToSign}
                 disabled={!signedByInput.trim()}
                 className="flex-1 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 text-[color:var(--text-primary)] rounded-xl text-sm font-bold min-h-[44px]"
-              >Continue</button>
+              >{t('ui.continue')}</button>
             </div>
           </div>
         </div>
@@ -569,7 +569,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       {/* Signature pad */}
       {sigRole && (
         <SignaturePad
-          label={sigRole === "gc" ? "GC / Owner Signature" : "Subcontractor Signature"}
+          label={sigRole === "gc" ? t('ui.gc.owner.signature') : t('ui.subcontractor.signature')}
           onDone={handleSignature}
           onCancel={() => setSigRole(null)}
         />

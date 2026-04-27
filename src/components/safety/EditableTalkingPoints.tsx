@@ -1,6 +1,9 @@
 "use client";
 
 import { Plus, X, ChevronUp, ChevronDown } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface EditableTalkingPointsProps {
   points: string[];
@@ -71,7 +74,7 @@ export default function EditableTalkingPoints({
               onClick={() => moveUp(idx)}
               disabled={idx === 0}
               className="p-0.5 text-gray-600 hover:text-[color:var(--text-secondary)] disabled:opacity-30 disabled:cursor-default transition-colors"
-              title="Move up"
+              title={t('ui.move.up')}
             >
               <ChevronUp size={12} />
             </button>
@@ -79,7 +82,7 @@ export default function EditableTalkingPoints({
               onClick={() => moveDown(idx)}
               disabled={idx === points.length - 1}
               className="p-0.5 text-gray-600 hover:text-[color:var(--text-secondary)] disabled:opacity-30 disabled:cursor-default transition-colors"
-              title="Move down"
+              title={t('ui.move.down')}
             >
               <ChevronDown size={12} />
             </button>
@@ -95,7 +98,7 @@ export default function EditableTalkingPoints({
             value={point}
             onChange={(e) => updatePoint(idx, e.target.value)}
             rows={2}
-            placeholder="Talking point..."
+            placeholder={t('ui.talking.point')}
             className="flex-1 bg-transparent text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none resize-none min-h-[36px]"
           />
 
@@ -103,7 +106,7 @@ export default function EditableTalkingPoints({
           <button
             onClick={() => removePoint(idx)}
             className="p-1 text-gray-600 hover:text-red-400 transition-colors shrink-0 mt-0.5 min-w-[28px] min-h-[28px] flex items-center justify-center"
-            title="Remove point"
+            title={t('ui.remove.point')}
           >
             <X size={12} />
           </button>
@@ -114,8 +117,7 @@ export default function EditableTalkingPoints({
         onClick={addPoint}
         className="flex items-center gap-1.5 text-xs text-[#F97316] hover:text-[#ea6c10] transition-colors py-1.5 px-1 min-h-[32px]"
       >
-        <Plus size={12} />
-        Add talking point
+        <Plus size={12} />{t('ui.add.talking.point')}
       </button>
     </div>
   );

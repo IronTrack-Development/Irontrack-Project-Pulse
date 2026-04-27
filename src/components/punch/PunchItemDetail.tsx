@@ -2,6 +2,9 @@
 
 import { useState, useRef } from "react";
 import { X, Camera, Trash2, Edit3, Loader2, CheckSquare, PlayCircle, Eye, AlertTriangle } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Photo {
   id: string;
@@ -45,18 +48,18 @@ interface PunchItemDetailProps {
 }
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
-  code:        { label: "Code",        color: "#F97316", bg: "bg-orange-500/15" },
-  standard:    { label: "Standard",    color: "var(--text-muted)", bg: "bg-gray-500/15" },
-  cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
+  life_safety: { label: t('ui.life.safety'), color: "#EF4444", bg: "bg-red-500/15" },
+  code:        { label: t('ui.code'),        color: "#F97316", bg: "bg-orange-500/15" },
+  standard:    { label: t('ui.standard'),    color: "#6B7280", bg: "bg-gray-500/15" },
+  cosmetic:    { label: t('ui.cosmetic'),    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  open:               { label: "Open",               color: "#EF4444", bg: "bg-red-500/15" },
-  in_progress:        { label: "In Progress",        color: "#EAB308", bg: "bg-yellow-500/15" },
-  ready_for_reinspect:{ label: "Ready for Re-inspect", color: "#A855F7", bg: "bg-purple-500/15" },
-  closed:             { label: "Closed",             color: "#22C55E", bg: "bg-green-500/15" },
-  disputed:           { label: "Disputed",           color: "#F97316", bg: "bg-orange-500/15" },
+  open:               { label: t('status.open'),               color: "#EF4444", bg: "bg-red-500/15" },
+  in_progress:        { label: t('status.inProgress'),        color: "#EAB308", bg: "bg-yellow-500/15" },
+  ready_for_reinspect:{ label: t('ui.ready.for.re.inspect'), color: "#A855F7", bg: "bg-purple-500/15" },
+  closed:             { label: t('ui.closed'),             color: "#22C55E", bg: "bg-green-500/15" },
+  disputed:           { label: t('ui.disputed'),           color: "#F97316", bg: "bg-orange-500/15" },
 };
 
 export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose, onUpdated }: PunchItemDetailProps) {
@@ -194,14 +197,14 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
           {/* Meta */}
           <div className="grid grid-cols-2 gap-2 text-xs">
             {locationParts.length > 0 && (
-              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
-                <p className="text-[color:var(--text-muted)] mb-0.5">Location</p>
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.location')}</p>
                 <p className="text-[color:var(--text-primary)] font-medium">{locationParts.join(" · ")}</p>
               </div>
             )}
             {item.assigned_contact && (
-              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
-                <p className="text-[color:var(--text-muted)] mb-0.5">Assigned To</p>
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.assigned.to.d00c2e')}</p>
                 <p className="text-[color:var(--text-primary)] font-medium truncate">{item.assigned_contact.name}</p>
                 {item.assigned_contact.company && (
                   <p className="text-[color:var(--text-muted)] truncate">{item.assigned_contact.company}</p>
@@ -209,15 +212,15 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
               </div>
             )}
             {item.due_date && (
-              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
-                <p className="text-[color:var(--text-muted)] mb-0.5">Due Date</p>
-                <p className="text-[color:var(--text-primary)] font-medium">{new Date(item.due_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.due.date')}</p>
+                <p className="text-[color:var(--text-primary)] font-medium">{new Date(item.due_date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
             )}
             {item.closed_date && (
-              <div className="bg-[var(--bg-primary)] rounded-xl px-3 py-2.5">
-                <p className="text-[color:var(--text-muted)] mb-0.5">Closed</p>
-                <p className="text-green-400 font-medium">{new Date(item.closed_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+              <div className="bg-[#0B0B0D] rounded-xl px-3 py-2.5">
+                <p className="text-[color:var(--text-muted)] mb-0.5">{t('ui.closed')}</p>
+                <p className="text-green-400 font-medium">{new Date(item.closed_date + t('ui.t12.00.00')).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
             )}
           </div>
@@ -228,12 +231,12 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
               {issuePhotos.length > 0 && completedPhotos.length > 0 ? (
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">Issue</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">{t('ui.issue')}</p>
                     <div className="grid gap-1.5">
                       {issuePhotos.map((photo) => (
                         <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={photoUrl(photo.storage_path)} alt="Issue" className="w-full h-full object-cover" loading="lazy" />
+                          <img src={photoUrl(photo.storage_path)} alt={t('ui.issue')} className="w-full h-full object-cover" loading="lazy" />
                           <button
                             onClick={() => deletePhoto(photo.id)}
                             className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-[color:var(--text-primary)]"
@@ -245,12 +248,12 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">Completed</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">{t('status.completed')}</p>
                     <div className="grid gap-1.5">
                       {completedPhotos.map((photo) => (
                         <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-video">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={photoUrl(photo.storage_path)} alt="Completed" className="w-full h-full object-cover" loading="lazy" />
+                          <img src={photoUrl(photo.storage_path)} alt={t('status.completed')} className="w-full h-full object-cover" loading="lazy" />
                           <button
                             onClick={() => deletePhoto(photo.id)}
                             className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-[color:var(--text-primary)]"
@@ -264,12 +267,12 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                 </div>
               ) : (
                 <div>
-                  <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">{issuePhotos.length > 0 ? "Issue Photos" : "Completion Photos"}</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1.5 font-medium">{issuePhotos.length > 0 ? t('ui.issue.photos') : t('ui.completion.photos')}</p>
                   <div className="grid grid-cols-3 gap-1.5">
                     {[...issuePhotos, ...completedPhotos].map((photo) => (
                       <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={photoUrl(photo.storage_path)} alt="Photo" className="w-full h-full object-cover" loading="lazy" />
+                        <img src={photoUrl(photo.storage_path)} alt={t('ui.photo')} className="w-full h-full object-cover" loading="lazy" />
                         <button
                           onClick={() => deletePhoto(photo.id)}
                           className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-[color:var(--text-primary)]"
@@ -301,13 +304,13 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
               hover:bg-green-500/10 hover:border-green-500/50 transition-all min-h-[44px]"
           >
             {uploadingPhoto ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />}
-            {uploadingPhoto ? "Uploading..." : "Add Completion Photo"}
+            {uploadingPhoto ? t('ui.uploading') : t('ui.add.completion.photo')}
           </button>
 
           {/* Notes */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs text-[color:var(--text-secondary)] font-medium">Notes</label>
+              <label className="text-xs text-[color:var(--text-secondary)] font-medium">{t('ui.notes')}</label>
               {!editingNotes && (
                 <button onClick={() => setEditingNotes(true)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                   <Edit3 size={12} />
@@ -322,23 +325,23 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   rows={3}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                     placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
-                  placeholder="Add notes..."
+                  placeholder={t('ui.add.notes')}
                 />
                 <div className="flex gap-2">
-                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-[color:var(--text-secondary)] rounded-lg bg-[var(--bg-tertiary)]">Cancel</button>
+                  <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-[color:var(--text-secondary)] rounded-lg bg-[#1F1F25]">{t('action.cancel')}</button>
                   <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-[color:var(--text-primary)] rounded-lg bg-[#F97316]">
-                    {saving ? "Saving..." : "Save Notes"}
+                    {saving ? t('ui.saving') : t('ui.save.notes')}
                   </button>
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-[color:var(--text-secondary)]">{notes || <span className="text-gray-600 italic">No notes</span>}</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">{notes || <span className="text-gray-600 italic">{t('ui.no.notes')}</span>}</p>
             )}
           </div>
 
           {/* Status action buttons */}
-          <div className="border-t border-[var(--border-primary)] pt-4 space-y-2">
-            <p className="text-xs text-[color:var(--text-muted)] font-medium mb-2">Update Status</p>
+          <div className="border-t border-[#1F1F25] pt-4 space-y-2">
+            <p className="text-xs text-[color:var(--text-muted)] font-medium mb-2">{t('ui.update.status')}</p>
             <div className="grid grid-cols-1 gap-2">
               {item.status === "open" && (
                 <button
@@ -347,8 +350,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   className="w-full py-3.5 rounded-xl bg-yellow-500/15 text-yellow-400 font-semibold text-sm
                     hover:bg-yellow-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
                 >
-                  <PlayCircle size={16} />
-                  Start Work
+                  <PlayCircle size={16} />{t('ui.start.work')}
                 </button>
               )}
               {(item.status === "open" || item.status === "in_progress") && (
@@ -358,8 +360,7 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   className="w-full py-3.5 rounded-xl bg-purple-500/15 text-purple-400 font-semibold text-sm
                     hover:bg-purple-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
                 >
-                  <Eye size={16} />
-                  Ready for Re-inspect
+                  <Eye size={16} />{t('ui.ready.for.re.inspect')}
                 </button>
               )}
               {item.status !== "closed" && (
@@ -369,18 +370,16 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   className="w-full py-3.5 rounded-xl bg-green-500/15 text-green-400 font-bold text-sm
                     hover:bg-green-500/25 transition-all min-h-[52px] flex items-center justify-center gap-2"
                 >
-                  {saving ? <Loader2 size={16} className="animate-spin" /> : <CheckSquare size={16} />}
-                  Close Item
+                  {saving ? <Loader2 size={16} className="animate-spin" /> : <CheckSquare size={16} />}{t('ui.close.item')}
                 </button>
               )}
               {item.status === "closed" && (
                 <button
                   onClick={() => updateStatus("open")}
                   disabled={saving}
-                  className="w-full py-3.5 rounded-xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] font-medium text-sm
-                    hover:bg-[var(--bg-hover)] transition-all min-h-[52px]"
-                >
-                  Reopen Item
+                  className="w-full py-3.5 rounded-xl bg-[#1F1F25] text-[color:var(--text-secondary)] font-medium text-sm
+                    hover:bg-[#2a2a35] transition-all min-h-[52px]"
+                >{t('ui.reopen.item')}
                 </button>
               )}
             </div>

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   X,
   Plus,
@@ -79,15 +82,15 @@ const DISCIPLINE_PREFIX: Record<string, string> = {
 };
 
 const DEFAULT_CATEGORIES: Omit<Category, "assignedPages">[] = [
-  { id: "general", name: "General", discipline: "general", color: DISCIPLINE_COLORS.general, isCustom: false, sort_order: 0 },
-  { id: "civil", name: "Civil", discipline: "civil", color: DISCIPLINE_COLORS.civil, isCustom: false, sort_order: 1 },
-  { id: "landscape", name: "Landscape", discipline: "landscape", color: DISCIPLINE_COLORS.landscape, isCustom: false, sort_order: 2 },
-  { id: "architectural", name: "Architectural", discipline: "architectural", color: DISCIPLINE_COLORS.architectural, isCustom: false, sort_order: 3 },
-  { id: "structural", name: "Structural", discipline: "structural", color: DISCIPLINE_COLORS.structural, isCustom: false, sort_order: 4 },
-  { id: "mechanical", name: "Mechanical", discipline: "mechanical", color: DISCIPLINE_COLORS.mechanical, isCustom: false, sort_order: 5 },
-  { id: "electrical", name: "Electrical", discipline: "electrical", color: DISCIPLINE_COLORS.electrical, isCustom: false, sort_order: 6 },
-  { id: "plumbing", name: "Plumbing", discipline: "plumbing", color: DISCIPLINE_COLORS.plumbing, isCustom: false, sort_order: 7 },
-  { id: "fire_protection", name: "Fire Protection", discipline: "fire_protection", color: DISCIPLINE_COLORS.fire_protection, isCustom: false, sort_order: 8 },
+  { id: "general", name: t('ui.general'), discipline: "general", color: DISCIPLINE_COLORS.general, isCustom: false, sort_order: 0 },
+  { id: "civil", name: t('ui.civil'), discipline: "civil", color: DISCIPLINE_COLORS.civil, isCustom: false, sort_order: 1 },
+  { id: "landscape", name: t('ui.landscape'), discipline: "landscape", color: DISCIPLINE_COLORS.landscape, isCustom: false, sort_order: 2 },
+  { id: "architectural", name: t('ui.architectural'), discipline: "architectural", color: DISCIPLINE_COLORS.architectural, isCustom: false, sort_order: 3 },
+  { id: "structural", name: t('ui.structural'), discipline: "structural", color: DISCIPLINE_COLORS.structural, isCustom: false, sort_order: 4 },
+  { id: "mechanical", name: t('ui.mechanical'), discipline: "mechanical", color: DISCIPLINE_COLORS.mechanical, isCustom: false, sort_order: 5 },
+  { id: "electrical", name: t('ui.electrical'), discipline: "electrical", color: DISCIPLINE_COLORS.electrical, isCustom: false, sort_order: 6 },
+  { id: "plumbing", name: t('ui.plumbing'), discipline: "plumbing", color: DISCIPLINE_COLORS.plumbing, isCustom: false, sort_order: 7 },
+  { id: "fire_protection", name: t('ui.fire.protection'), discipline: "fire_protection", color: DISCIPLINE_COLORS.fire_protection, isCustom: false, sort_order: 8 },
 ];
 
 // ─── Page Range Parsing ───────────────────────────────────────────────────────
@@ -442,9 +445,9 @@ export default function SheetOrganizer({
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-4 border-b border-[var(--border-primary)] shrink-0">
         <div className="flex-1 min-w-0">
-          <h2 className="text-[color:var(--text-primary)] font-semibold">Organize Drawing Set</h2>
+          <h2 className="text-[color:var(--text-primary)] font-semibold">{t('ui.organize.drawing.set')}</h2>
           <p className="text-[color:var(--text-muted)] text-xs mt-0.5">
-            {drawingSet.name} · {maxPage} pages
+            {drawingSet.name} · {maxPage}{t('ui.pages')}
           </p>
         </div>
         <button
@@ -469,8 +472,8 @@ export default function SheetOrganizer({
                 if (e.key === "Enter") handleAddCategory();
                 if (e.key === "Escape") { setShowAddCategory(false); setNewCategoryName(""); }
               }}
-              placeholder="Category name (e.g. Shop Drawings, ASI #3)"
-              className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
+              placeholder={t('ui.category.name.e.g.shop.drawings.asi.3')}
+              className="flex-1 bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2 text-[color:var(--text-primary)] placeholder-gray-600 text-sm min-h-[44px]"
             />
             <button
               onClick={handleAddCategory}
@@ -490,8 +493,7 @@ export default function SheetOrganizer({
             onClick={() => setShowAddCategory(true)}
             className="flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
           >
-            <Plus size={15} />
-            Add Custom Category
+            <Plus size={15} />{t('ui.add.custom.category')}
           </button>
         )}
 
@@ -552,9 +554,8 @@ export default function SheetOrganizer({
                 {isEditingThisPages ? null : (
                   <button
                     onClick={() => startEditPages(cat.id)}
-                    className="shrink-0 px-2.5 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[#2A2A30] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs min-h-[36px] transition-colors"
-                  >
-                    Set Pages
+                    className="shrink-0 px-2.5 py-1.5 bg-[#1F1F25] hover:bg-[#2A2A30] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs min-h-[36px] transition-colors"
+                  >{t('ui.set.pages')}
                   </button>
                 )}
               </div>
@@ -581,8 +582,7 @@ export default function SheetOrganizer({
                           <AlertTriangle size={11} /> {pageRangeError}
                         </p>
                       )}
-                      <p className="text-gray-600 text-xs mt-1">
-                        Sheets will be numbered: {prefix(cat)}-1, {prefix(cat)}-2, ...
+                      <p className="text-gray-600 text-xs mt-1">{t('ui.sheets.will.be.numbered')} {prefix(cat)}-1, {prefix(cat)}-2, ...
                       </p>
                     </div>
                     <div className="flex flex-col gap-2 shrink-0">
@@ -623,8 +623,8 @@ export default function SheetOrganizer({
                               autoFocus
                               value={editSheetNumber}
                               onChange={(e) => setEditSheetNumber(e.target.value)}
-                              className="w-20 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs font-mono min-h-[36px]"
-                              placeholder="A-1"
+                              className="w-20 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs font-mono min-h-[36px]"
+                              placeholder={t('ui.a.1')}
                             />
                             <input
                               value={editSheetTitle}
@@ -633,8 +633,8 @@ export default function SheetOrganizer({
                                 if (e.key === "Enter") saveSheetEdit(sheet.id);
                                 if (e.key === "Escape") setEditingSheet(null);
                               }}
-                              className="flex-1 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs min-h-[36px]"
-                              placeholder="Sheet title"
+                              className="flex-1 bg-[#0B0B0D] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs min-h-[36px]"
+                              placeholder={t('ui.sheet.title')}
                             />
                             <button
                               onClick={() => saveSheetEdit(sheet.id)}
@@ -681,14 +681,13 @@ export default function SheetOrganizer({
                 onClick={() => toggleSection("__uncategorized__")}
                 className="flex-1 flex items-center gap-2 text-left"
               >
-                <span className="text-[color:var(--text-secondary)] font-medium text-sm">
-                  Uncategorized
+                <span className="text-[color:var(--text-secondary)] font-medium text-sm">{t('ui.uncategorized')}
                 </span>
                 <span className="text-xs px-1.5 py-0.5 rounded-full bg-gray-700/50 text-[color:var(--text-muted)]">
                   {uncategorizedPages.length}
                 </span>
                 <span className="text-gray-600 ml-auto">
-                  {expanded.has("__uncategorized__") ? (
+                  {expanded.has(t('ui.uncategorized.faea64')) ? (
                     <ChevronDown size={14} />
                   ) : (
                     <ChevronRight size={14} />
@@ -701,8 +700,7 @@ export default function SheetOrganizer({
                   <button
                     onClick={() => setShowMoveMenu((v) => !v)}
                     className="px-2.5 py-1.5 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px]"
-                  >
-                    Move {selectedUncategorized.size} →
+                  >{t('ui.move')} {selectedUncategorized.size} →
                   </button>
                   {showMoveMenu && (
                     <div className="absolute right-0 top-full mt-1 z-10 bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-xl overflow-hidden shadow-xl min-w-[160px]">
@@ -725,8 +723,8 @@ export default function SheetOrganizer({
               )}
             </div>
 
-            {expanded.has("__uncategorized__") && (
-              <div className="border-t border-[var(--border-primary)] p-3">
+            {expanded.has(t('ui.uncategorized.faea64')) && (
+              <div className="border-t border-[#1F1F25] p-3">
                 <div className="flex flex-wrap gap-1.5">
                   {uncategorizedPages.map((pageNum) => {
                     const isSelected = selectedUncategorized.has(pageNum);
@@ -761,8 +759,7 @@ export default function SheetOrganizer({
         {uncategorizedPages.length === 0 && categories.every((c) => c.assignedPages.length === 0) && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <Layers size={36} className="text-gray-700 mb-3" />
-            <p className="text-[color:var(--text-muted)] text-sm">
-              Use &ldquo;Set Pages&rdquo; on each category to assign pages
+            <p className="text-[color:var(--text-muted)] text-sm">{t('ui.use.and.ldquo.set.pages.and.rdquo.on.each.category')}
             </p>
           </div>
         )}
@@ -778,9 +775,8 @@ export default function SheetOrganizer({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[48px]"
-          >
-            Cancel
+            className="flex-1 px-4 py-3 bg-[#1F1F25] text-[color:var(--text-secondary)] rounded-xl font-medium text-sm min-h-[48px]"
+          >{t('action.cancel')}
           </button>
           <button
             onClick={handleSave}
@@ -788,11 +784,10 @@ export default function SheetOrganizer({
             className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[48px] transition-colors"
           >
             {saving ? (
-              <>Saving...</>
+              <>{t('ui.saving')}</>
             ) : (
               <>
-                <Save size={16} />
-                Save Organization
+                <Save size={16} />{t('ui.save.organization')}
               </>
             )}
           </button>

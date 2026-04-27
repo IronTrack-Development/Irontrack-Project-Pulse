@@ -5,6 +5,9 @@ import { CalendarDays, Loader2, Share2, QrCode } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
 import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Activity {
   id: string;
@@ -80,7 +83,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <CalendarDays size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled this week</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.activities.scheduled.this.week')}</div>
       </div>
     );
   }
@@ -184,35 +187,33 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
-            <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
+            <div className="text-sm text-[color:var(--text-secondary)]">{t('ui.select.activities.to.share')}</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCancel}
                 className="px-3 py-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-xs font-medium transition-colors"
-              >
-                Cancel
+              >{t('action.cancel')}
               </button>
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
-                <Share2 size={13} />
-                Share ({selectedIds.size})
+                <Share2 size={13} />{t('ui.share.2ed068')}{selectedIds.size})
               </button>
             </div>
           </>
         ) : (
           <>
             <div>
-              <div className="text-xs text-[color:var(--text-muted)]">Week {weekNumber}</div>
+              <div className="text-xs text-[color:var(--text-muted)]">{t('ui.week')} {weekNumber}</div>
               <div className="text-sm font-medium text-[color:var(--text-primary)]">{formatDateRange()}</div>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowQR(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
-                title="Share via QR Code"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1F25] hover:bg-[#2a2a35] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
+                title={t('ui.share.via.qr.code')}
               >
                 <QrCode size={13} />
                 QR
@@ -222,7 +223,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
-                {shareStatus || "Share"}
+                {shareStatus || t('ui.share')}
               </button>
             </div>
           </>
@@ -326,10 +327,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 {isSelecting && (
                   <th className="px-4 py-2 w-12"></th>
                 )}
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Activity Name</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Start Date</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Finish Date</th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-[color:var(--text-muted)]">% Complete</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('ui.activity.name')}</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('ui.start.date')}</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('ui.finish.date')}</th>
+                <th className="px-4 py-2 text-right text-xs font-medium text-[color:var(--text-muted)]">{t('ui.complete.fc0f20')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#1F1F25]">

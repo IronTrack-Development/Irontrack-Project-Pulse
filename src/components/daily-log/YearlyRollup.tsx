@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, RefreshCw, Clock, AlertTriangle, Flag, TrendingUp } from "lucide-react";
 import RollupStatCard from "./RollupStatCard";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface QuarterSummary {
   quarter: string;
@@ -84,49 +87,48 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
           <RefreshCw size={20} className="text-[#F97316] animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
-        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
-          No logs found for {year}.
+        <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">{t('ui.no.logs.found.for')} {year}.
         </div>
       ) : (
         <>
           {/* Annual stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-6">
             <RollupStatCard
-              label="Total Crew-Hours"
+              label={t('ui.total.crew.hours')}
               value={data.totalCrewHours.toLocaleString()}
               icon={<Clock size={16} />}
               accent
             />
             <RollupStatCard
-              label="Days Logged"
+              label={t('ui.days.logged')}
               value={data.totalLogDays}
             />
             <RollupStatCard
-              label="Delay Days"
+              label={t('ui.delay.days')}
               value={data.totalDelayDays}
               icon={<AlertTriangle size={16} />}
               subtext={`${data.overallDelayPercent}% of days`}
             />
             <RollupStatCard
-              label="Lost Hours"
+              label={t('ui.lost.hours')}
               value={data.totalLostHours}
             />
             {data.milestoneHitRate !== null ? (
               <RollupStatCard
-                label="Milestone Hit Rate"
+                label={t('ui.milestone.hit.rate')}
                 value={`${data.milestoneHitRate}%`}
                 icon={<Flag size={16} />}
                 subtext={`${data.milestonesOnTime}/${data.totalMilestones}`}
                 accent
               />
             ) : (
-              <RollupStatCard label="Milestones" value="—" icon={<Flag size={16} />} />
+              <RollupStatCard label={t('ui.milestones')} value="—" icon={<Flag size={16} />} />
             )}
           </div>
 
           {/* Quarter-over-quarter comparison */}
           <div className="mb-6">
-            <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Quarter-over-Quarter</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.quarter.over.quarter')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
               {data.quarterlySummaries.map((q) => (
                 <div
@@ -150,31 +152,31 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                       </div>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
-                          <span className="text-[color:var(--text-secondary)]">Crew-Hours</span>
+                          <span className="text-[color:var(--text-secondary)]">{t('ui.crew.hours.648628')}</span>
                           <span className="text-[color:var(--text-primary)] font-medium">{q.crewHours.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-[color:var(--text-secondary)]">Logged Days</span>
+                          <span className="text-[color:var(--text-secondary)]">{t('ui.logged.days')}</span>
                           <span className="text-[color:var(--text-primary)]">{q.logDays}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-[color:var(--text-secondary)]">Delay Days</span>
+                          <span className="text-[color:var(--text-secondary)]">{t('ui.delay.days')}</span>
                           <span className="text-[color:var(--text-primary)]">{q.delayDays}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-[color:var(--text-secondary)]">Completed</span>
+                          <span className="text-[color:var(--text-secondary)]">{t('status.completed')}</span>
                           <span className="text-[color:var(--text-primary)]">{q.completedActivities}</span>
                         </div>
                         {q.milestoneHitRate !== null && (
                           <div className="flex justify-between">
-                            <span className="text-[color:var(--text-secondary)]">Milestones</span>
+                            <span className="text-[color:var(--text-secondary)]">{t('ui.milestones')}</span>
                             <span className="text-[color:var(--text-primary)]">{q.milestoneHitRate}% ({q.milestonesOnTime}/{q.totalMilestones})</span>
                           </div>
                         )}
                       </div>
                     </>
                   ) : (
-                    <div className="text-xs text-gray-600 py-2">No data</div>
+                    <div className="text-xs text-gray-600 py-2">{t('ui.no.data')}</div>
                   )}
                 </div>
               ))}
@@ -184,13 +186,13 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
           {/* Top delays */}
           {data.topDelays.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">Top Delay Reasons (Annual)</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-2">{t('ui.top.delay.reasons.annual')}</h3>
               <div className="flex gap-3 flex-wrap">
                 {data.topDelays.map((d, i) => (
                   <div key={d.code} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-center">
                     <div className="text-lg font-bold text-[color:var(--text-primary)]">#{i + 1}</div>
                     <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
-                    <div className="text-xs text-[color:var(--text-muted)]">{d.count} occurrences</div>
+                    <div className="text-xs text-[color:var(--text-muted)]">{d.count}{t('ui.occurrences.11e495')}</div>
                   </div>
                 ))}
               </div>
@@ -200,7 +202,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
           {/* Crew-hours by trade (annual) */}
           {Object.keys(data.crewHoursByTrade).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Annual Crew-Hours by Trade</h3>
+              <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">{t('ui.annual.crew.hours.by.trade')}</h3>
               <div className="space-y-2">
                 {Object.entries(data.crewHoursByTrade)
                   .sort((a, b) => b[1] - a[1])

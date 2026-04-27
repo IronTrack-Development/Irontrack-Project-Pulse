@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Flag, Loader2, CheckCircle, Clock, AlertTriangle, Users } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface ContextEntry {
   logDate: string;
@@ -59,7 +62,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <Flag size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">No milestones found</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">{t('ui.no.milestones.found')}</div>
       </div>
     );
   }
@@ -130,7 +133,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                       </span>
                       {hasContext && (
                         <span className="text-gray-600">
-                          {milestone.contextStrip!.length} log{milestone.contextStrip!.length !== 1 ? "s" : ""} nearby
+                          {milestone.contextStrip!.length}{t('ui.log')}{milestone.contextStrip!.length !== 1 ? t('ui.s') : ""}{t('ui.nearby')}
                         </span>
                       )}
                     </div>
@@ -150,8 +153,8 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
 
             {/* Context strip */}
             {isExpanded && hasContext && (
-              <div className="border-t border-[var(--border-primary)] px-4 py-3">
-                <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">Daily Log Context (±2 days)</div>
+              <div className="border-t border-[#1F1F25] px-4 py-3">
+                <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">{t('ui.daily.log.context.2.days')}</div>
                 <div className="space-y-1.5">
                   {milestone.contextStrip!.map((entry, i) => {
                     const dateLabel = new Date(entry.logDate + "T12:00:00").toLocaleDateString("en-US", {
@@ -181,7 +184,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                             ? "bg-[#22C55E]/10 text-[#22C55E]"
                             : "bg-[#3B82F6]/10 text-[#3B82F6]"
                         }`}>
-                          {entry.status === "locked" ? "Locked" : "Submitted"}
+                          {entry.status === "locked" ? t('ui.locked') : t('ui.submitted')}
                         </span>
                         <span className="text-[color:var(--text-muted)] truncate flex-1">{entry.summary}</span>
                       </div>

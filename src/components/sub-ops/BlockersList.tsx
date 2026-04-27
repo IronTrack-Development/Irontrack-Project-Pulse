@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   AlertTriangle, Plus, X, Check, ChevronDown, ChevronUp,
   Filter, Clock, CheckCircle, Camera,
@@ -35,8 +38,8 @@ const CATEGORY_STYLES: Record<string, { cls: string }> = {
 };
 
 const STATUS_STYLES: Record<string, { label: string; cls: string }> = {
-  open: { label: "Open", cls: "bg-orange-500/20 text-orange-300" },
-  resolved: { label: "Resolved", cls: "bg-green-500/20 text-green-300" },
+  open: { label: t('status.open'), cls: "bg-orange-500/20 text-orange-300" },
+  resolved: { label: t('status.resolved'), cls: "bg-green-500/20 text-green-300" },
 };
 
 export default function BlockersList({ projectId }: Props) {
@@ -90,7 +93,7 @@ export default function BlockersList({ projectId }: Props) {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   const handleAdd = async () => {
-    if (!addDescription.trim()) { setError("Description is required"); return; }
+    if (!addDescription.trim()) { setError(t('ui.description.is.required')); return; }
     setAdding(true);
     setError("");
     try {
@@ -113,7 +116,7 @@ export default function BlockersList({ projectId }: Props) {
         setError(d.error || "Failed to add blocker");
       }
     } catch {
-      setError("Network error");
+      setError(t('ui.network.error'));
     }
     setAdding(false);
   };
@@ -143,14 +146,14 @@ export default function BlockersList({ projectId }: Props) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Blockers</h2>
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Track and resolve field issues</p>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.blockers')}</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.track.and.resolve.field.issues')}</p>
         </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
           className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
-          {showAdd ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Report Blocker</>}
+          {showAdd ? <><X size={14} />{t('action.cancel')}</> : <><Plus size={14} />{t('blocker.title')}</>}
         </button>
       </div>
 
@@ -159,41 +162,40 @@ export default function BlockersList({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Category</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('blocker.category')}</label>
               <select
                 value={addCategory}
                 onChange={(e) => setAddCategory(e.target.value)}
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
-                <option value="material">Material</option>
-                <option value="labor">Labor</option>
-                <option value="equipment">Equipment</option>
-                <option value="weather">Weather</option>
-                <option value="design">Design/RFI</option>
-                <option value="access">Site Access</option>
-                <option value="safety">Safety</option>
-                <option value="other">Other</option>
+                <option value="material">{t('ui.material')}</option>
+                <option value="labor">{t('ui.labor')}</option>
+                <option value="equipment">{t('ui.equipment')}</option>
+                <option value="weather">{t('ui.weather')}</option>
+                <option value="design">{t('ui.design.rfi')}</option>
+                <option value="access">{t('ui.site.access')}</option>
+                <option value="safety">{t('nav.safety')}</option>
+                <option value="other">{t('ui.other')}</option>
               </select>
             </div>
           </div>
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">
-              Description <span className="text-red-400">*</span>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('blocker.description')} <span className="text-red-400">*</span>
             </label>
             <textarea
               value={addDescription}
               onChange={(e) => setAddDescription(e.target.value)}
-              placeholder="What's the issue?"
+              placeholder={t('ui.what.s.the.issue')}
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Impact</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('blocker.impact')}</label>
             <textarea
               value={addImpact}
               onChange={(e) => setAddImpact(e.target.value)}
-              placeholder="How does this affect work?"
+              placeholder={t('ui.how.does.this.affect.work')}
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -207,7 +209,7 @@ export default function BlockersList({ projectId }: Props) {
             className="flex items-center gap-1.5 px-4 py-2.5 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             <AlertTriangle size={14} />
-            {adding ? "Submitting..." : "Submit Blocker"}
+            {adding ? t('ui.submitting') : t('ui.submit.blocker')}
           </button>
         </div>
       )}
@@ -219,31 +221,31 @@ export default function BlockersList({ projectId }: Props) {
           onChange={(e) => setFilterStatus(e.target.value)}
           className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
         >
-          <option value="">All Status</option>
-          <option value="open">Open</option>
-          <option value="resolved">Resolved</option>
+          <option value="">{t('ui.all.status')}</option>
+          <option value="open">{t('status.open')}</option>
+          <option value="resolved">{t('status.resolved')}</option>
         </select>
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
           className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
         >
-          <option value="">All Categories</option>
-          <option value="material">Material</option>
-          <option value="labor">Labor</option>
-          <option value="equipment">Equipment</option>
-          <option value="weather">Weather</option>
-          <option value="design">Design/RFI</option>
-          <option value="access">Site Access</option>
-          <option value="safety">Safety</option>
-          <option value="other">Other</option>
+          <option value="">{t('ui.all.categories')}</option>
+          <option value="material">{t('ui.material')}</option>
+          <option value="labor">{t('ui.labor')}</option>
+          <option value="equipment">{t('ui.equipment')}</option>
+          <option value="weather">{t('ui.weather')}</option>
+          <option value="design">{t('ui.design.rfi')}</option>
+          <option value="access">{t('ui.site.access')}</option>
+          <option value="safety">{t('nav.safety')}</option>
+          <option value="other">{t('ui.other')}</option>
         </select>
         <select
           value={filterForeman}
           onChange={(e) => setFilterForeman(e.target.value)}
           className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
         >
-          <option value="">All Foremen</option>
+          <option value="">{t('ui.all.foremen')}</option>
           {foremen.map((f) => (
             <option key={f.id} value={f.id}>{f.name}</option>
           ))}
@@ -254,9 +256,9 @@ export default function BlockersList({ projectId }: Props) {
       {blockers.length === 0 ? (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <CheckCircle size={28} className="mx-auto text-green-500/50 mb-2" />
-          <p className="text-sm text-[color:var(--text-secondary)]">No blockers found</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.no.blockers.found')}</p>
           <p className="text-xs text-gray-600 mt-1">
-            {filterStatus === "open" ? "All clear — no open blockers!" : "No matching blockers"}
+            {filterStatus === "open" ? t('ui.all.clear.no.open.blockers') : t('ui.no.matching.blockers')}
           </p>
         </div>
       ) : (
@@ -294,12 +296,12 @@ export default function BlockersList({ projectId }: Props) {
                 {isExpanded && (
                   <div className="border-t border-[var(--border-primary)] p-4 space-y-3 bg-[#0e0e12] text-xs">
                     <div>
-                      <span className="text-[color:var(--text-muted)] font-medium">Description:</span>
+                      <span className="text-[color:var(--text-muted)] font-medium">{t('ui.description.9b6f3f')}</span>
                       <p className="text-[color:var(--text-secondary)] mt-1 whitespace-pre-wrap">{b.description}</p>
                     </div>
                     {b.impact && (
                       <div>
-                        <span className="text-[color:var(--text-muted)] font-medium">Impact:</span>
+                        <span className="text-[color:var(--text-muted)] font-medium">{t('ui.impact')}</span>
                         <p className="text-[color:var(--text-secondary)] mt-1">{b.impact}</p>
                       </div>
                     )}
@@ -308,8 +310,8 @@ export default function BlockersList({ projectId }: Props) {
                         <a href={b.photo_url} target="_blank" rel="noopener noreferrer">
                           <img
                             src={b.photo_url}
-                            alt="Blocker photo"
-                            className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
+                            alt={t('ui.blocker.photo')}
+                            className="w-32 h-32 object-cover rounded-lg border border-[#1F1F25] hover:border-[#F97316]/50 transition-colors"
                             loading="lazy"
                           />
                         </a>
@@ -317,10 +319,10 @@ export default function BlockersList({ projectId }: Props) {
                     )}
                     {b.status === "resolved" && b.resolution_notes && (
                       <div>
-                        <span className="text-green-400 font-medium">Resolution:</span>
+                        <span className="text-green-400 font-medium">{t('ui.resolution')}</span>
                         <p className="text-[color:var(--text-secondary)] mt-1">{b.resolution_notes}</p>
                         {b.resolved_at && (
-                          <p className="text-gray-600 mt-0.5">Resolved {new Date(b.resolved_at).toLocaleString()}</p>
+                          <p className="text-gray-600 mt-0.5">{t('status.resolved')} {new Date(b.resolved_at).toLocaleString()}</p>
                         )}
                       </div>
                     )}
@@ -332,7 +334,7 @@ export default function BlockersList({ projectId }: Props) {
                             <textarea
                               value={resolveNotes}
                               onChange={(e) => setResolveNotes(e.target.value)}
-                              placeholder="Resolution notes (optional)"
+                              placeholder={t('ui.resolution.notes.optional')}
                               rows={2}
                               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
                             />
@@ -341,13 +343,12 @@ export default function BlockersList({ projectId }: Props) {
                                 onClick={() => handleResolve(b.id)}
                                 className="flex items-center gap-1 px-3 py-1.5 bg-green-500/20 text-green-400 hover:bg-green-500/30 rounded-lg text-xs font-medium transition-colors min-h-[36px]"
                               >
-                                <Check size={12} /> Confirm Resolve
+                                <Check size={12} />{t('ui.confirm.resolve')}
                               </button>
                               <button
                                 onClick={() => { setResolvingId(null); setResolveNotes(""); }}
                                 className="px-3 py-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-xs min-h-[36px]"
-                              >
-                                Cancel
+                              >{t('action.cancel')}
                               </button>
                             </div>
                           </div>
@@ -356,7 +357,7 @@ export default function BlockersList({ projectId }: Props) {
                             onClick={() => setResolvingId(b.id)}
                             className="flex items-center gap-1 px-3 py-1.5 bg-green-500/10 text-green-400 hover:bg-green-500/20 rounded-lg text-xs font-medium transition-colors min-h-[36px]"
                           >
-                            <CheckCircle size={12} /> Resolve
+                            <CheckCircle size={12} />{t('ui.resolve')}
                           </button>
                         )}
                       </>

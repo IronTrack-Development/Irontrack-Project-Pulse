@@ -8,6 +8,9 @@ import {
   Users, CloudRain, Activity, Printer
 } from "lucide-react";
 import type { IssueReport, ReportStatus } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Props {
   projectId: string;
@@ -16,11 +19,11 @@ interface Props {
 function statusBadge(status: ReportStatus) {
   switch (status) {
     case "draft":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-[color:var(--text-secondary)]">Draft</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-[color:var(--text-secondary)]">{t('status.draft')}</span>;
     case "generated":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#22C55E]/15 text-[#22C55E]">Generated</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#22C55E]/15 text-[#22C55E]">{t('ui.generated')}</span>;
     case "shared":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">Shared</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">{t('ui.shared')}</span>;
   }
 }
 
@@ -85,18 +88,16 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <CalendarDays size={16} className="text-[#F97316]" />
-          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.weekly.log.report')}</h3>
         </div>
-        <p className="text-xs text-[color:var(--text-muted)] mb-4">
-          Generate a summary from this week&apos;s daily logs — crew-hours, progress, weather, and issues.
+        <p className="text-xs text-[color:var(--text-muted)] mb-4">{t('ui.generate.a.summary.from.this.week.s.daily.logs.crew')}
         </p>
         <button
           onClick={generate}
           disabled={loading}
           className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
         >
-          {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}
-          Generate Weekly Report
+          {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}{t('ui.generate.weekly.report')}
         </button>
       </div>
     );
@@ -112,15 +113,15 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <CalendarDays size={16} className="text-[#F97316]" />
-            <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.weekly.log.report')}</h3>
           </div>
-          <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} · {data.logCount} log{data.logCount !== 1 ? "s" : ""}</div>
+          <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} · {data.logCount}{t('ui.log')}{data.logCount !== 1 ? t('ui.s') : ""}</div>
         </div>
         <div className="flex gap-2">
           <button
             onClick={generate}
-            className="p-2 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
-            title="Refresh"
+            className="p-2 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+            title={t('action.refresh')}
           >
             <RefreshCw size={14} />
           </button>
@@ -128,8 +129,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
             onClick={exportPdf}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
-            <Printer size={12} />
-            Export PDF
+            <Printer size={12} />{t('ui.export.pdf')}
           </button>
         </div>
       </div>
@@ -138,22 +138,22 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Users size={14} className="mx-auto text-[#F97316] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.totalCrewHours}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Crew-Hours</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('ui.crew.hours.648628')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Activity size={14} className="mx-auto text-[#22C55E] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.activitiesCompleted}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Completed</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('status.completed')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <CloudRain size={14} className="mx-auto text-[#3B82F6] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.weatherImpactDays}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Weather Days</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('ui.weather.days')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <AlertTriangle size={14} className="mx-auto text-[#EF4444] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.lostCrewHours}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Lost Hours</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('ui.lost.hours')}</div>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@ export default function ReportsTab({ projectId }: Props) {
   }, [projectId]);
 
   const handleDelete = async (reportId: string) => {
-    if (!confirm("Delete this report? This cannot be undone.")) return;
+    if (!confirm(t('ui.delete.this.report.this.cannot.be.undone'))) return;
     setDeletingId(reportId);
     try {
       await fetch(`/api/projects/${projectId}/reports/${reportId}`, { method: "DELETE" });
@@ -210,11 +210,10 @@ export default function ReportsTab({ projectId }: Props) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-[color:var(--text-primary)] font-bold text-lg flex items-center gap-2">
-            <ClipboardList size={18} className="text-[#F97316]" />
-            Observations
+            <ClipboardList size={18} className="text-[#F97316]" />{t('ui.observations')}
           </h2>
           <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
-            {reports.length} observation{reports.length !== 1 ? "s" : ""} generated
+            {reports.length}{t('ui.observation.7c02c7')}{reports.length !== 1 ? t('ui.s') : ""}{t('ui.generated.67bd58')}
           </p>
         </div>
         <div className="flex gap-2">
@@ -228,8 +227,7 @@ export default function ReportsTab({ projectId }: Props) {
             href={`/projects/${projectId}/report`}
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
-            <ClipboardList size={14} />
-            New Observation
+            <ClipboardList size={14} />{t('ui.new.observation')}
           </Link>
         </div>
       </div>
@@ -239,16 +237,14 @@ export default function ReportsTab({ projectId }: Props) {
           <div className="w-14 h-14 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center mb-4">
             <FileText size={24} className="text-gray-600" />
           </div>
-          <p className="text-[color:var(--text-secondary)] font-semibold mb-1">No observations yet</p>
-          <p className="text-gray-600 text-sm mb-6">
-            Start your first observation to document field conditions.
+          <p className="text-[color:var(--text-secondary)] font-semibold mb-1">{t('ui.no.observations.yet')}</p>
+          <p className="text-gray-600 text-sm mb-6">{t('ui.start.your.first.observation.to.document.field.conditions')}
           </p>
           <Link
             href={`/projects/${projectId}/report`}
             className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
-            <ClipboardList size={16} />
-            New Observation
+            <ClipboardList size={16} />{t('ui.new.observation')}
           </Link>
         </div>
       ) : (
@@ -277,8 +273,8 @@ export default function ReportsTab({ projectId }: Props) {
                           href={`/projects/${projectId}/reports/${report.id}/print`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
-                          title="View PDF"
+                          className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
+                          title={t('ui.view.pdf')}
                         >
                           <ExternalLink size={14} />
                         </a>
@@ -286,8 +282,8 @@ export default function ReportsTab({ projectId }: Props) {
                       <button
                         onClick={() => handleDelete(report.id)}
                         disabled={deletingId === report.id}
-                        className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
-                        title="Delete observation"
+                        className="p-1.5 rounded-lg bg-[#1F1F25] text-[color:var(--text-secondary)] hover:text-[#EF4444] transition-colors disabled:opacity-40"
+                        title={t('ui.delete.observation')}
                       >
                         {deletingId === report.id ? (
                           <RefreshCw size={14} className="animate-spin" />
@@ -305,11 +301,11 @@ export default function ReportsTab({ projectId }: Props) {
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
                     <span className="flex items-center gap-1">
                       <AlertTriangle size={10} className="text-[#EF4444]" />
-                      {report.issue_count} issue{report.issue_count !== 1 ? "s" : ""}
+                      {report.issue_count}{t('ui.issue.00819c')}{report.issue_count !== 1 ? t('ui.s') : ""}
                     </span>
                     <span>{formatDate(report.report_date)}</span>
                     {report.trade && <span>{report.trade}</span>}
-                    {report.prepared_by && <span>By {report.prepared_by}</span>}
+                    {report.prepared_by && <span>{t('ui.by')} {report.prepared_by}</span>}
                   </div>
                 </div>
               </div>
@@ -320,9 +316,8 @@ export default function ReportsTab({ projectId }: Props) {
                   href={`/projects/${projectId}/reports/${report.id}/print`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
-                >
-                  View Observation
+                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[#1F1F25] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
+                >{t('ui.view.observation')}
                   <ChevronRight size={12} />
                 </a>
               )}

@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Building2 } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 type Platform = "Web" | "iOS" | "Android";
 
@@ -19,7 +22,7 @@ const releases: ReleaseNote[] = [
     version: "v1.6.0",
     date: "April 16, 2026",
     platform: "Web",
-    title: "Subcontractor Schedule Views",
+    title: t('ui.subcontractor.schedule.views'),
     changes: [
       "New Sub Management — add subcontractors to projects and assign their trades",
       "Shareable Sub Schedule Links — generate unique URLs for each sub with one click",
@@ -35,7 +38,7 @@ const releases: ReleaseNote[] = [
     version: "v1.5.0",
     date: "April 16, 2026",
     platform: "Web",
-    title: "Mobile Upload & Login Reliability",
+    title: t('ui.mobile.upload.and.login.reliability'),
     changes: [
       "Fixed mobile file upload — iOS and Android users can now select and upload schedule files",
       "Fixed .mpp file selection on iOS — Microsoft Project files no longer greyed out in file picker",
@@ -52,7 +55,7 @@ const releases: ReleaseNote[] = [
     version: "v1.4.0",
     date: "April 13, 2026",
     platform: "Web",
-    title: "Priority Intelligence & Task Relationships",
+    title: t('ui.priority.intelligence.and.task.relationships'),
     changes: [
       "Added Priority tab — critical path tracking, upcoming inspections, behind-schedule tasks",
       "Added task relationship chains — click any activity to see predecessors and successors",
@@ -65,7 +68,7 @@ const releases: ReleaseNote[] = [
     version: "v1.3.0",
     date: "April 12, 2026",
     platform: "Web",
-    title: "Visual Identity & Landing Page",
+    title: t('ui.visual.identity.and.landing.page'),
     changes: [
       "New animated hero video on landing page",
       "Updated favicon and app icons with IronTrack metallic monogram",
@@ -78,7 +81,7 @@ const releases: ReleaseNote[] = [
     version: "v1.2.0",
     date: "April 10, 2026",
     platform: "Web",
-    title: "Schedule Intelligence",
+    title: t('ui.schedule.intelligence'),
     changes: [
       "3-week lookahead with day-grouped activities",
       "Milestone tracking and progress monitoring",
@@ -91,7 +94,7 @@ const releases: ReleaseNote[] = [
     version: "v1.1.0",
     date: "April 8, 2026",
     platform: "Web",
-    title: "Upload & Parse",
+    title: t('ui.upload.and.parse'),
     changes: [
       "Multi-format schedule upload (MPP, XLSX, CSV, XML, XER)",
       "Automatic column mapping",
@@ -103,7 +106,7 @@ const releases: ReleaseNote[] = [
     version: "v1.0.0",
     date: "April 5, 2026",
     platform: "Web",
-    title: "Initial Launch",
+    title: t('ui.initial.launch'),
     changes: [
       "IronTrack Project Pulse beta launch",
       "Single project upload and view",
@@ -151,17 +154,15 @@ export default function ReleaseNotesPage() {
             <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
               <img
                 src="/logo-irontrack.png"
-                alt="IronTrack Logo"
+                alt={t('ui.irontrack.logo')}
                 className="h-10 md:h-20 w-auto object-contain"
                 style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
               />
             </div>
-            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
-              IronTrack<span className="hidden md:inline"> Project Pulse</span>
+            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">{t('ui.irontrack')}<span className="hidden md:inline">{t('ui.project.pulse')}</span>
             </span>
           </Link>
-          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
-            ← Back to home
+          <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">{t('ui.back.to.home.054e10')}
           </Link>
         </div>
       </header>
@@ -169,8 +170,8 @@ export default function ReleaseNotesPage() {
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
         {/* Page Title */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">Release Notes</h1>
-          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Project Pulse</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">{t('ui.release.notes')}</h1>
+          <p className="text-[color:var(--text-secondary)]">{t('ui.what.s.new.in.irontrack.project.pulse')}</p>
         </div>
 
         {/* Filter Tabs */}
@@ -193,8 +194,8 @@ export default function ReleaseNotesPage() {
         {/* Release Cards */}
         {filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-[color:var(--text-muted)] text-lg">No release notes yet for {activeTab}.</p>
-            <p className="text-gray-600 text-sm mt-2">Check back soon.</p>
+            <p className="text-[color:var(--text-muted)] text-lg">{t('ui.no.release.notes.yet.for')} {activeTab}.</p>
+            <p className="text-gray-600 text-sm mt-2">{t('ui.check.back.soon')}</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -241,14 +242,14 @@ export default function ReleaseNotesPage() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />
-            <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
+            <span className="text-sm text-[color:var(--text-muted)]">{t('ui.2026.irontrack.development.llc.all.rights.reserved')}</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.terms')}</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.privacy')}</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/status" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Status</Link>
+            <Link href="/status" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.status')}</Link>
           </div>
         </div>
       </footer>

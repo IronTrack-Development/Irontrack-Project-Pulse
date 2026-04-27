@@ -1,5 +1,8 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 interface PunchProgressRingProps {
   total: number;
   closed: number;
@@ -54,7 +57,7 @@ export default function PunchProgressRing({
         {/* Center text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-xl font-bold text-[color:var(--text-primary)] leading-none">{closed}/{total}</span>
-          <span className="text-xs text-[color:var(--text-muted)] mt-0.5">Done</span>
+          <span className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.done.e9b450')}</span>
         </div>
       </div>
     </div>

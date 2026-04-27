@@ -3,6 +3,9 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowLeft, Pencil, Trash2, ChevronDown, ChevronUp, ImageOff } from "lucide-react";
 import { FieldReport } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Props {
   projectId: string;
@@ -64,14 +67,14 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
   };
 
   const handleDelete = async () => {
-    if (!confirm("Delete this report?")) return;
+    if (!confirm(t('ui.delete.this.report'))) return;
     setDeleting(true);
     await fetch(`/api/projects/${projectId}/field-reports/${report.id}`, { method: "DELETE" });
     onBack();
   };
 
   const handleDeletePhoto = async () => {
-    if (!confirm("Remove photo from this report?")) return;
+    if (!confirm(t('ui.remove.photo.from.this.report'))) return;
     await save({ photo_path: undefined });
   };
 
@@ -94,8 +97,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
         onClick={onBack}
         className="flex items-center gap-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm mb-4 min-h-[44px] transition-colors"
       >
-        <ArrowLeft size={16} />
-        Reports
+        <ArrowLeft size={16} />{t('ui.reports')}
       </button>
 
       {/* Photo */}
@@ -131,7 +133,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
 
       {/* Title */}
       <div className="mb-4">
-        <label className="block text-xs text-[color:var(--text-muted)] mb-1">Title</label>
+        <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.title')}</label>
         <input
           type="text"
           value={report.title}
@@ -143,25 +145,25 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
 
       {/* Assigned To */}
       <div className="mb-4">
-        <label className="block text-xs text-[color:var(--text-muted)] mb-1">Assigned To</label>
+        <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.assigned.to.d00c2e')}</label>
         <input
           type="text"
           value={report.assigned_to || ""}
           onChange={(e) => handleFieldChange("assigned_to", e.target.value)}
           onBlur={() => handleBlurSave("assigned_to")}
-          placeholder="Name or company"
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+          placeholder={t('ui.name.or.company')}
+          className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
         />
       </div>
 
       {/* Comments */}
       <div className="mb-4">
-        <label className="block text-xs text-[color:var(--text-muted)] mb-1">Comments</label>
+        <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.comments')}</label>
         <textarea
           value={report.comments || ""}
           onChange={(e) => handleFieldChange("comments", e.target.value)}
           onBlur={() => handleBlurSave("comments")}
-          placeholder="Notes about this issue..."
+          placeholder={t('ui.notes.about.this.issue')}
           rows={3}
           className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
         />
@@ -172,28 +174,27 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
         onClick={() => setShowMore(!showMore)}
         className="flex items-center gap-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-xs font-medium mb-3 min-h-[44px] transition-colors"
       >
-        {showMore ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-        More Details
+        {showMore ? <ChevronUp size={14} /> : <ChevronDown size={14} />}{t('ui.more.details')}
       </button>
 
       {showMore && (
         <div className="space-y-4 mb-6 pl-1">
           {/* Location */}
           <div>
-            <label className="block text-xs text-[color:var(--text-muted)] mb-1">Location</label>
+            <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.location')}</label>
             <input
               type="text"
               value={report.location || ""}
               onChange={(e) => handleFieldChange("location", e.target.value)}
               onBlur={() => handleBlurSave("location")}
-              placeholder="Building, floor, area..."
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              placeholder={t('ui.building.floor.area')}
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
           {/* Priority */}
           <div>
-            <label className="block text-xs text-[color:var(--text-muted)] mb-1">Priority</label>
+            <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.priority')}</label>
             <select
               value={report.priority}
               onChange={(e) => {
@@ -202,15 +203,15 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               }}
               className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
             >
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
+              <option value="high">{t('ui.high')}</option>
+              <option value="medium">{t('ui.medium')}</option>
+              <option value="low">{t('ui.low')}</option>
             </select>
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-xs text-[color:var(--text-muted)] mb-1">Status</label>
+            <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.status')}</label>
             <select
               value={report.status}
               onChange={(e) => {
@@ -219,34 +220,34 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               }}
               className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
             >
-              <option value="open">Open</option>
-              <option value="in_progress">In Progress</option>
-              <option value="resolved">Resolved</option>
+              <option value="open">{t('status.open')}</option>
+              <option value="in_progress">{t('status.inProgress')}</option>
+              <option value="resolved">{t('status.resolved')}</option>
             </select>
           </div>
 
           {/* Trade */}
           <div>
-            <label className="block text-xs text-[color:var(--text-muted)] mb-1">Trade</label>
+            <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.trade')}</label>
             <input
               type="text"
               value={report.trade || ""}
               onChange={(e) => handleFieldChange("trade", e.target.value)}
               onBlur={() => handleBlurSave("trade")}
-              placeholder="e.g. Electrical, Plumbing..."
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              placeholder={t('ui.e.g.electrical.plumbing')}
+              className="w-full bg-[#121217] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
           {/* Resolution Notes (shown when resolved) */}
           {report.status === "resolved" && (
             <div>
-              <label className="block text-xs text-[color:var(--text-muted)] mb-1">Resolution Notes</label>
+              <label className="block text-xs text-[color:var(--text-muted)] mb-1">{t('ui.resolution.notes')}</label>
               <textarea
                 value={report.resolution_notes || ""}
                 onChange={(e) => handleFieldChange("resolution_notes", e.target.value)}
                 onBlur={() => handleBlurSave("resolution_notes")}
-                placeholder="How was this resolved?"
+                placeholder={t('ui.how.was.this.resolved')}
                 rows={2}
                 className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
               />
@@ -257,7 +258,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
 
       {/* Saving indicator */}
       {saving && (
-        <p className="text-xs text-[color:var(--text-muted)] mb-3">Saving...</p>
+        <p className="text-xs text-[color:var(--text-muted)] mb-3">{t('ui.saving')}</p>
       )}
 
       {/* Delete button */}
@@ -267,7 +268,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
         className="w-full flex items-center justify-center gap-2 py-3 mt-4 bg-red-600/10 border border-red-600/20 text-red-500 rounded-lg text-sm font-medium hover:bg-red-600/20 transition-colors min-h-[44px] disabled:opacity-50"
       >
         <Trash2 size={14} />
-        {deleting ? "Deleting..." : "Delete Report"}
+        {deleting ? t('ui.deleting') : t('ui.delete.report')}
       </button>
     </div>
   );

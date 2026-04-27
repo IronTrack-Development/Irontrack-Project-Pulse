@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { Building2, ArrowLeft } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 export default function TermsPage() {
   return (
@@ -11,8 +14,7 @@ export default function TermsPage() {
             href="/"
             className="inline-flex items-center gap-2 text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
+            <ArrowLeft className="w-4 h-4" />{t('ui.back.to.home')}
           </Link>
         </div>
       </header>
@@ -21,203 +23,180 @@ export default function TermsPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-6 h-6 text-[#F97316]" />
-          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
+          <span className="text-sm text-[color:var(--text-muted)]">{t('ui.irontrack.project.pulse')}</span>
         </div>
 
-        <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">Terms of Service</h1>
-        <p className="text-[color:var(--text-secondary)] mb-8">Last updated: April 10, 2026</p>
+        <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.terms.of.service')}</h1>
+        <p className="text-[color:var(--text-secondary)] mb-8">{t('ui.last.updated.april.10.2026')}</p>
 
         <div className="space-y-8 text-[color:var(--text-secondary)] leading-relaxed">
           {/* Acceptance */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">1. Acceptance of Terms</h2>
-            <p>
-              By creating an account or using IronTrack Project Pulse ("the Service"), you agree to these Terms of Service. If you don&apos;t agree, don&apos;t use the Service.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.1.acceptance.of.terms')}</h2>
+            <p>{t('ui.by.creating.an.account.or.using.irontrack.project.pulse.the')}
             </p>
-            <p className="mt-4">
-              These terms are a legal agreement between you and IronTrack Development LLC, an Arizona limited liability company.
+            <p className="mt-4">{t('ui.these.terms.are.a.legal.agreement.between.you.and.irontrack')}
             </p>
           </section>
 
           {/* Description of Service */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">2. Description of Service</h2>
-            <p>
-              IronTrack Project Pulse is a web application that helps construction professionals track project schedules. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.2.description.of.service')}</h2>
+            <p>{t('ui.irontrack.project.pulse.is.a.web.application.that.helps.construction.professionals.track.project.schedules')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>3-week lookahead of upcoming activities</li>
-              <li>Milestone tracking and dates</li>
-              <li>Progress percentage and completion status</li>
+              <li>{t('ui.3.week.lookahead.of.upcoming.activities')}</li>
+              <li>{t('ui.milestone.tracking.and.dates')}</li>
+              <li>{t('ui.progress.percentage.and.completion.status')}</li>
             </ul>
-            <p className="mt-4">
-              The Service uses AI-powered parsing (Anthropic Claude) to extract schedule data from uploaded files.
+            <p className="mt-4">{t('ui.the.service.uses.ai.powered.parsing.anthropic.claude.to.extract')}
             </p>
           </section>
 
           {/* Account Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">3. Account Terms</h2>
-            <p>
-              Your account is for <strong className="text-[color:var(--text-primary)]">one person only</strong>. You may not share your login credentials with anyone. The Service enforces single-session authentication — if you log in from a new location, previous sessions are automatically ended.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.3.account.terms')}</h2>
+            <p>{t('ui.your.account.is.for')} <strong className="text-[color:var(--text-primary)]">{t('ui.one.person.only')}</strong>. {t('ui.you.may.not.share.your.login.credentials.with.anyone')}
             </p>
-            <p className="mt-4">
-              You are responsible for:
+            <p className="mt-4">{t('ui.you.are.responsible.for')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Maintaining the security of your password</li>
-              <li>All activity that occurs under your account</li>
-              <li>Notifying us immediately of any unauthorized access</li>
+              <li>{t('ui.maintaining.the.security.of.your.password')}</li>
+              <li>{t('ui.all.activity.that.occurs.under.your.account')}</li>
+              <li>{t('ui.notifying.us.immediately.of.any.unauthorized.access')}</li>
             </ul>
-            <p className="mt-4">
-              We reserve the right to terminate accounts that violate these terms, including account sharing.
+            <p className="mt-4">{t('ui.we.reserve.the.right.to.terminate.accounts.that.violate.these')}
             </p>
           </section>
 
           {/* Subscription and Billing */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">4. Subscription and Billing</h2>
-            <p>
-              IronTrack Project Pulse is a subscription service. The current price is <strong className="text-[color:var(--text-primary)]">$19.99 per month</strong>, billed automatically via Stripe.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.4.subscription.and.billing')}</h2>
+            <p>{t('ui.irontrack.project.pulse.is.a.subscription.service.the.current.price')} <strong className="text-[color:var(--text-primary)]">{t('ui.19.99.per.month')}</strong>{t('ui.billed.automatically.via.stripe')}
             </p>
             <p className="mt-4">
-              <strong className="text-[color:var(--text-primary)]">Cancellation:</strong> You may cancel at any time. Your access will continue until the end of your current billing period. We do not offer refunds for partial months.
+              <strong className="text-[color:var(--text-primary)]">{t('ui.cancellation')}</strong>{t('ui.you.may.cancel.at.any.time.your.access.will.continue')}
             </p>
             <p className="mt-4">
-              <strong className="text-[color:var(--text-primary)]">Price changes:</strong> We may change the subscription price with 30 days&apos; notice. Continued use after the notice period means you accept the new price.
+              <strong className="text-[color:var(--text-primary)]">{t('ui.price.changes')}</strong>{t('ui.we.may.change.the.subscription.price.with.30.days.notice')}
             </p>
             <p className="mt-4">
-              <strong className="text-[color:var(--text-primary)]">Payment failures:</strong> If your payment method fails, we may suspend your account until payment is resolved.
+              <strong className="text-[color:var(--text-primary)]">{t('ui.payment.failures')}</strong>{t('ui.if.your.payment.method.fails.we.may.suspend.your.account')}
             </p>
           </section>
 
           {/* Data Usage */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">5. Data Usage and Intelligence</h2>
-            <p className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-6">
-              <strong className="text-[color:var(--text-primary)]">We may use anonymized, aggregate data from uploaded schedules to improve our platform&apos;s accuracy and intelligence features.</strong> Individual project data is never shared, sold, or identified. Your project-specific data remains private and accessible only to your account.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.5.data.usage.and.intelligence')}</h2>
+            <p className="bg-[#1F1F25] border border-[#2A2A30] rounded-lg p-6">
+              <strong className="text-[color:var(--text-primary)]">{t('ui.we.may.use.anonymized.aggregate.data.from.uploaded.schedules.to')}</strong>{t('ui.individual.project.data.is.never.shared.sold.or.identified.your')}
             </p>
-            <p className="mt-4">
-              This means we analyze patterns across many schedules (without identifying information) to:
+            <p className="mt-4">{t('ui.this.means.we.analyze.patterns.across.many.schedules.without.identifying')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Improve schedule parsing accuracy</li>
-              <li>Refine AI models for activity recognition</li>
-              <li>Develop better scheduling intelligence features</li>
-              <li>Create industry benchmarks and insights</li>
+              <li>{t('ui.improve.schedule.parsing.accuracy')}</li>
+              <li>{t('ui.refine.ai.models.for.activity.recognition')}</li>
+              <li>{t('ui.develop.better.scheduling.intelligence.features')}</li>
+              <li>{t('ui.create.industry.benchmarks.and.insights')}</li>
             </ul>
-            <p className="mt-4">
-              Your individual project names, company information, and specific schedule details are never included in aggregate data.
+            <p className="mt-4">{t('ui.your.individual.project.names.company.information.and.specific.schedule.details')}
             </p>
           </section>
 
           {/* Uploaded Content */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">6. Uploaded Content and Ownership</h2>
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.6.uploaded.content.and.ownership')}</h2>
             <p>
-              <strong className="text-[color:var(--text-primary)]">You own your data.</strong> All schedule files and project information you upload remain your property.
+              <strong className="text-[color:var(--text-primary)]">{t('ui.you.own.your.data')}</strong>{t('ui.all.schedule.files.and.project.information.you.upload.remain.your')}
             </p>
-            <p className="mt-4">
-              By uploading files to the Service, you grant IronTrack Development LLC a license to:
+            <p className="mt-4">{t('ui.by.uploading.files.to.the.service.you.grant.irontrack.development')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Store and process your files to provide the Service</li>
-              <li>Parse and display schedule data in the application</li>
-              <li>Use anonymized, aggregate insights derived from your data (as described in Section 5)</li>
+              <li>{t('ui.store.and.process.your.files.to.provide.the.service')}</li>
+              <li>{t('ui.parse.and.display.schedule.data.in.the.application')}</li>
+              <li>{t('ui.use.anonymized.aggregate.insights.derived.from.your.data.as.described')}</li>
             </ul>
-            <p className="mt-4">
-              This license ends when you delete your account or remove uploaded files.
+            <p className="mt-4">{t('ui.this.license.ends.when.you.delete.your.account.or.remove')}
             </p>
           </section>
 
           {/* Acceptable Use */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">7. Acceptable Use</h2>
-            <p>
-              You agree <strong className="text-[color:var(--text-primary)]">not to</strong>:
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.7.acceptable.use')}</h2>
+            <p>{t('ui.you.agree')} <strong className="text-[color:var(--text-primary)]">{t('ui.not.to')}</strong>:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Upload malicious files (viruses, malware, etc.)</li>
-              <li>Attempt to reverse engineer or hack the Service</li>
-              <li>Share your account credentials with others</li>
-              <li>Use the Service for any illegal purpose</li>
-              <li>Attempt to bypass usage limits or security measures</li>
-              <li>Resell or redistribute access to the Service</li>
+              <li>{t('ui.upload.malicious.files.viruses.malware.etc')}</li>
+              <li>{t('ui.attempt.to.reverse.engineer.or.hack.the.service')}</li>
+              <li>{t('ui.share.your.account.credentials.with.others')}</li>
+              <li>{t('ui.use.the.service.for.any.illegal.purpose')}</li>
+              <li>{t('ui.attempt.to.bypass.usage.limits.or.security.measures')}</li>
+              <li>{t('ui.resell.or.redistribute.access.to.the.service')}</li>
             </ul>
           </section>
 
           {/* Service Availability */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">8. Service Availability</h2>
-            <p>
-              We work hard to keep the Service running, but we <strong className="text-[color:var(--text-primary)]">do not guarantee 100% uptime</strong>. The Service is provided "as is" and may be temporarily unavailable for maintenance, updates, or unforeseen issues.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.8.service.availability')}</h2>
+            <p>{t('ui.we.work.hard.to.keep.the.service.running.but.we')} <strong className="text-[color:var(--text-primary)]">{t('ui.do.not.guarantee.100.uptime')}</strong>. {t('ui.the.service.is.provided.as.is.and.may.be.temporarily.unavailable')}
             </p>
-            <p className="mt-4">
-              We may modify, suspend, or discontinue features at any time. We will provide reasonable notice for major changes, but immediate changes may be required for security or legal reasons.
+            <p className="mt-4">{t('ui.we.may.modify.suspend.or.discontinue.features.at.any.time')}
             </p>
           </section>
 
           {/* Limitation of Liability */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">9. Limitation of Liability</h2>
-            <p>
-              IronTrack Project Pulse is a tool to help you track schedules. It is <strong className="text-[color:var(--text-primary)]">not a substitute for professional judgment</strong>. You are responsible for verifying all schedule data and making project decisions.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.9.limitation.of.liability')}</h2>
+            <p>{t('ui.irontrack.project.pulse.is.a.tool.to.help.you.track')} <strong className="text-[color:var(--text-primary)]">{t('ui.not.a.substitute.for.professional.judgment')}</strong>. {t('ui.you.are.responsible.for.verifying.all.schedule.data')}
             </p>
-            <p className="mt-4">
-              To the maximum extent permitted by law, IronTrack Development LLC is not liable for:
+            <p className="mt-4">{t('ui.to.the.maximum.extent.permitted.by.law.irontrack.development.llc')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Errors in schedule parsing or data display</li>
-              <li>Project delays or financial losses</li>
-              <li>Data loss or corruption</li>
-              <li>Service interruptions or downtime</li>
+              <li>{t('ui.errors.in.schedule.parsing.or.data.display')}</li>
+              <li>{t('ui.project.delays.or.financial.losses')}</li>
+              <li>{t('ui.data.loss.or.corruption')}</li>
+              <li>{t('ui.service.interruptions.or.downtime')}</li>
             </ul>
-            <p className="mt-4">
-              Our total liability to you for any claim is limited to the amount you paid us in the 12 months before the claim.
+            <p className="mt-4">{t('ui.our.total.liability.to.you.for.any.claim.is.limited')}
             </p>
           </section>
 
           {/* Termination */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">10. Termination</h2>
-            <p>
-              We may terminate or suspend your account immediately if you violate these terms, including:
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.10.termination')}</h2>
+            <p>{t('ui.we.may.terminate.or.suspend.your.account.immediately.if.you')}
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>Sharing account credentials</li>
-              <li>Uploading malicious content</li>
-              <li>Attempting to hack or abuse the Service</li>
-              <li>Chargebacks or payment fraud</li>
+              <li>{t('ui.sharing.account.credentials')}</li>
+              <li>{t('ui.uploading.malicious.content')}</li>
+              <li>{t('ui.attempting.to.hack.or.abuse.the.service')}</li>
+              <li>{t('ui.chargebacks.or.payment.fraud')}</li>
             </ul>
-            <p className="mt-4">
-              You may terminate your account at any time by canceling your subscription. Your data will be deleted within 30 days of account termination (see our <Link href="/privacy" className="text-[#F97316] hover:text-[#EA580C]">Privacy Policy</Link>).
+            <p className="mt-4">{t('ui.you.may.terminate.your.account.at.any.time.by.canceling')} <Link href="/privacy" className="text-[#F97316] hover:text-[#EA580C]">{t('ui.privacy.policy')}</Link>).
             </p>
           </section>
 
           {/* Governing Law */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">11. Governing Law</h2>
-            <p>
-              These Terms are governed by the laws of the State of Arizona, without regard to conflict of law principles. Any disputes will be resolved in the courts of Arizona.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.11.governing.law')}</h2>
+            <p>{t('ui.these.terms.are.governed.by.the.laws.of.the.state')}
             </p>
           </section>
 
           {/* Changes to Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">12. Changes to These Terms</h2>
-            <p>
-              We may update these Terms from time to time. We will post the new Terms on this page and update the "Last updated" date. Continued use of the Service after changes means you accept the new Terms.
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.12.changes.to.these.terms')}</h2>
+            <p>{t('ui.we.may.update.these.terms.from.time.to.time.we')}
             </p>
           </section>
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">13. Contact</h2>
-            <p>
-              Questions about these Terms? Contact us:
+            <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">{t('ui.13.contact')}</h2>
+            <p>{t('ui.questions.about.these.terms.contact.us')}
             </p>
             <p className="mt-4">
-              <strong className="text-[color:var(--text-primary)]">IronTrack Development LLC</strong><br />
+              <strong className="text-[color:var(--text-primary)]">{t('ui.irontrack.development.llc')}</strong><br />
               <a href="mailto:irontrackdevelopment@outlook.com" className="text-[#F97316] hover:text-[#EA580C]">
                 irontrackdevelopment@outlook.com
               </a>
@@ -231,11 +210,10 @@ export default function TermsPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Building2 className="w-4 h-4 text-[#F97316]" />
-            <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
+            <span className="text-sm text-[color:var(--text-muted)]">{t('ui.2026.irontrack.development.llc.all.rights.reserved')}</span>
           </div>
           <div className="flex items-center justify-center gap-4 text-sm">
-            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">
-              Privacy Policy
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">{t('ui.privacy.policy')}
             </Link>
             <span className="text-gray-700">•</span>
             <a href="mailto:irontrackdevelopment@outlook.com" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">

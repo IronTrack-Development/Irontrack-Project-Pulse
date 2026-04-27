@@ -7,6 +7,9 @@ import SnapshotScreen from "./SnapshotScreen";
 import WorkIssuesScreen from "./WorkIssuesScreen";
 import PhotosSubmitScreen from "./PhotosSubmitScreen";
 import { saveDraft, loadDraft, deleteDraft } from "@/lib/daily-log-offline";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import type {
   DailyLog, DailyLogWeather, DailyLogCrewEntry, DailyLogProgress,
   DailyLogPhoto, DelayCode, ParsedActivity,
@@ -247,7 +250,7 @@ export default function DailyLogWizard({
   // Submit handler — returns boolean for success/failure
   const handleSubmit = async (): Promise<boolean> => {
     if (!isOnline) {
-      alert("You're offline. Your log is saved locally and will sync when you reconnect.");
+      alert(t('ui.you.re.offline.your.log.is.saved.locally.and.will'));
       return false;
     }
 
@@ -305,8 +308,7 @@ export default function DailyLogWizard({
               href={`/projects/${projectId}`}
               className="flex items-center gap-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] text-sm transition-colors min-h-[44px]"
             >
-              <ChevronLeft size={16} />
-              Back
+              <ChevronLeft size={16} />{t('action.back')}
             </Link>
             <div className="flex items-center gap-2 text-xs">
               {/* Online/offline indicator */}
@@ -316,28 +318,26 @@ export default function DailyLogWizard({
                 </span>
               ) : (
                 <span className="flex items-center gap-1 text-[#EAB308]">
-                  <WifiOff size={12} />
-                  Offline
+                  <WifiOff size={12} />{t('ui.offline')}
                 </span>
               )}
               {/* Save indicator */}
               {isSaving && (
                 <span className="flex items-center gap-1 text-[color:var(--text-muted)]">
-                  <Save size={12} className="animate-pulse" />
-                  Saving...
+                  <Save size={12} className="animate-pulse" />{t('ui.saving')}
                 </span>
               )}
               {lastSaved && !isSaving && (
-                <span className="text-gray-600">Saved {lastSaved}</span>
+                <span className="text-gray-600">{t('ui.saved')} {lastSaved}</span>
               )}
             </div>
           </div>
 
           {/* Title */}
           <div className="mb-2">
-            <h1 className="text-lg font-bold text-[color:var(--text-primary)]">Daily Log</h1>
+            <h1 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.daily.log')}</h1>
             <p className="text-xs text-[color:var(--text-muted)]">
-              {projectName} · {new Date(logDate + "T12:00:00").toLocaleDateString("en-US", {
+              {projectName} · {new Date(logDate + t('ui.t12.00.00')).toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
                 day: "numeric",
@@ -417,8 +417,7 @@ export default function DailyLogWizard({
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
                 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-colors min-h-[48px]"
             >
-              <ArrowLeft size={16} />
-              Back
+              <ArrowLeft size={16} />{t('action.back')}
             </button>
           )}
           {screen < SCREENS.length - 1 && (
@@ -427,8 +426,7 @@ export default function DailyLogWizard({
               onClick={() => goToScreen(screen + 1)}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
                 bg-[#F97316] text-[color:var(--text-primary)] hover:bg-[#ea6c10] transition-colors min-h-[48px] font-medium"
-            >
-              Next
+            >{t('ui.next')}
               <ArrowRight size={16} />
             </button>
           )}

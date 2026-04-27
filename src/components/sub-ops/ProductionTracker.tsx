@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   TrendingUp, Calendar, Users, Filter, Clock,
 } from "lucide-react";
@@ -87,8 +90,8 @@ export default function ProductionTracker({ projectId }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Production Tracking</h2>
-        <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Track what your crews install and complete</p>
+        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.production.tracking')}</h2>
+        <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('ui.track.what.your.crews.install.and.complete')}</p>
       </div>
 
       {/* Summary Cards */}
@@ -96,12 +99,12 @@ export default function ProductionTracker({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
           <TrendingUp size={16} className="text-[#F97316] mx-auto mb-1" />
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_entries}</p>
-          <p className="text-xs text-[color:var(--text-muted)]">Entries This Period</p>
+          <p className="text-xs text-[color:var(--text-muted)]">{t('ui.entries.this.period')}</p>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
           <Clock size={16} className="text-[#F97316] mx-auto mb-1" />
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_crew_hours}</p>
-          <p className="text-xs text-[color:var(--text-muted)]">Crew Hours</p>
+          <p className="text-xs text-[color:var(--text-muted)]">{t('ui.crew.hours.5131d4')}</p>
         </div>
       </div>
 
@@ -128,7 +131,7 @@ export default function ProductionTracker({ projectId }: Props) {
           onChange={(e) => setFilterForeman(e.target.value)}
           className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none appearance-none min-h-[36px]"
         >
-          <option value="">All Foremen</option>
+          <option value="">{t('ui.all.foremen')}</option>
           {foremen.map((f) => (
             <option key={f.id} value={f.id}>{f.name}</option>
           ))}
@@ -136,8 +139,8 @@ export default function ProductionTracker({ projectId }: Props) {
         <input
           value={filterProject}
           onChange={(e) => setFilterProject(e.target.value)}
-          placeholder="Filter by project..."
-          className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none placeholder-gray-600 min-h-[36px]"
+          placeholder={t('ui.filter.by.project')}
+          className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-xs text-[color:var(--text-primary)] focus:outline-none placeholder-gray-600 min-h-[36px]"
         />
       </div>
 
@@ -145,18 +148,18 @@ export default function ProductionTracker({ projectId }: Props) {
       {entries.length === 0 ? (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
           <TrendingUp size={28} className="mx-auto text-gray-600 mb-2" />
-          <p className="text-sm text-[color:var(--text-secondary)]">No production entries for this period</p>
-          <p className="text-xs text-gray-600 mt-1">Production is logged via foreman check-ins</p>
+          <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.no.production.entries.for.this.period')}</p>
+          <p className="text-xs text-gray-600 mt-1">{t('ui.production.is.logged.via.foreman.check.ins')}</p>
         </div>
       ) : (
         <div className="space-y-1">
           {/* Table Header */}
           <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-semibold text-[color:var(--text-muted)] uppercase tracking-wider">
-            <div className="col-span-2">Date</div>
-            <div className="col-span-2">Foreman</div>
-            <div className="col-span-3">Description</div>
-            <div className="col-span-2">Qty / Unit</div>
-            <div className="col-span-3">Area</div>
+            <div className="col-span-2">{t('ui.date')}</div>
+            <div className="col-span-2">{t('ui.foreman')}</div>
+            <div className="col-span-3">{t('blocker.description')}</div>
+            <div className="col-span-2">{t('ui.qty.unit')}</div>
+            <div className="col-span-3">{t('handoff.area')}</div>
           </div>
           {entries.map((e) => (
             <div

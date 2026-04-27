@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 import {
   CheckCircle, Camera, Plus, X, AlertTriangle, Send, Clock,
   Users, Shield, Package, FileText,
@@ -78,7 +81,7 @@ export default function CheckInView({ projectId }: Props) {
   useEffect(() => { fetchDispatch(); }, [fetchDispatch]);
 
   const handleCheckIn = async () => {
-    if (!crewCount) { setError("Crew count is required"); return; }
+    if (!crewCount) { setError(t('ui.crew.count.is.required')); return; }
     setSubmitting(true);
     setError("");
     try {
@@ -101,7 +104,7 @@ export default function CheckInView({ projectId }: Props) {
         setError(d.error || "Failed to check in");
       }
     } catch {
-      setError("Network error");
+      setError(t('ui.network.error'));
     }
     setSubmitting(false);
   };
@@ -123,7 +126,7 @@ export default function CheckInView({ projectId }: Props) {
 
   const handleSubmitProduction = async () => {
     const validEntries = entries.filter((e) => e.description.trim());
-    if (validEntries.length === 0) { setError("Add at least one production entry"); return; }
+    if (validEntries.length === 0) { setError(t('ui.add.at.least.one.production.entry')); return; }
     setSubmitting(true);
     setError("");
     try {
@@ -143,13 +146,13 @@ export default function CheckInView({ projectId }: Props) {
       setEntries([{ description: "", quantity: "", unit: "LF", photo: null, area: "" }]);
       setStep("dispatch");
     } catch {
-      setError("Failed to submit production data");
+      setError(t('ui.failed.to.submit.production.data'));
     }
     setSubmitting(false);
   };
 
   const handleSubmitBlocker = async () => {
-    if (!blockerDescription.trim()) { setError("Description is required"); return; }
+    if (!blockerDescription.trim()) { setError(t('ui.description.is.required')); return; }
     setSubmitting(true);
     setError("");
     try {
@@ -173,7 +176,7 @@ export default function CheckInView({ projectId }: Props) {
         setError(d.error || "Failed to report blocker");
       }
     } catch {
-      setError("Network error");
+      setError(t('ui.network.error'));
     }
     setSubmitting(false);
   };
@@ -191,12 +194,12 @@ export default function CheckInView({ projectId }: Props) {
   return (
     <div className="space-y-4 max-w-2xl">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Field Check-In</h2>
+        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('ui.field.check.in')}</h2>
         <button
           onClick={() => setStep("blocker")}
           className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
-          <AlertTriangle size={14} /> Report Blocker
+          <AlertTriangle size={14} />{t('blocker.title')}
         </button>
       </div>
 
@@ -208,38 +211,38 @@ export default function CheckInView({ projectId }: Props) {
               <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
                 <div className="flex items-center gap-2">
                   <Send size={14} className="text-[#F97316]" />
-                  <span className="text-sm font-bold text-[color:var(--text-primary)]">Today&apos;s Dispatch</span>
+                  <span className="text-sm font-bold text-[color:var(--text-primary)]">{t('ui.today.s.dispatch')}</span>
                 </div>
                 <p className="text-xs text-[color:var(--text-secondary)]">{dispatch.project_name}</p>
 
                 <div className="space-y-2 text-xs">
                   <div>
-                    <span className="text-[color:var(--text-muted)] font-medium">Scope:</span>
+                    <span className="text-[color:var(--text-muted)] font-medium">{t('ui.scope')}</span>
                     <p className="text-[color:var(--text-secondary)] mt-0.5 whitespace-pre-wrap">{dispatch.scope_of_work}</p>
                   </div>
                   {dispatch.priority_notes && (
                     <div>
-                      <span className="text-orange-400 font-medium flex items-center gap-1"><AlertTriangle size={10} /> Priority:</span>
+                      <span className="text-orange-400 font-medium flex items-center gap-1"><AlertTriangle size={10} />{t('ui.priority.01eb22')}</span>
                       <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.priority_notes}</p>
                     </div>
                   )}
                   {dispatch.safety_focus && (
                     <div>
-                      <span className="text-green-400 font-medium flex items-center gap-1"><Shield size={10} /> Safety:</span>
+                      <span className="text-green-400 font-medium flex items-center gap-1"><Shield size={10} />{t('ui.safety')}</span>
                       <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.safety_focus}</p>
                     </div>
                   )}
                   {dispatch.material_notes && (
                     <div>
-                      <span className="text-blue-400 font-medium flex items-center gap-1"><Package size={10} /> Materials:</span>
+                      <span className="text-blue-400 font-medium flex items-center gap-1"><Package size={10} />{t('ui.materials')}</span>
                       <p className="text-[color:var(--text-secondary)] mt-0.5">{dispatch.material_notes}</p>
                     </div>
                   )}
                 </div>
 
                 <div className="flex items-center gap-4 text-xs text-[color:var(--text-secondary)]">
-                  {dispatch.expected_crew_size && <span>👷 {dispatch.expected_crew_size} crew</span>}
-                  {dispatch.expected_hours && <span>⏱ {dispatch.expected_hours}h expected</span>}
+                  {dispatch.expected_crew_size && <span>👷 {dispatch.expected_crew_size}{t('ui.crew')}</span>}
+                  {dispatch.expected_hours && <span>⏱ {dispatch.expected_hours}{t('ui.h.expected')}</span>}
                 </div>
               </div>
 
@@ -248,20 +251,20 @@ export default function CheckInView({ projectId }: Props) {
                   onClick={() => setStep("checkin")}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
                 >
-                  <CheckCircle size={16} /> Check In
+                  <CheckCircle size={16} />{t('checkin.checkIn')}
                 </button>
               )}
             </div>
           ) : (
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6 text-center space-y-3">
               <Clock size={28} className="mx-auto text-gray-600" />
-              <p className="text-sm text-[color:var(--text-secondary)]">No dispatch for today</p>
-              <p className="text-xs text-gray-600">You can still check in manually</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">{t('ui.no.dispatch.for.today')}</p>
+              <p className="text-xs text-gray-600">{t('ui.you.can.still.check.in.manually')}</p>
               <button
                 onClick={() => setStep("checkin")}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px] mx-auto"
               >
-                <CheckCircle size={14} /> Check In Anyway
+                <CheckCircle size={14} />{t('ui.check.in.anyway')}
               </button>
             </div>
           )}
@@ -272,45 +275,44 @@ export default function CheckInView({ projectId }: Props) {
       {step === "checkin" && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
           <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <CheckCircle size={14} className="text-[#F97316]" /> Check-In Form
+            <CheckCircle size={14} className="text-[#F97316]" />{t('ui.check.in.form')}
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
-                Crew Count <span className="text-red-400">*</span>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('checkin.crewCount')} <span className="text-red-400">*</span>
               </label>
               <input
                 type="number"
                 min="1"
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
-                placeholder="e.g., 4"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                placeholder={t('ui.e.g.4')}
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Hours Worked</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('checkin.hoursWorked')}</label>
               <input
                 type="number"
                 min="0"
                 step="0.5"
                 value={hoursWorked}
                 onChange={(e) => setHoursWorked(e.target.value)}
-                placeholder="e.g., 8"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                placeholder={t('ui.e.g.8')}
+                className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Site Photo</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('checkin.sitePhoto')}</label>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
             >
               <Camera size={16} />
-              {sitePhoto ? sitePhoto.name : "Capture or upload photo"}
+              {sitePhoto ? sitePhoto.name : t('ui.capture.or.upload.photo')}
             </button>
             <input
               ref={fileInputRef}
@@ -323,11 +325,11 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Notes</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('ui.notes')}</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any notes about today..."
+              placeholder={t('ui.any.notes.about.today')}
               rows={3}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -343,7 +345,7 @@ export default function CheckInView({ projectId }: Props) {
             className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <CheckCircle size={16} />
-            {submitting ? "Checking in..." : "Check In"}
+            {submitting ? t('ui.checking.in') : t('checkin.checkIn')}
           </button>
         </div>
       )}
@@ -353,13 +355,13 @@ export default function CheckInView({ projectId }: Props) {
         <div className="space-y-3">
           <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3 flex items-center gap-2">
             <CheckCircle size={16} className="text-green-400" />
-            <span className="text-sm text-green-300 font-medium">Checked in! Log your production below.</span>
+            <span className="text-sm text-green-300 font-medium">{t('ui.checked.in.log.your.production.below')}</span>
           </div>
 
           {entries.map((entry, idx) => (
             <div key={idx} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Entry #{idx + 1}</span>
+                <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{t('ui.entry')}{idx + 1}</span>
                 {entries.length > 1 && (
                   <button onClick={() => removeEntry(idx)} className="text-gray-600 hover:text-red-400">
                     <X size={14} />
@@ -367,17 +369,17 @@ export default function CheckInView({ projectId }: Props) {
                 )}
               </div>
               <div>
-                <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">What did you install/complete?</label>
+                <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('ui.what.did.you.install.complete')}</label>
                 <input
                   value={entry.description}
                   onChange={(e) => updateEntry(idx, "description", e.target.value)}
-                  placeholder="e.g., Ran conduit on 3rd floor east wing"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                  placeholder={t('ui.e.g.ran.conduit.on.3rd.floor.east.wing')}
+                  className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Qty</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('ui.qty')}</label>
                   <input
                     type="number"
                     value={entry.quantity}
@@ -387,7 +389,7 @@ export default function CheckInView({ projectId }: Props) {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Unit</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('production.unit')}</label>
                   <select
                     value={entry.unit}
                     onChange={(e) => updateEntry(idx, "unit", e.target.value)}
@@ -397,12 +399,12 @@ export default function CheckInView({ projectId }: Props) {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Area</label>
+                  <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">{t('handoff.area')}</label>
                   <input
                     value={entry.area}
                     onChange={(e) => updateEntry(idx, "area", e.target.value)}
-                    placeholder="3rd Floor"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    placeholder={t('ui.3rd.floor')}
+                    className="w-full bg-[#0B0B0D] border border-[#1F1F25] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
               </div>
@@ -413,7 +415,7 @@ export default function CheckInView({ projectId }: Props) {
             onClick={addEntry}
             className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
           >
-            <Plus size={14} /> Add Another Entry
+            <Plus size={14} />{t('ui.add.another.entry')}
           </button>
 
           {error && (
@@ -425,7 +427,7 @@ export default function CheckInView({ projectId }: Props) {
             disabled={submitting}
             className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
-            {submitting ? "Submitting..." : "Done"}
+            {submitting ? t('ui.submitting') : t('ui.done.e9b450')}
           </button>
         </div>
       )}
@@ -435,7 +437,7 @@ export default function CheckInView({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-              <AlertTriangle size={14} className="text-red-400" /> Report Blocker
+              <AlertTriangle size={14} className="text-red-400" />{t('blocker.title')}
             </h3>
             <button
               onClick={() => { setStep(checkedIn ? "production" : "dispatch"); setError(""); }}
@@ -446,42 +448,41 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Category</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('blocker.category')}</label>
             <select
               value={blockerCategory}
               onChange={(e) => setBlockerCategory(e.target.value)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
             >
-              <option value="material">Material</option>
-              <option value="labor">Labor</option>
-              <option value="equipment">Equipment</option>
-              <option value="weather">Weather</option>
-              <option value="design">Design/RFI</option>
-              <option value="access">Site Access</option>
-              <option value="safety">Safety</option>
-              <option value="other">Other</option>
+              <option value="material">{t('ui.material')}</option>
+              <option value="labor">{t('ui.labor')}</option>
+              <option value="equipment">{t('ui.equipment')}</option>
+              <option value="weather">{t('ui.weather')}</option>
+              <option value="design">{t('ui.design.rfi')}</option>
+              <option value="access">{t('ui.site.access')}</option>
+              <option value="safety">{t('nav.safety')}</option>
+              <option value="other">{t('ui.other')}</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
-              Description <span className="text-red-400">*</span>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('blocker.description')} <span className="text-red-400">*</span>
             </label>
             <textarea
               value={blockerDescription}
               onChange={(e) => setBlockerDescription(e.target.value)}
-              placeholder="What's the issue?"
+              placeholder={t('ui.what.s.the.issue')}
               rows={3}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Impact</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('blocker.impact')}</label>
             <textarea
               value={blockerImpact}
               onChange={(e) => setBlockerImpact(e.target.value)}
-              placeholder="How does this affect work?"
+              placeholder={t('ui.how.does.this.affect.work')}
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -497,7 +498,7 @@ export default function CheckInView({ projectId }: Props) {
             className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <AlertTriangle size={16} />
-            {submitting ? "Submitting..." : "Submit Blocker"}
+            {submitting ? t('ui.submitting') : t('ui.submit.blocker')}
           </button>
         </div>
       )}

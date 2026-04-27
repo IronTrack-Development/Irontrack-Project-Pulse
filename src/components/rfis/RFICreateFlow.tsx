@@ -7,6 +7,9 @@ import {
 } from "lucide-react";
 import VoiceTextArea from "@/components/daily-log/VoiceTextArea";
 import RFIPhotoCapture, { type RFIPhoto } from "@/components/rfis/RFIPhotoCapture";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface Contact {
   id: string;
@@ -130,10 +133,10 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
   };
 
   const priorityOptions: { value: DraftFields["priority"]; label: string; color: string }[] = [
-    { value: "critical", label: "Critical", color: "#EF4444" },
-    { value: "high", label: "High", color: "#F97316" },
-    { value: "normal", label: "Normal", color: "#3B82F6" },
-    { value: "low", label: "Low", color: "var(--text-muted)" },
+    { value: "critical", label: t('ui.critical'), color: "#EF4444" },
+    { value: "high", label: t('ui.high'), color: "#F97316" },
+    { value: "normal", label: t('ui.normal'), color: "#3B82F6" },
+    { value: "low", label: t('ui.low'), color: "#6B7280" },
   ];
 
   const architectContacts = contacts.filter(
@@ -157,11 +160,11 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
             )}
             <div>
               <h2 className="text-sm font-semibold text-[color:var(--text-primary)]">
-                {step === 1 && "New RFI — What's the issue?"}
-                {step === 2 && "Review AI Draft"}
-                {step === 3 && "Confirm & Submit"}
+                {step === 1 && t('ui.new.rfi.what.s.the.issue')}
+                {step === 2 && t('ui.review.ai.draft')}
+                {step === 3 && t('ui.confirm.and.submit')}
               </h2>
-              <p className="text-xs text-[color:var(--text-muted)]">Step {step} of 3</p>
+              <p className="text-xs text-[color:var(--text-muted)]">{t('ui.step')} {step}{t('ui.of.3')}</p>
             </div>
           </div>
           <button onClick={onCancel} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
@@ -183,8 +186,8 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
               <VoiceTextArea
                 value={roughDescription}
                 onChange={setRoughDescription}
-                placeholder="Describe what you're seeing in the field... 'the plans show 4 inch slab but geotech says 6 inch'"
-                label="Describe the issue"
+                placeholder={t('ui.describe.what.you.re.seeing.in.the.field.the.plans')}
+                label={t('ui.describe.the.issue')}
                 rows={5}
               />
 
@@ -206,9 +209,9 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
                 >
                   {isGenerating ? (
-                    <><Loader2 size={16} className="animate-spin" /> Drafting...</>
+                    <><Loader2 size={16} className="animate-spin" />{t('ui.drafting')}</>
                   ) : (
-                    <><Sparkles size={16} /> AI Draft</>
+                    <><Sparkles size={16} />{t('ui.ai.draft')}</>
                   )}
                 </button>
                 <button
@@ -216,8 +219,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   disabled={!roughDescription.trim()}
                   className="px-4 py-4 rounded-2xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]
                     text-sm font-medium disabled:opacity-50 transition-all min-h-[56px]"
-                >
-                  Manual
+                >{t('ui.manual')}
                 </button>
               </div>
             </>
@@ -228,34 +230,34 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
             <>
               {/* Subject */}
               <div>
-                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Subject *</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.subject')}</label>
                 <input
                   type="text"
                   value={draft.subject}
                   onChange={(e) => setDraft((p) => ({ ...p, subject: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                     placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
-                  placeholder="RFI subject"
+                  placeholder={t('ui.rfi.subject')}
                 />
               </div>
 
               {/* Question */}
               <div>
-                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Question *</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.question')}</label>
                 <textarea
                   value={draft.question}
                   onChange={(e) => setDraft((p) => ({ ...p, question: e.target.value }))}
                   rows={5}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                     placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50"
-                  placeholder="Formal question text"
+                  placeholder={t('ui.formal.question.text')}
                 />
               </div>
 
               {/* Spec Section + Drawing Reference */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Spec Section</label>
+                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.spec.section')}</label>
                   <input
                     type="text"
                     value={draft.spec_section}
@@ -266,21 +268,21 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">Drawing Ref</label>
+                  <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">{t('ui.drawing.ref')}</label>
                   <input
                     type="text"
                     value={draft.drawing_reference}
                     onChange={(e) => setDraft((p) => ({ ...p, drawing_reference: e.target.value }))}
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
                       placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
-                    placeholder="Sheet S-1"
+                    placeholder={t('ui.sheet.s.1')}
                   />
                 </div>
               </div>
 
               {/* Priority */}
               <div>
-                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-2">Priority</label>
+                <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-2">{t('ui.priority')}</label>
                 <div className="flex gap-2">
                   {priorityOptions.map((opt) => (
                     <button
@@ -311,8 +313,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                       : "bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[color:var(--text-muted)]"
                   }`}
                 >
-                  <DollarSign size={14} />
-                  Cost Impact
+                  <DollarSign size={14} />{t('ui.cost.impact')}
                 </button>
                 <button
                   type="button"
@@ -323,16 +324,14 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                       : "bg-[var(--bg-tertiary)] border-[var(--border-primary)] text-[color:var(--text-muted)]"
                   }`}
                 >
-                  <Clock size={14} />
-                  Schedule Impact
+                  <Clock size={14} />{t('ui.schedule.impact')}
                 </button>
               </div>
 
               {/* Due Date */}
               <div>
                 <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">
-                  <Calendar size={12} className="inline mr-1" />
-                  Due Date
+                  <Calendar size={12} className="inline mr-1" />{t('ui.due.date')}
                 </label>
                 <input
                   type="date"
@@ -347,8 +346,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
               {allContacts.length > 0 && (
                 <div>
                   <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5">
-                    <User size={12} className="inline mr-1" />
-                    Assigned To (Architect / Engineer)
+                    <User size={12} className="inline mr-1" />{t('ui.assigned.to.architect.engineer')}
                   </label>
                   <select
                     value={draft.assigned_to}
@@ -356,7 +354,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
                       focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
                   >
-                    <option value="">Select contact...</option>
+                    <option value="">{t('ui.select.contact')}</option>
                     {allContacts.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.name} — {c.company || c.role}
@@ -372,8 +370,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl
                   bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
                   disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
-              >
-                Review RFI <ArrowRight size={16} />
+              >{t('ui.review.rfi')} <ArrowRight size={16} />
               </button>
             </>
           )}
@@ -383,22 +380,22 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
             <>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-4">
                 <div>
-                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Subject</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.subject.8d183d')}</p>
                   <p className="text-sm font-semibold text-[color:var(--text-primary)]">{draft.subject}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-[color:var(--text-muted)] mb-1">Question</p>
+                  <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.question.002ff5')}</p>
                   <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">{draft.question}</p>
                 </div>
                 {draft.spec_section && (
                   <div>
-                    <p className="text-xs text-[color:var(--text-muted)] mb-1">Spec Section</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.spec.section')}</p>
                     <p className="text-sm text-[color:var(--text-secondary)]">{draft.spec_section}</p>
                   </div>
                 )}
                 {draft.drawing_reference && (
                   <div>
-                    <p className="text-xs text-[color:var(--text-muted)] mb-1">Drawing Reference</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-1">{t('ui.drawing.reference')}</p>
                     <p className="text-sm text-[color:var(--text-secondary)]">{draft.drawing_reference}</p>
                   </div>
                 )}
@@ -409,22 +406,20 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     draft.priority === "normal" ? "bg-blue-500/20 text-blue-400" :
                     "bg-gray-700 text-[color:var(--text-secondary)]"
                   }`}>
-                    {draft.priority.charAt(0).toUpperCase() + draft.priority.slice(1)} Priority
+                    {draft.priority.charAt(0).toUpperCase() + draft.priority.slice(1)}{t('ui.priority')}
                   </span>
                   {draft.cost_impact && (
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400">
-                      💰 Cost Impact
+                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400">{t('ui.cost.impact.87becc')}
                     </span>
                   )}
                   {draft.schedule_impact && (
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400">
-                      ⏱ Schedule Impact
+                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400">{t('ui.schedule.impact.75cad2')}
                     </span>
                   )}
                 </div>
                 {photos.length > 0 && (
                   <div>
-                    <p className="text-xs text-[color:var(--text-muted)] mb-2">{photos.length} photo{photos.length !== 1 ? "s" : ""} attached</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">{photos.length}{t('ui.photo.eeb35d')}{photos.length !== 1 ? t('ui.s') : ""}{t('ui.attached')}</p>
                     <div className="flex gap-1.5">
                       {photos.slice(0, 4).map((p) => (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -442,7 +437,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   className="flex-1 py-4 rounded-2xl bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] font-semibold text-sm
                     hover:bg-[var(--bg-hover)] disabled:opacity-50 transition-all min-h-[56px]"
                 >
-                  {isSaving ? "Saving..." : "Save as Draft"}
+                  {isSaving ? t('ui.saving') : t('ui.save.as.draft')}
                 </button>
                 <button
                   onClick={() => handleSave("submitted")}
@@ -451,8 +446,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
                     disabled:opacity-50 transition-all min-h-[56px]"
                 >
-                  {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-                  Submit RFI
+                  {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}{t('ui.submit.rfi')}
                 </button>
               </div>
             </>

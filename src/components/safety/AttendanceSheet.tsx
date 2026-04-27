@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { Plus, Check, X, Users } from "lucide-react";
 import type { ToolboxTalkAttendee } from "@/types";
+import { useTranslation } from "@/lib/i18n";
+
+const { t } = useTranslation();
 
 interface AttendanceSheetProps {
   projectId: string;
@@ -83,9 +86,9 @@ export default function AttendanceSheet({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Users size={14} className="text-[#F97316]" />
-          <span className="text-sm font-medium text-[color:var(--text-primary)]">Attendance</span>
+          <span className="text-sm font-medium text-[color:var(--text-primary)]">{t('safety.attendance')}</span>
           <span className="text-xs text-[color:var(--text-muted)]">
-            {signedCount} of {attendees.length} signed
+            {signedCount}{t('ui.of')} {attendees.length}{t('ui.signed')}
           </span>
         </div>
         {!readOnly && (
@@ -93,8 +96,7 @@ export default function AttendanceSheet({
             onClick={() => setShowAddForm(!showAddForm)}
             className="flex items-center gap-1 text-xs text-[#F97316] hover:text-[#ea6c10] min-h-[44px] px-2"
           >
-            <Plus size={12} />
-            Add
+            <Plus size={12} />{t('action.add')}
           </button>
         )}
       </div>
@@ -107,37 +109,36 @@ export default function AttendanceSheet({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Name *"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              placeholder={t('ui.name.d145bb')}
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              placeholder="Trade"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              placeholder={t('ui.trade')}
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              placeholder={t('settings.company')}
+              className="bg-[#121217] border border-[#1F1F25] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setShowAddForm(false)}
               className="px-3 py-1.5 text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] min-h-[36px]"
-            >
-              Cancel
+            >{t('action.cancel')}
             </button>
             <button
               onClick={handleAdd}
               disabled={adding || !name.trim()}
               className="px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-medium disabled:opacity-50 min-h-[36px]"
             >
-              {adding ? "Adding..." : "Add"}
+              {adding ? t('ui.adding') : t('action.add')}
             </button>
           </div>
         </div>
@@ -145,8 +146,7 @@ export default function AttendanceSheet({
 
       {/* Attendee list */}
       {attendees.length === 0 ? (
-        <div className="text-center py-6 text-gray-600 text-xs">
-          No attendees added yet
+        <div className="text-center py-6 text-gray-600 text-xs">{t('ui.no.attendees.added.yet')}
         </div>
       ) : (
         <div className="space-y-1.5">
