@@ -629,35 +629,79 @@ export default function LandingPage() {
               Pricing
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              One plan. Everything included.
+              Plans for every size crew.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Main Plan */}
-            <div className="rounded-2xl p-8 md:p-10 border-2" style={{ background: "white", borderColor: "#E85D1C" }}>
-              <div className="text-center mb-8">
-                <div className="text-4xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  $19.99<span className="text-xl font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Subcontractor Plan */}
+            <div className="rounded-2xl p-8 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(59,130,246,0.1)" }}>
+                  <Briefcase className="w-6 h-6" style={{ color: "#3B82F6" }} />
                 </div>
-                <p className="text-sm mt-2" style={{ color: "rgba(13,13,13,0.4)" }}>Per user · Full platform</p>
+                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Subcontractor</h3>
+                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
+                  $10<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
+                </div>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Per company</p>
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2.5 mb-6">
                 {[
-                  "All schedule formats - MPP, XER, XLSX, CSV, XML",
-                  "Schedule intelligence - lookahead, reforecast, critical path",
-                  "Field ops - daily logs, reports, inspections, punch list",
-                  "Safety & compliance - toolbox talks, OSHA templates",
-                  "Trade coordination - meetings, conflict detection, action items",
-                  "Documents - submittals, RFIs with AI, drawings",
-                  "Sub Ops - dispatch, foreman tracking, production, SOPs, handoffs",
-                  "Ready Check + QR sharing",
-                  "Light/dark theme + Spanish localization",
+                  "Sub Ops dashboard",
+                  "Morning Dispatch Board",
+                  "Foreman & Crew management",
+                  "Daily Check-In with photos",
+                  "Production tracking",
+                  "Blocker reporting",
+                  "SOP Library",
+                  "Handoff Tracker",
+                  "Light/dark + Spanish",
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
+                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/signup/sub"
+                className="block w-full text-center px-6 py-3 text-white rounded-xl text-sm font-bold transition-all"
+                style={{ background: "#3B82F6" }}
+              >
+                Get Started
+              </Link>
+            </div>
+
+            {/* GC Plan — Featured */}
+            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#E85D1C" }}>
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E85D1C" }}>Most Popular</span>
+              </div>
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(232,93,28,0.1)" }}>
+                  <HardHat className="w-6 h-6" style={{ color: "#E85D1C" }} />
+                </div>
+                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>General Contractor</h3>
+                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
+                  $19.99<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
+                </div>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Per user · Full platform</p>
+              </div>
+              <ul className="space-y-2.5 mb-6">
+                {[
+                  "Everything in Subcontractor, plus:",
+                  "All schedule formats (MPP, XER, XLSX, CSV, XML)",
+                  "3-week lookahead + reforecast engine",
+                  "Field ops: daily logs, reports, inspections",
+                  "Safety: toolbox talks, templates",
+                  "Documents: submittals, RFIs with AI, drawings",
+                  "Sub management + Ready Check + QR sharing",
+                  "Punch list + T&M tracking",
                   "Up to 50 projects",
-                  "Desktop and mobile",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
-                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{item}</span>
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
+                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
                   </li>
                 ))}
               </ul>
@@ -669,40 +713,46 @@ export default function LandingPage() {
                 Get Started
               </Link>
             </div>
-            {/* Sub Ops Standalone - Coming Soon */}
-            <div className="rounded-2xl p-8 md:p-10 border-2 flex flex-col" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.08)" }}>
-                  <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>Coming Soon</span>
+            {/* Enterprise Plan */}
+            <div className="rounded-2xl p-8 border flex flex-col" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
+                  <Building2 className="w-6 h-6" style={{ color: "#0D0D0D" }} />
                 </div>
-                <div className="text-2xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  Sub Ops Standalone
+                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Enterprise</h3>
+                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
+                  Custom
                 </div>
-                <p className="text-sm mt-2" style={{ color: "rgba(13,13,13,0.4)" }}>For subs who don&apos;t need GC schedule tools</p>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>For firms with 5+ active projects</p>
               </div>
-              <ul className="space-y-3 mb-8 flex-1">
+              <ul className="space-y-2.5 mb-6 flex-1">
                 {[
-                  "Morning Dispatch Board",
-                  "Foreman & Crew Management",
-                  "Production Tracking with photos",
-                  "SOP Library with read-tracking",
-                  "Blocker Reporting",
-                  "Department Handoff Tracker",
-                  "Light/dark theme + Spanish",
-                  "Desktop and mobile",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "rgba(13,13,13,0.2)" }} />
-                    <span className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>{item}</span>
+                  "Everything in GC, plus:",
+                  "Unlimited projects",
+                  "Multi-user team accounts",
+                  "Custom onboarding + training",
+                  "Priority support",
+                  "API access",
+                  "Custom report templates",
+                  "Dedicated account manager",
+                  "Volume pricing",
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(13,13,13,0.25)" }} />
+                    <span className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{feat}</span>
                   </li>
                 ))}
               </ul>
-              <div
-                className="block w-full text-center px-8 py-4 rounded-xl text-lg font-bold"
-                style={{ background: "rgba(13,13,13,0.06)", color: "rgba(13,13,13,0.35)" }}
+              <a
+                href="mailto:irontrackdevelopment@outlook.com?subject=Enterprise%20Demo%20Request&body=I%27d%20like%20to%20schedule%20a%20demo%20of%20IronTrack%20Pulse%20for%20our%20team."
+                className="block w-full text-center px-6 py-3 rounded-xl text-sm font-bold transition-all border-2"
+                style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
               >
-                Notify Me
-              </div>
+                Book a Demo
+              </a>
+              <p className="text-center text-xs mt-3" style={{ color: "rgba(13,13,13,0.35)" }}>
+                Demo coming soon
+              </p>
             </div>
           </div>
         </div>
