@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Public routes that don't require auth
-  const publicRoutes = ['/', '/login', '/signup', '/signup/sub', '/terms', '/privacy'];
+  const publicRoutes = ['/', '/login', '/login/sub', '/signup', '/signup/sub', '/terms', '/privacy', '/release-notes', '/status'];
   // Protected routes that require auth + active GC subscription:
   // /schedule-generator — Schedule Simulator (enterprise feature, GC login required)
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
@@ -52,7 +52,7 @@ export async function middleware(request: NextRequest) {
   // Redirect to login if not authenticated
   if (!user) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = '/login';
+    redirectUrl.pathname = isSubRoute ? '/login/sub' : '/login';
     redirectUrl.searchParams.set('redirect', request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
   }
