@@ -78,7 +78,7 @@ function statusChip(status: string, pct: number) {
     );
   }
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[#2a2a33]">
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[var(--border-secondary)]">
       Upcoming
     </span>
   );
@@ -89,9 +89,9 @@ function statusChip(status: string, pct: number) {
 function ActivityRow({ activity }: { activity: Activity }) {
   const days = daysUntil(activity.start_date);
   return (
-    <div className="flex items-start justify-between gap-3 py-3 px-4 bg-[#13131A] border border-[var(--border-primary)] rounded-xl">
+    <div className="flex items-start justify-between gap-3 py-3 px-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl">
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-gray-100 font-medium leading-snug">{activity.activity_name}</p>
+        <p className="text-sm text-[color:var(--text-primary)] font-medium leading-snug">{activity.activity_name}</p>
         <div className="flex items-center gap-3 mt-1 flex-wrap">
           <span className="text-xs text-[color:var(--text-muted)]">
             {formatDateRange(activity.start_date, activity.finish_date)}
@@ -142,7 +142,7 @@ function Section({
       >
         <div className="flex items-center gap-2">
           <Icon size={16} className={color} />
-          <span className="text-sm font-semibold text-gray-200">{title}</span>
+          <span className="text-sm font-semibold text-[color:var(--text-primary)]">{title}</span>
           <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${color.replace("text-", "bg-")}/20 ${color}`}>
             {count}
           </span>
@@ -163,7 +163,7 @@ function StatCard({ label, value, icon: Icon, color }: {
   color: string;
 }) {
   return (
-    <div className="bg-[#13131A] border border-[var(--border-primary)] rounded-xl p-3 flex flex-col items-center text-center">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 flex flex-col items-center text-center">
       <Icon size={18} className={`${color} mb-1`} />
       <span className={`text-xl font-bold ${color}`}>{value}</span>
       <span className="text-[10px] text-[color:var(--text-muted)] mt-0.5 leading-tight">{label}</span>
@@ -200,9 +200,9 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
   if (!data || data.stats.total === 0) {
     return (
       <div className="text-center py-16">
-        <Calendar size={36} className="mx-auto text-gray-700 mb-3" />
+        <Calendar size={36} className="mx-auto text-[color:var(--text-muted)] mb-3" />
         <p className="text-[color:var(--text-secondary)] text-sm">No activities in the 4-6 week window</p>
-        <p className="text-gray-600 text-xs mt-1">Activities starting 3-6 weeks from today will appear here</p>
+        <p className="text-[color:var(--text-muted)] text-xs mt-1">Activities starting 3-6 weeks from today will appear here</p>
       </div>
     );
   }

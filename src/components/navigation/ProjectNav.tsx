@@ -213,8 +213,8 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 onClick={() => handleGroupClick(id)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] whitespace-nowrap"
                 style={{
-                  background: isActive ? "#F97316" : "#1F1F25",
-                  color: isActive ? "#fff" : "#9CA3AF",
+                  background: isActive ? "#F97316" : "var(--bg-tertiary)",
+                  color: isActive ? "#fff" : "var(--text-secondary)",
                 }}
               >
                 <Icon size={13} />
@@ -238,7 +238,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 className="flex items-center gap-1.5 px-3 md:px-4 py-2.5 text-xs md:text-sm font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px]"
                 style={{
                   borderBottomColor: isActive ? "#F97316" : "transparent",
-                  color: isActive ? "#F97316" : "#6B7280",
+                  color: isActive ? "#F97316" : "var(--text-muted)",
                 }}
               >
                 <Icon size={14} />
@@ -261,8 +261,8 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 onClick={() => handleGroupClick(id)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all min-h-[36px] whitespace-nowrap shrink-0"
                 style={{
-                  background: isActive ? "#F97316" : "#1F1F25",
-                  color: isActive ? "#fff" : "#9CA3AF",
+                  background: isActive ? "#F97316" : "var(--bg-tertiary)",
+                  color: isActive ? "#fff" : "var(--text-secondary)",
                 }}
               >
                 <Icon size={13} />
@@ -287,7 +287,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                   className="flex items-center gap-1.5 px-3 py-3 text-xs font-medium border-b-2 transition-all whitespace-nowrap min-h-[44px]"
                   style={{
                     borderBottomColor: isActive ? "#F97316" : "transparent",
-                    color: isActive ? "#F97316" : "#6B7280",
+                    color: isActive ? "#F97316" : "var(--text-muted)",
                   }}
                 >
                   <Icon size={14} />
