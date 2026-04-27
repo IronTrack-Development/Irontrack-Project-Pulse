@@ -120,16 +120,16 @@ export default function TMTab({ projectId }: Props) {
   const pendingApproval = tickets.filter((t) => t.status === "submitted").length;
   const disputed = tickets.filter((t) => t.status === "disputed").length;
 
-  const openDetail = async (t: TMTicket) => {
+  const openDetail = async (ticket: TMTicket) => {
     // Fetch full ticket with line items
     try {
-      const res = await fetch(`/api/projects/${projectId}/tm-tickets/${t.id}`);
+      const res = await fetch(`/api/projects/${projectId}/tm-tickets/${ticket.id}`);
       if (res.ok) {
         const full = await res.json();
         setDetailTicket(full);
       }
     } catch {
-      setDetailTicket(t);
+      setDetailTicket(ticket);
     }
   };
 

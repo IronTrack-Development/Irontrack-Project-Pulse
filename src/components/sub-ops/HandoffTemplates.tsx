@@ -68,12 +68,12 @@ export default function HandoffTemplates({ companyId }: Props) {
     setEditingId(null);
   };
 
-  const openEdit = (t: Template) => {
-    setEditingId(t.id);
-    setFormTitle(t.title);
-    setFormFrom(t.from_department_id || "");
-    setFormTo(t.to_department_id || "");
-    setFormItems(t.items.length > 0 ? [...t.items] : [""]);
+  const openEdit = (template: Template) => {
+    setEditingId(template.id);
+    setFormTitle(template.title);
+    setFormFrom(template.from_department_id || "");
+    setFormTo(template.to_department_id || "");
+    setFormItems(template.items.length > 0 ? [...template.items] : [""]);
     setShowForm(true);
   };
 

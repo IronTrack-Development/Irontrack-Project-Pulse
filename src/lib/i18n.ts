@@ -1,12 +1,21 @@
 export type Language = 'en' | 'es';
 
+export let clientLanguage: Language | null = null;
+
+export function setClientLanguage(lang: Language | null) {
+  clientLanguage = lang;
+}
+
 export function getLanguage(): Language {
-  if (typeof window === 'undefined') return 'en';
-  return (localStorage.getItem('pulse_language') as Language) || 'en';
+  return clientLanguage || 'en';
 }
 
 export function setLanguage(lang: Language) {
-  localStorage.setItem('pulse_language', lang);
+  clientLanguage = lang;
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('pulse_language', lang);
+    window.dispatchEvent(new CustomEvent<Language>('pulse-language-change', { detail: lang }));
+  }
 }
 
 // Translation dictionary — start with common UI strings

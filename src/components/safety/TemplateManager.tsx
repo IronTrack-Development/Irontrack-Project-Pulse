@@ -79,13 +79,13 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
     setEditingId(null);
   };
 
-  const startEdit = (t: ToolboxTalkTemplate) => {
-    setEditingId(t.id);
-    setFormTitle(t.title);
-    setFormCategory(t.category);
-    setFormPoints([...t.talking_points]);
-    setFormDuration(t.duration_minutes);
-    setFormOsha(t.osha_reference || "");
+  const startEdit = (template: ToolboxTalkTemplate) => {
+    setEditingId(template.id);
+    setFormTitle(template.title);
+    setFormCategory(template.category);
+    setFormPoints([...template.talking_points]);
+    setFormDuration(template.duration_minutes);
+    setFormOsha(template.osha_reference || "");
     setShowCreate(false);
   };
 

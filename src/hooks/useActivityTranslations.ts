@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { getLanguage } from "@/lib/i18n";
+import { useLanguage } from "@/components/I18nProvider";
 
 /**
  * Fetches Spanish translations for a list of activity names.
@@ -13,7 +13,7 @@ export function useActivityTranslations(activityNames: string[]) {
   const [translations, setTranslations] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const fetchedRef = useRef<string>("");
-  const isSpanish = typeof window !== "undefined" && getLanguage() === "es";
+  const isSpanish = useLanguage() === "es";
 
   useEffect(() => {
     // Skip if not Spanish or no activities
