@@ -221,7 +221,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                         className={inputClass}
                       >
                         <option value="">{t('ui.select')}</option>
-                        {TRADE_OPTIONS.map((t) => (
+                        {TRADE_OPTIONS.map((item) => (
                           <option key={t} value={t}>{t}</option>
                         ))}
                       </select>

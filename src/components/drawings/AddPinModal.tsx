@@ -94,7 +94,7 @@ export default function AddPinModal({
     });
   };
 
-  const selectedType = PIN_TYPES.find((t) => t.value === pinType)!;
+  const selectedType = PIN_TYPES.find((item) => item.value === pinType)!;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -120,7 +120,7 @@ export default function AddPinModal({
           <div>
             <label className="text-xs text-[color:var(--text-secondary)] uppercase tracking-wider mb-2 block">{t('ui.pin.type')}</label>
             <div className="grid grid-cols-5 gap-2">
-              {PIN_TYPES.map((t) => (
+              {PIN_TYPES.map((item) => (
                 <button
                   key={t.value}
                   onClick={() => { setPinType(t.value); setReferenceId(""); }}

@@ -143,7 +143,7 @@ const NAV_GROUPS: GroupDef[] = [
 // Helper: find which group owns a given tab id
 function findGroupForTab(tabId: string): string {
   for (const group of NAV_GROUPS) {
-    if (group.tabs.some((t) => t.id === tabId)) return group.id;
+    if (group.tabs.some((item) => item.id === tabId)) return group.id;
   }
   return "schedule";
 }
@@ -192,7 +192,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
     const group = NAV_GROUPS.find((g) => g.id === groupId)!;
     const remembered = lastTabPerGroup.current[groupId];
     const target =
-      remembered && group.tabs.some((t) => t.id === remembered)
+      remembered && group.tabs.some((item) => item.id === remembered)
         ? remembered
         : group.tabs[0].id;
     onTabChange(target);

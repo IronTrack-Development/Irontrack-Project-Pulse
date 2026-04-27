@@ -379,7 +379,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                 // Fallback to generic categories
                 INSPECTION_CATEGORIES.map((cat) => (
                   <optgroup key={cat.label} label={cat.label}>
-                    {cat.types.map((t) => (
+                    {cat.types.map((item) => (
                       <option key={t} value={t}>{t}</option>
                     ))}
                   </optgroup>

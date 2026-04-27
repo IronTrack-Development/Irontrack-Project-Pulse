@@ -438,7 +438,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
     criticalPath?.nextSuccessor?.activity_name,
     criticalPath?.nearestMilestone?.activity_name,
     ...inspections.map((i) => i.name),
-    ...lateTasks.map((t) => t.name),
+    ...lateTasks.map((item) => item.name),
   ].filter(Boolean) as string[];
   const { translations, isSpanish } = useActivityTranslations(allActivityNames);
 

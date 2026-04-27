@@ -245,7 +245,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
             >
               <option value="">{t('ui.select.trade')}</option>
-              {TRADES.map((t) => (
+              {TRADES.map((item) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>

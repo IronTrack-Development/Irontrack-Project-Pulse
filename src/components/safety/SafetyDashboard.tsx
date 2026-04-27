@@ -137,7 +137,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
     .toISOString()
     .split("T")[0];
-  const thisMonthTalks = talks.filter((t) => t.talk_date >= monthStart);
+  const thisMonthTalks = talks.filter((item) => item.talk_date >= monthStart);
   const avgAttendance =
     talks.length > 0
       ? Math.round(
@@ -145,7 +145,7 @@ export default function SafetyDashboard({ projectId }: SafetyDashboardProps) {
         )
       : 0;
   const followUps = talks.filter(
-    (t) => t.follow_up_needed && t.status !== "locked"
+    (item) => item.follow_up_needed && t.status !== "locked"
   ).length;
 
   // If viewing a specific talk detail

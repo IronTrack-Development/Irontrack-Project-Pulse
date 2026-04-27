@@ -134,7 +134,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       {/* Trades */}
       {project.trades.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
-          {project.trades.map((t) => (
+          {project.trades.map((item) => (
             <span
               key={t}
               className="text-xs px-2 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316]"

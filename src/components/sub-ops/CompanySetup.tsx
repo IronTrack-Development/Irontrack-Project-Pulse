@@ -106,7 +106,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
             >
               <option value="">{t('ui.select.a.trade')}</option>
-              {TRADES.map((t) => (
+              {TRADES.map((item) => (
                 <option key={t.value} value={t.value}>{t.label}</option>
               ))}
             </select>

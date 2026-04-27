@@ -147,7 +147,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
 
   // Group by category
   const grouped: Record<string, ToolboxTalkTemplate[]> = {};
-  templates.forEach((t) => {
+  templates.forEach((item) => {
     if (!grouped[t.category]) grouped[t.category] = [];
     grouped[t.category].push(t);
   });

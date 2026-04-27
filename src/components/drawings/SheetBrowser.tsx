@@ -87,7 +87,7 @@ const DISCIPLINE_COLOR: Record<Discipline, string> = {
 // Natural sort for sheet numbers like A1.01, A1.02, A2.01, S1.1, S2.1
 function naturalSheetSort(a: DrawingSheet, b: DrawingSheet): number {
   const tokenize = (s: string) =>
-    s.split(/(\d+)/).map((t) => (isNaN(Number(t)) ? t : parseInt(t, 10)));
+    s.split(/(\d+)/).map((item) => (isNaN(Number(t)) ? t : parseInt(t, 10)));
   const ta = tokenize(a.sheet_number);
   const tb = tokenize(b.sheet_number);
   for (let i = 0; i < Math.max(ta.length, tb.length); i++) {

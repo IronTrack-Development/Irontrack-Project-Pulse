@@ -114,12 +114,12 @@ export default function TMTab({ projectId }: Props) {
   }, [fetchTickets, fetchContacts]);
 
   const filtered =
-    filter === "all" ? tickets : tickets.filter((t) => t.status === filter);
+    filter === "all" ? tickets : tickets.filter((item) => item.status === filter);
 
   const totalTickets = tickets.length;
   const totalCost = tickets.reduce((s, t) => s + (t.total_cost ?? 0), 0);
-  const pendingApproval = tickets.filter((t) => t.status === "submitted").length;
-  const disputed = tickets.filter((t) => t.status === "disputed").length;
+  const pendingApproval = tickets.filter((item) => item.status === "submitted").length;
+  const disputed = tickets.filter((item) => item.status === "disputed").length;
 
   const openDetail = async (t: TMTicket) => {
     // Fetch full ticket with line items
@@ -203,7 +203,7 @@ export default function TMTab({ projectId }: Props) {
             {FILTERS.map((f) => {
               const count = f.value === "all"
                 ? tickets.length
-                : tickets.filter((t) => t.status === f.value).length;
+                : tickets.filter((item) => item.status === f.value).length;
               return (
                 <button
                   key={f.value}
@@ -251,7 +251,7 @@ export default function TMTab({ projectId }: Props) {
           </div>
         ) : (
           <div className="space-y-2">
-            {filtered.map((t) => (
+            {filtered.map((item) => (
               <button
                 key={t.id}
                 onClick={() => openDetail(t)}
