@@ -182,12 +182,12 @@ export default function ReforecastTab({ projectId }: Props) {
 
   // Critical path tasks
   const criticalTasks = (data.tasks || []).filter(
-    (t: any) => t.is_critical && t.status !== "complete"
+    (task: any) => task.is_critical && task.status !== "complete"
   );
 
   // In-progress tasks (for progress update)
   const inProgressTasks = (data.tasks || []).filter(
-    (t: any) => t.status === "in_progress" || t.status === "not_started"
+    (task: any) => task.status === "in_progress" || task.status === "not_started"
   );
 
   return (

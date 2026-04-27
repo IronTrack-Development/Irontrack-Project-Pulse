@@ -117,7 +117,7 @@ export default function TMTab({ projectId }: Props) {
     filter === "all" ? tickets : tickets.filter((item) => item.status === filter);
 
   const totalTickets = tickets.length;
-  const totalCost = tickets.reduce((s, t) => s + (t.total_cost ?? 0), 0);
+  const totalCost = tickets.reduce((s, ticket) => s + (ticket.total_cost ?? 0), 0);
   const pendingApproval = tickets.filter((item) => item.status === "submitted").length;
   const disputed = tickets.filter((item) => item.status === "disputed").length;
 

@@ -89,7 +89,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
 
   useEffect(() => { fetchData(days); }, [projectId, days]);
 
-  const totalActivities = groups.reduce((s, g) => s + g.trades.reduce((ts, t) => ts + t.activities.length, 0), 0);
+  const totalActivities = groups.reduce((s, g) => s + g.trades.reduce((ts, trade) => ts + trade.activities.length, 0), 0);
 
   return (
     <div className="space-y-5">
@@ -143,7 +143,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       ) : (
         <div className="space-y-4">
           {groups.map((group) => {
-            const totalInWeek = group.trades.reduce((s, t) => s + t.activities.length, 0);
+            const totalInWeek = group.trades.reduce((s, trade) => s + trade.activities.length, 0);
             if (totalInWeek === 0) return null;
             const isCollapsed = collapsed[group.weekStart];
 

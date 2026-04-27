@@ -256,7 +256,7 @@ export default function HandoffTracker({ projectId }: Props) {
 
   const applyTemplate = async (templateId: string) => {
     if (!companyId || !selectedHandoff) return;
-    const template = templates.find(t => t.id === templateId);
+    const template = templates.find((template) => template.id === templateId);
     if (!template) return;
     // Add each item from template
     for (const item of template.items) {
@@ -684,8 +684,8 @@ export default function HandoffTracker({ projectId }: Props) {
                         defaultValue=""
                       >
                         <option value="" disabled>{t('ui.apply.template')}</option>
-                        {templates.map(t => (
-                          <option key={t.id} value={t.id}>{t.title}</option>
+                        {templates.map((template) => (
+                          <option key={template.id} value={template.id}>{template.title}</option>
                         ))}
                       </select>
                     )}

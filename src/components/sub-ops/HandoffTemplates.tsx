@@ -130,10 +130,10 @@ export default function HandoffTemplates({ companyId }: Props) {
 
   // Group templates by department transition
   const grouped: Record<string, Template[]> = {};
-  templates.forEach(t => {
-    const key = [t.from_department_name || "Any", t.to_department_name || "Any"].join(" → ");
+  templates.forEach((template) => {
+    const key = [template.from_department_name || "Any", template.to_department_name || "Any"].join(" → ");
     if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(t);
+    grouped[key].push(template);
   });
 
   if (loading) {
@@ -241,21 +241,21 @@ export default function HandoffTemplates({ companyId }: Props) {
               <span className="text-xs font-semibold text-[color:var(--text-secondary)]">{key}</span>
             </div>
             <div className="space-y-2">
-              {temps.map(t => (
-                <div key={t.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3">
+              {temps.map((template) => (
+                <div key={template.id} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-[color:var(--text-primary)]">{t.title}</span>
+                    <span className="text-sm font-medium text-[color:var(--text-primary)]">{template.title}</span>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => openEdit(t)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
+                      <button onClick={() => openEdit(template)} className="p-1.5 text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]">
                         <Edit2 size={13} />
                       </button>
-                      <button onClick={() => handleDelete(t.id)} className="p-1.5 text-red-400/50 hover:text-red-400">
+                      <button onClick={() => handleDelete(template.id)} className="p-1.5 text-red-400/50 hover:text-red-400">
                         <Trash2 size={13} />
                       </button>
                     </div>
                   </div>
                   <ul className="mt-1.5 space-y-0.5">
-                    {t.items.map((item, i) => (
+                    {template.items.map((item, i) => (
                       <li key={i} className="text-xs text-[color:var(--text-muted)] flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-gray-600" />
                         {item}

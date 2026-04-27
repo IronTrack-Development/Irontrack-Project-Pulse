@@ -211,16 +211,16 @@ function LookaheadScene() {
           { name: t('ui.structural.steel.tower.2'), pct: 60, color: C.blue },
           { name: t('ui.electrical.rough.in.bldg.a'), pct: 85, color: C.orange },
           { name: t('ui.concrete.pour.level.3'), pct: 0, color: C.dim },
-        ].map((t, i) => (
+        ].map((task, i) => (
           <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 + i * 0.1 }}
             style={{ background: C.card, borderRadius: 10, padding: "10px 12px", marginBottom: 6 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-              <span style={{ fontSize: 12, color: C.text, fontWeight: 500 }}>{t.name}</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: t.color }}>{t.pct}%</span>
+              <span style={{ fontSize: 12, color: C.text, fontWeight: 500 }}>{task.name}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: task.color }}>{task.pct}%</span>
             </div>
             <div style={{ height: 3, background: C.line, borderRadius: 2 }}>
-              <motion.div initial={{ width: 0 }} animate={{ width: `${t.pct}%` }} transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-                style={{ height: "100%", background: t.color, borderRadius: 2 }} />
+              <motion.div initial={{ width: 0 }} animate={{ width: `${task.pct}%` }} transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
+                style={{ height: "100%", background: task.color, borderRadius: 2 }} />
             </div>
           </motion.div>
         ))}
@@ -228,12 +228,12 @@ function LookaheadScene() {
         {[
           { name: t('ui.fire.sprinkler.bldg.b'), pct: 25, color: C.orange },
           { name: t('ui.drywall.hang.level.2'), pct: 0, color: C.dim },
-        ].map((t, i) => (
+        ].map((task, i) => (
           <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 + i * 0.1 }}
             style={{ background: C.card, borderRadius: 10, padding: "10px 12px", marginBottom: 6 }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 12, color: C.text, fontWeight: 500 }}>{t.name}</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: t.color }}>{t.pct}%</span>
+              <span style={{ fontSize: 12, color: C.text, fontWeight: 500 }}>{task.name}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: task.color }}>{task.pct}%</span>
             </div>
           </motion.div>
         ))}
