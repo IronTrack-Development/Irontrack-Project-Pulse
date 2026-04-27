@@ -44,8 +44,8 @@ export default function SendRFIPanel({
     if (drawingReference) lines.push(`Drawing Reference: ${drawingReference}`);
     if (dueDate) lines.push(`Response Needed By: ${formatDueDate(dueDate)}`);
     lines.push("", "QUESTION:", question, "");
-    if (costImpact) lines.push("⚠ Potential Cost Impact");
-    if (scheduleImpact) lines.push("⚠ Potential Schedule Impact");
+    lines.push("Cost Impact: TBD");
+    lines.push("Schedule Impact: TBD");
     lines.push("", "Please respond at your earliest convenience.", "", "---", "Sent via IronTrack Pulse");
     return lines.join("\n");
   };
@@ -58,8 +58,8 @@ export default function SendRFIPanel({
     if (specSection) lines.push(`Spec: ${specSection}`);
     if (dueDate) lines.push(`Due: ${formatDueDate(dueDate)}`);
     lines.push("", question, "");
-    if (costImpact) lines.push("Cost Impact: Yes");
-    if (scheduleImpact) lines.push("Schedule Impact: Yes");
+    lines.push("Cost Impact: TBD");
+    lines.push("Schedule Impact: TBD");
     return lines.join("\n");
   };
 
