@@ -191,6 +191,20 @@ export function parseXER(xerText: string): XERTask[] {
     }
   }
 
+  // ── Parse TASKPRED (predecessor relationships) ────────────────────────────
+  // Map: task_id → list of predecessor task_ids
+  const taskPredMap = new Map<string, string[]>();
+  const taskpredRows = parseTable(lines, "TASKPRED");
+  for (const r of taskpredRows) {
+    const tid = r.task_id || "";
+    const predTid = r.pred_task_id || "";
+    if (tid && predTid) {
+      const existing = taskPredMap.get(tid) || [];
+      existing.push(predTid);
+      taskPredMap.set(tid, existing);
+    }
+  }
+
   // ── Parse TASKNOTE (activity notes) ───────────────────────────────────────
   // Map: task_id → notes text
   const taskNoteMap = new Map<string, string>();
@@ -264,7 +278,10 @@ export function parseXER(xerText: string): XERTask[] {
       milestone: isMilestone,
       wbs_id: wbsId,
       rsrc_names: row.rsrc_names || null,
-      pred_task_ids: row.pred_task_id || null,
+      // Use TASKPRED table (complete predecessor list) if available, else fall back to TASK row field
+      pred_task_ids: taskPredMap.has(taskId)
+        ? taskPredMap.get(taskId)!.join(",")
+        : (row.pred_task_id || null),
       constraint_type: constraintType,
       constraint_date: constraintDate,
       resource_names: resourceNames,

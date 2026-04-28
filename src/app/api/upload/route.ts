@@ -23,27 +23,41 @@ async function computeSuccessorIds(supabase: ReturnType<typeof getServiceClient>
 
   if (!activities?.length) return;
 
-  // Build reverse map: predecessor -> list of successors
+  // Build O(1) lookup maps: activity_id -> UUID, and UUID -> UUID (identity)
+  const idToUuid = new Map<string, string>();
+  for (const a of activities) {
+    idToUuid.set(a.id, a.id); // UUID -> UUID
+    if (a.activity_id) idToUuid.set(a.activity_id, a.id); // string activity_id -> UUID
+  }
+
+  // Build reverse map: predecessor UUID -> set of successor activity_ids
   const successorMap = new Map<string, Set<string>>();
 
   for (const act of activities) {
     if (!act.predecessor_ids?.length) continue;
-    for (const predId of act.predecessor_ids) {
-      // Find the predecessor activity by activity_id or id
-      const predAct = activities.find((a: { activity_id: string | null; id: string }) => a.activity_id === predId || a.id === predId);
-      if (predAct) {
-        if (!successorMap.has(predAct.id)) successorMap.set(predAct.id, new Set());
-        successorMap.get(predAct.id)!.add(act.activity_id || act.id);
+    for (const rawPredId of act.predecessor_ids) {
+      // Strip any remaining relationship types (FS/SS/FF/SF) and lag, just in case
+      const predId = rawPredId.replace(/\s*(FS|FF|SS|SF)\s*([+-][^,;|]*)?$/i, "").trim();
+      const predUuid = idToUuid.get(predId);
+      if (predUuid) {
+        if (!successorMap.has(predUuid)) successorMap.set(predUuid, new Set());
+        successorMap.get(predUuid)!.add(act.activity_id || act.id);
       }
     }
   }
 
-  // Batch update
-  for (const [actId, successors] of successorMap) {
-    await supabase
-      .from("parsed_activities")
-      .update({ successor_ids: Array.from(successors) })
-      .eq("id", actId);
+  // Batch update successor_ids
+  const updates = Array.from(successorMap.entries());
+  for (let i = 0; i < updates.length; i += 50) {
+    const batch = updates.slice(i, i + 50);
+    await Promise.all(
+      batch.map(([actId, successors]) =>
+        supabase
+          .from("parsed_activities")
+          .update({ successor_ids: Array.from(successors) })
+          .eq("id", actId)
+      )
+    );
   }
 }
 
@@ -652,7 +666,10 @@ export async function POST(req: NextRequest) {
         actual_start: null,
         actual_finish: null,
         percent_complete: pct,
-        predecessor_ids: task.pred_task_ids ? task.pred_task_ids.split(/[,;|]/).map((s) => s.trim()).filter(Boolean) : null,
+        predecessor_ids: task.pred_task_ids ? task.pred_task_ids.split(/[,;|]/).map((s) => {
+          // Strip relationship types (FS/SS/FF/SF) and lag
+          return s.trim().replace(/\s*(FS|FF|SS|SF)\s*([+-][^,;|]*)?$/i, "").trim();
+        }).filter(Boolean) : null,
         successor_ids: null,
         milestone: isMilestone,
         status,
@@ -702,8 +719,13 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Delete existing activities before inserting XER activities
+    // ── Clean slate on re-upload ──────────────────────────────────────────
+    // Delete old activities, risks, and stale upload records so re-uploads
+    // don't accumulate ghost data.
     await supabase.from("parsed_activities").delete().eq("project_id", projectId);
+    await supabase.from("daily_risks").delete().eq("project_id", projectId).eq("status", "open");
+    // Clean old upload records (keep only the current one)
+    await supabase.from("schedule_uploads").delete().eq("project_id", projectId).neq("id", upload.id);
 
     // Insert in batches and return early
     const insertedXer: { id: string }[] = [];
@@ -885,8 +907,13 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Delete existing activities for this project (re-upload flow)
+  // ── Clean slate on re-upload ────────────────────────────────────────────
+  // Delete old activities, risks, and stale upload records so re-uploads
+  // don't accumulate ghost data.
   await supabase.from("parsed_activities").delete().eq("project_id", projectId);
+  await supabase.from("daily_risks").delete().eq("project_id", projectId).eq("status", "open");
+  // Clean old upload records (keep only the current one)
+  await supabase.from("schedule_uploads").delete().eq("project_id", projectId).neq("id", upload.id);
 
   // Build flat hierarchy rows for MPP/XLSX outline-level WBS path resolution
   const outlineColName = (mapping as Record<string, string>)["outline_level"] || "Outline Level";
@@ -927,7 +954,11 @@ export async function POST(req: NextRequest) {
 
     const predecessorRaw = String(col(row, "predecessor_ids") || "").trim();
     const predecessorIds = predecessorRaw
-      ? predecessorRaw.split(/[,;|]/).map((s) => s.trim()).filter(Boolean)
+      ? predecessorRaw.split(/[,;|]/).map((s) => {
+          // Strip relationship types (FS/SS/FF/SF) and lag (+2d, -1d, +3 days, etc.)
+          // Examples: "15FS" → "15", "A1010SS+2d" → "A1010", "20FF-1" → "20"
+          return s.trim().replace(/\s*(FS|FF|SS|SF)\s*([+-][^,;|]*)?$/i, "").trim();
+        }).filter(Boolean)
       : [];
 
     const status = deriveStatus({ actual_finish: actualFinish, actual_start: actualStart, percent_complete: pct, start_date: startDate });

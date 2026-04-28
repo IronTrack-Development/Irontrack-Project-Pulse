@@ -21,15 +21,20 @@ export async function GET() {
   const service = getServiceClient();
 
   // 2. Look up the user's sub_companies record
-  const { data: company, error: companyError } = await service
+  //    Use .limit(1) instead of .maybeSingle() to avoid crashing when
+  //    duplicate rows exist for the same user_id.
+  const { data: companies, error: companyError } = await service
     .from("sub_companies")
     .select("id, company_name, contact_name, contact_email")
     .eq("user_id", user.id)
-    .maybeSingle();
+    .order("created_at", { ascending: false })
+    .limit(1);
 
   if (companyError) {
     return NextResponse.json({ error: companyError.message }, { status: 500 });
   }
+
+  const company = companies?.[0] ?? null;
 
   if (!company) {
     // No sub company registered — return empty state
@@ -38,6 +43,7 @@ export async function GET() {
       projects: [],
       recentReports: [],
       stats: { activeProjects: 0, reportsThisWeek: 0, uniqueForemen: 0 },
+      totalReports: 0,
     });
   }
 

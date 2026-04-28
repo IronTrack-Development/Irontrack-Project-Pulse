@@ -44,13 +44,14 @@ export async function POST(request: NextRequest) {
   const serviceClient = getServiceClient();
 
   // Check if a sub_company already exists for this user
-  const { data: existing } = await serviceClient
+  // Use .limit(1) to avoid crashing when duplicate rows already exist.
+  const { data: existingRows } = await serviceClient
     .from("sub_companies")
     .select("id")
     .eq("user_id", resolvedUserId)
-    .maybeSingle();
+    .limit(1);
 
-  if (existing) {
+  if (existingRows && existingRows.length > 0) {
     return NextResponse.json(
       { error: "A sub company already exists for this account." },
       { status: 409 }
