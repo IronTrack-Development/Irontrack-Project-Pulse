@@ -30,6 +30,7 @@ yarn-error.log*
 
 # local QA manifests
 docs/QA_DISPOSABLE_RECORDS_*.md
+qa-artifacts/
 
 # vercel
 .vercel
