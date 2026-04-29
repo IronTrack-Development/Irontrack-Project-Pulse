@@ -2,14 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getServiceClient } from "@/lib/supabase";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not set");
+  }
+
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-03-25.dahlia",
+  });
+}
 
 // POST /api/stripe/sub-checkout
 // Creates a Stripe Checkout session for the $10/month sub progress report subscription.
 // Body: { sub_company_id: string, return_url: string }
 export async function POST(req: NextRequest) {
+  let stripe: Stripe;
+  try {
+    stripe = getStripe();
+  } catch (err) {
+    console.error("[stripe-sub-checkout] configuration error:", err);
+    return NextResponse.json(
+      { error: "Stripe is not configured" },
+      { status: 500 }
+    );
+  }
+
   let body: { sub_company_id?: string; return_url?: string } = {};
   try {
     body = await req.json();

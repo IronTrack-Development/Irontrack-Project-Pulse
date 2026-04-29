@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 import { normalizeCompanyName } from "@/lib/company-match";
 import { generateToken } from "@/lib/token-utils";
+import { rateLimit } from "@/lib/rate-limit";
 
 // GET /api/join/[projectId]
 // Returns project info for the registration page (no auth required)
@@ -39,6 +40,18 @@ export async function POST(
 ) {
   const { projectId } = await params;
   const supabase = getServiceClient();
+
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const rl = rateLimit(`join-register:${projectId}:${ip}`, 10, 60_000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
 
   let body: { company_name?: string; full_name?: string };
   try {

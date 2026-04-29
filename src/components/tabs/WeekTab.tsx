@@ -5,6 +5,8 @@ import { CalendarDays, Loader2, Share2, QrCode } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
 import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
+import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
   id: string;
@@ -36,6 +38,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   const [allActivities, setAllActivities] = useState<ParsedActivity[]>([]);
   const [drawerActivity, setDrawerActivity] = useState<ParsedActivity | null>(null);
   const [showQR, setShowQR] = useState(false);
+  const { getActivityName } = useActivityTranslations([
+    ...(data?.activities.map((a) => a.activity_name) || []),
+    ...allActivities.map((a) => a.activity_name),
+  ]);
 
   useEffect(() => {
     const fetchWeekData = async () => {
@@ -80,7 +86,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <CalendarDays size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled this week</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">{t('week.noActivitiesThisWeek')}</div>
       </div>
     );
   }
@@ -146,7 +152,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
     selected.forEach((activity) => {
       const dateRange = formatActivityDateRange(activity.start_date, activity.finish_date);
-      text += `• ${activity.activity_name} (${dateRange})\n`;
+      text += `• ${getActivityName(activity.activity_name)} (${dateRange})\n`;
     });
 
     // Try native share first
@@ -184,13 +190,13 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
         {isSelecting ? (
           <>
-            <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
+            <div className="text-sm text-[color:var(--text-secondary)]">{t('week.selectToShare')}</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCancel}
                 className="px-3 py-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-xs font-medium transition-colors"
               >
-                Cancel
+                {t('action.cancel')}
               </button>
               <button
                 onClick={handleShare}
@@ -198,7 +204,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
-                Share ({selectedIds.size})
+                {t('action.share')} ({selectedIds.size})
               </button>
             </div>
           </>
@@ -222,7 +228,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
-                {shareStatus || "Share"}
+                {shareStatus ? t(shareStatus === 'Shared!' ? 'week.shared' : 'week.copied') : t('action.share')}
               </button>
             </div>
           </>
@@ -271,7 +277,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         )}
                         <div className="flex items-start justify-between gap-3 flex-1">
                           <div className="flex-1 min-w-0">
-                            <div className="text-sm text-[color:var(--text-primary)] mb-1">{activity.activity_name}</div>
+                            <div className="text-sm text-[color:var(--text-primary)] mb-1">{getActivityName(activity.activity_name)}</div>
                             <div className="text-xs text-[color:var(--text-muted)]">
                               {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                               {" → "}
@@ -326,10 +332,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                 {isSelecting && (
                   <th className="px-4 py-2 w-12"></th>
                 )}
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Activity Name</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Start Date</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">Finish Date</th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-[color:var(--text-muted)]">% Complete</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('week.activityName')}</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('week.startDate')}</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-[color:var(--text-muted)]">{t('week.finishDate')}</th>
+                <th className="px-4 py-2 text-right text-xs font-medium text-[color:var(--text-muted)]">{t('week.percentComplete')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#1F1F25]">
@@ -357,7 +363,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         />
                       </td>
                     )}
-                    <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">{activity.activity_name}</td>
+                    <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">{getActivityName(activity.activity_name)}</td>
                     <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
                       {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                     </td>

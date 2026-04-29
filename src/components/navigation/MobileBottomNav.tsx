@@ -7,6 +7,7 @@ import {
   Receipt,
   BarChart3,
 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface NavGroup {
   id: string;
@@ -15,11 +16,11 @@ interface NavGroup {
 }
 
 const GROUPS: NavGroup[] = [
-  { id: "schedule", label: "Schedule", icon: CalendarDays },
-  { id: "fieldops", label: "Field Ops", icon: ClipboardList },
-  { id: "documents", label: "Documents", icon: FileText },
-  { id: "money", label: "Money", icon: Receipt },
-  { id: "project", label: "Project", icon: BarChart3 },
+  { id: "schedule", label: "nav.schedule", icon: CalendarDays },
+  { id: "fieldops", label: "nav.fieldOps", icon: ClipboardList },
+  { id: "documents", label: "nav.documents", icon: FileText },
+  { id: "money", label: "nav.money", icon: Receipt },
+  { id: "project", label: "nav.project", icon: BarChart3 },
 ];
 
 interface MobileBottomNavProps {
@@ -61,7 +62,7 @@ export default function MobileBottomNav({
                   lineHeight: 1.2,
                 }}
               >
-                {label}
+                {t(label)}
               </span>
             </button>
           );

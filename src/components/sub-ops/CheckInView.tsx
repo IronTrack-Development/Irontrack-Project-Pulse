@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   CheckCircle, Camera, Plus, X, AlertTriangle, Send, Clock,
-  Users, Shield, Package, FileText,
+  Users, Shield, Package, FileText, BellRing,
 } from "lucide-react";
 
 interface Props {
@@ -30,11 +30,20 @@ interface ProductionEntry {
   area: string;
 }
 
+interface Foreman {
+  id: string;
+  name: string;
+}
+
 export default function CheckInView({ projectId }: Props) {
   const [dispatch, setDispatch] = useState<TodayDispatch | null>(null);
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState<"dispatch" | "checkin" | "production" | "blocker">("dispatch");
   const [checkedIn, setCheckedIn] = useState(false);
+  const [currentCheckinId, setCurrentCheckinId] = useState("");
+  const [foremen, setForemen] = useState<Foreman[]>([]);
+  const [foremanId, setForemanId] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Check-in form
   const [crewCount, setCrewCount] = useState("");
@@ -57,16 +66,51 @@ export default function CheckInView({ projectId }: Props) {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const companyId = typeof window !== "undefined" ? localStorage.getItem("sub_ops_company_id") : null;
+  const draftKey = companyId ? `irontrack_checkin_draft_${companyId}_${projectId}` : "";
+  const steps = [
+    { id: "dispatch", label: "Plan" },
+    { id: "checkin", label: "Crew" },
+    { id: "production", label: "Work" },
+    { id: "blocker", label: "Blocker" },
+  ] as const;
+  const noteChips = [
+    "Material missing",
+    "Area not ready",
+    "Need layout",
+    "Crew short",
+    "Waiting on GC",
+    "Ready for next crew",
+  ];
+
+  const appendNote = (note: string) => {
+    setNotes((current) => {
+      if (current.includes(note)) return current;
+      return current.trim() ? `${current.trim()}\n${note}` : note;
+    });
+  };
 
   const fetchDispatch = useCallback(async () => {
     if (!companyId) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/sub-ops/companies/${companyId}/dispatches/today`);
-      if (res.ok) {
-        const d = await res.json();
-        setDispatch(d);
-        if (d?.status === "checked_in") {
+      const today = new Date().toISOString().split("T")[0];
+      const [dispatchRes, foremenRes] = await Promise.all([
+        fetch(`/api/sub-ops/companies/${companyId}/dispatches?date=${today}`),
+        fetch(`/api/sub-ops/companies/${companyId}/foremen`),
+      ]);
+      if (foremenRes.ok) {
+        const foremenJson = await foremenRes.json();
+        const nextForemen = Array.isArray(foremenJson) ? foremenJson : foremenJson.data ?? foremenJson.foremen ?? [];
+        setForemen(nextForemen);
+        setForemanId((current) => current || nextForemen[0]?.id || "");
+      }
+      if (dispatchRes.ok) {
+        const d = await dispatchRes.json();
+        const dispatches = Array.isArray(d) ? d : d.data ?? d.dispatches ?? [];
+        const todayDispatch = dispatches[0] ?? null;
+        setDispatch(todayDispatch);
+        if (todayDispatch?.foreman_id) setForemanId((current) => current || todayDispatch.foreman_id);
+        if (todayDispatch?.status === "checked_in") {
           setCheckedIn(true);
           setStep("production");
         }
@@ -77,24 +121,69 @@ export default function CheckInView({ projectId }: Props) {
 
   useEffect(() => { fetchDispatch(); }, [fetchDispatch]);
 
+  useEffect(() => {
+    if (!draftKey) return;
+    const rawDraft = window.localStorage.getItem(draftKey);
+    if (!rawDraft) return;
+    try {
+      const draft = JSON.parse(rawDraft) as {
+        crewCount?: string;
+        hoursWorked?: string;
+        notes?: string;
+      };
+      if (draft.crewCount) setCrewCount(draft.crewCount);
+      if (draft.hoursWorked) setHoursWorked(draft.hoursWorked);
+      if (draft.notes) setNotes(draft.notes);
+    } catch {
+      window.localStorage.removeItem(draftKey);
+    }
+  }, [draftKey]);
+
+  useEffect(() => {
+    if (!draftKey || checkedIn) return;
+    const hasDraft = crewCount || hoursWorked || notes;
+    if (!hasDraft) return;
+    const timer = window.setTimeout(() => {
+      window.localStorage.setItem(
+        draftKey,
+        JSON.stringify({ crewCount, hoursWorked, notes })
+      );
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [checkedIn, crewCount, draftKey, hoursWorked, notes]);
+
   const handleCheckIn = async () => {
     if (!crewCount) { setError("Crew count is required"); return; }
+    if (!foremanId) { setError("Choose a foreman first"); return; }
     setSubmitting(true);
     setError("");
     try {
-      const formData = new FormData();
-      formData.append("crew_count", crewCount);
-      formData.append("hours_worked", hoursWorked || "0");
-      formData.append("notes", notes);
-      if (sitePhoto) formData.append("photo", sitePhoto);
-      if (dispatch) formData.append("dispatch_id", dispatch.id);
-
       const res = await fetch(`/api/sub-ops/companies/${companyId}/checkins`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          foreman_id: foremanId,
+          dispatch_id: dispatch?.id || null,
+          checkin_date: new Date().toISOString().split("T")[0],
+          crew_count: Number(crewCount),
+          crew_hours: hoursWorked ? Number(hoursWorked) : null,
+          notes: notes.trim() || null,
+        }),
       });
       if (res.ok) {
+        const checkin = await res.json();
+        setCurrentCheckinId(checkin.id);
+        if (sitePhoto) {
+          const photoData = new FormData();
+          photoData.append("file", sitePhoto);
+          await fetch(`/api/sub-ops/companies/${companyId}/checkins/${checkin.id}/photo`, {
+            method: "POST",
+            body: photoData,
+          });
+        }
         setCheckedIn(true);
+        if (draftKey) window.localStorage.removeItem(draftKey);
+        setSuccessMessage("Office notified. Your crew count and huddle notes are saved to today's record.");
         setStep("production");
       } else {
         const d = await res.json().catch(() => ({}));
@@ -124,23 +213,29 @@ export default function CheckInView({ projectId }: Props) {
   const handleSubmitProduction = async () => {
     const validEntries = entries.filter((e) => e.description.trim());
     if (validEntries.length === 0) { setError("Add at least one production entry"); return; }
+    if (!foremanId) { setError("Choose a foreman first"); return; }
     setSubmitting(true);
     setError("");
     try {
       for (const entry of validEntries) {
-        const formData = new FormData();
-        formData.append("description", entry.description);
-        formData.append("quantity", entry.quantity || "0");
-        formData.append("unit", entry.unit);
-        formData.append("area", entry.area);
-        if (entry.photo) formData.append("photo", entry.photo);
-
-        await fetch(`/api/sub-ops/companies/${companyId}/production`, {
+        const endpoint = currentCheckinId
+          ? `/api/sub-ops/companies/${companyId}/checkins/${currentCheckinId}/production`
+          : `/api/sub-ops/companies/${companyId}/production`;
+        await fetch(endpoint, {
           method: "POST",
-          body: formData,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            foreman_id: foremanId,
+            log_date: new Date().toISOString().split("T")[0],
+            description: entry.description.trim(),
+            quantity: entry.quantity ? Number(entry.quantity) : null,
+            unit: entry.unit,
+            area: entry.area.trim() || null,
+          }),
         });
       }
       setEntries([{ description: "", quantity: "", unit: "LF", photo: null, area: "" }]);
+      setSuccessMessage("Production saved. The office can see what was completed without chasing a text.");
       setStep("dispatch");
     } catch {
       setError("Failed to submit production data");
@@ -150,23 +245,27 @@ export default function CheckInView({ projectId }: Props) {
 
   const handleSubmitBlocker = async () => {
     if (!blockerDescription.trim()) { setError("Description is required"); return; }
+    if (!foremanId) { setError("Choose a foreman first"); return; }
     setSubmitting(true);
     setError("");
     try {
-      const formData = new FormData();
-      formData.append("category", blockerCategory);
-      formData.append("description", blockerDescription);
-      formData.append("impact", blockerImpact);
-      if (blockerPhoto) formData.append("photo", blockerPhoto);
-
       const res = await fetch(`/api/sub-ops/companies/${companyId}/blockers`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          foreman_id: foremanId,
+          dispatch_id: dispatch?.id || null,
+          blocker_date: new Date().toISOString().split("T")[0],
+          category: blockerCategory,
+          description: blockerDescription.trim(),
+          impact: blockerImpact.trim() || null,
+        }),
       });
       if (res.ok) {
         setBlockerDescription("");
         setBlockerImpact("");
         setBlockerPhoto(null);
+        setSuccessMessage("Blocker reported. The issue is now visible to the office with a timestamp.");
         setStep(checkedIn ? "production" : "dispatch");
       } else {
         const d = await res.json().catch(() => ({}));
@@ -189,15 +288,75 @@ export default function CheckInView({ projectId }: Props) {
   const UNITS = ["LF", "SF", "EA", "CY", "SY", "TON", "GAL", "HR"];
 
   return (
-    <div className="space-y-4 max-w-2xl">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Field Check-In</h2>
+    <div className="space-y-4 max-w-3xl">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#93C5FD]">60-second field update</p>
+          <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Field Check-In</h2>
+          <p className="mt-1 text-sm text-[color:var(--text-secondary)]">
+            Tell the office who is here, what changed, and what is blocking work.
+          </p>
+        </div>
         <button
           onClick={() => setStep("blocker")}
-          className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-red-500/10 px-4 py-3 text-sm font-black text-red-300 transition-colors hover:bg-red-500/20"
         >
-          <AlertTriangle size={14} /> Report Blocker
+          <AlertTriangle size={16} /> Report Blocker
         </button>
+      </div>
+
+      <div className="grid gap-2 sm:grid-cols-3">
+        {[
+          { icon: BellRing, label: "Office sees it", detail: "No extra call needed" },
+          { icon: FileText, label: "Record is saved", detail: "Timestamped field truth" },
+          { icon: Users, label: "Next crew benefits", detail: "Less starting from zero" },
+        ].map((item) => {
+          const ItemIcon = item.icon;
+          return (
+            <div key={item.label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+              <div className="flex items-center gap-2 text-sm font-black text-[color:var(--text-primary)]">
+                <ItemIcon size={15} className="text-[#F97316]" />
+                {item.label}
+              </div>
+              <p className="mt-1 text-xs text-[color:var(--text-muted)]">{item.detail}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      {successMessage && (
+        <div className="flex items-start gap-2 rounded-xl border border-[#22C55E]/25 bg-[#22C55E]/10 p-3 text-sm font-bold text-[#86EFAC]">
+          <CheckCircle size={16} className="mt-0.5 shrink-0" />
+          <span>{successMessage}</span>
+          <button
+            type="button"
+            onClick={() => setSuccessMessage("")}
+            className="ml-auto text-[#86EFAC]/70 transition-colors hover:text-[#86EFAC]"
+            aria-label="Dismiss confirmation"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
+      <div className="grid grid-cols-4 gap-2">
+        {steps.map((item, index) => {
+          const active = step === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setStep(item.id)}
+              className={`rounded-lg border px-2 py-2 text-center transition-colors ${
+                active
+                  ? "border-[#3B82F6]/50 bg-[#3B82F6]/15 text-white"
+                  : "border-[var(--border-primary)] bg-[var(--bg-secondary)] text-[color:var(--text-muted)]"
+              }`}
+            >
+              <span className="block text-[10px] font-black uppercase tracking-[0.16em]">{index + 1}</span>
+              <span className="block text-xs font-bold">{item.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ── Dispatch Details ── */}
@@ -246,7 +405,7 @@ export default function CheckInView({ projectId }: Props) {
               {!checkedIn && (
                 <button
                   onClick={() => setStep("checkin")}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+                  className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-base font-black text-[#052E16] transition-colors hover:bg-[#16A34A]"
                 >
                   <CheckCircle size={16} /> Check In
                 </button>
@@ -256,12 +415,12 @@ export default function CheckInView({ projectId }: Props) {
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6 text-center space-y-3">
               <Clock size={28} className="mx-auto text-gray-600" />
               <p className="text-sm text-[color:var(--text-secondary)]">No dispatch for today</p>
-              <p className="text-xs text-gray-600">You can still check in manually</p>
+              <p className="text-xs text-[color:var(--text-muted)]">You can still check in manually and leave notes for the office.</p>
               <button
                 onClick={() => setStep("checkin")}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px] mx-auto"
+                className="mx-auto flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-5 py-3 text-sm font-black text-[#052E16] transition-colors hover:bg-[#16A34A]"
               >
-                <CheckCircle size={14} /> Check In Anyway
+                <CheckCircle size={16} /> Start Check-In
               </button>
             </div>
           )}
@@ -271,11 +430,50 @@ export default function CheckInView({ projectId }: Props) {
       {/* ── Check-In Form ── */}
       {step === "checkin" && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
-          <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <CheckCircle size={14} className="text-[#F97316]" /> Check-In Form
+          <h3 className="text-base font-black text-[color:var(--text-primary)] flex items-center gap-2">
+            <CheckCircle size={16} className="text-[#22C55E]" /> Who is here right now?
           </h3>
 
-          <div className="grid grid-cols-2 gap-4">
+          {foremen.length > 1 && (
+            <div>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
+                Foreman <span className="text-red-400">*</span>
+              </label>
+              <select
+                value={foremanId}
+                onChange={(e) => setForemanId(e.target.value)}
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+              >
+                {foremen.map((foreman) => (
+                  <option key={foreman.id} value={foreman.id}>{foreman.name}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {foremen.length === 0 && (
+            <div className="rounded-lg border border-[#EAB308]/25 bg-[#EAB308]/10 px-3 py-2 text-xs font-semibold text-[#FACC15]">
+              Add a foreman before submitting field updates.
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {["2", "3", "4", "6"].map((count) => (
+              <button
+                key={count}
+                onClick={() => setCrewCount(count)}
+                className={`min-h-[52px] rounded-lg border text-lg font-black transition-colors ${
+                  crewCount === count
+                    ? "border-[#22C55E]/50 bg-[#22C55E]/15 text-[#86EFAC]"
+                    : "border-[var(--border-primary)] bg-[var(--bg-primary)] text-[color:var(--text-secondary)]"
+                }`}
+              >
+                {count}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
                 Crew Count <span className="text-red-400">*</span>
@@ -285,7 +483,7 @@ export default function CheckInView({ projectId }: Props) {
                 min="1"
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
-                placeholder="e.g., 4"
+                placeholder="Other number"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
@@ -323,14 +521,31 @@ export default function CheckInView({ projectId }: Props) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Notes</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Huddle Notes</label>
+            <div className="mb-2 flex flex-wrap gap-2">
+              {noteChips.map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  onClick={() => appendNote(chip)}
+                  className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-bold text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any notes about today..."
+              placeholder="Materials, schedule, manpower, hurdles, handoff notes..."
               rows={3}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
+            {(crewCount || hoursWorked || notes) && (
+              <p className="mt-1 text-[11px] font-medium text-[color:var(--text-muted)]">
+                Draft saved on this device until check-in is submitted.
+              </p>
+            )}
           </div>
 
           {error && (
@@ -340,10 +555,10 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleCheckIn}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-base font-black text-[#052E16] transition-colors hover:bg-[#16A34A] disabled:opacity-50"
           >
             <CheckCircle size={16} />
-            {submitting ? "Checking in..." : "Check In"}
+            {submitting ? "Checking in..." : "Check In Crew"}
           </button>
         </div>
       )}
@@ -353,7 +568,7 @@ export default function CheckInView({ projectId }: Props) {
         <div className="space-y-3">
           <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3 flex items-center gap-2">
             <CheckCircle size={16} className="text-green-400" />
-            <span className="text-sm text-green-300 font-medium">Checked in! Log your production below.</span>
+            <span className="text-sm text-green-300 font-bold">Checked in. Add production now, or come back later.</span>
           </div>
 
           {entries.map((entry, idx) => (
@@ -362,7 +577,7 @@ export default function CheckInView({ projectId }: Props) {
                 <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Entry #{idx + 1}</span>
                 {entries.length > 1 && (
                   <button onClick={() => removeEntry(idx)} className="text-gray-600 hover:text-red-400">
-                    <X size={14} />
+                    <X size={18} />
                   </button>
                 )}
               </div>
@@ -411,7 +626,7 @@ export default function CheckInView({ projectId }: Props) {
 
           <button
             onClick={addEntry}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors w-full justify-center min-h-[44px]"
+            className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--bg-tertiary)] px-3 py-2 text-sm font-bold text-[color:var(--text-secondary)] transition-colors hover:text-[color:var(--text-primary)]"
           >
             <Plus size={14} /> Add Another Entry
           </button>
@@ -423,9 +638,9 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleSubmitProduction}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
+            className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-3 text-base font-black text-white transition-colors hover:bg-[#ea6c0a] disabled:opacity-50"
           >
-            {submitting ? "Submitting..." : "Done"}
+            {submitting ? "Submitting..." : "Submit Production"}
           </button>
         </div>
       )}
@@ -453,12 +668,13 @@ export default function CheckInView({ projectId }: Props) {
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
             >
               <option value="material">Material</option>
-              <option value="labor">Labor</option>
+              <option value="manpower">Manpower</option>
               <option value="equipment">Equipment</option>
               <option value="weather">Weather</option>
-              <option value="design">Design/RFI</option>
+              <option value="drawing">Drawing/RFI</option>
+              <option value="inspection">Inspection</option>
+              <option value="gc_delay">GC Delay</option>
               <option value="access">Site Access</option>
-              <option value="safety">Safety</option>
               <option value="other">Other</option>
             </select>
           </div>

@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
 
-// Allow large PDF uploads (up to 50MB on Vercel Pro)
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 // Increase max duration for large file processing
 export const maxDuration = 60;
 

@@ -28,20 +28,18 @@ interface SOPDetail extends SOP {
 }
 
 const CATEGORIES = [
-  "general", "safety", "quality", "environmental", "emergency",
-  "equipment", "material_handling", "site_access", "other",
+  "general", "safety", "quality", "install_procedure", "company_policy",
+  "equipment", "training",
 ];
 
 const CATEGORY_STYLES: Record<string, string> = {
   general: "bg-gray-700 text-[color:var(--text-secondary)]",
   safety: "bg-red-500/20 text-red-300",
   quality: "bg-blue-500/20 text-blue-300",
-  environmental: "bg-green-500/20 text-green-300",
-  emergency: "bg-orange-500/20 text-orange-300",
+  install_procedure: "bg-green-500/20 text-green-300",
+  company_policy: "bg-orange-500/20 text-orange-300",
   equipment: "bg-yellow-500/20 text-yellow-300",
-  material_handling: "bg-purple-500/20 text-purple-300",
-  site_access: "bg-indigo-500/20 text-indigo-300",
-  other: "bg-gray-700 text-[color:var(--text-secondary)]",
+  training: "bg-purple-500/20 text-purple-300",
 };
 
 export default function SOPLibrary({ projectId }: Props) {
@@ -70,7 +68,7 @@ export default function SOPLibrary({ projectId }: Props) {
       const res = await fetch(`/api/sub-ops/companies/${companyId}/sops`);
       if (res.ok) {
         const d = await res.json();
-        setSops(Array.isArray(d) ? d : d.sops ?? []);
+        setSops(Array.isArray(d) ? d : d.data ?? d.sops ?? []);
       }
     } catch {}
     setLoading(false);
@@ -90,20 +88,36 @@ export default function SOPLibrary({ projectId }: Props) {
 
   const handleUpload = async () => {
     if (!title.trim()) { setError("Title is required"); return; }
+    if (!file) { setError("File is required"); return; }
     setUploading(true);
     setError("");
     try {
-      const formData = new FormData();
-      formData.append("title", title.trim());
-      formData.append("category", category);
-      formData.append("description", description.trim());
-      if (file) formData.append("file", file);
-
       const res = await fetch(`/api/sub-ops/companies/${companyId}/sops`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title.trim(),
+          category,
+          description: description.trim() || null,
+          file_path: "__pending_upload__",
+          file_name: file.name,
+          file_size: file.size,
+        }),
       });
       if (res.ok) {
+        const sop = await res.json();
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        const uploadRes = await fetch(`/api/sub-ops/companies/${companyId}/sops/${sop.id}/upload`, {
+          method: "POST",
+          body: uploadData,
+        });
+        if (!uploadRes.ok) {
+          const d = await uploadRes.json().catch(() => ({}));
+          setError(d.error || "SOP created, but file upload failed");
+          setUploading(false);
+          return;
+        }
         setTitle("");
         setDescription("");
         setFile(null);
@@ -125,13 +139,6 @@ export default function SOPLibrary({ projectId }: Props) {
       await fetch(`/api/sub-ops/companies/${companyId}/sops/${id}`, { method: "DELETE" });
       setSelectedSop(null);
       await fetchSops();
-    } catch {}
-  };
-
-  const handleAssignAll = async (id: string) => {
-    try {
-      await fetch(`/api/sub-ops/companies/${companyId}/sops/${id}/assign-all`, { method: "POST" });
-      await fetchDetail(id);
     } catch {}
   };
 
@@ -220,8 +227,9 @@ export default function SOPLibrary({ projectId }: Props) {
                   Acknowledgments ({s.acknowledged_count}/{s.total_foremen})
                 </h3>
                 <button
-                  onClick={() => handleAssignAll(s.id)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-medium transition-colors min-h-[36px]"
+                  disabled
+                  title="Assignment tracking needs a dedicated assignment table before launch."
+                  className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316]/10 text-[#F97316]/60 rounded-lg text-xs font-medium transition-colors min-h-[36px] disabled:cursor-not-allowed"
                 >
                   <Send size={12} /> Assign to All
                 </button>

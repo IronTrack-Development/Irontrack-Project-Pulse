@@ -23,14 +23,10 @@ import {
   Eye,
   Users,
   Shield,
-  HardHat,
   Camera,
-  Send,
-  CheckCircle,
-  AlertTriangle,
-  ArrowRightLeft,
 } from "lucide-react";
 import MobileBottomNav from "./MobileBottomNav";
+import { t } from "@/lib/i18n";
 
 // ─── Group & Tab Definitions ──────────────────────────────────────────────────
 
@@ -47,94 +43,91 @@ interface GroupDef {
   tabs: TabDef[];
 }
 
-const NAV_GROUPS: GroupDef[] = [
+interface TabDefI18n {
+  id: string;
+  labelKey: string;
+  icon: React.ElementType;
+}
+
+interface GroupDefI18n {
+  id: string;
+  labelKey: string;
+  icon: React.ElementType;
+  tabs: TabDefI18n[];
+}
+
+const NAV_GROUPS: GroupDefI18n[] = [
   {
     id: "schedule",
-    label: "Schedule",
+    labelKey: "nav.schedule",
     icon: CalendarDays,
     tabs: [
-      { id: "priority", label: "Priority", icon: Zap },
-      { id: "today", label: "Today", icon: CalendarCheck },
-      { id: "tomorrow", label: "Tomorrow", icon: CalendarPlus },
-      { id: "week1", label: "Week 1", icon: CalendarDays },
-      { id: "week2", label: "Week 2", icon: CalendarDays },
-      { id: "week3", label: "Week 3", icon: CalendarDays },
-      { id: "6week", label: "6-Week", icon: Binoculars },
-      { id: "milestones", label: "Milestones", icon: Flag },
-      { id: "reforecast", label: "Reforecast", icon: GitBranch },
+      { id: "priority", labelKey: "tab.priority", icon: Zap },
+      { id: "today", labelKey: "tab.today", icon: CalendarCheck },
+      { id: "tomorrow", labelKey: "tab.tomorrow", icon: CalendarPlus },
+      { id: "week1", labelKey: "tab.week1", icon: CalendarDays },
+      { id: "week2", labelKey: "tab.week2", icon: CalendarDays },
+      { id: "week3", labelKey: "tab.week3", icon: CalendarDays },
+      { id: "6week", labelKey: "tab.6week", icon: Binoculars },
+      { id: "milestones", labelKey: "tab.milestones", icon: Flag },
+      { id: "reforecast", labelKey: "tab.reforecast", icon: GitBranch },
     ],
   },
   {
     id: "fieldops",
-    label: "Field Ops",
+    labelKey: "nav.fieldOps",
     icon: ClipboardList,
     tabs: [
-      { id: "dailylog", label: "Daily Log", icon: ClipboardList },
-      { id: "inspections", label: "Inspections", icon: ShieldCheck },
-      { id: "field-reports", label: "Reports", icon: Camera },
-      { id: "punch", label: "Punch List", icon: CheckSquare },
-      { id: "reports", label: "Observations", icon: Eye },
+      { id: "dailylog", labelKey: "tab.dailyLog", icon: ClipboardList },
+      { id: "inspections", labelKey: "tab.inspections", icon: ShieldCheck },
+      { id: "field-reports", labelKey: "tab.fieldReports", icon: Camera },
+      { id: "punch", labelKey: "tab.punchList", icon: CheckSquare },
+      { id: "reports", labelKey: "tab.observations", icon: Eye },
     ],
   },
   {
     id: "coordination",
-    label: "Coordination",
+    labelKey: "nav.coordination",
     icon: Handshake,
     tabs: [
-      { id: "coordination", label: "Meetings", icon: Handshake },
-      { id: "action-tracker", label: "Action Items", icon: CheckSquare },
+      { id: "coordination", labelKey: "tab.meetings", icon: Handshake },
+      { id: "action-tracker", labelKey: "tab.actionItems", icon: CheckSquare },
     ],
   },
   {
     id: "documents",
-    label: "Documents",
+    labelKey: "nav.documents",
     icon: FileText,
     tabs: [
-      { id: "submittals", label: "Submittals", icon: FileCheck },
-      { id: "rfis", label: "RFIs", icon: MessageCircleQuestion },
-      { id: "drawings", label: "Drawings", icon: Layers },
+      { id: "submittals", labelKey: "tab.submittals", icon: FileCheck },
+      { id: "rfis", labelKey: "tab.rfis", icon: MessageCircleQuestion },
+      { id: "drawings", labelKey: "tab.drawings", icon: Layers },
     ],
   },
   {
     id: "money",
-    label: "Money",
+    labelKey: "nav.money",
     icon: Receipt,
     tabs: [
-      { id: "tm", label: "T&M", icon: Receipt },
+      { id: "tm", labelKey: "tab.tm", icon: Receipt },
     ],
   },
   {
     id: "safety",
-    label: "Safety",
+    labelKey: "nav.safety",
     icon: Shield,
     tabs: [
-      { id: "safety", label: "Toolbox Talks", icon: Shield },
+      { id: "safety", labelKey: "tab.toolboxTalks", icon: Shield },
     ],
   },
   {
     id: "project",
-    label: "Project",
+    labelKey: "nav.project",
     icon: BarChart3,
     tabs: [
-      { id: "progress", label: "Progress", icon: TrendingUp },
-      { id: "directory", label: "Directory", icon: Users },
-      { id: "subs", label: "Subs", icon: Users },
-    ],
-  },
-  {
-    id: "subops",
-    label: "Sub Ops",
-    icon: HardHat,
-    tabs: [
-      { id: "sub-dashboard", label: "Dashboard", icon: BarChart3 },
-      { id: "sub-dispatch", label: "Dispatch", icon: Send },
-      { id: "sub-foremen", label: "Foremen", icon: Users },
-      { id: "sub-checkins", label: "Check-Ins", icon: CheckCircle },
-      { id: "sub-production", label: "Production", icon: TrendingUp },
-      { id: "sub-blockers", label: "Blockers", icon: AlertTriangle },
-      { id: "sub-handoffs", label: "Handoffs", icon: ArrowRightLeft },
-      { id: "sub-crew", label: "Crew", icon: HardHat },
-      { id: "sub-sops", label: "SOPs", icon: FileText },
+      { id: "progress", labelKey: "tab.progress", icon: TrendingUp },
+      { id: "directory", labelKey: "tab.directory", icon: Users },
+      { id: "subs", labelKey: "tab.subs", icon: Users },
     ],
   },
 ];
@@ -171,7 +164,6 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
     money: "tm",
     safety: "safety",
     project: "progress",
-    subops: "sub-dashboard",
   });
 
   // Keep activeGroupId in sync when parent changes activeTab externally
@@ -205,7 +197,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
       <div className="hidden md:block">
         {/* Row 1: Group pills */}
         <div className="flex items-center gap-2 pb-2 border-b border-[var(--border-primary)]">
-          {NAV_GROUPS.map(({ id, label, icon: Icon }) => {
+          {NAV_GROUPS.map(({ id, labelKey, icon: Icon }) => {
             const isActive = activeGroupId === id;
             return (
               <button
@@ -218,7 +210,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 }}
               >
                 <Icon size={13} />
-                {label}
+                {t(labelKey)}
               </button>
             );
           })}
@@ -226,7 +218,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
 
         {/* Row 2: Tab row for active group */}
         <div className="flex gap-0 overflow-x-auto scrollbar-none">
-          {activeGroup.tabs.map(({ id: tabId, label, icon: Icon }) => {
+          {activeGroup.tabs.map(({ id: tabId, labelKey, icon: Icon }) => {
             const isActive = activeTab === tabId;
             return (
               <button
@@ -242,7 +234,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 }}
               >
                 <Icon size={14} />
-                {label}
+                {t(labelKey)}
               </button>
             );
           })}
@@ -253,7 +245,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
       <div className="md:hidden">
         {/* Group selector pills */}
         <div className="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none">
-          {NAV_GROUPS.map(({ id, label, icon: Icon }) => {
+          {NAV_GROUPS.map(({ id, labelKey, icon: Icon }) => {
             const isActive = activeGroupId === id;
             return (
               <button
@@ -266,7 +258,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                 }}
               >
                 <Icon size={13} />
-                {label}
+                {t(labelKey)}
               </button>
             );
           })}
@@ -275,7 +267,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
         {/* Sub-tab strip for active group (skip if only 1 tab) */}
         {activeGroup.tabs.length > 1 && (
           <div className="flex gap-0 overflow-x-auto scrollbar-none -mx-1 px-1 border-b border-[var(--border-primary)]">
-            {activeGroup.tabs.map(({ id: tabId, label, icon: Icon }) => {
+            {activeGroup.tabs.map(({ id: tabId, labelKey, icon: Icon }) => {
               const isActive = activeTab === tabId;
               return (
                 <button
@@ -291,7 +283,7 @@ export default function ProjectNav({ activeTab, onTabChange }: ProjectNavProps) 
                   }}
                 >
                   <Icon size={14} />
-                  {label}
+                  {t(labelKey)}
                 </button>
               );
             })}

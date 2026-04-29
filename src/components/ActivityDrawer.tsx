@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import type { ParsedActivity, DailyRisk, ReadyCheck } from "@/types";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
+import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 function fmt(d?: string) {
   if (!d) return "—";
@@ -37,10 +39,10 @@ function statusStyle(status: string) {
 
 function statusLabel(status: string) {
   switch (status) {
-    case "in_progress": return "In Progress";
-    case "complete": return "Complete";
-    case "late": return "Overdue";
-    case "not_started": return "Not Started";
+    case "in_progress": return t('status.inProgress');
+    case "complete": return t('status.complete');
+    case "late": return t('status.overdue');
+    case "not_started": return t('status.notStarted');
     default: return status;
   }
 }
@@ -73,6 +75,11 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
   const [rcLoading, setRcLoading] = useState(true);
   const [showReadyCheckModal, setShowReadyCheckModal] = useState(false);
   const [isFollowUp, setIsFollowUp] = useState(false);
+  const { getActivityName, isSpanish } = useActivityTranslations([
+    activity.activity_name,
+    ...predecessors.map((pred) => pred.activity_name),
+    ...successors.map((succ) => succ.activity_name),
+  ]);
 
   useEffect(() => {
     const fetchRisks = async () => {
@@ -162,7 +169,10 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {statusLabel(activity.status)}
               </span>
             </div>
-            <h2 className="font-bold text-[color:var(--text-primary)] text-base leading-tight">{activity.activity_name}</h2>
+            <h2 className="font-bold text-[color:var(--text-primary)] text-base leading-tight">{getActivityName(activity.activity_name)}</h2>
+            {isSpanish && getActivityName(activity.activity_name) !== activity.activity_name && (
+              <p className="mt-1 text-xs text-[color:var(--text-muted)] leading-tight">{activity.activity_name}</p>
+            )}
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors shrink-0">
             <X size={18} />
@@ -173,13 +183,13 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Trade + Area */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
-              <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">Trade</div>
-              <div className="text-sm font-semibold text-[#F97316]">{activity.trade || "General"}</div>
+              <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('drawer.trade')}</div>
+              <div className="text-sm font-semibold text-[#F97316]">{activity.trade || t('drawer.general')}</div>
             </div>
             {activity.area && (
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
                 <div className="flex items-center gap-1 text-[10px] text-gray-600 uppercase tracking-wide mb-1">
-                  <MapPin size={9} /> Area
+                  <MapPin size={9} /> {t('drawer.area')}
                 </div>
                 <div className="text-sm font-semibold text-[color:var(--text-primary)]">{activity.area}</div>
               </div>
@@ -191,13 +201,13 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             <div>
               <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
                 <MapPin size={12} className="inline mr-1.5" />
-                Location
+                {t('drawer.location')}
               </div>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 space-y-2">
                 {activity.normalized_building && (
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
-                      <Building2 size={12} /> Building
+                      <Building2 size={12} /> {t('drawer.building')}
                     </span>
                     <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_building)}</span>
                   </div>
@@ -205,7 +215,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {activity.normalized_phase && (
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
-                      <Layers size={12} /> Phase
+                      <Layers size={12} /> {t('drawer.phase')}
                     </span>
                     <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_phase)}</span>
                   </div>
@@ -213,7 +223,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {activity.normalized_area && (
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
-                      <MapPin size={12} /> Area
+                      <MapPin size={12} /> {t('drawer.area')}
                     </span>
                     <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_area)}</span>
                   </div>
@@ -221,7 +231,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 {activity.normalized_work_type && (
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
-                      <Tag size={12} /> Work Type
+                      <Tag size={12} /> {t('drawer.workType')}
                     </span>
                     <span className="font-semibold text-[color:var(--text-primary)]">{fmtNormalized(activity.normalized_work_type)}</span>
                   </div>
@@ -235,7 +245,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             <div>
               <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                 <Users size={12} className="inline mr-1.5" />
-                Resources
+                {t('drawer.resources')}
               </div>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2">
                 <div className="text-sm text-[color:var(--text-secondary)]">{activity.resource_names}</div>
@@ -248,7 +258,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             <div>
               <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                 <FileText size={12} className="inline mr-1.5" />
-                Notes
+                {t('drawer.notes')}
               </div>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2">
                 <div className="text-xs text-[color:var(--text-secondary)] whitespace-pre-wrap leading-relaxed">{activity.notes}</div>
@@ -258,13 +268,13 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
 
           {/* Dates */}
           <div>
-            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">Schedule</div>
+            <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">{t('drawer.schedule')}</div>
             <div className="space-y-2">
               {[
-                { label: "Planned Start", value: activity.start_date, icon: Calendar },
-                { label: "Planned Finish", value: activity.finish_date, icon: Calendar },
-                { label: "Actual Start", value: activity.actual_start, icon: Calendar },
-                { label: "Actual Finish", value: activity.actual_finish, icon: Calendar },
+                { label: t('drawer.plannedStart'), value: activity.start_date, icon: Calendar },
+                { label: t('drawer.plannedFinish'), value: activity.finish_date, icon: Calendar },
+                { label: t('drawer.actualStart'), value: activity.actual_start, icon: Calendar },
+                { label: t('drawer.actualFinish'), value: activity.actual_finish, icon: Calendar },
               ].map(({ label, value, icon: Icon }) => (
                 <div key={label} className="flex items-center justify-between text-sm">
                   <span className="flex items-center gap-1.5 text-[color:var(--text-muted)]">
@@ -294,15 +304,15 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div className="grid grid-cols-3 gap-2">
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-[color:var(--text-primary)]">{activity.original_duration ?? "—"}</div>
-              <div className="text-[10px] text-[color:var(--text-muted)]">Orig Duration</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">{t('drawer.origDuration')}</div>
             </div>
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-[color:var(--text-primary)]">{activity.remaining_duration ?? "—"}</div>
-              <div className="text-[10px] text-[color:var(--text-muted)]">Remaining</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">{t('drawer.remaining')}</div>
             </div>
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <div className="text-lg font-bold text-[#3B82F6]">{activity.percent_complete}%</div>
-              <div className="text-[10px] text-[color:var(--text-muted)]">Complete</div>
+              <div className="text-[10px] text-[color:var(--text-muted)]">{t('drawer.complete')}</div>
             </div>
           </div>
 
@@ -340,7 +350,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {relLoading ? (
             <div className="flex items-center gap-2 text-xs text-gray-600">
               <div className="w-3 h-3 border border-gray-600 border-t-[#F97316] rounded-full animate-spin" />
-              Loading relationships…
+              {t('drawer.loadingRelationships')}
             </div>
           ) : (
             <div className="space-y-4">
@@ -352,7 +362,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 </span>
                 <span className="text-gray-700">→</span>
                 <span className="text-[#F97316] font-semibold truncate max-w-[140px]">
-                  {activity.activity_name}
+                  {getActivityName(activity.activity_name)}
                 </span>
                 <span className="text-gray-700">→</span>
                 <span className="text-[color:var(--text-muted)]">
@@ -364,10 +374,10 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                   <ArrowLeft size={12} />
-                  Predecessors ({predecessors.length})
+                  {t('drawer.predecessors')} ({predecessors.length})
                 </div>
                 {predecessors.length === 0 ? (
-                  <p className="text-xs text-gray-700 italic">No predecessors</p>
+                  <p className="text-xs text-gray-700 italic">{t('drawer.noPredecessors')}</p>
                 ) : (
                   <div className="space-y-2">
                     {predecessors.map((pred) => (
@@ -379,7 +389,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
                           <span className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight line-clamp-2">
-                            {pred.activity_name}
+                            {getActivityName(pred.activity_name)}
                           </span>
                           <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(pred.status)}`}>
                             {statusLabel(pred.status)}
@@ -421,10 +431,10 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-2">
                   <ArrowRight size={12} />
-                  Successors ({successors.length})
+                  {t('drawer.successors')} ({successors.length})
                 </div>
                 {successors.length === 0 ? (
-                  <p className="text-xs text-gray-700 italic">No successors</p>
+                  <p className="text-xs text-gray-700 italic">{t('drawer.noSuccessors')}</p>
                 ) : (
                   <div className="space-y-2">
                     {successors.map((succ) => (
@@ -436,7 +446,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                       >
                         <div className="flex items-start justify-between gap-2 mb-1.5">
                           <span className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight line-clamp-2">
-                            {succ.activity_name}
+                            {getActivityName(succ.activity_name)}
                           </span>
                           <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border font-semibold ${statusStyle(succ.status)}`}>
                             {statusLabel(succ.status)}
@@ -480,7 +490,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div>
             <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
               <ClipboardList size={12} className="inline mr-1.5 text-[#F97316]" />
-              Observation
+              {t('drawer.observation')}
             </div>
             <button
               onClick={() => {
@@ -490,7 +500,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
               className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
             >
               <ClipboardList size={14} className="text-[#F97316]" />
-              New Observation
+              {t('action.newObservation')}
             </button>
           </div>
 
@@ -498,12 +508,12 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div>
             <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
               <Send size={12} className="inline mr-1.5 text-[#F97316]" />
-              Ready Check
+              {t('drawer.readyCheck')}
             </div>
             {rcLoading ? (
               <div className="flex items-center gap-2 text-xs text-gray-600">
                 <RefreshCw size={12} className="animate-spin" />
-                Loading…
+                {t('drawer.loading')}
               </div>
             ) : readyCheck ? (
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3 space-y-3">
@@ -511,7 +521,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                   <div>
                     <ReadyCheckBadge status={readyCheck.status} followUpCount={readyCheck.follow_up_count} />
                     <div className="text-xs text-[color:var(--text-muted)] mt-1.5">
-                      Sent to {readyCheck.contact_name}
+                      {t('drawer.sentTo')} {readyCheck.contact_name}
                       {readyCheck.contact_company ? ` · ${readyCheck.contact_company}` : ""}
                     </div>
                     {readyCheck.sent_at && (
@@ -532,7 +542,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                     className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg py-2.5 text-xs font-semibold transition-colors"
                   >
                     <RefreshCw size={12} />
-                    Send Follow-Up
+                    {t('action.sendFollowUp')}
                   </button>
                 )}
               </div>
@@ -542,7 +552,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
               >
                 <Send size={14} className="text-[#F97316]" />
-                Send Ready Check
+                {t('action.sendReadyCheck')}
               </button>
             )}
           </div>
@@ -552,7 +562,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             <div>
               <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
                 <AlertTriangle size={12} className="inline mr-1.5 text-[#EF4444]" />
-                Flagged Issues ({risks.length})
+                {t('drawer.flaggedIssues')} ({risks.length})
               </div>
               <div className="space-y-2">
                 {risks.map((risk) => (

@@ -5,11 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 function SubLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/sub/dashboard";
+  const showLocalPreview = process.env.NODE_ENV !== "production";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +58,7 @@ function SubLoginForm() {
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to home
+          {t('action.backToHome')}
         </Link>
 
         {/* Logo */}
@@ -79,10 +81,10 @@ function SubLoginForm() {
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                Subcontractor
+                {t('auth.subcontractor')}
               </h1>
               <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                Sign in to your sub account
+                {t('auth.signInToSub')}
               </p>
             </div>
           </div>
@@ -96,7 +98,7 @@ function SubLoginForm() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Email
+                {t('auth.email')}
               </label>
               <input
                 id="email"
@@ -116,7 +118,7 @@ function SubLoginForm() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <input
@@ -153,25 +155,34 @@ function SubLoginForm() {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Signing in...
+                  {t('action.signingIn')}
                 </>
               ) : (
-                "Sign in"
+                t('action.signIn')
               )}
             </button>
           </form>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
+            {showLocalPreview && (
+              <Link
+                href="/sub/preview"
+                className="mb-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold transition-colors"
+                style={{ background: "rgba(59,130,246,0.1)", color: "#2563EB" }}
+              >
+                Preview Sub Portal without login
+              </Link>
+            )}
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Don't have an account?{" "}
+              {t('auth.dontHaveAccount')}{" "}
               <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
-                Sign up
+                {t('action.signUp')}
               </Link>
             </p>
             <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              General Contractor?{" "}
+              {t('auth.gcQuestion')}{" "}
               <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                Sign in here
+                {t('auth.signInHere')}
               </Link>
             </p>
           </div>

@@ -16,6 +16,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
   title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
   description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader

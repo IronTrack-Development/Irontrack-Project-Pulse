@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const { searchParams } = new URL(req.url);
   const limit = parseInt(searchParams.get("limit") || "100");
   const offset = parseInt(searchParams.get("offset") || "0");
@@ -45,7 +49,10 @@ export async function POST(
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   if (!body.name) {
@@ -62,3 +69,5 @@ export async function POST(
 
   return NextResponse.json(data, { status: 201 });
 }
+
+

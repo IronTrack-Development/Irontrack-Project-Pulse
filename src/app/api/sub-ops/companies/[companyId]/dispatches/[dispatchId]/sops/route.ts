@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string; dispatchId: string }> }
 ) {
-  const { dispatchId } = await params;
-  const supabase = getServiceClient();
+  const { companyId, dispatchId } = await params;
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { data, error } = await supabase
     .from("sub_dispatch_sops")
@@ -24,8 +27,11 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ companyId: string; dispatchId: string }> }
 ) {
-  const { dispatchId } = await params;
-  const supabase = getServiceClient();
+  const { companyId, dispatchId } = await params;
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   if (!body.sop_id) {

@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const today = new Date().toISOString().split("T")[0];
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
@@ -130,3 +134,7 @@ export async function GET(
     sops_low_acknowledgment: lowAckSops,
   });
 }
+
+
+
+

@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function POST(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string; dispatchId: string }> }
 ) {
   const { companyId, dispatchId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { data, error } = await supabase
     .from("sub_dispatches")

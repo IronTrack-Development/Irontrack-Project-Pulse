@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string; handoffId: string }> }
 ) {
-  const { handoffId } = await params;
-  const supabase = getServiceClient();
+  const { companyId, handoffId } = await params;
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { data, error } = await supabase
     .from("sub_handoff_photos")
@@ -24,7 +27,10 @@ export async function POST(
   { params }: { params: Promise<{ companyId: string; handoffId: string }> }
 ) {
   const { companyId, handoffId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const formData = await req.formData();
   const file = formData.get("file") as File | null;

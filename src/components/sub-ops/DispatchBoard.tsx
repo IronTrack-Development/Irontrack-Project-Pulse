@@ -25,7 +25,8 @@ interface Dispatch {
   id: string;
   foreman_id: string;
   foreman_name: string;
-  date: string;
+  date?: string;
+  dispatch_date?: string;
   project_name: string;
   project_location: string | null;
   scope_of_work: string;
@@ -100,21 +101,21 @@ export default function DispatchBoard({ projectId }: Props) {
     setLoading(true);
     try {
       const [dRes, fRes, sRes] = await Promise.all([
-        fetch(`/api/sub-ops/companies/${companyId}/dispatches?date=${filterDate}&foreman=${filterForeman}&status=${filterStatus}`),
+        fetch(`/api/sub-ops/companies/${companyId}/dispatches?date=${filterDate}&foreman_id=${filterForeman}&status=${filterStatus}`),
         fetch(`/api/sub-ops/companies/${companyId}/foremen`),
         fetch(`/api/sub-ops/companies/${companyId}/sops`),
       ]);
       if (dRes.ok) {
         const d = await dRes.json();
-        setDispatches(Array.isArray(d) ? d : d.dispatches ?? []);
+        setDispatches(Array.isArray(d) ? d : d.data ?? d.dispatches ?? []);
       }
       if (fRes.ok) {
         const f = await fRes.json();
-        setForemen(Array.isArray(f) ? f : f.foremen ?? []);
+        setForemen(Array.isArray(f) ? f : f.data ?? f.foremen ?? []);
       }
       if (sRes.ok) {
         const s = await sRes.json();
-        setSops(Array.isArray(s) ? s : s.sops ?? []);
+        setSops(Array.isArray(s) ? s : s.data ?? s.sops ?? []);
       }
     } catch {}
     setLoading(false);
@@ -134,6 +135,7 @@ export default function DispatchBoard({ projectId }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          dispatch_date: form.date,
           expected_crew_size: form.expected_crew_size ? Number(form.expected_crew_size) : null,
           expected_hours: form.expected_hours ? Number(form.expected_hours) : null,
         }),
@@ -179,21 +181,37 @@ export default function DispatchBoard({ projectId }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Dispatch Board</h2>
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Morning huddle — send daily work assignments</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
+            Turn the morning huddle into clear direction before crews spread across jobs.
+          </p>
         </div>
         <button
           onClick={() => setView(view === "list" ? "create" : "list")}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
-          {view === "list" ? <><Plus size={14} /> Create Dispatch</> : <><X size={14} /> Cancel</>}
+          {view === "list" ? <><Plus size={14} /> Create Plan</> : <><X size={14} /> Cancel</>}
         </button>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-4">
+        {[
+          ["Material", "What must be onsite before lunch?"],
+          ["Schedule", "What area or activity matters today?"],
+          ["Manpower", "Who is going, and how many hours?"],
+          ["Hurdles", "What could stop the crew?"],
+        ].map(([title, text]) => (
+          <div key={title} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-[#93C5FD]">{title}</p>
+            <p className="mt-2 text-xs leading-5 text-[color:var(--text-secondary)]">{text}</p>
+          </div>
+        ))}
       </div>
 
       {view === "create" ? (
         /* ── Create Dispatch Form ── */
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
           <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Send size={14} className="text-[#F97316]" /> New Dispatch
+            <Send size={14} className="text-[#F97316]" /> New Morning Plan
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -248,12 +266,12 @@ export default function DispatchBoard({ projectId }: Props) {
 
           <div>
             <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
-              Scope of Work <span className="text-red-400">*</span>
+              Schedule / Scope <span className="text-red-400">*</span>
             </label>
             <textarea
               value={form.scope_of_work}
               onChange={(e) => setForm({ ...form, scope_of_work: e.target.value })}
-              placeholder="What are they doing today?"
+              placeholder="What area, sequence, or activity are they owning?"
               rows={3}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
@@ -441,7 +459,7 @@ export default function DispatchBoard({ projectId }: Props) {
                         <p className="text-xs text-gray-600 truncate mt-0.5">{d.scope_of_work}</p>
                       </div>
                       <div className="flex items-center gap-2 ml-3 flex-shrink-0">
-                        <span className="text-xs text-[color:var(--text-muted)]">{formatDate(d.date)}</span>
+                        <span className="text-xs text-[color:var(--text-muted)]">{formatDate(d.dispatch_date || d.date || "")}</span>
                         {isExpanded ? <ChevronUp size={14} className="text-[color:var(--text-muted)]" /> : <ChevronDown size={14} className="text-[color:var(--text-muted)]" />}
                       </div>
                     </div>

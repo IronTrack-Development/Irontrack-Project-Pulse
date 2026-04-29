@@ -25,12 +25,13 @@ interface Blocker {
 
 const CATEGORY_STYLES: Record<string, { cls: string }> = {
   material: { cls: "bg-blue-500/20 text-blue-300" },
-  labor: { cls: "bg-purple-500/20 text-purple-300" },
+  manpower: { cls: "bg-purple-500/20 text-purple-300" },
   equipment: { cls: "bg-yellow-500/20 text-yellow-300" },
   weather: { cls: "bg-cyan-500/20 text-cyan-300" },
-  design: { cls: "bg-pink-500/20 text-pink-300" },
+  drawing: { cls: "bg-pink-500/20 text-pink-300" },
+  inspection: { cls: "bg-green-500/20 text-green-300" },
+  gc_delay: { cls: "bg-orange-500/20 text-orange-300" },
   access: { cls: "bg-indigo-500/20 text-indigo-300" },
-  safety: { cls: "bg-red-500/20 text-red-300" },
   other: { cls: "bg-gray-700 text-[color:var(--text-secondary)]" },
 };
 
@@ -51,6 +52,7 @@ export default function BlockersList({ projectId }: Props) {
   // Quick add form
   const [showAdd, setShowAdd] = useState(false);
   const [addCategory, setAddCategory] = useState("material");
+  const [addForemanId, setAddForemanId] = useState("");
   const [addDescription, setAddDescription] = useState("");
   const [addImpact, setAddImpact] = useState("");
   const [adding, setAdding] = useState(false);
@@ -69,7 +71,7 @@ export default function BlockersList({ projectId }: Props) {
       const params = new URLSearchParams({
         status: filterStatus,
         ...(filterCategory && { category: filterCategory }),
-        ...(filterForeman && { foreman: filterForeman }),
+        ...(filterForeman && { foreman_id: filterForeman }),
       });
       const [bRes, fRes] = await Promise.all([
         fetch(`/api/sub-ops/companies/${companyId}/blockers?${params}`),
@@ -77,11 +79,13 @@ export default function BlockersList({ projectId }: Props) {
       ]);
       if (bRes.ok) {
         const d = await bRes.json();
-        setBlockers(Array.isArray(d) ? d : d.blockers ?? []);
+        setBlockers(Array.isArray(d) ? d : d.data ?? d.blockers ?? []);
       }
       if (fRes.ok) {
         const f = await fRes.json();
-        setForemen(Array.isArray(f) ? f : f.foremen ?? []);
+        const nextForemen = Array.isArray(f) ? f : f.data ?? f.foremen ?? [];
+        setForemen(nextForemen);
+        setAddForemanId((current) => current || nextForemen[0]?.id || "");
       }
     } catch {}
     setLoading(false);
@@ -91,6 +95,7 @@ export default function BlockersList({ projectId }: Props) {
 
   const handleAdd = async () => {
     if (!addDescription.trim()) { setError("Description is required"); return; }
+    if (!addForemanId) { setError("Choose a foreman first"); return; }
     setAdding(true);
     setError("");
     try {
@@ -98,6 +103,8 @@ export default function BlockersList({ projectId }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          foreman_id: addForemanId,
+          blocker_date: new Date().toISOString().split("T")[0],
           category: addCategory,
           description: addDescription.trim(),
           impact: addImpact.trim() || null,
@@ -120,10 +127,10 @@ export default function BlockersList({ projectId }: Props) {
 
   const handleResolve = async (id: string) => {
     try {
-      await fetch(`/api/sub-ops/companies/${companyId}/blockers/${id}/resolve`, {
-        method: "POST",
+      await fetch(`/api/sub-ops/companies/${companyId}/blockers/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resolution_notes: resolveNotes.trim() || null }),
+        body: JSON.stringify({ status: "resolved", resolution_notes: resolveNotes.trim() || null }),
       });
       setResolvingId(null);
       setResolveNotes("");
@@ -166,13 +173,29 @@ export default function BlockersList({ projectId }: Props) {
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
               >
                 <option value="material">Material</option>
-                <option value="labor">Labor</option>
+                <option value="manpower">Manpower</option>
                 <option value="equipment">Equipment</option>
                 <option value="weather">Weather</option>
-                <option value="design">Design/RFI</option>
+                <option value="drawing">Drawing/RFI</option>
+                <option value="inspection">Inspection</option>
+                <option value="gc_delay">GC Delay</option>
                 <option value="access">Site Access</option>
-                <option value="safety">Safety</option>
                 <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">
+                Foreman <span className="text-red-400">*</span>
+              </label>
+              <select
+                value={addForemanId}
+                onChange={(e) => setAddForemanId(e.target.value)}
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+              >
+                {foremen.length === 0 && <option value="">Add a foreman first</option>}
+                {foremen.map((foreman) => (
+                  <option key={foreman.id} value={foreman.id}>{foreman.name}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -230,12 +253,13 @@ export default function BlockersList({ projectId }: Props) {
         >
           <option value="">All Categories</option>
           <option value="material">Material</option>
-          <option value="labor">Labor</option>
+          <option value="manpower">Manpower</option>
           <option value="equipment">Equipment</option>
           <option value="weather">Weather</option>
-          <option value="design">Design/RFI</option>
+          <option value="drawing">Drawing/RFI</option>
+          <option value="inspection">Inspection</option>
+          <option value="gc_delay">GC Delay</option>
           <option value="access">Site Access</option>
-          <option value="safety">Safety</option>
           <option value="other">Other</option>
         </select>
         <select

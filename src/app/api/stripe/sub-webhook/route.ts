@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getServiceClient } from "@/lib/supabase";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not set");
+  }
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-03-25.dahlia",
+  });
+}
 
 // POST /api/stripe/sub-webhook
 // Handles Stripe webhook events for sub subscriptions.
@@ -17,15 +21,32 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!signature) {
     return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
+  }
+
+  let stripe: Stripe | null = null;
+  if (webhookSecret) {
+    try {
+      stripe = getStripe();
+    } catch (err) {
+      console.error("[stripe-webhook] configuration error:", err);
+      return NextResponse.json(
+        { error: "Stripe is not configured" },
+        { status: 500 }
+      );
+    }
   }
 
   let event: Stripe.Event;
 
   try {
     if (webhookSecret) {
+      if (!stripe) {
+        return NextResponse.json({ error: "Stripe is not configured" }, { status: 500 });
+      }
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } else {
       // Dev fallback: parse without verification (not safe for production)
@@ -49,6 +70,7 @@ export async function POST(req: NextRequest) {
         // Retrieve the subscription to get period end (in v22+, period end is on items)
         let subscriptionEndsAt: string | null = null;
         if (session.subscription) {
+          stripe ??= getStripe();
           const subscription = await stripe.subscriptions.retrieve(
             session.subscription as string
           );

@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const { searchParams } = new URL(req.url);
   const limit = parseInt(searchParams.get("limit") || "50");
   const offset = parseInt(searchParams.get("offset") || "0");
@@ -14,6 +18,7 @@ export async function GET(
   const category = searchParams.get("category");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
+  const foremanId = searchParams.get("foreman_id") || searchParams.get("foreman");
 
   let query = supabase
     .from("sub_blockers")
@@ -25,6 +30,7 @@ export async function GET(
   if (category) query = query.eq("category", category);
   if (from) query = query.gte("blocker_date", from);
   if (to) query = query.lte("blocker_date", to);
+  if (foremanId) query = query.eq("foreman_id", foremanId);
 
   const { data, error, count } = await query.range(offset, offset + limit - 1);
 
@@ -47,7 +53,10 @@ export async function POST(
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   if (!body.foreman_id || !body.description || !body.blocker_date) {
@@ -67,3 +76,7 @@ export async function POST(
 
   return NextResponse.json(data, { status: 201 });
 }
+
+
+
+

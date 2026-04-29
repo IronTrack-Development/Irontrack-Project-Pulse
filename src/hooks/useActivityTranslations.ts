@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/components/I18nProvider";
 
 /**
@@ -14,18 +14,16 @@ export function useActivityTranslations(activityNames: string[]) {
   const [loading, setLoading] = useState(false);
   const fetchedRef = useRef<string>("");
   const isSpanish = useLanguage() === "es";
+  const uniqueNames = [...new Set((activityNames || []).filter(Boolean))];
+  const requestKey = uniqueNames.slice().sort().join("|");
 
   useEffect(() => {
     // Skip if not Spanish or no activities
-    if (!isSpanish || !activityNames || activityNames.length === 0) return;
-
-    const uniqueNames = [...new Set(activityNames.filter(Boolean))];
-    if (uniqueNames.length === 0) return;
+    if (!isSpanish || uniqueNames.length === 0) return;
 
     // Skip if we already fetched this exact set
-    const key = uniqueNames.slice().sort().join("|");
-    if (key === fetchedRef.current) return;
-    fetchedRef.current = key;
+    if (requestKey === fetchedRef.current) return;
+    fetchedRef.current = requestKey;
 
     // Fetch translations without blocking render
     setLoading(true);
@@ -47,7 +45,12 @@ export function useActivityTranslations(activityNames: string[]) {
         // Silent fail — show English
       })
       .finally(() => setLoading(false));
-  }, [isSpanish, activityNames?.length]);
+  }, [isSpanish, requestKey]);
 
-  return { translations, loading, isSpanish };
+  const getActivityName = (name: string) => {
+    if (!isSpanish) return name;
+    return translations[name] || name;
+  };
+
+  return { translations, loading, isSpanish, getActivityName };
 }

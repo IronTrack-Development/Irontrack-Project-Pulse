@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase-server";
 
 /**
  * GET /api/setup - Check if database tables exist
  * POST /api/setup - Run database migration (requires tables to be created manually first)
  */
 export async function GET() {
+  const authClient = await createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await authClient.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const supabase = getServiceClient();
 
   const tableChecks = await Promise.all([

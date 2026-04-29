@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ companyId: string; blockerId: string }> }
 ) {
   const { companyId, blockerId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const formData = await req.formData();
   const file = formData.get("file") as File | null;

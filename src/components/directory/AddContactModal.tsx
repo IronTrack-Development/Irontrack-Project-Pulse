@@ -65,7 +65,7 @@ export default function AddContactModal({
     setSearching(true);
     try {
       const res = await fetch(
-        `/api/company-contacts/search?q=${encodeURIComponent(q)}&limit=10`
+        `/api/company-contacts/search?project_id=${projectId}&q=${encodeURIComponent(q)}&limit=10`
       );
       if (res.ok) {
         const data: CompanyContact[] = await res.json();

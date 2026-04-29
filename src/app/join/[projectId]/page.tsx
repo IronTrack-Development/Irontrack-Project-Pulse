@@ -351,7 +351,7 @@ function WaitingScreen({
     setChecking(true);
     try {
       const res = await fetch(
-        `/api/join/${projectId}/status?sub_id=${subId}`
+        `/api/join/${projectId}/status?sub_id=${subId}&token=${encodeURIComponent(token)}`
       );
       if (!res.ok) return;
       const data = await res.json();
@@ -512,7 +512,7 @@ export default function JoinProjectPage() {
         // Session is valid — try to go straight to schedule view
         try {
           const statusRes = await fetch(
-            `/api/join/${projectId}/status?sub_id=${existing.sub_id}`
+            `/api/join/${projectId}/status?sub_id=${existing.sub_id}&token=${encodeURIComponent(existing.token)}`
           );
           if (statusRes.ok) {
             const statusData = await statusRes.json();

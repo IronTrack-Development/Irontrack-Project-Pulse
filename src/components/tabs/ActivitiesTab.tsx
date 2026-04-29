@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Search, SlidersHorizontal, RefreshCw, ChevronUp, ChevronDown, Building2 } from "lucide-react";
 import type { ParsedActivity } from "@/types";
 import ActivityDrawer from "@/components/ActivityDrawer";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 function statusStyle(status: string) {
   switch (status) {
@@ -52,6 +53,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
   const [trades, setTrades] = useState<string[]>([]);
   const [buildings, setBuildings] = useState<string[]>([]);
   const [phases, setPhases] = useState<string[]>([]);
+  const { getActivityName } = useActivityTranslations(activities.map((activity) => activity.activity_name));
 
   const fetchData = async () => {
     setLoading(true);
@@ -235,7 +237,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                   >
                     <td className="px-4 py-3 text-xs text-[color:var(--text-muted)] font-mono">{a.activity_id || "—"}</td>
                     <td className="px-4 py-3">
-                      <div className="font-medium text-[color:var(--text-primary)] max-w-xs truncate">{a.activity_name}</div>
+                      <div className="font-medium text-[color:var(--text-primary)] max-w-xs truncate">{getActivityName(a.activity_name)}</div>
                       {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">MILESTONE</span>}
                     </td>
                     {/* Building column — only rendered when hierarchy data exists */}

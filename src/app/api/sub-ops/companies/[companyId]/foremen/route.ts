@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const { searchParams } = new URL(req.url);
   const limit = parseInt(searchParams.get("limit") || "50");
   const offset = parseInt(searchParams.get("offset") || "0");
@@ -20,7 +24,12 @@ export async function GET(
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  return NextResponse.json({ data, total: count });
+  const foremen = (data || []).map((foreman: Record<string, unknown>) => ({
+    ...foreman,
+    name: (foreman.name as string | undefined) || "",
+  }));
+
+  return NextResponse.json({ data: foremen, total: count });
 }
 
 export async function POST(
@@ -28,7 +37,10 @@ export async function POST(
   { params }: { params: Promise<{ companyId: string }> }
 ) {
   const { companyId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   if (!body.name) {
@@ -37,7 +49,10 @@ export async function POST(
 
   const { data, error } = await supabase
     .from("sub_foremen")
-    .insert({ ...body, company_id: companyId })
+    .insert({
+      ...body,
+      company_id: companyId,
+    })
     .select()
     .single();
 
@@ -45,3 +60,5 @@ export async function POST(
 
   return NextResponse.json(data, { status: 201 });
 }
+
+

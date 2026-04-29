@@ -36,15 +36,6 @@ const PunchListTab = dynamic(() => import("@/components/tabs/PunchListTab"), { s
 const SafetyTab = dynamic(() => import("@/components/tabs/SafetyTab"), { ssr: false });
 const CoordinationTab = dynamic(() => import("@/components/tabs/CoordinationTab"), { ssr: false });
 const FieldReportsTab = dynamic(() => import("@/components/tabs/FieldReportsTab"), { ssr: false });
-const SubDashboardTab = dynamic(() => import("@/components/tabs/SubDashboardTab"), { ssr: false });
-const SubDispatchTab = dynamic(() => import("@/components/tabs/SubDispatchTab"), { ssr: false });
-const SubForemenTab = dynamic(() => import("@/components/tabs/SubForemenTab"), { ssr: false });
-const SubCheckinsTab = dynamic(() => import("@/components/tabs/SubCheckinsTab"), { ssr: false });
-const SubProductionTab = dynamic(() => import("@/components/tabs/SubProductionTab"), { ssr: false });
-const SubBlockersTab = dynamic(() => import("@/components/tabs/SubBlockersTab"), { ssr: false });
-const SubSOPsTab = dynamic(() => import("@/components/tabs/SubSOPsTab"), { ssr: false });
-const SubHandoffsTab = dynamic(() => import("@/components/tabs/SubHandoffsTab"), { ssr: false });
-const SubCrewTab = dynamic(() => import("@/components/tabs/SubCrewTab"), { ssr: false });
 
 // ---------------------------------------------------------------------------
 // TabLoader — shown while a lazy-loaded tab chunk is downloading
@@ -269,15 +260,6 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
           {renderTab("field-reports", <FieldReportsTab projectId={id} />)}
           {renderTab("coordination", <CoordinationTab projectId={id} />)}
           {renderTab("action-tracker", <CoordinationTab projectId={id} defaultView="actions" />)}
-          {renderTab("sub-dashboard", <SubDashboardTab projectId={id} />)}
-          {renderTab("sub-dispatch", <SubDispatchTab projectId={id} />)}
-          {renderTab("sub-foremen", <SubForemenTab projectId={id} />)}
-          {renderTab("sub-checkins", <SubCheckinsTab projectId={id} />)}
-          {renderTab("sub-production", <SubProductionTab projectId={id} />)}
-          {renderTab("sub-blockers", <SubBlockersTab projectId={id} />)}
-          {renderTab("sub-handoffs", <SubHandoffsTab projectId={id} />)}
-          {renderTab("sub-crew", <SubCrewTab projectId={id} />)}
-          {renderTab("sub-sops", <SubSOPsTab projectId={id} />)}
         </div>
       </ProjectDataProvider>
 

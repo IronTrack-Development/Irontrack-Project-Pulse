@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Flag, Loader2, CheckCircle, Clock, AlertTriangle, Users } from "lucide-react";
+import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface ContextEntry {
   logDate: string;
@@ -27,6 +29,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const { getActivityName } = useActivityTranslations(milestones.map((milestone) => milestone.activity_name));
 
   useEffect(() => {
     const fetchMilestones = async () => {
@@ -59,7 +62,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
         <Flag size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">No milestones found</div>
+        <div className="text-[color:var(--text-secondary)] text-sm">{t('milestones.noMilestonesFound')}</div>
       </div>
     );
   }
@@ -116,7 +119,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                 <div className="flex items-start gap-3 flex-1 min-w-0">
                   <div className="mt-0.5">{getStatusIcon(milestone.status)}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-[color:var(--text-primary)] mb-1">{milestone.activity_name}</div>
+                    <div className="text-sm font-medium text-[color:var(--text-primary)] mb-1">{getActivityName(milestone.activity_name)}</div>
                     <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
                       <span>
                         {new Date(milestone.milestone_date).toLocaleDateString("en-US", {
@@ -130,7 +133,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                       </span>
                       {hasContext && (
                         <span className="text-gray-600">
-                          {milestone.contextStrip!.length} log{milestone.contextStrip!.length !== 1 ? "s" : ""} nearby
+                          {milestone.contextStrip!.length} {milestone.contextStrip!.length !== 1 ? t('milestones.logsNearby') : t('milestones.logNearby')}
                         </span>
                       )}
                     </div>
@@ -151,7 +154,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
             {/* Context strip */}
             {isExpanded && hasContext && (
               <div className="border-t border-[var(--border-primary)] px-4 py-3">
-                <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">Daily Log Context (±2 days)</div>
+                <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">{t('milestones.dailyLogContext')}</div>
                 <div className="space-y-1.5">
                   {milestone.contextStrip!.map((entry, i) => {
                     const dateLabel = new Date(entry.logDate + "T12:00:00").toLocaleDateString("en-US", {
@@ -181,7 +184,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                             ? "bg-[#22C55E]/10 text-[#22C55E]"
                             : "bg-[#3B82F6]/10 text-[#3B82F6]"
                         }`}>
-                          {entry.status === "locked" ? "Locked" : "Submitted"}
+                          {entry.status === "locked" ? t('milestones.locked') : t('milestones.submitted')}
                         </span>
                         <span className="text-[color:var(--text-muted)] truncate flex-1">{entry.summary}</span>
                       </div>

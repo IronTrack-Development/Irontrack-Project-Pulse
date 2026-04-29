@@ -65,7 +65,7 @@ export default function ForemanManager({ projectId }: Props) {
       const res = await fetch(`/api/sub-ops/companies/${companyId}/foremen`);
       if (res.ok) {
         const d = await res.json();
-        setForemen(Array.isArray(d) ? d : d.foremen ?? []);
+        setForemen(Array.isArray(d) ? d : d.data ?? d.foremen ?? []);
       }
     } catch {}
     setLoading(false);

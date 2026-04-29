@@ -6,6 +6,7 @@ import ActivityDrawer from "@/components/ActivityDrawer";
 import ReadyCheckModal from "@/components/ReadyCheckModal";
 import ReadyCheckBadge from "@/components/ReadyCheckBadge";
 import type { ParsedActivity, ReadyCheck } from "@/types";
+import { t } from "@/lib/i18n";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -86,9 +87,9 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
     return (
       <div className="text-center py-10">
         <CheckCircle size={28} className="mx-auto text-[#22C55E] mb-2" />
-        <p className="text-[color:var(--text-primary)] font-semibold">No critical path activity found</p>
+        <p className="text-[color:var(--text-primary)] font-semibold">{t('priority.noCriticalPath')}</p>
         <p className="text-gray-600 text-sm mt-1">
-          All activities have float or no schedule logic loaded yet.
+          {t('priority.allActivitiesHaveFloat')}
         </p>
       </div>
     );
@@ -102,7 +103,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
         onClick={() => onOpenDrawer(data.currentActivity.id)}
       >
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
-          Current Critical Activity
+          {t('priority.currentCriticalActivity')}
         </div>
         <div className="text-[color:var(--text-primary)] font-bold text-sm hover:text-[#F97316] transition-colors">{data.currentActivity.activity_name}</div>
         <div className="flex items-center gap-3 mt-1">
@@ -119,16 +120,16 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
-            Next Critical Successor
+            {t('priority.nextCriticalSuccessor')}
           </div>
           <div className="text-xs text-gray-200 font-medium">
-            {data.nextSuccessor?.activity_name ?? "None identified"}
+            {data.nextSuccessor?.activity_name ?? t('priority.noneIdentified')}
           </div>
         </div>
 
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
           <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
-            Nearest Critical Milestone
+            {t('priority.nearestCriticalMilestone')}
           </div>
           {data.nearestMilestone ? (
             <>
@@ -140,7 +141,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
               </div>
             </>
           ) : (
-            <div className="text-xs text-[color:var(--text-muted)]">None on critical path</div>
+            <div className="text-xs text-[color:var(--text-muted)]">{t('priority.noneOnCriticalPath')}</div>
           )}
         </div>
       </div>
@@ -151,14 +152,14 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
           <Clock size={13} className="text-[#F97316]" />
           <span className="text-xs text-[color:var(--text-secondary)]">
             <span className="text-[#F97316] font-bold">{data.daysUntilImpact} day{data.daysUntilImpact !== 1 ? "s" : ""}</span>
-            {" "}until finish deadline
+            {" "}{t('priority.untilFinishDeadline')}
           </span>
         </div>
       )}
 
       {/* Impact statement */}
       <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
-        <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Impact</div>
+        <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('priority.impact')}</div>
         <div className="text-xs text-[color:var(--text-secondary)]">{data.impactStatement}</div>
       </div>
     </div>
@@ -182,8 +183,8 @@ function InspectionsSection({
     return (
       <div className="text-center py-10">
         <Shield size={28} className="mx-auto text-gray-600 mb-2" />
-        <p className="text-[color:var(--text-primary)] font-semibold">No inspections due in 7 days</p>
-        <p className="text-gray-600 text-sm mt-1">You're clear for the week ahead.</p>
+        <p className="text-[color:var(--text-primary)] font-semibold">{t('priority.noInspections')}</p>
+        <p className="text-gray-600 text-sm mt-1">{t('priority.clearForWeek')}</p>
       </div>
     );
   }
@@ -232,7 +233,7 @@ function InspectionsSection({
                 className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
               >
                 <Send size={10} />
-                Ready Check
+                {t('action.readyCheck')}
               </button>
             );
           })()}
@@ -259,8 +260,8 @@ function LateTasksSection({
     return (
       <div className="text-center py-10">
         <CheckCircle size={28} className="mx-auto text-[#22C55E] mb-2" />
-        <p className="text-[color:var(--text-primary)] font-semibold">Nothing behind schedule</p>
-        <p className="text-gray-600 text-sm mt-1">All tasks are on track or complete.</p>
+        <p className="text-[color:var(--text-primary)] font-semibold">{t('priority.nothingBehind')}</p>
+        <p className="text-gray-600 text-sm mt-1">{t('priority.allOnTrack')}</p>
       </div>
     );
   }
@@ -291,7 +292,7 @@ function LateTasksSection({
           </div>
 
           <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 mb-2">
-            <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">Impact</div>
+            <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">{t('priority.impact')}</div>
             <div className="text-xs text-[color:var(--text-secondary)]">{task.impactStatement}</div>
           </div>
           {(() => {
@@ -303,7 +304,7 @@ function LateTasksSection({
                 className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
               >
                 <Send size={10} />
-                Ready Check
+                {t('action.readyCheck')}
               </button>
             );
           })()}
@@ -384,12 +385,12 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
     return (
       <div className="text-center py-16">
         <AlertTriangle size={28} className="mx-auto text-[#EF4444] mb-2" />
-        <p className="text-[color:var(--text-primary)] font-semibold">Failed to load priority data</p>
+        <p className="text-[color:var(--text-primary)] font-semibold">{t('priority.failedToLoad')}</p>
         <button
           onClick={fetchData}
           className="mt-3 px-4 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs transition-colors"
         >
-          Retry
+          {t('action.retry')}
         </button>
       </div>
     );
@@ -404,15 +405,15 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
       <div className="grid grid-cols-3 gap-3">
         <div className={`rounded-xl p-4 ${pressStyle.bg} text-center`}>
           <div className={`text-xl font-bold ${pressStyle.color}`}>{summary.criticalPressure}</div>
-          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">Critical Pressure</div>
+          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('priority.criticalPressure')}</div>
         </div>
         <div className="rounded-xl p-4 bg-[#3B82F6]/10 text-center">
           <div className="text-xl font-bold text-[#3B82F6]">{summary.inspectionsDue7Days}</div>
-          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">Inspections in 7 Days</div>
+          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('priority.inspectionsIn7Days')}</div>
         </div>
         <div className="rounded-xl p-4 bg-[#EF4444]/10 text-center">
           <div className="text-xl font-bold text-[#EF4444]">{summary.lateTasks}</div>
-          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">Late Tasks</div>
+          <div className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('priority.lateTasks')}</div>
         </div>
       </div>
 
@@ -430,7 +431,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
       <section>
         <div className="flex items-center gap-2 mb-3">
           <AlertTriangle size={16} className="text-[#F97316]" />
-          <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">Critical Path Ahead</h3>
+          <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">{t('priority.criticalPathAhead')}</h3>
         </div>
         <CriticalPathSection data={criticalPath} onOpenDrawer={openDrawer} />
       </section>
@@ -440,10 +441,10 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
         <div className="flex items-center gap-2 mb-3">
           <Shield size={16} className="text-[#3B82F6]" />
           <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">
-            Upcoming Inspections
+            {t('priority.upcomingInspections')}
             {inspections.length > 0 && (
               <span className="ml-2 text-xs text-[#3B82F6] font-semibold normal-case">
-                {inspections.length} in next 7 days
+                {inspections.length} {t('priority.inNext7Days')}
               </span>
             )}
           </h3>
@@ -456,10 +457,10 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
         <div className="flex items-center gap-2 mb-3">
           <Clock size={16} className="text-[#EF4444]" />
           <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">
-            Behind Schedule
+            {t('priority.behindSchedule')}
             {lateTasks.length > 0 && (
               <span className="ml-2 text-xs text-[#EF4444] font-semibold normal-case">
-                {lateTasks.length} overdue
+                {lateTasks.length} {t('priority.overdue')}
               </span>
             )}
           </h3>

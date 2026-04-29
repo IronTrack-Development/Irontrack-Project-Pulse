@@ -5,6 +5,8 @@ import {
   Flag, Truck, Search, HardHat, ClipboardCheck,
   Calendar, ChevronDown, ChevronUp, AlertTriangle, CheckCircle
 } from "lucide-react";
+import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
   id: string;
@@ -59,39 +61,39 @@ function statusChip(status: string, pct: number) {
   if (status === "complete" || pct >= 100) {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-900/40 text-green-400 border border-green-700/40">
-        <CheckCircle size={10} /> Done
+        <CheckCircle size={10} /> {t('sixweek.done')}
       </span>
     );
   }
   if (status === "late") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-900/40 text-red-400 border border-red-700/40">
-        <AlertTriangle size={10} /> Late
+        <AlertTriangle size={10} /> {t('sixweek.late')}
       </span>
     );
   }
   if (status === "in_progress") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-900/40 text-orange-400 border border-orange-700/40">
-        In Progress
+        {t('sixweek.inProgress')}
       </span>
     );
   }
   return (
     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] border border-[var(--border-secondary)]">
-      Upcoming
+      {t('sixweek.upcoming')}
     </span>
   );
 }
 
 // ── Activity Row ──
 
-function ActivityRow({ activity }: { activity: Activity }) {
+function ActivityRow({ activity, getActivityName }: { activity: Activity; getActivityName: (name: string) => string }) {
   const days = daysUntil(activity.start_date);
   return (
     <div className="flex items-start justify-between gap-3 py-3 px-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl">
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-[color:var(--text-primary)] font-medium leading-snug">{activity.activity_name}</p>
+        <p className="text-sm text-[color:var(--text-primary)] font-medium leading-snug">{getActivityName(activity.activity_name)}</p>
         <div className="flex items-center gap-3 mt-1 flex-wrap">
           <span className="text-xs text-[color:var(--text-muted)]">
             {formatDateRange(activity.start_date, activity.finish_date)}
@@ -103,7 +105,7 @@ function ActivityRow({ activity }: { activity: Activity }) {
           )}
           {days !== null && days > 0 && (
             <span className="text-[10px] text-[#F97316] font-medium">
-              {days}d away
+              {days}{t('sixweek.dAway')}
             </span>
           )}
         </div>
@@ -176,6 +178,17 @@ function StatCard({ label, value, icon: Icon, color }: {
 export default function SixWeekTab({ projectId }: { projectId: string }) {
   const [data, setData] = useState<SixWeekData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { getActivityName } = useActivityTranslations(
+    data
+      ? [
+          ...data.milestones,
+          ...data.inspections,
+          ...data.longLead,
+          ...data.mobilizations,
+          ...data.other,
+        ].map((activity) => activity.activity_name)
+      : []
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -201,8 +214,8 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
     return (
       <div className="text-center py-16">
         <Calendar size={36} className="mx-auto text-[color:var(--text-muted)] mb-3" />
-        <p className="text-[color:var(--text-secondary)] text-sm">No activities in the 4-6 week window</p>
-        <p className="text-[color:var(--text-muted)] text-xs mt-1">Activities starting 3-6 weeks from today will appear here</p>
+        <p className="text-[color:var(--text-secondary)] text-sm">{t('sixweek.noActivities46')}</p>
+        <p className="text-[color:var(--text-muted)] text-xs mt-1">{t('sixweek.activitiesAppearHere')}</p>
       </div>
     );
   }
@@ -212,60 +225,60 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
       {/* Window header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">6-Week Lookahead</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('sixweek.title')}</h2>
           <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-            {formatDate(data.window.start)} — {formatDate(data.window.end)} · {data.stats.total} activities
+            {formatDate(data.window.start)} — {formatDate(data.window.end)} · {data.stats.total} {t('sixweek.activities')}
           </p>
         </div>
       </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-2">
-        <StatCard label="Milestones" value={data.stats.milestones} icon={Flag} color="text-[#F97316]" />
-        <StatCard label="Inspections" value={data.stats.inspections} icon={ClipboardCheck} color="text-blue-400" />
-        <StatCard label="Procurement" value={data.stats.longLead} icon={Truck} color="text-purple-400" />
-        <StatCard label="Mobilizations" value={data.stats.mobilizations} icon={HardHat} color="text-emerald-400" />
+        <StatCard label={t('sixweek.milestones')} value={data.stats.milestones} icon={Flag} color="text-[#F97316]" />
+        <StatCard label={t('sixweek.inspections')} value={data.stats.inspections} icon={ClipboardCheck} color="text-blue-400" />
+        <StatCard label={t('sixweek.procurement')} value={data.stats.longLead} icon={Truck} color="text-purple-400" />
+        <StatCard label={t('sixweek.mobilizations')} value={data.stats.mobilizations} icon={HardHat} color="text-emerald-400" />
       </div>
 
       {/* Milestones */}
-      <Section icon={Flag} title="Upcoming Milestones" count={data.milestones.length} color="text-[#F97316]">
-        {data.milestones.map((a) => <ActivityRow key={a.id} activity={a} />)}
+      <Section icon={Flag} title={t('sixweek.upcomingMilestones')} count={data.milestones.length} color="text-[#F97316]">
+        {data.milestones.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
       </Section>
 
       {/* Long-Lead / Procurement */}
-      <Section icon={Truck} title="Long-Lead & Procurement" count={data.longLead.length} color="text-purple-400">
+      <Section icon={Truck} title={t('sixweek.longLeadProcurement')} count={data.longLead.length} color="text-purple-400">
         <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Items that need ordering/fabrication NOW to land in 4-6 weeks
+          {t('sixweek.longLeadDesc')}
         </p>
-        {data.longLead.map((a) => <ActivityRow key={a.id} activity={a} />)}
+        {data.longLead.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
       </Section>
 
       {/* Mobilizations by Trade */}
-      <Section icon={HardHat} title="Sub Mobilizations" count={data.mobilizations.length} color="text-emerald-400">
+      <Section icon={HardHat} title={t('sixweek.subMobilizations')} count={data.mobilizations.length} color="text-emerald-400">
         <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Trades that need to be on site in weeks 4-6
+          {t('sixweek.subMobDesc')}
         </p>
         {Object.entries(data.mobilizationsByTrade).map(([trade, acts]) => (
           <div key={trade} className="space-y-1.5">
             <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider px-1 pt-2">
               {trade} ({acts.length})
             </p>
-            {acts.map((a) => <ActivityRow key={a.id} activity={a} />)}
+            {acts.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
           </div>
         ))}
       </Section>
 
       {/* Inspections */}
-      <Section icon={ClipboardCheck} title="Inspections & Testing" count={data.inspections.length} color="text-blue-400">
+      <Section icon={ClipboardCheck} title={t('sixweek.inspectionsTesting')} count={data.inspections.length} color="text-blue-400">
         <p className="text-xs text-[color:var(--text-muted)] px-1 -mt-1 mb-2">
-          Schedule these now — lead time for inspectors and testing labs
+          {t('sixweek.inspectionsDesc')}
         </p>
-        {data.inspections.map((a) => <ActivityRow key={a.id} activity={a} />)}
+        {data.inspections.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
       </Section>
 
       {/* Other */}
-      <Section icon={Calendar} title="Other Activities" count={data.other.length} color="text-[color:var(--text-secondary)]" defaultOpen={false}>
-        {data.other.map((a) => <ActivityRow key={a.id} activity={a} />)}
+      <Section icon={Calendar} title={t('sixweek.otherActivities')} count={data.other.length} color="text-[color:var(--text-secondary)]" defaultOpen={false}>
+        {data.other.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
       </Section>
     </div>
   );

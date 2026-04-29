@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string; handoffId: string }> }
 ) {
   const { companyId, handoffId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { data: handoff, error } = await supabase
     .from("sub_handoffs")
@@ -59,7 +62,10 @@ export async function PATCH(
   { params }: { params: Promise<{ companyId: string; handoffId: string }> }
 ) {
   const { companyId, handoffId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   // Auto-set dates based on status
@@ -88,7 +94,10 @@ export async function DELETE(
   { params }: { params: Promise<{ companyId: string; handoffId: string }> }
 ) {
   const { companyId, handoffId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { error } = await supabase
     .from("sub_handoffs")

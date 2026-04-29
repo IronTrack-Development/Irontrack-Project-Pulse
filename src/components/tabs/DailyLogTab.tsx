@@ -3,6 +3,7 @@
 import { useState } from "react";
 import DailyLogList from "@/components/daily-log/DailyLogList";
 import RollupDashboard from "@/components/daily-log/RollupDashboard";
+import { t } from "@/lib/i18n";
 
 type SubView = "logs" | "rollups";
 
@@ -25,7 +26,7 @@ export default function DailyLogTab({ projectId }: DailyLogTabProps) {
               : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
           }`}
         >
-          Logs
+          {t('dailylog.logs')}
         </button>
         <button
           onClick={() => setSubView("rollups")}
@@ -35,7 +36,7 @@ export default function DailyLogTab({ projectId }: DailyLogTabProps) {
               : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
           }`}
         >
-          Rollups
+          {t('dailylog.rollups')}
         </button>
       </div>
 

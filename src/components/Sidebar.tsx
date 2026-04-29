@@ -11,12 +11,13 @@ import {
   Settings,
   Zap,
 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/projects", label: "Projects", icon: FolderOpen },
-  { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { href: "/projects", labelKey: "nav.projects", icon: FolderOpen },
+  { href: "/upload", labelKey: "nav.upload", icon: Upload },
+  { href: "/settings", labelKey: "nav.settings", icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -37,7 +38,7 @@ export default function Sidebar() {
         </div>
         <div>
           <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
-          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">Run Your Job. Don&apos;t Chase It.</div>
+          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">{t('landing.heroTitle1')} {t('landing.heroTitle2')}</div>
         </div>
       </div>
 
@@ -45,15 +46,15 @@ export default function Sidebar() {
       <div className="px-4 py-3">
         <div className="flex items-center gap-2 bg-[var(--bg-primary)] rounded-lg px-3 py-2 border border-[var(--border-primary)]">
           <Zap size={13} className="text-[#F97316]" />
-          <span className="text-xs text-[color:var(--text-secondary)]">Field Intelligence</span>
+          <span className="text-xs text-[color:var(--text-secondary)]">{t('nav.fieldIntelligence')}</span>
           <span className="ml-auto w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-2">
-        <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-2 mb-2">Navigation</div>
-        {navItems.map(({ href, label, icon: Icon }) => {
+        <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-2 mb-2">{t('nav.navigation')}</div>
+        {navItems.map(({ href, labelKey, icon: Icon }) => {
           const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
@@ -66,7 +67,7 @@ export default function Sidebar() {
               }`}
             >
               <Icon size={16} />
-              {label}
+              {t(labelKey)}
             </Link>
           );
         })}
@@ -79,7 +80,7 @@ export default function Sidebar() {
           className="flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
         >
           <Home size={14} />
-          Landing Page
+          {t('nav.landingPage')}
         </Link>
         <div className="text-xs text-gray-600">v1.4.0</div>
       </div>

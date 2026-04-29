@@ -63,12 +63,13 @@ export default function ProductionTracker({ projectId }: Props) {
       ]);
       if (pRes.ok) {
         const d = await pRes.json();
-        setEntries(Array.isArray(d) ? d : d.entries ?? []);
-        setSummary(d.summary ?? { total_entries: d.entries?.length ?? 0, total_crew_hours: 0 });
+        const productionEntries = Array.isArray(d) ? d : d.data ?? d.entries ?? [];
+        setEntries(productionEntries);
+        setSummary(d.summary ?? { total_entries: productionEntries.length, total_crew_hours: 0 });
       }
       if (fRes.ok) {
         const f = await fRes.json();
-        setForemen(Array.isArray(f) ? f : f.foremen ?? []);
+        setForemen(Array.isArray(f) ? f : f.data ?? f.foremen ?? []);
       }
     } catch {}
     setLoading(false);

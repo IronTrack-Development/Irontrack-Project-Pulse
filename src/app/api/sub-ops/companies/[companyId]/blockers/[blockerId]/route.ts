@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireSubOpsCompanyAccess } from "@/lib/sub-ops-auth";
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ companyId: string; blockerId: string }> }
 ) {
   const { companyId, blockerId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { data, error } = await supabase
     .from("sub_blockers")
@@ -31,7 +34,10 @@ export async function PATCH(
   { params }: { params: Promise<{ companyId: string; blockerId: string }> }
 ) {
   const { companyId, blockerId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
   const body = await req.json();
 
   // If resolving, set resolved_at
@@ -57,7 +63,10 @@ export async function DELETE(
   { params }: { params: Promise<{ companyId: string; blockerId: string }> }
 ) {
   const { companyId, blockerId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireSubOpsCompanyAccess(companyId);
+  if (access.response) return access.response;
+
+  const supabase = access.supabase;
 
   const { error } = await supabase
     .from("sub_blockers")
@@ -69,3 +78,5 @@ export async function DELETE(
 
   return NextResponse.json({ success: true });
 }
+
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sun, Moon, Globe } from "lucide-react";
+import { Sun, Moon, HardHat } from "lucide-react";
 import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { setLanguage, type Language } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
@@ -31,10 +31,10 @@ export default function AppearanceSettings() {
       {/* Theme */}
       <div>
         <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">{t('settings.theme')}</p>
-        <div className="flex gap-2">
+        <div className="grid gap-2 sm:grid-cols-3">
           <button
             onClick={() => handleThemeChange("dark")}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
               backgroundColor: currentTheme === "dark" ? "#F97316" : "var(--bg-tertiary)",
               color: currentTheme === "dark" ? "#FFFFFF" : "var(--text-secondary)",
@@ -44,7 +44,7 @@ export default function AppearanceSettings() {
           </button>
           <button
             onClick={() => handleThemeChange("light")}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
               backgroundColor: currentTheme === "light" ? "#F97316" : "var(--bg-tertiary)",
               color: currentTheme === "light" ? "#FFFFFF" : "var(--text-secondary)",
@@ -52,16 +52,29 @@ export default function AppearanceSettings() {
           >
             <Sun size={16} />{t('settings.light')}
           </button>
+          <button
+            onClick={() => handleThemeChange("field")}
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
+            style={{
+              backgroundColor: currentTheme === "field" ? "#FFB020" : "var(--bg-tertiary)",
+              color: currentTheme === "field" ? "#111827" : "var(--text-secondary)",
+            }}
+          >
+            <HardHat size={16} />Field
+          </button>
         </div>
+        <p className="mt-2 text-xs" style={{ color: "var(--text-muted)" }}>
+          Field mode boosts contrast and tap size for glare, gloves, and rough screens.
+        </p>
       </div>
 
       {/* Language */}
       <div>
         <p className="text-sm font-medium text-[color:var(--text-primary)] mb-3">{t('settings.language')}</p>
-        <div className="flex gap-2">
+        <div className="grid gap-2 sm:grid-cols-2">
           <button
             onClick={() => handleLangChange("en")}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
               backgroundColor: currentLang === "en" ? "#F97316" : "var(--bg-tertiary)",
               color: currentLang === "en" ? "#FFFFFF" : "var(--text-secondary)",
@@ -70,7 +83,7 @@ export default function AppearanceSettings() {
           </button>
           <button
             onClick={() => handleLangChange("es")}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
               backgroundColor: currentLang === "es" ? "#F97316" : "var(--bg-tertiary)",
               color: currentLang === "es" ? "#FFFFFF" : "var(--text-secondary)",

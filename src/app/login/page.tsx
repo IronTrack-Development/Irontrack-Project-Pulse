@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, Eye, EyeOff, ArrowLeft, HardHat, Briefcase } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -59,7 +60,7 @@ function LoginForm() {
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to home
+          {t('action.backToHome')}
         </Link>
 
         {/* Logo */}
@@ -86,7 +87,7 @@ function LoginForm() {
             }}
           >
             <HardHat size={18} />
-            General Contractor
+            {t('auth.generalContractor')}
           </button>
           <button
             onClick={() => setRole("sub")}
@@ -98,7 +99,7 @@ function LoginForm() {
             }}
           >
             <Briefcase size={18} />
-            Subcontractor
+            {t('auth.subcontractor')}
           </button>
         </div>
 
@@ -116,10 +117,10 @@ function LoginForm() {
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                {isGC ? "General Contractor" : "Subcontractor"}
+                {isGC ? t('auth.generalContractor') : t('auth.subcontractor')}
               </h1>
               <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                {isGC ? "Sign in to your GC account" : "Sign in to your Sub account"}
+                {isGC ? t('auth.signInToGC') : t('auth.signInToSub')}
               </p>
             </div>
           </div>
@@ -133,7 +134,7 @@ function LoginForm() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Email
+                {t('auth.email')}
               </label>
               <input
                 id="email"
@@ -153,7 +154,7 @@ function LoginForm() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <input
@@ -190,23 +191,23 @@ function LoginForm() {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Signing in...
+                  {t('action.signingIn')}
                 </>
               ) : (
-                "Sign in"
+                t('action.signIn')
               )}
             </button>
           </form>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Don&apos;t have an account?{" "}
+              {t('auth.dontHaveAccount')}{" "}
               <Link
                 href={isGC ? "/signup" : "/signup/sub"}
                 className="font-bold transition-colors"
                 style={{ color: accentColor }}
               >
-                Sign up
+                {t('action.signUp')}
               </Link>
             </p>
           </div>

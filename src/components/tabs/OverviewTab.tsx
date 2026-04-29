@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle, AlertTriangle, TrendingDown, Clock, Flag, Activity, Zap } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface Project {
   id: string;
@@ -22,9 +23,9 @@ interface Project {
 }
 
 function healthColor(score: number) {
-  if (score >= 85) return { color: "#22C55E", label: "On Track", ring: "rgba(34,197,94,0.15)" };
-  if (score >= 70) return { color: "#EAB308", label: "Watch", ring: "rgba(234,179,8,0.15)" };
-  return { color: "#EF4444", label: "At Risk", ring: "rgba(239,68,68,0.15)" };
+  if (score >= 85) return { color: "#22C55E", labelKey: "status.onTrack", ring: "rgba(34,197,94,0.15)" };
+  if (score >= 70) return { color: "#EAB308", labelKey: "status.watch", ring: "rgba(234,179,8,0.15)" };
+  return { color: "#EF4444", labelKey: "status.atRisk", ring: "rgba(239,68,68,0.15)" };
 }
 
 export default function OverviewTab({ project }: { project: Project }) {
@@ -58,14 +59,14 @@ export default function OverviewTab({ project }: { project: Project }) {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-2xl font-bold text-[color:var(--text-primary)]">{project.health_score}</span>
-              <span className="text-[10px] text-[color:var(--text-muted)]">Health</span>
+              <span className="text-[10px] text-[color:var(--text-muted)]">{t('overview.health')}</span>
             </div>
           </div>
           <div
             className="text-sm font-bold px-3 py-1 rounded-full"
             style={{ color: health.color, backgroundColor: health.ring }}
           >
-            {health.label}
+            {t(health.labelKey)}
           </div>
         </div>
 
@@ -73,7 +74,7 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle size={16} className="text-[#22C55E]" />
-            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">Schedule Progress</span>
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">{t('overview.scheduleProgress')}</span>
           </div>
           <div className="text-4xl font-bold text-[color:var(--text-primary)] mb-1">{stats.completionPercent}%</div>
           <div className="text-xs text-[color:var(--text-muted)] mb-4">
@@ -91,7 +92,7 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Flag size={16} className="text-[#F97316]" />
-            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">Next Milestone</span>
+            <span className="text-sm font-semibold text-[color:var(--text-secondary)]">{t('overview.nextMilestone')}</span>
           </div>
           {stats.nextMilestone ? (
             <>
@@ -119,7 +120,7 @@ export default function OverviewTab({ project }: { project: Project }) {
               })()}
             </>
           ) : (
-            <div className="text-gray-600 text-sm">No upcoming milestones</div>
+            <div className="text-gray-600 text-sm">{t('overview.noUpcomingMilestones')}</div>
           )}
         </div>
       </div>
@@ -129,28 +130,28 @@ export default function OverviewTab({ project }: { project: Project }) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Activity size={14} className="text-[#3B82F6]" />
-            <span className="text-xs text-[color:var(--text-muted)]">In Progress</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{t('overview.inProgress')}</span>
           </div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)]">{stats.inProgressActivities}</div>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <TrendingDown size={14} className="text-[#EAB308]" />
-            <span className="text-xs text-[color:var(--text-muted)]">Overdue</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{t('overview.overdue')}</span>
           </div>
           <div className="text-2xl font-bold text-[#EAB308]">{stats.lateActivities}</div>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle size={14} className="text-[#EF4444]" />
-            <span className="text-xs text-[color:var(--text-muted)]">High Risks</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{t('overview.highRisks')}</span>
           </div>
           <div className="text-2xl font-bold text-[#EF4444]">{stats.highRisks}</div>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Clock size={14} className="text-[#22C55E]" />
-            <span className="text-xs text-[color:var(--text-muted)]">Days Left</span>
+            <span className="text-xs text-[color:var(--text-muted)]">{t('overview.daysLeft')}</span>
           </div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)]">
             {stats.daysToCompletion !== null
@@ -164,13 +165,13 @@ export default function OverviewTab({ project }: { project: Project }) {
 
       {/* Activity breakdown */}
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
-        <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">Activity Status Breakdown</h3>
+        <h3 className="text-sm font-semibold text-[color:var(--text-secondary)] mb-4">{t('overview.activityStatusBreakdown')}</h3>
         <div className="space-y-3">
           {[
-            { label: "Complete", value: stats.completeActivities, color: "#22C55E" },
-            { label: "In Progress", value: stats.inProgressActivities, color: "#3B82F6" },
-            { label: "Not Started", value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "var(--text-muted)" },
-            { label: "Overdue", value: stats.lateActivities, color: "#EAB308" },
+            { label: t('status.complete'), value: stats.completeActivities, color: "#22C55E" },
+            { label: t('status.inProgress'), value: stats.inProgressActivities, color: "#3B82F6" },
+            { label: t('overview.notStarted'), value: stats.totalActivities - stats.completeActivities - stats.inProgressActivities - stats.lateActivities, color: "var(--text-muted)" },
+            { label: t('status.overdue'), value: stats.lateActivities, color: "#EAB308" },
           ].map(({ label, value, color }) => (
             <div key={label}>
               <div className="flex items-center justify-between text-xs mb-1">

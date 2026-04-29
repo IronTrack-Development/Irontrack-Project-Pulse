@@ -14,6 +14,16 @@ import {
   BarChart3,
   ClipboardList,
   RefreshCw,
+  Package,
+  Send,
+  AlertTriangle,
+  CheckCircle2,
+  ArrowUpRight,
+  MapPin,
+  Gauge,
+  HardHat,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -97,21 +107,27 @@ function StatCard({
   value,
   icon,
   accent = false,
+  helper,
 }: {
   label: string;
   value: string | number;
   icon: React.ReactNode;
   accent?: boolean;
+  helper?: string;
 }) {
   return (
-    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 flex flex-col gap-2">
+    <div className="group relative overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 flex flex-col gap-2 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#3B82F6]/70 to-transparent opacity-70" />
       <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
-        {icon}
-        <span className="text-xs uppercase tracking-wide">{label}</span>
+        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-[#F97316]"}`}>
+          {icon}
+        </span>
+        <span className="text-[10px] uppercase tracking-[0.18em] font-bold">{label}</span>
       </div>
       <span className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </span>
+      {helper && <span className="text-xs text-[color:var(--text-muted)]">{helper}</span>}
     </div>
   );
 }
@@ -120,12 +136,16 @@ function StatCard({
 
 function ProjectCard({ project }: { project: ProjectSummary }) {
   return (
-    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-5 space-y-3 hover:border-[#F97316]/30 transition-colors">
+    <div className="group relative overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-5 space-y-4 hover:border-[#3B82F6]/50 transition-all hover:-translate-y-0.5 shadow-[0_18px_55px_rgba(0,0,0,0.16)]">
+      <div className="absolute -right-14 -top-16 h-32 w-32 rounded-full bg-[#3B82F6]/10 blur-2xl group-hover:bg-[#F97316]/10 transition-colors" />
       {/* Project name + location */}
       <div>
         <h3 className="text-base font-bold text-[color:var(--text-primary)] leading-tight">{project.project_name}</h3>
         {project.location && (
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{project.location}</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-1 flex items-center gap-1">
+            <MapPin size={11} />
+            {project.location}
+          </p>
         )}
       </div>
 
@@ -135,7 +155,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
           {project.trades.map((t) => (
             <span
               key={t}
-              className="text-xs px-2 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316]"
+            className="text-xs px-2.5 py-1 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#93C5FD] font-semibold"
             >
               {t}
             </span>
@@ -164,18 +184,26 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       </div>
 
       {/* Progress bar */}
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
           <span>Avg progress (last report)</span>
           <span className="text-[color:var(--text-secondary)] font-medium">{project.avg_percent}%</span>
         </div>
-        <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+        <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-[#F97316] transition-all"
+            className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316] transition-all"
             style={{ width: `${Math.min(project.avg_percent, 100)}%` }}
           />
         </div>
       </div>
+
+      <Link
+        href="/sub/check-in"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#2563EB]"
+      >
+        Submit field update
+        <ArrowUpRight size={13} />
+      </Link>
     </div>
   );
 }
@@ -378,49 +406,197 @@ export default function SubDashboardPage() {
 
   const visibleReportList = recentReports.slice(0, visibleReports);
   const canLoadMore = visibleReports < totalReports && visibleReports < recentReports.length;
+  const latestReport = recentReports[0];
+  const projectsNeedingReports = projects.filter((project) => !project.last_report_date).length;
+  const fieldPulse =
+    stats.reportsThisWeek > 0
+      ? "Field reporting is active this week."
+      : "No reports yet this week. Get a field update in before lunch.";
+  const topProject = projects[0];
+  const huddleCards = [
+    {
+      label: "Schedule",
+      icon: <CalendarDays size={15} />,
+      text: topProject
+        ? `${topProject.project_name}: ${topProject.tasks_count} tracked task${topProject.tasks_count === 1 ? "" : "s"}.`
+        : "No linked schedule yet.",
+    },
+    {
+      label: "Manpower",
+      icon: <HardHat size={15} />,
+      text: stats.uniqueForemen > 0
+        ? `${stats.uniqueForemen} foreman${stats.uniqueForemen === 1 ? "" : "en"} sending field signals.`
+        : "Add foremen so updates have owners.",
+    },
+    {
+      label: "Materials",
+      icon: <Package size={15} />,
+      text: "Use dispatch notes to make needed material obvious before crews mobilize.",
+    },
+    {
+      label: "Hurdles",
+      icon: <AlertTriangle size={15} />,
+      text: projectsNeedingReports > 0
+        ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need first-report visibility.`
+        : "No first-report gaps right now.",
+    },
+    {
+      label: "Handoffs",
+      icon: <ArrowUpRight size={15} />,
+      text: "Capture what the next crew needs before the current crew leaves.",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-16">
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="relative max-w-6xl mx-auto px-4 py-8 space-y-8">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm text-[color:var(--text-muted)] mb-1">Sub Dashboard</p>
-            <h1 className="text-2xl md:text-3xl font-bold text-[color:var(--text-primary)]">
-              <span className="text-[#F97316]">{displayName}</span>
-            </h1>
-            {company.contact_name && (
-              <p className="text-[color:var(--text-secondary)] text-sm mt-1">{company.contact_name}</p>
-            )}
+        <div className="relative overflow-hidden rounded-xl border border-[#3B82F6]/20 bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92)_42%,rgba(249,115,22,0.14))] p-5 md:p-7 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316]" />
+          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#93C5FD]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E] shadow-[0_0_14px_#22C55E]" />
+                Sub Command Center
+              </div>
+              <h1 className="text-3xl md:text-5xl font-black text-white">
+                {displayName}
+              </h1>
+              <p className="mt-3 max-w-xl text-sm md:text-base text-slate-300">
+                Morning dispatch, field check-ins, blockers, crew activity, and GC-facing reports in one place.
+              </p>
+              {company.contact_name && (
+                <p className="text-sm text-slate-400 mt-2">Signed in as {company.contact_name}</p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+              <Link href="/sub/check-in" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-sm font-black text-[#052E16] transition-transform hover:-translate-y-0.5">
+                Check in
+                <CheckCircle2 size={16} />
+              </Link>
+              <Link href="/sub/dispatch" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white transition-transform hover:-translate-y-0.5">
+                Dispatch
+                <Send size={16} />
+              </Link>
+              <Link href="/sub/blockers" className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
+                Blocker
+                <AlertTriangle size={16} />
+              </Link>
+            </div>
           </div>
           <button
             onClick={() => loadDashboard(true)}
             disabled={refreshing}
-            className="flex items-center gap-1.5 text-xs text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)] transition-colors disabled:opacity-40 mt-1"
+            className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:text-white disabled:opacity-40"
           >
             <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
             Refresh
           </button>
         </div>
 
+        <div className="grid gap-3 md:grid-cols-3">
+          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#93C5FD]">
+              <Gauge size={14} />
+              Field Pulse
+            </div>
+            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{fieldPulse}</p>
+          </div>
+          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+              <AlertTriangle size={14} />
+              Needs Attention
+            </div>
+            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
+              {projectsNeedingReports > 0
+                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first report.`
+                : "Every active project has at least one report."}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#22C55E]">
+              <ShieldCheck size={14} />
+              Last Signal
+            </div>
+            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
+              {latestReport ? `${latestReport.project_name} updated ${timeAgo(latestReport.submitted_at)}.` : "No reports submitted yet."}
+            </p>
+          </div>
+        </div>
+
+        <section className="rounded-xl border border-[#22C55E]/20 bg-[linear-gradient(135deg,rgba(34,197,94,0.1),rgba(15,23,42,0.74)_50%,rgba(59,130,246,0.1))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#86EFAC]">
+                <Sparkles size={14} />
+                Field Intelligence Loop
+              </div>
+              <h2 className="mt-2 text-xl font-black text-white">One update should power the whole job conversation.</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Check-ins feed GC reports, production pulse, blocker accountability, and tomorrow's dispatch instead of becoming another dead-end daily log.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs font-bold text-white sm:grid-cols-4 md:min-w-[420px]">
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Check-In</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Production</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Blockers</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Dispatch</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#93C5FD]">
+                <Users size={14} />
+                Morning Huddle
+              </div>
+              <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Get every crew pointed the same direction.</h2>
+            </div>
+            <Link
+              href="/sub/dispatch"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white"
+            >
+              Build tomorrow's plan
+              <Send size={15} />
+            </Link>
+          </div>
+          <div className="grid gap-3 md:grid-cols-5">
+            {huddleCards.map((card) => (
+              <div key={card.label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.14)]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+                  {card.icon}
+                  {card.label}
+                </div>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--text-secondary)]">{card.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* ── Stats Row ── */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <StatCard
             label="Active Projects"
             value={stats.activeProjects}
             icon={<FolderOpen size={14} />}
             accent
+            helper="Scopes connected by GCs"
           />
           <StatCard
             label="Reports This Week"
             value={stats.reportsThisWeek}
             icon={<BarChart3 size={14} />}
+            helper="Fresh field intelligence"
           />
           <StatCard
             label="Foremen"
             value={stats.uniqueForemen}
             icon={<Users size={14} />}
+            helper="People sending updates"
           />
         </div>
 

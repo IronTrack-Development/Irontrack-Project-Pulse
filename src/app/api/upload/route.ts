@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase-server";
 
 // Allow up to 300 seconds for AI-powered PDF/MPP parsing (Vercel Pro)
 export const maxDuration = 300;
@@ -18,7 +19,7 @@ const MPP_CONVERTER_URL = process.env.MPP_CONVERTER_URL || "https://mpp-converte
 async function computeSuccessorIds(supabase: ReturnType<typeof getServiceClient>, projectId: string) {
   const { data: activities } = await supabase
     .from("parsed_activities")
-    .select("id, activity_id, predecessor_ids")
+    .select("id, activity_id, external_task_id, external_unique_id, predecessor_ids")
     .eq("project_id", projectId);
 
   if (!activities?.length) return;
@@ -28,9 +29,11 @@ async function computeSuccessorIds(supabase: ReturnType<typeof getServiceClient>
   for (const a of activities) {
     idToUuid.set(a.id, a.id); // UUID -> UUID
     if (a.activity_id) idToUuid.set(a.activity_id, a.id); // string activity_id -> UUID
+    if (a.external_task_id) idToUuid.set(a.external_task_id, a.id);
+    if (a.external_unique_id) idToUuid.set(a.external_unique_id, a.id);
   }
 
-  // Build reverse map: predecessor UUID -> set of successor activity_ids
+  // Build reverse map: predecessor UUID -> set of successor UUIDs
   const successorMap = new Map<string, Set<string>>();
 
   for (const act of activities) {
@@ -41,7 +44,7 @@ async function computeSuccessorIds(supabase: ReturnType<typeof getServiceClient>
       const predUuid = idToUuid.get(predId);
       if (predUuid) {
         if (!successorMap.has(predUuid)) successorMap.set(predUuid, new Set());
-        successorMap.get(predUuid)!.add(act.activity_id || act.id);
+        successorMap.get(predUuid)!.add(act.id);
       }
     }
   }
@@ -407,6 +410,16 @@ ${textForAI}`,
 }
 
 export async function POST(req: NextRequest) {
+  const authClient = await createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await authClient.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const supabase = getServiceClient();
   const contentType = req.headers.get("content-type") || "";
 
@@ -487,6 +500,9 @@ export async function POST(req: NextRequest) {
     .eq("id", projectId)
     .single();
   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
+  if (project.user_id !== user.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   // Get user_id from project for quota checks
   const userId = project.user_id;

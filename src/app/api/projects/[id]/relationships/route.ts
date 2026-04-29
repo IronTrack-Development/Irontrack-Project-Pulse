@@ -37,19 +37,51 @@ export async function GET(
 
   const predIds: string[] = target.predecessor_ids || [];
   const succIds: string[] = target.successor_ids || [];
+  const targetKeys = new Set(
+    [target.id, target.activity_id, target.external_task_id, target.external_unique_id]
+      .filter((value): value is string => typeof value === "string" && value.length > 0)
+      .map(normalizeScheduleLinkId)
+  );
+
+  const includesScheduleLink = (ids: string[] | null | undefined, activity: ParsedActivity) => {
+    if (!ids?.length) return false;
+
+    const activityKeys = [activity.id, activity.activity_id, activity.external_task_id, activity.external_unique_id]
+      .filter((value): value is string => typeof value === "string" && value.length > 0)
+      .map(normalizeScheduleLinkId);
+
+    const idSet = new Set(ids.map(normalizeScheduleLinkId));
+    return activityKeys.some((key) => idSet.has(key));
+  };
 
   // Match against both `id` (UUID) and `activity_id` (string code)
   const predecessors = activities.filter(
-    (a) =>
-      predIds.includes(a.id) ||
-      (a.activity_id != null && predIds.includes(a.activity_id))
+    (a) => includesScheduleLink(predIds, a)
   );
 
-  const successors = activities.filter(
-    (a) =>
-      succIds.includes(a.id) ||
-      (a.activity_id != null && succIds.includes(a.activity_id))
+  const storedSuccessors = activities.filter(
+    (a) => includesScheduleLink(succIds, a)
   );
+
+  // Derive successors from other activities' predecessor lists too. This repairs
+  // older uploads and MPP/XER imports where successor_ids were empty or stored
+  // with a different schedule ID flavor than the UI expects.
+  const derivedSuccessors = activities.filter(
+    (a) => (a.predecessor_ids || []).some((id) => targetKeys.has(normalizeScheduleLinkId(id)))
+  );
+
+  const successorMap = new Map<string, ParsedActivity>();
+  for (const successor of [...storedSuccessors, ...derivedSuccessors]) {
+    if (successor.id !== target.id) successorMap.set(successor.id, successor);
+  }
+  const successors = Array.from(successorMap.values());
 
   return NextResponse.json({ predecessors, successors });
+}
+
+function normalizeScheduleLinkId(value: string): string {
+  return value
+    .replace(/\s*(FS|FF|SS|SF)\s*([+-][^,;|]*)?$/i, "")
+    .trim()
+    .toLowerCase();
 }

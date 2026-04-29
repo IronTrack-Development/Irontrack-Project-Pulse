@@ -1,8 +1,9 @@
-export type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light' | 'field';
 
 export function getTheme(): Theme {
   if (typeof window === 'undefined') return 'dark';
-  return (localStorage.getItem('pulse_theme') as Theme) || 'dark';
+  const saved = localStorage.getItem('pulse_theme') as Theme | null;
+  return saved === 'light' || saved === 'field' || saved === 'dark' ? saved : 'dark';
 }
 
 export function setTheme(theme: Theme) {
@@ -12,11 +13,12 @@ export function setTheme(theme: Theme) {
 
 export function applyTheme(theme: Theme) {
   const root = document.documentElement;
+  root.classList.remove('dark-theme', 'light-theme', 'field-theme');
   if (theme === 'light') {
     root.classList.add('light-theme');
-    root.classList.remove('dark-theme');
+  } else if (theme === 'field') {
+    root.classList.add('field-theme');
   } else {
     root.classList.add('dark-theme');
-    root.classList.remove('light-theme');
   }
 }

@@ -84,7 +84,7 @@ const STATUS_CONFIG: Record<string, { label: string; abbrev: string; color: stri
   ready_for_handoff: { label: "Ready", abbrev: "RDY", color: "#EAB308", bg: "rgba(234,179,8,0.2)" },
   handed_off: { label: "Handed Off", abbrev: "HO", color: "#F97316", bg: "rgba(249,115,22,0.2)" },
   accepted: { label: "Accepted", abbrev: "OK", color: "#22C55E", bg: "rgba(34,197,94,0.2)" },
-  issue_flagged: { label: "Issue", abbrev: "⚠", color: "#EF4444", bg: "rgba(239,68,68,0.2)" },
+  issue_flagged: { label: "Issue", abbrev: "!", color: "#EF4444", bg: "rgba(239,68,68,0.2)" },
 };
 
 interface Props {
@@ -366,13 +366,14 @@ export default function HandoffTracker({ projectId }: Props) {
 
   return (
     <div className="space-y-4">
-      {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
           <h2 className="text-lg font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <ArrowRightLeft size={20} /> Handoff Tracker
+            <ArrowRightLeft size={20} /> Crew Handoff Board
           </h2>
-          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Track department-to-department handoffs by area</p>
+          <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
+            Keep the next crew from starting at zero when departments rotate through the same area.
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -399,6 +400,23 @@ export default function HandoffTracker({ projectId }: Props) {
             </>
           )}
         </div>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-4">
+        {[
+          ["1", "Define the area", "Building, floor, room, zone, or system."],
+          ["2", "Mark readiness", "What is ready, blocked, or accepted."],
+          ["3", "Attach proof", "Photos and checklist items travel with the handoff."],
+          ["4", "Next crew knows", "Trim, startup, or follow-on crew sees context before arriving."],
+        ].map(([num, title, text]) => (
+          <div key={num} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+            <div className="flex items-center gap-2">
+              <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#3B82F6]/15 text-xs font-black text-[#93C5FD]">{num}</span>
+              <h3 className="text-sm font-black text-[color:var(--text-primary)]">{title}</h3>
+            </div>
+            <p className="mt-2 text-xs leading-5 text-[color:var(--text-secondary)]">{text}</p>
+          </div>
+        ))}
       </div>
 
       {/* Add Area Form */}
@@ -501,7 +519,7 @@ export default function HandoffTracker({ projectId }: Props) {
                         <div className="flex items-center justify-center gap-1">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: dept.color }} />
                           <span className="truncate">{dept.name}</span>
-                          <span className="text-gray-600 mx-0.5">→</span>
+                          <span className="text-gray-600 mx-0.5">-&gt;</span>
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: departments[i + 1].color }} />
                           <span className="truncate">{departments[i + 1].name}</span>
                         </div>

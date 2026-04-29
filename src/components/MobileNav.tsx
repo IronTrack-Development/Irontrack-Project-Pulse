@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, FolderOpen, Upload, Home, ClipboardList } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/projects", label: "Projects", icon: FolderOpen },
-  { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/", label: "Home", icon: Home },
+  { href: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
+  { href: "/projects", labelKey: "nav.projects", icon: FolderOpen },
+  { href: "/upload", labelKey: "nav.upload", icon: Upload },
+  { href: "/", labelKey: "nav.home", icon: Home },
 ];
 
 export default function MobileNav() {
@@ -27,15 +28,16 @@ export default function MobileNav() {
   const items = [
     ...navItems,
     ...(projectId && !isOnReportFlow
-      ? [{ href: `/projects/${projectId}/report`, label: "Report", icon: ClipboardList }]
+      ? [{ href: `/projects/${projectId}/report`, labelKey: "nav.report", icon: ClipboardList }]
       : []),
   ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] z-50 safe-area-bottom">
       <div className="flex items-center justify-around h-16 px-2">
-        {items.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (label !== "Dashboard" && label !== "Report" && href !== "/dashboard" && pathname.startsWith(href));
+        {items.map(({ href, labelKey, icon: Icon }) => {
+          const label = t(labelKey);
+          const active = pathname === href || (labelKey !== "nav.dashboard" && labelKey !== "nav.report" && href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
               key={href}

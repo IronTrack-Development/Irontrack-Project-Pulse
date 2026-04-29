@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, RefreshCw, ChevronDown, AlertTriangle } from "lucide-react";
 import type { LookaheadGroup, ParsedActivity } from "@/types";
+import { t } from "@/lib/i18n";
+import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface TradeFlag {
   trade: string;
@@ -23,15 +25,15 @@ function statusStyle(status: string): string {
 
 function statusLabel(status: string): string {
   switch (status) {
-    case "in_progress": return "Active";
-    case "complete": return "Done";
-    case "late": return "Late";
-    case "not_started": return "Upcoming";
+    case "in_progress": return t('lookahead.active');
+    case "complete": return t('lookahead.done');
+    case "late": return t('lookahead.late');
+    case "not_started": return t('lookahead.upcoming');
     default: return status;
   }
 }
 
-function ActivityRow({ activity }: { activity: ParsedActivity }) {
+function ActivityRow({ activity, getActivityName }: { activity: ParsedActivity; getActivityName: (name: string) => string }) {
   const isInspection = activity.trade === "Inspection";
   return (
     <div
@@ -43,8 +45,8 @@ function ActivityRow({ activity }: { activity: ParsedActivity }) {
     >
       <div className="flex-1 min-w-0">
         <div className={`text-sm font-medium truncate ${isInspection ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
-          {activity.activity_name}
-          {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">INSPECT</span>}
+          {getActivityName(activity.activity_name)}
+          {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">{t('lookahead.inspect')}</span>}
         </div>
         <div className="flex items-center gap-3 mt-0.5 text-xs text-[color:var(--text-muted)]">
           {activity.start_date && (
@@ -74,6 +76,9 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
   const [tradeFlags, setTradeFlags] = useState<TradeFlag[]>([]);
   const [loading, setLoading] = useState(true);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const { getActivityName } = useActivityTranslations(
+    groups.flatMap((group) => group.trades.flatMap((trade) => trade.activities.map((activity) => activity.activity_name)))
+  );
 
   const fetchData = async (d: number) => {
     setLoading(true);
@@ -95,8 +100,8 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       {/* Controls */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm font-semibold text-[color:var(--text-primary)]">{totalActivities} activities in view</div>
-          <div className="text-xs text-[color:var(--text-muted)]">Grouped by week and trade</div>
+          <div className="text-sm font-semibold text-[color:var(--text-primary)]">{totalActivities} {t('lookahead.activitiesInView')}</div>
+          <div className="text-xs text-[color:var(--text-muted)]">{t('lookahead.groupedByWeekTrade')}</div>
         </div>
         <div className="flex items-center gap-1 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-1">
           {DAY_OPTIONS.map((d) => (
@@ -137,7 +142,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
       ) : groups.length === 0 ? (
         <div className="text-center py-12 text-gray-600">
           <CalendarDays size={32} className="mx-auto mb-3 opacity-30" />
-          <p>No activities in this window.</p>
+          <p>{t('lookahead.noActivitiesWindow')}</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -155,7 +160,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                   <div className="flex items-center gap-3">
                     <CalendarDays size={15} className="text-[#F97316]" />
                     <span className="font-semibold text-[color:var(--text-primary)] text-sm">{group.weekLabel}</span>
-                    <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek} activit{totalInWeek !== 1 ? "ies" : "y"}</span>
+                    <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek} {totalInWeek !== 1 ? t('lookahead.activities') : t('lookahead.activity')}</span>
                   </div>
                   <ChevronDown
                     size={16}
@@ -175,7 +180,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                           {flagged && <AlertTriangle size={10} className="text-[#EAB308]" />}
                         </div>
                         <div className="space-y-1.5">
-                          {activities.map((a) => <ActivityRow key={a.id} activity={a} />)}
+                          {activities.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
                         </div>
                       </div>
                       );

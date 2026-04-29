@@ -72,6 +72,55 @@ body {
   --accent-hover: #ea6c10;
 }
 
+.field-theme {
+  --bg-primary: #050505;
+  --bg-secondary: #0F1115;
+  --bg-tertiary: #1B1F27;
+  --bg-hover: #28303D;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D1D5DB;
+  --text-muted: #A3AAB7;
+  --border-primary: #3B4658;
+  --border-secondary: #596579;
+  --accent: #FFB020;
+  --accent-hover: #F59E0B;
+}
+
+.field-theme body {
+  text-rendering: optimizeLegibility;
+}
+
+.field-theme button,
+.field-theme a,
+.field-theme input,
+.field-theme select,
+.field-theme textarea {
+  min-height: 44px;
+}
+
+.field-theme button,
+.field-theme a {
+  -webkit-tap-highlight-color: rgba(255, 176, 32, 0.28);
+}
+
+.field-theme input,
+.field-theme select,
+.field-theme textarea {
+  font-size: 16px;
+}
+
+.field-theme :focus-visible {
+  outline: 3px solid #FFB020;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .field-theme {
+    --text-secondary: #E5E7EB;
+    --text-muted: #C4CAD4;
+  }
+}
+
 /* Theme-aware utility overrides */
 .theme-bg-primary { background-color: var(--bg-primary); }
 .theme-bg-secondary { background-color: var(--bg-secondary); }

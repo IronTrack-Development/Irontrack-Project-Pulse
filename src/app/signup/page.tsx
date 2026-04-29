@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -79,17 +80,17 @@ export default function SignupPage() {
               <CheckCircle className="w-8 h-8" style={{ color: "#22C55E" }} />
             </div>
             <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-              Account created!
+              {t('auth.accountCreated')}
             </h1>
             <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Check your email to confirm your account, then sign in.
+              {t('auth.checkEmail')}
             </p>
             <Link
               href="/login"
               className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
               style={{ background: "#E85D1C" }}
             >
-              Go to login
+              {t('action.goToLogin')}
             </Link>
           </div>
         </div>
@@ -107,7 +108,7 @@ export default function SignupPage() {
           style={{ color: "rgba(13,13,13,0.55)" }}
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to home
+          {t('action.backToHome')}
         </Link>
 
         {/* Logo */}
@@ -130,10 +131,10 @@ export default function SignupPage() {
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                General Contractor
+                {t('auth.generalContractor')}
               </h1>
               <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
-                $19.99/month — schedule intelligence
+                {t('auth.gcPrice')}
               </p>
             </div>
           </div>
@@ -147,7 +148,7 @@ export default function SignupPage() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Email
+                {t('auth.email')}
               </label>
               <input
                 id="email"
@@ -167,7 +168,7 @@ export default function SignupPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <input
@@ -197,7 +198,7 @@ export default function SignupPage() {
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
-                Confirm Password
+                {t('auth.confirmPassword')}
               </label>
               <input
                 id="confirmPassword"
@@ -224,36 +225,36 @@ export default function SignupPage() {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating account...
+                  {t('action.creatingAccount')}
                 </>
               ) : (
-                "Create Account"
+                t('action.createAccount')
               )}
             </button>
 
             <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>
-              By creating an account, you agree to our{" "}
+              {t('auth.termsAgree')}{" "}
               <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
-                Terms of Service
+                {t('auth.termsOfService')}
               </Link>{" "}
-              and{" "}
+              {t('auth.and')}{" "}
               <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
-                Privacy Policy
+                {t('auth.privacyPolicy')}
               </Link>.
             </p>
           </form>
 
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Already have an account?{" "}
+              {t('auth.alreadyHaveAccount')}{" "}
               <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                Sign in
+                {t('action.signIn')}
               </Link>
             </p>
             <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Subcontractor?{" "}
+              {t('auth.subQuestion')}{" "}
               <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
-                Sign up here
+                {t('auth.signUpHere')}
               </Link>
             </p>
           </div>
