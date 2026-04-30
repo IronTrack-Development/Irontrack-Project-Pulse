@@ -30,7 +30,7 @@ export default function LandingPage() {
           <MobileMenu />
 
           <nav className="hidden md:flex items-center gap-8">
-            {["Features", "Who We Serve", "Integrations", "Pricing"].map((item) => (
+            {["Workflow", "Features", "Who We Serve", "Pricing"].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/ /g, "-")}`}
@@ -50,13 +50,13 @@ export default function LandingPage() {
             >
               Sign in
             </Link>
-            <Link
-              href="/signup"
+            <a
+              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
               className="text-sm px-5 py-2.5 rounded-xl font-bold text-white transition-colors"
               style={{ background: "#E85D1C" }}
             >
-              Get Started
-            </Link>
+              Book Demo
+            </a>
           </div>
         </div>
       </header>
@@ -66,7 +66,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              The Complete Field Management Platform
+              Daily Field Pulse For GCs And Subs
             </p>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
@@ -75,17 +75,26 @@ export default function LandingPage() {
               Run Your Job.<br />
               <em className="font-medium" style={{ color: "#E85D1C" }}>Don&apos;t Chase It.</em>
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Schedule intelligence. Daily field ops. Safety compliance. Trade coordination. Subcontractor management. One app, one price - built by field operators who&apos;ve lived it.
+            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
+              Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                href="/signup"
+              <a
+                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
                 className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
                 style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
               >
+                <Calendar className="w-5 h-5" />
+                Book a Demo
+                <ArrowRight className="w-5 h-5" />
+              </a>
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
+                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
+              >
                 <HardHat className="w-5 h-5" />
-                I&apos;m a General Contractor
+                GC Signup
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
@@ -94,9 +103,84 @@ export default function LandingPage() {
                 style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
               >
                 <Briefcase className="w-5 h-5" />
-                I&apos;m a Subcontractor
+                Sub Signup
                 <ArrowRight className="w-5 h-5" />
               </Link>
+            </div>
+            <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
+              {[
+                {
+                  label: "6:15 AM",
+                  title: "Morning huddle locked in",
+                  body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
+                  icon: Truck,
+                  color: "#E85D1C",
+                },
+                {
+                  label: "11:40 AM",
+                  title: "Blocker raised before it costs a day",
+                  body: "Field notes, photos, and caveats are captured while the problem is still fresh.",
+                  icon: AlertTriangle,
+                  color: "#DC2626",
+                },
+                {
+                  label: "3:55 PM",
+                  title: "Next crew gets the handoff",
+                  body: "What is ready, what is missing, and where to start is already waiting for them.",
+                  icon: ArrowRightLeft,
+                  color: "#3B82F6",
+                },
+              ].map((item) => (
+                <div key={item.title} className="rounded-2xl p-5 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>{item.label}</span>
+                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
+                  </div>
+                  <h3 className="text-base font-extrabold mb-2" style={{ color: "#0D0D0D" }}>{item.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" className="py-12 md:py-16 border-y" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0D0D0D" }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-12 items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
+                The Problem We Are Built For
+              </p>
+              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5 text-white" style={{ letterSpacing: "-0.03em" }}>
+                Stop making every crew start from zero.
+              </h2>
+              <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.68)" }}>
+                Duct rough-in leaves. Piping walks in. Trim follows. Startup finishes. Too often, nobody hands off what changed, what is missing, or what the GC needs to know. IronTrack turns that chaos into a daily field rhythm.
+              </p>
+              <a
+                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
+                style={{ background: "#E85D1C" }}
+              >
+                See the workflow
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["Dispatch", "Who is going where, with what scope, material notes, and safety focus."],
+                ["Check-In", "Foremen confirm arrival, manpower, site conditions, and plan for the day."],
+                ["Production", "Quantities, photos, progress notes, and work completed while it is still fresh."],
+                ["Blockers", "Caveats, delays, missing material, access issues, and GC-facing risk history."],
+                ["Handoffs", "Department-to-department readiness so the next crew does not walk in blind."],
+                ["GC Pulse", "A clean view of what is happening without burying the field in paperwork."],
+              ].map(([title, body]) => (
+                <div key={title} className="rounded-2xl p-5 border" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)" }}>
+                  <h3 className="text-base font-extrabold mb-2 text-white">{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.62)" }}>{body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -626,10 +710,10 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Pricing
+              Founder Pricing
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Plans for every size crew.
+              Simple pricing while we build with early crews.
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -643,7 +727,7 @@ export default function LandingPage() {
                 <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
                   $10<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
                 </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Per company</p>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Beta pricing per company</p>
               </div>
               <ul className="space-y-2.5 mb-6">
                 {[
@@ -685,7 +769,7 @@ export default function LandingPage() {
                 <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
                   $19.99<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
                 </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Per user · Full platform</p>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Founder beta pricing</p>
               </div>
               <ul className="space-y-2.5 mb-6">
                 {[
@@ -697,7 +781,7 @@ export default function LandingPage() {
                   "Documents: submittals, RFIs with AI, drawings",
                   "Sub management + Ready Check + QR sharing",
                   "Punch list + T&M tracking",
-                  "Up to 50 projects",
+                  "Unlimited invited subs and foremen",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
@@ -710,7 +794,7 @@ export default function LandingPage() {
                 className="block w-full text-center px-8 py-4 text-white rounded-xl text-lg font-bold transition-all"
                 style={{ background: "#E85D1C" }}
               >
-                Get Started
+                Start Founder Plan
               </Link>
             </div>
             {/* Enterprise Plan */}
@@ -751,7 +835,7 @@ export default function LandingPage() {
                 Book a Demo
               </a>
               <p className="text-center text-xs mt-3" style={{ color: "rgba(13,13,13,0.35)" }}>
-                Demo coming soon
+                We will walk your real workflow
               </p>
             </div>
           </div>

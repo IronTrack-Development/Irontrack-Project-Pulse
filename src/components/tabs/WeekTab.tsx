@@ -5,7 +5,7 @@ import { CalendarDays, Loader2, Share2, QrCode } from "lucide-react";
 import ActivityDrawer from "@/components/ActivityDrawer";
 import WeekQRModal from "@/components/WeekQRModal";
 import type { ParsedActivity } from "@/types";
-import { t } from "@/lib/i18n";
+import { getLanguage, t } from "@/lib/i18n";
 import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
@@ -93,9 +93,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
 
   const weekStart = new Date(data.weekStart);
   const weekEnd = new Date(data.weekEnd);
+  const locale = getLanguage() === "es" ? "es-US" : "en-US";
   const formatDateRange = () => {
     const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
-    return `${weekStart.toLocaleDateString("en-US", options)} - ${weekEnd.toLocaleDateString("en-US", options)}`;
+    return `${weekStart.toLocaleDateString(locale, options)} - ${weekEnd.toLocaleDateString(locale, options)}`;
   };
 
   const handleShareClick = () => {
@@ -125,9 +126,9 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     const finish = new Date(finishDate);
     
     const monthDay = (date: Date) => 
-      date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      date.toLocaleDateString(locale, { month: "short", day: "numeric" });
     const day = (date: Date) => 
-      date.toLocaleDateString("en-US", { day: "numeric" });
+      date.toLocaleDateString(locale, { day: "numeric" });
     
     if (startDate === finishDate) {
       return monthDay(start);
@@ -135,7 +136,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     
     // Same month
     if (start.getMonth() === finish.getMonth() && start.getFullYear() === finish.getFullYear()) {
-      const month = start.toLocaleDateString("en-US", { month: "short" });
+      const month = start.toLocaleDateString(locale, { month: "short" });
       return `${month} ${day(start)}-${day(finish)}`;
     }
     
@@ -178,7 +179,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
     setSelectedIds(new Set());
   };
 
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayFormatter = new Intl.DateTimeFormat(locale, { weekday: "short" });
   const daysInWeek = Array.from({ length: 7 }, (_, i) => {
     const day = new Date(weekStart);
     day.setDate(weekStart.getDate() + i);
@@ -211,7 +212,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
         ) : (
           <>
             <div>
-              <div className="text-xs text-[color:var(--text-muted)]">Week {weekNumber}</div>
+              <div className="text-xs text-[color:var(--text-muted)]">{t('week.week')} {weekNumber}</div>
               <div className="text-sm font-medium text-[color:var(--text-primary)]">{formatDateRange()}</div>
             </div>
             <div className="flex items-center gap-2">
@@ -246,9 +247,9 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
           return (
             <div key={dayKey} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
               <div className="bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-2">
-                <div className="text-xs text-[color:var(--text-muted)]">{dayNames[day.getDay()]}</div>
+                <div className="text-xs text-[color:var(--text-muted)]">{dayFormatter.format(day)}</div>
                 <div className="text-sm font-medium text-[color:var(--text-primary)]">
-                  {day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  {day.toLocaleDateString(locale, { month: "short", day: "numeric" })}
                 </div>
               </div>
               <div className="divide-y divide-[#1F1F25]">
@@ -279,9 +280,9 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                           <div className="flex-1 min-w-0">
                             <div className="text-sm text-[color:var(--text-primary)] mb-1">{getActivityName(activity.activity_name)}</div>
                             <div className="text-xs text-[color:var(--text-muted)]">
-                              {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                              {new Date(activity.start_date).toLocaleDateString(locale, { month: "short", day: "numeric" })}
                               {" → "}
-                              {new Date(activity.finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                              {new Date(activity.finish_date).toLocaleDateString(locale, { month: "short", day: "numeric" })}
                             </div>
                           </div>
                           <div className="text-right shrink-0">
@@ -365,10 +366,10 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                     )}
                     <td className="px-4 py-3 text-sm text-[color:var(--text-primary)]">{getActivityName(activity.activity_name)}</td>
                     <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
-                      {new Date(activity.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      {new Date(activity.start_date).toLocaleDateString(locale, { month: "short", day: "numeric" })}
                     </td>
                     <td className="px-4 py-3 text-sm text-[color:var(--text-secondary)]">
-                      {new Date(activity.finish_date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      {new Date(activity.finish_date).toLocaleDateString(locale, { month: "short", day: "numeric" })}
                     </td>
                     <td className="px-4 py-3 text-sm text-right">
                       <span className={`font-semibold ${

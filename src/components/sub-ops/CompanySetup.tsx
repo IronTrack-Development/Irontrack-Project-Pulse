@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { HardHat, Building2, Save } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 const TRADES = [
   { value: "electrical", label: "Electrical" },
@@ -36,7 +37,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
 
   const handleSave = async () => {
     if (!companyName.trim()) {
-      setError("Company name is required");
+      setError(t('subops.companyRequired'));
       return;
     }
     setSaving(true);
@@ -60,10 +61,10 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         onComplete(id);
       } else {
         const data = await res.json().catch(() => ({}));
-        setError(data.error || "Failed to create company");
+        setError(data.error || t('subops.createFailed'));
       }
     } catch {
-      setError("Network error. Please try again.");
+      setError(t('subops.networkError'));
     }
     setSaving(false);
   };
@@ -76,9 +77,9 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F97316]/10 mb-2">
             <HardHat size={28} className="text-[#F97316]" />
           </div>
-          <h2 className="text-xl font-bold text-[color:var(--text-primary)]">Set Up Your Company</h2>
+          <h2 className="text-xl font-bold text-[color:var(--text-primary)]">{t('subops.setUpCompany')}</h2>
           <p className="text-sm text-[color:var(--text-muted)]">
-            Create your sub ops company to manage foremen, dispatches, and production tracking.
+            {t('subops.setupDesc')}
           </p>
         </div>
 
@@ -86,7 +87,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         <div className="space-y-4">
           <div>
             <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">
-              Company Name <span className="text-red-400">*</span>
+              {t('subops.companyName')} <span className="text-red-400">*</span>
             </label>
             <div className="relative">
               <Building2 size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--text-muted)]" />
@@ -100,13 +101,13 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Primary Trade</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('subops.primaryTrade')}</label>
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
             >
-              <option value="">Select a trade...</option>
+              <option value="">{t('subops.selectTrade')}</option>
               {TRADES.map((t) => (
                 <option key={t.value} value={t.value}>{t.label}</option>
               ))}
@@ -115,16 +116,16 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Contact Name</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('subops.contactName')}</label>
               <input
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
-                placeholder="Your name"
+                placeholder={t('subops.yourName')}
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Phone</label>
+              <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('subops.phone')}</label>
               <input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -135,7 +136,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Email</label>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">{t('subops.email')}</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -157,7 +158,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors min-h-[44px]"
         >
           <Save size={16} />
-          {saving ? "Creating..." : "Create Company"}
+          {saving ? t('subops.creating') : t('subops.createCompany')}
         </button>
       </div>
     </div>

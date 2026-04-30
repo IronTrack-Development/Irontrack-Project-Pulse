@@ -8,6 +8,7 @@ import {
   Users, CloudRain, Activity, Printer
 } from "lucide-react";
 import type { IssueReport, ReportStatus } from "@/types";
+import { getLanguage, t } from "@/lib/i18n";
 
 interface Props {
   projectId: string;
@@ -16,16 +17,17 @@ interface Props {
 function statusBadge(status: ReportStatus) {
   switch (status) {
     case "draft":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-[color:var(--text-secondary)]">Draft</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-700 text-[color:var(--text-secondary)]">{t('status.draft')}</span>;
     case "generated":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#22C55E]/15 text-[#22C55E]">Generated</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#22C55E]/15 text-[#22C55E]">{t('status.completed')}</span>;
     case "shared":
-      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">Shared</span>;
+      return <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#3B82F6]">{t('action.share')}</span>;
   }
 }
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
+  const locale = getLanguage() === "es" ? "es-US" : "en-US";
+  return new Date(dateStr).toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -85,10 +87,10 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <CalendarDays size={16} className="text-[#F97316]" />
-          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
+          <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('reports.weeklyLogReport')}</h3>
         </div>
         <p className="text-xs text-[color:var(--text-muted)] mb-4">
-          Generate a summary from this week&apos;s daily logs — crew-hours, progress, weather, and issues.
+          {t('reports.weeklySummaryDesc')}
         </p>
         <button
           onClick={generate}
@@ -96,15 +98,15 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
           className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
         >
           {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}
-          Generate Weekly Report
+          {t('reports.generateWeekly')}
         </button>
       </div>
     );
   }
 
   if (!data) return null;
-
-  const weekLabel = `${new Date(data.weekStart + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${new Date(data.weekEnd + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+  const locale = getLanguage() === "es" ? "es-US" : "en-US";
+  const weekLabel = `${new Date(data.weekStart + "T12:00:00").toLocaleDateString(locale, { month: "short", day: "numeric" })} - ${new Date(data.weekEnd + "T12:00:00").toLocaleDateString(locale, { month: "short", day: "numeric" })}`;
 
   return (
     <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
@@ -112,9 +114,9 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <CalendarDays size={16} className="text-[#F97316]" />
-            <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Weekly Log Report</h3>
+            <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('reports.weeklyLogReport')}</h3>
           </div>
-          <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} · {data.logCount} log{data.logCount !== 1 ? "s" : ""}</div>
+          <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} - {data.logCount} {data.logCount === 1 ? t('dailylog.dailyLog') : t('dailylog.dailyLogs')}</div>
         </div>
         <div className="flex gap-2">
           <button
@@ -129,7 +131,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
             className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <Printer size={12} />
-            Export PDF
+            {t('reports.exportPdf')}
           </button>
         </div>
       </div>
@@ -138,22 +140,22 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Users size={14} className="mx-auto text-[#F97316] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.totalCrewHours}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Crew-Hours</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('reports.crewHours')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <Activity size={14} className="mx-auto text-[#22C55E] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.activitiesCompleted}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Completed</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('reports.completed')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <CloudRain size={14} className="mx-auto text-[#3B82F6] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.weatherImpactDays}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Weather Days</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('reports.weatherDays')}</div>
         </div>
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
           <AlertTriangle size={14} className="mx-auto text-[#EF4444] mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.lostCrewHours}</div>
-          <div className="text-[10px] text-[color:var(--text-muted)]">Lost Hours</div>
+          <div className="text-[10px] text-[color:var(--text-muted)]">{t('reports.lostHours')}</div>
         </div>
       </div>
     </div>
@@ -211,10 +213,10 @@ export default function ReportsTab({ projectId }: Props) {
         <div>
           <h2 className="text-[color:var(--text-primary)] font-bold text-lg flex items-center gap-2">
             <ClipboardList size={18} className="text-[#F97316]" />
-            Observations
+            {t('reports.observations')}
           </h2>
           <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
-            {reports.length} observation{reports.length !== 1 ? "s" : ""} generated
+            {reports.length} {reports.length === 1 ? t('reports.observationGenerated') : t('reports.observationsGenerated')}
           </p>
         </div>
         <div className="flex gap-2">
@@ -229,7 +231,7 @@ export default function ReportsTab({ projectId }: Props) {
             className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <ClipboardList size={14} />
-            New Observation
+            {t('reports.newObservation')}
           </Link>
         </div>
       </div>
@@ -239,16 +241,16 @@ export default function ReportsTab({ projectId }: Props) {
           <div className="w-14 h-14 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center mb-4">
             <FileText size={24} className="text-gray-600" />
           </div>
-          <p className="text-[color:var(--text-secondary)] font-semibold mb-1">No observations yet</p>
+          <p className="text-[color:var(--text-secondary)] font-semibold mb-1">{t('reports.noObservations')}</p>
           <p className="text-gray-600 text-sm mb-6">
-            Start your first observation to document field conditions.
+            {t('reports.startObservation')}
           </p>
           <Link
             href={`/projects/${projectId}/report`}
             className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <ClipboardList size={16} />
-            New Observation
+            {t('reports.newObservation')}
           </Link>
         </div>
       ) : (
@@ -305,11 +307,11 @@ export default function ReportsTab({ projectId }: Props) {
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
                     <span className="flex items-center gap-1">
                       <AlertTriangle size={10} className="text-[#EF4444]" />
-                      {report.issue_count} issue{report.issue_count !== 1 ? "s" : ""}
+                      {report.issue_count} {report.issue_count === 1 ? t('reports.issue') : t('reports.issues')}
                     </span>
                     <span>{formatDate(report.report_date)}</span>
                     {report.trade && <span>{report.trade}</span>}
-                    {report.prepared_by && <span>By {report.prepared_by}</span>}
+                    {report.prepared_by && <span>{t('reports.by')} {report.prepared_by}</span>}
                   </div>
                 </div>
               </div>
@@ -322,7 +324,7 @@ export default function ReportsTab({ projectId }: Props) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
                 >
-                  View Observation
+                  {t('reports.viewObservation')}
                   <ChevronRight size={12} />
                 </a>
               )}

@@ -14,6 +14,7 @@ import type { CoordinationMeeting } from "@/types";
 import NewMeetingModal from "./NewMeetingModal";
 import MeetingDetail from "./MeetingDetail";
 import ActionTracker from "./ActionTracker";
+import { getLanguage, t } from "@/lib/i18n";
 
 interface CoordinationDashboardProps {
   projectId: string;
@@ -89,7 +90,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
             onClick={() => setView("list")}
             className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-h-[44px] px-2"
           >
-            ← Meetings
+            {t('action.back')} {t('coordination.meetings')}
           </button>
         </div>
         <ActionTracker projectId={projectId} />
@@ -124,11 +125,11 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
               </div>
               <div>
                 <span className="text-[color:var(--text-primary)] text-sm font-medium">
-                  {actionSummary.open} open action item{actionSummary.open !== 1 ? "s" : ""}
+                  {actionSummary.open} {actionSummary.open === 1 ? t('coordination.openActionItem') : t('coordination.openActionItems')}
                 </span>
                 {actionSummary.overdue > 0 && (
                   <span className="text-red-400 text-sm ml-2">
-                    · {actionSummary.overdue} overdue
+                    - {actionSummary.overdue} {t('coordination.overdue')}
                   </span>
                 )}
               </div>
@@ -142,14 +143,14 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Handshake size={20} className="text-[#F97316]" />
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Coordination Meetings</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('coordination.coordinationMeetings')}</h2>
         </div>
         <button
           onClick={() => setShowNewModal(true)}
           className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
         >
           <Plus size={16} />
-          New Meeting
+          {t('coordination.newMeeting')}
         </button>
       </div>
 
@@ -164,13 +165,13 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {!loading && meetings.length === 0 && (
         <div className="text-center py-16">
           <Handshake size={48} className="text-gray-600 mx-auto mb-4" />
-          <p className="text-[color:var(--text-secondary)] text-lg mb-2">No coordination meetings yet</p>
-          <p className="text-[color:var(--text-muted)] text-sm mb-6">Schedule your first meeting to start tracking trade coordination.</p>
+          <p className="text-[color:var(--text-secondary)] text-lg mb-2">{t('coordination.noMeetings')}</p>
+          <p className="text-[color:var(--text-muted)] text-sm mb-6">{t('coordination.scheduleFirst')}</p>
           <button
             onClick={() => setShowNewModal(true)}
             className="px-6 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
-            Schedule Meeting
+            {t('coordination.scheduleMeeting')}
           </button>
         </div>
       )}
@@ -199,7 +200,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                     </span>
                   </div>
                   <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
-                    <span>{new Date(meeting.meeting_date + "T00:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</span>
+                    <span>{new Date(meeting.meeting_date + "T00:00:00").toLocaleDateString(getLanguage() === "es" ? "es-US" : "en-US", { weekday: "short", month: "short", day: "numeric" })}</span>
                     <span className="text-gray-700">·</span>
                     <span>{meeting.meeting_type.replace(/_/g, " ")}</span>
                     {meeting.facilitator && (
@@ -212,10 +213,10 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                 </div>
                 <div className="flex items-center gap-3 shrink-0 text-xs">
                   {(meeting.agenda_count ?? 0) > 0 && (
-                    <span className="text-[color:var(--text-muted)]">{meeting.agenda_count} agenda</span>
+                    <span className="text-[color:var(--text-muted)]">{meeting.agenda_count} {t('coordination.agenda')}</span>
                   )}
                   {(meeting.open_action_count ?? 0) > 0 && (
-                    <span className="text-[#F97316]">{meeting.open_action_count} open</span>
+                    <span className="text-[#F97316]">{meeting.open_action_count} {t('coordination.open')}</span>
                   )}
                   <ChevronRight size={16} className="text-gray-600" />
                 </div>

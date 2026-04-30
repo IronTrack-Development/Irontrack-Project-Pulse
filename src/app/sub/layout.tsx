@@ -17,6 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
+import { t } from "@/lib/i18n";
 
 const subNavItems = [
   { href: "/sub/dashboard", label: "Dashboard", icon: LayoutDashboard, helper: "Daily command" },
@@ -24,10 +25,18 @@ const subNavItems = [
   { href: "/sub/check-in", label: "Daily Check-In", icon: ClipboardCheck, helper: "Field reports" },
   { href: "/sub/production", label: "Production", icon: BarChart3, helper: "Quantities" },
   { href: "/sub/blockers", label: "Blockers", icon: AlertTriangle, helper: "Issues to clear" },
-  { href: "/sub/sops", label: "SOPs", icon: BookOpen, helper: "Crew standards" },
   { href: "/sub/handoffs", label: "Handoffs", icon: ArrowRightLeft, helper: "Area turnover" },
+  { href: "/sub/sops", label: "SOPs", icon: BookOpen, helper: "Crew standards" },
   { href: "/sub/crew", label: "Crew", icon: Users, helper: "People" },
   { href: "/sub/foremen", label: "Foremen", icon: HardHat, helper: "Leads" },
+];
+
+const fieldLoopItems = [
+  { href: "/sub/dispatch", labelKey: "subops.plan", short: "Dispatch" },
+  { href: "/sub/check-in", labelKey: "subops.start", short: "Check in" },
+  { href: "/sub/production", labelKey: "subops.track", short: "Production" },
+  { href: "/sub/blockers", labelKey: "subops.clear", short: "Blockers" },
+  { href: "/sub/handoffs", labelKey: "subops.handOff", short: "Turnover" },
 ];
 
 export default function SubLayout({ children }: { children: React.ReactNode }) {
@@ -58,6 +67,35 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
               </span>
             </span>
           </Link>
+        </div>
+
+        <div className="border-b border-white/10 px-4 py-4">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">{t('subops.todaysLoop')}</p>
+            <span className="rounded-full bg-[#22C55E]/10 px-2 py-1 text-[10px] font-bold text-[#86EFAC]">{t('subops.fieldReady')}</span>
+          </div>
+          <div className="space-y-1.5">
+            {fieldLoopItems.map((item, index) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors ${
+                    active ? "border-[#F97316]/40 bg-[#F97316]/15 text-white" : "border-white/10 bg-white/[0.03] text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <span className={`grid h-6 w-6 place-items-center rounded-full text-[10px] font-black ${active ? "bg-[#F97316] text-white" : "bg-white/10 text-slate-500"}`}>
+                    {index + 1}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-black">{t(item.labelKey)}</span>
+                    <span className="block text-[11px] text-slate-500">{item.short}</span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
@@ -94,7 +132,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
 
         <div className="space-y-3 border-t border-white/10 px-4 py-4">
           <div className="rounded-lg border border-[#22C55E]/20 bg-[#22C55E]/10 p-3">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">Field ready</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">{t('subops.fieldReady')}</p>
             <p className="mt-1 text-xs leading-5 text-slate-400">Built for fast updates, clear blockers, and clean GC reports.</p>
           </div>
           <Link

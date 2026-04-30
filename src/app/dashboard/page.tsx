@@ -14,6 +14,8 @@ import {
   TrendingDown,
   Flag,
   Calendar,
+  Send,
+  ClipboardList,
 } from "lucide-react";
 import AddProjectModal from "@/components/AddProjectModal";
 import DashboardOnboardingWizard from "@/components/DashboardOnboardingWizard";
@@ -162,6 +164,79 @@ export default function Dashboard() {
             </Link>
           </div>
         )}
+
+        {!loading && projects.length > 0 && (
+          <section className="mb-8 overflow-hidden rounded-2xl border border-[#F97316]/20 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(15,23,42,0.72)_48%,rgba(59,130,246,0.12))] p-5 shadow-[0_24px_75px_rgba(0,0,0,0.2)]">
+            <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#F97316]">
+                  <Calendar size={14} />
+                  Today&apos;s Operating Loop
+                </div>
+                <h2 className="mt-2 text-xl font-black text-white">Start with the job pulse, then capture what changes it.</h2>
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-300">
+                  Review today&apos;s plan, log what happened, flag what can hurt tomorrow, and keep subs pointed at the next clean handoff.
+                </p>
+              </div>
+              <Link
+                href={`/projects/${projects[0].id}`}
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-2 text-sm font-black text-white"
+              >
+                Open command center
+                <Flag size={15} />
+              </Link>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-4">
+              {[
+                {
+                  href: `/projects/${projects[0].id}`,
+                  label: "Review Today",
+                  body: projects[0].stats.todayActivity?.activity_name ?? "Open the project pulse and check the day plan.",
+                  icon: Calendar,
+                  color: "#3B82F6",
+                },
+                {
+                  href: `/projects/${projects[0].id}/daily-log`,
+                  label: "Log The Field",
+                  body: "Weather, manpower, delays, work performed, and photos.",
+                  icon: ClipboardList,
+                  color: "#22C55E",
+                },
+                {
+                  href: `/projects/${projects[0].id}/report`,
+                  label: "Capture Issue",
+                  body: "Create a report before the detail gets lost.",
+                  icon: AlertTriangle,
+                  color: "#F97316",
+                },
+                {
+                  href: `/projects/${projects[0].id}`,
+                  label: "Align Subs",
+                  body: "Check readiness, reports, caveats, and the next handoff.",
+                  icon: Send,
+                  color: "#EAB308",
+                },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="group rounded-xl border border-white/10 bg-black/20 p-4 transition-all hover:-translate-y-0.5 hover:border-white/20"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-10 w-10 place-items-center rounded-lg bg-white/10" style={{ color: item.color }}>
+                      <item.icon size={18} />
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Next</span>
+                  </div>
+                  <h3 className="mt-4 text-sm font-black text-white">{item.label}</h3>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{item.body}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Summary bar */}
         {projects.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

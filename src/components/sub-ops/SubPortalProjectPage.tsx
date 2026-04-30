@@ -2,7 +2,20 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Building2, FolderOpen, Loader2, RefreshCw } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  AlertTriangle,
+  ArrowRightLeft,
+  ArrowUpRight,
+  BarChart3,
+  Building2,
+  ClipboardCheck,
+  FolderOpen,
+  Loader2,
+  RefreshCw,
+  Send,
+} from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface SubProject {
   sub_id: string;
@@ -32,6 +45,44 @@ interface Props {
   children: (projectId: string) => React.ReactNode;
 }
 
+const FIELD_LOOP = [
+  {
+    href: "/sub/dispatch",
+    label: "Dispatch",
+    verbKey: "subops.planDay",
+    detailKey: "subops.dispatchDetail",
+    icon: Send,
+  },
+  {
+    href: "/sub/check-in",
+    label: "Check-In",
+    verbKey: "subops.startClean",
+    detailKey: "subops.checkinDetail",
+    icon: ClipboardCheck,
+  },
+  {
+    href: "/sub/production",
+    label: "Production",
+    verbKey: "subops.trackOutput",
+    detailKey: "subops.productionDetail",
+    icon: BarChart3,
+  },
+  {
+    href: "/sub/blockers",
+    label: "Blockers",
+    verbKey: "subops.protectCaveat",
+    detailKey: "subops.blockersDetail",
+    icon: AlertTriangle,
+  },
+  {
+    href: "/sub/handoffs",
+    label: "Handoffs",
+    verbKey: "subops.setUpNextCrew",
+    detailKey: "subops.handoffsDetail",
+    icon: ArrowRightLeft,
+  },
+];
+
 export default function SubPortalProjectPage({
   title,
   eyebrow,
@@ -40,6 +91,7 @@ export default function SubPortalProjectPage({
   actionLabel,
   children,
 }: Props) {
+  const pathname = usePathname();
   const [data, setData] = useState<DashboardData | null>(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -193,6 +245,43 @@ export default function SubPortalProjectPage({
           </div>
         )}
       </div>
+
+      <section className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 shadow-[0_18px_55px_rgba(0,0,0,0.12)]">
+        <div className="mb-3 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">{t('subops.dailyFieldLoop')}</p>
+            <h2 className="text-sm font-black text-[color:var(--text-primary)]">{t('subops.nextAction')}</h2>
+          </div>
+          <p className="text-xs text-[color:var(--text-muted)]">{t('subops.loopSummary')}</p>
+        </div>
+        <div className="grid gap-2 md:grid-cols-5">
+          {FIELD_LOOP.map((step, index) => {
+            const active = pathname === step.href;
+            const Icon = step.icon;
+            return (
+              <Link
+                key={step.href}
+                href={step.href}
+                className={`group rounded-lg border p-3 transition-all ${
+                  active
+                    ? "border-[#F97316]/40 bg-[#F97316]/10 shadow-[0_12px_35px_rgba(249,115,22,0.12)]"
+                    : "border-[var(--border-primary)] bg-[var(--bg-primary)] hover:border-[#3B82F6]/40"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${active ? "bg-[#F97316] text-white" : "bg-[var(--bg-tertiary)] text-[#93C5FD]"}`}>
+                    <Icon size={15} />
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--text-muted)]">0{index + 1}</span>
+                </div>
+                <p className="mt-3 text-sm font-black text-[color:var(--text-primary)]">{step.label}</p>
+                <p className="mt-1 text-xs font-bold text-[color:var(--text-secondary)]">{t(step.verbKey)}</p>
+                <p className="mt-1 text-xs leading-5 text-[color:var(--text-muted)]">{t(step.detailKey)}</p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
       {selectedProjectId && children(selectedProjectId)}
     </div>

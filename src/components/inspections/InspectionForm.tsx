@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Phone, CheckCircle } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface Jurisdiction {
   id: string;
@@ -325,7 +326,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-2 bg-green-500/20 text-green-300 rounded-lg text-xs font-medium hover:bg-green-500/30 transition-colors min-h-[44px]"
                 >
-                  Open Portal <ExternalLink size={12} />
+                  {t('action.openPortal')} <ExternalLink size={12} />
                 </a>
               )}
               {banner.phone && (
@@ -333,7 +334,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                   href={`tel:${banner.phone}`}
                   className="inline-flex items-center gap-1.5 px-3 py-2 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-medium hover:bg-blue-500/30 transition-colors min-h-[44px]"
                 >
-                  Call Now <Phone size={12} />
+                  {t('action.callNow')} <Phone size={12} />
                 </a>
               )}
             </div>
@@ -353,14 +354,14 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
           {/* Inspection Type */}
           <div className="md:col-span-2">
             <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">
-              Inspection Type <span className="text-red-400">*</span>
+              {t('inspection.inspectionType')} <span className="text-red-400">*</span>
             </label>
             <select
               value={inspectionType}
               onChange={(e) => setInspectionType(e.target.value)}
               className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
             >
-              <option value="">Select inspection type...</option>
+              <option value="">{t('inspection.selectType')}</option>
               {inspectionCodes.length > 0 ? (
                 // Database-driven jurisdiction-specific codes
                 (() => {
@@ -392,19 +393,19 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
 
           {/* Permit Number */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Permit #</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.permit')}</label>
             <input
               type="text"
               value={permitNumber}
               onChange={(e) => setPermitNumber(e.target.value)}
-              placeholder="Enter permit number"
+              placeholder={t('inspection.enterPermit')}
               className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Requested Date */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Requested Date</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.requestedDate')}</label>
             <input
               type="date"
               value={requestedDate}
@@ -415,31 +416,31 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
 
           {/* Contact Name */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Contact Name</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.contactName')}</label>
             <input
               type="text"
               value={contactName}
               onChange={(e) => setContactName(e.target.value)}
-              placeholder="Your name"
+              placeholder={t('inspection.yourName')}
               className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Contact Phone */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Contact Phone</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.contactPhone')}</label>
             <input
               type="tel"
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
-              placeholder="Your phone number"
+              placeholder={t('inspection.yourPhone')}
               className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
             />
           </div>
 
           {/* Time Window */}
           <div>
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Time Window</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.timeWindow')}</label>
             <div className="flex gap-2">
               {TIME_WINDOWS.map((tw) => (
                 <button
@@ -452,7 +453,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                       : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
-                  {tw.label}
+                  {tw.value === "Anytime" ? t('inspection.anytime') : tw.label}
                 </button>
               ))}
             </div>
@@ -460,11 +461,11 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
 
           {/* Notes */}
           <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">Notes</label>
+            <label className="block text-xs font-medium text-[color:var(--text-secondary)] mb-1">{t('inspection.notes')}</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Additional notes for this inspection..."
+              placeholder={t('inspection.additionalNotes')}
               rows={3}
               className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
             />
@@ -477,7 +478,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
           disabled={!inspectionType || submitting}
           className="w-full px-6 py-4 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-40 disabled:cursor-not-allowed min-h-[52px]"
         >
-          {submitting ? "Scheduling..." : "Schedule Inspection"}
+          {submitting ? t('inspection.scheduling') : t('inspection.scheduleInspection')}
         </button>
       </form>
     </div>
