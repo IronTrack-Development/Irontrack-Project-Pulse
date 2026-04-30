@@ -20,23 +20,23 @@ import { createClient } from "@/lib/supabase-browser";
 import { t } from "@/lib/i18n";
 
 const subNavItems = [
-  { href: "/sub/dashboard", label: "Dashboard", icon: LayoutDashboard, helper: "Daily command" },
-  { href: "/sub/dispatch", label: "Dispatch", icon: Send, helper: "Crew direction" },
-  { href: "/sub/check-in", label: "Daily Check-In", icon: ClipboardCheck, helper: "Field reports" },
-  { href: "/sub/production", label: "Production", icon: BarChart3, helper: "Quantities" },
-  { href: "/sub/blockers", label: "Blockers", icon: AlertTriangle, helper: "Issues to clear" },
-  { href: "/sub/handoffs", label: "Handoffs", icon: ArrowRightLeft, helper: "Area turnover" },
-  { href: "/sub/sops", label: "SOPs", icon: BookOpen, helper: "Crew standards" },
-  { href: "/sub/crew", label: "Crew", icon: Users, helper: "People" },
-  { href: "/sub/foremen", label: "Foremen", icon: HardHat, helper: "Leads" },
+  { href: "/sub/dashboard", labelKey: "subops.dashboard", icon: LayoutDashboard, helperKey: "subops.dailyCommand" },
+  { href: "/sub/dispatch", labelKey: "subops.dispatch", icon: Send, helperKey: "subops.crewDirection" },
+  { href: "/sub/check-in", labelKey: "subops.dailyCheckIn", icon: ClipboardCheck, helperKey: "subops.fieldReports" },
+  { href: "/sub/production", labelKey: "subops.production", icon: BarChart3, helperKey: "subops.quantities" },
+  { href: "/sub/blockers", labelKey: "subops.blockers", icon: AlertTriangle, helperKey: "subops.issuesToClear" },
+  { href: "/sub/handoffs", labelKey: "subops.handoffs", icon: ArrowRightLeft, helperKey: "subops.areaTurnover" },
+  { href: "/sub/sops", labelKey: "subops.sops", icon: BookOpen, helperKey: "subops.crewStandards" },
+  { href: "/sub/crew", labelKey: "subops.crew", icon: Users, helperKey: "subops.people" },
+  { href: "/sub/foremen", labelKey: "subops.foremen", icon: HardHat, helperKey: "subops.leads" },
 ];
 
 const fieldLoopItems = [
-  { href: "/sub/dispatch", labelKey: "subops.plan", short: "Dispatch" },
-  { href: "/sub/check-in", labelKey: "subops.start", short: "Check in" },
-  { href: "/sub/production", labelKey: "subops.track", short: "Production" },
-  { href: "/sub/blockers", labelKey: "subops.clear", short: "Blockers" },
-  { href: "/sub/handoffs", labelKey: "subops.handOff", short: "Turnover" },
+  { href: "/sub/dispatch", labelKey: "subops.plan", shortKey: "subops.dispatch" },
+  { href: "/sub/check-in", labelKey: "subops.start", shortKey: "subops.dailyCheckIn" },
+  { href: "/sub/production", labelKey: "subops.track", shortKey: "subops.production" },
+  { href: "/sub/blockers", labelKey: "subops.clear", shortKey: "subops.blockers" },
+  { href: "/sub/handoffs", labelKey: "subops.handOff", shortKey: "subops.turnover" },
 ];
 
 export default function SubLayout({ children }: { children: React.ReactNode }) {
@@ -63,7 +63,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                 IronTrack <span className="text-[#60A5FA]">Pulse</span>
               </span>
               <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">
-                Sub Portal
+                {t('subops.subPortal')}
               </span>
             </span>
           </Link>
@@ -90,7 +90,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                   </span>
                   <span className="min-w-0">
                     <span className="block text-xs font-black">{t(item.labelKey)}</span>
-                    <span className="block text-[11px] text-slate-500">{item.short}</span>
+                    <span className="block text-[11px] text-slate-500">{t(item.shortKey)}</span>
                   </span>
                 </Link>
               );
@@ -100,9 +100,9 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
           <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">
-            Operations
+            {t('subops.operations')}
           </div>
-          {subNavItems.map(({ href, label, helper, icon: Icon }) => {
+          {subNavItems.map(({ href, labelKey, helperKey, icon: Icon }) => {
             const active = pathname === href;
             return (
               <Link
@@ -122,8 +122,8 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                   <Icon size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-sm font-bold">{label}</span>
-                  <span className="block truncate text-xs text-slate-500">{helper}</span>
+                  <span className="block text-sm font-bold">{t(labelKey)}</span>
+                  <span className="block truncate text-xs text-slate-500">{t(helperKey)}</span>
                 </span>
               </Link>
             );
@@ -133,21 +133,21 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
         <div className="space-y-3 border-t border-white/10 px-4 py-4">
           <div className="rounded-lg border border-[#22C55E]/20 bg-[#22C55E]/10 p-3">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">{t('subops.fieldReady')}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-400">Built for fast updates, clear blockers, and clean GC reports.</p>
+            <p className="mt-1 text-xs leading-5 text-slate-400">{t('subops.fieldReadyDesc')}</p>
           </div>
           <Link
             href="/sub/settings"
             className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-white/5 hover:text-[#93C5FD]"
           >
             <Settings size={14} />
-            Settings
+            {t('subops.settings')}
           </Link>
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
           >
             <LogOut size={14} />
-            Sign out
+            {t('subops.signOut')}
           </button>
         </div>
       </aside>
@@ -166,13 +166,13 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
           <button
             onClick={handleLogout}
             className="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
-            aria-label="Sign out"
+            aria-label={t('subops.signOut')}
           >
             <LogOut size={16} />
           </button>
         </div>
         <div className="flex gap-1 overflow-x-auto px-3 pb-3 scrollbar-none">
-          {subNavItems.map(({ href, label, icon: Icon }) => {
+          {subNavItems.map(({ href, labelKey, icon: Icon }) => {
             const active = pathname === href;
             return (
               <Link
@@ -185,7 +185,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                 }`}
               >
                 <Icon size={12} />
-                {label}
+                {t(labelKey)}
               </Link>
             );
           })}

@@ -106,7 +106,7 @@ export default function SubPortalProjectPage({
     try {
       const res = await fetch("/api/sub/dashboard");
       if (!res.ok) {
-        setError(res.status === 401 ? "Please sign in to continue." : "Could not load your project list.");
+        setError(res.status === 401 ? t('subops.signInToContinue') : t('subops.loadProjectsError'));
         return;
       }
 
@@ -117,10 +117,10 @@ export default function SubPortalProjectPage({
       setData(json);
       setSelectedProjectId((current) => {
         if (current && json.projects.some((project) => project.project_id === current)) return current;
-        return json.projects[0]?.project_id ?? null;
+        return json.projects.length === 1 ? json.projects[0]?.project_id ?? null : null;
       });
     } catch {
-      setError("An unexpected error occurred while loading the portal.");
+      setError(t('subops.unexpectedLoadError'));
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -136,7 +136,7 @@ export default function SubPortalProjectPage({
       <div className="flex min-h-[58vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
           <Loader2 className="h-8 w-8 animate-spin text-[#3B82F6]" />
-          <p className="text-sm">Loading sub portal...</p>
+          <p className="text-sm">{t('subops.loadingPortal')}</p>
         </div>
       </div>
     );
@@ -150,7 +150,7 @@ export default function SubPortalProjectPage({
         </div>
         <h1 className="text-xl font-black text-[color:var(--text-primary)]">{error}</h1>
         <Link href="/login/sub" className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-2 text-sm font-bold text-white">
-          Go to sub login
+          {t('subops.goToSubLogin')}
           <ArrowUpRight size={14} />
         </Link>
       </div>
@@ -166,13 +166,31 @@ export default function SubPortalProjectPage({
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-lg border border-white/10 bg-white/5">
           <FolderOpen className="h-6 w-6 text-slate-500" />
         </div>
-        <h1 className="text-xl font-black text-[color:var(--text-primary)]">No projects assigned yet</h1>
-        <p className="mx-auto mt-2 max-w-md text-sm text-[color:var(--text-secondary)]">
-          When a GC links your company to a schedule, the work area will appear here automatically.
+        <h1 className="text-xl font-black text-[color:var(--text-primary)]">{t('subops.noProjectsTitle')}</h1>
+        <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[color:var(--text-secondary)]">
+          {t('subops.noProjectsDesc')}
         </p>
-        <Link href="/sub/dashboard" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-bold text-[color:var(--text-secondary)]">
-          Back to dashboard
-        </Link>
+        <div className="mx-auto mt-5 grid max-w-xl gap-2 text-left sm:grid-cols-3">
+          {[t('subops.noProjectsStep1'), t('subops.noProjectsStep2'), t('subops.noProjectsStep3')].map((step, index) => (
+            <div key={step} className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#F97316]">0{index + 1}</p>
+              <p className="mt-2 text-xs leading-5 text-[color:var(--text-secondary)]">{step}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+          <button
+            onClick={() => loadProjects(true)}
+            disabled={refreshing}
+            className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-2 text-sm font-bold text-white disabled:opacity-50"
+          >
+            <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
+            {t('subops.refreshAssignments')}
+          </button>
+          <Link href="/sub/dashboard" className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-bold text-[color:var(--text-secondary)]">
+            {t('subops.backToDashboard')}
+          </Link>
+        </div>
       </div>
     );
   }
@@ -193,8 +211,9 @@ export default function SubPortalProjectPage({
                 value={selectedProjectId ?? ""}
                 onChange={(event) => setSelectedProjectId(event.target.value)}
                 className="min-h-[42px] rounded-lg border border-white/10 bg-slate-950/60 px-3 py-2 text-sm font-semibold text-white outline-none transition-colors focus:border-[#3B82F6]"
-                aria-label="Select project"
+                aria-label={t('subops.selectProject')}
               >
+                <option value="">{t('subops.selectProject')}</option>
                 {projects.map((project) => (
                   <option key={project.sub_id} value={project.project_id}>
                     {project.project_name}
@@ -209,7 +228,7 @@ export default function SubPortalProjectPage({
               className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-bold text-slate-300 transition-colors hover:text-white disabled:opacity-50"
             >
               <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
-              Refresh
+              {t('subops.refresh')}
             </button>
 
             {actionHref && actionLabel && (
@@ -227,25 +246,36 @@ export default function SubPortalProjectPage({
         {selectedProject && (
           <div className="mt-4 grid gap-2 sm:grid-cols-3">
             <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Project</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{t('subops.project')}</p>
               <p className="mt-1 truncate text-sm font-bold text-white">{selectedProject.project_name}</p>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Scope</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{t('subops.scope')}</p>
               <p className="mt-1 truncate text-sm font-bold text-white">
-                {selectedProject.trades.length > 0 ? selectedProject.trades.join(", ") : "Trade scope"}
+                {selectedProject.trades.length > 0 ? selectedProject.trades.join(", ") : t('subops.tradeScope')}
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/20 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Activity</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{t('subops.activity')}</p>
               <p className="mt-1 text-sm font-bold text-white">
-                {selectedProject.tasks_count} tasks - {selectedProject.report_count} reports
+                {selectedProject.tasks_count} {t('subops.tasks')} - {selectedProject.report_count} {t('subops.reports')}
               </p>
             </div>
           </div>
         )}
       </div>
 
+      {!selectedProject && (
+        <section className="rounded-xl border border-[#3B82F6]/20 bg-[#3B82F6]/10 p-5 text-center">
+          <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-lg border border-[#3B82F6]/25 bg-[#3B82F6]/15">
+            <FolderOpen className="h-5 w-5 text-[#93C5FD]" />
+          </div>
+          <h2 className="text-lg font-black text-[color:var(--text-primary)]">{t('subops.chooseProjectTitle')}</h2>
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[color:var(--text-secondary)]">{t('subops.chooseProjectDesc')}</p>
+        </section>
+      )}
+
+      {selectedProject && (
       <section className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 shadow-[0_18px_55px_rgba(0,0,0,0.12)]">
         <div className="mb-3 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -282,8 +312,9 @@ export default function SubPortalProjectPage({
           })}
         </div>
       </section>
+      )}
 
-      {selectedProjectId && children(selectedProjectId)}
+      {selectedProject && children(selectedProject.project_id)}
     </div>
   );
 }
