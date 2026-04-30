@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Shield, ChevronRight, Plus, Minus, BookOpen } from "lucide-react";
 import type { ToolboxTalkTemplate, ToolboxTalkCategory } from "@/types";
 import EditableTalkingPoints from "./EditableTalkingPoints";
-import { t as tr } from "@/lib/i18n";
+import { getLanguage, t as tr } from "@/lib/i18n";
 
 interface NewTalkModalProps {
   projectId: string;
@@ -37,8 +37,31 @@ const CATEGORIES: { value: ToolboxTalkCategory; label: string }[] = [
 ];
 
 function categoryLabel(value: string): string {
+  const translated = tr(`safety.category.${value}`);
+  if (translated !== `safety.category.${value}`) return translated;
   const match = CATEGORIES.find((category) => category.value === value);
   return match?.label ?? value.replace(/_/g, " ");
+}
+
+const SPANISH_TEMPLATE_TITLES: Record<string, string> = {
+  "Cold Stress — Hypothermia, Frostbite & Prevention": "Estrés por Frío: Hipotermia, Congelación y Prevención",
+  "Cold Stress - Hypothermia, Frostbite & Prevention": "Estrés por Frío: Hipotermia, Congelación y Prevención",
+};
+
+const SPANISH_TALKING_POINTS: Record<string, string> = {
+  "Wind chill is the real danger. A 35F day with 25 mph wind feels like 23F.": "La sensación térmica es el peligro real. Un día de 35 °F con viento de 25 mph se siente como 23 °F.",
+  "Dress in layers: moisture-wicking base, insulating middle, wind-resistant outer. Avoid cotton.": "Vístase en capas: base que absorba humedad, capa aislante y exterior resistente al viento. Evite el algodón.",
+  "Hypothermia signs: uncontrollable shivering, slurred speech, confusion. Call 911.": "Señales de hipotermia: temblores incontrolables, habla arrastrada y confusión. Llame al 911.",
+  "Frostbite affects fingers, toes, ears, nose first. Do not rub frostbitten skin.": "La congelación afecta primero dedos, orejas, nariz y pies. No frote la piel congelada.",
+  "Take frequent warming breaks. Have warm beverages available. Avoid alcohol and caffeine.": "Tome descansos frecuentes para calentarse. Tenga bebidas calientes disponibles. Evite alcohol y cafeína.",
+};
+
+function templateTitle(title: string): string {
+  return getLanguage() === "es" ? SPANISH_TEMPLATE_TITLES[title] ?? title : title;
+}
+
+function talkingPoint(point: string): string {
+  return getLanguage() === "es" ? SPANISH_TALKING_POINTS[point] ?? point : point;
 }
 
 export default function NewTalkModal({
@@ -88,9 +111,9 @@ export default function NewTalkModal({
 
   const selectTemplate = (template: ToolboxTalkTemplate) => {
     setSelectedTemplate(template);
-    setTopic(template.title);
+    setTopic(templateTitle(template.title));
     setCategory(template.category);
-    setTalkingPoints([...template.talking_points]);
+    setTalkingPoints(template.talking_points.map(talkingPoint));
     setDuration(template.duration_minutes);
     setMode("template");
   };
@@ -217,7 +240,7 @@ export default function NewTalkModal({
                       >
                         <div className="text-left min-w-0 flex-1">
                           <div className="text-sm text-[color:var(--text-primary)] truncate">
-                            {t.title}
+                            {templateTitle(t.title)}
                           </div>
                           <div className="text-[10px] text-[color:var(--text-muted)] mt-0.5">
                             {t.talking_points.length} {tr('safety.talkingPoints')} -{" "}
@@ -264,7 +287,7 @@ export default function NewTalkModal({
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
-                      {c.label}
+                      {categoryLabel(c.value)}
                     </option>
                   ))}
                 </select>

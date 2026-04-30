@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Flag, Loader2, CheckCircle, Clock, AlertTriangle, Users } from "lucide-react";
-import { t } from "@/lib/i18n";
+import { getLanguage, t } from "@/lib/i18n";
 import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface ContextEntry {
@@ -30,6 +30,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const { getActivityName } = useActivityTranslations(milestones.map((milestone) => milestone.activity_name));
+  const locale = getLanguage() === "es" ? "es-US" : "en-US";
 
   useEffect(() => {
     const fetchMilestones = async () => {
@@ -122,14 +123,14 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                     <div className="text-sm font-medium text-[color:var(--text-primary)] mb-1">{getActivityName(milestone.activity_name)}</div>
                     <div className="flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
                       <span>
-                        {new Date(milestone.milestone_date).toLocaleDateString("en-US", {
+                        {new Date(milestone.milestone_date).toLocaleDateString(locale, {
                           month: "short",
                           day: "numeric",
                           year: "numeric",
                         })}
                       </span>
                       <span className={`font-semibold ${getStatusColor(milestone.status)}`}>
-                        {milestone.status.charAt(0).toUpperCase() + milestone.status.slice(1)}
+                        {milestone.status === "complete" ? t('status.complete') : milestone.status === "upcoming" ? t('status.upcoming') : t('milestones.overdue')}
                       </span>
                       {hasContext && (
                         <span className="text-gray-600">
@@ -157,7 +158,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                 <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-2">{t('milestones.dailyLogContext')}</div>
                 <div className="space-y-1.5">
                   {milestone.contextStrip!.map((entry, i) => {
-                    const dateLabel = new Date(entry.logDate + "T12:00:00").toLocaleDateString("en-US", {
+                    const dateLabel = new Date(entry.logDate + "T12:00:00").toLocaleDateString(locale, {
                       month: "short",
                       day: "numeric",
                     });

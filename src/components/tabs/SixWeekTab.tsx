@@ -5,7 +5,7 @@ import {
   Flag, Truck, Search, HardHat, ClipboardCheck,
   Calendar, ChevronDown, ChevronUp, AlertTriangle, CheckCircle
 } from "lucide-react";
-import { t } from "@/lib/i18n";
+import { getLanguage, t } from "@/lib/i18n";
 import { useActivityTranslations } from "@/hooks/useActivityTranslations";
 
 interface Activity {
@@ -41,7 +41,7 @@ interface SixWeekData {
 function formatDate(d?: string) {
   if (!d) return "—";
   const date = new Date(d + "T12:00:00");
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return date.toLocaleDateString(getLanguage() === "es" ? "es-US" : "en-US", { month: "short", day: "numeric" });
 }
 
 function formatDateRange(start?: string, end?: string) {
@@ -86,6 +86,12 @@ function statusChip(status: string, pct: number) {
   );
 }
 
+function tradeLabel(trade: string): string {
+  const key = `label.${trade.toLowerCase().replace(/[\s/-]+/g, "_")}`;
+  const translated = t(key);
+  return translated === key ? trade : translated;
+}
+
 // ── Activity Row ──
 
 function ActivityRow({ activity, getActivityName }: { activity: Activity; getActivityName: (name: string) => string }) {
@@ -100,7 +106,7 @@ function ActivityRow({ activity, getActivityName }: { activity: Activity; getAct
           </span>
           {activity.trade && (
             <span className="text-[10px] bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] px-1.5 py-0.5 rounded">
-              {activity.trade}
+              {tradeLabel(activity.trade)}
             </span>
           )}
           {days !== null && days > 0 && (
@@ -261,7 +267,7 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
         {Object.entries(data.mobilizationsByTrade).map(([trade, acts]) => (
           <div key={trade} className="space-y-1.5">
             <p className="text-xs font-semibold text-[color:var(--text-secondary)] uppercase tracking-wider px-1 pt-2">
-              {trade} ({acts.length})
+              {tradeLabel(trade)} ({acts.length})
             </p>
             {acts.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
           </div>

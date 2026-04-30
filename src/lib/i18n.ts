@@ -133,6 +133,9 @@ const translations: Record<string, Record<Language, string>> = {
   'action.clear': { en: 'Clear', es: 'Limpiar' },
   'action.callNow': { en: 'Call Now', es: 'Llamar Ahora' },
   'action.openPortal': { en: 'Open Portal', es: 'Abrir Portal' },
+  'action.weeklySummary': { en: 'Weekly Summary', es: 'Resumen Semanal' },
+  'action.observe': { en: 'Observe', es: 'Observar' },
+  'action.uploadSchedule': { en: 'Upload Schedule', es: 'Subir Cronograma' },
 
   // ── Statuses ──────────────────────────────────────────────────────────────
   'status.open': { en: 'Open', es: 'Abierto' },
@@ -895,6 +898,33 @@ const translations: Record<string, Record<Language, string>> = {
   'tm.createTicketDesc': { en: 'Create a ticket to track time & material costs on this project.', es: 'Cree una boleta para rastrear costos de tiempo y materiales en este proyecto.' },
   'tm.noStatusTickets': { en: 'No', es: 'No hay' },
   'tm.ticketsStatus': { en: 'tickets', es: 'boletas' },
+  'tm.noStatusDesc': { en: 'No tickets with this status.', es: 'No hay boletas con este estado.' },
+
+  'label.closeout': { en: 'Closeout', es: 'Cierre' },
+  'label.inspection': { en: 'Inspection', es: 'Inspección' },
+  'label.general': { en: 'General', es: 'General' },
+
+  'safety.category.falls': { en: 'Falls', es: 'Caídas' },
+  'safety.category.electrical': { en: 'Electrical', es: 'Eléctrico' },
+  'safety.category.excavation': { en: 'Excavation', es: 'Excavación' },
+  'safety.category.confined_space': { en: 'Confined Space', es: 'Espacio Confinado' },
+  'safety.category.scaffolding': { en: 'Scaffolding', es: 'Andamios' },
+  'safety.category.ppe': { en: 'PPE', es: 'EPP' },
+  'safety.category.heat_illness': { en: 'Heat Illness', es: 'Enfermedad por Calor' },
+  'safety.category.cold_stress': { en: 'Cold Stress', es: 'Estrés por Frío' },
+  'safety.category.fire_prevention': { en: 'Fire Prevention', es: 'Prevención de Incendios' },
+  'safety.category.hazcom': { en: 'HazCom', es: 'Comunicación de Riesgos' },
+  'safety.category.lockout_tagout': { en: 'Lockout/Tagout', es: 'Bloqueo/Etiquetado' },
+  'safety.category.crane_rigging': { en: 'Crane & Rigging', es: 'Grúa y Aparejos' },
+  'safety.category.housekeeping': { en: 'Housekeeping', es: 'Orden y Limpieza' },
+  'safety.category.hand_power_tools': { en: 'Hand & Power Tools', es: 'Herramientas Manuales y Eléctricas' },
+  'safety.category.ladders': { en: 'Ladders', es: 'Escaleras' },
+  'safety.category.silica': { en: 'Silica', es: 'Sílice' },
+  'safety.category.struck_by': { en: 'Struck-By', es: 'Golpeado por' },
+  'safety.category.caught_between': { en: 'Caught In/Between', es: 'Atrapado Entre' },
+  'safety.category.traffic_control': { en: 'Traffic Control', es: 'Control de Tráfico' },
+  'safety.category.general': { en: 'General', es: 'General' },
+  'safety.category.custom': { en: 'Custom', es: 'Personalizado' },
 
   // ── Activities Tab ─────────────────────────────────────────────────────────
   'activities.searchActivities': { en: 'Search activities...', es: 'Buscar actividades...' },

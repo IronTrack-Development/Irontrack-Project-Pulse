@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Plus, RefreshCw, FileCheck, AlertCircle, Clock, CheckCircle2 } from "lucide-react";
 import SubmittalForm from "@/components/submittals/SubmittalForm";
 import SubmittalDetail from "@/components/submittals/SubmittalDetail";
+import { getLanguage, t } from "@/lib/i18n";
 
 interface Contact {
   id: string;
@@ -40,14 +41,14 @@ interface Props {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  not_started: "Not Started",
-  in_preparation: "In Prep",
-  submitted: "Submitted",
-  under_review: "Under Review",
-  approved: "Approved",
-  approved_as_noted: "Approved as Noted",
-  revise_resubmit: "Revise & Resubmit",
-  rejected: "Rejected",
+  not_started: "submittals.notStarted",
+  in_preparation: "submittals.inPrep",
+  submitted: "submittals.submitted",
+  under_review: "submittals.underReview",
+  approved: "submittals.approvedLabel",
+  approved_as_noted: "submittals.approvedAsNoted",
+  revise_resubmit: "submittals.reviseResubmit",
+  rejected: "submittals.rejected",
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -62,13 +63,13 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const FILTER_OPTIONS = [
-  { value: "all", label: "All" },
-  { value: "not_started", label: "Not Started" },
-  { value: "in_preparation", label: "In Prep" },
-  { value: "submitted", label: "Submitted" },
-  { value: "under_review", label: "Under Review" },
-  { value: "approved", label: "Approved" },
-  { value: "rejected", label: "Rejected" },
+  { value: "all", labelKey: "submittals.all" },
+  { value: "not_started", labelKey: "submittals.notStarted" },
+  { value: "in_preparation", labelKey: "submittals.inPrep" },
+  { value: "submitted", labelKey: "submittals.submitted" },
+  { value: "under_review", labelKey: "submittals.underReview" },
+  { value: "approved", labelKey: "submittals.approvedLabel" },
+  { value: "rejected", labelKey: "submittals.rejected" },
 ];
 
 function isOverdue(s: Submittal): boolean {
@@ -127,9 +128,9 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Submittals</h2>
+            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('submittals.title')}</h2>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-              {total} submittal{total !== 1 ? "s" : ""} on this project
+              {total} {total === 1 ? t('submittals.submittalsOnProject') : t('submittals.submittalsOnProjectPlural')} {t('submittals.onThisProject')}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -144,7 +145,7 @@ export default function SubmittalsTab({ projectId }: Props) {
               className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">New Submittal</span>
+              <span className="hidden sm:inline">{t('submittals.newSubmittal')}</span>
             </button>
           </div>
         </div>
@@ -154,19 +155,19 @@ export default function SubmittalsTab({ projectId }: Props) {
           <div className="grid grid-cols-4 gap-2">
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className="text-xl font-bold text-[color:var(--text-primary)]">{total}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Total</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('submittals.total')}</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${pendingReview > 0 ? "text-purple-400" : "text-[color:var(--text-primary)]"}`}>{pendingReview}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Pending</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('submittals.pending')}</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${overdue > 0 ? "text-red-400" : "text-[color:var(--text-primary)]"}`}>{overdue}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Overdue</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('submittals.overdue')}</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
               <p className={`text-xl font-bold ${approved > 0 ? "text-green-400" : "text-[color:var(--text-primary)]"}`}>{approved}</p>
-              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">Approved</p>
+              <p className="text-xs text-[color:var(--text-muted)] mt-0.5">{t('submittals.approved')}</p>
             </div>
           </div>
         )}
@@ -189,7 +190,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                       : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
-                  {opt.label}
+                  {t(opt.labelKey)}
                   <span className={`text-xs ${filter === opt.value ? "text-orange-200" : "text-gray-600"}`}>
                     {count}
                   </span>
@@ -203,16 +204,16 @@ export default function SubmittalsTab({ projectId }: Props) {
         {total === 0 && (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-10 text-center">
             <FileCheck size={36} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">No submittals yet</p>
+            <p className="text-[color:var(--text-secondary)] text-sm font-semibold mb-1">{t('submittals.noSubmittals')}</p>
             <p className="text-gray-600 text-xs mb-5">
-              Tap + to create your first submittal
+              {t('submittals.tapToCreate')}
             </p>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <Plus size={14} />
-              New Submittal
+              {t('submittals.newSubmittal')}
             </button>
           </div>
         )}
@@ -247,7 +248,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                       <p className="text-sm font-semibold text-[color:var(--text-primary)] leading-tight mb-2">{s.title}</p>
                       <div className="flex flex-wrap items-center gap-2">
                         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[s.status] ?? "bg-gray-700 text-[color:var(--text-secondary)]"}`}>
-                          {STATUS_LABELS[s.status] ?? s.status}
+                          {STATUS_LABELS[s.status] ? t(STATUS_LABELS[s.status]) : s.status}
                         </span>
                         <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                           🏀 {s.ball_in_court}
@@ -260,12 +261,12 @@ export default function SubmittalsTab({ projectId }: Props) {
                         <div className="flex flex-wrap gap-3 mt-2">
                           {s.assigned_contact && (
                             <span className="text-xs text-[color:var(--text-muted)]">
-                              Sub: <span className="text-[color:var(--text-secondary)]">{s.assigned_contact.name}</span>
+                              {t('submittals.sub')}: <span className="text-[color:var(--text-secondary)]">{s.assigned_contact.name}</span>
                             </span>
                           )}
                           {s.reviewer_contact && (
                             <span className="text-xs text-[color:var(--text-muted)]">
-                              Review: <span className="text-[color:var(--text-secondary)]">{s.reviewer_contact.name}</span>
+                              {t('submittals.review')}: <span className="text-[color:var(--text-secondary)]">{s.reviewer_contact.name}</span>
                             </span>
                           )}
                         </div>
@@ -275,7 +276,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                       {s.required_by && (
                         <div className={`flex items-center gap-1 text-xs font-medium ${overdueSub ? "text-red-400" : "text-[color:var(--text-muted)]"}`}>
                           {overdueSub ? <AlertCircle size={12} /> : <Clock size={12} />}
-                          {new Date(s.required_by + "T00:00:00").toLocaleDateString("en-US", {
+                          {new Date(s.required_by + "T00:00:00").toLocaleDateString(getLanguage() === "es" ? "es-US" : "en-US", {
                             month: "short", day: "numeric",
                           })}
                         </div>
@@ -294,7 +295,7 @@ export default function SubmittalsTab({ projectId }: Props) {
         {/* Filtered empty */}
         {total > 0 && filtered.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-[color:var(--text-muted)] text-sm">No submittals match this filter</p>
+            <p className="text-[color:var(--text-muted)] text-sm">{t('submittals.noMatch')}</p>
           </div>
         )}
       </div>
