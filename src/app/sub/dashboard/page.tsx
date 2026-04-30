@@ -25,6 +25,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -92,12 +93,12 @@ function formatDateShort(dateStr: string | null | undefined): string {
 function timeAgo(isoStr: string): string {
   const diff = Date.now() - new Date(isoStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 2) return "just now";
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 2) return t('time.justNow');
+  if (mins < 60) return `${mins} ${t('time.minAgo')}`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs} ${t('time.hrAgo')}`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${days} ${t('time.dayAgo')}`;
 }
 
 // ─── Stat Card ─────────────────────────────────────────────────────────────────
@@ -337,17 +338,17 @@ export default function SubDashboardPage() {
       const res = await fetch("/api/sub/dashboard");
       if (!res.ok) {
         if (res.status === 401) {
-          setError("Not authenticated. Please sign in.");
+          setError(t('subops.notAuthenticated'));
         } else {
           const json = await res.json().catch(() => ({}));
-          setError(json.error ?? "Could not load dashboard. Please try again.");
+          setError(json.error ?? t('subops.dashboardLoadError'));
         }
         return;
       }
       const json: DashboardData = await res.json();
       setDashData(json);
     } catch {
-      setError("An unexpected error occurred.");
+      setError(t('subops.unexpectedLoadError'));
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -377,7 +378,7 @@ export default function SubDashboardPage() {
         <AlertCircle className="w-12 h-12 text-red-400 mx-auto" />
         <p className="text-red-400">{error}</p>
         <Link href="/login" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
-          Return to login
+          {t('auth.returnToLogin')}
         </Link>
       </div>
     );
@@ -386,19 +387,19 @@ export default function SubDashboardPage() {
   if (!dashData) return null;
 
   const { company, projects, recentReports, stats, totalReports } = dashData;
-  const displayName = company?.company_name ?? "Your Company";
+  const displayName = company?.company_name ?? t('subops.yourCompany');
 
   // ── No company registered
   if (!company) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-4">
         <FolderOpen className="w-12 h-12 text-gray-600 mx-auto" />
-        <h1 className="text-xl font-bold text-[color:var(--text-primary)]">No Sub Company Found</h1>
+        <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{t('subops.noCompanyFound')}</h1>
         <p className="text-[color:var(--text-secondary)] text-sm">
-          Register your subcontractor company to access the dashboard.
+          {t('subops.registerCompanyAccess')}
         </p>
         <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
-          Register your company
+          {t('subops.registerYourCompany')}
         </Link>
       </div>
     );
