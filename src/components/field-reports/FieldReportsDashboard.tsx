@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Plus, ImagePlus, ChevronRight, ImageOff } from "lucide-react";
+import { Plus, ImagePlus, ChevronRight, ImageOff, FileText, Table2 } from "lucide-react";
 import { FieldReport, FieldReportStatus } from "@/types";
 import FieldReportDetail from "./FieldReportDetail";
 import AddReportModal from "./AddReportModal";
@@ -57,6 +57,11 @@ export default function FieldReportsDashboard({ projectId }: Props) {
     return `${base}/storage/v1/object/public/field-report-photos/${path}`;
   };
 
+  const openExport = (format: "pdf" | "csv") => {
+    const endpoint = format === "pdf" ? "pdf" : "csv";
+    window.open(`/api/projects/${projectId}/field-reports/${endpoint}`, "_blank", "noopener,noreferrer");
+  };
+
   // Detail view
   if (selectedReport) {
     return (
@@ -95,6 +100,33 @@ export default function FieldReportsDashboard({ projectId }: Props) {
           <span className="px-2 py-0.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] text-xs font-medium rounded-full">
             {count}
           </span>
+        </div>
+      </div>
+
+      <div className="mb-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#F97316]">{t('reports.reportGenerator')}</p>
+            <p className="mt-1 text-xs leading-5 text-[color:var(--text-secondary)]">{t('reports.reportGeneratorDesc')}</p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => openExport("pdf")}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-3 py-2 text-xs font-black text-white"
+            >
+              <FileText size={14} />
+              {t('reports.exportOpenPdf')}
+            </button>
+            <button
+              type="button"
+              onClick={() => openExport("csv")}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-white/10 bg-[var(--bg-tertiary)] px-3 py-2 text-xs font-bold text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
+            >
+              <Table2 size={14} />
+              {t('reports.exportOpenCsv')}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -179,7 +211,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
                       color: STATUS_COLORS[report.status],
                     }}
                   >
-                    {report.status.replace("_", " ")}
+                    {report.status === "in_progress" ? t('status.inProgress') : report.status === "resolved" ? t('status.resolved') : t('status.open')}
                   </span>
                   <span
                     className="text-[10px] font-medium px-1.5 py-0.5 rounded"
@@ -188,7 +220,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
                       color: PRIORITY_COLORS[report.priority],
                     }}
                   >
-                    {report.priority}
+                    {report.priority === "high" ? t('coordination.high') : report.priority === "medium" ? t('coordination.medium') : t('coordination.low')}
                   </span>
                   {report.assigned_to && (
                     <span className="text-[10px] text-[color:var(--text-muted)] truncate">{report.assigned_to}</span>

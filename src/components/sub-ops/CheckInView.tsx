@@ -65,6 +65,7 @@ export default function CheckInView({ projectId }: Props) {
   const [blockerPhoto, setBlockerPhoto] = useState<File | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const blockerPhotoInputRef = useRef<HTMLInputElement>(null);
   const companyId = typeof window !== "undefined" ? localStorage.getItem("sub_ops_company_id") : null;
   const draftKey = companyId ? `irontrack_checkin_draft_${companyId}_${projectId}` : "";
   const steps = [
@@ -262,6 +263,15 @@ export default function CheckInView({ projectId }: Props) {
         }),
       });
       if (res.ok) {
+        const blocker = await res.json();
+        if (blockerPhoto && blocker?.id) {
+          const photoData = new FormData();
+          photoData.append("file", blockerPhoto);
+          await fetch(`/api/sub-ops/companies/${companyId}/blockers/${blocker.id}/photo`, {
+            method: "POST",
+            body: photoData,
+          });
+        }
         setBlockerDescription("");
         setBlockerImpact("");
         setBlockerPhoto(null);
@@ -700,6 +710,26 @@ export default function CheckInView({ projectId }: Props) {
               placeholder="How does this affect work?"
               rows={2}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Photo</label>
+            <button
+              type="button"
+              onClick={() => blockerPhotoInputRef.current?.click()}
+              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+            >
+              <Camera size={16} />
+              {blockerPhoto ? blockerPhoto.name : "Capture or upload blocker photo"}
+            </button>
+            <input
+              ref={blockerPhotoInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={(e) => setBlockerPhoto(e.target.files?.[0] ?? null)}
+              className="hidden"
             />
           </div>
 

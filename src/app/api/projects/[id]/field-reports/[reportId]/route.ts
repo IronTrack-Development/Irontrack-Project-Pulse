@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireProjectAccess } from "@/lib/project-auth";
 
 // GET /api/projects/[id]/field-reports/[reportId]
 export async function GET(
@@ -7,7 +7,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string; reportId: string }> }
 ) {
   const { id, reportId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireProjectAccess(id);
+  if (access.response) return access.response;
+  const supabase = access.supabase;
 
   const { data, error } = await supabase
     .from("field_reports")
@@ -26,7 +28,9 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; reportId: string }> }
 ) {
   const { id, reportId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireProjectAccess(id);
+  if (access.response) return access.response;
+  const supabase = access.supabase;
   const body = await req.json();
 
   // If resolving, set resolved_at
@@ -57,7 +61,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string; reportId: string }> }
 ) {
   const { id, reportId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireProjectAccess(id);
+  if (access.response) return access.response;
+  const supabase = access.supabase;
 
   const { error } = await supabase
     .from("field_reports")

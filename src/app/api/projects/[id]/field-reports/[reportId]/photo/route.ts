@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceClient } from "@/lib/supabase";
+import { requireProjectAccess } from "@/lib/project-auth";
 
 // POST /api/projects/[id]/field-reports/[reportId]/photo
 export async function POST(
@@ -7,7 +7,9 @@ export async function POST(
   { params }: { params: Promise<{ id: string; reportId: string }> }
 ) {
   const { id, reportId } = await params;
-  const supabase = getServiceClient();
+  const access = await requireProjectAccess(id);
+  if (access.response) return access.response;
+  const supabase = access.supabase;
 
   const formData = await req.formData();
   const file = formData.get("file") as File | null;

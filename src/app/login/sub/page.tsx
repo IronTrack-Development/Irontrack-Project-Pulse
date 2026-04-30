@@ -170,7 +170,7 @@ function SubLoginForm() {
                 className="mb-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold transition-colors"
                 style={{ background: "rgba(59,130,246,0.1)", color: "#2563EB" }}
               >
-                Preview Sub Portal without login
+                {t('subops.previewWithoutLogin')}
               </Link>
             )}
             <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>

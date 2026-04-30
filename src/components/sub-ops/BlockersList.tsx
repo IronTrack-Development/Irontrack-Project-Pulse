@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   AlertTriangle, Plus, X, Check, ChevronDown, ChevronUp,
   Filter, Clock, CheckCircle, Camera,
@@ -19,6 +19,7 @@ interface Blocker {
   date: string;
   status: "open" | "resolved";
   photo_url: string | null;
+  photo_path?: string | null;
   resolution_notes: string | null;
   resolved_at: string | null;
 }
@@ -55,14 +56,22 @@ export default function BlockersList({ projectId }: Props) {
   const [addForemanId, setAddForemanId] = useState("");
   const [addDescription, setAddDescription] = useState("");
   const [addImpact, setAddImpact] = useState("");
+  const [addPhoto, setAddPhoto] = useState<File | null>(null);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState("");
+  const blockerPhotoRef = useRef<HTMLInputElement>(null);
 
   // Resolve
   const [resolvingId, setResolvingId] = useState<string | null>(null);
   const [resolveNotes, setResolveNotes] = useState("");
 
   const companyId = typeof window !== "undefined" ? localStorage.getItem("sub_ops_company_id") : null;
+  const getBlockerPhotoUrl = (blocker: Blocker) => {
+    if (blocker.photo_url) return blocker.photo_url;
+    if (!blocker.photo_path) return "";
+    const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    return `${base}/storage/v1/object/public/sub-blocker-photos/${blocker.photo_path}`;
+  };
 
   const fetchData = useCallback(async () => {
     if (!companyId) return;
@@ -111,8 +120,18 @@ export default function BlockersList({ projectId }: Props) {
         }),
       });
       if (res.ok) {
+        const blocker = await res.json();
+        if (addPhoto && blocker?.id) {
+          const photoData = new FormData();
+          photoData.append("file", addPhoto);
+          await fetch(`/api/sub-ops/companies/${companyId}/blockers/${blocker.id}/photo`, {
+            method: "POST",
+            body: photoData,
+          });
+        }
         setAddDescription("");
         setAddImpact("");
+        setAddPhoto(null);
         setShowAdd(false);
         await fetchData();
       } else {
@@ -221,6 +240,25 @@ export default function BlockersList({ projectId }: Props) {
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
             />
           </div>
+          <div>
+            <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">Photo</label>
+            <button
+              type="button"
+              onClick={() => blockerPhotoRef.current?.click()}
+              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+            >
+              <Camera size={16} />
+              {addPhoto ? addPhoto.name : "Capture or upload blocker photo"}
+            </button>
+            <input
+              ref={blockerPhotoRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={(e) => setAddPhoto(e.target.files?.[0] ?? null)}
+              className="hidden"
+            />
+          </div>
           {error && (
             <div className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</div>
           )}
@@ -327,11 +365,11 @@ export default function BlockersList({ projectId }: Props) {
                         <p className="text-[color:var(--text-secondary)] mt-1">{b.impact}</p>
                       </div>
                     )}
-                    {b.photo_url && (
+                    {getBlockerPhotoUrl(b) && (
                       <div>
-                        <a href={b.photo_url} target="_blank" rel="noopener noreferrer">
+                        <a href={getBlockerPhotoUrl(b)} target="_blank" rel="noopener noreferrer">
                           <img
-                            src={b.photo_url}
+                            src={getBlockerPhotoUrl(b)}
                             alt="Blocker photo"
                             className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
                             loading="lazy"

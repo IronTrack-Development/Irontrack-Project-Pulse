@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { ArrowLeft, X, ImagePlus } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface PhotoItem {
   file: File;
@@ -58,61 +59,22 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
     setError(null);
 
     try {
-      // 1. Upload all photos and collect storage paths
-      const uploadedItems: { photo_path: string; title: string }[] = [];
-
       for (const photo of photos) {
-        // Create a temp report to get a reportId for the photo path, or upload directly
-        // Simpler: upload photos directly to storage with a temp path, then batch-create
-        const formData = new FormData();
-        formData.append("file", photo.file);
-
-        // Upload to a temp path under the project
-        const ext = photo.file.name.split(".").pop() || "jpg";
-        const storagePath = `${projectId}/batch/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-
-        const uploadRes = await fetch(
-          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/field-report-photos/${storagePath}`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-              "x-upsert": "true",
-            },
-            body: photo.file,
-          }
-        );
-
-        if (!uploadRes.ok) {
-          // Fallback: try via our API by creating report first, then uploading
-          const createRes = await fetch(`/api/projects/${projectId}/field-reports`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title: photo.title }),
-          });
-          if (!createRes.ok) throw new Error("Failed to create report");
-          const report = await createRes.json();
-
-          const photoFormData = new FormData();
-          photoFormData.append("file", photo.file);
-          await fetch(`/api/projects/${projectId}/field-reports/${report.id}/photo`, {
-            method: "POST",
-            body: photoFormData,
-          });
-          continue;
-        }
-
-        uploadedItems.push({ photo_path: storagePath, title: photo.title });
-      }
-
-      // 2. Batch-create reports if we have any that went through direct upload
-      if (uploadedItems.length > 0) {
-        const batchRes = await fetch(`/api/projects/${projectId}/field-reports/multi-add`, {
+        const createRes = await fetch(`/api/projects/${projectId}/field-reports`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: uploadedItems }),
+          body: JSON.stringify({ title: photo.title }),
         });
-        if (!batchRes.ok) throw new Error("Failed to create batch reports");
+        if (!createRes.ok) throw new Error("Failed to create report");
+
+        const report = await createRes.json();
+        const photoFormData = new FormData();
+        photoFormData.append("file", photo.file);
+        const uploadRes = await fetch(`/api/projects/${projectId}/field-reports/${report.id}/photo`, {
+          method: "POST",
+          body: photoFormData,
+        });
+        if (!uploadRes.ok) throw new Error("Failed to upload photo");
       }
 
       // Clean up previews
@@ -132,10 +94,10 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
         className="flex items-center gap-1.5 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] text-sm mb-4 min-h-[44px] transition-colors"
       >
         <ArrowLeft size={16} />
-        Reports
+        {t('reports.backToReports')}
       </button>
 
-      <h2 className="text-lg font-bold text-[color:var(--text-primary)] mb-4">Multi-Add Reports</h2>
+      <h2 className="text-lg font-bold text-[color:var(--text-primary)] mb-4">{t('reports.multiAddReports')}</h2>
 
       {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
 
@@ -153,7 +115,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
         className="w-full flex items-center justify-center gap-2 py-4 mb-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-xl text-sm font-medium transition-colors min-h-[56px] border border-dashed border-[#333]"
       >
         <ImagePlus size={18} />
-        {photos.length === 0 ? "Select Photos" : "Add More Photos"}
+        {photos.length === 0 ? t('reports.selectPhotos') : t('reports.addMorePhotos')}
       </button>
 
       {/* Grid preview */}
@@ -193,10 +155,10 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
             {creating ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Creating {photos.length} reports...
+                {t('reports.creatingReports')}
               </>
             ) : (
-              `Create All (${photos.length})`
+              `${t('reports.createAll')} (${photos.length})`
             )}
           </button>
         </>
