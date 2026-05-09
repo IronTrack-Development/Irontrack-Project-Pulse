@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
   title: "IronTrack — Subcontractor Job Inbox and Proof Log",
-  description: "Control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.",
+  description: "Control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
     title: "IronTrack — Subcontractor Job Inbox and Proof Log",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "IronTrack — Subcontractor Job Inbox and Proof Log",
-    description: "Control GC chaos across portals, email, PDFs, screenshots, texts, and spreadsheets without a GC rollout.",
+    description: "Control GC chaos across portals, email, PDFs, screenshots, texts, calls, and spreadsheets without a GC rollout.",
     images: [
       {
         url: "/og-share-card.png",

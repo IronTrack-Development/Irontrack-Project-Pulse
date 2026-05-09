@@ -8,7 +8,7 @@ export default function SubCrewManagerPage() {
     <SubPortalProjectPage
       eyebrow="Crew"
       title="Crew Roster and Readiness"
-      description="Keep the working roster clean so check-ins, dispatches, and production reporting reflect the people actually on site."
+      description="Keep the working roster clean so proof logs, work cards, readiness, and production reporting reflect the people actually on site."
     >
       {(projectId) => <CrewManager projectId={projectId} />}
     </SubPortalProjectPage>

@@ -40,20 +40,20 @@ const mockProjects = [
 
 const commandCards = [
   {
-    title: "Dispatch",
-    copy: "Tomorrow's crew plan is waiting on 2 acknowledgements.",
+    title: "Work Cards",
+    copy: "Tomorrow's scope is waiting on 2 foreman acknowledgements.",
     icon: Send,
     color: "#3B82F6",
   },
   {
-    title: "Check-In",
-    copy: "Capture manpower, progress, notes, delays, and GC-ready updates.",
+    title: "Proof Log",
+    copy: "Capture manpower, progress, notes, delays, and shareable proof.",
     icon: ClipboardCheck,
     color: "#22C55E",
   },
   {
-    title: "Blockers",
-    copy: "3 open blockers need decisions before the next shift starts.",
+    title: "GC Response",
+    copy: "3 open blockers need a clean notice before the next shift starts.",
     icon: AlertTriangle,
     color: "#F97316",
   },
@@ -61,46 +61,46 @@ const commandCards = [
 
 const advantageCards = [
   {
-    title: "Schedule-aware by default",
-    copy: "Updates are tied to real activities, successors, lookaheads, and project milestones instead of living as plain daily-log text.",
+    title: "Works around GC tools",
+    copy: "Turn portal exports, emails, PDFs, screenshots, texts, calls, and manual notes into a queue your team controls.",
   },
   {
     title: "Built for Spanish crews",
     copy: "English schedule uploads can still drive the job while field-facing activity names can display in Spanish.",
   },
   {
-    title: "Blockers become action",
-    copy: "Issues are framed as decisions, responsible parties, and next steps so GCs see what is actually stopping work.",
+    title: "Blockers become responses",
+    copy: "Issues are framed as decisions, responsible parties, proof, and next steps so your PM can send a clean notice.",
   },
   {
-    title: "Sub-first, GC-useful",
-    copy: "The sub can run dispatch, check-ins, production, SOPs, and handoffs while the GC receives cleaner project intelligence.",
+    title: "Sub-owned workspace",
+    copy: "The subcontractor runs work cards, proof, responses, and handoffs while the GC can keep using whatever tool they already use.",
   },
 ];
 
 const huddleCards = [
   {
-    label: "Schedule",
+    label: "Work Cards",
     icon: CalendarDays,
     text: "Rough-in crew is on Level 2 today. Trim crew needs Area C released tomorrow.",
   },
   {
-    label: "Manpower",
+    label: "Readiness",
     icon: HardHat,
     text: "4 electricians, 1 apprentice, and 1 foreman planned for Avondale Medical Office.",
   },
   {
-    label: "Materials",
+    label: "Proof Log",
     icon: Package,
     text: "Panel tubs, MC cable, and fixture whips need confirmation before lunch.",
   },
   {
-    label: "Hurdles",
+    label: "GC Response",
     icon: AlertTriangle,
     text: "Ceiling grid is not released in Corridor B. GC decision needed before trim starts.",
   },
   {
-    label: "Handoff",
+    label: "Owner Snapshot",
     icon: ArrowUpRight,
     text: "Rough-in crew must leave photos, open items, and access notes for trim crew.",
   },
@@ -156,7 +156,7 @@ export default function SubPortalPreviewPage() {
               <AlertTriangle size={14} />
               Needs Attention
             </div>
-            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">2 dispatches need foreman acknowledgement.</p>
+            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">2 work cards need foreman acknowledgement.</p>
           </div>
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#22C55E]">
@@ -262,8 +262,8 @@ export default function SubPortalPreviewPage() {
                   ))}
                 </div>
                 <div className="mt-4 flex gap-4 text-xs text-[color:var(--text-muted)]">
-                  <span>{project.tasks} tasks</span>
-                  <span>{project.reports} reports</span>
+                  <span>{project.tasks} schedule tasks</span>
+                  <span>{project.reports} proof logs</span>
                 </div>
                 <div className="mt-4 space-y-1.5">
                   <div className="flex justify-between text-xs text-[color:var(--text-muted)]">

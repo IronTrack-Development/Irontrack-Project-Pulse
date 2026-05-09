@@ -6,11 +6,11 @@ import SubPortalProjectPage from "@/components/sub-ops/SubPortalProjectPage";
 export default function SubProductionTrackerPage() {
   return (
     <SubPortalProjectPage
-      eyebrow="Production"
-      title="Quantities and Crew Output"
-      description="Review recent production signals and keep percent-complete conversations anchored to field evidence."
+      eyebrow="Production Proof"
+      title="Quantities, Hours, and Field Evidence"
+      description="Review recent production signals and keep progress conversations anchored to proof your PM or owner can defend."
       actionHref="/sub/check-in"
-      actionLabel="Add update"
+      actionLabel="Add proof"
     >
       {(projectId) => <ProductionTracker projectId={projectId} />}
     </SubPortalProjectPage>

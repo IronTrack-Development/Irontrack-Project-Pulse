@@ -6,11 +6,11 @@ import SubPortalProjectPage from "@/components/sub-ops/SubPortalProjectPage";
 export default function SubCheckInViewPage() {
   return (
     <SubPortalProjectPage
-      eyebrow="Daily Check-In"
-      title="Fast Field Update"
-      description="Capture manpower, progress, delays, and notes in a GC-ready format without turning the foreman's morning into paperwork."
+      eyebrow="Proof Log"
+      title="Fast Field Proof"
+      description="Capture manpower, progress, delays, photos, and notes as a clear shareable record without turning the foreman's morning into paperwork."
       actionHref="/sub/blockers"
-      actionLabel="Log blocker"
+      actionLabel="Prepare GC notice"
     >
       {(projectId) => <CheckInView projectId={projectId} />}
     </SubPortalProjectPage>

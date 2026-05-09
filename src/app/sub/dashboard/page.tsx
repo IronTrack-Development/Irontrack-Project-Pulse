@@ -168,7 +168,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {project.tasks_count > 0 && (
           <span>
-            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> work cards
+            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> schedule tasks
           </span>
         )}
         <span>
@@ -419,7 +419,7 @@ export default function SubDashboardPage() {
       label: "Work Cards",
       icon: <CalendarDays size={15} />,
       text: topProject
-        ? `${topProject.project_name}: ${topProject.tasks_count} active card${topProject.tasks_count === 1 ? "" : "s"} to track.`
+        ? `${topProject.project_name}: ${topProject.tasks_count} schedule task${topProject.tasks_count === 1 ? "" : "s"} to track.`
         : "No GC requests or work cards yet.",
     },
     {
@@ -447,6 +447,44 @@ export default function SubDashboardPage() {
       text: "Roll up open asks, blockers, proof gaps, and responses for leadership.",
     },
   ];
+  const actionSpine = [
+    {
+      label: "What did the GC ask for?",
+      value: `${projects.length} inbox item${projects.length === 1 ? "" : "s"}`,
+      href: "#job-inbox",
+      icon: <FolderOpen size={15} />,
+    },
+    {
+      label: "What work is coming?",
+      value: topProject ? `${topProject.tasks_count} schedule task${topProject.tasks_count === 1 ? "" : "s"}` : "No work cards yet",
+      href: "/sub/dispatch",
+      icon: <Send size={15} />,
+    },
+    {
+      label: "Are we ready?",
+      value: `${stats.uniqueForemen} readiness owner${stats.uniqueForemen === 1 ? "" : "s"}`,
+      href: "/sub/handoffs",
+      icon: <ShieldCheck size={15} />,
+    },
+    {
+      label: "What proof do we have?",
+      value: `${stats.reportsThisWeek} proof log${stats.reportsThisWeek === 1 ? "" : "s"} this week`,
+      href: "/sub/check-in",
+      icon: <ClipboardList size={15} />,
+    },
+    {
+      label: "What needs a response?",
+      value: projectsNeedingReports > 0 ? `${projectsNeedingReports} first response${projectsNeedingReports === 1 ? "" : "s"} missing` : "No first-response gaps",
+      href: "/sub/blockers",
+      icon: <AlertTriangle size={15} />,
+    },
+    {
+      label: "What needs owner attention?",
+      value: latestReport ? `Latest proof: ${latestReport.project_name}` : "No proof captured yet",
+      href: "#owner-snapshot",
+      icon: <Gauge size={15} />,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-16">
@@ -465,7 +503,7 @@ export default function SubDashboardPage() {
                 {displayName}
               </h1>
               <p className="mt-3 max-w-xl text-sm md:text-base text-slate-300">
-                See GC requests, work cards, readiness, proof logs, GC responses, and owner snapshots that need attention.
+                One owner view for GC requests, work cards, readiness, proof logs, responses, and the calls that need attention today.
               </p>
               {company.contact_name && (
                 <p className="text-sm text-slate-400 mt-2">Signed in as {company.contact_name}</p>
@@ -474,15 +512,15 @@ export default function SubDashboardPage() {
 
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
               <Link href="/sub/check-in" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-sm font-black text-[#052E16] transition-transform hover:-translate-y-0.5">
-                Check in
+                Add proof
                 <CheckCircle2 size={16} />
               </Link>
               <Link href="/sub/dispatch" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white transition-transform hover:-translate-y-0.5">
-                Dispatch
+                Work card
                 <Send size={16} />
               </Link>
               <Link href="/sub/blockers" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
-                Blocker
+                GC notice
                 <AlertTriangle size={16} />
               </Link>
             </div>
@@ -501,7 +539,7 @@ export default function SubDashboardPage() {
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#93C5FD]">
               <Gauge size={14} />
-              GC Requests
+              Job Inbox
             </div>
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{fieldPulse}</p>
           </div>
@@ -527,6 +565,34 @@ export default function SubDashboardPage() {
           </div>
         </div>
 
+        <section id="owner-snapshot" className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">Owner Snapshot</div>
+              <h2 className="text-xl font-black text-[color:var(--text-primary)]">What needs action today?</h2>
+            </div>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {actionSpine.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 transition-colors hover:border-[#F97316]/40"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#F97316]/10 text-[#F97316]">
+                    {item.icon}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-bold uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{item.label}</span>
+                    <span className="mt-1 block text-sm font-black text-[color:var(--text-primary)]">{item.value}</span>
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         <section className="rounded-xl border border-[#22C55E]/20 bg-[linear-gradient(135deg,rgba(34,197,94,0.1),rgba(15,23,42,0.74)_50%,rgba(59,130,246,0.1))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
@@ -548,7 +614,7 @@ export default function SubDashboardPage() {
           </div>
         </section>
 
-        <section className="space-y-4">
+        <section className="space-y-4" id="job-inbox">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#93C5FD]">
@@ -667,7 +733,7 @@ export default function SubDashboardPage() {
             className="inline-flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to IronTrack Pulse
+            Back to IronTrack
           </Link>
         </div>
       </div>

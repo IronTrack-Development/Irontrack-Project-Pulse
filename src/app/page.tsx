@@ -75,7 +75,7 @@ export default function LandingPage() {
               <em className="font-medium" style={{ color: "#E85D1C" }}>without asking GC to change.</em>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              IronTrack helps subcontractors control requests, schedule noise, proof, and responses across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.
+              IronTrack helps subcontractors control requests, schedule noise, proof, and responses across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.
             </p>
             <div className="mx-auto mb-8 grid max-w-4xl grid-cols-2 gap-2 rounded-2xl border p-2 text-left sm:grid-cols-3 lg:grid-cols-6" style={{ background: "rgba(255,255,255,0.72)", borderColor: "rgba(13,13,13,0.08)" }}>
               {["Job Inbox", "Work Cards", "Readiness", "Proof Log", "GC Response", "Owner Snapshot"].map((step, index) => (
@@ -106,20 +106,13 @@ export default function LandingPage() {
                 Start as Subcontractor
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link
-                href="/signup"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
-              >
-                <HardHat className="w-5 h-5" />
-                GC / Owner access
-                <ArrowRight className="w-5 h-5" />
-              </Link>
             </div>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold" style={{ color: "rgba(13,13,13,0.45)" }}>
               <span>Public beta</span>
               <span>•</span>
               <span>Subcontractor-first workflow</span>
+              <span>•</span>
+              <Link href="/signup" className="hover:text-[#0D0D0D]">GC / owner access is secondary</Link>
               <span>•</span>
               <span>Support: irontrackdevelopment@outlook.com</span>
             </div>
@@ -172,7 +165,7 @@ export default function LandingPage() {
                 Stop letting GC noise run your company.
               </h2>
               <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.68)" }}>
-                Every GC works differently: Procore on one job, Autodesk on another, Fieldwire on a third, plus email, PDFs, screenshots, texts, and spreadsheets. IronTrack gives subcontractors one operating layer for what needs action today.
+                Every GC works differently: Procore on one job, Autodesk on another, Fieldwire on a third, plus email, PDFs, screenshots, texts, calls, and spreadsheets. IronTrack gives subcontractors one operating layer for what needs action today.
               </p>
               <a
                 href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
@@ -185,7 +178,7 @@ export default function LandingPage() {
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["Job Inbox", "All GC asks, portal exports, screenshots, emails, and texts routed into one daily queue."],
+                ["Job Inbox", "All GC asks, portal exports, screenshots, emails, calls, and texts routed into one daily queue."],
                 ["Work Cards", "Each request becomes a clear scope card with project, location, due date, owner, and next action."],
                 ["Readiness Board", "Foremen and operations see what is ready, not ready, blocked, or waiting on the GC."],
                 ["Proof Log", "Photos, notes, quantities, and field context stay tied to the work instead of scattered in phones."],
@@ -214,6 +207,7 @@ export default function LandingPage() {
               { name: "Autodesk", ext: "ACC / Build" },
               { name: "Fieldwire", ext: "Field tasks" },
               { name: "Email + Texts", ext: "Daily noise" },
+              { name: "Calls", ext: "Manual notes" },
               { name: "PDFs + Screenshots", ext: "Proof trails" },
               { name: "Spreadsheets", ext: "Work logs" },
             ].map((source) => (
@@ -259,7 +253,7 @@ export default function LandingPage() {
                   Job Inbox
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Pull the chaos into one queue: portal tasks, schedule exports, PDFs, screenshots, texts, emails, spreadsheet trackers, and GC asks. Operations can triage what needs action today without forcing the GC into another login.
+                  Pull the chaos into one queue: portal tasks, schedule exports, PDFs, screenshots, texts, calls, emails, spreadsheet trackers, and GC asks. Operations can triage what needs action today without forcing the GC into another login.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["GC Requests", "Portal Exports", "Email Intake", "PDF Notes", "Screenshot Tasks", "Today Queue"].map((tag) => (
@@ -382,19 +376,22 @@ export default function LandingPage() {
               </div>
               <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#DC2626" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Toolbox Talk</span>
-                    <span className="text-[10px] ml-2 text-red-200">OSHA Template</span>
+                  <div className="px-4 py-2.5" style={{ background: "#0D0D0D" }}>
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">Readiness Board</span>
+                    <span className="text-[10px] ml-2" style={{ color: "rgba(255,255,255,0.55)" }}>Tomorrow · 6 Cards</span>
                   </div>
                   <div className="px-4 py-3 space-y-2">
-                    <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>Fall Protection - Scaffolding</div>
                     <div className="flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs" style={{ color: "rgba(13,13,13,0.55)" }}>OSHA 1926.451 - Scaffolds</span>
+                      <Shield className="w-3.5 h-3.5" style={{ color: "#22C55E" }} />
+                      <span className="text-xs font-bold" style={{ color: "#22C55E" }}>Ready: Level 2 rough-in · crew assigned</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>18 attendees signed in</span>
+                      <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
+                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Blocked: loading dock access still locked</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-3.5 h-3.5" style={{ color: "#EAB308" }} />
+                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Waiting: revised drawing SK-18</span>
                     </div>
                   </div>
                 </div>
@@ -406,7 +403,7 @@ export default function LandingPage() {
                       </div>
                     ))}
                   </div>
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>All crews signed in</span>
+                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Foremen can update status from the phone</span>
                 </div>
               </div>
             </div>
@@ -588,11 +585,11 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(232,93,28,0.2)" }}>
-                  {/* Dispatch Board Mock */}
+                  {/* Work Card Mock */}
                   <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                     <div className="px-4 py-2.5" style={{ background: "#E85D1C" }}>
-                      <span className="text-xs font-bold text-white uppercase tracking-wider">Morning Dispatch Board</span>
-                      <span className="text-[10px] ml-2 text-orange-200">Today · 6 Crews Out</span>
+                      <span className="text-xs font-bold text-white uppercase tracking-wider">Work Cards</span>
+                      <span className="text-[10px] ml-2 text-orange-200">Today · 6 Active</span>
                     </div>
                     <div className="px-4 py-3 space-y-2">
                       <div className="flex items-center gap-2">
@@ -615,7 +612,7 @@ export default function LandingPage() {
                       <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Ductwork installed</div>
                     </div>
                     <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Handoffs</div>
+                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Readiness</div>
                       <div className="text-lg font-extrabold" style={{ color: "#3B82F6" }}>3 Ready</div>
                       <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sheet metal → piping</div>
                     </div>
@@ -799,7 +796,7 @@ export default function LandingPage() {
                   "Shared schedule infrastructure",
                   "All schedule formats (MPP, XER, XLSX, CSV, XML)",
                   "3-week lookahead + deterministic reforecast",
-                  "Daily logs, reports, inspections",
+                  "Daily logs, reports, and inspections",
                   "Scoped QR sharing",
                   "Sub visibility when the GC chooses to participate",
                 ].map((feat) => (

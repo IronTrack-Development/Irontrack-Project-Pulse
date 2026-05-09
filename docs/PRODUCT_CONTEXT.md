@@ -2,7 +2,7 @@
 
 ## What Is It
 
-**IronTrack Pulse** is a web-based SaaS platform for construction field management. It gives general contractors and subcontractors a single platform to manage schedules, daily field operations, safety compliance, trade coordination, and documents — from any device, on any job site.
+**IronTrack Pulse** is a subcontractor-first field operations app. It helps trade contractors control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.
 
 The product is live at **irontrackpulse.com**, built on Next.js + Supabase + Stripe, and deployed on Vercel.
 
@@ -10,13 +10,13 @@ The product is live at **irontrackpulse.com**, built on Next.js + Supabase + Str
 
 ## The Problem
 
-Construction schedule management today is:
-- **Manual** — schedules live in Microsoft Project or P6 and never leave the PM's laptop
-- **Fragmented** — daily logs in Excel, safety forms on paper, punch lists in email threads
-- **Expensive** — Procore starts at $500+/month per project; Fieldwire at $54+/user/month
-- **Disconnected from the field** — subs don't get their schedule until they show up Monday morning
+Subcontractor field work today is:
+- **Fragmented** — each GC uses a different portal, plus email, texts, calls, screenshots, PDFs, and spreadsheets
+- **Reactive** — foremen learn about changes late and operations has to reconstruct what happened
+- **Hard to defend** — proof lives in phones, text threads, and folders instead of being tied to the work
+- **Owner-blind** — leadership cannot instantly see what is ready, blocked, missing, or waiting on a GC response
 
-GCs and sups spend hours every week chasing information that should be instant. Subcontractors have no visibility into when they're needed until someone texts them. Issues that show up on site had warning signs in the schedule three weeks ago.
+IronTrack turns that noise into one daily subcontractor workflow: Job Inbox → Work Cards → Readiness Board → Proof Log → GC Response → Owner Snapshot.
 
 ---
 
@@ -24,10 +24,11 @@ GCs and sups spend hours every week chasing information that should be instant. 
 
 | User | Role | Core Value |
 |------|------|-----------|
-| **Superintendent** | Runs the day-to-day on site | Daily logs, field reports, toolbox talks, coordination meetings, punch lists — all from phone |
-| **Project Manager** | Owns the schedule and client relationship | Reforecast engine, milestone tracking, document management, sub portal, risk detection |
-| **General Contractor (company)** | Multiple projects, multiple sups | One platform for all projects, shared directory, sub management, safety records |
-| **Subcontractor** | Trades company doing work on GC jobs | Morning dispatch board, foreman management, production tracking, SOP library, handoff boards |
+| **Subcontractor owner** | Owns risk and customer relationships | Owner snapshot of ready jobs, at-risk jobs, blockers, proof, and responses needing a call |
+| **Operations manager** | Coordinates work across jobs | Job inbox, work cards, readiness, foreman follow-up, and proof gaps |
+| **Project manager** | Handles GC communication | GC responses, blocker notices, delay context, proof packets, and clarification requests |
+| **Foreman** | Runs field execution | Mobile work cards, readiness updates, proof capture, blocker notes, and handoffs |
+| **Field crew** | Performs the work | Clear scope, location, material/access status, and what proof to capture |
 
 ---
 
@@ -35,12 +36,12 @@ GCs and sups spend hours every week chasing information that should be instant. 
 
 | Competitor | Price | IronTrack Advantage |
 |------------|-------|---------------------|
-| Procore | $500+/month/project | ~25x cheaper; field-first, not office-first |
-| Fieldwire | $54+/user/month | Comparable field features, fraction of the cost |
-| Microsoft Project | ~$30/user/month (schedule only) | Full field ops + schedule in one app |
-| Excel/Paper | Free | Actually works; real tracking; defensible documentation |
+| Procore / Autodesk / Fieldwire | GC-controlled portals | IronTrack works alongside them without requiring GC adoption |
+| Email / Texts / Calls | Fast but scattered | Converts asks and decisions into one job inbox |
+| PDFs / Screenshots | Useful but hard to track | Ties source context and proof to work cards |
+| Spreadsheets | Flexible but fragile | Gives owners and foremen a live daily queue |
 
-**Price point:** $19.99/month GC, $10/month Sub. No per-project fees. No seat limits stated.
+**Price point:** $10/month Sub is the primary beta focus. GC / owner access remains secondary infrastructure.
 
 ---
 

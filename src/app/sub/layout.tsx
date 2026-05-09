@@ -32,6 +32,7 @@ const subNavItems = [
 ];
 
 const fieldLoopItems = [
+  { href: "/sub/dashboard", labelKey: "subops.jobInbox", shortKey: "subops.dashboard" },
   { href: "/sub/dispatch", labelKey: "subops.plan", shortKey: "subops.dispatch" },
   { href: "/sub/check-in", labelKey: "subops.start", shortKey: "subops.dailyCheckIn" },
   { href: "/sub/production", labelKey: "subops.track", shortKey: "subops.production" },

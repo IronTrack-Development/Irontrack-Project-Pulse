@@ -30,7 +30,7 @@ Revenue target: $3,500/month (~175 GC accounts, or mixed GC + Sub).
 
 **Primary users:** subcontractor owners, operations managers, project managers, foremen, and field crews.
 
-**Current product frame:** IronTrack helps subcontractors control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.
+**Current product frame:** IronTrack helps subcontractors control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.
 
 **Core subcontractor spine:** Job Inbox → Work Cards → Readiness Board → Proof Log → GC Response → Owner Snapshot.
 

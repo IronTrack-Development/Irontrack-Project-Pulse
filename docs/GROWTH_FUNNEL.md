@@ -14,7 +14,7 @@ The landing page is a full marketing site with:
 - Hero section: "Control GC chaos without asking GC to change."
 - Primary CTA: subcontractor beta → `/signup/sub`; GC / owner access remains secondary → `/signup`
 - Feature showcase centered on Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, Owner Snapshot
-- Source bar: Procore, Autodesk, Fieldwire, email/texts, PDFs/screenshots, spreadsheets
+- Source bar: Procore, Autodesk, Fieldwire, email/texts/calls, PDFs/screenshots, spreadsheets
 - "Who We Serve" section: subcontractor owners, operations managers, PMs, foremen, field crews
 - Pricing section: $10/mo Sub as primary beta plan; GC access is secondary infrastructure
 - Competitor positioning: control GC chaos across existing tools without requiring GC adoption

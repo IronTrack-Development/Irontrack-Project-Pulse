@@ -6,11 +6,11 @@ import SubPortalProjectPage from "@/components/sub-ops/SubPortalProjectPage";
 export default function SubDispatchBoardPage() {
   return (
     <SubPortalProjectPage
-      eyebrow="Dispatch"
-      title="Tomorrow's Crew Plan"
-      description="Send clear direction, surface acknowledgements, and keep field leads aligned before crews hit the gate."
+      eyebrow="Work Cards"
+      title="Upcoming Scope Cards"
+      description="Turn GC asks and upcoming scope into simple cards with crew, material, access, location, and next action before crews hit the gate."
       actionHref="/sub/check-in"
-      actionLabel="Check in"
+      actionLabel="Add proof"
     >
       {(projectId) => <DispatchBoard projectId={projectId} />}
     </SubPortalProjectPage>

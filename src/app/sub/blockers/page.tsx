@@ -6,11 +6,11 @@ import SubPortalProjectPage from "@/components/sub-ops/SubPortalProjectPage";
 export default function SubBlockersListPage() {
   return (
     <SubPortalProjectPage
-      eyebrow="Blockers"
-      title="Issues That Need a Decision"
-      description="Track access, material, drawing, manpower, and GC decision blockers so the next responsible person is obvious."
+      eyebrow="GC Response"
+      title="Blockers That Need a Clean Notice"
+      description="Track access, material, drawing, manpower, predecessor, and GC-decision blockers so the next response is obvious and backed by proof."
       actionHref="/sub/check-in"
-      actionLabel="Field update"
+      actionLabel="Add proof"
     >
       {(projectId) => <BlockersList projectId={projectId} />}
     </SubPortalProjectPage>
