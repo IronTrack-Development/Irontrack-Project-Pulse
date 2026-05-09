@@ -1,11 +1,9 @@
 import Link from "next/link";
 import {
   ArrowRight, CheckCircle, HardHat, Briefcase, Building2,
-  Upload, Calendar, Target, QrCode, ClipboardList, GitBranch,
-  Download, Share2, Camera, FileText, Shield, Zap, Users,
-  Handshake, Send, ArrowRightLeft, Sun, Moon, Globe,
-  AlertTriangle, BookOpen, Wrench, MessageSquare, Eye,
-  BarChart3, Columns3, Truck, Search, Clipboard, Settings
+  Calendar, QrCode, ClipboardList, Camera, FileText, Shield, Zap, Users,
+  Handshake, Send, ArrowRightLeft, Sun,
+  AlertTriangle, Truck, Search, Clipboard, Lock, RadioTower,
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 
@@ -63,70 +61,95 @@ export default function LandingPage() {
 
       {/* ═══ HERO ═══ */}
       <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
+        <div className="max-w-7xl mx-auto px-6 pt-14 pb-10 md:pt-24 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Daily Field Pulse For GCs And Subs
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
+              The Field Operating System For Commercial Construction
             </p>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
               style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}
             >
-              Run Your Job.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Don&apos;t Chase It.</em>
+              Keep the field aligned <br />
+              <em className="font-medium" style={{ color: "#E85D1C" }}>around today.</em>
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
+            <p className="text-base md:text-xl leading-relaxed mb-8 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.6)" }}>
+              IronTrack Pulse shows superintendents, foremen, and PMs <strong style={{ color: "#0D0D0D" }}>what&apos;s happening today, what&apos;s coming next, who&apos;s ready, what&apos;s blocked,</strong> and what needs leadership attention &mdash; all from a phone on the jobsite.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-                className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
-                style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
-              >
-                <Calendar className="w-5 h-5" />
-                Book a Demo
-                <ArrowRight className="w-5 h-5" />
-              </a>
+
+            {/* Core spine — five-step ribbon */}
+            <div className="mb-9 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider" style={{ color: "rgba(13,13,13,0.55)" }}>
+              {["Schedule", "Today", "Ready Check", "Field Status", "Report"].map((step, i) => (
+                <span key={step} className="flex items-center gap-1.5 sm:gap-2">
+                  <span
+                    className="rounded-full px-3 py-1.5 border"
+                    style={{
+                      background: i === 1 ? "rgba(232,93,28,0.08)" : "white",
+                      borderColor: i === 1 ? "rgba(232,93,28,0.35)" : "rgba(13,13,13,0.1)",
+                      color: i === 1 ? "#E85D1C" : "#0D0D0D",
+                    }}
+                  >
+                    {step}
+                  </span>
+                  {i < 4 && <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" style={{ color: "rgba(13,13,13,0.3)" }} aria-hidden />}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
+                style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
               >
                 <HardHat className="w-5 h-5" />
-                GC Signup
+                Start as a GC
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/signup/sub"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
+                className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-4 rounded-xl text-base font-bold transition-all border-2"
                 style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
               >
                 <Briefcase className="w-5 h-5" />
-                Sub Signup
+                Start as a Sub
                 <ArrowRight className="w-5 h-5" />
               </Link>
+              <a
+                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
+                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-4 rounded-xl text-base font-bold transition-all"
+                style={{ color: "rgba(13,13,13,0.7)" }}
+              >
+                <Calendar className="w-5 h-5" />
+                Or book a demo
+              </a>
             </div>
+
+            <p className="mt-5 text-xs sm:text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
+              No credit card to start. $19.99/mo for GCs. $10/mo for Subs.
+            </p>
+
+            {/* Day-in-the-life rhythm cards */}
             <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
               {[
                 {
                   label: "6:15 AM",
-                  title: "Morning huddle locked in",
-                  body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
+                  title: "Today is locked in",
+                  body: "Crews, scope, safety focus, and material notes leave the yard together. No one starts the day in the dark.",
                   icon: Truck,
                   color: "#E85D1C",
                 },
                 {
                   label: "11:40 AM",
-                  title: "Blocker raised before it costs a day",
-                  body: "Field notes, photos, and caveats are captured while the problem is still fresh.",
+                  title: "A blocker is raised early",
+                  body: "Photos, notes, and ready-check responses surface the issue while it is still cheap to fix.",
                   icon: AlertTriangle,
                   color: "#DC2626",
                 },
                 {
                   label: "3:55 PM",
-                  title: "Next crew gets the handoff",
-                  body: "What is ready, what is missing, and where to start is already waiting for them.",
+                  title: "The next crew has a clean handoff",
+                  body: "What is ready, what is missing, and where to pick up is captured before the truck pulls off site.",
                   icon: ArrowRightLeft,
                   color: "#3B82F6",
                 },
@@ -134,7 +157,7 @@ export default function LandingPage() {
                 <div key={item.title} className="rounded-2xl p-5 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>{item.label}</span>
-                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
+                    <item.icon className="w-5 h-5" style={{ color: item.color }} aria-hidden />
                   </div>
                   <h3 className="text-base font-extrabold mb-2" style={{ color: "#0D0D0D" }}>{item.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{item.body}</p>
@@ -238,10 +261,10 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[01]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Schedule Intelligence
+                  Schedule that the field can use
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Upload your schedule once. Instantly see today, tomorrow, and three weeks out - grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates your entire critical path in seconds. Float, forecast finish date, risk flags, milestones, and MSPDI export. Pure math, zero AI. Results you can trust and defend.
+                  Upload once from MS Project, P6, Excel, CSV, or XML. The team sees today, tomorrow, and the next three weeks &mdash; grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates float, finish dates, and risk flags in seconds. <strong style={{ color: "#0D0D0D" }}>Deterministic math, no AI rewrites.</strong> Results you can defend in an OAC.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
@@ -349,10 +372,10 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Safety & Compliance
+                  Toolbox Talks & Sign-In
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run toolbox talks with 20 built-in OSHA templates or create your own. Track attendance with digital sign-in. Generate company-branded PDF reports for your safety files. Custom templates let you match your company&apos;s safety program exactly.
+                  Run toolbox talks from a phone using 20+ topic templates or your own. Capture attendance with digital sign-in and export branded PDFs for your safety files. A clean record of what was talked about, who was there, and when &mdash; without replacing your safety program.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Toolbox Talks", "OSHA Templates", "Attendance", "Custom Templates", "PDF Reports"].map((tag) => (
@@ -444,13 +467,13 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[05]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Documents
+                  Submittals, RFIs, and Drawings
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Manage submittals with full approval workflows. Draft RFIs with AI assistance - describe the issue and get a professional RFI ready to send. Organize drawings by discipline with version control. Everything searchable, everything tracked.
+                  Track submittals with approval workflows. Draft an RFI quickly with an AI-assisted starting point you fully control before sending. Organize drawings by discipline with version control. Everything searchable, everything tracked &mdash; nothing fired off automatically.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
+                  {["Submittals", "RFIs", "Drawing Versions", "Search"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -610,47 +633,51 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [08] Platform Features ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)", background: "#F5F3EE" }}>
-                    <Sun className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Light Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center" style={{ background: "#1a1a1a" }}>
-                    <Moon className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold text-white">Dark Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Globe className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Español</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Settings className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Settings</span>
-                  </div>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[08]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Platform Features
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Light and dark themes so you can read the screen at 6 AM or midnight. Full Spanish localization for bilingual crews. Mobile-first design that works on any device - because nobody&apos;s carrying a laptop through a construction site.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Dark Mode", "Light Mode", "Español", "Mobile-First"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
           </div>
+        </div>
+      </section>
+
+      {/* ═══ TRUST & POSITIONING ═══ */}
+      <section className="py-14 md:py-20 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-10 md:mb-14">
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
+              Why Field Teams Trust Us
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
+              Boring on purpose. <em className="font-medium" style={{ color: "#E85D1C" }}>Predictable on the jobsite.</em>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              {
+                icon: Lock,
+                title: "Your project data stays yours",
+                body: "Each project is scoped to your account. Sub-shared links expose only the activities and weeks you publish &mdash; never float, predecessors, or the rest of the schedule.",
+              },
+              {
+                icon: RadioTower,
+                title: "Deterministic, not magical",
+                body: "Reforecast, critical path, and risk flags are rules-based math you can audit. We use AI only to help draft an RFI &mdash; you review and approve before anything is sent.",
+              },
+              {
+                icon: Sun,
+                title: "Built phone-first",
+                body: "Designed to be readable at 6 AM in a parking lot or 4 PM in a half-finished mech room. Light, dark, and Spanish on every screen. Big tap targets. No laptop required.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(232,93,28,0.08)" }}>
+                  <item.icon className="w-5 h-5" style={{ color: "#E85D1C" }} aria-hidden />
+                </div>
+                <h3 className="text-base font-extrabold mb-2" style={{ color: "#0D0D0D" }}>{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.6)" }} dangerouslySetInnerHTML={{ __html: item.body }} />
+              </div>
+            ))}
+          </div>
+          <p className="text-center mt-8 text-xs sm:text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
+            Public beta. We respond directly &mdash; <a href="mailto:irontrackdevelopment@outlook.com" style={{ color: "#E85D1C", fontWeight: 600 }}>irontrackdevelopment@outlook.com</a>.
+          </p>
         </div>
       </section>
 

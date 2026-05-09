@@ -11,19 +11,13 @@ import {
   Users,
   Timer,
   CalendarDays,
-  BarChart3,
   ClipboardList,
   RefreshCw,
-  Package,
   Send,
   AlertTriangle,
   CheckCircle2,
   ArrowUpRight,
   MapPin,
-  Gauge,
-  HardHat,
-  ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import { t } from "@/lib/i18n";
 
@@ -101,34 +95,30 @@ function timeAgo(isoStr: string): string {
   return `${days} ${t('time.dayAgo')}`;
 }
 
-// ─── Stat Card ─────────────────────────────────────────────────────────────────
+// ─── KPI Tile (compact, field-readable) ───────────────────────────────────────
 
-function StatCard({
+function KpiTile({
   label,
   value,
-  icon,
-  accent = false,
+  accent = "default",
   helper,
 }: {
   label: string;
   value: string | number;
-  icon: React.ReactNode;
-  accent?: boolean;
+  accent?: "default" | "warn" | "good";
   helper?: string;
 }) {
+  const valueColor =
+    accent === "warn"
+      ? "text-[#F97316]"
+      : accent === "good"
+        ? "text-[#22C55E]"
+        : "text-[color:var(--text-primary)]";
   return (
-    <div className="group relative overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 flex flex-col gap-2 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#3B82F6]/70 to-transparent opacity-70" />
-      <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
-        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-[#F97316]"}`}>
-          {icon}
-        </span>
-        <span className="text-[10px] uppercase tracking-[0.18em] font-bold">{label}</span>
-      </div>
-      <span className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
-        {value}
-      </span>
-      {helper && <span className="text-xs text-[color:var(--text-muted)]">{helper}</span>}
+    <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+      <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--text-muted)]">{label}</div>
+      <div className={`mt-1 text-2xl font-extrabold leading-none ${valueColor}`}>{value}</div>
+      {helper && <div className="mt-1.5 text-xs text-[color:var(--text-secondary)] line-clamp-2">{helper}</div>}
     </div>
   );
 }
@@ -409,197 +399,95 @@ export default function SubDashboardPage() {
   const canLoadMore = visibleReports < totalReports && visibleReports < recentReports.length;
   const latestReport = recentReports[0];
   const projectsNeedingReports = projects.filter((project) => !project.last_report_date).length;
-  const fieldPulse =
-    stats.reportsThisWeek > 0
-      ? "Field reporting is active this week."
-      : "No reports yet this week. Get a field update in before lunch.";
-  const topProject = projects[0];
-  const huddleCards = [
-    {
-      label: "Schedule",
-      icon: <CalendarDays size={15} />,
-      text: topProject
-        ? `${topProject.project_name}: ${topProject.tasks_count} tracked task${topProject.tasks_count === 1 ? "" : "s"}.`
-        : "No linked schedule yet.",
-    },
-    {
-      label: "Manpower",
-      icon: <HardHat size={15} />,
-      text: stats.uniqueForemen > 0
-        ? `${stats.uniqueForemen} foreman${stats.uniqueForemen === 1 ? "" : "en"} sending field signals.`
-        : "Add foremen so updates have owners.",
-    },
-    {
-      label: "Materials",
-      icon: <Package size={15} />,
-      text: "Use dispatch notes to make needed material obvious before crews mobilize.",
-    },
-    {
-      label: "Hurdles",
-      icon: <AlertTriangle size={15} />,
-      text: projectsNeedingReports > 0
-        ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need first-report visibility.`
-        : "No first-report gaps right now.",
-    },
-    {
-      label: "Handoffs",
-      icon: <ArrowUpRight size={15} />,
-      text: "Capture what the next crew needs before the current crew leaves.",
-    },
-  ];
+
+  const lastSignalText = latestReport
+    ? `${latestReport.project_name} · ${timeAgo(latestReport.submitted_at)}`
+    : "No field updates yet";
+  const needsAttentionText =
+    projectsNeedingReports > 0
+      ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} waiting on a first report`
+      : "All projects have a recent report";
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-16">
-      <div className="relative max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <div className="relative max-w-6xl mx-auto px-4 py-6 md:py-8 space-y-6 md:space-y-8">
 
         {/* ── Header ── */}
-        <div className="relative overflow-hidden rounded-xl border border-[#3B82F6]/20 bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92)_42%,rgba(249,115,22,0.14))] p-5 md:p-7 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+        <header className="relative overflow-hidden rounded-2xl border border-[#3B82F6]/20 bg-[linear-gradient(135deg,rgba(59,130,246,0.16),rgba(15,23,42,0.92)_50%,rgba(249,115,22,0.12))] p-5 md:p-7">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316]" />
-          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#93C5FD]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E] shadow-[0_0_14px_#22C55E]" />
+          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="min-w-0 flex-1 pr-10">
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#93C5FD]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E] shadow-[0_0_10px_#22C55E]" />
                 Sub Command Center
               </div>
-              <h1 className="text-3xl md:text-5xl font-black text-white">
-                {displayName}
-              </h1>
-              <p className="mt-3 max-w-xl text-sm md:text-base text-slate-300">
-                Morning dispatch, field check-ins, blockers, crew activity, and GC-facing reports in one place.
+              <h1 className="text-2xl md:text-4xl font-black text-white truncate">{displayName}</h1>
+              <p className="mt-2 max-w-xl text-sm text-slate-300">
+                {company.contact_name ? `Signed in as ${company.contact_name}. ` : ""}
+                {needsAttentionText}.
               </p>
-              {company.contact_name && (
-                <p className="text-sm text-slate-400 mt-2">Signed in as {company.contact_name}</p>
-              )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
-              <Link href="/sub/check-in" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-sm font-black text-[#052E16] transition-transform hover:-translate-y-0.5">
-                Check in
+            <div className="grid grid-cols-3 gap-2 lg:flex lg:flex-wrap lg:justify-end">
+              <Link
+                href="/sub/check-in"
+                className="inline-flex min-h-[44px] flex-col items-center justify-center gap-1 rounded-lg bg-[#22C55E] px-3 py-2 text-xs font-bold text-[#052E16] transition-transform hover:-translate-y-0.5 sm:flex-row sm:gap-2 sm:text-sm"
+              >
                 <CheckCircle2 size={16} />
+                Check in
               </Link>
-              <Link href="/sub/dispatch" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white transition-transform hover:-translate-y-0.5">
-                Dispatch
+              <Link
+                href="/sub/dispatch"
+                className="inline-flex min-h-[44px] flex-col items-center justify-center gap-1 rounded-lg bg-[#3B82F6] px-3 py-2 text-xs font-bold text-white transition-transform hover:-translate-y-0.5 sm:flex-row sm:gap-2 sm:text-sm"
+              >
                 <Send size={16} />
+                Dispatch
               </Link>
-              <Link href="/sub/blockers" className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
-                Blocker
+              <Link
+                href="/sub/blockers"
+                className="inline-flex min-h-[44px] flex-col items-center justify-center gap-1 rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-xs font-bold text-white transition-transform hover:-translate-y-0.5 sm:flex-row sm:gap-2 sm:text-sm"
+              >
                 <AlertTriangle size={16} />
+                Blocker
               </Link>
             </div>
           </div>
           <button
             onClick={() => loadDashboard(true)}
             disabled={refreshing}
-            className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:text-white disabled:opacity-40"
+            aria-label="Refresh dashboard"
+            className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-2.5 py-1.5 text-xs text-slate-300 transition-colors hover:text-white disabled:opacity-40"
           >
             <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
           </button>
-        </div>
+        </header>
 
-        <div className="grid gap-3 md:grid-cols-3">
-          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#93C5FD]">
-              <Gauge size={14} />
-              Field Pulse
-            </div>
-            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{fieldPulse}</p>
-          </div>
-          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
-              <AlertTriangle size={14} />
-              Needs Attention
-            </div>
-            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
-              {projectsNeedingReports > 0
-                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first report.`
-                : "Every active project has at least one report."}
-            </p>
-          </div>
-          <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#22C55E]">
-              <ShieldCheck size={14} />
-              Last Signal
-            </div>
-            <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
-              {latestReport ? `${latestReport.project_name} updated ${timeAgo(latestReport.submitted_at)}.` : "No reports submitted yet."}
-            </p>
-          </div>
-        </div>
-
-        <section className="rounded-xl border border-[#22C55E]/20 bg-[linear-gradient(135deg,rgba(34,197,94,0.1),rgba(15,23,42,0.74)_50%,rgba(59,130,246,0.1))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#86EFAC]">
-                <Sparkles size={14} />
-                Field Intelligence Loop
-              </div>
-              <h2 className="mt-2 text-xl font-black text-white">One update should power the whole job conversation.</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Check-ins feed GC reports, production pulse, blocker accountability, and tomorrow's dispatch instead of becoming another dead-end daily log.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-xs font-bold text-white sm:grid-cols-4 md:min-w-[420px]">
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Check-In</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Production</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Blockers</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Dispatch</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#93C5FD]">
-                <Users size={14} />
-                Morning Huddle
-              </div>
-              <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Get every crew pointed the same direction.</h2>
-            </div>
-            <Link
-              href="/sub/dispatch"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white"
-            >
-              Build tomorrow's plan
-              <Send size={15} />
-            </Link>
-          </div>
-          <div className="grid gap-3 md:grid-cols-5">
-            {huddleCards.map((card) => (
-              <div key={card.label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.14)]">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
-                  {card.icon}
-                  {card.label}
-                </div>
-                <p className="mt-3 text-sm leading-6 text-[color:var(--text-secondary)]">{card.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Stats Row ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <StatCard
+        {/* ── KPI Strip (replaces 3 separate intro sections) ── */}
+        <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <KpiTile
             label="Active Projects"
             value={stats.activeProjects}
-            icon={<FolderOpen size={14} />}
-            accent
-            helper="Scopes connected by GCs"
+            accent="warn"
+            helper={projects.length > 0 ? "Scopes connected by GCs" : "Waiting on first GC invite"}
           />
-          <StatCard
+          <KpiTile
             label="Reports This Week"
             value={stats.reportsThisWeek}
-            icon={<BarChart3 size={14} />}
-            helper="Fresh field intelligence"
+            accent={stats.reportsThisWeek > 0 ? "good" : "default"}
+            helper={stats.reportsThisWeek > 0 ? "Field reporting active" : "No update logged yet"}
           />
-          <StatCard
-            label="Foremen"
+          <KpiTile
+            label="Foremen Reporting"
             value={stats.uniqueForemen}
-            icon={<Users size={14} />}
-            helper="People sending updates"
+            helper={stats.uniqueForemen > 0 ? "People sending updates" : "Add foremen to assign updates"}
           />
-        </div>
+          <KpiTile
+            label="Last Signal"
+            value={latestReport ? timeAgo(latestReport.submitted_at) : "—"}
+            helper={lastSignalText}
+          />
+        </section>
 
         {/* ── Projects Section ── */}
         <section className="space-y-4">

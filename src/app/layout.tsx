@@ -17,12 +17,12 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
-  title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-  description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
+  title: "IronTrack Pulse — The Field Operating System for Construction",
+  description: "Keep field teams aligned around what is happening today, what is coming next, who is ready, what is blocked, and what needs leadership attention. Built for GCs, subs, and foremen on a phone — not in a spreadsheet.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
+    title: "IronTrack Pulse — The Field Operating System for Construction",
+    description: "Schedule, Today, Ready Check, Field Status, Report — one clean rhythm for superintendents, foremen, and PMs.",
     images: [
       {
         url: "/og-share-card.png",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
+    title: "IronTrack Pulse — The Field Operating System for Construction",
+    description: "Today, Ready Check, Field Status, and Report — built for jobsites, not spreadsheets.",
     images: [
       {
         url: "/og-share-card.png",

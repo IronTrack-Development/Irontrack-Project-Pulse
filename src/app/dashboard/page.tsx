@@ -166,136 +166,128 @@ export default function Dashboard() {
           </div>
         )}
 
-        {!loading && projects.length > 0 && (
-          <section className="mb-8 overflow-hidden rounded-2xl border border-[#F97316]/20 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(15,23,42,0.72)_48%,rgba(59,130,246,0.12))] p-5 shadow-[0_24px_75px_rgba(0,0,0,0.2)]">
-            <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-              <div>
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#F97316]">
-                  <Calendar size={14} />
-                  Today&apos;s Operating Loop
-                </div>
-                <h2 className="mt-2 text-xl font-black text-white">Choose the job, then run the day.</h2>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-300">
-                  Pick the project you are working on now. Then review the plan, capture field changes, and keep the next handoff clean.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 sm:min-w-[300px]">
-                <label className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                  Active job
-                </label>
-                <select
-                  id="dashboard-loop-project"
-                  value={loopProjectId}
-                  onChange={(event) => setLoopProjectId(event.target.value)}
-                  className="min-h-[44px] rounded-lg border border-white/10 bg-black/35 px-3 py-2 text-sm font-bold text-white outline-none transition-colors focus:border-[#F97316]"
-                >
-                  <option value="">Select a project...</option>
-                  {projects.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+        {!loading && projects.length > 0 && (() => {
+          const loopProject = projects.find((project) => project.id === loopProjectId) ?? null;
+          const loopItems = [
+            {
+              href: loopProject ? `/projects/${loopProject.id}` : "",
+              label: "Today",
+              body: loopProject?.stats.todayActivity?.activity_name ?? "Today's plan and ready checks.",
+              icon: Calendar,
+              color: "#3B82F6",
+            },
+            {
+              href: loopProject ? `/projects/${loopProject.id}/daily-log` : "",
+              label: "Daily Log",
+              body: "Weather, crew, delays, and photos.",
+              icon: ClipboardList,
+              color: "#22C55E",
+            },
+            {
+              href: loopProject ? `/projects/${loopProject.id}/report` : "",
+              label: "Field Report",
+              body: "Capture an issue while it is fresh.",
+              icon: AlertTriangle,
+              color: "#F97316",
+            },
+            {
+              href: loopProject ? `/projects/${loopProject.id}` : "",
+              label: "Subs",
+              body: "Ready checks, blockers, handoffs.",
+              icon: Send,
+              color: "#EAB308",
+            },
+          ];
 
-            {(() => {
-              const loopProject = projects.find((project) => project.id === loopProjectId) ?? null;
-              const loopItems = [
-                {
-                  href: loopProject ? `/projects/${loopProject.id}` : "",
-                  label: "Review Today",
-                  body: loopProject?.stats.todayActivity?.activity_name ?? "Choose a project to open its day plan.",
-                  icon: Calendar,
-                  color: "#3B82F6",
-                },
-                {
-                  href: loopProject ? `/projects/${loopProject.id}/daily-log` : "",
-                  label: "Log The Field",
-                  body: "Weather, manpower, delays, work performed, and photos.",
-                  icon: ClipboardList,
-                  color: "#22C55E",
-                },
-                {
-                  href: loopProject ? `/projects/${loopProject.id}/report` : "",
-                  label: "Capture Issue",
-                  body: "Create a report before the detail gets lost.",
-                  icon: AlertTriangle,
-                  color: "#F97316",
-                },
-                {
-                  href: loopProject ? `/projects/${loopProject.id}` : "",
-                  label: "Align Subs",
-                  body: "Check readiness, reports, caveats, and the next handoff.",
-                  icon: Send,
-                  color: "#EAB308",
-                },
-              ];
-
-              return (
-                <>
-                  {loopProject && (
-                    <div className="mb-3 flex flex-col gap-2 rounded-xl border border-white/10 bg-black/20 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Selected project</p>
-                        <p className="mt-1 text-sm font-black text-white">{loopProject.name}</p>
-                      </div>
-                      <Link
-                        href={`/projects/${loopProject.id}`}
-                        className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-2 text-sm font-black text-white"
-                      >
-                        Open command center
-                        <Flag size={15} />
-                      </Link>
-                    </div>
+          return (
+            <section className="mb-8 overflow-hidden rounded-2xl border border-[#F97316]/20 bg-[linear-gradient(135deg,rgba(249,115,22,0.10),rgba(15,23,42,0.72)_55%,rgba(59,130,246,0.10))] p-4 md:p-5">
+              <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#F97316]">
+                    <Calendar size={13} />
+                    Run The Day
+                  </div>
+                  <h2 className="mt-1.5 text-lg md:text-xl font-black text-white">
+                    {loopProject ? loopProject.name : "Pick a project to start"}
+                  </h2>
+                  {loopProject?.stats.todayActivity ? (
+                    <p className="mt-1 truncate text-sm text-slate-300">
+                      Today: <span className="text-white font-semibold">{loopProject.stats.todayActivity.activity_name}</span>
+                      <span className="text-slate-500"> · {loopProject.stats.todayActivity.trade}</span>
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-slate-400">Schedule, daily log, field report, subs &mdash; all in two taps.</p>
                   )}
-
-            <div className="grid gap-3 md:grid-cols-4">
-              {loopItems.map((item) => {
-                const content = (
-                  <>
-                    <div className="flex items-center justify-between">
-                      <span className="grid h-10 w-10 place-items-center rounded-lg bg-white/10" style={{ color: item.color }}>
-                        <item.icon size={18} />
-                      </span>
-                      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                        {loopProject ? "Next" : "Pick job"}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 text-sm font-black text-white">{item.label}</h3>
-                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{item.body}</p>
-                  </>
-                );
-
-                if (!loopProject) {
-                  return (
-                    <button
-                      key={item.label}
-                      type="button"
-                      onClick={() => document.getElementById("dashboard-loop-project")?.focus()}
-                      className="group rounded-xl border border-white/10 bg-black/20 p-4 text-left opacity-70 transition-all hover:border-white/20"
+                </div>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2 md:min-w-[320px]">
+                  <select
+                    id="dashboard-loop-project"
+                    value={loopProjectId}
+                    onChange={(event) => setLoopProjectId(event.target.value)}
+                    aria-label="Select active project"
+                    className="min-h-[44px] flex-1 rounded-lg border border-white/10 bg-black/35 px-3 py-2 text-sm font-bold text-white outline-none transition-colors focus:border-[#F97316]"
+                  >
+                    <option value="">Select project…</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
+                  {loopProject && (
+                    <Link
+                      href={`/projects/${loopProject.id}`}
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 text-sm font-black text-white whitespace-nowrap"
                     >
-                      {content}
-                    </button>
-                  );
-                }
+                      Open
+                      <Flag size={14} />
+                    </Link>
+                  )}
+                </div>
+              </div>
 
-                return (
-                  <Link
-                  key={item.label}
-                  href={item.href}
-                  className="group rounded-xl border border-white/10 bg-black/20 p-4 transition-all hover:-translate-y-0.5 hover:border-white/20"
-                >
-                  {content}
-                </Link>
-                );
-              })}
-            </div>
-                </>
-              );
-            })()}
-          </section>
-        )}
+              <div className="grid gap-2 sm:gap-3 grid-cols-2 md:grid-cols-4">
+                {loopItems.map((item) => {
+                  const disabled = !loopProject;
+                  const inner = (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <span className="grid h-9 w-9 place-items-center rounded-lg bg-white/10" style={{ color: item.color }}>
+                          <item.icon size={16} />
+                        </span>
+                        <h3 className="text-sm font-black text-white">{item.label}</h3>
+                      </div>
+                      <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{item.body}</p>
+                    </>
+                  );
+
+                  if (disabled) {
+                    return (
+                      <button
+                        key={item.label}
+                        type="button"
+                        onClick={() => document.getElementById("dashboard-loop-project")?.focus()}
+                        className="rounded-xl border border-white/10 bg-black/20 p-3 text-left opacity-60 transition-all hover:border-white/20 hover:opacity-90 min-h-[88px]"
+                      >
+                        {inner}
+                      </button>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="rounded-xl border border-white/10 bg-black/20 p-3 transition-all hover:-translate-y-0.5 hover:border-[#F97316]/40 hover:bg-black/30 min-h-[88px]"
+                    >
+                      {inner}
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })()}
 
         {/* Summary bar */}
         {projects.length > 0 && (
