@@ -36,7 +36,7 @@ const fieldLoopItems = [
   { href: "/sub/check-in", labelKey: "subops.start", shortKey: "subops.dailyCheckIn" },
   { href: "/sub/production", labelKey: "subops.track", shortKey: "subops.production" },
   { href: "/sub/blockers", labelKey: "subops.clear", shortKey: "subops.blockers" },
-  { href: "/sub/handoffs", labelKey: "subops.handOff", shortKey: "subops.turnover" },
+  { href: "/sub/handoffs", labelKey: "subops.handoffs", shortKey: "subops.turnover" },
 ];
 
 export default function SubLayout({ children }: { children: React.ReactNode }) {

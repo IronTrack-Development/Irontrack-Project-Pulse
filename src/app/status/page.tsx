@@ -59,8 +59,7 @@ export default function StatusPage() {
   const activeServices = services.filter(s => s.status !== "coming_soon");
   const allOperational = activeServices.every(s => s.status === "operational");
 
-  // Static "last checked" — in production this would be dynamic
-  const lastChecked = "April 13, 2026 at 2:00 AM MST";
+  const lastChecked = "Manual status page";
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -90,7 +89,7 @@ export default function StatusPage() {
         {/* Page Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">System Status</h1>
-          <p className="text-[color:var(--text-secondary)]">Current health of IronTrack Project Pulse services</p>
+            <p className="text-[color:var(--text-secondary)]">Current public-beta health of IronTrack Project Pulse services</p>
         </div>
 
         {/* Overall Status Banner */}
@@ -105,7 +104,7 @@ export default function StatusPage() {
             <p className={`font-semibold text-lg ${allOperational ? "text-green-400" : "text-yellow-400"}`}>
               {allOperational ? "All Systems Operational" : "Some Systems Degraded"}
             </p>
-            <p className="text-sm text-[color:var(--text-secondary)]">99.9% uptime last 30 days</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">Public beta status is updated manually while telemetry is being formalized.</p>
           </div>
         </div>
 
@@ -130,7 +129,7 @@ export default function StatusPage() {
         {/* Last Checked */}
         <div className="flex items-center gap-2 text-sm text-[color:var(--text-muted)]">
           <Clock className="w-4 h-4" />
-          <span>Last checked: {lastChecked}</span>
+          <span>{lastChecked} · For support, email irontrackdevelopment@outlook.com.</span>
         </div>
       </main>
 

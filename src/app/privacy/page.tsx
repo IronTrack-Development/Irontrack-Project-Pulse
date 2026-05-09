@@ -78,8 +78,8 @@ export default function PrivacyPage() {
               Here&apos;s what that means in practice:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li>We look at patterns across thousands of schedules to improve AI parsing accuracy</li>
-              <li>We analyze common activity types to build better scheduling intelligence</li>
+              <li>We look at patterns across schedules to improve file parsing accuracy</li>
+              <li>We analyze common activity types to improve rules-based scheduling and field workflow features</li>
               <li>We study typical project durations and milestones to refine our features</li>
               <li>We create industry benchmarks (e.g., "average time for rough-in electrical")</li>
             </ul>

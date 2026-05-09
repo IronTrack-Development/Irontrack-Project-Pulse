@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import {
   HardHat, Send, Users, AlertTriangle, TrendingUp, FileText,
@@ -26,9 +27,9 @@ interface DashboardData {
 }
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
-  checked_in: <span title="Checked in">✅</span>,
-  not_yet: <span title="Not yet">⏳</span>,
-  off: <span title="Off">🔴</span>,
+  checked_in: <CheckCircle size={15} className="text-[#22C55E]" aria-label="Checked in" />,
+  not_yet: <Clock size={15} className="text-[#F97316]" aria-label="Not yet" />,
+  off: <AlertTriangle size={15} className="text-red-400" aria-label="Off" />,
 };
 
 export default function SubOpsDashboard({ projectId }: Props) {
@@ -133,10 +134,10 @@ export default function SubOpsDashboard({ projectId }: Props) {
               <p className="text-[10px] text-[color:var(--text-muted)]">Pending</p>
             </div>
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
+          <Link href="/sub/dispatch" className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-white rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
             <Plus size={14} />
             Create Dispatch
-          </button>
+          </Link>
         </div>
 
         {/* Open Blockers */}

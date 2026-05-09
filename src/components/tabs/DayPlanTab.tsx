@@ -36,6 +36,7 @@ interface DayPlanTabProps {
 export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [data, setData] = useState<DayPlanData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [shareStatus, setShareStatus] = useState<string | null>(null);
@@ -44,23 +45,29 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   const [readyChecks, setReadyChecks] = useState<ReadyCheck[]>([]);
   const [readyCheckActivity, setReadyCheckActivity] = useState<ParsedActivity | null>(null);
 
-  useEffect(() => {
-    const fetchDayPlan = async () => {
-      setLoading(true);
-      try {
-        const clientDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
-    const res = await fetch(`/api/projects/${projectId}/today-plan?day=${day}&clientDate=${clientDate}`);
-        if (res.ok) {
-          const json = await res.json();
-          setData(json);
-        }
-      } catch (error) {
-        console.error("Failed to fetch day plan:", error);
-      } finally {
-        setLoading(false);
+  const fetchDayPlan = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const clientDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local tz
+      const res = await fetch(`/api/projects/${projectId}/today-plan?day=${day}&clientDate=${clientDate}`);
+      if (!res.ok) {
+        setData(null);
+        setError("Could not load the day plan right now.");
+        return;
       }
-    };
+      const json = await res.json();
+      setData(json);
+    } catch (error) {
+      console.error("Failed to fetch day plan:", error);
+      setData(null);
+      setError("Network error while loading the day plan.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchDayPlan();
   }, [projectId, day]);
 
@@ -150,7 +157,6 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     const allActivities = [...data.inspections, ...data.activeTasks];
     const selected = allActivities.filter((a) => selectedIds.has(a.id));
 
-    const dayLabel = day === "today" ? "Today" : "Tomorrow";
     let text = ``;
 
     selected.forEach((activity) => {
@@ -184,17 +190,44 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 size={24} className="text-[#F97316] animate-spin" />
+      <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-6">
+        <div className="flex items-center gap-3">
+          <Loader2 size={24} className="text-[#F97316] animate-spin" />
+          <div>
+            <div className="text-sm font-bold text-[color:var(--text-primary)]">
+              Building {day === "today" ? "today's" : "tomorrow's"} field plan
+            </div>
+            <div className="text-xs text-[color:var(--text-muted)]">Activities, inspections, ready checks, and share tools are loading.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-6 text-center">
+        <AlertTriangle size={30} className="mx-auto mb-3 text-red-400" />
+        <h2 className="text-base font-bold text-[color:var(--text-primary)]">Day plan unavailable</h2>
+        <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{error}</p>
+        <button
+          onClick={fetchDayPlan}
+          className="mt-5 inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#F97316] px-4 py-2 text-sm font-bold text-white"
+        >
+          Retry day plan
+        </button>
       </div>
     );
   }
 
   if (!data || data.totalActivities === 0) {
     return (
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-12 text-center">
-        <CalendarCheck size={40} className="mx-auto text-gray-700 mb-4" />
-        <div className="text-[color:var(--text-secondary)] text-sm">No activities scheduled</div>
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 text-center">
+        <CalendarCheck size={40} className="mx-auto text-[#22C55E] mb-4" />
+        <h2 className="text-lg font-bold text-[color:var(--text-primary)]">No scheduled work for {day === "today" ? "today" : "tomorrow"}</h2>
+        <p className="mx-auto mt-2 max-w-md text-sm text-[color:var(--text-muted)]">
+          If crews are still active, capture field status from Daily Log or upload an updated schedule so the plan reflects the job.
+        </p>
       </div>
     );
   }
@@ -212,11 +245,14 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
     month: "short",
     day: "numeric",
   });
+  const dayLabel = day === "today" ? "Today" : "Tomorrow";
+  const readyCheckCount = [...data.inspections, ...data.activeTasks].filter((activity) => getReadyCheck(activity.id)).length;
+  const notStartedCount = data.activeTasks.filter((task) => (task.percent_complete || 0) === 0).length;
 
   return (
     <div className="space-y-4">
       {/* Header with Share button / Selection mode */}
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex items-center justify-between">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {isSelecting ? (
           <>
             <div className="text-sm text-[color:var(--text-secondary)]">Select activities to share</div>
@@ -240,18 +276,32 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
         ) : (
           <>
             <div>
-              <div className="text-xs text-[color:var(--text-muted)]">{day === "today" ? "Today" : "Tomorrow"}</div>
-              <div className="text-sm font-medium text-[color:var(--text-primary)]">{formattedDate}</div>
+              <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">{dayLabel} field plan</div>
+              <div className="text-base font-bold text-[color:var(--text-primary)]">{formattedDate}</div>
             </div>
             <button
               onClick={handleShareClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
+              className="flex min-h-[44px] items-center justify-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] rounded-lg text-xs font-medium transition-colors"
             >
               <Share2 size={13} />
               {shareStatus || "Share"}
             </button>
           </>
         )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {[
+          ["Total work", data.totalActivities],
+          ["Inspections", data.inspections.length],
+          ["Ready checks", readyCheckCount],
+          ["Not started", notStartedCount],
+        ].map(([label, value]) => (
+          <div key={label} className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+            <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{label}</div>
+            <div className="mt-1 text-xl font-black text-[color:var(--text-primary)]">{value}</div>
+          </div>
+        ))}
       </div>
 
       {/* Inspections section */}

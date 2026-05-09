@@ -43,15 +43,16 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">2. Description of Service</h2>
             <p>
-              IronTrack Project Pulse is a web application that helps construction professionals track project schedules. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
+              IronTrack Project Pulse is a web application that helps construction professionals turn project schedules and field updates into daily operating views. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li>3-week lookahead of upcoming activities</li>
               <li>Milestone tracking and dates</li>
               <li>Progress percentage and completion status</li>
+              <li>Ready checks, field status, daily logs, reports, and scoped subcontractor views</li>
             </ul>
             <p className="mt-4">
-              The Service uses AI-powered parsing (Anthropic Claude) to extract schedule data from uploaded files.
+              The Service may use automated parsing and AI-assisted extraction to process uploaded files or draft optional field documents. You are responsible for reviewing outputs before relying on them.
             </p>
           </section>
 
@@ -78,7 +79,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">4. Subscription and Billing</h2>
             <p>
-              IronTrack Project Pulse is a subscription service. The current price is <strong className="text-[color:var(--text-primary)]">$19.99 per month</strong>, billed automatically via Stripe.
+              IronTrack Project Pulse is a subscription service billed automatically via Stripe. Current public beta pricing is shown on the pricing page and may include separate General Contractor and Subcontractor tiers.
             </p>
             <p className="mt-4">
               <strong className="text-[color:var(--text-primary)]">Cancellation:</strong> You may cancel at any time. Your access will continue until the end of your current billing period. We do not offer refunds for partial months.

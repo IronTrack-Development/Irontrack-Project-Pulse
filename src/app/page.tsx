@@ -1,11 +1,10 @@
 import Link from "next/link";
 import {
   ArrowRight, CheckCircle, HardHat, Briefcase, Building2,
-  Upload, Calendar, Target, QrCode, ClipboardList, GitBranch,
-  Download, Share2, Camera, FileText, Shield, Zap, Users,
-  Handshake, Send, ArrowRightLeft, Sun, Moon, Globe,
-  AlertTriangle, BookOpen, Wrench, MessageSquare, Eye,
-  BarChart3, Columns3, Truck, Search, Clipboard, Settings
+  Calendar, QrCode, ClipboardList,
+  Camera, FileText, Shield, Zap, Users,
+  Handshake, ArrowRightLeft, Sun, Moon, Globe,
+  AlertTriangle, Truck, Search, Clipboard, Settings
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 
@@ -23,7 +22,7 @@ export default function LandingPage() {
             />
             <span className="text-lg md:text-xl font-extrabold tracking-tight" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
               Iron<span style={{ color: "#E85D1C" }}>Track</span>
-              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Field Management Platform</span>
+              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Project Pulse</span>
             </span>
           </div>
 
@@ -66,46 +65,63 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Daily Field Pulse For GCs And Subs
+              Schedule → Today → Ready Check → Field Status → Report
             </p>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
               style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}
             >
-              Run Your Job.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Don&apos;t Chase It.</em>
+              Know what matters<br />
+              <em className="font-medium" style={{ color: "#E85D1C" }}>before the field asks.</em>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
+              IronTrack keeps GCs, PMs, foremen, subs, and owners aligned around what is happening today, what is coming next, who is ready, what is blocked, and what needs leadership attention.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="mx-auto mb-8 grid max-w-3xl grid-cols-2 gap-2 rounded-2xl border p-2 text-left sm:grid-cols-5" style={{ background: "rgba(255,255,255,0.72)", borderColor: "rgba(13,13,13,0.08)" }}>
+              {["Today", "Next Work", "Ready", "Blocked", "Report"].map((step, index) => (
+                <div key={step} className="rounded-xl px-3 py-3" style={{ background: index === 0 ? "rgba(232,93,28,0.08)" : "white" }}>
+                  <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
+                    0{index + 1}
+                  </div>
+                  <div className="mt-1 text-sm font-extrabold" style={{ color: "#0D0D0D" }}>{step}</div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
               <a
                 href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-                className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
                 style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
               >
                 <Calendar className="w-5 h-5" />
-                Book a Demo
+                Book a field workflow demo
                 <ArrowRight className="w-5 h-5" />
               </a>
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
                 style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
               >
                 <HardHat className="w-5 h-5" />
-                GC Signup
+                Start as GC
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/signup/sub"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
                 style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
               >
                 <Briefcase className="w-5 h-5" />
-                Sub Signup
+                Start as Sub
                 <ArrowRight className="w-5 h-5" />
               </Link>
+            </div>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold" style={{ color: "rgba(13,13,13,0.45)" }}>
+              <span>Public beta</span>
+              <span>•</span>
+              <span>Rules-based schedule logic</span>
+              <span>•</span>
+              <span>Support: irontrackdevelopment@outlook.com</span>
             </div>
             <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
               {[
@@ -223,11 +239,11 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Everything You Need
+              Field Workflow
             </p>
             <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Built for the field.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Not the office.</em>
+              One daily rhythm.<br />
+              <em className="font-medium" style={{ color: "#E85D1C" }}>Clear enough for the jobsite.</em>
             </h2>
           </div>
 
@@ -238,10 +254,10 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[01]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Schedule Intelligence
+                  Schedule to Today
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Upload your schedule once. Instantly see today, tomorrow, and three weeks out - grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates your entire critical path in seconds. Float, forecast finish date, risk flags, milestones, and MSPDI export. Pure math, zero AI. Results you can trust and defend.
+                  Upload the schedule once, then turn it into a field-readable day plan: today, tomorrow, and the next three weeks grouped by day and trade. Progress updates are rules-based and auditable, with float, milestones, and export paths kept visible for PM review.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
@@ -329,10 +345,10 @@ export default function LandingPage() {
               <div className="order-1 md:order-2">
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[02]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Field Ops
+                  Field Status
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Daily logs with weather, crew counts, delays, and photos. Photo-first field reports. Formal walkthrough observations with professional PDF export. Inspections tied to a jurisdiction database. Punch lists that actually close out. Everything from your phone, saved to project history.
+                  Daily logs, field photos, issues, walkthrough observations, inspections, and punch status are captured from the phone while the context is fresh. The result is a cleaner project history without asking the field to write a novel.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Daily Logs", "Field Reports", "Inspections", "Punch List", "Photo Capture", "PDF Export"].map((tag) => (
@@ -349,10 +365,10 @@ export default function LandingPage() {
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Safety & Compliance
+                  Safety Talks
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run toolbox talks with 20 built-in OSHA templates or create your own. Track attendance with digital sign-in. Generate company-branded PDF reports for your safety files. Custom templates let you match your company&apos;s safety program exactly.
+                  Run toolbox talks, collect attendance, and export a clean record for your files. IronTrack supports your company safety process; it does not replace professional safety judgment, training, or compliance review.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Toolbox Talks", "OSHA Templates", "Attendance", "Custom Templates", "PDF Reports"].map((tag) => (
@@ -427,7 +443,7 @@ export default function LandingPage() {
                   Trade Coordination
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run coordination meetings with agendas auto-populated from your schedule. The system detects trade conflicts before they happen in the field. Track action items with owners and due dates. Stop running meetings off a legal pad.
+                  Run coordination meetings from the same schedule and field signals the team is already using. Track action items, owners, due dates, and trade conflicts without turning every huddle into another spreadsheet.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Meeting Management", "Conflict Detection", "Action Items", "Auto-Agenda"].map((tag) => (
@@ -447,7 +463,7 @@ export default function LandingPage() {
                   Documents
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Manage submittals with full approval workflows. Draft RFIs with AI assistance - describe the issue and get a professional RFI ready to send. Organize drawings by discipline with version control. Everything searchable, everything tracked.
+                  Keep submittals, RFIs, drawings, and versions close to the work they affect. Optional RFI drafting assistance helps format the question; the team still owns the facts, review, and final send.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
@@ -463,7 +479,7 @@ export default function LandingPage() {
                     <FileText className="w-4 h-4" style={{ color: "#3B82F6" }} />
                     <div className="flex-1">
                       <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>RFI-042: Beam Connection Detail</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>AI-drafted · Awaiting response</div>
+                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Draft ready · Awaiting response</div>
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Open</span>
                   </div>
@@ -530,7 +546,7 @@ export default function LandingPage() {
                   Ready Check & Sub Portal
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Tap any activity, send a ready-check via SMS or email. Subs confirm they&apos;re mobilizing - or flag an issue before it becomes a problem. Share any week via QR code - subs scan and see only their scope. Schedule logic is protected: no float, no predecessors, no critical path data exposed. Zero friction, zero risk.
+                  Tap any activity and ask the right sub if they are ready. Subs can confirm, flag a blocker, or share what is missing before tomorrow's work slips. QR links show scoped work views without exposing float, predecessors, or critical path logic.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["SMS/Email", "QR Sharing", "Trade Filtering", "Protected Schedule Data"].map((tag) => (
@@ -549,17 +565,17 @@ export default function LandingPage() {
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.12)" }}>
                     <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>New - The Sub Differentiator</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>Subcontractor Wedge</span>
                   </div>
                   <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[07]</div>
                   <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
                     Sub Ops
                   </h3>
                   <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    The full subcontractor management platform. Digitize your morning huddle with the Dispatch Board - assign crews to jobs with scope, safety focus, and materials. Track foremen, journeymen, and apprentices with a real crew roster. Log production quantities with photos. Maintain an SOP library with read-tracking for compliance.
+                    Sub Ops gives foremen and dispatchers a focused way to see GC requests, upcoming work cards, readiness, blockers, proof photos, and production notes. It is a field loop, not another bloated back-office system.
                   </p>
                   <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Field crews flag blockers in real-time. Multi-department subs get a Kanban handoff board - sheet metal to piping to controls - with checklists and handoff photos. This isn&apos;t a viewer. It&apos;s how you run your company.
+                    Multi-department subs can track handoffs - sheet metal to piping to controls - with checklists and photos so the next crew knows what is ready, what is missing, and what needs an answer from the GC.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {["Morning Dispatch", "Foreman Tracking", "Production Logs", "SOP Library", "Handoff Board", "Blocker Reports"].map((tag) => (
@@ -671,22 +687,22 @@ export default function LandingPage() {
               {
                 icon: HardHat,
                 title: "Superintendents",
-                desc: "You run the job. Daily logs, field reports, coordination meetings, and toolbox talks - all from your phone. Know what's happening today, what's at risk, and what's about to blow up before it does.",
+                desc: "Open the job and see today's plan, ready checks, blockers, photos, and field notes without digging through office software.",
               },
               {
                 icon: Briefcase,
                 title: "Project Managers",
-                desc: "You own the schedule and the client relationship. Reforecast engine, milestone tracking, sub portal, document management - executive snapshots and risk detection without digging through spreadsheets.",
+                desc: "Keep schedule movement, field risk, daily status, and owner-ready snapshots tied together so leadership sees what needs attention.",
               },
               {
                 icon: Building2,
                 title: "General Contractors",
-                desc: "Full platform visibility across every project. Trade coordination, conflict detection, sub management, safety compliance. Your entire team on one shared operating picture - upload once, everyone's aligned.",
+                desc: "Give supers, PMs, subs, and owners one shared operating picture around today, next work, readiness, blocked items, and reports.",
               },
               {
                 icon: Users,
                 title: "Subcontractors",
-                desc: "This isn't just a schedule viewer. Sub Ops gives you a morning dispatch board, foreman and crew management, production tracking, SOP library, and department handoff boards. Run your entire operation - not just see when you're up.",
+                desc: "See GC requests, upcoming work cards, readiness, blockers, proof photos, and handoffs from a foreman-friendly mobile portal.",
               },
             ].map((persona) => (
               <div

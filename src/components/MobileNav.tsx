@@ -15,8 +15,22 @@ const navItems = [
 export default function MobileNav() {
   const pathname = usePathname();
 
-  // Don't show on public pages or sub view pages
-  if (pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/subscribe" || pathname.startsWith("/view/")) {
+  const publicPaths = [
+    "/",
+    "/login",
+    "/login/sub",
+    "/signup",
+    "/signup/sub",
+    "/subscribe",
+    "/privacy",
+    "/terms",
+    "/status",
+    "/release-notes",
+    "/demo-record",
+  ];
+
+  // Don't show the GC app nav on marketing, auth, legal, or tokenized public pages.
+  if (publicPaths.includes(pathname) || pathname.startsWith("/view/") || pathname.startsWith("/join/")) {
     return null;
   }
 

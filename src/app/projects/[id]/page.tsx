@@ -111,13 +111,26 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   const [activeTab, setActiveTab] = useState("priority");
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [projectError, setProjectError] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const fetchProject = async () => {
     setLoading(true);
-    const res = await fetch(`/api/projects/${id}`);
-    if (res.ok) setProject(await res.json());
-    setLoading(false);
+    setProjectError(null);
+    try {
+      const res = await fetch(`/api/projects/${id}`);
+      if (!res.ok) {
+        setProject(null);
+        setProjectError(res.status === 404 ? "Project not found." : "Could not load this project right now.");
+        return;
+      }
+      setProject(await res.json());
+    } catch {
+      setProject(null);
+      setProjectError("Network error while loading this project.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -126,20 +139,44 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+      <div className="mx-auto flex min-h-[55vh] max-w-md items-center justify-center px-6">
+        <div className="w-full rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-6 text-center shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+          <RefreshCw size={26} className="mx-auto mb-4 text-[#F97316] animate-spin" />
+          <h1 className="text-lg font-bold text-[color:var(--text-primary)]">Loading project command center</h1>
+          <p className="mt-2 text-sm text-[color:var(--text-muted)]">
+            Pulling today&apos;s plan, ready checks, field status, and reports.
+          </p>
+        </div>
       </div>
     );
   }
 
   if (!project) {
     return (
-      <div className="p-8 text-center">
-        <p className="text-[color:var(--text-muted)] mb-4">
-          Project not found.{" "}
-          <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
-        </p>
-        <SupportButton context="Project not found error" variant="inline" />
+      <div className="mx-auto max-w-xl px-6 py-16 text-center">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-6">
+          <h1 className="text-xl font-bold text-[color:var(--text-primary)]">
+            {projectError ?? "Project not found."}
+          </h1>
+          <p className="mt-2 text-sm text-[color:var(--text-muted)]">
+            If this project should be available, refresh once or contact support so we can trace the issue.
+          </p>
+          <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+            <button
+              onClick={fetchProject}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[#F97316] px-4 py-2 text-sm font-bold text-white"
+            >
+              <RefreshCw size={15} />
+              Retry
+            </button>
+            <Link href="/dashboard" className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[var(--border-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--text-secondary)]">
+              Back to dashboard
+            </Link>
+          </div>
+        </div>
+        <div className="mt-5">
+          <SupportButton context="Project command center load error" variant="inline" />
+        </div>
       </div>
     );
   }
@@ -160,7 +197,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden pb-16 md:pb-0" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen overflow-x-hidden pb-20 md:pb-0" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Header */}
       <div className="sticky top-0 z-20 backdrop-blur border-b" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 95%, transparent)', borderColor: 'var(--border-primary)' }}>
         <div className="px-4 md:px-6 pt-3 md:pt-4 pb-0 max-w-7xl mx-auto">
@@ -176,6 +213,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
             <div className="flex items-center gap-1.5 md:gap-3">
               <button
                 onClick={fetchProject}
+                aria-label="Refresh project"
                 className="p-2.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <RefreshCw size={16} />

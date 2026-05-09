@@ -398,7 +398,7 @@ export default function SubDashboardPage() {
         <p className="text-[color:var(--text-secondary)] text-sm">
           {t('subops.registerCompanyAccess')}
         </p>
-        <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+        <Link href="/signup/sub" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
           {t('subops.registerYourCompany')}
         </Link>
       </div>
@@ -459,13 +459,13 @@ export default function SubDashboardPage() {
             <div className="max-w-2xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#93C5FD]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E] shadow-[0_0_14px_#22C55E]" />
-                Sub Command Center
+                Sub Job Inbox
               </div>
               <h1 className="text-3xl md:text-5xl font-black text-white">
                 {displayName}
               </h1>
               <p className="mt-3 max-w-xl text-sm md:text-base text-slate-300">
-                Morning dispatch, field check-ins, blockers, crew activity, and GC-facing reports in one place.
+                See GC requests, upcoming work cards, readiness, blockers, proof logs, and responses that need attention.
               </p>
               {company.contact_name && (
                 <p className="text-sm text-slate-400 mt-2">Signed in as {company.contact_name}</p>
@@ -473,15 +473,15 @@ export default function SubDashboardPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
-              <Link href="/sub/check-in" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-sm font-black text-[#052E16] transition-transform hover:-translate-y-0.5">
+              <Link href="/sub/check-in" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#22C55E] px-4 py-3 text-sm font-black text-[#052E16] transition-transform hover:-translate-y-0.5">
                 Check in
                 <CheckCircle2 size={16} />
               </Link>
-              <Link href="/sub/dispatch" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white transition-transform hover:-translate-y-0.5">
+              <Link href="/sub/dispatch" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white transition-transform hover:-translate-y-0.5">
                 Dispatch
                 <Send size={16} />
               </Link>
-              <Link href="/sub/blockers" className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
+              <Link href="/sub/blockers" className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
                 Blocker
                 <AlertTriangle size={16} />
               </Link>
@@ -501,28 +501,28 @@ export default function SubDashboardPage() {
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#93C5FD]">
               <Gauge size={14} />
-              Field Pulse
+              GC Requests
             </div>
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{fieldPulse}</p>
           </div>
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
               <AlertTriangle size={14} />
-              Needs Attention
+              Blocked / Missing
             </div>
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
               {projectsNeedingReports > 0
-                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first report.`
-                : "Every active project has at least one report."}
+                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first report back to the GC.`
+                : "No first-response gaps right now."}
             </p>
           </div>
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#22C55E]">
               <ShieldCheck size={14} />
-              Last Signal
+              Latest Proof
             </div>
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
-              {latestReport ? `${latestReport.project_name} updated ${timeAgo(latestReport.submitted_at)}.` : "No reports submitted yet."}
+              {latestReport ? `${latestReport.project_name} updated ${timeAgo(latestReport.submitted_at)}.` : "No proof logs submitted yet."}
             </p>
           </div>
         </div>
