@@ -77,7 +77,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 size={24} className="text-[#F97316] animate-spin" />
+        <Loader2 size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -202,7 +202,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-accent hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 {t('action.share')} ({selectedIds.size})
@@ -264,7 +264,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                           ? "hover:bg-[var(--bg-tertiary)]/50"
                           : "hover:bg-[var(--bg-tertiary)]/30"
                       } ${
-                        isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
+                        isSelected ? "bg-accent/20 border-l-2 border-accent" : ""
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -273,7 +273,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => toggleActivity(activity.id)}
-                            className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                            className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-accent focus:ring-accent focus:ring-offset-0"
                           />
                         )}
                         <div className="flex items-start justify-between gap-3 flex-1">
@@ -290,7 +290,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                               (activity.percent_complete || 0) >= 100 
                                 ? "text-[#22C55E]" 
                                 : (activity.percent_complete || 0) > 0 
-                                ? "text-[#F97316]" 
+                                ? "text-accent" 
                                 : "text-[color:var(--text-muted)]"
                             }`}>
                               {activity.percent_complete || 0}%
@@ -351,7 +351,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         ? "hover:bg-[var(--bg-tertiary)]/50"
                         : "hover:bg-[var(--bg-tertiary)]/30"
                     } ${
-                      isSelected ? "bg-[#F97316]/20" : ""
+                      isSelected ? "bg-accent/20" : ""
                     }`}
                   >
                     {isSelecting && (
@@ -360,7 +360,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => toggleActivity(activity.id)}
-                          className="w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                          className="w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-accent focus:ring-accent focus:ring-offset-0"
                         />
                       </td>
                     )}
@@ -376,7 +376,7 @@ export default function WeekTab({ projectId, weekNumber }: WeekTabProps) {
                         (activity.percent_complete || 0) >= 100 
                           ? "text-[#22C55E]" 
                           : (activity.percent_complete || 0) > 0 
-                          ? "text-[#F97316]" 
+                          ? "text-accent" 
                           : "text-[color:var(--text-muted)]"
                       }`}>
                         {activity.percent_complete || 0}%

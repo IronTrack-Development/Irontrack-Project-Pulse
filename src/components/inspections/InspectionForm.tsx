@@ -359,7 +359,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
             <select
               value={inspectionType}
               onChange={(e) => setInspectionType(e.target.value)}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] min-h-[44px] appearance-none"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent min-h-[44px] appearance-none"
             >
               <option value="">{t('inspection.selectType')}</option>
               {inspectionCodes.length > 0 ? (
@@ -399,7 +399,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={permitNumber}
               onChange={(e) => setPermitNumber(e.target.value)}
               placeholder={t('inspection.enterPermit')}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-accent min-h-[44px]"
             />
           </div>
 
@@ -410,7 +410,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               type="date"
               value={requestedDate}
               onChange={(e) => setRequestedDate(e.target.value)}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent min-h-[44px]"
             />
           </div>
 
@@ -422,7 +422,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactName}
               onChange={(e) => setContactName(e.target.value)}
               placeholder={t('inspection.yourName')}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-accent min-h-[44px]"
             />
           </div>
 
@@ -434,7 +434,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
               placeholder={t('inspection.yourPhone')}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-accent min-h-[44px]"
             />
           </div>
 
@@ -449,7 +449,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
                   onClick={() => setTimeWindow(tw.value)}
                   className={`flex-1 px-3 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
                     timeWindow === tw.value
-                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      ? "bg-accent text-[color:var(--text-primary)]"
                       : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
@@ -467,7 +467,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
               onChange={(e) => setNotes(e.target.value)}
               placeholder={t('inspection.additionalNotes')}
               rows={3}
-              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] resize-none"
+              className="w-full px-3 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-accent resize-none"
             />
           </div>
         </div>
@@ -476,7 +476,7 @@ export default function InspectionForm({ projectId, jurisdiction, inspectionCode
         <button
           type="submit"
           disabled={!inspectionType || submitting}
-          className="w-full px-6 py-4 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-40 disabled:cursor-not-allowed min-h-[52px]"
+          className="w-full px-6 py-4 bg-accent text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed min-h-[52px]"
         >
           {submitting ? t('inspection.scheduling') : t('inspection.scheduleInspection')}
         </button>

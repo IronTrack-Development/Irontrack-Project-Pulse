@@ -21,7 +21,7 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const isGC = role === "gc";
-  const accentColor = isGC ? "#E85D1C" : "#3B82F6";
+  const accentColor = isGC ? "#2563EB" : "#3B82F6";
   const defaultRedirect = isGC ? "/dashboard" : "/sub/dashboard";
   const redirect = redirectParam || defaultRedirect;
 
@@ -51,13 +51,13 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-6" style={{ background: "#F5F3EE" }}>
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-6" style={{ background: "#f0f4f8" }}>
       <div className="w-full max-w-md">
         {/* Back to Home */}
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
-          style={{ color: "rgba(13,13,13,0.55)" }}
+          style={{ color: "rgba(15,23,42,0.55)" }}
         >
           <ArrowLeft className="w-4 h-4" />
           {t('action.backToHome')}
@@ -70,8 +70,8 @@ function LoginForm() {
             alt="IronTrack"
             className="h-10 w-auto mr-3"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
+          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
+            Iron<span style={{ color: "#2563EB" }}>Track</span>
           </span>
         </Link>
 
@@ -81,9 +81,9 @@ function LoginForm() {
             onClick={() => setRole("gc")}
             className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all"
             style={{
-              background: isGC ? "#E85D1C" : "white",
-              color: isGC ? "white" : "rgba(13,13,13,0.55)",
-              border: isGC ? "2px solid #E85D1C" : "2px solid rgba(13,13,13,0.12)",
+              background: isGC ? "#2563EB" : "white",
+              color: isGC ? "white" : "rgba(15,23,42,0.55)",
+              border: isGC ? "2px solid #2563EB" : "2px solid rgba(15,23,42,0.12)",
             }}
           >
             <HardHat size={18} />
@@ -94,8 +94,8 @@ function LoginForm() {
             className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all"
             style={{
               background: !isGC ? "#3B82F6" : "white",
-              color: !isGC ? "white" : "rgba(13,13,13,0.55)",
-              border: !isGC ? "2px solid #3B82F6" : "2px solid rgba(13,13,13,0.12)",
+              color: !isGC ? "white" : "rgba(15,23,42,0.55)",
+              border: !isGC ? "2px solid #3B82F6" : "2px solid rgba(15,23,42,0.12)",
             }}
           >
             <Briefcase size={18} />
@@ -104,22 +104,22 @@ function LoginForm() {
         </div>
 
         {/* Login Card */}
-        <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+        <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center"
               style={{ background: isGC ? "rgba(232,93,28,0.1)" : "rgba(59,130,246,0.1)" }}
             >
               {isGC
-                ? <HardHat size={24} style={{ color: "#E85D1C" }} />
+                ? <HardHat size={24} style={{ color: "#2563EB" }} />
                 : <Briefcase size={24} style={{ color: "#3B82F6" }} />
               }
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
+              <h1 className="text-2xl font-extrabold" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                 {isGC ? t('auth.generalContractor') : t('auth.subcontractor')}
               </h1>
-              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
+              <p className="text-sm" style={{ color: "rgba(15,23,42,0.45)" }}>
                 {isGC ? t('auth.signInToGC') : t('auth.signInToSub')}
               </p>
             </div>
@@ -133,7 +133,7 @@ function LoginForm() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0f172a" }}>
                 {t('auth.email')}
               </label>
               <input
@@ -144,16 +144,16 @@ function LoginForm() {
                 required
                 className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all"
                 style={{
-                  background: "#F5F3EE",
-                  borderColor: "rgba(13,13,13,0.12)",
-                  color: "#0D0D0D",
+                  background: "#f0f4f8",
+                  borderColor: "rgba(15,23,42,0.12)",
+                  color: "#0f172a",
                 }}
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0f172a" }}>
                 {t('auth.password')}
               </label>
               <div className="relative">
@@ -165,9 +165,9 @@ function LoginForm() {
                   required
                   className="w-full px-4 py-3 pr-12 rounded-xl border focus:outline-none focus:ring-2 transition-all"
                   style={{
-                    background: "#F5F3EE",
-                    borderColor: "rgba(13,13,13,0.12)",
-                    color: "#0D0D0D",
+                    background: "#f0f4f8",
+                    borderColor: "rgba(15,23,42,0.12)",
+                    color: "#0f172a",
                   }}
                   placeholder="••••••••"
                 />
@@ -175,7 +175,7 @@ function LoginForm() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
-                  style={{ color: "rgba(13,13,13,0.35)" }}
+                  style={{ color: "rgba(15,23,42,0.35)" }}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -199,8 +199,8 @@ function LoginForm() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
+          <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
+            <p className="text-sm" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.dontHaveAccount')}{" "}
               <Link
                 href={isGC ? "/signup" : "/signup/sub"}
@@ -214,7 +214,7 @@ function LoginForm() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>
+        <p className="text-center text-sm mt-6" style={{ color: "rgba(15,23,42,0.35)" }}>
           © 2026 IronTrack Development LLC
         </p>
       </div>
@@ -226,8 +226,8 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F3EE" }}>
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#E85D1C" }} />
+        <div className="min-h-screen flex items-center justify-center" style={{ background: "#f0f4f8" }}>
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#2563EB" }} />
         </div>
       }
     >

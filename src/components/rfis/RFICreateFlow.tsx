@@ -131,7 +131,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
   const priorityOptions: { value: DraftFields["priority"]; label: string; color: string }[] = [
     { value: "critical", label: "Critical", color: "#EF4444" },
-    { value: "high", label: "High", color: "#F97316" },
+    { value: "high", label: "High", color: "#2563EB" },
     { value: "normal", label: "Normal", color: "#3B82F6" },
     { value: "low", label: "Low", color: "var(--text-muted)" },
   ];
@@ -172,7 +172,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
         {/* Step indicators */}
         <div className="px-5 pt-4 flex gap-2">
           {[1, 2, 3].map((s) => (
-            <div key={s} className={`flex-1 h-1 rounded-full transition-all ${s <= step ? "bg-[#F97316]" : "bg-[var(--bg-tertiary)]"}`} />
+            <div key={s} className={`flex-1 h-1 rounded-full transition-all ${s <= step ? "bg-accent" : "bg-[var(--bg-tertiary)]"}`} />
           ))}
         </div>
 
@@ -202,7 +202,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   onClick={handleAIDraft}
                   disabled={!roughDescription.trim() || isGenerating}
                   className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl
-                    bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
+                    bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-bold text-sm
                     disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
                 >
                   {isGenerating ? (
@@ -234,7 +234,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   value={draft.subject}
                   onChange={(e) => setDraft((p) => ({ ...p, subject: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                    placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                    placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
                   placeholder="RFI subject"
                 />
               </div>
@@ -247,7 +247,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   onChange={(e) => setDraft((p) => ({ ...p, question: e.target.value }))}
                   rows={5}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                    placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50"
+                    placeholder-gray-600 resize-none focus:outline-none focus:border-accent/50"
                   placeholder="Formal question text"
                 />
               </div>
@@ -261,7 +261,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     value={draft.spec_section}
                     onChange={(e) => setDraft((p) => ({ ...p, spec_section: e.target.value }))}
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
-                      placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                      placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
                     placeholder="03 30 00"
                   />
                 </div>
@@ -272,7 +272,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     value={draft.drawing_reference}
                     onChange={(e) => setDraft((p) => ({ ...p, drawing_reference: e.target.value }))}
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
-                      placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                      placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
                     placeholder="Sheet S-1"
                   />
                 </div>
@@ -339,7 +339,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   value={draft.due_date}
                   onChange={(e) => setDraft((p) => ({ ...p, due_date: e.target.value }))}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                    focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                    focus:outline-none focus:border-accent/50 min-h-[44px]"
                 />
               </div>
 
@@ -354,7 +354,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                     value={draft.assigned_to}
                     onChange={(e) => setDraft((p) => ({ ...p, assigned_to: e.target.value }))}
                     className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                      focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                      focus:outline-none focus:border-accent/50 min-h-[44px]"
                   >
                     <option value="">Select contact...</option>
                     {allContacts.map((c) => (
@@ -370,7 +370,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                 onClick={() => setStep(3)}
                 disabled={!draft.subject.trim() || !draft.question.trim()}
                 className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl
-                  bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
+                  bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-bold text-sm
                   disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[56px]"
               >
                 Review RFI <ArrowRight size={16} />
@@ -448,7 +448,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
                   onClick={() => handleSave("submitted")}
                   disabled={isSaving}
                   className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl
-                    bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm
+                    bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-bold text-sm
                     disabled:opacity-50 transition-all min-h-[56px]"
                 >
                   {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}

@@ -38,8 +38,8 @@ export async function GET(
 
   const statusBadge = (status: string) => {
     const colors: Record<string, string> = {
-      pending: "#3B82F6", discussed: "#F97316", deferred: "#EAB308", resolved: "#22C55E",
-      open: "#3B82F6", in_progress: "#F97316", cancelled: "#6B7280",
+      pending: "#3B82F6", discussed: "#2563EB", deferred: "#EAB308", resolved: "#22C55E",
+      open: "#3B82F6", in_progress: "#2563EB", cancelled: "#6B7280",
     };
     return `<span style="background:${colors[status] || "#6B7280"};color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">${status.replace("_", " ")}</span>`;
   };
@@ -57,11 +57,11 @@ export async function GET(
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a1a; padding: 40px; max-width: 900px; margin: 0 auto; }
-    .header { border-bottom: 3px solid #F97316; padding-bottom: 16px; margin-bottom: 24px; }
+    .header { border-bottom: 3px solid #2563EB; padding-bottom: 16px; margin-bottom: 24px; }
     .header h1 { font-size: 24px; color: #0B0B0D; }
     .header .meta { color: #666; font-size: 13px; margin-top: 8px; }
     .section { margin-bottom: 24px; }
-    .section h2 { font-size: 16px; color: #F97316; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 12px; }
+    .section h2 { font-size: 16px; color: #2563EB; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 12px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { background: #f5f5f5; text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid #ddd; }
     td { padding: 8px 12px; border-bottom: 1px solid #eee; }

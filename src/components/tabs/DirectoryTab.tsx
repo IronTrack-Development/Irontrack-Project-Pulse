@@ -93,7 +93,7 @@ export default function DirectoryTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -125,7 +125,7 @@ export default function DirectoryTab({ projectId }: Props) {
             </button>
             <button
               onClick={() => { setEditContact(null); setShowAddModal(true); }}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <UserPlus size={14} />
               <span className="hidden sm:inline">Add Contact</span>
@@ -141,7 +141,7 @@ export default function DirectoryTab({ projectId }: Props) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search contacts…"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-9 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
             />
             {search && (
               <button
@@ -172,7 +172,7 @@ export default function DirectoryTab({ projectId }: Props) {
               </button>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
               >
                 <UserPlus size={14} />
                 Add Manually

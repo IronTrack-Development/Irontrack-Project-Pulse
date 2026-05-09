@@ -14,7 +14,7 @@ export default function RollupStatCard({ label, value, icon, subtext, accent }: 
   return (
     <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 flex flex-col items-center text-center min-w-[100px]">
       {icon && <div className="mb-1 text-[color:var(--text-muted)]">{icon}</div>}
-      <div className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
+      <div className={`text-2xl font-bold ${accent ? "text-accent" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </div>
       <div className="text-[11px] text-[color:var(--text-muted)] mt-0.5">{label}</div>

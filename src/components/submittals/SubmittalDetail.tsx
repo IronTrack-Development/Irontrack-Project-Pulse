@@ -158,7 +158,7 @@ export default function SubmittalDetail({ projectId, submittalId, onClose, onUpd
 
         {loading || !submittal ? (
           <div className="flex items-center justify-center h-40">
-            <Loader2 size={24} className="text-[#F97316] animate-spin" />
+            <Loader2 size={24} className="text-accent animate-spin" />
           </div>
         ) : (
           <div className="p-5 space-y-5">

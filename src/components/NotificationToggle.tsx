@@ -84,7 +84,7 @@ export default function NotificationToggle() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {enabled ? (
-            <Bell size={18} className="text-[#F97316] shrink-0" />
+            <Bell size={18} className="text-accent shrink-0" />
           ) : (
             <BellOff size={18} className="text-[color:var(--text-muted)] shrink-0" />
           )}
@@ -107,7 +107,7 @@ export default function NotificationToggle() {
           onClick={handleToggle}
           disabled={loading || permissionDenied}
           className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed ${
-            enabled ? 'bg-[#F97316]' : 'bg-gray-700'
+            enabled ? 'bg-accent' : 'bg-gray-700'
           }`}
           aria-label={enabled ? 'Disable notifications' : 'Enable notifications'}
         >

@@ -50,7 +50,7 @@ export default function MobileBottomNav({
               className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
               style={{
                 minHeight: "56px",
-                color: isActive ? "#F97316" : "var(--text-muted)",
+                color: isActive ? "#2563EB" : "var(--text-muted)",
               }}
             >
               <Icon size={20} />

@@ -110,7 +110,7 @@ function ActivityRow({ activity, getActivityName }: { activity: Activity; getAct
             </span>
           )}
           {days !== null && days > 0 && (
-            <span className="text-[10px] text-[#F97316] font-medium">
+            <span className="text-[10px] text-accent font-medium">
               {days}{t('sixweek.dAway')}
             </span>
           )}
@@ -211,7 +211,7 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -240,14 +240,14 @@ export default function SixWeekTab({ projectId }: { projectId: string }) {
 
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-2">
-        <StatCard label={t('sixweek.milestones')} value={data.stats.milestones} icon={Flag} color="text-[#F97316]" />
+        <StatCard label={t('sixweek.milestones')} value={data.stats.milestones} icon={Flag} color="text-accent" />
         <StatCard label={t('sixweek.inspections')} value={data.stats.inspections} icon={ClipboardCheck} color="text-blue-400" />
         <StatCard label={t('sixweek.procurement')} value={data.stats.longLead} icon={Truck} color="text-purple-400" />
         <StatCard label={t('sixweek.mobilizations')} value={data.stats.mobilizations} icon={HardHat} color="text-emerald-400" />
       </div>
 
       {/* Milestones */}
-      <Section icon={Flag} title={t('sixweek.upcomingMilestones')} count={data.milestones.length} color="text-[#F97316]">
+      <Section icon={Flag} title={t('sixweek.upcomingMilestones')} count={data.milestones.length} color="text-accent">
         {data.milestones.map((a) => <ActivityRow key={a.id} activity={a} getActivityName={getActivityName} />)}
       </Section>
 

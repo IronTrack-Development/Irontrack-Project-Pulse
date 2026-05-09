@@ -160,7 +160,7 @@ export default function BlockersList({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -189,7 +189,7 @@ export default function BlockersList({ projectId }: Props) {
               <select
                 value={addCategory}
                 onChange={(e) => setAddCategory(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
               >
                 <option value="material">Material</option>
                 <option value="manpower">Manpower</option>
@@ -209,7 +209,7 @@ export default function BlockersList({ projectId }: Props) {
               <select
                 value={addForemanId}
                 onChange={(e) => setAddForemanId(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
               >
                 {foremen.length === 0 && <option value="">Add a foreman first</option>}
                 {foremen.map((foreman) => (
@@ -227,7 +227,7 @@ export default function BlockersList({ projectId }: Props) {
               onChange={(e) => setAddDescription(e.target.value)}
               placeholder="What's the issue?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
@@ -237,7 +237,7 @@ export default function BlockersList({ projectId }: Props) {
               onChange={(e) => setAddImpact(e.target.value)}
               placeholder="How does this affect work?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
@@ -245,7 +245,7 @@ export default function BlockersList({ projectId }: Props) {
             <button
               type="button"
               onClick={() => blockerPhotoRef.current?.click()}
-              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-accent/40 hover:text-[color:var(--text-primary)]"
             >
               <Camera size={16} />
               {addPhoto ? addPhoto.name : "Capture or upload blocker photo"}
@@ -371,7 +371,7 @@ export default function BlockersList({ projectId }: Props) {
                           <img
                             src={getBlockerPhotoUrl(b)}
                             alt="Blocker photo"
-                            className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
+                            className="w-32 h-32 object-cover rounded-lg border border-[var(--border-primary)] hover:border-accent/50 transition-colors"
                             loading="lazy"
                           />
                         </a>
@@ -396,7 +396,7 @@ export default function BlockersList({ projectId }: Props) {
                               onChange={(e) => setResolveNotes(e.target.value)}
                               placeholder="Resolution notes (optional)"
                               rows={2}
-                              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+                              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
                             />
                             <div className="flex items-center gap-2">
                               <button

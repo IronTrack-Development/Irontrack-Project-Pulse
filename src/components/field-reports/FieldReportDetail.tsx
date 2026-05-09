@@ -138,7 +138,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           value={report.title}
           onChange={(e) => handleFieldChange("title", e.target.value)}
           onBlur={() => handleBlurSave("title")}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px]"
         />
       </div>
 
@@ -151,7 +151,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           onChange={(e) => handleFieldChange("assigned_to", e.target.value)}
           onBlur={() => handleBlurSave("assigned_to")}
           placeholder={t('reports.assignedPlaceholder')}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px] placeholder:text-gray-600"
         />
       </div>
 
@@ -164,7 +164,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
           onBlur={() => handleBlurSave("comments")}
           placeholder={t('reports.commentsPlaceholder')}
           rows={3}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
+          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors placeholder:text-gray-600 resize-none"
         />
       </div>
 
@@ -188,7 +188,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("location", e.target.value)}
               onBlur={() => handleBlurSave("location")}
               placeholder={t('reports.locationPlaceholder')}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
@@ -201,7 +201,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 handleFieldChange("priority", e.target.value);
                 save({ priority: e.target.value as FieldReport["priority"] });
               }}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px]"
             >
               <option value="high">{t('coordination.high')}</option>
               <option value="medium">{t('coordination.medium')}</option>
@@ -218,7 +218,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 handleFieldChange("status", e.target.value);
                 save({ status: e.target.value as FieldReport["status"] });
               }}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px]"
             >
               <option value="open">{t('status.open')}</option>
               <option value="in_progress">{t('status.inProgress')}</option>
@@ -235,7 +235,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
               onChange={(e) => handleFieldChange("trade", e.target.value)}
               onBlur={() => handleBlurSave("trade")}
               placeholder={t('reports.tradePlaceholder')}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px] placeholder:text-gray-600"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors min-h-[44px] placeholder:text-gray-600"
             />
           </div>
 
@@ -249,7 +249,7 @@ export default function FieldReportDetail({ projectId, report: initialReport, on
                 onBlur={() => handleBlurSave("resolution_notes")}
                 placeholder={t('reports.resolutionPlaceholder')}
                 rows={2}
-                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] transition-colors placeholder:text-gray-600 resize-none"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent transition-colors placeholder:text-gray-600 resize-none"
               />
             </div>
           )}

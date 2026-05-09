@@ -16,7 +16,7 @@ interface ActionTrackerProps {
 
 const STATUS_COLORS: Record<string, string> = {
   open: "#3B82F6",
-  in_progress: "#F97316",
+  in_progress: "#2563EB",
   resolved: "#22C55E",
   cancelled: "var(--text-muted)",
 };
@@ -31,7 +31,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
-  manpower: "#F97316",
+  manpower: "#2563EB",
   equipment: "#EAB308",
   schedule: "#22C55E",
   safety: "#EF4444",
@@ -105,7 +105,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <CheckSquare size={20} className="text-[#F97316]" />
+          <CheckSquare size={20} className="text-accent" />
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('coordination.actionItems')}</h2>
           {openCount > 0 && (
             <span className="text-sm text-[color:var(--text-secondary)] ml-2">
@@ -170,7 +170,7 @@ export default function ActionTracker({ projectId }: ActionTrackerProps) {
       {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center h-32">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       )}
 

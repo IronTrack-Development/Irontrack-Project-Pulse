@@ -14,7 +14,7 @@ interface Props {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  open: "#F97316",
+  open: "#2563EB",
   in_progress: "#3B82F6",
   resolved: "#22C55E",
 };
@@ -106,14 +106,14 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       <div className="mb-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#F97316]">{t('reports.reportGenerator')}</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-accent">{t('reports.reportGenerator')}</p>
             <p className="mt-1 text-xs leading-5 text-[color:var(--text-secondary)]">{t('reports.reportGeneratorDesc')}</p>
           </div>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => openExport("pdf")}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-3 py-2 text-xs font-black text-white"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2 text-xs font-black text-white"
             >
               <FileText size={14} />
               {t('reports.exportOpenPdf')}
@@ -139,7 +139,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
               onClick={() => setFilter(s)}
               className="px-3 py-1.5 rounded-full text-xs font-medium transition-all min-h-[36px]"
               style={{
-                background: filter === s ? "#F97316" : "var(--bg-tertiary)",
+                background: filter === s ? "#2563EB" : "var(--bg-tertiary)",
                 color: filter === s ? "#fff" : "var(--text-secondary)",
               }}
             >
@@ -150,7 +150,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
         <div className="flex-1" />
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
         >
           <Plus size={14} />
           {t('reports.add')}
@@ -167,7 +167,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
       {/* Report list */}
       {loading ? (
         <div className="flex items-center justify-center h-32">
-          <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
         </div>
       ) : reports.length === 0 ? (
         <div className="text-center py-16">

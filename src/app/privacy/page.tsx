@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       {/* Content */}
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
-          <Building2 className="w-6 h-6 text-[#F97316]" />
+          <Building2 className="w-6 h-6 text-accent" />
           <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
         </div>
 
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-4">
               To exercise these rights, contact us at{" "}
-              <a href="mailto:irontrackdevelopment@outlook.com" className="text-[#F97316] hover:text-[#EA580C]">
+              <a href="mailto:irontrackdevelopment@outlook.com" className="text-accent hover:text-[#EA580C]">
                 irontrackdevelopment@outlook.com
               </a>.
             </p>
@@ -222,7 +222,7 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-4">
               <strong className="text-[color:var(--text-primary)]">IronTrack Development LLC</strong><br />
-              <a href="mailto:irontrackdevelopment@outlook.com" className="text-[#F97316] hover:text-[#EA580C]">
+              <a href="mailto:irontrackdevelopment@outlook.com" className="text-accent hover:text-[#EA580C]">
                 irontrackdevelopment@outlook.com
               </a>
             </p>
@@ -234,15 +234,15 @@ export default function PrivacyPage() {
       <footer className="border-t border-[var(--border-primary)] py-8 mt-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Building2 className="w-4 h-4 text-[#F97316]" />
+            <Building2 className="w-4 h-4 text-accent" />
             <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center justify-center gap-4 text-sm">
-            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">
               Terms of Service
             </Link>
             <span className="text-gray-700">•</span>
-            <a href="mailto:irontrackdevelopment@outlook.com" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">
+            <a href="mailto:irontrackdevelopment@outlook.com" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">
               irontrackdevelopment@outlook.com
             </a>
           </div>

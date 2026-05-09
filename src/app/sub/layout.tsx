@@ -51,27 +51,27 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,rgba(59,130,246,0.08),transparent_260px),var(--bg-primary)] flex">
-      <aside className="hidden md:flex h-screen w-72 shrink-0 sticky top-0 flex-col border-r border-white/10 bg-[rgba(15,23,42,0.88)] shadow-[18px_0_70px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-        <div className="border-b border-white/10 px-5 py-5">
+    <div className="min-h-screen bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_7%,transparent),transparent_320px),var(--bg-primary)] flex">
+      <aside className="hidden md:flex h-screen w-72 shrink-0 sticky top-0 flex-col border-r border-[var(--border-primary)] bg-[var(--bg-secondary)]">
+        <div className="border-b border-[var(--border-primary)] px-5 py-5">
           <Link href="/sub/dashboard" className="flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-lg border border-[#3B82F6]/30 bg-[#3B82F6]/15 shadow-[0_14px_40px_rgba(59,130,246,0.18)]">
-              <Building2 className="h-5 w-5 text-[#60A5FA]" />
+            <span className="grid h-11 w-11 place-items-center rounded-xl border border-accent/25 bg-accent/10">
+              <Building2 className="h-5 w-5 text-accent" />
             </span>
             <span>
-              <span className="block text-sm font-black leading-none text-white">
-                IronTrack <span className="text-[#60A5FA]">Pulse</span>
+              <span className="block text-sm font-bold leading-none text-[color:var(--text-primary)]">
+                IronTrack <span className="text-accent">Pulse</span>
               </span>
-              <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">
+              <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
                 {t('subops.subPortal')}
               </span>
             </span>
           </Link>
         </div>
 
-        <div className="border-b border-white/10 px-4 py-4">
+        <div className="border-b border-[var(--border-primary)] px-4 py-4">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">{t('subops.todaysLoop')}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--text-muted)]">{t('subops.todaysLoop')}</p>
             <span className="rounded-full bg-[#22C55E]/10 px-2 py-1 text-[10px] font-bold text-[#86EFAC]">{t('subops.fieldReady')}</span>
           </div>
           <div className="space-y-1.5">
@@ -82,15 +82,15 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                   key={item.href}
                   href={item.href}
                   className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors ${
-                    active ? "border-[#F97316]/40 bg-[#F97316]/15 text-white" : "border-white/10 bg-white/[0.03] text-slate-400 hover:text-white"
+                    active ? "border-accent/40 bg-accent/15 text-[color:var(--text-primary)]" : "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
-                  <span className={`grid h-6 w-6 place-items-center rounded-full text-[10px] font-black ${active ? "bg-[#F97316] text-white" : "bg-white/10 text-slate-500"}`}>
+                  <span className={`grid h-6 w-6 place-items-center rounded-full text-[10px] font-bold ${active ? "bg-accent text-white" : "bg-[var(--bg-hover)] text-[color:var(--text-muted)]"}`}>
                     {index + 1}
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-xs font-black">{t(item.labelKey)}</span>
-                    <span className="block text-[11px] text-slate-500">{t(item.shortKey)}</span>
+                    <span className="block text-xs font-semibold">{t(item.labelKey)}</span>
+                    <span className="block text-[11px] text-[color:var(--text-muted)]">{t(item.shortKey)}</span>
                   </span>
                 </Link>
               );
@@ -99,7 +99,7 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">
+          <div className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
             {t('subops.operations')}
           </div>
           {subNavItems.map(({ href, labelKey, helperKey, icon: Icon }) => {
@@ -109,42 +109,42 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                 key={href}
                 href={href}
                 className={`group flex items-center gap-3 rounded-lg border px-3 py-3 transition-all ${
-                  active
-                    ? "border-[#3B82F6]/40 bg-[#3B82F6]/15 text-white shadow-[0_16px_45px_rgba(59,130,246,0.16)]"
-                    : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/5 hover:text-white"
+                    active
+                    ? "border-accent/30 bg-accent/10 text-[color:var(--text-primary)]"
+                    : "border-transparent text-[color:var(--text-muted)] hover:border-[var(--border-primary)] hover:bg-[var(--bg-hover)] hover:text-[color:var(--text-primary)]"
                 }`}
               >
                 <span
                   className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${
-                    active ? "bg-[#3B82F6] text-white" : "bg-white/5 text-slate-400 group-hover:text-[#93C5FD]"
+                    active ? "bg-accent text-white" : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] group-hover:text-accent"
                   }`}
                 >
                   <Icon size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-sm font-bold">{t(labelKey)}</span>
-                  <span className="block truncate text-xs text-slate-500">{t(helperKey)}</span>
+                  <span className="block text-sm font-semibold">{t(labelKey)}</span>
+                  <span className="block truncate text-xs text-[color:var(--text-muted)]">{t(helperKey)}</span>
                 </span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="space-y-3 border-t border-white/10 px-4 py-4">
-          <div className="rounded-lg border border-[#22C55E]/20 bg-[#22C55E]/10 p-3">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">{t('subops.fieldReady')}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-400">{t('subops.fieldReadyDesc')}</p>
+        <div className="space-y-3 border-t border-[var(--border-primary)] px-4 py-4">
+          <div className="rounded-xl border border-[#22C55E]/25 bg-[#22C55E]/10 p-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#86EFAC]">{t('subops.fieldReady')}</p>
+            <p className="mt-1 text-xs leading-5 text-[color:var(--text-muted)]">{t('subops.fieldReadyDesc')}</p>
           </div>
           <Link
             href="/sub/settings"
-            className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-white/5 hover:text-[#93C5FD]"
+            className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-[color:var(--text-muted)] transition-colors hover:bg-[var(--bg-hover)] hover:text-accent"
           >
             <Settings size={14} />
             {t('subops.settings')}
           </Link>
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-[color:var(--text-muted)] transition-colors hover:bg-red-500/10 hover:text-red-300"
           >
             <LogOut size={14} />
             {t('subops.signOut')}
@@ -152,20 +152,20 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <div className="md:hidden fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[rgba(15,23,42,0.92)] backdrop-blur-xl">
+      <div className="md:hidden fixed left-0 right-0 top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]/95 backdrop-blur-md">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/sub/dashboard" className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg border border-[#3B82F6]/25 bg-[#3B82F6]/15">
-              <Building2 className="h-4 w-4 text-[#60A5FA]" />
+            <span className="grid h-8 w-8 place-items-center rounded-lg border border-accent/25 bg-accent/10">
+              <Building2 className="h-4 w-4 text-accent" />
             </span>
-            <span className="text-sm font-black text-white">
-              Iron<span className="text-[#60A5FA]">Track</span>
+            <span className="text-sm font-bold text-[color:var(--text-primary)]">
+              Iron<span className="text-accent">Track</span>
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#F97316]">Sub</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-accent">Sub</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+            className="grid h-9 w-9 place-items-center rounded-xl text-[color:var(--text-muted)] transition-colors hover:bg-red-500/10 hover:text-red-300"
             aria-label={t('subops.signOut')}
           >
             <LogOut size={16} />
@@ -180,8 +180,8 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
                 href={href}
                 className={`flex min-h-[40px] shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold whitespace-nowrap transition-all ${
                   active
-                    ? "bg-[#3B82F6] text-white shadow-[0_8px_24px_rgba(59,130,246,0.28)]"
-                    : "bg-white/5 text-slate-400 hover:text-white"
+                    ? "bg-accent text-white"
+                    : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
                 }`}
               >
                 <Icon size={12} />

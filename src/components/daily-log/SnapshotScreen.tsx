@@ -45,7 +45,7 @@ function impactColor(value: WeatherImpact, active: boolean): string {
   switch (value) {
     case "none": return "bg-[#22C55E]/15 text-[#22C55E] border-[#22C55E]/40";
     case "minor_slowdown": return "bg-[#EAB308]/15 text-[#EAB308] border-[#EAB308]/40";
-    case "partial_stop": return "bg-[#F97316]/15 text-[#F97316] border-[#F97316]/40";
+    case "partial_stop": return "bg-accent/15 text-accent border-accent/40";
     case "full_stop": return "bg-[#EF4444]/15 text-[#EF4444] border-[#EF4444]/40";
   }
 }
@@ -222,13 +222,13 @@ export default function SnapshotScreen({
       {/* ─── WEATHER SECTION ─── */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <Thermometer size={16} className="text-[#F97316]" />
+          <Thermometer size={16} className="text-accent" />
           Weather
         </h3>
 
         {weatherLoading ? (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 flex items-center justify-center gap-3">
-            <RefreshCw size={18} className="text-[#F97316] animate-spin" />
+            <RefreshCw size={18} className="text-accent animate-spin" />
             <span className="text-sm text-[color:var(--text-secondary)]">Fetching weather…</span>
           </div>
         ) : weatherError ? (
@@ -282,7 +282,7 @@ export default function SnapshotScreen({
                       value={weather.high ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, high: e.target.value ? parseInt(e.target.value) : undefined })}
                       className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                        focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                        focus:outline-none focus:border-accent/50 min-h-[44px]"
                       placeholder="--"
                     />
                   </div>
@@ -294,7 +294,7 @@ export default function SnapshotScreen({
                       value={weather.low ?? ""}
                       onChange={(e) => onWeatherChange({ ...weather, low: e.target.value ? parseInt(e.target.value) : undefined })}
                       className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                        focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                        focus:outline-none focus:border-accent/50 min-h-[44px]"
                       placeholder="--"
                     />
                   </div>
@@ -313,7 +313,7 @@ export default function SnapshotScreen({
                           className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium
                             transition-all min-h-[36px] border
                             ${active
-                              ? "bg-[#F97316]/15 text-[#F97316] border-[#F97316]/40"
+                              ? "bg-accent/15 text-accent border-accent/40"
                               : "bg-[var(--bg-primary)] text-[color:var(--text-secondary)] border-[var(--border-primary)] hover:border-[var(--border-secondary)]"
                             }`}
                         >
@@ -437,7 +437,7 @@ export default function SnapshotScreen({
               placeholder="Trade name (e.g. Electrical)"
               autoFocus
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                focus:outline-none focus:border-accent/50 min-h-[44px]"
             />
             <input
               type="text"
@@ -445,15 +445,15 @@ export default function SnapshotScreen({
               onChange={(e) => setNewCompany(e.target.value)}
               placeholder="Company name (optional)"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                focus:outline-none focus:border-accent/50 min-h-[44px]"
             />
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={addCrewEntry}
                 disabled={!newTrade.trim()}
-                className="flex-1 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-medium
-                  hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed transition-all min-h-[44px]"
+                className="flex-1 py-2.5 rounded-xl bg-accent text-[color:var(--text-primary)] text-sm font-medium
+                  hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed transition-all min-h-[44px]"
               >
                 Add
               </button>
@@ -472,7 +472,7 @@ export default function SnapshotScreen({
             type="button"
             onClick={() => setShowAddTrade(true)}
             className="mt-3 w-full py-3 rounded-xl border border-dashed border-[var(--border-primary)] text-sm
-              text-[color:var(--text-muted)] hover:text-[#F97316] hover:border-[#F97316]/30 transition-colors min-h-[44px]"
+              text-[color:var(--text-muted)] hover:text-accent hover:border-accent/30 transition-colors min-h-[44px]"
           >
             + Add Trade
           </button>

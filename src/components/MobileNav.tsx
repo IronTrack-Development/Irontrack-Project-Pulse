@@ -43,7 +43,7 @@ export default function MobileNav() {
               key={href}
               href={href}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-                active ? "text-[#F97316]" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
+                active ? "text-accent" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
             >
               <Icon size={22} />

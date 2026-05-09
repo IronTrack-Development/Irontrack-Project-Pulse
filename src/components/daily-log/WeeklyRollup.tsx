@@ -108,7 +108,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
         <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
@@ -117,7 +117,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
       ) : (
         <>
           {/* Narrative */}
-          <div className="bg-[var(--bg-tertiary)] border-l-3 border-[#F97316] rounded-lg p-3 mb-4 text-sm text-[color:var(--text-secondary)] italic" style={{ borderLeftWidth: 3 }}>
+          <div className="bg-[var(--bg-tertiary)] border-l-3 border-accent rounded-lg p-3 mb-4 text-sm text-[color:var(--text-secondary)] italic" style={{ borderLeftWidth: 3 }}>
             {data.narrative}
           </div>
 
@@ -163,7 +163,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                       <div className="w-24 text-xs text-[color:var(--text-secondary)] text-right truncate shrink-0">{trade}</div>
                       <div className="flex-1 h-6 bg-[var(--bg-tertiary)] rounded-md overflow-hidden">
                         <div
-                          className="h-full bg-[#F97316] rounded-md transition-all duration-500"
+                          className="h-full bg-accent rounded-md transition-all duration-500"
                           style={{ width: `${Math.max((hours / maxCrewHours) * 100, 2)}%` }}
                         />
                       </div>
@@ -203,7 +203,7 @@ export default function WeeklyRollup({ projectId }: { projectId: string }) {
                 {data.activitiesAdvanced.map((a, i) => (
                   <div key={i} className="text-xs text-[color:var(--text-secondary)] bg-[var(--bg-secondary)] rounded-lg px-3 py-2 flex justify-between">
                     <span>{a.activityName}</span>
-                    <span className="text-[#F97316] font-medium">+{a.delta}% → {a.pctAfter}%</span>
+                    <span className="text-accent font-medium">+{a.delta}% → {a.pctAfter}%</span>
                   </div>
                 ))}
               </div>

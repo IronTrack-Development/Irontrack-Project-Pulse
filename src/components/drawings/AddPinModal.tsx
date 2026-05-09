@@ -126,7 +126,7 @@ export default function AddPinModal({
                   onClick={() => { setPinType(t.value); setReferenceId(""); }}
                   className={`flex flex-col items-center gap-1 py-2 rounded-lg border transition-all min-h-[60px] ${
                     pinType === t.value
-                      ? "border-[#F97316] bg-[#F97316]/10"
+                      ? "border-accent bg-accent/10"
                       : "border-[var(--border-primary)] bg-[var(--bg-primary)]"
                   }`}
                 >
@@ -212,7 +212,7 @@ export default function AddPinModal({
           <button
             onClick={handleSave}
             disabled={loading || (pinType === "note" && !notes.trim())}
-            className="flex-1 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
+            className="flex-1 px-4 py-3 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[44px] transition-colors"
             style={{ backgroundColor: selectedType.color }}
           >
             {loading ? "Saving..." : "Add Pin"}

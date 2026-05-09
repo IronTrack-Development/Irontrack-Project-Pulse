@@ -63,12 +63,12 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   in_progress:        { label: "In Progress", color: "#EAB308", bg: "bg-yellow-500/15" },
   ready_for_reinspect:{ label: "Re-inspect",  color: "#A855F7", bg: "bg-purple-500/15" },
   closed:             { label: "Closed",      color: "#22C55E", bg: "bg-green-500/15" },
-  disputed:           { label: "Disputed",    color: "#F97316", bg: "bg-orange-500/15" },
+  disputed:           { label: "Disputed",    color: "#2563EB", bg: "bg-orange-500/15" },
 };
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; pulse: boolean }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", pulse: true },
-  code:        { label: "Code",        color: "#F97316", pulse: false },
+  code:        { label: "Code",        color: "#2563EB", pulse: false },
   standard:    { label: "Standard",    color: "var(--text-muted)", pulse: false },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", pulse: false },
 };
@@ -184,7 +184,7 @@ export default function PunchListTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -242,7 +242,7 @@ export default function PunchListTab({ projectId }: Props) {
               onClick={() => setStatusFilter(value)}
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
-                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  ? "bg-accent text-[color:var(--text-primary)]"
                   : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
               }`}
             >
@@ -311,7 +311,7 @@ export default function PunchListTab({ projectId }: Props) {
               <div
                 key={item.id}
                 className={`bg-[var(--bg-secondary)] border rounded-2xl p-4 transition-all cursor-pointer
-                  active:scale-[0.99] ${isSelected ? "border-[#F97316]/50" : "border-[var(--border-primary)] hover:border-[#F97316]/30"}`}
+                  active:scale-[0.99] ${isSelected ? "border-accent/50" : "border-[var(--border-primary)] hover:border-accent/30"}`}
                 onClick={() => openDetail(item)}
               >
                 {/* Top row */}
@@ -320,7 +320,7 @@ export default function PunchListTab({ projectId }: Props) {
                   <button
                     onClick={(e) => toggleSelect(e, item.id)}
                     className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 transition-colors ${
-                      isSelected ? "bg-[#F97316] border-[#F97316]" : "border-gray-600 bg-transparent"
+                      isSelected ? "bg-accent border-accent" : "border-gray-600 bg-transparent"
                     }`}
                   >
                     {isSelected && <CheckSquare size={10} className="text-[color:var(--text-primary)]" />}
@@ -381,9 +381,9 @@ export default function PunchListTab({ projectId }: Props) {
       {/* FAB */}
       <button
         onClick={() => setShowForm(true)}
-        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[#F97316] text-[color:var(--text-primary)]
-          shadow-lg shadow-[#F97316]/30 flex items-center justify-center
-          hover:bg-[#ea6c10] active:scale-95 transition-all z-40"
+        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-accent text-[color:var(--text-primary)]
+          shadow-lg shadow-accent/30 flex items-center justify-center
+          hover:bg-accent-hover active:scale-95 transition-all z-40"
         aria-label="Add punch item"
       >
         <Plus size={24} />
@@ -391,7 +391,7 @@ export default function PunchListTab({ projectId }: Props) {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[var(--bg-tertiary)] border border-[#F97316]/30
+        <div className="fixed bottom-40 left-1/2 -translate-x-1/2 z-50 bg-[var(--bg-tertiary)] border border-accent/30
           text-[color:var(--text-primary)] text-sm font-medium px-4 py-3 rounded-2xl shadow-xl animate-fade-in">
           {toast}
         </div>

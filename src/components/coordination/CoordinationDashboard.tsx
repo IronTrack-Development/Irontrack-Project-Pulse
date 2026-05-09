@@ -23,7 +23,7 @@ interface CoordinationDashboardProps {
 
 const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
-  in_progress: "#F97316",
+  in_progress: "#2563EB",
   completed: "#22C55E",
   cancelled: "var(--text-muted)",
 };
@@ -116,12 +116,12 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {(actionSummary.open > 0 || actionSummary.overdue > 0) && (
         <button
           onClick={() => setView("actions")}
-          className="w-full mb-4 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
+          className="w-full mb-4 p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-accent/30 transition-colors text-left min-h-[44px]"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[#F97316]/10">
-                <AlertTriangle size={18} className="text-[#F97316]" />
+              <div className="p-2 rounded-lg bg-accent/10">
+                <AlertTriangle size={18} className="text-accent" />
               </div>
               <div>
                 <span className="text-[color:var(--text-primary)] text-sm font-medium">
@@ -142,12 +142,12 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Handshake size={20} className="text-[#F97316]" />
+          <Handshake size={20} className="text-accent" />
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{t('coordination.coordinationMeetings')}</h2>
         </div>
         <button
           onClick={() => setShowNewModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
         >
           <Plus size={16} />
           {t('coordination.newMeeting')}
@@ -157,7 +157,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
       {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center h-32">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       )}
 
@@ -169,7 +169,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
           <p className="text-[color:var(--text-muted)] text-sm mb-6">{t('coordination.scheduleFirst')}</p>
           <button
             onClick={() => setShowNewModal(true)}
-            className="px-6 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="px-6 py-3 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             {t('coordination.scheduleMeeting')}
           </button>
@@ -183,7 +183,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
             <button
               key={meeting.id}
               onClick={() => handleSelectMeeting(meeting.id)}
-              className="w-full p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/30 transition-colors text-left min-h-[44px]"
+              className="w-full p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-accent/30 transition-colors text-left min-h-[44px]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
@@ -216,7 +216,7 @@ export default function CoordinationDashboard({ projectId, defaultView = "meetin
                     <span className="text-[color:var(--text-muted)]">{meeting.agenda_count} {t('coordination.agenda')}</span>
                   )}
                   {(meeting.open_action_count ?? 0) > 0 && (
-                    <span className="text-[#F97316]">{meeting.open_action_count} {t('coordination.open')}</span>
+                    <span className="text-accent">{meeting.open_action_count} {t('coordination.open')}</span>
                   )}
                   <ChevronRight size={16} className="text-gray-600" />
                 </div>

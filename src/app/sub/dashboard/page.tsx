@@ -120,12 +120,12 @@ function StatCard({
     <div className="group relative overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 flex flex-col gap-2 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#3B82F6]/70 to-transparent opacity-70" />
       <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
-        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-[#F97316]"}`}>
+        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-accent"}`}>
           {icon}
         </span>
         <span className="text-[10px] uppercase tracking-[0.18em] font-bold">{label}</span>
       </div>
-      <span className={`text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
+      <span className={`text-2xl font-bold ${accent ? "text-accent" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </span>
       {helper && <span className="text-xs text-[color:var(--text-muted)]">{helper}</span>}
@@ -138,7 +138,7 @@ function StatCard({
 function ProjectCard({ project }: { project: ProjectSummary }) {
   return (
     <div className="group relative overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-5 space-y-4 hover:border-[#3B82F6]/50 transition-all hover:-translate-y-0.5 shadow-[0_18px_55px_rgba(0,0,0,0.16)]">
-      <div className="absolute -right-14 -top-16 h-32 w-32 rounded-full bg-[#3B82F6]/10 blur-2xl group-hover:bg-[#F97316]/10 transition-colors" />
+      <div className="absolute -right-14 -top-16 h-32 w-32 rounded-full bg-[#3B82F6]/10 blur-2xl group-hover:bg-accent/10 transition-colors" />
       {/* Project name + location */}
       <div>
         <h3 className="text-base font-bold text-[color:var(--text-primary)] leading-tight">{project.project_name}</h3>
@@ -192,7 +192,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
         </div>
         <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316] transition-all"
+            className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-accent transition-all"
             style={{ width: `${Math.min(project.avg_percent, 100)}%` }}
           />
         </div>
@@ -228,7 +228,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
             </span>
             <span className="text-xs text-[color:var(--text-muted)]">{timeAgo(report.submitted_at)}</span>
           </div>
-          <p className="text-xs text-[#F97316] truncate">{report.project_name}</p>
+          <p className="text-xs text-accent truncate">{report.project_name}</p>
           <p className="text-xs text-[color:var(--text-muted)]">by {report.submitted_by}</p>
         </div>
 
@@ -237,13 +237,13 @@ function ReportRow({ report }: { report: ReportEntry }) {
           <div className="hidden sm:flex items-center gap-3 text-xs text-[color:var(--text-muted)]">
             {report.manpower_count != null && (
               <span className="flex items-center gap-1">
-                <Users size={11} className="text-[#F97316]" />
+                <Users size={11} className="text-accent" />
                 {report.manpower_count}
               </span>
             )}
             {report.total_hours != null && (
               <span className="flex items-center gap-1">
-                <Timer size={11} className="text-[#F97316]" />
+                <Timer size={11} className="text-accent" />
                 {report.total_hours}h
               </span>
             )}
@@ -261,12 +261,12 @@ function ReportRow({ report }: { report: ReportEntry }) {
           <div className="flex gap-4 text-xs text-[color:var(--text-secondary)] sm:hidden">
             {report.manpower_count != null && (
               <span className="flex items-center gap-1">
-                <Users size={11} className="text-[#F97316]" /> {report.manpower_count} workers
+                <Users size={11} className="text-accent" /> {report.manpower_count} workers
               </span>
             )}
             {report.total_hours != null && (
               <span className="flex items-center gap-1">
-                <Timer size={11} className="text-[#F97316]" /> {report.total_hours}h total
+                <Timer size={11} className="text-accent" /> {report.total_hours}h total
               </span>
             )}
           </div>
@@ -301,7 +301,7 @@ function ReportRow({ report }: { report: ReportEntry }) {
                     </div>
                     <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-[#F97316]/70"
+                        className="h-full rounded-full bg-accent/70"
                         style={{ width: `${barWidth}%` }}
                       />
                     </div>
@@ -364,7 +364,7 @@ export default function SubDashboardPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
-          <Loader2 className="w-8 h-8 text-[#F97316] animate-spin" />
+          <Loader2 className="w-8 h-8 text-accent animate-spin" />
           <p className="text-sm">Loading your dashboard…</p>
         </div>
       </div>
@@ -377,7 +377,7 @@ export default function SubDashboardPage() {
       <div className="max-w-2xl mx-auto px-6 py-16 text-center space-y-4">
         <AlertCircle className="w-12 h-12 text-red-400 mx-auto" />
         <p className="text-red-400">{error}</p>
-        <Link href="/login" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+        <Link href="/login" className="text-accent hover:text-[#EA580C] text-sm underline">
           {t('auth.returnToLogin')}
         </Link>
       </div>
@@ -398,7 +398,7 @@ export default function SubDashboardPage() {
         <p className="text-[color:var(--text-secondary)] text-sm">
           {t('subops.registerCompanyAccess')}
         </p>
-        <Link href="/sub/register" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+        <Link href="/sub/register" className="text-accent hover:text-[#EA580C] text-sm underline">
           {t('subops.registerYourCompany')}
         </Link>
       </div>
@@ -454,7 +454,7 @@ export default function SubDashboardPage() {
 
         {/* ── Header ── */}
         <div className="relative overflow-hidden rounded-xl border border-[#3B82F6]/20 bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92)_42%,rgba(249,115,22,0.14))] p-5 md:p-7 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-accent" />
           <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#93C5FD]">
@@ -506,7 +506,7 @@ export default function SubDashboardPage() {
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{fieldPulse}</p>
           </div>
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-accent">
               <AlertTriangle size={14} />
               Needs Attention
             </div>
@@ -568,7 +568,7 @@ export default function SubDashboardPage() {
           <div className="grid gap-3 md:grid-cols-5">
             {huddleCards.map((card) => (
               <div key={card.label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.14)]">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-accent">
                   {card.icon}
                   {card.label}
                 </div>
@@ -604,7 +604,7 @@ export default function SubDashboardPage() {
         {/* ── Projects Section ── */}
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <FolderOpen size={16} className="text-[#F97316]" />
+            <FolderOpen size={16} className="text-accent" />
             <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
             {projects.length > 0 && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
@@ -634,7 +634,7 @@ export default function SubDashboardPage() {
         {recentReports.length > 0 && (
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <ClipboardList size={16} className="text-[#F97316]" />
+              <ClipboardList size={16} className="text-accent" />
               <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Reports</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {totalReports}

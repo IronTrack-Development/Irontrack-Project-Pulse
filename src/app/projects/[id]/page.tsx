@@ -44,7 +44,7 @@ const FieldReportsTab = dynamic(() => import("@/components/tabs/FieldReportsTab"
 function TabLoader() {
   return (
     <div className="flex items-center justify-center py-20">
-      <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+      <RefreshCw size={20} className="text-accent animate-spin" />
     </div>
   );
 }
@@ -127,7 +127,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -137,7 +137,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
       <div className="p-8 text-center">
         <p className="text-[color:var(--text-muted)] mb-4">
           Project not found.{" "}
-          <Link href="/dashboard" className="text-[#F97316]">Go back</Link>
+          <Link href="/dashboard" className="text-accent">Go back</Link>
         </p>
         <SupportButton context="Project not found error" variant="inline" />
       </div>
@@ -196,7 +196,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ id: string
               </Link>
               <Link
                 href={`/projects/${id}/report`}
-                className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+                className="flex items-center gap-1.5 px-3 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
               >
                 <ClipboardList size={14} />
                 <span className="hidden sm:inline">{t('action.observe')}</span>

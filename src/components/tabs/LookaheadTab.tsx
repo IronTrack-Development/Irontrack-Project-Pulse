@@ -39,14 +39,14 @@ function ActivityRow({ activity, getActivityName }: { activity: ParsedActivity; 
     <div
       className={`flex items-center gap-3 px-3 py-2 rounded-lg ${
         isInspection
-          ? "bg-[#F97316]/10 border border-[#F97316]/20"
+          ? "bg-accent/10 border border-accent/20"
           : "bg-[var(--bg-primary)] border border-[var(--border-primary)]"
       }`}
     >
       <div className="flex-1 min-w-0">
-        <div className={`text-sm font-medium truncate ${isInspection ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
+        <div className={`text-sm font-medium truncate ${isInspection ? "text-accent" : "text-[color:var(--text-primary)]"}`}>
           {getActivityName(activity.activity_name)}
-          {isInspection && <span className="ml-2 text-[10px] bg-[#F97316]/20 text-[#F97316] px-1.5 py-0.5 rounded font-bold">{t('lookahead.inspect')}</span>}
+          {isInspection && <span className="ml-2 text-[10px] bg-accent/20 text-accent px-1.5 py-0.5 rounded font-bold">{t('lookahead.inspect')}</span>}
         </div>
         <div className="flex items-center gap-3 mt-0.5 text-xs text-[color:var(--text-muted)]">
           {activity.start_date && (
@@ -110,7 +110,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
               onClick={() => setDays(d)}
               className={`px-3 py-1 rounded text-xs font-semibold transition-colors ${
                 days === d
-                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  ? "bg-accent text-[color:var(--text-primary)]"
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
@@ -137,7 +137,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
 
       {loading ? (
         <div className="flex justify-center py-16">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : groups.length === 0 ? (
         <div className="text-center py-12 text-gray-600">
@@ -158,7 +158,7 @@ export default function LookaheadTab({ projectId }: { projectId: string }) {
                   className="w-full flex items-center justify-between px-5 py-3 hover:bg-[var(--bg-tertiary)]/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <CalendarDays size={15} className="text-[#F97316]" />
+                    <CalendarDays size={15} className="text-accent" />
                     <span className="font-semibold text-[color:var(--text-primary)] text-sm">{group.weekLabel}</span>
                     <span className="text-xs text-[color:var(--text-muted)]">{totalInWeek} {totalInWeek !== 1 ? t('lookahead.activities') : t('lookahead.activity')}</span>
                   </div>

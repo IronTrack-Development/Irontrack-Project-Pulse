@@ -185,7 +185,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 size={24} className="text-[#F97316] animate-spin" />
+        <Loader2 size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -230,7 +230,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
               <button
                 onClick={handleShare}
                 disabled={selectedIds.size === 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-accent hover:bg-[#ea6a0a] disabled:bg-[var(--bg-tertiary)] disabled:text-gray-600 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
               >
                 <Share2 size={13} />
                 Share ({selectedIds.size})
@@ -256,10 +256,10 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
 
       {/* Inspections section */}
       {data.inspections.length > 0 && (
-        <div className="bg-[var(--bg-secondary)] border border-[#F97316]/30 rounded-xl overflow-hidden">
-          <div className="bg-[#F97316]/10 border-b border-[#F97316]/30 px-4 py-2.5 flex items-center gap-2">
-            <AlertTriangle size={16} className="text-[#F97316]" />
-            <div className="text-sm font-semibold text-[#F97316]">Inspections</div>
+        <div className="bg-[var(--bg-secondary)] border border-accent/30 rounded-xl overflow-hidden">
+          <div className="bg-accent/10 border-b border-accent/30 px-4 py-2.5 flex items-center gap-2">
+            <AlertTriangle size={16} className="text-accent" />
+            <div className="text-sm font-semibold text-accent">Inspections</div>
           </div>
           <div className="divide-y divide-[#1F1F25]">
             {data.inspections.map((inspection) => {
@@ -273,7 +273,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       ? "hover:bg-[var(--bg-tertiary)]/50"
                       : "hover:bg-[var(--bg-tertiary)]/30"
                   } ${
-                    isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
+                    isSelected ? "bg-accent/20 border-l-2 border-accent" : ""
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -282,7 +282,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleActivity(inspection.id)}
-                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-accent focus:ring-accent focus:ring-offset-0"
                       />
                     )}
                     <div className="flex-1">
@@ -296,7 +296,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         if (!isSelecting) return (
                           <button
                             onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === inspection.id); if (full) setReadyCheckActivity(full); }}
-                            className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                            className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-accent transition-colors"
                           >
                             <Send size={10} />
                             Ready Check
@@ -332,7 +332,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       ? "hover:bg-[var(--bg-tertiary)]/50"
                       : "hover:bg-[var(--bg-tertiary)]/30"
                   } ${
-                    isSelected ? "bg-[#F97316]/20 border-l-2 border-[#F97316]" : ""
+                    isSelected ? "bg-accent/20 border-l-2 border-accent" : ""
                   }`}
                 >
                   <div className="flex items-start gap-3 mb-2">
@@ -341,7 +341,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleActivity(task.id)}
-                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0"
+                        className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-[var(--bg-tertiary)] text-accent focus:ring-accent focus:ring-offset-0"
                       />
                     )}
                     <div className="flex-1 min-w-0">
@@ -357,7 +357,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                             if (!isSelecting) return (
                               <button
                                 onClick={(e) => { e.stopPropagation(); const full = allActivities.find((a) => a.id === task.id); if (full) setReadyCheckActivity(full); }}
-                                className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                                className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-600 hover:text-accent transition-colors"
                               >
                                 <Send size={10} />
                                 Ready Check
@@ -370,7 +370,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                           pct >= 100 
                             ? "text-[#22C55E]" 
                             : pct > 0 
-                            ? "text-[#F97316]" 
+                            ? "text-accent" 
                             : "text-[color:var(--text-muted)]"
                         }`}>
                           {pct}%
@@ -380,7 +380,7 @@ export default function DayPlanTab({ projectId, day }: DayPlanTabProps) {
                       <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-1.5 overflow-hidden">
                         <div
                           className={`h-full transition-all ${
-                            pct >= 100 ? "bg-[#22C55E]" : "bg-[#F97316]"
+                            pct >= 100 ? "bg-[#22C55E]" : "bg-accent"
                           }`}
                           style={{ width: `${Math.min(pct, 100)}%` }}
                         />

@@ -35,7 +35,7 @@ function statusBadge(status: string) {
     case "scheduled":
       return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-500/20 text-[color:var(--text-secondary)]">SCHEDULED</span>;
     case "redirected":
-      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#F97316]/20 text-[#F97316]">REDIRECTED</span>;
+      return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-accent/20 text-accent">REDIRECTED</span>;
     case "called":
       return <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/20 text-blue-400">CALLED</span>;
     case "completed":
@@ -107,7 +107,7 @@ export default function InspectionHistory({ inspections, jurisdiction, projectId
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="p-1.5 text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
+                    className="p-1.5 text-[color:var(--text-muted)] hover:text-accent transition-colors"
                     title="Open Portal"
                   >
                     <ExternalLink size={14} />

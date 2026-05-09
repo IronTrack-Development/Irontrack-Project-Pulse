@@ -55,7 +55,7 @@ const commandCards = [
     title: "Blockers",
     copy: "3 open blockers need decisions before the next shift starts.",
     icon: AlertTriangle,
-    color: "#F97316",
+    color: "#2563EB",
   },
 ];
 
@@ -152,7 +152,7 @@ export default function SubPortalPreviewPage() {
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">Field reporting is active this week.</p>
           </div>
           <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-accent">
               <AlertTriangle size={14} />
               Needs Attention
             </div>
@@ -175,7 +175,7 @@ export default function SubPortalPreviewPage() {
 
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <HardHat size={16} className="text-[#F97316]" />
+            <HardHat size={16} className="text-accent" />
             <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Command Actions</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
@@ -234,7 +234,7 @@ export default function SubPortalPreviewPage() {
           <div className="grid gap-3 md:grid-cols-5">
             {huddleCards.map(({ label, text, icon: Icon }) => (
               <div key={label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.14)]">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F97316]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-accent">
                   <Icon size={15} />
                   {label}
                 </div>
@@ -246,7 +246,7 @@ export default function SubPortalPreviewPage() {
 
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <FolderOpen size={16} className="text-[#F97316]" />
+            <FolderOpen size={16} className="text-accent" />
             <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -271,7 +271,7 @@ export default function SubPortalPreviewPage() {
                     <span>{project.progress}%</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
-                    <div className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-[#F97316]" style={{ width: `${project.progress}%` }} />
+                    <div className="h-full rounded-full bg-gradient-to-r from-[#3B82F6] via-[#22C55E] to-accent" style={{ width: `${project.progress}%` }} />
                   </div>
                 </div>
               </div>
@@ -307,12 +307,12 @@ function StatCard({
   return (
     <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
       <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
-        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-[#F97316]"}`}>
+        <span className={`grid h-8 w-8 place-items-center rounded-lg ${accent ? "bg-[#3B82F6]/15 text-[#60A5FA]" : "bg-[var(--bg-tertiary)] text-accent"}`}>
           {icon}
         </span>
         <span className="text-[10px] font-bold uppercase tracking-[0.18em]">{label}</span>
       </div>
-      <span className={`mt-2 block text-2xl font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
+      <span className={`mt-2 block text-2xl font-bold ${accent ? "text-accent" : "text-[color:var(--text-primary)]"}`}>
         {value}
       </span>
     </div>

@@ -180,7 +180,7 @@ export default function CrewManager({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -199,7 +199,7 @@ export default function CrewManager({ projectId }: Props) {
         </div>
         <button
           onClick={() => { resetForm(); setShowForm(!showForm); }}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-semibold transition-colors min-h-[40px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-accent/10 text-accent hover:bg-accent/20 rounded-lg text-xs font-semibold transition-colors min-h-[40px]"
         >
           {showForm ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Crew</>}
         </button>
@@ -307,7 +307,7 @@ export default function CrewManager({ projectId }: Props) {
             <button
               onClick={handleSubmit}
               disabled={saving}
-              className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
+              className="px-4 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px] disabled:opacity-50"
             >
               {saving ? "Saving…" : editingId ? "Update" : "Add Crew Member"}
             </button>

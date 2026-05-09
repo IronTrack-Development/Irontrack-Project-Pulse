@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
             <h2 className="font-semibold text-[color:var(--text-primary)] mb-3">Run Migration</h2>
             <ol className="space-y-3 text-sm text-[color:var(--text-secondary)] mb-5">
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">1.</span>
+                <span className="text-accent font-bold shrink-0">1.</span>
                 Open the Supabase SQL Editor:
                 <a
                   href="https://supabase.com/dashboard/project/raxdqjivrathfornpxug/editor"
@@ -119,19 +119,19 @@ CREATE TABLE IF NOT EXISTS daily_projects (
                 </a>
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">2.</span>
+                <span className="text-accent font-bold shrink-0">2.</span>
                 Open the file at: <code className="text-[color:var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1 rounded">src/migrations/001_irontrack_daily.sql</code>
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">3.</span>
+                <span className="text-accent font-bold shrink-0">3.</span>
                 Paste the full SQL and click Run
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">4.</span>
+                <span className="text-accent font-bold shrink-0">4.</span>
                 Come back here and click refresh to confirm tables were created
               </li>
               <li className="flex gap-2">
-                <span className="text-[#F97316] font-bold shrink-0">5.</span>
+                <span className="text-accent font-bold shrink-0">5.</span>
                 Run the seed: <code className="text-[color:var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1 rounded">npx tsx src/seed/seed-demo.ts</code>
               </li>
             </ol>
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS daily_projects (
             <div className="text-[color:var(--text-secondary)] text-sm mt-1">All tables are configured. You can now use IronTrack Daily.</div>
             <a
               href="/"
-              className="inline-block mt-4 px-5 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold hover:bg-[#ea6c0a] transition-colors"
+              className="inline-block mt-4 px-5 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-sm font-semibold hover:bg-accent-hover transition-colors"
             >
               Go to Dashboard
             </a>

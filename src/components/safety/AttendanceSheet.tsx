@@ -82,7 +82,7 @@ export default function AttendanceSheet({
     <div>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Users size={14} className="text-[#F97316]" />
+          <Users size={14} className="text-accent" />
           <span className="text-sm font-medium text-[color:var(--text-primary)]">Attendance</span>
           <span className="text-xs text-[color:var(--text-muted)]">
             {signedCount} of {attendees.length} signed
@@ -91,7 +91,7 @@ export default function AttendanceSheet({
         {!readOnly && (
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center gap-1 text-xs text-[#F97316] hover:text-[#ea6c10] min-h-[44px] px-2"
+            className="flex items-center gap-1 text-xs text-accent hover:text-accent-hover min-h-[44px] px-2"
           >
             <Plus size={12} />
             Add
@@ -108,21 +108,21 @@ export default function AttendanceSheet({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name *"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
             />
             <input
               type="text"
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
               placeholder="Trade"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
             />
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company"
-              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-2.5 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
             />
           </div>
           <div className="flex justify-end gap-2">
@@ -135,7 +135,7 @@ export default function AttendanceSheet({
             <button
               onClick={handleAdd}
               disabled={adding || !name.trim()}
-              className="px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-medium disabled:opacity-50 min-h-[36px]"
+              className="px-3 py-1.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-medium disabled:opacity-50 min-h-[36px]"
             >
               {adding ? "Adding..." : "Add"}
             </button>

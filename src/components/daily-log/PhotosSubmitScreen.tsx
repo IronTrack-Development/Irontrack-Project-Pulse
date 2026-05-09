@@ -151,7 +151,7 @@ export default function PhotosSubmitScreen({
       {/* Camera / Photo Capture — BIG prominent button */}
       <div>
         <h3 className="text-sm font-semibold text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-          <Camera size={16} className="text-[#F97316]" />
+          <Camera size={16} className="text-accent" />
           Photos
         </h3>
 
@@ -163,7 +163,7 @@ export default function PhotosSubmitScreen({
               value={selectedTag || ""}
               onChange={(e) => setSelectedTag(e.target.value || null)}
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
-                focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                focus:outline-none focus:border-accent/50 min-h-[44px]"
             >
               <option value="">No tag (general)</option>
               {activities
@@ -183,8 +183,8 @@ export default function PhotosSubmitScreen({
             type="button"
             onClick={() => cameraInputRef.current?.click()}
             className="flex flex-col items-center justify-center gap-2 py-6 rounded-2xl
-              bg-[#F97316]/10 border-2 border-dashed border-[#F97316]/40
-              text-[#F97316] hover:bg-[#F97316]/15 active:scale-[0.98] transition-all min-h-[100px]"
+              bg-accent/10 border-2 border-dashed border-accent/40
+              text-accent hover:bg-accent/15 active:scale-[0.98] transition-all min-h-[100px]"
           >
             <Camera size={28} />
             <span className="text-sm font-medium">Take Photo</span>
@@ -239,7 +239,7 @@ export default function PhotosSubmitScreen({
                   {/* Activity tag */}
                   {tagName && (
                     <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2 py-1">
-                      <span className="text-[10px] text-[#F97316] flex items-center gap-1">
+                      <span className="text-[10px] text-accent flex items-center gap-1">
                         <Tag size={10} />
                         {tagName}
                       </span>
@@ -279,7 +279,7 @@ export default function PhotosSubmitScreen({
 
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
-            <Thermometer size={14} className="text-[#F97316]" />
+            <Thermometer size={14} className="text-accent" />
             <span>
               {weather.current_temp ?? weather.high ?? "--"}°F
               {(weather.conditions || []).length > 0 && (
@@ -315,8 +315,8 @@ export default function PhotosSubmitScreen({
           ${logStatus === "submitted"
             ? "bg-[#22C55E]/20 text-[#22C55E] cursor-default"
             : isSubmitting
-              ? "bg-[#F97316]/50 text-[color:var(--text-primary)] cursor-wait"
-              : "bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] active:scale-[0.98]"
+              ? "bg-accent/50 text-[color:var(--text-primary)] cursor-wait"
+              : "bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] active:scale-[0.98]"
           }`}
       >
         {logStatus === "submitted"

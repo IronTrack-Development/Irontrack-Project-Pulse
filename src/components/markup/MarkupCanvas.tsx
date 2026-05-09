@@ -33,7 +33,7 @@ export interface MarkupAction {
 
 export const MARKUP_COLORS: { name: string; value: string }[] = [
   { name: "Red", value: "#EF4444" },
-  { name: "Orange", value: "#F97316" },
+  { name: "Orange", value: "#2563EB" },
   { name: "Yellow", value: "#EAB308" },
   { name: "Blue", value: "#3B82F6" },
   { name: "White", value: "#FFFFFF" },
@@ -499,7 +499,7 @@ export default function MarkupCanvas({
               onClick={() => setTool(t.id)}
               className={`flex flex-col items-center justify-center gap-0.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
                 tool === t.id
-                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  ? "bg-accent text-[color:var(--text-primary)]"
                   : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] active:bg-[var(--bg-hover)]"
               }`}
               style={{ minWidth: 52, minHeight: 52, padding: "6px 10px" }}
@@ -523,7 +523,7 @@ export default function MarkupCanvas({
                   width: 26,
                   height: 26,
                   backgroundColor: c.value,
-                  borderColor: color === c.value ? "#F97316" : "#333",
+                  borderColor: color === c.value ? "#2563EB" : "#333",
                   transform: color === c.value ? "scale(1.3)" : "scale(1)",
                   boxShadow:
                     c.value === "#FFFFFF" ? "0 0 0 1px #444 inset" : undefined,
@@ -541,7 +541,7 @@ export default function MarkupCanvas({
                 onClick={() => setSizeKey(s)}
                 className={`rounded-lg font-bold transition-all flex items-center justify-center ${
                   sizeKey === s
-                    ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                    ? "bg-accent text-[color:var(--text-primary)]"
                     : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]"
                 }`}
                 style={{ minWidth: 36, minHeight: 36, fontSize: s === "thin" ? 10 : s === "medium" ? 16 : 22 }}
@@ -585,7 +585,7 @@ export default function MarkupCanvas({
           </button>
           <button
             onClick={handleDone}
-            className="rounded-xl bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold text-sm px-4 transition-all"
+            className="rounded-xl bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-bold text-sm px-4 transition-all"
             style={{ minHeight: 44 }}
           >
             Done ✓

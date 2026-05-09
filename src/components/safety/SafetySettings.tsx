@@ -42,7 +42,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Settings size={16} className="text-[#F97316]" />
+            <Settings size={16} className="text-accent" />
             Safety Settings
           </h3>
           <button
@@ -64,7 +64,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Your company name (for PDF headers)"
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Used in exported PDF headers
@@ -80,7 +80,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
               value={defaultPresenter}
               onChange={(e) => setDefaultPresenter(e.target.value)}
               placeholder="Auto-fill presenter name on new talks"
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
             />
             <p className="text-[10px] text-gray-600 mt-1">
               Pre-fills the presenter field when creating new talks
@@ -98,7 +98,7 @@ export default function SafetySettings({ projectId, onClose }: SafetySettingsPro
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
+            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
           >
             <Save size={14} />
             Save Settings

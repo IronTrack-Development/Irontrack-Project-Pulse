@@ -1,18 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import MobileNav from "@/components/MobileNav";
 import ManifestLoader from "@/components/ManifestLoader";
 import ThemeProvider from "@/components/ThemeProvider";
 import I18nProvider from "@/components/I18nProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const fontSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#0B0B0D", // Dark background to match new branding
+  themeColor: "#070a0f",
 };
 
 export const metadata: Metadata = {
@@ -57,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={fontSans.variable} suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
@@ -66,7 +71,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3" />
         <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=3" />
       </head>
-      <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden">
+      <body className="bg-[var(--bg-primary)] text-[color:var(--text-primary)] min-h-screen overflow-x-hidden antialiased">
         <ManifestLoader />
         <ThemeProvider>
           <I18nProvider>

@@ -74,8 +74,8 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
       <div className="w-full max-w-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 md:p-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F97316]/10 mb-2">
-            <HardHat size={28} className="text-[#F97316]" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 mb-2">
+            <HardHat size={28} className="text-accent" />
           </div>
           <h2 className="text-xl font-bold text-[color:var(--text-primary)]">{t('subops.setUpCompany')}</h2>
           <p className="text-sm text-[color:var(--text-muted)]">
@@ -95,7 +95,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="e.g., Martinez Electric LLC"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-9 pr-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
               />
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none"
             >
               <option value="">{t('subops.selectTrade')}</option>
               {TRADES.map((t) => (
@@ -121,7 +121,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
                 placeholder={t('subops.yourName')}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
               />
             </div>
             <div>
@@ -130,7 +130,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="602-555-1234"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function CompanySetup({ onComplete }: CompanySetupProps) {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors min-h-[44px]"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors min-h-[44px]"
         >
           <Save size={16} />
           {saving ? t('subops.creating') : t('subops.createCompany')}

@@ -46,7 +46,7 @@ interface PunchItemDetailProps {
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
-  code:        { label: "Code",        color: "#F97316", bg: "bg-orange-500/15" },
+  code:        { label: "Code",        color: "#2563EB", bg: "bg-orange-500/15" },
   standard:    { label: "Standard",    color: "var(--text-muted)", bg: "bg-gray-500/15" },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
@@ -56,7 +56,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   in_progress:        { label: "In Progress",        color: "#EAB308", bg: "bg-yellow-500/15" },
   ready_for_reinspect:{ label: "Ready for Re-inspect", color: "#A855F7", bg: "bg-purple-500/15" },
   closed:             { label: "Closed",             color: "#22C55E", bg: "bg-green-500/15" },
-  disputed:           { label: "Disputed",           color: "#F97316", bg: "bg-orange-500/15" },
+  disputed:           { label: "Disputed",           color: "#2563EB", bg: "bg-orange-500/15" },
 };
 
 export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose, onUpdated }: PunchItemDetailProps) {
@@ -321,12 +321,12 @@ export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose,
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 text-sm text-[color:var(--text-primary)]
-                    placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+                    placeholder-gray-600 focus:outline-none focus:border-accent/50 resize-none"
                   placeholder="Add notes..."
                 />
                 <div className="flex gap-2">
                   <button onClick={() => setEditingNotes(false)} className="flex-1 py-2 text-xs text-[color:var(--text-secondary)] rounded-lg bg-[var(--bg-tertiary)]">Cancel</button>
-                  <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-[color:var(--text-primary)] rounded-lg bg-[#F97316]">
+                  <button onClick={saveNotes} disabled={saving} className="flex-1 py-2 text-xs text-[color:var(--text-primary)] rounded-lg bg-accent">
                     {saving ? "Saving..." : "Save Notes"}
                   </button>
                 </div>

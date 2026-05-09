@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
+/* Tailwind maps to CSS variables so the whole app tracks theme tokens */
 @theme {
   --color-background: var(--bg-primary);
   --color-panel: var(--bg-secondary);
   --color-border: var(--border-primary);
-  --color-accent-orange: #F97316;
-  --color-accent-blue: #3B82F6;
-  --color-status-green: #22C55E;
-  --color-status-yellow: #EAB308;
-  --color-status-red: #EF4444;
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-blue: #3b82f6;
+  --color-status-green: #22c55e;
+  --color-status-yellow: #eab308;
+  --color-status-red: #ef4444;
 }
 
 * {
@@ -18,72 +20,84 @@
 html {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   background-color: var(--bg-primary);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  color: var(--text-primary);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 3px;
+  background: color-mix(in srgb, var(--text-muted) 35%, transparent);
+  border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-hover);
+  background: color-mix(in srgb, var(--text-secondary) 45%, transparent);
 }
 
-/* ── Theme Variables ────────────────────────────────────── */
-:root, .dark-theme {
-  --bg-primary: #0B0B0D;
-  --bg-secondary: #121217;
-  --bg-tertiary: #1F1F25;
-  --bg-hover: #2a2a35;
-  --text-primary: #FFFFFF;
-  --text-secondary: #9CA3AF;
-  --text-muted: #6B7280;
-  --border-primary: #1F1F25;
-  --border-secondary: #2a2a35;
-  --accent: #F97316;
-  --accent-hover: #ea6c10;
+/* ── Theme tokens: Fieldwire-style clarity + enterprise depth + crisp surfaces ─ */
+:root,
+.dark-theme {
+  --bg-primary: #070a0f;
+  --bg-secondary: #0d1219;
+  --bg-tertiary: #141c28;
+  --bg-hover: #1c2736;
+  --text-primary: #f4f7fb;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-primary: #1e293b;
+  --border-secondary: #273549;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --surface-glow: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
 .light-theme {
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
-  --bg-hover: #E5E7EB;
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
-  --text-muted: #9CA3AF;
-  --border-primary: #E5E7EB;
-  --border-secondary: #D1D5DB;
-  --accent: #F97316;
-  --accent-hover: #ea6c10;
+  --bg-primary: #fafbfc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-hover: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --surface-glow: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 .field-theme {
-  --bg-primary: #050505;
-  --bg-secondary: #0F1115;
-  --bg-tertiary: #1B1F27;
-  --bg-hover: #28303D;
-  --text-primary: #FFFFFF;
-  --text-secondary: #D1D5DB;
-  --text-muted: #A3AAB7;
-  --border-primary: #3B4658;
-  --border-secondary: #596579;
-  --accent: #FFB020;
-  --accent-hover: #F59E0B;
+  --bg-primary: #050608;
+  --bg-secondary: #0a0e14;
+  --bg-tertiary: #111827;
+  --bg-hover: #1c2533;
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #a8b3c4;
+  --border-primary: #2d3b50;
+  --border-secondary: #3d4f66;
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --surface-glow: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .field-theme body {
@@ -100,7 +114,7 @@ body {
 
 .field-theme button,
 .field-theme a {
-  -webkit-tap-highlight-color: rgba(255, 176, 32, 0.28);
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--accent) 32%, transparent);
 }
 
 .field-theme input,
@@ -110,21 +124,45 @@ body {
 }
 
 .field-theme :focus-visible {
-  outline: 3px solid #FFB020;
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
 @media (max-width: 640px) {
   .field-theme {
-    --text-secondary: #E5E7EB;
-    --text-muted: #C4CAD4;
+    --text-secondary: #e8edf5;
+    --text-muted: #c5cedc;
   }
 }
 
 /* Theme-aware utility overrides */
-.theme-bg-primary { background-color: var(--bg-primary); }
-.theme-bg-secondary { background-color: var(--bg-secondary); }
-.theme-bg-tertiary { background-color: var(--bg-tertiary); }
-.theme-text-primary { color: var(--text-primary); }
-.theme-text-secondary { color: var(--text-secondary); }
-.theme-border { border-color: var(--border-primary); }
+.theme-bg-primary {
+  background-color: var(--bg-primary);
+}
+.theme-bg-secondary {
+  background-color: var(--bg-secondary);
+}
+.theme-bg-tertiary {
+  background-color: var(--bg-tertiary);
+}
+.theme-text-primary {
+  color: var(--text-primary);
+}
+.theme-text-secondary {
+  color: var(--text-secondary);
+}
+.theme-border {
+  border-color: var(--border-primary);
+}
+
+/* Subtle app chrome: cards and panels read calmer on large dashboards */
+.app-panel {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--bg-secondary) 100%, transparent) 0%,
+    color-mix(in srgb, var(--bg-primary) 40%, var(--bg-secondary)) 100%
+  );
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent);
+}

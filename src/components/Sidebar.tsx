@@ -37,7 +37,7 @@ export default function Sidebar() {
           />
         </div>
         <div>
-          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-[#F97316]">Pulse</span></div>
+          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-accent">Pulse</span></div>
           <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">{t('landing.heroTitle1')} {t('landing.heroTitle2')}</div>
         </div>
       </div>
@@ -45,7 +45,7 @@ export default function Sidebar() {
       {/* Status pill */}
       <div className="px-4 py-3">
         <div className="flex items-center gap-2 bg-[var(--bg-primary)] rounded-lg px-3 py-2 border border-[var(--border-primary)]">
-          <Zap size={13} className="text-[#F97316]" />
+          <Zap size={13} className="text-accent" />
           <span className="text-xs text-[color:var(--text-secondary)]">{t('nav.fieldIntelligence')}</span>
           <span className="ml-auto w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
         </div>
@@ -62,7 +62,7 @@ export default function Sidebar() {
               href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 transition-all text-sm font-medium ${
                 active
-                  ? "bg-[#F97316]/15 text-[#F97316] border border-[#F97316]/20"
+                  ? "bg-accent/15 text-accent border border-accent/20"
                   : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-white/5"
               }`}
             >
@@ -77,7 +77,7 @@ export default function Sidebar() {
       <div className="px-4 py-4 border-t border-[var(--border-primary)] space-y-3">
         <Link
           href="/"
-          className="flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors"
+          className="flex items-center gap-2 text-sm text-[color:var(--text-muted)] hover:text-accent transition-colors"
         >
           <Home size={14} />
           {t('nav.landingPage')}

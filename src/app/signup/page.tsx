@@ -73,22 +73,22 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "#F5F3EE" }}>
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "#f0f4f8" }}>
         <div className="w-full max-w-md">
-          <div className="rounded-2xl p-8 border text-center shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+          <div className="rounded-2xl p-8 border text-center shadow-sm" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(34,197,94,0.1)" }}>
               <CheckCircle className="w-8 h-8" style={{ color: "#22C55E" }} />
             </div>
-            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-extrabold mb-2" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
               {t('auth.accountCreated')}
             </h1>
-            <p className="mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
+            <p className="mb-6" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.checkEmail')}
             </p>
             <Link
               href="/login"
               className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
-              style={{ background: "#E85D1C" }}
+              style={{ background: "#2563EB" }}
             >
               {t('action.goToLogin')}
             </Link>
@@ -99,13 +99,13 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-6" style={{ background: "#F5F3EE" }}>
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-6" style={{ background: "#f0f4f8" }}>
       <div className="w-full max-w-md">
         {/* Back to Home */}
         <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors mb-6 hover:opacity-70"
-          style={{ color: "rgba(13,13,13,0.55)" }}
+          style={{ color: "rgba(15,23,42,0.55)" }}
         >
           <ArrowLeft className="w-4 h-4" />
           {t('action.backToHome')}
@@ -118,22 +118,22 @@ export default function SignupPage() {
             alt="IronTrack"
             className="h-10 w-auto mr-3"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
+          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
+            Iron<span style={{ color: "#2563EB" }}>Track</span>
           </span>
         </Link>
 
         {/* Signup Card */}
-        <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+        <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(232,93,28,0.1)" }}>
               <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
+              <h1 className="text-2xl font-extrabold" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                 {t('auth.generalContractor')}
               </h1>
-              <p className="text-sm" style={{ color: "rgba(13,13,13,0.45)" }}>
+              <p className="text-sm" style={{ color: "rgba(15,23,42,0.45)" }}>
                 {t('auth.gcPrice')}
               </p>
             </div>
@@ -147,7 +147,7 @@ export default function SignupPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: "#0f172a" }}>
                 {t('auth.email')}
               </label>
               <input
@@ -158,16 +158,16 @@ export default function SignupPage() {
                 required
                 className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all"
                 style={{ 
-                  background: "#F5F3EE",
-                  borderColor: "rgba(13,13,13,0.12)",
-                  color: "#0D0D0D"
+                  background: "#f0f4f8",
+                  borderColor: "rgba(15,23,42,0.12)",
+                  color: "#0f172a"
                 }}
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: "#0f172a" }}>
                 {t('auth.password')}
               </label>
               <div className="relative">
@@ -179,9 +179,9 @@ export default function SignupPage() {
                   required
                   className="w-full px-4 py-3 pr-12 rounded-xl border focus:outline-none focus:ring-2 transition-all"
                   style={{ 
-                    background: "#F5F3EE",
-                    borderColor: "rgba(13,13,13,0.12)",
-                    color: "#0D0D0D"
+                    background: "#f0f4f8",
+                    borderColor: "rgba(15,23,42,0.12)",
+                    color: "#0f172a"
                   }}
                   placeholder="••••••••"
                 />
@@ -189,7 +189,7 @@ export default function SignupPage() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
-                  style={{ color: "rgba(13,13,13,0.35)" }}
+                  style={{ color: "rgba(15,23,42,0.35)" }}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -197,7 +197,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2" style={{ color: "#0D0D0D" }}>
+              <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2" style={{ color: "#0f172a" }}>
                 {t('auth.confirmPassword')}
               </label>
               <input
@@ -208,9 +208,9 @@ export default function SignupPage() {
                 required
                 className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all"
                 style={{ 
-                  background: "#F5F3EE",
-                  borderColor: "rgba(13,13,13,0.12)",
-                  color: "#0D0D0D"
+                  background: "#f0f4f8",
+                  borderColor: "rgba(15,23,42,0.12)",
+                  color: "#0f172a"
                 }}
                 placeholder="••••••••"
               />
@@ -220,7 +220,7 @@ export default function SignupPage() {
               type="submit"
               disabled={loading}
               className="w-full py-3 px-4 rounded-xl font-bold text-[color:var(--text-primary)] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              style={{ background: "#E85D1C" }}
+              style={{ background: "#2563EB" }}
             >
               {loading ? (
                 <>
@@ -232,26 +232,26 @@ export default function SignupPage() {
               )}
             </button>
 
-            <p className="text-xs text-center mt-4" style={{ color: "rgba(13,13,13,0.45)" }}>
+            <p className="text-xs text-center mt-4" style={{ color: "rgba(15,23,42,0.45)" }}>
               {t('auth.termsAgree')}{" "}
-              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
+              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#2563EB" }}>
                 {t('auth.termsOfService')}
               </Link>{" "}
               {t('auth.and')}{" "}
-              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#E85D1C" }}>
+              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#2563EB" }}>
                 {t('auth.privacyPolicy')}
               </Link>.
             </p>
           </form>
 
-          <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-            <p className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>
+          <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
+            <p className="text-sm" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.alreadyHaveAccount')}{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#2563EB" }}>
                 {t('action.signIn')}
               </Link>
             </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
+            <p className="text-sm mt-3" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.subQuestion')}{" "}
               <Link href="/signup/sub" className="font-bold transition-colors" style={{ color: "#3B82F6" }}>
                 {t('auth.signUpHere')}
@@ -261,7 +261,7 @@ export default function SignupPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm mt-6" style={{ color: "rgba(13,13,13,0.35)" }}>
+        <p className="text-center text-sm mt-6" style={{ color: "rgba(15,23,42,0.35)" }}>
           © 2026 IronTrack Development LLC
         </p>
       </div>

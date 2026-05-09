@@ -54,7 +54,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 size={24} className="text-[#F97316] animate-spin" />
+        <Loader2 size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -73,7 +73,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
       case "complete":
         return <CheckCircle size={16} className="text-[#22C55E]" />;
       case "upcoming":
-        return <Clock size={16} className="text-[#F97316]" />;
+        return <Clock size={16} className="text-accent" />;
       case "overdue":
         return <AlertTriangle size={16} className="text-[#EF4444]" />;
     }
@@ -84,7 +84,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
       case "complete":
         return "text-[#22C55E]";
       case "upcoming":
-        return "text-[#F97316]";
+        return "text-accent";
       case "overdue":
         return "text-[#EF4444]";
     }
@@ -95,7 +95,7 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
       case "complete":
         return "bg-[#22C55E]/10 border-[#22C55E]/20";
       case "upcoming":
-        return "bg-[#F97316]/10 border-[#F97316]/20";
+        return "bg-accent/10 border-accent/20";
       case "overdue":
         return "bg-[#EF4444]/10 border-[#EF4444]/20";
     }
@@ -169,11 +169,11 @@ export default function MilestonesTab({ projectId }: MilestonesTabProps) {
                         key={i}
                         className={`flex items-center gap-3 text-xs px-2 py-1.5 rounded-lg ${
                           isMilestoneDay
-                            ? "bg-[#F97316]/10 border border-[#F97316]/20"
+                            ? "bg-accent/10 border border-accent/20"
                             : "bg-[var(--bg-primary)]"
                         }`}
                       >
-                        <span className={`font-mono w-12 shrink-0 ${isMilestoneDay ? "text-[#F97316] font-bold" : "text-[color:var(--text-muted)]"}`}>
+                        <span className={`font-mono w-12 shrink-0 ${isMilestoneDay ? "text-accent font-bold" : "text-[color:var(--text-muted)]"}`}>
                           {dateLabel}
                         </span>
                         <span className="flex items-center gap-1 text-[color:var(--text-secondary)] shrink-0">

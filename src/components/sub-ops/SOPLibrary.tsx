@@ -161,7 +161,7 @@ export default function SOPLibrary({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -182,7 +182,7 @@ export default function SOPLibrary({ projectId }: Props) {
 
         {detailLoading ? (
           <div className="flex items-center justify-center h-40">
-            <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -223,13 +223,13 @@ export default function SOPLibrary({ projectId }: Props) {
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-                  <Users size={14} className="text-[#F97316]" />
+                  <Users size={14} className="text-accent" />
                   Acknowledgments ({s.acknowledged_count}/{s.total_foremen})
                 </h3>
                 <button
                   disabled
                   title="Assignment tracking needs a dedicated assignment table before launch."
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316]/10 text-[#F97316]/60 rounded-lg text-xs font-medium transition-colors min-h-[36px] disabled:cursor-not-allowed"
+                  className="flex items-center gap-1 px-2.5 py-1.5 bg-accent/10 text-accent/60 rounded-lg text-xs font-medium transition-colors min-h-[36px] disabled:cursor-not-allowed"
                 >
                   <Send size={12} /> Assign to All
                 </button>
@@ -272,7 +272,7 @@ export default function SOPLibrary({ projectId }: Props) {
         </div>
         <button
           onClick={() => setShowUpload(!showUpload)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
           {showUpload ? <><X size={14} /> Cancel</> : <><Upload size={14} /> Upload SOP</>}
         </button>
@@ -291,7 +291,7 @@ export default function SOPLibrary({ projectId }: Props) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Fall Protection Procedures"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -299,7 +299,7 @@ export default function SOPLibrary({ projectId }: Props) {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
@@ -314,14 +314,14 @@ export default function SOPLibrary({ projectId }: Props) {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of this SOP..."
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
           </div>
           <div>
             <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1 block">File (PDF/DOC)</label>
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-accent/30 transition-colors w-full min-h-[44px]"
             >
               <Upload size={14} />
               {file ? file.name : "Choose file..."}
@@ -340,7 +340,7 @@ export default function SOPLibrary({ projectId }: Props) {
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             <Upload size={14} />
             {uploading ? "Uploading..." : "Upload SOP"}
@@ -386,7 +386,7 @@ export default function SOPLibrary({ projectId }: Props) {
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <FileText size={12} className="text-[#F97316] flex-none" />
+                            <FileText size={12} className="text-accent flex-none" />
                             <span className="text-sm text-[color:var(--text-primary)] truncate">{s.title}</span>
                           </div>
                           <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5 ml-5">v{s.version}</p>

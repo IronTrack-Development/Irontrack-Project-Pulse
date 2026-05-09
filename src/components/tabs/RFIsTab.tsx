@@ -62,7 +62,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 
 const PRIORITY_CONFIG: Record<string, { color: string }> = {
   critical: { color: "#EF4444" },
-  high:     { color: "#F97316" },
+  high:     { color: "#2563EB" },
   normal:   { color: "#3B82F6" },
   low:      { color: "var(--text-muted)" },
 };
@@ -141,7 +141,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
       {/* Summary bar */}
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: "Total", value: totalRFIs, color: "#F97316" },
+          { label: "Total", value: totalRFIs, color: "#2563EB" },
           { label: "Open", value: openRFIs, color: "#EAB308" },
           { label: "Overdue", value: overdueRFIs, color: "#EF4444" },
           { label: "Answered", value: answeredRFIs, color: "#22C55E" },
@@ -172,7 +172,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
               onClick={() => setStatusFilter(value)}
               className={`px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === value
-                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  ? "bg-accent text-[color:var(--text-primary)]"
                   : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
               }`}
             >
@@ -182,8 +182,8 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
-            text-xs font-bold hover:bg-[#ea6c10] transition-all min-h-[44px] shrink-0"
+          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-accent text-[color:var(--text-primary)]
+            text-xs font-bold hover:bg-accent-hover transition-all min-h-[44px] shrink-0"
         >
           <Plus size={14} />
           New RFI
@@ -201,8 +201,8 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
           {!statusFilter && (
             <button
               onClick={() => setShowCreate(true)}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F97316] text-[color:var(--text-primary)]
-                text-sm font-semibold hover:bg-[#ea6c10] transition-all min-h-[44px]"
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-accent text-[color:var(--text-primary)]
+                text-sm font-semibold hover:bg-accent-hover transition-all min-h-[44px]"
             >
               <Plus size={16} />
               New RFI
@@ -221,7 +221,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
                 key={rfi.id}
                 onClick={() => openRFIDetail(rfi)}
                 className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-4
-                  hover:border-[#F97316]/30 active:scale-[0.99] transition-all text-left"
+                  hover:border-accent/30 active:scale-[0.99] transition-all text-left"
               >
                 {/* Top row: number + badges */}
                 <div className="flex items-center gap-2 mb-2">
@@ -232,7 +232,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
                   <span className="px-2 py-0.5 rounded-full text-xs font-medium border" style={{ color: priorityCfg.color, borderColor: `${priorityCfg.color}40` }}>
                     {rfi.priority.charAt(0).toUpperCase() + rfi.priority.slice(1)}
                   </span>
-                  {rfi.ai_drafted && <span className="text-xs text-[#F97316]">✨</span>}
+                  {rfi.ai_drafted && <span className="text-xs text-accent">✨</span>}
                   <div className="ml-auto flex items-center gap-1.5 text-gray-600 text-xs">
                     {(rfi.response_count || 0) > 0 && (
                       <span className="flex items-center gap-0.5">

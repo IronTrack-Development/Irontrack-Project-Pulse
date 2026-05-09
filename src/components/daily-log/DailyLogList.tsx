@@ -31,7 +31,7 @@ function statusBadge(status: string) {
       );
     default:
       return (
-        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
+        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent">
           <Edit3 size={10} />
           {t('dailylog.draft')}
         </span>
@@ -69,7 +69,7 @@ function LogCard({ log, projectId }: { log: DailyLog; projectId: string }) {
       <div className="flex flex-wrap gap-3 text-xs text-[color:var(--text-secondary)] mt-2">
         {(weather.high || weather.low) && (
           <span className="flex items-center gap-1">
-            <Thermometer size={12} className="text-[#F97316]" />
+            <Thermometer size={12} className="text-accent" />
             {weather.high ?? "--"}°/{weather.low ?? "--"}°
           </span>
         )}
@@ -120,7 +120,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
       {/* Header row */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-          <CalendarDays size={18} className="text-[#F97316]" />
+          <CalendarDays size={18} className="text-accent" />
           {t('dailylog.dailyLogs')}
           {total > 0 && <span className="text-xs text-[color:var(--text-muted)] font-normal">({total})</span>}
         </h2>
@@ -133,7 +133,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
           </button>
           <Link
             href={`/projects/${projectId}/daily-log?date=${today}`}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10]
+            className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover
               text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors min-h-[40px]"
           >
             <Plus size={14} />
@@ -145,7 +145,7 @@ export default function DailyLogList({ projectId }: DailyLogListProps) {
       {/* Log list */}
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : logs.length === 0 ? (
         <div className="text-center py-12">

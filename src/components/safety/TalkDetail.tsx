@@ -181,7 +181,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={20} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -221,7 +221,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 </span>
               )}
               {talk.status === "draft" && (
-                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F97316]/10 text-[#F97316]">
+                <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent">
                   <Edit3 size={10} />
                   Draft
                 </span>
@@ -232,7 +232,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-[color:var(--text-secondary)]">
           <div className="flex items-center gap-1.5">
-            <Calendar size={12} className="text-[#F97316]" />
+            <Calendar size={12} className="text-accent" />
             {talkDate.toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
@@ -241,7 +241,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           </div>
           {talk.presenter && (
             <div className="flex items-center gap-1.5">
-              <User size={12} className="text-[#F97316]" />
+              <User size={12} className="text-accent" />
               {talk.presenter}
               <button
                 onClick={handleToggleDefaultPresenter}
@@ -258,12 +258,12 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             </div>
           )}
           <div className="flex items-center gap-1.5">
-            <Clock size={12} className="text-[#F97316]" />
+            <Clock size={12} className="text-accent" />
             {talk.duration_minutes} min
           </div>
           {talk.location && (
             <div className="flex items-center gap-1.5">
-              <MapPin size={12} className="text-[#F97316]" />
+              <MapPin size={12} className="text-accent" />
               {talk.location}
             </div>
           )}
@@ -274,7 +274,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
       {(isReadOnly ? (talk.talking_points || []).length > 0 : true) && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4">
           <h4 className="text-sm font-medium text-[color:var(--text-primary)] mb-3 flex items-center gap-2">
-            <Shield size={14} className="text-[#F97316]" />
+            <Shield size={14} className="text-accent" />
             Talking Points
           </h4>
           <EditableTalkingPoints
@@ -312,7 +312,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={3}
             placeholder="Additional notes..."
-            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent resize-none disabled:opacity-50"
           />
         </div>
 
@@ -329,7 +329,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
             disabled={isReadOnly}
             rows={2}
             placeholder="Any corrective actions needed..."
-            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+            className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent resize-none disabled:opacity-50"
           />
         </div>
 
@@ -363,7 +363,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
                 disabled={isReadOnly}
                 rows={2}
                 placeholder="Follow-up details..."
-                className="w-full mt-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] resize-none disabled:opacity-50"
+                className="w-full mt-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent resize-none disabled:opacity-50"
               />
             )}
           </div>
@@ -383,7 +383,7 @@ export default function TalkDetail({ projectId, talkId, onBack }: TalkDetailProp
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-medium transition-colors disabled:opacity-50 min-h-[44px]"
           >
             <Save size={14} />
             {saving ? "Saving..." : "Save Changes"}

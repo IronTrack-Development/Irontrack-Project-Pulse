@@ -184,9 +184,9 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
           ) : (
             <button
               onClick={() => fileRef.current?.click()}
-              className="w-full h-24 rounded-2xl border-2 border-dashed border-[#F97316]/40 bg-[#F97316]/5
-                flex flex-col items-center justify-center gap-2 text-[#F97316] hover:border-[#F97316]/70
-                hover:bg-[#F97316]/10 transition-all min-h-[96px] active:scale-[0.98]"
+              className="w-full h-24 rounded-2xl border-2 border-dashed border-accent/40 bg-accent/5
+                flex flex-col items-center justify-center gap-2 text-accent hover:border-accent/70
+                hover:bg-accent/10 transition-all min-h-[96px] active:scale-[0.98]"
             >
               <Camera size={28} />
               <span className="text-sm font-semibold">Take Photo</span>
@@ -212,7 +212,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={building}
                 onChange={(e) => setBuilding(e.target.value)}
                 placeholder="A"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
               />
             </div>
             <div>
@@ -221,7 +221,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
                 placeholder="3"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
               />
             </div>
             <div>
@@ -230,7 +230,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 placeholder="301"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <select
               value={trade}
               onChange={(e) => setTrade(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-accent/50 min-h-[44px] appearance-none"
             >
               <option value="">Select trade...</option>
               {TRADES.map((t) => (
@@ -256,7 +256,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] appearance-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-accent/50 min-h-[44px] appearance-none"
             >
               <option value="">Unassigned</option>
               {contacts.map((c) => (
@@ -292,7 +292,7 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316]/50 min-h-[44px] [color-scheme:dark]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-accent/50 min-h-[44px] [color-scheme:dark]"
             />
           </div>
 
@@ -313,8 +313,8 @@ export default function PunchItemForm({ projectId, contacts, onSaved, onCancel }
             <button
               onClick={() => handleSave(true)}
               disabled={saving}
-              className="flex-[2] py-3.5 rounded-xl bg-[#F97316] text-[color:var(--text-primary)] text-sm font-bold
-                hover:bg-[#ea6c10] transition-all min-h-[52px] disabled:opacity-50 active:scale-[0.98]"
+              className="flex-[2] py-3.5 rounded-xl bg-accent text-[color:var(--text-primary)] text-sm font-bold
+                hover:bg-accent-hover transition-all min-h-[52px] disabled:opacity-50 active:scale-[0.98]"
             >
               {saving ? <Loader2 size={16} className="animate-spin mx-auto" /> : "Save & Add Another"}
             </button>

@@ -290,7 +290,7 @@ export default function CheckInView({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -325,7 +325,7 @@ export default function CheckInView({ projectId }: Props) {
           return (
             <div key={item.label} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
               <div className="flex items-center gap-2 text-sm font-black text-[color:var(--text-primary)]">
-                <ItemIcon size={15} className="text-[#F97316]" />
+                <ItemIcon size={15} className="text-accent" />
                 {item.label}
               </div>
               <p className="mt-1 text-xs text-[color:var(--text-muted)]">{item.detail}</p>
@@ -376,7 +376,7 @@ export default function CheckInView({ projectId }: Props) {
             <div className="space-y-3">
               <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
                 <div className="flex items-center gap-2">
-                  <Send size={14} className="text-[#F97316]" />
+                  <Send size={14} className="text-accent" />
                   <span className="text-sm font-bold text-[color:var(--text-primary)]">Today&apos;s Dispatch</span>
                 </div>
                 <p className="text-xs text-[color:var(--text-secondary)]">{dispatch.project_name}</p>
@@ -452,7 +452,7 @@ export default function CheckInView({ projectId }: Props) {
               <select
                 value={foremanId}
                 onChange={(e) => setForemanId(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
               >
                 {foremen.map((foreman) => (
                   <option key={foreman.id} value={foreman.id}>{foreman.name}</option>
@@ -494,7 +494,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={crewCount}
                 onChange={(e) => setCrewCount(e.target.value)}
                 placeholder="Other number"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -506,7 +506,7 @@ export default function CheckInView({ projectId }: Props) {
                 value={hoursWorked}
                 onChange={(e) => setHoursWorked(e.target.value)}
                 placeholder="e.g., 8"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
           </div>
@@ -515,7 +515,7 @@ export default function CheckInView({ projectId }: Props) {
             <label className="text-xs font-medium text-[color:var(--text-secondary)] mb-1.5 block">Site Photo</label>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-[#F97316]/30 transition-colors w-full min-h-[44px]"
+              className="flex items-center gap-2 px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:border-accent/30 transition-colors w-full min-h-[44px]"
             >
               <Camera size={16} />
               {sitePhoto ? sitePhoto.name : "Capture or upload photo"}
@@ -538,7 +538,7 @@ export default function CheckInView({ projectId }: Props) {
                   key={chip}
                   type="button"
                   onClick={() => appendNote(chip)}
-                  className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-bold text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+                  className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-bold text-[color:var(--text-secondary)] transition-colors hover:border-accent/40 hover:text-[color:var(--text-primary)]"
                 >
                   {chip}
                 </button>
@@ -549,7 +549,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Materials, schedule, manpower, hurdles, handoff notes..."
               rows={3}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
             {(crewCount || hoursWorked || notes) && (
               <p className="mt-1 text-[11px] font-medium text-[color:var(--text-muted)]">
@@ -597,7 +597,7 @@ export default function CheckInView({ projectId }: Props) {
                   value={entry.description}
                   onChange={(e) => updateEntry(idx, "description", e.target.value)}
                   placeholder="e.g., Ran conduit on 3rd floor east wing"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -608,7 +608,7 @@ export default function CheckInView({ projectId }: Props) {
                     value={entry.quantity}
                     onChange={(e) => updateEntry(idx, "quantity", e.target.value)}
                     placeholder="45"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -616,7 +616,7 @@ export default function CheckInView({ projectId }: Props) {
                   <select
                     value={entry.unit}
                     onChange={(e) => updateEntry(idx, "unit", e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
                   >
                     {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
                   </select>
@@ -627,7 +627,7 @@ export default function CheckInView({ projectId }: Props) {
                     value={entry.area}
                     onChange={(e) => updateEntry(idx, "area", e.target.value)}
                     placeholder="3rd Floor"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
                   />
                 </div>
               </div>
@@ -648,7 +648,7 @@ export default function CheckInView({ projectId }: Props) {
           <button
             onClick={handleSubmitProduction}
             disabled={submitting}
-            className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-3 text-base font-black text-white transition-colors hover:bg-[#ea6c0a] disabled:opacity-50"
+            className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 text-base font-black text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
           >
             {submitting ? "Submitting..." : "Submit Production"}
           </button>
@@ -675,7 +675,7 @@ export default function CheckInView({ projectId }: Props) {
             <select
               value={blockerCategory}
               onChange={(e) => setBlockerCategory(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 appearance-none min-h-[44px]"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 appearance-none min-h-[44px]"
             >
               <option value="material">Material</option>
               <option value="manpower">Manpower</option>
@@ -698,7 +698,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setBlockerDescription(e.target.value)}
               placeholder="What's the issue?"
               rows={3}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -709,7 +709,7 @@ export default function CheckInView({ projectId }: Props) {
               onChange={(e) => setBlockerImpact(e.target.value)}
               placeholder="How does this affect work?"
               rows={2}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 resize-none"
             />
           </div>
 
@@ -718,7 +718,7 @@ export default function CheckInView({ projectId }: Props) {
             <button
               type="button"
               onClick={() => blockerPhotoInputRef.current?.click()}
-              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-[#F97316]/40 hover:text-[color:var(--text-primary)]"
+              className="flex min-h-[44px] w-full items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[color:var(--text-secondary)] transition-colors hover:border-accent/40 hover:text-[color:var(--text-primary)]"
             >
               <Camera size={16} />
               {blockerPhoto ? blockerPhoto.name : "Capture or upload blocker photo"}

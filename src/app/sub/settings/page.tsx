@@ -30,7 +30,7 @@ export default function SubSettingsPage() {
 
       <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 shadow-[0_18px_55px_rgba(0,0,0,0.16)] md:p-6">
         <div className="flex items-start gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#F97316]/15 text-[#F97316]">
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/15 text-accent">
             <Settings size={18} />
           </span>
           <div>

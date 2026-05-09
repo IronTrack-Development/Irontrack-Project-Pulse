@@ -145,8 +145,8 @@ export default function SubPortalProjectPage({
   if (error) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-lg border border-[#F97316]/25 bg-[#F97316]/10">
-          <Building2 className="h-6 w-6 text-[#F97316]" />
+        <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-lg border border-accent/25 bg-accent/10">
+          <Building2 className="h-6 w-6 text-accent" />
         </div>
         <h1 className="text-xl font-black text-[color:var(--text-primary)]">{error}</h1>
         <Link href="/login/sub" className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-2 text-sm font-bold text-white">
@@ -173,7 +173,7 @@ export default function SubPortalProjectPage({
         <div className="mx-auto mt-5 grid max-w-xl gap-2 text-left sm:grid-cols-3">
           {[t('subops.noProjectsStep1'), t('subops.noProjectsStep2'), t('subops.noProjectsStep3')].map((step, index) => (
             <div key={step} className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#F97316]">0{index + 1}</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-accent">0{index + 1}</p>
               <p className="mt-2 text-xs leading-5 text-[color:var(--text-secondary)]">{step}</p>
             </div>
           ))}
@@ -279,7 +279,7 @@ export default function SubPortalProjectPage({
       <section className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 shadow-[0_18px_55px_rgba(0,0,0,0.12)]">
         <div className="mb-3 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">{t('subops.dailyFieldLoop')}</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">{t('subops.dailyFieldLoop')}</p>
             <h2 className="text-sm font-black text-[color:var(--text-primary)]">{t('subops.nextAction')}</h2>
           </div>
           <p className="text-xs text-[color:var(--text-muted)]">{t('subops.loopSummary')}</p>
@@ -294,12 +294,12 @@ export default function SubPortalProjectPage({
                 href={step.href}
                 className={`group rounded-lg border p-3 transition-all ${
                   active
-                    ? "border-[#F97316]/40 bg-[#F97316]/10 shadow-[0_12px_35px_rgba(249,115,22,0.12)]"
+                    ? "border-accent/40 bg-accent/10 shadow-[0_12px_35px_rgba(249,115,22,0.12)]"
                     : "border-[var(--border-primary)] bg-[var(--bg-primary)] hover:border-[#3B82F6]/40"
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${active ? "bg-[#F97316] text-white" : "bg-[var(--bg-tertiary)] text-[#93C5FD]"}`}>
+                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${active ? "bg-accent text-white" : "bg-[var(--bg-tertiary)] text-[#93C5FD]"}`}>
                     <Icon size={15} />
                   </span>
                   <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--text-muted)]">0{index + 1}</span>

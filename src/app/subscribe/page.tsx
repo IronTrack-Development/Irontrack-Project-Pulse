@@ -42,7 +42,7 @@ export default function SubscribePage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
-          <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
+          <Building2 className="w-8 h-8 text-accent mr-2" />
           <span className="text-2xl font-bold text-[color:var(--text-primary)]">IronTrack Project Pulse</span>
         </div>
 
@@ -89,7 +89,7 @@ export default function SubscribePage() {
           <button
             onClick={handleSubscribe}
             disabled={loading}
-            className="w-full bg-[#F97316] hover:bg-[#EA580C] disabled:bg-gray-600 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center mb-4"
+            className="w-full bg-accent hover:bg-[#EA580C] disabled:bg-gray-600 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center mb-4"
           >
             {loading ? (
               <>
