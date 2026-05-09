@@ -8,7 +8,7 @@ How each marketing channel supports IronTrack Pulse customer acquisition and ret
 
 | Channel | Primary Purpose | Target Audience | Frequency |
 |---------|----------------|-----------------|-----------|
-| **LinkedIn** | Thought leadership + direct outreach | GC PMs, Superintendents, Construction execs | 3-5x/week |
+| **LinkedIn** | Thought leadership + direct outreach | Subcontractor owners, ops managers, PMs, foremen | 3-5x/week |
 | **Reddit** | Community engagement + awareness | r/construction, r/projectmanagement, r/SaaS | 2-3x/week |
 | **Ghost Newsletter** | Email nurture + retention | Leads who signed up but haven't converted | Weekly |
 | **Buffer** | Social scheduling + distribution | LinkedIn + other platforms | Daily |
@@ -20,14 +20,14 @@ How each marketing channel supports IronTrack Pulse customer acquisition and ret
 ## LinkedIn
 
 ### Why It Matters
-Construction decision-makers (PMs, Supers, VPs of Operations) are on LinkedIn. It's the primary B2B channel for reaching GC buyers.
+Subcontractor owners, operations managers, PMs, and senior foremen are on LinkedIn. It's the primary B2B channel for reaching trade contractors who feel GC tool sprawl every day.
 
 ### Content Strategy
-- **Field-first perspective** — posts from the superintendent's POV, not the software seller's POV
-- **Pain-point content:** "Your sub showed up Monday with no idea what was on the schedule"
-- **Feature reveals:** Share specific workflows (ready check, daily log, QR share) with screenshots
+- **Subcontractor-first perspective** — posts from the owner, ops manager, PM, and foreman POV
+- **Pain-point content:** "One GC uses Procore, another uses Autodesk, and your foreman still gets the answer by text"
+- **Feature reveals:** Share specific workflows (Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, Owner Snapshot) with screenshots
 - **Social proof:** When users share wins, amplify them
-- **Comparison content:** "$19.99/mo vs. Procore at $500+/mo — here's what you get"
+- **Comparison content:** "Control GC chaos without asking the GC to adopt another tool"
 
 ### How It Connects to Product
 - LinkedIn posts → landing page (`irontrackpulse.com`)

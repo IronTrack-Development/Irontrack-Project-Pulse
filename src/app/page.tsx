@@ -22,7 +22,7 @@ export default function LandingPage() {
             />
             <span className="text-lg md:text-xl font-extrabold tracking-tight" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
               Iron<span style={{ color: "#E85D1C" }}>Track</span>
-              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Project Pulse</span>
+              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Subcontractor Pulse</span>
             </span>
           </div>
 
@@ -65,20 +65,20 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Schedule → Today → Ready Check → Field Status → Report
+              Job Inbox → Work Cards → Readiness Board → Proof Log → GC Response → Owner Snapshot
             </p>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
               style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}
             >
-              Know what matters<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>before the field asks.</em>
+              Control GC chaos<br />
+              <em className="font-medium" style={{ color: "#E85D1C" }}>without asking GC to change.</em>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              IronTrack keeps GCs, PMs, foremen, subs, and owners aligned around what is happening today, what is coming next, who is ready, what is blocked, and what needs leadership attention.
+              IronTrack helps subcontractors control requests, schedule noise, proof, and responses across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.
             </p>
-            <div className="mx-auto mb-8 grid max-w-3xl grid-cols-2 gap-2 rounded-2xl border p-2 text-left sm:grid-cols-5" style={{ background: "rgba(255,255,255,0.72)", borderColor: "rgba(13,13,13,0.08)" }}>
-              {["Today", "Next Work", "Ready", "Blocked", "Report"].map((step, index) => (
+            <div className="mx-auto mb-8 grid max-w-4xl grid-cols-2 gap-2 rounded-2xl border p-2 text-left sm:grid-cols-3 lg:grid-cols-6" style={{ background: "rgba(255,255,255,0.72)", borderColor: "rgba(13,13,13,0.08)" }}>
+              {["Job Inbox", "Work Cards", "Readiness", "Proof Log", "GC Response", "Owner Snapshot"].map((step, index) => (
                 <div key={step} className="rounded-xl px-3 py-3" style={{ background: index === 0 ? "rgba(232,93,28,0.08)" : "white" }}>
                   <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
                     0{index + 1}
@@ -94,32 +94,32 @@ export default function LandingPage() {
                 style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
               >
                 <Calendar className="w-5 h-5" />
-                Book a field workflow demo
+                Book a sub workflow demo
                 <ArrowRight className="w-5 h-5" />
               </a>
-              <Link
-                href="/signup"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
-              >
-                <HardHat className="w-5 h-5" />
-                Start as GC
-                <ArrowRight className="w-5 h-5" />
-              </Link>
               <Link
                 href="/signup/sub"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
                 style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
               >
                 <Briefcase className="w-5 h-5" />
-                Start as Sub
+                Start as Subcontractor
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
+                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
+              >
+                <HardHat className="w-5 h-5" />
+                GC / Owner access
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold" style={{ color: "rgba(13,13,13,0.45)" }}>
               <span>Public beta</span>
               <span>•</span>
-              <span>Rules-based schedule logic</span>
+              <span>Subcontractor-first workflow</span>
               <span>•</span>
               <span>Support: irontrackdevelopment@outlook.com</span>
             </div>
@@ -127,22 +127,22 @@ export default function LandingPage() {
               {[
                 {
                   label: "6:15 AM",
-                  title: "Morning huddle locked in",
-                  body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
+                  title: "GC requests land in one inbox",
+                  body: "Email, screenshots, texts, PDFs, and portal notes become work cards your team can act on.",
                   icon: Truck,
                   color: "#E85D1C",
                 },
                 {
                   label: "11:40 AM",
-                  title: "Blocker raised before it costs a day",
-                  body: "Field notes, photos, and caveats are captured while the problem is still fresh.",
+                  title: "Blockers get proof, not rumors",
+                  body: "Foremen attach photos, notes, and readiness status while the facts are still fresh.",
                   icon: AlertTriangle,
                   color: "#DC2626",
                 },
                 {
                   label: "3:55 PM",
-                  title: "Next crew gets the handoff",
-                  body: "What is ready, what is missing, and where to start is already waiting for them.",
+                  title: "GC response is ready to send",
+                  body: "Operations can send a clean answer and roll the proof into an owner-friendly snapshot.",
                   icon: ArrowRightLeft,
                   color: "#3B82F6",
                 },
@@ -169,28 +169,28 @@ export default function LandingPage() {
                 The Problem We Are Built For
               </p>
               <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5 text-white" style={{ letterSpacing: "-0.03em" }}>
-                Stop making every crew start from zero.
+                Stop letting GC noise run your company.
               </h2>
               <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.68)" }}>
-                Duct rough-in leaves. Piping walks in. Trim follows. Startup finishes. Too often, nobody hands off what changed, what is missing, or what the GC needs to know. IronTrack turns that chaos into a daily field rhythm.
+                Every GC works differently: Procore on one job, Autodesk on another, Fieldwire on a third, plus email, PDFs, screenshots, texts, and spreadsheets. IronTrack gives subcontractors one operating layer for what needs action today.
               </p>
               <a
                 href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
                 style={{ background: "#E85D1C" }}
               >
-                See the workflow
+                See the sub workflow
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["Dispatch", "Who is going where, with what scope, material notes, and safety focus."],
-                ["Check-In", "Foremen confirm arrival, manpower, site conditions, and plan for the day."],
-                ["Production", "Quantities, photos, progress notes, and work completed while it is still fresh."],
-                ["Blockers", "Caveats, delays, missing material, access issues, and GC-facing risk history."],
-                ["Handoffs", "Department-to-department readiness so the next crew does not walk in blind."],
-                ["GC Pulse", "A clean view of what is happening without burying the field in paperwork."],
+                ["Job Inbox", "All GC asks, portal exports, screenshots, emails, and texts routed into one daily queue."],
+                ["Work Cards", "Each request becomes a clear scope card with project, location, due date, owner, and next action."],
+                ["Readiness Board", "Foremen and operations see what is ready, not ready, blocked, or waiting on the GC."],
+                ["Proof Log", "Photos, notes, quantities, and field context stay tied to the work instead of scattered in phones."],
+                ["GC Response", "Turn field facts into a clean reply back to the GC without rewriting the story twice."],
+                ["Owner Snapshot", "Roll up proof, blockers, and responses into a leadership view for subcontractor owners."],
               ].map(([title, body]) => (
                 <div key={title} className="rounded-2xl p-5 border" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)" }}>
                   <h3 className="text-base font-extrabold mb-2 text-white">{title}</h3>
@@ -206,26 +206,28 @@ export default function LandingPage() {
       <section id="integrations" className="py-10 md:py-14 border-y" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-center text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
-            Works With Your Schedule Software
+            Works Around The Tools GCs Already Use
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {[
-              { name: "Microsoft Project", ext: ".mpp", icon: "/icons/ms-project.svg" },
-              { name: "Primavera P6", ext: ".xer", icon: "/icons/primavera-p6.svg" },
-              { name: "Excel", ext: ".xlsx", icon: "/icons/excel.svg" },
-              { name: "XML / MSPDI", ext: ".xml", icon: "/icons/xml.svg" },
-              { name: "CSV", ext: ".csv", icon: "/icons/csv.svg" },
-            ].map((fmt) => (
+              { name: "Procore", ext: "GC portal" },
+              { name: "Autodesk", ext: "ACC / Build" },
+              { name: "Fieldwire", ext: "Field tasks" },
+              { name: "Email + Texts", ext: "Daily noise" },
+              { name: "PDFs + Screenshots", ext: "Proof trails" },
+              { name: "Spreadsheets", ext: "Work logs" },
+            ].map((source) => (
               <div
-                key={fmt.name}
+                key={source.name}
                 className="flex items-center gap-3 px-5 py-3 rounded-xl border shadow-sm"
                 style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={fmt.icon} alt={fmt.name} className="w-8 h-8 rounded-lg" />
+                <div className="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style={{ background: "#0D0D0D" }}>
+                  {source.name.slice(0, 1)}
+                </div>
                 <div>
-                  <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>{fmt.name}</div>
-                  <div className="text-[10px] font-mono" style={{ color: "rgba(13,13,13,0.4)" }}>{fmt.ext}</div>
+                  <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>{source.name}</div>
+                  <div className="text-[10px] font-mono" style={{ color: "rgba(13,13,13,0.4)" }}>{source.ext}</div>
                 </div>
                 <CheckCircle className="w-4 h-4 ml-1" style={{ color: "#22C55E" }} />
               </div>
@@ -239,28 +241,28 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Field Workflow
+              Subcontractor Workflow
             </p>
             <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              One daily rhythm.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Clear enough for the jobsite.</em>
+              One operating layer.<br />
+              <em className="font-medium" style={{ color: "#E85D1C" }}>No GC rollout required.</em>
             </h2>
           </div>
 
           <div className="space-y-16 md:space-y-24">
 
-            {/* ── [01] Schedule Intelligence ── */}
+            {/* ── [01] Job Inbox ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[01]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Schedule to Today
+                  Job Inbox
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Upload the schedule once, then turn it into a field-readable day plan: today, tomorrow, and the next three weeks grouped by day and trade. Progress updates are rules-based and auditable, with float, milestones, and export paths kept visible for PM review.
+                  Pull the chaos into one queue: portal tasks, schedule exports, PDFs, screenshots, texts, emails, spreadsheet trackers, and GC asks. Operations can triage what needs action today without forcing the GC into another login.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
+                  {["GC Requests", "Portal Exports", "Email Intake", "PDF Notes", "Screenshot Tasks", "Today Queue"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -270,10 +272,10 @@ export default function LandingPage() {
               <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="space-y-2 mb-4">
                   {[
-                    { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#E85D1C" },
-                    { task: "Rough-In Electrical - Tower 2", pct: "60%", color: "#3B82F6" },
-                    { task: "Pour Foundation North Wing", pct: "100%", color: "#22C55E" },
-                    { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "var(--text-muted)" },
+                    { task: "Procore RFI follow-up - Level 3 ceiling", pct: "Due today", color: "#E85D1C" },
+                    { task: "Fieldwire task screenshot - Room 204", pct: "New", color: "#3B82F6" },
+                    { task: "Email: missing access at loading dock", pct: "Blocked", color: "#DC2626" },
+                    { task: "PDF markup: duct reroute sketch", pct: "Review", color: "var(--text-muted)" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
                       <div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
@@ -284,27 +286,27 @@ export default function LandingPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-3 mb-3">
                   <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Forecast Delta</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>+5d Late</div>
+                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Needs Action</div>
+                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>4 items</div>
                   </div>
                   <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Critical Path</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>8 tasks</div>
+                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Waiting on GC</div>
+                    <div className="text-lg font-extrabold" style={{ color: "#EAB308" }}>2 asks</div>
                   </div>
                 </div>
                 <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.04)" }}>
                   <div className="flex items-center gap-2 mb-1">
                     <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase" style={{ color: "#E85D1C" }}>Recovery Action</span>
+                    <span className="text-[10px] font-bold uppercase" style={{ color: "#E85D1C" }}>Next Action</span>
                   </div>
                   <p className="text-xs" style={{ color: "rgba(13,13,13,0.6)" }}>
-                    Increase crew size on &quot;Structural Steel&quot; to recover 3 days on critical path
+                    Assign the loading dock blocker to the PM and send the GC the proof package.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* ── [02] Field Ops ── */}
+            {/* ── [02] Work Cards & Proof Log ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
@@ -345,13 +347,13 @@ export default function LandingPage() {
               <div className="order-1 md:order-2">
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[02]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Field Status
+                  Work Cards & Proof Log
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Daily logs, field photos, issues, walkthrough observations, inspections, and punch status are captured from the phone while the context is fresh. The result is a cleaner project history without asking the field to write a novel.
+                  Convert scattered GC requests into work cards that carry location, scope, owner, readiness, blockers, photos, quantities, and field notes. Foremen update the card once; operations gets proof without chasing texts.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Daily Logs", "Field Reports", "Inspections", "Punch List", "Photo Capture", "PDF Export"].map((tag) => (
+                  {["Work Cards", "Photo Proof", "Quantities", "Blockers", "Foreman Notes", "Response History"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -360,18 +362,18 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [03] Safety & Compliance ── */}
+            {/* ── [03] Readiness Board ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Safety Talks
+                  Readiness Board
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run toolbox talks, collect attendance, and export a clean record for your files. IronTrack supports your company safety process; it does not replace professional safety judgment, training, or compliance review.
+                  Show owners, PMs, and foremen what is ready, what is not ready, what is blocked, and what is waiting on a GC answer. The board is deterministic and status-driven so crews know where to go next.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Toolbox Talks", "OSHA Templates", "Attendance", "Custom Templates", "PDF Reports"].map((tag) => (
+                  {["Ready", "Not Ready", "Blocked", "Waiting on GC", "Needs Proof", "Next Crew"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -409,7 +411,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [04] Trade Coordination ── */}
+            {/* ── [04] GC Response ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
@@ -440,13 +442,13 @@ export default function LandingPage() {
               <div className="order-1 md:order-2">
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[04]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Trade Coordination
+                  GC Response
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run coordination meetings from the same schedule and field signals the team is already using. Track action items, owners, due dates, and trade conflicts without turning every huddle into another spreadsheet.
+                  Turn field facts into clean responses for Procore comments, email threads, meeting asks, and delay notices. IronTrack keeps the source proof attached so your PM is not rebuilding the story from memory.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Meeting Management", "Conflict Detection", "Action Items", "Auto-Agenda"].map((tag) => (
+                  {["Reply Draft", "Proof Attached", "Delay Context", "Owner Review", "Response Log"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -455,18 +457,18 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [05] Documents ── */}
+            {/* ── [05] Owner Snapshot ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[05]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Documents
+                  Owner Snapshot
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Keep submittals, RFIs, drawings, and versions close to the work they affect. Optional RFI drafting assistance helps format the question; the team still owns the facts, review, and final send.
+                  Give subcontractor owners and operations leaders a fast read on what needs action today: open GC requests, blocked crews, missing proof, unsent responses, and work that is ready for the next crew.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
+                  {["Today's Actions", "Blocked Work", "Proof Gaps", "GC Responses", "Crew Readiness"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -503,7 +505,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── [06] Ready Check & Sub Portal ── */}
+            {/* ── [06] GC-Compatible Access ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
                 <div className="space-y-3 mb-4">
@@ -543,13 +545,13 @@ export default function LandingPage() {
               <div className="order-1 md:order-2">
                 <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[06]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Ready Check & Sub Portal
+                  GC-Compatible Access
                 </h3>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Tap any activity and ask the right sub if they are ready. Subs can confirm, flag a blocker, or share what is missing before tomorrow's work slips. QR links show scoped work views without exposing float, predecessors, or critical path logic.
+                  The GC side still exists when a project needs shared schedules, QR links, or scoped views. But the subcontractor can get value first by organizing requests and proof internally before asking anyone else to adopt IronTrack.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["SMS/Email", "QR Sharing", "Trade Filtering", "Protected Schedule Data"].map((tag) => (
+                  {["Scoped Views", "QR Links", "Schedule Imports", "No GC Rollout", "Protected Data"].map((tag) => (
                     <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                       {tag}
                     </span>
@@ -572,13 +574,13 @@ export default function LandingPage() {
                     Sub Ops
                   </h3>
                   <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Sub Ops gives foremen and dispatchers a focused way to see GC requests, upcoming work cards, readiness, blockers, proof photos, and production notes. It is a field loop, not another bloated back-office system.
+                    Sub Ops gives owners, operations managers, PMs, foremen, and field crews a focused way to see GC requests, upcoming work cards, readiness, blockers, proof photos, and response status. It is a field loop, not another bloated back-office system.
                   </p>
                   <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
                     Multi-department subs can track handoffs - sheet metal to piping to controls - with checklists and photos so the next crew knows what is ready, what is missing, and what needs an answer from the GC.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {["Morning Dispatch", "Foreman Tracking", "Production Logs", "SOP Library", "Handoff Board", "Blocker Reports"].map((tag) => (
+                    {["Job Inbox", "Work Cards", "Readiness Board", "Proof Log", "GC Response", "Owner Snapshot"].map((tag) => (
                       <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
                         {tag}
                       </span>
@@ -678,37 +680,42 @@ export default function LandingPage() {
               Who We Serve
             </p>
             <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Built by <em className="font-medium" style={{ color: "#E85D1C" }}>field operators</em>.<br />
-              For field operators.
+              Built for <em className="font-medium" style={{ color: "#E85D1C" }}>subcontractor teams</em>.<br />
+              Clear enough for the jobsite.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
               {
-                icon: HardHat,
-                title: "Superintendents",
-                desc: "Open the job and see today's plan, ready checks, blockers, photos, and field notes without digging through office software.",
+                icon: Building2,
+                title: "Subcontractor Owners",
+                desc: "See which GC requests, blockers, responses, and proof gaps need leadership attention today.",
+              },
+              {
+                icon: Settings,
+                title: "Operations Managers",
+                desc: "Triage work across jobs and crews without bouncing between portals, spreadsheets, texts, and screenshots.",
               },
               {
                 icon: Briefcase,
                 title: "Project Managers",
-                desc: "Keep schedule movement, field risk, daily status, and owner-ready snapshots tied together so leadership sees what needs attention.",
+                desc: "Turn scattered GC asks and field proof into clean responses with the context still attached.",
               },
               {
-                icon: Building2,
-                title: "General Contractors",
-                desc: "Give supers, PMs, subs, and owners one shared operating picture around today, next work, readiness, blocked items, and reports.",
+                icon: HardHat,
+                title: "Foremen",
+                desc: "Open the phone and know what work card needs action, what is ready, and what proof to capture.",
               },
               {
                 icon: Users,
-                title: "Subcontractors",
-                desc: "See GC requests, upcoming work cards, readiness, blockers, proof photos, and handoffs from a foreman-friendly mobile portal.",
+                title: "Field Crews",
+                desc: "Get clear scope, location, materials, blockers, and handoff notes without reading a full project-management system.",
               },
             ].map((persona) => (
               <div
                 key={persona.title}
                 className="rounded-2xl p-6 md:p-8 border transition-all"
-                style={{ background: "white", borderColor: persona.title === "Subcontractors" ? "rgba(232,93,28,0.3)" : "rgba(13,13,13,0.08)" }}
+                style={{ background: "white", borderColor: persona.title === "Subcontractor Owners" ? "rgba(232,93,28,0.3)" : "rgba(13,13,13,0.08)" }}
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "rgba(232,93,28,0.08)" }}>
                   <persona.icon className="w-6 h-6" style={{ color: "#E85D1C" }} />
@@ -734,10 +741,13 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {/* Subcontractor Plan */}
-            <div className="rounded-2xl p-8 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
+            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#E85D1C" }}>
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E85D1C" }}>Primary Focus</span>
+              </div>
               <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(59,130,246,0.1)" }}>
-                  <Briefcase className="w-6 h-6" style={{ color: "#3B82F6" }} />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(232,93,28,0.1)" }}>
+                  <Briefcase className="w-6 h-6" style={{ color: "#E85D1C" }} />
                 </div>
                 <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Subcontractor</h3>
                 <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
@@ -747,14 +757,14 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-2.5 mb-6">
                 {[
-                  "Sub Ops dashboard",
-                  "Morning Dispatch Board",
-                  "Foreman & Crew management",
-                  "Daily Check-In with photos",
-                  "Production tracking",
-                  "Blocker reporting",
-                  "SOP Library",
-                  "Handoff Tracker",
+                  "Job Inbox",
+                  "Work Cards",
+                  "Readiness Board",
+                  "Proof Log with photos",
+                  "GC Response workflow",
+                  "Owner Snapshot",
+                  "Foreman-friendly mobile tools",
+                  "Handoff Tracker for crews",
                   "Light/dark + Spanish",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
@@ -766,38 +776,32 @@ export default function LandingPage() {
               <Link
                 href="/signup/sub"
                 className="block w-full text-center px-6 py-3 text-white rounded-xl text-sm font-bold transition-all"
-                style={{ background: "#3B82F6" }}
+                style={{ background: "#E85D1C" }}
               >
-                Get Started
+                Start Subcontractor Beta
               </Link>
             </div>
 
-            {/* GC Plan — Featured */}
-            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#E85D1C" }}>
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E85D1C" }}>Most Popular</span>
-              </div>
+            {/* GC Plan — Secondary */}
+            <div className="rounded-2xl p-8 border relative" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
               <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(232,93,28,0.1)" }}>
-                  <HardHat className="w-6 h-6" style={{ color: "#E85D1C" }} />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
+                  <HardHat className="w-6 h-6" style={{ color: "#0D0D0D" }} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>General Contractor</h3>
+                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>GC / Owner Access</h3>
                 <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
                   $19.99<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
                 </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Founder beta pricing</p>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Legacy infrastructure tier</p>
               </div>
               <ul className="space-y-2.5 mb-6">
                 {[
-                  "Everything in Subcontractor, plus:",
+                  "Shared schedule infrastructure",
                   "All schedule formats (MPP, XER, XLSX, CSV, XML)",
-                  "3-week lookahead + reforecast engine",
-                  "Field ops: daily logs, reports, inspections",
-                  "Safety: toolbox talks, templates",
-                  "Documents: submittals, RFIs with AI, drawings",
-                  "Sub management + Ready Check + QR sharing",
-                  "Punch list + T&M tracking",
-                  "Unlimited invited subs and foremen",
+                  "3-week lookahead + deterministic reforecast",
+                  "Daily logs, reports, inspections",
+                  "Scoped QR sharing",
+                  "Sub visibility when the GC chooses to participate",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
@@ -807,10 +811,10 @@ export default function LandingPage() {
               </ul>
               <Link
                 href="/signup"
-                className="block w-full text-center px-8 py-4 text-white rounded-xl text-lg font-bold transition-all"
-                style={{ background: "#E85D1C" }}
+                className="block w-full text-center px-8 py-4 rounded-xl text-lg font-bold transition-all border-2"
+                style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
               >
-                Start Founder Plan
+                Request GC access
               </Link>
             </div>
             {/* Enterprise Plan */}
@@ -827,7 +831,7 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-2.5 mb-6 flex-1">
                 {[
-                  "Everything in GC, plus:",
+                  "Everything in Subcontractor, plus:",
                   "Unlimited projects",
                   "Multi-user team accounts",
                   "Custom onboarding + training",

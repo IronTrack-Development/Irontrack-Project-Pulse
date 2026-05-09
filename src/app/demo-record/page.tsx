@@ -112,11 +112,11 @@ function TitleCard() {
         <div style={{ fontSize: 28, fontWeight: 800, color: C.text, textAlign: "center", letterSpacing: -0.5 }}>
           Iron<span style={{ color: C.orange }}>Track</span>
         </div>
-        <div style={{ fontSize: 14, color: C.dim, textAlign: "center", marginTop: 4 }}>Project Pulse</div>
+        <div style={{ fontSize: 14, color: C.dim, textAlign: "center", marginTop: 4 }}>Subcontractor Pulse</div>
       </motion.div>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
         style={{ fontSize: 12, color: C.dim, textAlign: "center", lineHeight: 1.6, marginTop: 8 }}>
-        Run Your Job.<br />Don&apos;t Chase It.
+        Control GC chaos.<br />No GC rollout required.
       </motion.div>
     </div>
   );
@@ -445,7 +445,7 @@ function OutroCard() {
       </motion.div>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
         style={{ fontSize: 11, color: C.dim, textAlign: "center", lineHeight: 1.5 }}>
-        $19.99/mo · 14-day free trial<br />Built for superintendents
+        Subcontractor beta · $10/mo<br />Built for owners, foremen, and crews
       </motion.div>
     </div>
   );

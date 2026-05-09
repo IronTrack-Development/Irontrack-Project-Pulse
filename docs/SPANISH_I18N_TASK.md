@@ -39,7 +39,7 @@ Complete the Spanish i18n so that **all user-facing text** in the app uses `t('k
 1. Add new keys to the `translations` dictionary in `src/lib/i18n.ts`
 2. In components, import `{ t } from '@/lib/i18n'` (or use `useTranslation()` hook for React components)
 3. Replace hardcoded strings with `t('key.subkey')` calls
-4. Use construction industry terminology for Spanish translations — this is for field superintendents, foremen, and project managers in commercial construction
+4. Use construction industry terminology for Spanish translations — this is for subcontractor owners, operations managers, project managers, foremen, and field crews in commercial construction
 
 ### Naming Convention for Keys
 Follow the existing pattern:

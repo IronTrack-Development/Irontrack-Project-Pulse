@@ -29,7 +29,7 @@ export default function MobileNav() {
     "/demo-record",
   ];
 
-  // Don't show the GC app nav on marketing, auth, legal, or tokenized public pages.
+  // Don't show the app nav on marketing, auth, legal, or tokenized public pages.
   if (publicPaths.includes(pathname) || pathname.startsWith("/view/") || pathname.startsWith("/join/")) {
     return null;
   }

@@ -46,7 +46,7 @@ export default async function PublicWeekView({ params }: PageProps) {
       <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="text-center">
           <p className="text-[color:var(--text-secondary)] text-lg font-semibold">This link has expired</p>
-          <p className="text-gray-600 text-sm mt-2">Ask your superintendent for a new QR code.</p>
+          <p className="text-gray-600 text-sm mt-2">Ask your project contact for a new QR code.</p>
         </div>
       </div>
     );

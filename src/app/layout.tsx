@@ -17,12 +17,12 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
-  title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-  description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
+  title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+  description: "Control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
+    title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+    description: "Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, and Owner Snapshot for subcontractor teams.",
     images: [
       {
         url: "/og-share-card.png",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
+    title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+    description: "Control GC chaos across portals, email, PDFs, screenshots, texts, and spreadsheets without a GC rollout.",
     images: [
       {
         url: "/og-share-card.png",

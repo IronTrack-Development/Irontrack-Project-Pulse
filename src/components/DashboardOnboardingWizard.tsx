@@ -197,7 +197,7 @@ export default function DashboardOnboardingWizard({
                     What success looks like
                   </div>
                   <p className="mt-1 text-sm leading-6 text-[color:var(--text-muted)]">
-                    A superintendent can open IronTrack in the morning and know the plan, the risk, the crew impact, and what needs a follow-up before the job gets away from them.
+                    A subcontractor foreman or owner can open IronTrack in the morning and know which GC requests, work cards, blockers, proof gaps, and responses need action today.
                   </p>
                 </div>
 

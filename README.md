@@ -1,9 +1,9 @@
-# IronTrack Daily — Field Intelligence Platform
+# IronTrack Daily — Subcontractor Field Operations Platform
 
-A production-ready construction schedule intelligence app. Built to answer three questions every field day:
-- **What is happening today?**
-- **What is at risk?**
-- **What do I need to do now?**
+A production-ready subcontractor field operations app. Built to control GC chaos across portals, email, PDFs, screenshots, texts, and spreadsheets:
+- **What GC requests need action today?**
+- **Which work cards are ready, blocked, or waiting on a response?**
+- **What proof should be captured before the story gets lost?**
 
 ---
 
@@ -139,4 +139,4 @@ src/
 
 ---
 
-Built for field superintendents who need answers, not schedules.
+Built for subcontractor owners, operations managers, PMs, foremen, and field crews who need action clarity without another GC rollout.

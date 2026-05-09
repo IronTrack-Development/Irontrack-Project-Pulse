@@ -4,8 +4,8 @@
 
 | Tier | Price | Who | Billing |
 |------|-------|-----|---------|
-| **General Contractor** | $19.99/month | GC firms, PMs, superintendents | Stripe monthly subscription |
-| **Subcontractor** | $10/month | Sub companies (trade contractors) | Stripe monthly subscription (separate product) |
+| **Subcontractor** | $10/month | Subcontractor owners, ops managers, PMs, foremen, field crews | Stripe monthly subscription (primary product focus) |
+| **General Contractor** | $19.99/month | GC / owner access for shared schedule infrastructure | Stripe monthly subscription (secondary/legacy capability) |
 
 Both are monthly subscriptions. No annual option, no per-project pricing, no seat limits (as currently implemented).
 

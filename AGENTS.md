@@ -6,7 +6,7 @@
 
 ## What Is This
 
-**IronTrack Pulse** is a production SaaS for construction field management. It is deployed at [irontrackpulse.com](https://irontrackpulse.com) and serves paying customers. This is not a side project. Breaking changes have real consequences.
+**IronTrack Pulse** is a production SaaS for subcontractor field operations. It is deployed at [irontrackpulse.com](https://irontrackpulse.com) and serves paying customers. This is not a side project. Breaking changes have real consequences.
 
 **Stack:**
 - Next.js 16.2.3 (App Router, TypeScript) — **Note: this is NOT the standard Next.js 14 you may know. Read `/node_modules/next/dist/docs/` before making assumptions about conventions.**
@@ -28,7 +28,15 @@
 
 Revenue target: $3,500/month (~175 GC accounts, or mixed GC + Sub).
 
-**Primary users:** Superintendents, Project Managers, GC companies, Subcontractors.
+**Primary users:** subcontractor owners, operations managers, project managers, foremen, and field crews.
+
+**Current product frame:** IronTrack helps subcontractors control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, and spreadsheets without requiring the GC to adopt another tool.
+
+**Core subcontractor spine:** Job Inbox → Work Cards → Readiness Board → Proof Log → GC Response → Owner Snapshot.
+
+**Product judgment rule:** Would a tired subcontractor foreman or owner understand what needs action today in 5 seconds? If not, simplify.
+
+The GC side can still exist as infrastructure or legacy capability, but it should not be the main product promise, main website pitch, or primary build priority unless explicitly requested.
 
 ---
 

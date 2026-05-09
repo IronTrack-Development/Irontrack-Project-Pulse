@@ -168,11 +168,11 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[color:var(--text-muted)]">
         {project.tasks_count > 0 && (
           <span>
-            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> tasks
+            <span className="text-[color:var(--text-secondary)] font-medium">{project.tasks_count}</span> work cards
           </span>
         )}
         <span>
-          <span className="text-[color:var(--text-secondary)] font-medium">{project.report_count}</span> reports
+          <span className="text-[color:var(--text-secondary)] font-medium">{project.report_count}</span> proof logs
         </span>
         {project.last_report_date && (
           <span>
@@ -187,7 +187,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
       {/* Progress bar */}
       <div className="space-y-1.5">
         <div className="flex justify-between text-xs text-[color:var(--text-muted)]">
-          <span>Avg progress (last report)</span>
+          <span>Avg progress (latest proof)</span>
           <span className="text-[color:var(--text-secondary)] font-medium">{project.avg_percent}%</span>
         </div>
         <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
@@ -202,7 +202,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
         href="/sub/check-in"
         className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#2563EB]"
       >
-        Submit field update
+        Add proof / response
         <ArrowUpRight size={13} />
       </Link>
     </div>
@@ -411,40 +411,40 @@ export default function SubDashboardPage() {
   const projectsNeedingReports = projects.filter((project) => !project.last_report_date).length;
   const fieldPulse =
     stats.reportsThisWeek > 0
-      ? "Field reporting is active this week."
-      : "No reports yet this week. Get a field update in before lunch.";
+      ? "Proof logs are active this week."
+      : "No proof logs yet this week. Capture today's first field signal.";
   const topProject = projects[0];
   const huddleCards = [
     {
-      label: "Schedule",
+      label: "Work Cards",
       icon: <CalendarDays size={15} />,
       text: topProject
-        ? `${topProject.project_name}: ${topProject.tasks_count} tracked task${topProject.tasks_count === 1 ? "" : "s"}.`
-        : "No linked schedule yet.",
+        ? `${topProject.project_name}: ${topProject.tasks_count} active card${topProject.tasks_count === 1 ? "" : "s"} to track.`
+        : "No GC requests or work cards yet.",
     },
     {
-      label: "Manpower",
+      label: "Readiness",
       icon: <HardHat size={15} />,
       text: stats.uniqueForemen > 0
-        ? `${stats.uniqueForemen} foreman${stats.uniqueForemen === 1 ? "" : "en"} sending field signals.`
-        : "Add foremen so updates have owners.",
+        ? `${stats.uniqueForemen} foreman${stats.uniqueForemen === 1 ? "" : "en"} can signal ready, blocked, or waiting.`
+        : "Add foremen so readiness has an owner.",
     },
     {
-      label: "Materials",
+      label: "Proof Log",
       icon: <Package size={15} />,
-      text: "Use dispatch notes to make needed material obvious before crews mobilize.",
+      text: "Attach photos, quantities, and notes before proof gets buried in phones.",
     },
     {
-      label: "Hurdles",
+      label: "GC Response",
       icon: <AlertTriangle size={15} />,
       text: projectsNeedingReports > 0
-        ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need first-report visibility.`
-        : "No first-report gaps right now.",
+        ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first response back to the GC.`
+        : "No first-response gaps right now.",
     },
     {
-      label: "Handoffs",
+      label: "Owner Snapshot",
       icon: <ArrowUpRight size={15} />,
-      text: "Capture what the next crew needs before the current crew leaves.",
+      text: "Roll up open asks, blockers, proof gaps, and responses for leadership.",
     },
   ];
 
@@ -465,7 +465,7 @@ export default function SubDashboardPage() {
                 {displayName}
               </h1>
               <p className="mt-3 max-w-xl text-sm md:text-base text-slate-300">
-                See GC requests, upcoming work cards, readiness, blockers, proof logs, and responses that need attention.
+                See GC requests, work cards, readiness, proof logs, GC responses, and owner snapshots that need attention.
               </p>
               {company.contact_name && (
                 <p className="text-sm text-slate-400 mt-2">Signed in as {company.contact_name}</p>
@@ -512,7 +512,7 @@ export default function SubDashboardPage() {
             </div>
             <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
               {projectsNeedingReports > 0
-                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first report back to the GC.`
+                ? `${projectsNeedingReports} project${projectsNeedingReports === 1 ? "" : "s"} need a first response back to the GC.`
                 : "No first-response gaps right now."}
             </p>
           </div>
@@ -532,18 +532,18 @@ export default function SubDashboardPage() {
             <div className="max-w-2xl">
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#86EFAC]">
                 <Sparkles size={14} />
-                Field Intelligence Loop
+              Subcontractor Control Loop
               </div>
-              <h2 className="mt-2 text-xl font-black text-white">One update should power the whole job conversation.</h2>
+              <h2 className="mt-2 text-xl font-black text-white">One work card should carry the whole job conversation.</h2>
               <p className="mt-2 text-sm leading-6 text-slate-300">
-                Check-ins feed GC reports, production pulse, blocker accountability, and tomorrow's dispatch instead of becoming another dead-end daily log.
+                Field notes feed proof logs, readiness, GC responses, and owner snapshots instead of becoming another dead-end text thread.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-white sm:grid-cols-4 md:min-w-[420px]">
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Check-In</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Production</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Blockers</span>
-              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Dispatch</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Work Card</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Readiness</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">Proof Log</span>
+              <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-center">GC Response</span>
             </div>
           </div>
         </section>
@@ -553,15 +553,15 @@ export default function SubDashboardPage() {
             <div>
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#93C5FD]">
                 <Users size={14} />
-                Morning Huddle
+                Today's Actions
               </div>
-              <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Get every crew pointed the same direction.</h2>
+              <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Would a tired foreman or owner know what needs action in 5 seconds?</h2>
             </div>
             <Link
               href="/sub/dispatch"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 py-3 text-sm font-black text-white"
             >
-              Build tomorrow's plan
+              Build work cards
               <Send size={15} />
             </Link>
           </div>
@@ -585,19 +585,19 @@ export default function SubDashboardPage() {
             value={stats.activeProjects}
             icon={<FolderOpen size={14} />}
             accent
-            helper="Scopes connected by GCs"
+            helper="GC requests and work cards"
           />
           <StatCard
-            label="Reports This Week"
+            label="Proof Logs This Week"
             value={stats.reportsThisWeek}
             icon={<BarChart3 size={14} />}
-            helper="Fresh field intelligence"
+            helper="Proof logs captured"
           />
           <StatCard
             label="Foremen"
             value={stats.uniqueForemen}
             icon={<Users size={14} />}
-            helper="People sending updates"
+            helper="Readiness owners"
           />
         </div>
 
@@ -605,7 +605,7 @@ export default function SubDashboardPage() {
         <section className="space-y-4">
           <div className="flex items-center gap-2">
             <FolderOpen size={16} className="text-[#F97316]" />
-            <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Projects</h2>
+              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Job Inbox</h2>
             {projects.length > 0 && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {projects.length}
@@ -617,8 +617,8 @@ export default function SubDashboardPage() {
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center space-y-2">
               <CalendarDays size={32} className="mx-auto text-gray-700 mb-2" />
               <p className="text-sm text-[color:var(--text-secondary)] max-w-sm mx-auto">
-                No projects yet. Your projects will appear here when a general contractor
-                shares a schedule with your company.
+                No GC requests or work cards yet. Jobs will appear here when a GC shares scope
+                or your team starts tracking work in Sub Ops.
               </p>
             </div>
           ) : (
@@ -630,12 +630,12 @@ export default function SubDashboardPage() {
           )}
         </section>
 
-        {/* ── Recent Reports Feed ── */}
+        {/* ── Recent Proof Log Feed ── */}
         {recentReports.length > 0 && (
           <section className="space-y-4">
             <div className="flex items-center gap-2">
               <ClipboardList size={16} className="text-[#F97316]" />
-              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Reports</h2>
+              <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Recent Proof Logs</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)]">
                 {totalReports}
               </span>

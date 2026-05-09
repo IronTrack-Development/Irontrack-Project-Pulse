@@ -622,15 +622,15 @@ const translations: Record<string, Record<Language, string>> = {
   'auth.failedSetup': { en: 'Failed to set up your company. Please contact support.', es: 'Error al configurar su empresa. Contacte a soporte.' },
 
   // ── Landing Page ──────────────────────────────────────────────────────────
-  'landing.tagline': { en: 'The Complete Field Management Platform', es: 'La Plataforma Completa de Gestión de Campo' },
-  'landing.heroTitle1': { en: 'Run Your Job.', es: 'Maneje Su Obra.' },
-  'landing.heroTitle2': { en: "Don't Chase It.", es: 'No La Persiga.' },
-  'landing.heroDesc': { en: "Schedule intelligence. Daily field ops. Safety compliance. Trade coordination. Subcontractor management. One app, one price - built by field operators who've lived it.", es: 'Inteligencia de cronograma. Operaciones diarias de campo. Cumplimiento de seguridad. Coordinación de oficios. Gestión de subcontratistas. Una app, un precio — construida por operadores de campo que lo han vivido.' },
+  'landing.tagline': { en: 'Subcontractor Job Inbox and Proof Log', es: 'Bandeja de Trabajo y Registro de Pruebas para Subcontratistas' },
+  'landing.heroTitle1': { en: 'Control GC chaos.', es: 'Controle el caos del contratista general.' },
+  'landing.heroTitle2': { en: 'No GC rollout required.', es: 'Sin implementación del contratista general.' },
+  'landing.heroDesc': { en: 'Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, and Owner Snapshot for subcontractor teams.', es: 'Bandeja de trabajo, tarjetas de trabajo, tablero de preparación, registro de pruebas, respuesta al contratista general y resumen para dueños de empresas subcontratistas.' },
   'landing.features': { en: 'Features', es: 'Características' },
   'landing.whoWeServe': { en: 'Who We Serve', es: 'A Quién Servimos' },
   'landing.integrations': { en: 'Integrations', es: 'Integraciones' },
   'landing.pricing': { en: 'Pricing', es: 'Precios' },
-  'landing.fieldManagementPlatform': { en: 'Field Management Platform', es: 'Plataforma de Gestión de Campo' },
+  'landing.fieldManagementPlatform': { en: 'Subcontractor Operations Platform', es: 'Plataforma de Operaciones para Subcontratistas' },
 
   // ── Common Labels ─────────────────────────────────────────────────────────
   'common.of': { en: 'of', es: 'de' },

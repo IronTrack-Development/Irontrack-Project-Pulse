@@ -4,23 +4,23 @@ Growth funnel stages mapped to actual code flows in the application.
 
 ---
 
-## GC Funnel: Visitor → Paying Customer → Retained User
+## Subcontractor Funnel: Visitor → Paying Customer → Retained User
 
 ### Stage 1: Awareness → Landing Page Visit
 
 **Route:** `/` (`src/app/page.tsx`)
 
 The landing page is a full marketing site with:
-- Hero section: "Run Your Job. Don't Chase It."
-- Two CTA buttons: "I'm a General Contractor" → `/signup` | "I'm a Subcontractor" → `/signup/sub`
-- Feature showcase: 8 product categories with visual mockups
-- Integration bar: MS Project, Primavera P6, Excel, XML, CSV
-- "Who We Serve" section: Superintendents, PMs, Subcontractors
-- Pricing section: $19.99/mo GC, $10/mo Sub (on landing page)
-- Competitor comparison positioning vs. Procore ($500+/mo) and Fieldwire
+- Hero section: "Control GC chaos without asking GC to change."
+- Primary CTA: subcontractor beta → `/signup/sub`; GC / owner access remains secondary → `/signup`
+- Feature showcase centered on Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, Owner Snapshot
+- Source bar: Procore, Autodesk, Fieldwire, email/texts, PDFs/screenshots, spreadsheets
+- "Who We Serve" section: subcontractor owners, operations managers, PMs, foremen, field crews
+- Pricing section: $10/mo Sub as primary beta plan; GC access is secondary infrastructure
+- Competitor positioning: control GC chaos across existing tools without requiring GC adoption
 - Footer links: Terms, Privacy, Status, Release Notes, Contact email
 
-**Conversion point:** "Get Started" buttons → `/signup` or `/signup/sub`
+**Conversion point:** "Start Subcontractor Beta" → `/signup/sub`
 
 ---
 
