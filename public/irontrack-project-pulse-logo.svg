@@ -1,0 +1,21 @@
+<svg width="560" height="128" viewBox="0 0 560 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">IronTrack Project Pulse logo</title>
+  <desc id="desc">Orange pulse icon with IronTrack Project Pulse wordmark.</desc>
+  <rect x="8" y="16" width="96" height="96" rx="24" fill="url(#iconGradient)"/>
+  <path d="M27 76L39 76L46 56L55 87L64 41L73 83L81 64L91 64" stroke="#FFF7ED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="27" cy="76" r="6" fill="#E85D1C" stroke="#FFF7ED" stroke-width="5"/>
+  <circle cx="39" cy="76" r="5" fill="#E85D1C" stroke="#FFF7ED" stroke-width="5"/>
+  <circle cx="91" cy="64" r="6" fill="#E85D1C" stroke="#FFF7ED" stroke-width="5"/>
+  <path d="M91 33V60" stroke="#FFF7ED" stroke-width="5" stroke-linecap="round"/>
+  <path d="M91 33L109 42L91 51V33Z" fill="#FFF7ED"/>
+  <text x="128" y="67" fill="#111827" font-family="Inter, Arial, Helvetica, sans-serif" font-size="48" font-weight="900" letter-spacing="3">IRONTRACK</text>
+  <path d="M130 88H186" stroke="#E85D1C" stroke-width="2"/>
+  <text x="202" y="96" fill="#E85D1C" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="14">PROJECT PULSE</text>
+  <path d="M484 88H552" stroke="#E85D1C" stroke-width="2"/>
+  <defs>
+    <linearGradient id="iconGradient" x1="8" y1="16" x2="104" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF7A00"/>
+      <stop offset="1" stop-color="#E85D1C"/>
+    </linearGradient>
+  </defs>
+</svg>

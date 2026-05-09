@@ -16,14 +16,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-3">
             <img
-              src="/irontrack-app-icon.svg"
-              alt="IronTrack"
-              className="h-9 md:h-11 w-auto"
+              src="/irontrack-project-pulse-logo.svg"
+              alt="IronTrack Project Pulse"
+              className="h-10 md:h-14 w-auto"
             />
-            <span className="text-lg md:text-xl font-extrabold tracking-tight" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Iron<span style={{ color: "#E85D1C" }}>Track</span>
-              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Subcontractor Pulse</span>
-            </span>
           </div>
 
           <MobileMenu />

@@ -109,10 +109,12 @@ function TitleCard() {
         <PulseLogo size={48} color="#F5F3EE" />
       </motion.div>
       <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
-        <div style={{ fontSize: 28, fontWeight: 800, color: C.text, textAlign: "center", letterSpacing: -0.5 }}>
-          Iron<span style={{ color: C.orange }}>Track</span>
-        </div>
-        <div style={{ fontSize: 14, color: C.dim, textAlign: "center", marginTop: 4 }}>Subcontractor Pulse</div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/irontrack-project-pulse-logo-dark.svg"
+          alt="IronTrack Project Pulse"
+          style={{ width: 300, maxWidth: "80%", display: "block" }}
+        />
       </motion.div>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
         style={{ fontSize: 12, color: C.dim, textAlign: "center", lineHeight: 1.6, marginTop: 8 }}>

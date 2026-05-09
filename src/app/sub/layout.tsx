@@ -7,7 +7,6 @@ import {
   ArrowRightLeft,
   BarChart3,
   BookOpen,
-  Building2,
   ClipboardCheck,
   HardHat,
   LayoutDashboard,
@@ -56,18 +55,15 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex h-screen w-72 shrink-0 sticky top-0 flex-col border-r border-white/10 bg-[rgba(15,23,42,0.88)] shadow-[18px_0_70px_rgba(0,0,0,0.22)] backdrop-blur-xl">
         <div className="border-b border-white/10 px-5 py-5">
           <Link href="/sub/dashboard" className="flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-lg border border-[#3B82F6]/30 bg-[#3B82F6]/15 shadow-[0_14px_40px_rgba(59,130,246,0.18)]">
-              <Building2 className="h-5 w-5 text-[#60A5FA]" />
-            </span>
-            <span>
-              <span className="block text-sm font-black leading-none text-white">
-                IronTrack <span className="text-[#60A5FA]">Pulse</span>
-              </span>
-              <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">
-                {t('subops.subPortal')}
-              </span>
-            </span>
+            <img
+              src="/irontrack-project-pulse-logo-dark.svg"
+              alt="IronTrack Project Pulse"
+              className="h-12 w-auto"
+            />
           </Link>
+          <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">
+            {t('subops.subPortal')}
+          </p>
         </div>
 
         <div className="border-b border-white/10 px-4 py-4">
@@ -156,13 +152,11 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
       <div className="md:hidden fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[rgba(15,23,42,0.92)] backdrop-blur-xl">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/sub/dashboard" className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg border border-[#3B82F6]/25 bg-[#3B82F6]/15">
-              <Building2 className="h-4 w-4 text-[#60A5FA]" />
-            </span>
-            <span className="text-sm font-black text-white">
-              Iron<span className="text-[#60A5FA]">Track</span>
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#F97316]">Sub</span>
+            <img
+              src="/irontrack-project-pulse-logo-dark.svg"
+              alt="IronTrack Project Pulse"
+              className="h-9 w-auto"
+            />
           </Link>
           <button
             onClick={handleLogout}

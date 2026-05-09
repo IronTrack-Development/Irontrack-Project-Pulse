@@ -148,17 +148,11 @@ export default function ReleaseNotesPage() {
       <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 md:gap-3">
-            <div className="relative" style={{ marginTop: "4px", marginBottom: "-12px" }}>
-              <img
-                src="/logo-irontrack.png"
-                alt="IronTrack Logo"
-                className="h-10 md:h-20 w-auto object-contain"
-                style={{ filter: "drop-shadow(0 0 12px rgba(249,115,22,0.4))" }}
-              />
-            </div>
-            <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
-              IronTrack<span className="hidden md:inline"> Project Pulse</span>
-            </span>
+            <img
+              src="/irontrack-project-pulse-logo-dark.svg"
+              alt="IronTrack Project Pulse"
+              className="h-10 md:h-12 w-auto object-contain"
+            />
           </Link>
           <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
             ← Back to home

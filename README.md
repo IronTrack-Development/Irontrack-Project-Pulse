@@ -137,6 +137,13 @@ src/
 | Yellow (watch) | `#EAB308` |
 | Red (at risk) | `#EF4444` |
 
+Primary logo assets:
+- Light backgrounds: `/irontrack-project-pulse-logo.svg`
+- Dark backgrounds: `/irontrack-project-pulse-logo-dark.svg`
+- Compact app icon: `/irontrack-app-icon.svg`
+
+Use the full **IronTrack Project Pulse** lockup in app demos, website demos, screenshots, and marketing mockups.
+
 ---
 
 Built for subcontractor owners, operations managers, PMs, foremen, and field crews who need action clarity without another GC rollout.
