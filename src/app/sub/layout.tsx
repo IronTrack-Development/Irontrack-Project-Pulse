@@ -3,40 +3,33 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  AlertTriangle,
-  ArrowRightLeft,
   BarChart3,
-  BookOpen,
-  ClipboardCheck,
-  HardHat,
+  Bell,
+  Briefcase,
+  ClipboardList,
+  FolderOpen,
+  HelpCircle,
   LayoutDashboard,
   LogOut,
-  Send,
+  Mail,
+  Plus,
   Settings,
+  ShieldCheck,
+  UserRound,
   Users,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
-import { t } from "@/lib/i18n";
 
-const subNavItems = [
-  { href: "/sub/dashboard", labelKey: "subops.dashboard", icon: LayoutDashboard, helperKey: "subops.dailyCommand" },
-  { href: "/sub/dispatch", labelKey: "subops.dispatch", icon: Send, helperKey: "subops.crewDirection" },
-  { href: "/sub/check-in", labelKey: "subops.dailyCheckIn", icon: ClipboardCheck, helperKey: "subops.fieldReports" },
-  { href: "/sub/production", labelKey: "subops.production", icon: BarChart3, helperKey: "subops.quantities" },
-  { href: "/sub/blockers", labelKey: "subops.blockers", icon: AlertTriangle, helperKey: "subops.issuesToClear" },
-  { href: "/sub/handoffs", labelKey: "subops.handoffs", icon: ArrowRightLeft, helperKey: "subops.areaTurnover" },
-  { href: "/sub/sops", labelKey: "subops.sops", icon: BookOpen, helperKey: "subops.crewStandards" },
-  { href: "/sub/crew", labelKey: "subops.crew", icon: Users, helperKey: "subops.people" },
-  { href: "/sub/foremen", labelKey: "subops.foremen", icon: HardHat, helperKey: "subops.leads" },
-];
-
-const fieldLoopItems = [
-  { href: "/sub/dashboard", labelKey: "subops.jobInbox", shortKey: "subops.dashboard" },
-  { href: "/sub/dispatch", labelKey: "subops.plan", shortKey: "subops.dispatch" },
-  { href: "/sub/check-in", labelKey: "subops.start", shortKey: "subops.dailyCheckIn" },
-  { href: "/sub/production", labelKey: "subops.track", shortKey: "subops.production" },
-  { href: "/sub/blockers", labelKey: "subops.clear", shortKey: "subops.blockers" },
-  { href: "/sub/handoffs", labelKey: "subops.handoffs", shortKey: "subops.turnover" },
+const navItems = [
+  { href: "/sub/dashboard", label: "Owner Snapshot", icon: BarChart3 },
+  { href: "/sub/dispatch", label: "Work Cards", icon: ClipboardList },
+  { href: "/sub/dashboard#job-inbox", label: "Job Inbox", icon: Mail },
+  { href: "/sub/check-in", label: "Proof Center", icon: ShieldCheck },
+  { href: "/sub/blockers", label: "Responses", icon: LayoutDashboard },
+  { href: "/sub/dashboard#reports", label: "Reports", icon: BarChart3 },
+  { href: "/sub/dashboard#job-inbox", label: "Projects", icon: Briefcase },
+  { href: "/sub/crew", label: "Team", icon: Users },
+  { href: "/sub/settings", label: "Settings", icon: Settings },
 ];
 
 export default function SubLayout({ children }: { children: React.ReactNode }) {
@@ -51,145 +44,107 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,rgba(59,130,246,0.08),transparent_260px),var(--bg-primary)] flex">
-      <aside className="hidden md:flex h-screen w-72 shrink-0 sticky top-0 flex-col border-r border-white/10 bg-[rgba(15,23,42,0.88)] shadow-[18px_0_70px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-        <div className="border-b border-white/10 px-5 py-5">
-          <Link href="/sub/dashboard" className="flex items-center gap-3">
-            <img
-              src="/irontrack-field-pulse-logo-dark.svg"
-              alt="IronTrack Field Pulse"
-              className="h-12 w-auto"
-            />
-          </Link>
-          <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">
-            {t('subops.subPortal')}
-          </p>
-        </div>
-
-        <div className="border-b border-white/10 px-4 py-4">
-          <div className="mb-3 flex items-center justify-between">
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">{t('subops.todaysLoop')}</p>
-            <span className="rounded-full bg-[#22C55E]/10 px-2 py-1 text-[10px] font-bold text-[#86EFAC]">{t('subops.fieldReady')}</span>
+    <div className="min-h-screen bg-[#050607] text-white">
+      <div className="flex min-h-screen">
+        <aside className="hidden w-[260px] shrink-0 border-r border-white/10 bg-[linear-gradient(180deg,#080B0E,#050607_48%,#0D0A07)] md:flex md:flex-col">
+          <div className="border-b border-white/10 px-5 py-4">
+            <Link href="/sub/dashboard" className="flex items-center gap-3">
+              <img src="/irontrack-field-pulse-logo-dark.svg" alt="IronTrack Field Pulse" className="h-12 w-auto" />
+            </Link>
+            <div className="mt-3 flex items-center gap-3">
+              <span className="h-px flex-1 bg-white/15" />
+              <span className="text-[10px] font-black uppercase tracking-[0.24em] text-white/45">Admin Portal</span>
+            </div>
           </div>
-          <div className="space-y-1.5">
-            {fieldLoopItems.map((item, index) => {
-              const active = pathname === item.href;
+
+          <nav className="flex-1 space-y-1 px-3 py-4">
+            {navItems.map(({ href, label, icon: Icon }) => {
+              const pathOnly = href.split("#")[0];
+              const active = href.includes("#") ? false : pathname === pathOnly;
               return (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors ${
-                    active ? "border-[#F97316]/40 bg-[#F97316]/15 text-white" : "border-white/10 bg-white/[0.03] text-slate-400 hover:text-white"
+                  key={`${href}-${label}`}
+                  href={href}
+                  className={`group flex min-h-[44px] items-center gap-3 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-all ${
+                    active
+                      ? "border-[#F97316]/40 bg-[#F97316]/15 text-[#F97316] shadow-[inset_3px_0_0_#F97316]"
+                      : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
                   }`}
                 >
-                  <span className={`grid h-6 w-6 place-items-center rounded-full text-[10px] font-black ${active ? "bg-[#F97316] text-white" : "bg-white/10 text-slate-500"}`}>
-                    {index + 1}
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-xs font-black">{t(item.labelKey)}</span>
-                    <span className="block text-[11px] text-slate-500">{t(item.shortKey)}</span>
-                  </span>
+                  <Icon size={17} className={active ? "text-[#F97316]" : "text-slate-500 group-hover:text-slate-300"} />
+                  {label}
                 </Link>
               );
             })}
-          </div>
-        </div>
+          </nav>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">
-            {t('subops.operations')}
+          <div className="space-y-3 border-t border-white/10 p-4">
+            <Link
+              href="/sub/dispatch"
+              className="flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-[#F97316] px-4 py-3 text-sm font-black text-white shadow-[0_16px_38px_rgba(249,115,22,0.24)]"
+            >
+              <Plus size={18} />
+              New Work Card
+            </Link>
+            <Link
+              href="mailto:irontrackdevelopment@outlook.com"
+              className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-400 hover:text-white"
+            >
+              <HelpCircle size={18} />
+              <span>
+                <span className="block font-semibold">Need Help?</span>
+                <span className="block text-xs text-slate-500">Contact Support</span>
+              </span>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition-colors hover:bg-red-500/10 hover:text-red-300"
+            >
+              <LogOut size={15} />
+              Sign out
+            </button>
           </div>
-          {subNavItems.map(({ href, labelKey, helperKey, icon: Icon }) => {
-            const active = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`group flex items-center gap-3 rounded-lg border px-3 py-3 transition-all ${
-                  active
-                    ? "border-[#3B82F6]/40 bg-[#3B82F6]/15 text-white shadow-[0_16px_45px_rgba(59,130,246,0.16)]"
-                    : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                <span
-                  className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${
-                    active ? "bg-[#3B82F6] text-white" : "bg-white/5 text-slate-400 group-hover:text-[#93C5FD]"
-                  }`}
+        </aside>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          <header className="sticky top-0 z-40 border-b border-white/10 bg-[#07090B]/92 backdrop-blur-xl">
+            <div className="flex min-h-[72px] items-center justify-between gap-4 px-4 md:px-6">
+              <div className="flex items-center gap-3 md:hidden">
+                <img src="/irontrack-field-pulse-logo-dark.svg" alt="IronTrack Field Pulse" className="h-9 w-auto" />
+              </div>
+              <div className="hidden items-center gap-3 md:flex">
+                <span className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-black uppercase tracking-[0.2em] text-slate-500">
+                  Admin Portal
+                </span>
+              </div>
+
+              <div className="ml-auto flex items-center gap-3">
+                <Link
+                  href="/sub/dashboard"
+                  className="hidden min-h-[38px] items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-bold text-white md:flex"
                 >
-                  <Icon size={16} />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-bold">{t(labelKey)}</span>
-                  <span className="block truncate text-xs text-slate-500">{t(helperKey)}</span>
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
+                  <Briefcase size={15} className="text-slate-400" />
+                  Summit Electrical
+                </Link>
+                <button className="relative grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-slate-300">
+                  <Bell size={17} />
+                  <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-[#F97316] px-1 text-[10px] font-black text-white">
+                    7
+                  </span>
+                </button>
+                <button className="hidden h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] pl-1 pr-3 text-sm font-bold text-white sm:flex">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-700 text-xs">AD</span>
+                  <UserRound size={14} className="text-slate-400" />
+                </button>
+              </div>
+            </div>
+          </header>
 
-        <div className="space-y-3 border-t border-white/10 px-4 py-4">
-          <div className="rounded-lg border border-[#22C55E]/20 bg-[#22C55E]/10 p-3">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">{t('subops.fieldReady')}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-400">{t('subops.fieldReadyDesc')}</p>
-          </div>
-          <Link
-            href="/sub/settings"
-            className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-white/5 hover:text-[#93C5FD]"
-          >
-            <Settings size={14} />
-            {t('subops.settings')}
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
-          >
-            <LogOut size={14} />
-            {t('subops.signOut')}
-          </button>
-        </div>
-      </aside>
-
-      <div className="md:hidden fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[rgba(15,23,42,0.92)] backdrop-blur-xl">
-        <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/sub/dashboard" className="flex items-center gap-2">
-            <img
-              src="/irontrack-field-pulse-logo-dark.svg"
-              alt="IronTrack Field Pulse"
-              className="h-9 w-auto"
-            />
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
-            aria-label={t('subops.signOut')}
-          >
-            <LogOut size={16} />
-          </button>
-        </div>
-        <div className="flex gap-1 overflow-x-auto px-3 pb-3 scrollbar-none">
-          {subNavItems.map(({ href, labelKey, icon: Icon }) => {
-            const active = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`flex min-h-[40px] shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold whitespace-nowrap transition-all ${
-                  active
-                    ? "bg-[#3B82F6] text-white shadow-[0_8px_24px_rgba(59,130,246,0.28)]"
-                    : "bg-white/5 text-slate-400 hover:text-white"
-                }`}
-              >
-                <Icon size={12} />
-                {t(labelKey)}
-              </Link>
-            );
-          })}
+          <main className="flex-1 bg-[radial-gradient(circle_at_80%_0%,rgba(249,115,22,0.08),transparent_28%),#050607]">
+            {children}
+          </main>
         </div>
       </div>
-
-      <main className="min-h-screen flex-1 pt-[104px] md:pt-0">
-        {children}
-      </main>
     </div>
   );
 }
