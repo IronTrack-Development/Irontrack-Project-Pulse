@@ -150,7 +150,7 @@ export default function DispatchBoard({ projectId }: Props) {
         await fetchData();
       } else {
         const d = await res.json().catch(() => ({}));
-        setError(d.error || "Failed to create dispatch");
+        setError(d.error || "Failed to create work card");
       }
     } catch {
       setError("Network error");
@@ -180,25 +180,25 @@ export default function DispatchBoard({ projectId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Dispatch Board</h2>
+          <h2 className="text-lg font-bold text-[color:var(--text-primary)]">Work Cards</h2>
           <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
-            Turn the morning huddle into clear direction before crews spread across jobs.
+            Turn GC asks and schedule noise into field-ready scope, readiness, proof, and response history.
           </p>
         </div>
         <button
           onClick={() => setView(view === "list" ? "create" : "list")}
           className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
-          {view === "list" ? <><Plus size={14} /> Create Plan</> : <><X size={14} /> Cancel</>}
+          {view === "list" ? <><Plus size={14} /> New Work Card</> : <><X size={14} /> Cancel</>}
         </button>
       </div>
 
       <div className="grid gap-3 md:grid-cols-4">
         {[
-          ["Material", "What must be onsite before lunch?"],
-          ["Schedule", "What area or activity matters today?"],
-          ["Manpower", "Who is going, and how many hours?"],
-          ["Hurdles", "What could stop the crew?"],
+          ["Material", "Is material ready or missing?"],
+          ["Schedule", "What work is coming today?"],
+          ["Manpower", "Who owns the card?"],
+          ["Hurdles", "What blocks the crew or needs a GC response?"],
         ].map(([title, text]) => (
           <div key={title} className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-[#93C5FD]">{title}</p>
@@ -208,10 +208,10 @@ export default function DispatchBoard({ projectId }: Props) {
       </div>
 
       {view === "create" ? (
-        /* ── Create Dispatch Form ── */
+        /* ── Create Work Card Form ── */
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 md:p-6 space-y-4">
           <h3 className="text-sm font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <Send size={14} className="text-[#F97316]" /> New Morning Plan
+            <Send size={14} className="text-[#F97316]" /> New Work Card
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -387,11 +387,11 @@ export default function DispatchBoard({ projectId }: Props) {
             className="flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-bold transition-colors w-full min-h-[44px]"
           >
             <Send size={16} />
-            {sending ? "Sending..." : "Send Dispatch"}
+            {sending ? "Sending..." : "Send Work Card"}
           </button>
         </div>
       ) : (
-        /* ── Dispatch List View ── */
+        /* ── Work Card List View ── */
         <>
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-2">
@@ -427,12 +427,12 @@ export default function DispatchBoard({ projectId }: Props) {
             </select>
           </div>
 
-          {/* Dispatch Cards */}
+          {/* Work Cards */}
           {dispatches.length === 0 ? (
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
               <Send size={28} className="mx-auto text-gray-600 mb-2" />
-              <p className="text-sm text-[color:var(--text-secondary)]">No dispatches for this date</p>
-              <p className="text-xs text-gray-600 mt-1">Create a dispatch to send work assignments to your foremen</p>
+              <p className="text-sm text-[color:var(--text-secondary)]">No work cards for this date</p>
+              <p className="text-xs text-gray-600 mt-1">Create a work card to send clear scope, readiness, and proof needs to your foremen</p>
             </div>
           ) : (
             <div className="space-y-2">

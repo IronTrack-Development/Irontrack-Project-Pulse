@@ -485,6 +485,29 @@ export default function SubDashboardPage() {
       icon: <Gauge size={15} />,
     },
   ];
+  const workCardConnections = [
+    {
+      label: "Input",
+      title: "Job Inbox",
+      text: "GC asks, schedule noise, PDFs, screenshots, calls, and notes start here.",
+      href: "#job-inbox",
+      icon: <FolderOpen size={16} />,
+    },
+    {
+      label: "Field",
+      title: "Work Card",
+      text: "Scope, crew, readiness, blockers, proof, and handoff stay tied to one card.",
+      href: "/sub/dispatch",
+      icon: <Send size={16} />,
+    },
+    {
+      label: "Output",
+      title: "GC Response",
+      text: "Proof and blocker history roll into the response or owner snapshot.",
+      href: "/sub/blockers",
+      icon: <AlertTriangle size={16} />,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-16">
@@ -588,6 +611,37 @@ export default function SubDashboardPage() {
                     <span className="mt-1 block text-sm font-black text-[color:var(--text-primary)]">{item.value}</span>
                   </span>
                 </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-xl border border-[#F97316]/20 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(18,18,23,0.96)_48%,rgba(59,130,246,0.08))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F97316]">Source of Truth</div>
+              <h2 className="mt-2 text-xl font-black text-[color:var(--text-primary)]">Every issue should land on a work card.</h2>
+              <p className="mt-2 text-sm leading-6 text-[color:var(--text-secondary)]">
+                Inbox items, readiness, proof, blockers, responses, reports, and handoffs should orbit the work card so nobody rebuilds the story twice.
+              </p>
+            </div>
+            <Link
+              href="/sub/dispatch"
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#F97316] px-5 py-3 text-sm font-black text-white shadow-[0_14px_35px_rgba(249,115,22,0.22)]"
+            >
+              Open Work Cards
+              <ArrowUpRight size={15} />
+            </Link>
+          </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {workCardConnections.map((item) => (
+              <Link key={item.title} href={item.href} className="rounded-xl border border-white/10 bg-black/20 p-4 transition-colors hover:border-[#F97316]/40">
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#93C5FD]">
+                  {item.icon}
+                  {item.label}
+                </div>
+                <h3 className="mt-3 text-base font-black text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-400">{item.text}</p>
               </Link>
             ))}
           </div>

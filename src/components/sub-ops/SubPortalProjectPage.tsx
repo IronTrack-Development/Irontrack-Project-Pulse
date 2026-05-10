@@ -9,9 +9,11 @@ import {
   ArrowUpRight,
   BarChart3,
   Building2,
+  Camera,
   ClipboardCheck,
   FolderOpen,
   Loader2,
+  Phone,
   RefreshCw,
   Send,
 } from "lucide-react";
@@ -273,6 +275,49 @@ export default function SubPortalProjectPage({
           <h2 className="text-lg font-black text-[color:var(--text-primary)]">{t('subops.chooseProjectTitle')}</h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[color:var(--text-secondary)]">{t('subops.chooseProjectDesc')}</p>
         </section>
+      )}
+
+      {selectedProject && (
+      <section className="rounded-xl border border-[#F97316]/20 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(18,18,23,0.96)_46%,rgba(59,130,246,0.08))] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.16)]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F97316]">Start Here</p>
+            <h2 className="mt-1 text-xl font-black text-[color:var(--text-primary)]">Open the work card first.</h2>
+            <p className="mt-2 text-sm leading-6 text-[color:var(--text-secondary)]">
+              The card carries scope, readiness, proof, blockers, handoff notes, and anything the PM may need to send back.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:min-w-[520px]">
+            {[
+              { href: "/sub/dispatch", label: "Open Cards", icon: Send, tone: "bg-[#F97316] text-white" },
+              { href: "/sub/check-in", label: "Add Proof", icon: Camera, tone: "bg-[#22C55E] text-[#052E16]" },
+              { href: "/sub/blockers", label: "Flag Blocker", icon: AlertTriangle, tone: "bg-red-500 text-white" },
+              { href: "/sub/handoffs", label: "Readiness", icon: ArrowRightLeft, tone: "bg-[#3B82F6] text-white" },
+            ].map((action) => {
+              const Icon = action.icon;
+              return (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className={`inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-black shadow-[0_12px_30px_rgba(0,0,0,0.18)] ${action.tone}`}
+                >
+                  <Icon size={16} />
+                  {action.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-2 text-xs text-[color:var(--text-muted)]">
+          <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">One job</span>
+          <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">One next action</span>
+          <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">Proof stays attached</span>
+          <Link href="/sub/foremen" className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[color:var(--text-secondary)] hover:text-white">
+            <Phone size={12} />
+            Call / assign foreman
+          </Link>
+        </div>
+      </section>
       )}
 
       {selectedProject && (
