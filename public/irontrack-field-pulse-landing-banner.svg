@@ -1,0 +1,39 @@
+<svg width="1440" height="420" viewBox="0 0 1440 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">IronTrack Field Pulse landing banner</title>
+  <desc id="desc">Dark construction skyline banner with IronTrack Field Pulse logo.</desc>
+  <rect width="1440" height="420" fill="#07090B"/>
+  <rect width="1440" height="420" fill="url(#bgGlow)" opacity="0.9"/>
+  <g opacity="0.32">
+    <path d="M0 314H1440" stroke="#29313A" stroke-width="2"/>
+    <path d="M80 320V156M120 320V190M160 320V135M200 320V210M240 320V170M280 320V118M320 320V158M360 320V206M400 320V128M440 320V180M480 320V150M520 320V210M560 320V170M600 320V132M640 320V196M680 320V156M720 320V190M760 320V128M800 320V206M840 320V170M880 320V120M920 320V188M960 320V150M1000 320V212M1040 320V164M1080 320V130M1120 320V206M1160 320V172M1200 320V136M1240 320V196M1280 320V158M1320 320V218M1360 320V176" stroke="#3B4149" stroke-width="2"/>
+    <path d="M42 160L380 84L716 142L1034 74L1396 132" stroke="#2D3540" stroke-width="3"/>
+    <path d="M102 188H538M585 178H1045M1086 206H1384" stroke="#343D47" stroke-width="3"/>
+    <path d="M220 80V320M220 80H532M532 80V320M220 118H532M220 156H532M220 194H532M220 232H532M220 270H532" stroke="#262E37" stroke-width="2"/>
+    <path d="M920 90V320M920 90H1215M1215 90V320M920 130H1215M920 170H1215M920 210H1215M920 250H1215M920 290H1215" stroke="#262E37" stroke-width="2"/>
+  </g>
+  <rect y="294" width="1440" height="126" fill="url(#bottomFade)"/>
+  <g transform="translate(122 86)">
+    <path d="M100 0L190 52V154L100 206L10 154V52L100 0Z" fill="#0B0D10" stroke="#F8FAFC" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M38 70L100 36L162 70" stroke="#F97316" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 116L160 98" stroke="#F8FAFC" stroke-width="10" stroke-linecap="round"/>
+    <path d="M56 88V156M100 80V156M144 98V156" stroke="#F8FAFC" stroke-width="9" stroke-linecap="round"/>
+    <path d="M42 156H164" stroke="#F8FAFC" stroke-width="9" stroke-linecap="round"/>
+    <path d="M62 120L144 156" stroke="#F8FAFC" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <path d="M398 52V300" stroke="#F8FAFC" stroke-opacity="0.55" stroke-width="2"/>
+  <text x="452" y="157" fill="#F8FAFC" font-family="Inter, Arial, Helvetica, sans-serif" font-size="82" font-weight="900" letter-spacing="6">IRONTRACK</text>
+  <path d="M456 212H560" stroke="#F97316" stroke-width="4"/>
+  <text x="592" y="229" fill="#F97316" font-family="Inter, Arial, Helvetica, sans-serif" font-size="42" font-weight="800" letter-spacing="24">FIELD PULSE</text>
+  <path d="M1092 212H1268" stroke="#F97316" stroke-width="4"/>
+  <defs>
+    <radialGradient id="bgGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1150 84) rotate(154) scale(838 468)">
+      <stop stop-color="#F97316" stop-opacity="0.18"/>
+      <stop offset="0.42" stop-color="#111827" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#050607"/>
+    </radialGradient>
+    <linearGradient id="bottomFade" x1="720" y1="294" x2="720" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08090B" stop-opacity="0"/>
+      <stop offset="1" stop-color="#08090B"/>
+    </linearGradient>
+  </defs>
+</svg>

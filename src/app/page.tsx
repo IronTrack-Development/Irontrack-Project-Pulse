@@ -157,6 +157,14 @@ export default function LandingPage() {
       </header>
 
       <main>
+        <section className="border-b border-white/10 bg-[#08090B]">
+          <img
+            src="/irontrack-field-pulse-landing-banner.svg"
+            alt="IronTrack Field Pulse"
+            className="h-auto w-full"
+          />
+        </section>
+
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(249,115,22,0.18),transparent_34%),linear-gradient(135deg,#08090B_0%,#121418_48%,#050506_100%)]" />
           <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/70 to-transparent" />
