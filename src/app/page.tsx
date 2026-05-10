@@ -340,11 +340,11 @@ export default function LandingPage() {
                   Most platforms invite subs into someone else&apos;s system. IronTrack gives subs their own operating layer first, then turns the cleanest field signal into GC-ready intelligence.
                 </p>
                 <Link
-                  href="/sub/preview"
+                  href="/signup/sub"
                   className="mt-7 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white"
                   style={{ background: accent }}
                 >
-                  Preview the portal
+                  Create a sub portal
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
