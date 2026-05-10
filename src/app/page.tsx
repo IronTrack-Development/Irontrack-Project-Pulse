@@ -118,15 +118,13 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#08090B] text-white">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090B]/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 md:px-6">
+        <div className="mx-auto flex h-[92px] max-w-7xl items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center">
-            <span className="rounded-md bg-white px-3 py-2 shadow-[0_14px_35px_rgba(0,0,0,0.28)]">
-              <img
-                src="/irontrack-field-pulse-logo.svg"
-                alt="IronTrack Field Pulse"
-                className="h-8 w-auto md:h-9"
-              />
-            </span>
+            <img
+              src="/irontrack-field-pulse-logo.svg"
+              alt="IronTrack Field Pulse"
+              className="h-12 w-auto rounded bg-white shadow-[0_14px_35px_rgba(0,0,0,0.28)] md:h-16"
+            />
           </Link>
 
           <MobileMenu />
