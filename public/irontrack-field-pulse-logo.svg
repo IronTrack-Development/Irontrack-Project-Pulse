@@ -1,15 +1,25 @@
-<svg width="620" height="128" viewBox="0 0 620 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="980" height="196" viewBox="0 0 980 196" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">IronTrack Field Pulse logo</title>
-  <desc id="desc">IronTrack Field Pulse wordmark with construction shield icon.</desc>
-  <path d="M64 14L108 39V89L64 114L20 89V39L64 14Z" fill="#111827" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M33 48L64 31L95 48" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M36 72L92 64" stroke="#F8FAFC" stroke-width="7" stroke-linecap="round"/>
-  <path d="M43 58V92M64 54V92M85 63V92" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round"/>
-  <path d="M35 92H94" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round"/>
-  <path d="M45 74L82 92" stroke="#F8FAFC" stroke-width="5" stroke-linecap="round"/>
-  <path d="M132 20V108" stroke="#111827" stroke-width="2" opacity="0.55"/>
-  <text x="164" y="67" fill="#111827" font-family="Inter, Arial, Helvetica, sans-serif" font-size="50" font-weight="900" letter-spacing="3">IRONTRACK</text>
-  <path d="M166 91H224" stroke="#F97316" stroke-width="2"/>
-  <text x="242" y="99" fill="#F97316" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="15">FIELD PULSE</text>
-  <path d="M520 91H598" stroke="#F97316" stroke-width="2"/>
+  <desc id="desc">IronTrack Field Pulse white-background lockup with shield, crane, jobsite mark, black wordmark, and orange subtitle.</desc>
+  <rect width="980" height="196" fill="#FFFFFF"/>
+  <g transform="translate(104 30)">
+    <path d="M72 0L132 35V105L72 140L12 105V35L72 0Z" fill="#101820" stroke="#101820" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M29 49L72 25L115 49" stroke="#FF5A00" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <g opacity="0.96">
+      <path d="M32 75H112" stroke="#F8FAFC" stroke-width="4" stroke-linecap="round"/>
+      <path d="M36 75L102 62" stroke="#F8FAFC" stroke-width="4" stroke-linecap="round"/>
+      <path d="M44 63V107M72 59V107M100 68V107" stroke="#F8FAFC" stroke-width="5" stroke-linecap="round"/>
+      <path d="M34 107H112" stroke="#F8FAFC" stroke-width="5" stroke-linecap="round"/>
+      <path d="M45 82L103 107" stroke="#F8FAFC" stroke-width="4" stroke-linecap="round"/>
+      <path d="M50 62V42" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 42H92" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"/>
+      <path d="M91 42L105 50" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"/>
+      <path d="M66 43L50 61M82 43L60 61" stroke="#F8FAFC" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+  </g>
+  <path d="M308 34V164" stroke="#1F2933" stroke-width="2" opacity="0.58"/>
+  <text x="362" y="94" fill="#101820" font-family="Arial Black, Impact, Inter, Arial, Helvetica, sans-serif" font-size="70" font-weight="900" letter-spacing="5">IRONTRACK</text>
+  <path d="M366 132H470" stroke="#F97316" stroke-width="3"/>
+  <text x="500" y="145" fill="#F97316" font-family="Inter, Arial, Helvetica, sans-serif" font-size="36" font-weight="800" letter-spacing="22">FIELD PULSE</text>
+  <path d="M830 132H926" stroke="#F97316" stroke-width="3"/>
 </svg>

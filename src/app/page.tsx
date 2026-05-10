@@ -122,7 +122,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
           <Link href="/" className="flex items-center">
             <img
-              src="/irontrack-field-pulse-logo-dark.svg"
+              src="/irontrack-field-pulse-logo.svg"
               alt="IronTrack Field Pulse"
               className="h-11 w-auto md:h-14"
             />
