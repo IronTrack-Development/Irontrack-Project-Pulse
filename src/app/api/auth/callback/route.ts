@@ -11,6 +11,6 @@ export async function GET(request: Request) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  // Redirect to dashboard after email confirmation
-  return NextResponse.redirect(`${origin}/dashboard`);
+  // Redirect to subcontractor workspace after email confirmation.
+  return NextResponse.redirect(`${origin}/sub/dashboard`);
 }

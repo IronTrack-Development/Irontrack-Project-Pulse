@@ -34,8 +34,7 @@ export async function proxy(request: NextRequest) {
 
   // Public routes that don't require auth
   const publicRoutes = ['/', '/login', '/login/sub', '/signup', '/signup/sub', '/terms', '/privacy', '/release-notes', '/status'];
-  // Protected routes that require auth + active GC subscription:
-  // /schedule-generator — Schedule Simulator (enterprise feature, GC login required)
+  // Legacy protected routes that are not part of the subcontractor portal.
   const isDevPreviewRoute =
     process.env.NODE_ENV !== 'production' && request.nextUrl.pathname === '/sub/preview';
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname) || isDevPreviewRoute;
@@ -179,13 +178,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Sub routes: require auth but NOT a GC subscription check
+  // Sub routes: require auth but not the legacy subscription check
   // (user is already verified above; subs have separate billing)
   if (isSubRoute) {
     return supabaseResponse;
   }
 
-  // Allow subscribe page and setup page for authenticated users
+  // Allow legacy subscribe page redirect and setup page for authenticated users.
   const isSubscribePage = request.nextUrl.pathname === '/subscribe';
   const isSetupPage = request.nextUrl.pathname === '/setup';
 
@@ -202,10 +201,12 @@ export async function proxy(request: NextRequest) {
       .eq('user_id', user.id)
       .single();
 
-    // Only redirect to subscribe if we got a definitive "not active" answer
+    // Legacy GC routes are no longer the primary product surface. If a user
+    // reaches this guard without an active legacy subscription, send them back
+    // to the subcontractor workspace instead of showing a legacy subscription gate.
     if (subscription && subscription.status !== 'active') {
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = '/subscribe';
+      redirectUrl.pathname = '/sub/dashboard';
       return NextResponse.redirect(redirectUrl);
     }
     // If no subscription row exists, allow through (new user flow / free beta)

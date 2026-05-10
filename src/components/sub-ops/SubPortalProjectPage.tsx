@@ -9,13 +9,24 @@ import {
   ArrowUpRight,
   BarChart3,
   Building2,
+  BookOpen,
   Camera,
+  CalendarDays,
   ClipboardCheck,
+  ClipboardList,
+  Contact,
+  FileText,
   FolderOpen,
+  HardHat,
+  Image as ImageIcon,
   Loader2,
+  MessageSquare,
+  Package,
   Phone,
+  PhoneCall,
   RefreshCw,
   Send,
+  Wrench,
 } from "lucide-react";
 import { t } from "@/lib/i18n";
 
@@ -47,41 +58,52 @@ interface Props {
   children: (projectId: string) => React.ReactNode;
 }
 
-const FIELD_LOOP = [
+const CONTROL_SECTIONS = [
   {
-    href: "/sub/dispatch",
-    label: "Work Cards",
-    verbKey: "subops.planDay",
-    detailKey: "subops.dispatchDetail",
-    icon: Send,
+    title: "Today",
+    accent: "text-[#F97316]",
+    items: [
+      { href: "/sub/dashboard", label: "Schedule", detail: "What work is coming", icon: CalendarDays, count: "5" },
+      { href: "/sub/dashboard#job-inbox", label: "Job Inbox", detail: "GC asks and notes", icon: FolderOpen, count: "3" },
+      { href: "/sub/dispatch", label: "Work Cards", detail: "Assigned scope", icon: ClipboardList },
+      { href: "/sub/handoffs", label: "Readiness", detail: "Ready / blocked", icon: ClipboardCheck },
+      { href: "/sub/blockers", label: "Blockers", detail: "Stops and caveats", icon: AlertTriangle, count: "1", tone: "red" },
+      { href: "/sub/check-in", label: "Proof Log", detail: "Photos and notes", icon: FileText, count: "2", tone: "blue" },
+      { href: "/sub/blockers", label: "GC Response", detail: "Notice needed", icon: MessageSquare },
+    ],
   },
   {
-    href: "/sub/check-in",
-    label: "Proof Log",
-    verbKey: "subops.startClean",
-    detailKey: "subops.checkinDetail",
-    icon: ClipboardCheck,
+    title: "Field Work",
+    accent: "text-[#F97316]",
+    items: [
+      { href: "/sub/production", label: "Production", detail: "Quantities and hours", icon: BarChart3 },
+      { href: "/sub/check-in", label: "Photos", detail: "Proof album", icon: ImageIcon },
+      { href: "/sub/dispatch", label: "Equipment", detail: "Tools and rentals", icon: Wrench },
+      { href: "/sub/dispatch", label: "Materials", detail: "Material status", icon: Package },
+      { href: "/sub/blockers", label: "Calls / Notes", detail: "Field notes", icon: PhoneCall },
+      { href: "/sub/handoffs", label: "Handoff", detail: "Next crew notes", icon: ArrowRightLeft },
+    ],
   },
   {
-    href: "/sub/production",
-    label: "Production Proof",
-    verbKey: "subops.trackOutput",
-    detailKey: "subops.productionDetail",
-    icon: BarChart3,
+    title: "Project Docs",
+    accent: "text-[#F97316]",
+    items: [
+      { href: "/sub/dashboard", label: "Drawings", detail: "Latest set", icon: FileText },
+      { href: "/sub/blockers", label: "RFIs", detail: "Clarifications", icon: MessageSquare, count: "1", tone: "red" },
+      { href: "/sub/dashboard", label: "Submittals", detail: "Approvals", icon: ClipboardList },
+      { href: "/sub/sops", label: "SOPs", detail: "Crew standards", icon: BookOpen },
+      { href: "/sub/dashboard", label: "Reports", detail: "Proof packets", icon: BarChart3 },
+      { href: "/sub/crew", label: "Directory", detail: "Contacts", icon: Contact },
+    ],
   },
   {
-    href: "/sub/blockers",
-    label: "GC Response",
-    verbKey: "subops.protectCaveat",
-    detailKey: "subops.blockersDetail",
-    icon: AlertTriangle,
-  },
-  {
-    href: "/sub/handoffs",
-    label: "Readiness Board",
-    verbKey: "subops.setUpNextCrew",
-    detailKey: "subops.handoffsDetail",
-    icon: ArrowRightLeft,
+    title: "Coordination",
+    accent: "text-[#F97316]",
+    items: [
+      { href: "/sub/dashboard", label: "Meetings", detail: "Action items", icon: ClipboardCheck },
+      { href: "/sub/crew", label: "Crew", detail: "People onsite", icon: HardHat },
+      { href: "/sub/dashboard#owner-snapshot", label: "Owner Snapshot", detail: "Needs attention", icon: BarChart3 },
+    ],
   },
 ];
 
@@ -322,39 +344,46 @@ export default function SubPortalProjectPage({
 
       {selectedProject && (
       <section className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 shadow-[0_18px_55px_rgba(0,0,0,0.12)]">
-        <div className="mb-3 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-4 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">{t('subops.dailyFieldLoop')}</p>
-            <h2 className="text-sm font-black text-[color:var(--text-primary)]">{t('subops.nextAction')}</h2>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F97316]">Job Control</p>
+            <h2 className="text-lg font-black text-[color:var(--text-primary)]">{selectedProject.project_name}</h2>
           </div>
-          <p className="text-xs text-[color:var(--text-muted)]">{t('subops.loopSummary')}</p>
+          <p className="text-xs text-[color:var(--text-muted)]">Scroll, tap once, and go straight to the tool.</p>
         </div>
-        <div className="grid gap-2 md:grid-cols-5">
-          {FIELD_LOOP.map((step, index) => {
-            const active = pathname === step.href;
-            const Icon = step.icon;
-            return (
-              <Link
-                key={step.href}
-                href={step.href}
-                className={`group rounded-lg border p-3 transition-all ${
-                  active
-                    ? "border-[#F97316]/40 bg-[#F97316]/10 shadow-[0_12px_35px_rgba(249,115,22,0.12)]"
-                    : "border-[var(--border-primary)] bg-[var(--bg-primary)] hover:border-[#3B82F6]/40"
-                }`}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${active ? "bg-[#F97316] text-white" : "bg-[var(--bg-tertiary)] text-[#93C5FD]"}`}>
-                    <Icon size={15} />
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--text-muted)]">0{index + 1}</span>
-                </div>
-                <p className="mt-3 text-sm font-black text-[color:var(--text-primary)]">{step.label}</p>
-                <p className="mt-1 text-xs font-bold text-[color:var(--text-secondary)]">{t(step.verbKey)}</p>
-                <p className="mt-1 text-xs leading-5 text-[color:var(--text-muted)]">{t(step.detailKey)}</p>
-              </Link>
-            );
-          })}
+        <div className="space-y-4">
+          {CONTROL_SECTIONS.map((section) => (
+            <div key={section.title} className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-primary)] p-3">
+              <p className={`mb-2 text-[11px] font-black uppercase tracking-[0.18em] ${section.accent}`}>{section.title}</p>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+                {section.items.map((item) => {
+                  const active = pathname === item.href;
+                  const Icon = item.icon;
+                  const badgeClass = item.tone === "red" ? "bg-red-500 text-white" : item.tone === "blue" ? "bg-[#3B82F6] text-white" : "bg-[#F97316] text-white";
+                  return (
+                    <Link
+                      key={`${section.title}-${item.label}`}
+                      href={item.href}
+                      className={`relative min-h-[76px] rounded-xl border p-3 transition-all ${
+                        active
+                          ? "border-[#F97316]/50 bg-[#F97316]/10 shadow-[0_12px_35px_rgba(249,115,22,0.12)]"
+                          : "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] hover:border-[#F97316]/35"
+                      }`}
+                    >
+                      {item.count && (
+                        <span className={`absolute right-2 top-2 grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-black ${badgeClass}`}>
+                          {item.count}
+                        </span>
+                      )}
+                      <Icon size={20} className="text-[#F97316]" />
+                      <p className="mt-2 text-sm font-black text-[color:var(--text-primary)]">{item.label}</p>
+                      <p className="mt-0.5 text-[11px] leading-4 text-[color:var(--text-muted)]">{item.detail}</p>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
       )}

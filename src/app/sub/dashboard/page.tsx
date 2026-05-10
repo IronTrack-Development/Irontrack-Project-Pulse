@@ -377,7 +377,7 @@ export default function SubDashboardPage() {
       <div className="max-w-2xl mx-auto px-6 py-16 text-center space-y-4">
         <AlertCircle className="w-12 h-12 text-red-400 mx-auto" />
         <p className="text-red-400">{error}</p>
-        <Link href="/login" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
+        <Link href="/login/sub" className="text-[#F97316] hover:text-[#EA580C] text-sm underline">
           {t('auth.returnToLogin')}
         </Link>
       </div>

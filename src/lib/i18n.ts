@@ -587,9 +587,9 @@ const translations: Record<string, Record<Language, string>> = {
   'upload.fileTooLarge': { en: 'File too large. Maximum file size is 100MB.', es: 'Archivo demasiado grande. El tamaño máximo es 100MB.' },
 
   // ── Login/Signup ──────────────────────────────────────────────────────────
-  'auth.generalContractor': { en: 'General Contractor', es: 'Contratista General' },
+  'auth.generalContractor': { en: 'Operations Team', es: 'Equipo de Operaciones' },
   'auth.subcontractor': { en: 'Subcontractor', es: 'Subcontratista' },
-  'auth.signInToGC': { en: 'Sign in to your GC account', es: 'Inicie sesión en su cuenta de CG' },
+  'auth.signInToGC': { en: 'Sign in to your operations workspace', es: 'Inicie sesión en su espacio de operaciones' },
   'auth.signInToSub': { en: 'Sign in to your Sub account', es: 'Inicie sesion en su cuenta de subcontratista' },
   'auth.email': { en: 'Email', es: 'Correo Electrónico' },
   'auth.password': { en: 'Password', es: 'Contraseña' },
@@ -616,7 +616,7 @@ const translations: Record<string, Record<Language, string>> = {
   'auth.subTagline': { en: 'Track schedules & report progress', es: 'Seguimiento de cronogramas y reporte de progreso' },
   'auth.createSubAccount': { en: 'Create Subcontractor Account', es: 'Crear Cuenta de Subcontratista' },
   'auth.pricingNote': { en: 'Schedule views are free. Progress Reports are $10/month during beta.', es: 'Las vistas del cronograma son gratuitas. Los reportes de progreso cuestan $10/mes durante la beta.' },
-  'auth.gcQuestion': { en: 'General Contractor?', es: '¿Contratista General?' },
+  'auth.gcQuestion': { en: 'Operations team?', es: '¿Equipo de operaciones?' },
   'auth.subQuestion': { en: 'Subcontractor?', es: '¿Subcontratista?' },
   'auth.accountCreationFailed': { en: 'Account creation failed. Please try again.', es: 'Error al crear la cuenta. Intente de nuevo.' },
   'auth.failedSetup': { en: 'Failed to set up your company. Please contact support.', es: 'Error al configurar su empresa. Contacte a soporte.' },

@@ -39,7 +39,7 @@ export default function LandingPage() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/login"
+              href="/login/sub"
               className="hidden sm:block text-sm font-medium transition-colors"
               style={{ color: "rgba(13,13,13,0.55)" }}
             >
@@ -107,9 +107,6 @@ export default function LandingPage() {
               <span>Public beta</span>
               <span>•</span>
               <span>Subcontractor-first workflow</span>
-              <span>•</span>
-              <Link href="/signup" className="hover:text-[#0D0D0D]">GC / owner access is secondary</Link>
-              <span>•</span>
               <span>Support: irontrackdevelopment@outlook.com</span>
             </div>
             <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
@@ -775,26 +772,25 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* GC Plan — Secondary */}
             <div className="rounded-2xl p-8 border relative" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
               <div className="text-center mb-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
                   <HardHat className="w-6 h-6" style={{ color: "#0D0D0D" }} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>GC / Owner Access</h3>
+                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Operations Team</h3>
                 <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  $19.99<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
+                  Included
                 </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Legacy infrastructure tier</p>
+                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>For owners, PMs, foremen, and crews</p>
               </div>
               <ul className="space-y-2.5 mb-6">
                 {[
-                  "Shared schedule infrastructure",
-                  "All schedule formats (MPP, XER, XLSX, CSV, XML)",
-                  "3-week lookahead + deterministic reforecast",
-                  "Daily logs, reports, and inspections",
-                  "Scoped QR sharing",
-                  "Sub visibility when the GC chooses to participate",
+                  "Owner Snapshot",
+                  "Job Inbox triage",
+                  "Work card assignment",
+                  "Readiness and blocker review",
+                  "Proof log review",
+                  "GC response and proof packets",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
@@ -803,11 +799,11 @@ export default function LandingPage() {
                 ))}
               </ul>
               <Link
-                href="/signup"
+                href="/signup/sub"
                 className="block w-full text-center px-8 py-4 rounded-xl text-lg font-bold transition-all border-2"
                 style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
               >
-                Request GC access
+                Set up your team
               </Link>
             </div>
             {/* Enterprise Plan */}

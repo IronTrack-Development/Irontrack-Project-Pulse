@@ -176,12 +176,6 @@ function SubLoginForm() {
                 {t('action.signUp')}
               </Link>
             </p>
-            <p className="text-sm mt-3" style={{ color: "rgba(13,13,13,0.55)" }}>
-              {t('auth.gcQuestion')}{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#E85D1C" }}>
-                {t('auth.signInHere')}
-              </Link>
-            </p>
           </div>
         </div>
 

@@ -380,7 +380,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 <div className="grid grid-cols-2 gap-3">
                   {/* GC signature */}
                   <div className="p-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
-                    <p className="text-xs text-[color:var(--text-muted)] mb-2">GC / Owner</p>
+                    <p className="text-xs text-[color:var(--text-muted)] mb-2">Customer / Approver</p>
                     {ticket.gc_signature_path ? (
                       <div>
                         <img
@@ -537,7 +537,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
         <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4">
           <div className="w-full max-w-sm bg-[var(--bg-secondary)] rounded-2xl border border-[var(--border-primary)] p-5 space-y-4">
             <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">
-              {pendingRole === "gc" ? "Sign as GC / Owner" : "Sign as Subcontractor"}
+              {pendingRole === "gc" ? "Sign as Customer / Approver" : "Sign as Subcontractor"}
             </h3>
             <div>
               <label className="block text-xs text-[color:var(--text-secondary)] mb-1.5">Your Name</label>
@@ -569,7 +569,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
       {/* Signature pad */}
       {sigRole && (
         <SignaturePad
-          label={sigRole === "gc" ? "GC / Owner Signature" : "Subcontractor Signature"}
+          label={sigRole === "gc" ? "Customer / Approver Signature" : "Subcontractor Signature"}
           onDone={handleSignature}
           onCancel={() => setSigRole(null)}
         />

@@ -30,7 +30,12 @@ export default function MobileNav() {
   ];
 
   // Don't show the app nav on marketing, auth, legal, or tokenized public pages.
-  if (publicPaths.includes(pathname) || pathname.startsWith("/view/") || pathname.startsWith("/join/")) {
+  if (
+    publicPaths.includes(pathname) ||
+    pathname.startsWith("/sub") ||
+    pathname.startsWith("/view/") ||
+    pathname.startsWith("/join/")
+  ) {
     return null;
   }
 

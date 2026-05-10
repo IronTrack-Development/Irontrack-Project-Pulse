@@ -79,7 +79,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">4. Subscription and Billing</h2>
             <p>
-              IronTrack Field Pulse is a subscription service billed automatically via Stripe. Current public beta pricing is shown on the pricing page and may include separate General Contractor and Subcontractor tiers.
+              IronTrack Field Pulse is a subscription service billed automatically via Stripe. Current public beta pricing is shown on the pricing page for subcontractor workspaces and team access.
             </p>
             <p className="mt-4">
               <strong className="text-[color:var(--text-primary)]">Cancellation:</strong> You may cancel at any time. Your access will continue until the end of your current billing period. We do not offer refunds for partial months.
