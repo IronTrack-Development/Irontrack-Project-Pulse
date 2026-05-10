@@ -131,7 +131,7 @@ export default function RFICreateFlow({ projectId, contacts, onCreated, onCancel
 
   const priorityOptions: { value: DraftFields["priority"]; label: string; color: string }[] = [
     { value: "critical", label: "Critical", color: "#EF4444" },
-    { value: "high", label: "High", color: "#2563EB" },
+    { value: "high", label: "High", color: "#F37021" },
     { value: "normal", label: "Normal", color: "#3B82F6" },
     { value: "low", label: "Low", color: "var(--text-muted)" },
   ];

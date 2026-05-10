@@ -221,7 +221,7 @@ export default function Dashboard() {
                   label: "Capture Issue",
                   body: "Create a report before the detail gets lost.",
                   icon: AlertTriangle,
-                  color: "#2563EB",
+                  color: "#F37021",
                 },
                 {
                   href: loopProject ? `/projects/${loopProject.id}` : "",

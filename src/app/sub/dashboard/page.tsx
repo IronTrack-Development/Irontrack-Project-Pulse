@@ -200,7 +200,7 @@ function ProjectCard({ project }: { project: ProjectSummary }) {
 
       <Link
         href="/sub/check-in"
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#2563EB]"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#F37021]"
       >
         Submit field update
         <ArrowUpRight size={13} />

@@ -28,7 +28,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     ctx.scale(dpr, dpr);
     ctx.fillStyle = "#1A1A22";
     ctx.fillRect(0, 0, rect.width, rect.height);
-    ctx.strokeStyle = "#2563EB";
+    ctx.strokeStyle = "#F37021";
     ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -57,7 +57,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     if (ctx) {
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, 1.25, 0, Math.PI * 2);
-      ctx.fillStyle = "#2563EB";
+      ctx.fillStyle = "#F37021";
       ctx.fill();
     }
   }, []);
@@ -94,7 +94,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     ctx.fillStyle = "#1A1A22";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.strokeStyle = "#2563EB";
+    ctx.strokeStyle = "#F37021";
     ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";

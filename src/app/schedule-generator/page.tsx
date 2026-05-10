@@ -147,7 +147,7 @@ const PHASE_COLORS: Record<string, string> = {
   'Phase 2': '#22C55E',
   'Phase 3': '#EAB308',
   'Phase 4': '#3B82F6',
-  'Phase 5': '#2563EB',
+  'Phase 5': '#F37021',
   'Phase 6': '#14B8A6',
   'Phase 7': '#A855F7',
   'Phase 8': '#EC4899',
@@ -871,7 +871,7 @@ export default function ScheduleGeneratorPage() {
                                   style={{
                                     left: `${barLeft}%`,
                                     width: `${barWidth + floatWidth}%`,
-                                    backgroundColor: '#2563EB',
+                                    backgroundColor: '#F37021',
                                     opacity: 0.2,
                                   }}
                                 />

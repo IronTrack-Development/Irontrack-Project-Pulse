@@ -16,7 +16,7 @@ interface ActionTrackerProps {
 
 const STATUS_COLORS: Record<string, string> = {
   open: "#3B82F6",
-  in_progress: "#2563EB",
+  in_progress: "#F37021",
   resolved: "#22C55E",
   cancelled: "var(--text-muted)",
 };
@@ -31,7 +31,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
-  manpower: "#2563EB",
+  manpower: "#F37021",
   equipment: "#EAB308",
   schedule: "#22C55E",
   safety: "#EF4444",

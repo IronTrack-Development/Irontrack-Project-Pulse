@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { t } from "@/lib/i18n";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -88,7 +89,7 @@ export default function SignupPage() {
             <Link
               href="/login"
               className="inline-block py-3 px-6 rounded-xl font-bold text-[color:var(--text-primary)] transition-colors shadow-sm"
-              style={{ background: "#2563EB" }}
+              style={{ background: "#F37021" }}
             >
               {t('action.goToLogin')}
             </Link>
@@ -112,15 +113,8 @@ export default function SignupPage() {
         </Link>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center mb-8 group">
-          <img
-            src="/irontrack-app-icon.svg"
-            alt="IronTrack"
-            className="h-10 w-auto mr-3"
-          />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#2563EB" }}>Track</span>
-          </span>
+        <Link href="/" className="flex justify-center mb-8 group">
+          <IronTrackFieldPulseWordmark compact className="group-hover:opacity-90 transition-opacity" />
         </Link>
 
         {/* Signup Card */}
@@ -220,7 +214,7 @@ export default function SignupPage() {
               type="submit"
               disabled={loading}
               className="w-full py-3 px-4 rounded-xl font-bold text-[color:var(--text-primary)] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              style={{ background: "#2563EB" }}
+              style={{ background: "#F37021" }}
             >
               {loading ? (
                 <>
@@ -234,11 +228,11 @@ export default function SignupPage() {
 
             <p className="text-xs text-center mt-4" style={{ color: "rgba(15,23,42,0.45)" }}>
               {t('auth.termsAgree')}{" "}
-              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#2563EB" }}>
+              <Link href="/terms" className="font-semibold transition-colors" style={{ color: "#F37021" }}>
                 {t('auth.termsOfService')}
               </Link>{" "}
               {t('auth.and')}{" "}
-              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#2563EB" }}>
+              <Link href="/privacy" className="font-semibold transition-colors" style={{ color: "#F37021" }}>
                 {t('auth.privacyPolicy')}
               </Link>.
             </p>
@@ -247,7 +241,7 @@ export default function SignupPage() {
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
             <p className="text-sm" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.alreadyHaveAccount')}{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#2563EB" }}>
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#F37021" }}>
                 {t('action.signIn')}
               </Link>
             </p>

@@ -23,7 +23,7 @@ interface CoordinationDashboardProps {
 
 const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
-  in_progress: "#2563EB",
+  in_progress: "#F37021",
   completed: "#22C55E",
   cancelled: "var(--text-muted)",
 };

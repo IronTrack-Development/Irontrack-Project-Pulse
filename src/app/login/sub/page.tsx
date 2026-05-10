@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { t } from "@/lib/i18n";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 function SubLoginForm() {
   const router = useRouter();
@@ -62,15 +63,8 @@ function SubLoginForm() {
         </Link>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center mb-8 group">
-          <img
-            src="/irontrack-app-icon.svg"
-            alt="IronTrack"
-            className="h-10 w-auto mr-3"
-          />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#2563EB" }}>Track</span>
-          </span>
+        <Link href="/" className="flex justify-center mb-8 group">
+          <IronTrackFieldPulseWordmark compact className="group-hover:opacity-90 transition-opacity" />
         </Link>
 
         {/* Login Card */}
@@ -168,7 +162,7 @@ function SubLoginForm() {
               <Link
                 href="/sub/preview"
                 className="mb-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold transition-colors"
-                style={{ background: "rgba(59,130,246,0.1)", color: "#2563EB" }}
+                style={{ background: "rgba(59,130,246,0.1)", color: "#F37021" }}
               >
                 {t('subops.previewWithoutLogin')}
               </Link>
@@ -181,7 +175,7 @@ function SubLoginForm() {
             </p>
             <p className="text-sm mt-3" style={{ color: "rgba(15,23,42,0.55)" }}>
               {t('auth.gcQuestion')}{" "}
-              <Link href="/login" className="font-bold transition-colors" style={{ color: "#2563EB" }}>
+              <Link href="/login" className="font-bold transition-colors" style={{ color: "#F37021" }}>
                 {t('auth.signInHere')}
               </Link>
             </p>

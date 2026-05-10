@@ -33,7 +33,7 @@ export interface MarkupAction {
 
 export const MARKUP_COLORS: { name: string; value: string }[] = [
   { name: "Red", value: "#EF4444" },
-  { name: "Orange", value: "#2563EB" },
+  { name: "Orange", value: "#F37021" },
   { name: "Yellow", value: "#EAB308" },
   { name: "Blue", value: "#3B82F6" },
   { name: "White", value: "#FFFFFF" },
@@ -523,7 +523,7 @@ export default function MarkupCanvas({
                   width: 26,
                   height: 26,
                   backgroundColor: c.value,
-                  borderColor: color === c.value ? "#2563EB" : "#333",
+                  borderColor: color === c.value ? "#F37021" : "#333",
                   transform: color === c.value ? "scale(1.3)" : "scale(1)",
                   boxShadow:
                     c.value === "#FFFFFF" ? "0 0 0 1px #444 inset" : undefined,

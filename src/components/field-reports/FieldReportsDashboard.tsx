@@ -14,7 +14,7 @@ interface Props {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  open: "#2563EB",
+  open: "#F37021",
   in_progress: "#3B82F6",
   resolved: "#22C55E",
 };
@@ -139,7 +139,7 @@ export default function FieldReportsDashboard({ projectId }: Props) {
               onClick={() => setFilter(s)}
               className="px-3 py-1.5 rounded-full text-xs font-medium transition-all min-h-[36px]"
               style={{
-                background: filter === s ? "#2563EB" : "var(--bg-tertiary)",
+                background: filter === s ? "#F37021" : "var(--bg-tertiary)",
                 color: filter === s ? "#fff" : "var(--text-secondary)",
               }}
             >

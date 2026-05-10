@@ -7,7 +7,6 @@ import {
   ArrowRightLeft,
   BarChart3,
   BookOpen,
-  Building2,
   ClipboardCheck,
   HardHat,
   LayoutDashboard,
@@ -18,6 +17,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
 import { t } from "@/lib/i18n";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 const subNavItems = [
   { href: "/sub/dashboard", labelKey: "subops.dashboard", icon: LayoutDashboard, helperKey: "subops.dailyCommand" },
@@ -53,19 +53,9 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_7%,transparent),transparent_320px),var(--bg-primary)] flex">
       <aside className="hidden md:flex h-screen w-72 shrink-0 sticky top-0 flex-col border-r border-[var(--border-primary)] bg-[var(--bg-secondary)]">
-        <div className="border-b border-[var(--border-primary)] px-5 py-5">
-          <Link href="/sub/dashboard" className="flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-xl border border-accent/25 bg-accent/10">
-              <Building2 className="h-5 w-5 text-accent" />
-            </span>
-            <span>
-              <span className="block text-sm font-bold leading-none text-[color:var(--text-primary)]">
-                IronTrack <span className="text-accent">Pulse</span>
-              </span>
-              <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
-                {t('subops.subPortal')}
-              </span>
-            </span>
+        <div className="border-b border-[var(--border-primary)] px-5 py-4">
+          <Link href="/sub/dashboard" className="block min-w-0 hover:opacity-90 transition-opacity">
+            <IronTrackFieldPulseWordmark variant="theme" compact className="scale-[0.92] origin-left" />
           </Link>
         </div>
 
@@ -154,14 +144,12 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
 
       <div className="md:hidden fixed left-0 right-0 top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]/95 backdrop-blur-md">
         <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/sub/dashboard" className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg border border-accent/25 bg-accent/10">
-              <Building2 className="h-4 w-4 text-accent" />
+          <Link href="/sub/dashboard" className="flex min-w-0 items-center gap-2">
+            <img src="/irontrack-field-pulse-mark.svg" alt="" className="h-8 w-8 shrink-0" width={32} height={32} />
+            <span className="min-w-0 text-sm font-bold leading-tight text-[color:var(--text-primary)]">
+              IronTrack <span className="text-accent">Field Pulse</span>
+              <span className="mt-0.5 block text-[9px] font-bold uppercase tracking-wider text-[color:var(--text-muted)]">{t('subops.subPortal')}</span>
             </span>
-            <span className="text-sm font-bold text-[color:var(--text-primary)]">
-              Iron<span className="text-accent">Track</span>
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-accent">Sub</span>
           </Link>
           <button
             onClick={handleLogout}

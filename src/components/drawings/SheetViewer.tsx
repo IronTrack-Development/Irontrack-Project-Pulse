@@ -57,7 +57,7 @@ const PIN_COLORS: Record<string, string> = {
 };
 
 const DISCIPLINE_COLORS: Record<string, string> = {
-  architectural: "#2563EB",
+  architectural: "#0EA5E9",
   structural: "#EF4444",
   mechanical: "#3B82F6",
   electrical: "#EAB308",
@@ -366,7 +366,7 @@ export default function SheetViewer({
                   style={{
                     left: `${pin.x_percent}%`,
                     top: `${pin.y_percent}%`,
-                    backgroundColor: PIN_COLORS[pin.pin_type] || "#2563EB",
+                    backgroundColor: PIN_COLORS[pin.pin_type] || "#F37021",
                     width: "28px",
                     height: "28px",
                   }}

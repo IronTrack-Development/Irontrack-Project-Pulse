@@ -406,7 +406,7 @@ export default function GenerateReportPage({
               style={{
                 backgroundColor:
                   step === s
-                    ? "#2563EB"
+                    ? "#F37021"
                     : (["select", "issues", "done"].indexOf(step) > idx)
                     ? "#22C55E"
                     : "var(--bg-tertiary)",

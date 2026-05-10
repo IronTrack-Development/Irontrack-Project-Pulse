@@ -17,38 +17,38 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#070a0f",
+  themeColor: "#141414",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
-  title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+  title: "IronTrack Field Pulse — Feel The Pulse Of Your Project",
   description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+    title: "IronTrack Field Pulse — Feel The Pulse Of Your Project",
     description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Field Pulse",
       },
     ],
     type: "website",
-    siteName: "IronTrack Project Pulse",
+    siteName: "IronTrack Field Pulse",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
+    title: "IronTrack Field Pulse — Feel The Pulse Of Your Project",
     description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Field Pulse",
       },
     ],
   },

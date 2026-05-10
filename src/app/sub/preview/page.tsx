@@ -55,7 +55,7 @@ const commandCards = [
     title: "Blockers",
     copy: "3 open blockers need decisions before the next shift starts.",
     icon: AlertTriangle,
-    color: "#2563EB",
+    color: "#F37021",
   },
 ];
 

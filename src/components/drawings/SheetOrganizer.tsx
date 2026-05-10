@@ -57,7 +57,7 @@ const DISCIPLINE_COLORS: Record<string, string> = {
   civil: "#A16207",
   landscape: "#22C55E",
   architectural: "#3B82F6",
-  structural: "#2563EB",
+  structural: "#F37021",
   mechanical: "#8B5CF6",
   electrical: "#EAB308",
   plumbing: "#22D3EE",

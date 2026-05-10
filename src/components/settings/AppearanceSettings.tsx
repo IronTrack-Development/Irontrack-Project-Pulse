@@ -36,7 +36,7 @@ export default function AppearanceSettings() {
             onClick={() => handleThemeChange("dark")}
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
-              backgroundColor: currentTheme === "dark" ? "#2563EB" : "var(--bg-tertiary)",
+              backgroundColor: currentTheme === "dark" ? "#F37021" : "var(--bg-tertiary)",
               color: currentTheme === "dark" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >
@@ -46,7 +46,7 @@ export default function AppearanceSettings() {
             onClick={() => handleThemeChange("light")}
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
-              backgroundColor: currentTheme === "light" ? "#2563EB" : "var(--bg-tertiary)",
+              backgroundColor: currentTheme === "light" ? "#F37021" : "var(--bg-tertiary)",
               color: currentTheme === "light" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >
@@ -76,7 +76,7 @@ export default function AppearanceSettings() {
             onClick={() => handleLangChange("en")}
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
-              backgroundColor: currentLang === "en" ? "#2563EB" : "var(--bg-tertiary)",
+              backgroundColor: currentLang === "en" ? "#F37021" : "var(--bg-tertiary)",
               color: currentLang === "en" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >{t('ui.english')}
@@ -85,7 +85,7 @@ export default function AppearanceSettings() {
             onClick={() => handleLangChange("es")}
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-all"
             style={{
-              backgroundColor: currentLang === "es" ? "#2563EB" : "var(--bg-tertiary)",
+              backgroundColor: currentLang === "es" ? "#F37021" : "var(--bg-tertiary)",
               color: currentLang === "es" ? "#FFFFFF" : "var(--text-secondary)",
             }}
           >{t('ui.espanol')}

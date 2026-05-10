@@ -8,6 +8,7 @@ import {
   BarChart3, Columns3, Truck, Search, Clipboard, Settings
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 export default function LandingPage() {
   return (
@@ -15,17 +16,9 @@ export default function LandingPage() {
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-50 border-b" style={{ background: "#f0f4f8", borderColor: "rgba(15,23,42,0.08)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
-            <img
-              src="/irontrack-app-icon.svg"
-              alt="IronTrack"
-              className="h-9 md:h-11 w-auto"
-            />
-            <span className="text-lg md:text-xl font-extrabold tracking-tight" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
-              Iron<span style={{ color: "#2563EB" }}>Track</span>
-              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(15,23,42,0.4)" }}>Field Management Platform</span>
-            </span>
-          </div>
+          <Link href="/" aria-label="IronTrack Field Pulse home" className="flex items-center gap-2 md:gap-3 min-w-0 hover:opacity-90 transition-opacity">
+            <IronTrackFieldPulseWordmark className="min-w-0" />
+          </Link>
 
           <MobileMenu />
 
@@ -53,7 +46,7 @@ export default function LandingPage() {
             <a
               href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
               className="text-sm px-5 py-2.5 rounded-xl font-bold text-white transition-colors"
-              style={{ background: "#2563EB" }}
+              style={{ background: "#F37021" }}
             >
               Book Demo
             </a>
@@ -65,7 +58,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
           <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#2563EB", fontFamily: "monospace" }}>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
               Daily Field Pulse For GCs And Subs
             </p>
             <h1
@@ -73,7 +66,7 @@ export default function LandingPage() {
               style={{ color: "#0f172a", letterSpacing: "-0.03em" }}
             >
               Run Your Job.<br />
-              <em className="font-medium" style={{ color: "#2563EB" }}>Don&apos;t Chase It.</em>
+              <em className="font-medium" style={{ color: "#F37021" }}>Don&apos;t Chase It.</em>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(15,23,42,0.55)" }}>
               Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
@@ -82,7 +75,7 @@ export default function LandingPage() {
               <a
                 href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
                 className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
-                style={{ background: "#2563EB", boxShadow: "0 8px 24px rgba(37,99,235,0.25)" }}
+                style={{ background: "#F37021", boxShadow: "0 8px 24px rgba(243,112,33,0.25)" }}
               >
                 <Calendar className="w-5 h-5" />
                 Book a Demo
@@ -114,7 +107,7 @@ export default function LandingPage() {
                   title: "Morning huddle locked in",
                   body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
                   icon: Truck,
-                  color: "#2563EB",
+                  color: "#F37021",
                 },
                 {
                   label: "11:40 AM",
@@ -149,7 +142,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-12 items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#2563EB", fontFamily: "monospace" }}>
+              <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
                 The Problem We Are Built For
               </p>
               <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5 text-white" style={{ letterSpacing: "-0.03em" }}>
@@ -161,7 +154,7 @@ export default function LandingPage() {
               <a
                 href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
-                style={{ background: "#2563EB" }}
+                style={{ background: "#F37021" }}
               >
                 See the workflow
                 <ArrowRight className="w-4 h-4" />
@@ -222,12 +215,12 @@ export default function LandingPage() {
       <section id="features" className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#2563EB", fontFamily: "monospace" }}>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
               Everything You Need
             </p>
             <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
               Built for the field.<br />
-              <em className="font-medium" style={{ color: "#2563EB" }}>Not the office.</em>
+              <em className="font-medium" style={{ color: "#F37021" }}>Not the office.</em>
             </h2>
           </div>
 
@@ -236,7 +229,7 @@ export default function LandingPage() {
             {/* ── [01] Schedule Intelligence ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[01]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[01]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Schedule Intelligence
                 </h3>
@@ -245,7 +238,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -254,7 +247,7 @@ export default function LandingPage() {
               <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
                 <div className="space-y-2 mb-4">
                   {[
-                    { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#2563EB" },
+                    { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#F37021" },
                     { task: "Rough-In Electrical - Tower 2", pct: "60%", color: "#3B82F6" },
                     { task: "Pour Foundation North Wing", pct: "100%", color: "#22C55E" },
                     { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "var(--text-muted)" },
@@ -276,10 +269,10 @@ export default function LandingPage() {
                     <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>8 tasks</div>
                   </div>
                 </div>
-                <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(37,99,235,0.2)", background: "rgba(37,99,235,0.04)" }}>
+                <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(243,112,33,0.2)", background: "rgba(243,112,33,0.04)" }}>
                   <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
-                    <span className="text-[10px] font-bold uppercase" style={{ color: "#2563EB" }}>Recovery Action</span>
+                    <Zap className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
+                    <span className="text-[10px] font-bold uppercase" style={{ color: "#F37021" }}>Recovery Action</span>
                   </div>
                   <p className="text-xs" style={{ color: "rgba(15,23,42,0.6)" }}>
                     Increase crew size on &quot;Structural Steel&quot; to recover 3 days on critical path
@@ -306,7 +299,7 @@ export default function LandingPage() {
                       <span className="text-xs" style={{ color: "#0f172a" }}>34 workers on-site · 6 trades active</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Camera className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
+                      <Camera className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
                       <span className="text-xs" style={{ color: "#0f172a" }}>12 photos attached</span>
                     </div>
                   </div>
@@ -322,12 +315,12 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-3 pt-3 border-t" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
-                  <FileText className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
+                  <FileText className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
                   <span className="text-xs" style={{ color: "rgba(15,23,42,0.4)" }}>Export as PDF · Share via link</span>
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[02]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[02]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Field Ops
                 </h3>
@@ -336,7 +329,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Daily Logs", "Field Reports", "Inspections", "Punch List", "Photo Capture", "PDF Export"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -347,7 +340,7 @@ export default function LandingPage() {
             {/* ── [03] Safety & Compliance ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[03]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[03]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Safety & Compliance
                 </h3>
@@ -356,7 +349,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Toolbox Talks", "OSHA Templates", "Attendance", "Custom Templates", "PDF Reports"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -383,7 +376,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "var(--text-muted)" : "#2563EB" }}>
+                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "var(--text-muted)" : "#F37021" }}>
                         {i === 4 ? "+14" : ["JR", "MS", "DT"][i - 1]}
                       </div>
                     ))}
@@ -407,7 +400,7 @@ export default function LandingPage() {
                       <span className="text-xs font-bold" style={{ color: "#DC2626" }}>Conflict: Electrical + HVAC - Level 3 ceiling</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
+                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
                       <span className="text-xs" style={{ color: "#0f172a" }}>Action: Re-sequence HVAC rough-in - Owner: AMS Mechanical</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -417,12 +410,12 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Handshake className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
+                  <Handshake className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
                   <span className="text-xs" style={{ color: "rgba(15,23,42,0.4)" }}>Agenda auto-populated from schedule data</span>
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[04]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[04]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Trade Coordination
                 </h3>
@@ -431,7 +424,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Meeting Management", "Conflict Detection", "Action Items", "Auto-Agenda"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -442,7 +435,7 @@ export default function LandingPage() {
             {/* ── [05] Documents ── */}
             <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
               <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[05]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[05]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Documents
                 </h3>
@@ -451,7 +444,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -476,7 +469,7 @@ export default function LandingPage() {
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Approved</span>
                   </div>
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
-                    <Search className="w-4 h-4" style={{ color: "#2563EB" }} />
+                    <Search className="w-4 h-4" style={{ color: "#F37021" }} />
                     <div className="flex-1">
                       <span className="text-xs font-bold" style={{ color: "#0f172a" }}>DWG: Mechanical - Level 3</span>
                       <div className="text-[10px]" style={{ color: "rgba(15,23,42,0.4)" }}>Rev C · 4 sheets</div>
@@ -505,7 +498,7 @@ export default function LandingPage() {
                     </div>
                     <span className="text-[11px]" style={{ color: "rgba(15,23,42,0.4)" }}>Exterior Framing Bldg B - Tue Apr 22</span>
                   </div>
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(37,99,235,0.2)", background: "rgba(37,99,235,0.03)" }}>
+                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(243,112,33,0.2)", background: "rgba(243,112,33,0.03)" }}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-bold" style={{ color: "#0f172a" }}>AMS Fire Protection</span>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EF4444", background: "rgba(239,68,68,0.1)" }}>Issue Flagged</span>
@@ -514,7 +507,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-center mb-3">
-                  <div className="w-24 h-24 rounded-xl flex items-center justify-center" style={{ background: "#2563EB" }}>
+                  <div className="w-24 h-24 rounded-xl flex items-center justify-center" style={{ background: "#F37021" }}>
                     <QrCode className="w-12 h-12 text-white" />
                   </div>
                 </div>
@@ -525,7 +518,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[06]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[06]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Ready Check & Sub Portal
                 </h3>
@@ -534,7 +527,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["SMS/Email", "QR Sharing", "Trade Filtering", "Protected Schedule Data"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -544,14 +537,14 @@ export default function LandingPage() {
 
             {/* ── [07] Sub Ops - FEATURED ── */}
             <div className="relative">
-              <div className="absolute -inset-4 md:-inset-8 rounded-3xl" style={{ background: "rgba(37,99,235,0.04)", border: "2px solid rgba(37,99,235,0.15)" }} />
+              <div className="absolute -inset-4 md:-inset-8 rounded-3xl" style={{ background: "rgba(243,112,33,0.04)", border: "2px solid rgba(243,112,33,0.15)" }} />
               <div className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(37,99,235,0.12)" }}>
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#2563EB" }}>New - The Sub Differentiator</span>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(243,112,33,0.12)" }}>
+                    <Zap className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#F37021" }}>New - The Sub Differentiator</span>
                   </div>
-                  <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[07]</div>
+                  <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[07]</div>
                   <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                     Sub Ops
                   </h3>
@@ -563,22 +556,22 @@ export default function LandingPage() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {["Morning Dispatch", "Foreman Tracking", "Production Logs", "SOP Library", "Handoff Board", "Blocker Reports"].map((tag) => (
-                      <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                      <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(37,99,235,0.2)" }}>
+                <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(243,112,33,0.2)" }}>
                   {/* Dispatch Board Mock */}
                   <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
-                    <div className="px-4 py-2.5" style={{ background: "#2563EB" }}>
+                    <div className="px-4 py-2.5" style={{ background: "#F37021" }}>
                       <span className="text-xs font-bold text-white uppercase tracking-wider">Morning Dispatch Board</span>
                       <span className="text-[10px] ml-2 text-orange-200">Today · 6 Crews Out</span>
                     </div>
                     <div className="px-4 py-3 space-y-2">
                       <div className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5" style={{ color: "#2563EB" }} />
+                        <Truck className="w-3.5 h-3.5" style={{ color: "#F37021" }} />
                         <span className="text-xs font-bold" style={{ color: "#0f172a" }}>Crew A → Riverside Medical</span>
                         <span className="text-[10px] ml-auto" style={{ color: "rgba(15,23,42,0.4)" }}>Ductwork L3</span>
                       </div>
@@ -615,25 +608,25 @@ export default function LandingPage() {
               <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(15,23,42,0.06)", background: "#f0f4f8" }}>
-                    <Sun className="w-6 h-6 mb-2" style={{ color: "#2563EB" }} />
+                    <Sun className="w-6 h-6 mb-2" style={{ color: "#F37021" }} />
                     <span className="text-xs font-bold" style={{ color: "#0f172a" }}>Light Mode</span>
                   </div>
                   <div className="rounded-xl p-4 flex flex-col items-center justify-center" style={{ background: "#1a1a1a" }}>
-                    <Moon className="w-6 h-6 mb-2" style={{ color: "#2563EB" }} />
+                    <Moon className="w-6 h-6 mb-2" style={{ color: "#F37021" }} />
                     <span className="text-xs font-bold text-white">Dark Mode</span>
                   </div>
                   <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
-                    <Globe className="w-6 h-6 mb-2" style={{ color: "#2563EB" }} />
+                    <Globe className="w-6 h-6 mb-2" style={{ color: "#F37021" }} />
                     <span className="text-xs font-bold" style={{ color: "#0f172a" }}>Español</span>
                   </div>
                   <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
-                    <Settings className="w-6 h-6 mb-2" style={{ color: "#2563EB" }} />
+                    <Settings className="w-6 h-6 mb-2" style={{ color: "#F37021" }} />
                     <span className="text-xs font-bold" style={{ color: "#0f172a" }}>Settings</span>
                   </div>
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#2563EB", fontFamily: "monospace" }}>[08]</div>
+                <div className="text-sm font-bold mb-2" style={{ color: "#F37021", fontFamily: "monospace" }}>[08]</div>
                 <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0f172a", letterSpacing: "-0.02em" }}>
                   Platform Features
                 </h3>
@@ -642,7 +635,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Dark Mode", "Light Mode", "Español", "Mobile-First"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#2563EB", borderColor: "rgba(37,99,235,0.3)", background: "rgba(37,99,235,0.06)" }}>
+                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#F37021", borderColor: "rgba(243,112,33,0.3)", background: "rgba(243,112,33,0.06)" }}>
                       {tag}
                     </span>
                   ))}
@@ -658,11 +651,11 @@ export default function LandingPage() {
       <section id="who-we-serve" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(15,23,42,0.08)" }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#2563EB", fontFamily: "monospace" }}>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
               Who We Serve
             </p>
             <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
-              Built by <em className="font-medium" style={{ color: "#2563EB" }}>field operators</em>.<br />
+              Built by <em className="font-medium" style={{ color: "#F37021" }}>field operators</em>.<br />
               For field operators.
             </h2>
           </div>
@@ -692,10 +685,10 @@ export default function LandingPage() {
               <div
                 key={persona.title}
                 className="rounded-2xl p-6 md:p-8 border transition-all"
-                style={{ background: "white", borderColor: persona.title === "Subcontractors" ? "rgba(37,99,235,0.3)" : "rgba(15,23,42,0.08)" }}
+                style={{ background: "white", borderColor: persona.title === "Subcontractors" ? "rgba(243,112,33,0.3)" : "rgba(15,23,42,0.08)" }}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "rgba(37,99,235,0.08)" }}>
-                  <persona.icon className="w-6 h-6" style={{ color: "#2563EB" }} />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "rgba(243,112,33,0.08)" }}>
+                  <persona.icon className="w-6 h-6" style={{ color: "#F37021" }} />
                 </div>
                 <h3 className="text-xl font-extrabold mb-3" style={{ color: "#0f172a" }}>{persona.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(15,23,42,0.55)" }}>{persona.desc}</p>
@@ -709,7 +702,7 @@ export default function LandingPage() {
       <section id="pricing" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(15,23,42,0.08)" }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#2563EB", fontFamily: "monospace" }}>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
               Founder Pricing
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
@@ -757,13 +750,13 @@ export default function LandingPage() {
             </div>
 
             {/* GC Plan — Featured */}
-            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#2563EB" }}>
+            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#F37021" }}>
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#2563EB" }}>Most Popular</span>
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#F37021" }}>Most Popular</span>
               </div>
               <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(37,99,235,0.1)" }}>
-                  <HardHat className="w-6 h-6" style={{ color: "#2563EB" }} />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(243,112,33,0.1)" }}>
+                  <HardHat className="w-6 h-6" style={{ color: "#F37021" }} />
                 </div>
                 <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0f172a" }}>General Contractor</h3>
                 <div className="text-3xl font-extrabold" style={{ color: "#0f172a" }}>
@@ -792,7 +785,7 @@ export default function LandingPage() {
               <Link
                 href="/signup"
                 className="block w-full text-center px-8 py-4 text-white rounded-xl text-lg font-bold transition-all"
-                style={{ background: "#2563EB" }}
+                style={{ background: "#F37021" }}
               >
                 Start Founder Plan
               </Link>

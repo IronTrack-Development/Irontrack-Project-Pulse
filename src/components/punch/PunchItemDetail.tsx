@@ -46,7 +46,7 @@ interface PunchItemDetailProps {
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
   life_safety: { label: "Life Safety", color: "#EF4444", bg: "bg-red-500/15" },
-  code:        { label: "Code",        color: "#2563EB", bg: "bg-orange-500/15" },
+  code:        { label: "Code",        color: "#F37021", bg: "bg-orange-500/15" },
   standard:    { label: "Standard",    color: "var(--text-muted)", bg: "bg-gray-500/15" },
   cosmetic:    { label: "Cosmetic",    color: "#3B82F6", bg: "bg-blue-500/15" },
 };
@@ -56,7 +56,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   in_progress:        { label: "In Progress",        color: "#EAB308", bg: "bg-yellow-500/15" },
   ready_for_reinspect:{ label: "Ready for Re-inspect", color: "#A855F7", bg: "bg-purple-500/15" },
   closed:             { label: "Closed",             color: "#22C55E", bg: "bg-green-500/15" },
-  disputed:           { label: "Disputed",           color: "#2563EB", bg: "bg-orange-500/15" },
+  disputed:           { label: "Disputed",           color: "#F37021", bg: "bg-orange-500/15" },
 };
 
 export default function PunchItemDetail({ item, projectId, supabaseUrl, onClose, onUpdated }: PunchItemDetailProps) {

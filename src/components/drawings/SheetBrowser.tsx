@@ -70,7 +70,7 @@ const DISCIPLINE_LABEL: Record<Discipline, string> = {
 
 const DISCIPLINE_COLOR: Record<Discipline, string> = {
   architectural: "#3B82F6",   // blue
-  structural: "#2563EB",      // orange-red
+  structural: "#F37021",      // orange-red
   mechanical: "#8B5CF6",      // purple
   electrical: "#EAB308",      // yellow
   plumbing: "#22D3EE",        // cyan

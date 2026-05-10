@@ -62,7 +62,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 
 const PRIORITY_CONFIG: Record<string, { color: string }> = {
   critical: { color: "#EF4444" },
-  high:     { color: "#2563EB" },
+  high:     { color: "#F37021" },
   normal:   { color: "#3B82F6" },
   low:      { color: "var(--text-muted)" },
 };
@@ -151,7 +151,7 @@ export default function RFIsTab({ projectId }: RFIsTabProps) {
       {/* Summary bar */}
       <div className="grid grid-cols-4 gap-2">
         {[
-          { label: "Total", value: totalRFIs, color: "#2563EB" },
+          { label: "Total", value: totalRFIs, color: "#F37021" },
           { label: "Open", value: openRFIs, color: "#EAB308" },
           { label: "Overdue", value: overdueRFIs, color: "#EF4444" },
           { label: "Answered", value: answeredRFIs, color: "#22C55E" },

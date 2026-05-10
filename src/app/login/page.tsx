@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
 import { Loader2, Eye, EyeOff, ArrowLeft, HardHat, Briefcase } from "lucide-react";
 import { t } from "@/lib/i18n";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -21,7 +22,7 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const isGC = role === "gc";
-  const accentColor = isGC ? "#2563EB" : "#3B82F6";
+  const accentColor = isGC ? "#F37021" : "#3B82F6";
   const defaultRedirect = isGC ? "/dashboard" : "/sub/dashboard";
   const redirect = redirectParam || defaultRedirect;
 
@@ -64,15 +65,8 @@ function LoginForm() {
         </Link>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center mb-8 group">
-          <img
-            src="/irontrack-app-icon.svg"
-            alt="IronTrack"
-            className="h-10 w-auto mr-3"
-          />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0f172a", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#2563EB" }}>Track</span>
-          </span>
+        <Link href="/" className="flex justify-center mb-8 group">
+          <IronTrackFieldPulseWordmark compact className="group-hover:opacity-90 transition-opacity" />
         </Link>
 
         {/* Role Toggle */}
@@ -81,9 +75,9 @@ function LoginForm() {
             onClick={() => setRole("gc")}
             className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all"
             style={{
-              background: isGC ? "#2563EB" : "white",
+              background: isGC ? "#F37021" : "white",
               color: isGC ? "white" : "rgba(15,23,42,0.55)",
-              border: isGC ? "2px solid #2563EB" : "2px solid rgba(15,23,42,0.12)",
+              border: isGC ? "2px solid #F37021" : "2px solid rgba(15,23,42,0.12)",
             }}
           >
             <HardHat size={18} />
@@ -108,10 +102,10 @@ function LoginForm() {
           <div className="flex items-center gap-3 mb-6">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ background: isGC ? "rgba(232,93,28,0.1)" : "rgba(59,130,246,0.1)" }}
+              style={{ background: isGC ? "rgba(243,112,33,0.12)" : "rgba(59,130,246,0.1)" }}
             >
               {isGC
-                ? <HardHat size={24} style={{ color: "#2563EB" }} />
+                ? <HardHat size={24} style={{ color: "#F37021" }} />
                 : <Briefcase size={24} style={{ color: "#3B82F6" }} />
               }
             </div>
@@ -227,7 +221,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center" style={{ background: "#f0f4f8" }}>
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#2563EB" }} />
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: "#F37021" }} />
         </div>
       }
     >

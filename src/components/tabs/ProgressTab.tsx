@@ -153,7 +153,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
   const progressColor = data.percentComplete >= 75 
     ? "#22C55E" 
     : data.percentComplete >= 50 
-    ? "#2563EB" 
+    ? "#F37021" 
     : "#EF4444";
 
   return (

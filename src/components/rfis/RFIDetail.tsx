@@ -60,7 +60,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 
 const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   critical: { color: "#EF4444", bg: "bg-red-500/20" },
-  high:     { color: "#2563EB", bg: "bg-orange-500/20" },
+  high:     { color: "#F37021", bg: "bg-orange-500/20" },
   normal:   { color: "#3B82F6", bg: "bg-blue-500/20" },
   low:      { color: "var(--text-muted)", bg: "bg-gray-700/30" },
 };

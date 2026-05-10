@@ -82,12 +82,12 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
         <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Daily Crew Size</h3>
         <div className="bg-[var(--bg-secondary)] rounded-xl p-3 overflow-x-auto">
           <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ maxHeight: 160 }}>
-            <polygon points={areaPoints} fill="#2563EB" opacity="0.1" />
-            <polyline points={points.join(" ")} fill="none" stroke="#2563EB" strokeWidth="2" />
+            <polygon points={areaPoints} fill="#F37021" opacity="0.1" />
+            <polyline points={points.join(" ")} fill="none" stroke="#F37021" strokeWidth="2" />
             {trend.map((d, i) => {
               const x = padding + (i / (trend.length - 1)) * chartW;
               const y = padding + chartH - (d.headcount / maxHC) * chartH;
-              return <circle key={i} cx={x} cy={y} r="3" fill="#2563EB" />;
+              return <circle key={i} cx={x} cy={y} r="3" fill="#F37021" />;
             })}
             {/* Y-axis labels */}
             <text x={padding - 4} y={padding + 4} fill="#666" fontSize="10" textAnchor="end">{maxHC}</text>

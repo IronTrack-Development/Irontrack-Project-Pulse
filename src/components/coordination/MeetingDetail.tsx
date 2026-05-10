@@ -31,14 +31,14 @@ interface MeetingDetailProps {
 
 const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
-  in_progress: "#2563EB",
+  in_progress: "#F37021",
   completed: "#22C55E",
   cancelled: "var(--text-muted)",
 };
 
 const AGENDA_STATUS_COLORS: Record<string, string> = {
   pending: "#3B82F6",
-  discussed: "#2563EB",
+  discussed: "#F37021",
   deferred: "#EAB308",
   resolved: "#22C55E",
 };
@@ -53,7 +53,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
-  manpower: "#2563EB",
+  manpower: "#F37021",
   equipment: "#EAB308",
   schedule: "#22C55E",
   safety: "#EF4444",
@@ -470,7 +470,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   onChange={(e) => updateActionStatus(item.id, e.target.value)}
                   className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px]"
                   style={{
-                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#2563EB" : item.status === "resolved" ? "#22C55E" : "var(--text-muted)",
+                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F37021" : item.status === "resolved" ? "#22C55E" : "var(--text-muted)",
                   }}
                 >
                   <option value="open">Open</option>

@@ -143,12 +143,12 @@ export async function GET(
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1a1a1a; background: #fff; padding: 40px; max-width: 900px; margin: 0 auto; font-size: 13px; }
-  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 3px solid #2563EB; padding-bottom: 16px; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 3px solid #F37021; padding-bottom: 16px; }
   .header h1 { font-size: 22px; color: #0B0B0D; }
   .header .meta { text-align: right; font-size: 12px; color: #666; }
-  .header .brand { font-size: 11px; color: #2563EB; font-weight: 700; letter-spacing: 0.5px; }
+  .header .brand { font-size: 11px; color: #F37021; font-weight: 700; letter-spacing: 0.5px; }
   .section { margin-bottom: 20px; }
-  .section h2 { font-size: 14px; font-weight: 700; color: #2563EB; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section h2 { font-size: 14px; font-weight: 700; color: #F37021; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
   .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
   .stat { flex: 1; min-width: 120px; background: #f8f8f8; border-radius: 8px; padding: 12px; text-align: center; }
   .stat .value { font-size: 24px; font-weight: 800; color: #0B0B0D; }
@@ -158,7 +158,7 @@ export async function GET(
   td { padding: 6px 10px; border-bottom: 1px solid #eee; }
   .list { padding-left: 18px; }
   .list li { margin-bottom: 4px; }
-  .narrative { background: #FFF7ED; border-left: 3px solid #2563EB; padding: 12px 16px; border-radius: 4px; font-style: italic; margin-bottom: 20px; }
+  .narrative { background: #FFF7ED; border-left: 3px solid #F37021; padding: 12px 16px; border-radius: 4px; font-style: italic; margin-bottom: 20px; }
   .photos { display: flex; gap: 8px; flex-wrap: wrap; }
   .photo { width: 130px; }
   .photo img { width: 100%; border-radius: 6px; }

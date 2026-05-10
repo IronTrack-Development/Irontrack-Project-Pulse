@@ -46,7 +46,7 @@ export async function GET(
   };
 
   const priorityColor: Record<string, string> = { high: "#EF4444", medium: "#EAB308", low: "#6B7280" };
-  const statusColor: Record<string, string> = { open: "#2563EB", in_progress: "#3B82F6", resolved: "#22C55E" };
+  const statusColor: Record<string, string> = { open: "#F37021", in_progress: "#3B82F6", resolved: "#22C55E" };
 
   const rows = (reports || [])
     .map(
@@ -77,11 +77,11 @@ export async function GET(
   <title>Field Reports — ${escapeHtml(projectName)}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0B0B0D; color: #E5E7EB; margin: 0; padding: 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 12px; }
-    .header h1 { font-size: 20px; color: #2563EB; margin: 0; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px solid #F37021; padding-bottom: 12px; }
+    .header h1 { font-size: 20px; color: #F37021; margin: 0; }
     .header .meta { font-size: 12px; color: #9CA3AF; text-align: right; }
     table { width: 100%; border-collapse: collapse; }
-    th { background: #1F1F25; color: #2563EB; padding: 8px; border: 1px solid #333; text-align: left; font-size: 13px; }
+    th { background: #1F1F25; color: #F37021; padding: 8px; border: 1px solid #333; text-align: left; font-size: 13px; }
   </style>
 </head>
 <body>

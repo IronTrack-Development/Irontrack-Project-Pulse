@@ -82,7 +82,7 @@ const STATUS_CONFIG: Record<string, { label: string; abbrev: string; color: stri
   not_started: { label: "Not Started", abbrev: "NS", color: "var(--text-muted)", bg: "rgba(107,114,128,0.2)" },
   in_progress: { label: "In Progress", abbrev: "IP", color: "#3B82F6", bg: "rgba(59,130,246,0.2)" },
   ready_for_handoff: { label: "Ready", abbrev: "RDY", color: "#EAB308", bg: "rgba(234,179,8,0.2)" },
-  handed_off: { label: "Handed Off", abbrev: "HO", color: "#2563EB", bg: "rgba(249,115,22,0.2)" },
+  handed_off: { label: "Handed Off", abbrev: "HO", color: "#F37021", bg: "rgba(249,115,22,0.2)" },
   accepted: { label: "Accepted", abbrev: "OK", color: "#22C55E", bg: "rgba(34,197,94,0.2)" },
   issue_flagged: { label: "Issue", abbrev: "!", color: "#EF4444", bg: "rgba(239,68,68,0.2)" },
 };
@@ -110,7 +110,7 @@ export default function HandoffTracker({ projectId }: Props) {
   const [showAddDept, setShowAddDept] = useState(false);
   const [deptName, setDeptName] = useState("");
   const [deptTrade, setDeptTrade] = useState("");
-  const [deptColor, setDeptColor] = useState("#2563EB");
+  const [deptColor, setDeptColor] = useState("#F37021");
 
   // Checklist add
   const [newItemText, setNewItemText] = useState("");
@@ -296,7 +296,7 @@ export default function HandoffTracker({ projectId }: Props) {
       if (res.ok) {
         setDeptName("");
         setDeptTrade("");
-        setDeptColor("#2563EB");
+        setDeptColor("#F37021");
         setShowAddDept(false);
         fetchBoard();
         fetchDepartments();
@@ -644,7 +644,7 @@ export default function HandoffTracker({ projectId }: Props) {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2 text-sm font-medium text-[color:var(--text-primary)]">
-                      <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.from_department_color || "#2563EB", color: "#fff" }}>
+                      <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.from_department_color || "#F37021", color: "#fff" }}>
                         {selectedHandoff.from_department_name}
                       </span>
                       <ArrowRightLeft size={14} className="text-[color:var(--text-muted)]" />

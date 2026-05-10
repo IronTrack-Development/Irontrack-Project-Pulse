@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -12,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { t } from "@/lib/i18n";
+import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
 
 const navItems = [
   { href: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
@@ -26,20 +26,10 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col w-64 bg-[var(--bg-secondary)] border-r border-[var(--border-primary)] h-full shrink-0">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-[var(--border-primary)]">
-        <div className="relative w-8 h-8">
-          <Image
-            src="/icon-192.png"
-            alt="IronTrack Pulse Logo"
-            fill
-            className="object-contain"
-            onError={() => {}}
-          />
-        </div>
-        <div>
-          <div className="font-bold text-[color:var(--text-primary)] text-sm leading-none">IronTrack <span className="text-accent">Pulse</span></div>
-          <div className="text-[10px] text-[color:var(--text-muted)] font-medium mt-0.5">{t('landing.heroTitle1')} {t('landing.heroTitle2')}</div>
-        </div>
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-[var(--border-primary)]">
+        <Link href="/dashboard" className="min-w-0 hover:opacity-90 transition-opacity">
+          <IronTrackFieldPulseWordmark variant="theme" compact className="scale-[0.88] origin-left" />
+        </Link>
       </div>
 
       {/* Status pill */}
