@@ -12,10 +12,12 @@ export default function MobileMenu() {
       </button>
       {open && (
         <div className="absolute top-full left-0 right-0 bg-[var(--bg-primary)] border-b border-[var(--border-primary)] px-4 py-4 flex flex-col gap-4 z-50">
-          <a href="#about" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">About Us</a>
-          <a href="#who-we-serve" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Who We Serve</a>
+          <a href="#platform" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Platform</a>
+          <a href="#daily-loop" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Daily Loop</a>
           <a href="#features" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Features</a>
+          <a href="#who-we-serve" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Who We Serve</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Pricing</a>
+          <Link href="/signup/sub" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Sub Signup</Link>
           <Link href="/status" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Status</Link>
           <Link href="/release-notes" onClick={() => setOpen(false)} className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]">Release Notes</Link>
         </div>

@@ -1,7 +1,7 @@
 {
   "name": "IronTrack Pulse",
   "short_name": "IronTrack Pulse",
-  "description": "Run Your Job. Don't Chase It. Your Pulse Check For Every Jobsite.",
+  "description": "Subcontractor field portal for dispatch, check-ins, production, blockers, SOPs, and handoffs.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0B0B0D",

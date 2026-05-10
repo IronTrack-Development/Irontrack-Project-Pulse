@@ -21,7 +21,7 @@ export default function TermsPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-6 h-6 text-[#F97316]" />
-          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
+          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Pulse</span>
         </div>
 
         <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">Terms of Service</h1>
@@ -32,7 +32,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">1. Acceptance of Terms</h2>
             <p>
-              By creating an account or using IronTrack Project Pulse ("the Service"), you agree to these Terms of Service. If you don&apos;t agree, don&apos;t use the Service.
+              By creating an account or using IronTrack Pulse ("the Service"), you agree to these Terms of Service. If you don&apos;t agree, don&apos;t use the Service.
             </p>
             <p className="mt-4">
               These terms are a legal agreement between you and IronTrack Development LLC, an Arizona limited liability company.
@@ -43,12 +43,13 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">2. Description of Service</h2>
             <p>
-              IronTrack Project Pulse is a web application that helps construction professionals track project schedules. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
+              IronTrack Pulse is a web application that helps construction professionals run subcontractor field operations and coordinate project schedules. Subcontractor teams can manage dispatch, check-ins, production, blockers, SOPs, handoffs, crew records, and photos. General contractor teams may upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li>3-week lookahead of upcoming activities</li>
               <li>Milestone tracking and dates</li>
               <li>Progress percentage and completion status</li>
+              <li>Ready checks and subcontractor-facing scope views</li>
             </ul>
             <p className="mt-4">
               The Service uses AI-powered parsing (Anthropic Claude) to extract schedule data from uploaded files.
@@ -78,7 +79,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">4. Subscription and Billing</h2>
             <p>
-              IronTrack Project Pulse is a subscription service. The current price is <strong className="text-[color:var(--text-primary)]">$19.99 per month</strong>, billed automatically via Stripe.
+              IronTrack Pulse is a subscription service billed automatically via Stripe. The current beta price is <strong className="text-[color:var(--text-primary)]">$10 per month</strong> for the Subcontractor Portal and <strong className="text-[color:var(--text-primary)]">$19.99 per month</strong> for the General Contractor plan.
             </p>
             <p className="mt-4">
               <strong className="text-[color:var(--text-primary)]">Cancellation:</strong> You may cancel at any time. Your access will continue until the end of your current billing period. We do not offer refunds for partial months.
@@ -115,7 +116,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">6. Uploaded Content and Ownership</h2>
             <p>
-              <strong className="text-[color:var(--text-primary)]">You own your data.</strong> All schedule files and project information you upload remain your property.
+              <strong className="text-[color:var(--text-primary)]">You own your data.</strong> All schedule files, subcontractor portal records, photos, crew information, and project information you upload remain your property.
             </p>
             <p className="mt-4">
               By uploading files to the Service, you grant IronTrack Development LLC a license to:
@@ -161,7 +162,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">9. Limitation of Liability</h2>
             <p>
-              IronTrack Project Pulse is a tool to help you track schedules. It is <strong className="text-[color:var(--text-primary)]">not a substitute for professional judgment</strong>. You are responsible for verifying all schedule data and making project decisions.
+              IronTrack Pulse is a tool to help you manage field operations and track schedules. It is <strong className="text-[color:var(--text-primary)]">not a substitute for professional judgment</strong>. You are responsible for verifying all field records, schedule data, and project decisions.
             </p>
             <p className="mt-4">
               To the maximum extent permitted by law, IronTrack Development LLC is not liable for:
