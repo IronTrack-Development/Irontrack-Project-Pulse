@@ -14,7 +14,6 @@ import {
   HardHat,
   Mail,
   MessageSquare,
-  Phone,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -118,14 +117,16 @@ function DemoRequestLink({ children, className }: { children: React.ReactNode; c
 export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#08090B] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090B]/92 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090B]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center">
-            <img
-              src="/irontrack-field-pulse-logo.svg"
-              alt="IronTrack Field Pulse"
-              className="h-11 w-auto md:h-14"
-            />
+            <span className="rounded-md bg-white px-3 py-2 shadow-[0_14px_35px_rgba(0,0,0,0.28)]">
+              <img
+                src="/irontrack-field-pulse-logo.svg"
+                alt="IronTrack Field Pulse"
+                className="h-8 w-auto md:h-9"
+              />
+            </span>
           </Link>
 
           <MobileMenu />
@@ -157,29 +158,22 @@ export default function LandingPage() {
       </header>
 
       <main>
-        <section className="border-b border-white/10 bg-[#08090B]">
-          <img
-            src="/irontrack-field-pulse-landing-banner.svg"
-            alt="IronTrack Field Pulse"
-            className="h-auto w-full"
-          />
-        </section>
-
         <section className="relative overflow-hidden border-b border-white/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(249,115,22,0.18),transparent_34%),linear-gradient(135deg,#08090B_0%,#121418_48%,#050506_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(249,115,22,0.14),transparent_34%),linear-gradient(135deg,#08090B_0%,#111418_54%,#07080A_100%)]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/60 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-48 opacity-30" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)", backgroundSize: "56px 56px" }} />
           <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/70 to-transparent" />
-          <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="relative mx-auto grid min-h-[720px] max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
             <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#FDBA74]">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#FDBA74]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F97316]" />
                 Subcontractor-owned field command center
               </div>
-              <h1 className="max-w-4xl text-4xl font-black leading-[0.94] tracking-[-0.045em] text-white sm:text-5xl md:text-6xl lg:text-7xl">
-                Turn scattered GC communication into organized job control.
+              <h1 className="max-w-4xl text-4xl font-black leading-[0.95] tracking-[-0.045em] text-white sm:text-5xl md:text-6xl">
+                The field command center for subcontractors.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
-                IronTrack Field Pulse helps subcontractors know what is coming, what is ready, what is blocked,
-                what needs proof, and what needs a clean response back to the GC.
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                Turn GC emails, PDFs, screenshots, lookaheads, portal updates, calls, and field notes into one organized work queue your team controls.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -195,13 +189,25 @@ export default function LandingPage() {
                 </DemoRequestLink>
               </div>
               <p className="mt-5 text-sm font-semibold text-slate-500">
-                GC does not need an account. Your team owns the workspace.
+                GC does not need an account. Your subcontractor team owns the workspace.
               </p>
+              <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
+                {[
+                  ["Ready", "7 jobs"],
+                  ["Blocked", "2 items"],
+                  ["Proof", "23 logs"],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                    <p className="mt-2 text-xl font-black text-white">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-6 rounded-[2rem] bg-[#F97316]/10 blur-3xl" />
-              <div className="relative rounded-[2rem] border border-white/12 bg-[#0D0F12] p-4 shadow-[0_32px_100px_rgba(0,0,0,0.42)]">
+              <div className="absolute -inset-8 rounded-[2rem] bg-[#F97316]/10 blur-3xl" />
+              <div className="relative rounded-[2rem] border border-white/12 bg-[#0D0F12]/95 p-4 shadow-[0_32px_100px_rgba(0,0,0,0.42)] backdrop-blur">
                 <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F97316]">Job Control</p>
@@ -251,7 +257,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="border-b border-white/10 bg-[#0B0D10] py-10">
+        <section className="border-b border-white/10 bg-[#0B0D10] py-8">
           <div className="mx-auto max-w-7xl px-6">
             <p className="mb-5 text-center text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">
               Works alongside the tools GCs already use
