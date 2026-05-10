@@ -16,7 +16,16 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   // Don't show on public pages or sub view pages
-  if (pathname === "/" || pathname === "/login" || pathname === "/signup" || pathname === "/subscribe" || pathname.startsWith("/view/")) {
+  if (
+    pathname === "/" ||
+    pathname === "/login" ||
+    pathname === "/login/sub" ||
+    pathname === "/signup" ||
+    pathname === "/signup/sub" ||
+    pathname === "/subscribe" ||
+    pathname === "/sub/preview" ||
+    pathname.startsWith("/view/")
+  ) {
     return null;
   }
 

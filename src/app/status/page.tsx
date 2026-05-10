@@ -4,8 +4,9 @@ import { Building2 } from "lucide-react";
 
 const services = [
   { name: "Web Application", status: "operational", description: "irontrackpulse.com" },
+  { name: "Subcontractor Portal", status: "operational", description: "Dispatch, check-ins, production, blockers, handoffs, SOPs" },
   { name: "Schedule Upload & Processing", status: "operational", description: "File parsing, column mapping, data import" },
-  { name: "Risk Detection Engine", status: "operational", description: "Automated risk scanning and alerts" },
+  { name: "GC Coordination Layer", status: "operational", description: "Ready checks, QR views, risk detection, reports" },
   { name: "Database (Supabase)", status: "operational", description: "Data storage and real-time sync" },
   { name: "Authentication", status: "operational", description: "Sign up, sign in, session management" },
   { name: "iOS App", status: "coming_soon", description: "Native iOS application" },
@@ -77,7 +78,7 @@ export default function StatusPage() {
               />
             </div>
             <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
-              IronTrack<span className="hidden md:inline"> Project Pulse</span>
+              IronTrack<span className="hidden md:inline"> Pulse</span>
             </span>
           </Link>
           <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors flex items-center gap-1">
@@ -90,7 +91,7 @@ export default function StatusPage() {
         {/* Page Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">System Status</h1>
-          <p className="text-[color:var(--text-secondary)]">Current health of IronTrack Project Pulse services</p>
+          <p className="text-[color:var(--text-secondary)]">Current health of IronTrack Pulse services</p>
         </div>
 
         {/* Overall Status Banner */}

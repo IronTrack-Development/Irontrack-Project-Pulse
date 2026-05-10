@@ -1,59 +1,183 @@
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 import {
-  ArrowRight, CheckCircle, HardHat, Briefcase, Building2,
-  Upload, Calendar, Target, QrCode, ClipboardList, GitBranch,
-  Download, Share2, Camera, FileText, Shield, Zap, Users,
-  Handshake, Send, ArrowRightLeft, Sun, Moon, Globe,
-  AlertTriangle, BookOpen, Wrench, MessageSquare, Eye,
-  BarChart3, Columns3, Truck, Search, Clipboard, Settings
+  AlertTriangle,
+  ArrowRight,
+  ArrowRightLeft,
+  BarChart3,
+  BookOpen,
+  Briefcase,
+  Building2,
+  Calendar,
+  Camera,
+  CheckCircle,
+  ClipboardCheck,
+  Globe,
+  HardHat,
+  QrCode,
+  Send,
+  Shield,
+  Truck,
+  Users,
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 
+type IconCard = {
+  title: string;
+  body: string;
+  icon: LucideIcon;
+};
+
+const accent = "#E85D1C";
+const subBlue = "#3B82F6";
+const ink = "#0D0D0D";
+const paper = "#F5F3EE";
+
+const dailyLoop: IconCard[] = [
+  {
+    title: "Dispatch",
+    body: "Send every crew out with job, scope, safety focus, material notes, and foreman ownership.",
+    icon: Send,
+  },
+  {
+    title: "Check-In",
+    body: "Foremen confirm arrival, manpower, conditions, photos, and the plan before the day gets away.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Production",
+    body: "Capture quantities, percent complete, photos, and notes while the work is still fresh.",
+    icon: BarChart3,
+  },
+  {
+    title: "Blockers",
+    body: "Turn caveats, access issues, missing material, and RFIs into clean GC-facing action.",
+    icon: AlertTriangle,
+  },
+  {
+    title: "Handoffs",
+    body: "Move context from crew to crew so rough-in, trim, startup, and controls do not restart from zero.",
+    icon: ArrowRightLeft,
+  },
+];
+
+const portalFeatures: IconCard[] = [
+  {
+    title: "Foreman command center",
+    body: "A mobile-first dashboard for today's work, open blockers, pending handoffs, and crew updates.",
+    icon: HardHat,
+  },
+  {
+    title: "Crew and manpower tracking",
+    body: "Track foremen, journeymen, apprentices, and where each crew is supposed to be working.",
+    icon: Users,
+  },
+  {
+    title: "SOP library",
+    body: "Keep install standards, safety procedures, and company playbooks in one place with read tracking.",
+    icon: BookOpen,
+  },
+  {
+    title: "Bilingual field UX",
+    body: "English office schedules can drive Spanish-friendly crew communication in the field.",
+    icon: Globe,
+  },
+  {
+    title: "Photo-first proof",
+    body: "Attach photos to check-ins, production, blockers, and handoffs so the office sees the real condition.",
+    icon: Camera,
+  },
+  {
+    title: "GC-ready visibility",
+    body: "Share clean updates without exposing private schedule logic, float, or internal company noise.",
+    icon: Shield,
+  },
+];
+
+const gcLayer = [
+  "Ready-check confirmations by trade",
+  "QR and token links for scope-only views",
+  "Schedule imports from MPP, XER, XLSX, CSV, and XML",
+  "Daily logs, reports, inspections, RFIs, submittals, punch, and T&M",
+];
+
+const heroUpdates: Array<{
+  time: string;
+  title: string;
+  body: string;
+  icon: LucideIcon;
+  color: string;
+}> = [
+  { time: "06:10", title: "Dispatch sent", body: "Crew B -> Level 2 rough-in, panels confirmed", icon: Truck, color: subBlue },
+  { time: "07:32", title: "Check-in complete", body: "5 workers on site, access clear, 3 photos", icon: ClipboardCheck, color: "#22C55E" },
+  { time: "12:18", title: "Blocker raised", body: "Ceiling grid not released in Corridor B", icon: AlertTriangle, color: accent },
+  { time: "15:44", title: "Handoff ready", body: "Trim crew has notes, photos, and open items", icon: ArrowRightLeft, color: "#A855F7" },
+];
+
+const subPlanFeatures = [
+  "Sub Ops dashboard",
+  "Morning dispatch board",
+  "Foreman and crew management",
+  "Daily check-ins with photos",
+  "Production tracking",
+  "Blocker reporting",
+  "SOP library",
+  "Handoff tracker",
+  "Light/dark mode and Spanish",
+];
+
+const gcPlanFeatures = [
+  "GC schedule intelligence",
+  "3-week lookahead and reforecasting",
+  "Ready Check and QR schedule sharing",
+  "Daily logs, reports, inspections, punch, and T&M",
+  "Submittals, RFIs with AI drafting, and drawings",
+  "Unlimited invited subs and foremen",
+];
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#F5F3EE" }}>
-      {/* ═══ HEADER ═══ */}
-      <header className="sticky top-0 z-50 border-b" style={{ background: "#F5F3EE", borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
-            <img
-              src="/irontrack-app-icon.svg"
-              alt="IronTrack"
-              className="h-9 md:h-11 w-auto"
-            />
-            <span className="text-lg md:text-xl font-extrabold tracking-tight" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Iron<span style={{ color: "#E85D1C" }}>Track</span>
-              <span className="hidden md:inline font-medium text-base ml-1.5" style={{ color: "rgba(13,13,13,0.4)" }}>Field Management Platform</span>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: paper }}>
+      <header className="sticky top-0 z-50 border-b" style={{ background: "rgba(245,243,238,0.96)", borderColor: "rgba(13,13,13,0.08)" }}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+          <Link href="/" className="flex items-center gap-2 md:gap-3">
+            <img src="/irontrack-app-icon.svg" alt="IronTrack" className="h-9 w-auto md:h-11" />
+            <span className="text-lg font-extrabold tracking-tight md:text-xl" style={{ color: ink, letterSpacing: "-0.03em" }}>
+              Iron<span style={{ color: accent }}>Track</span>
+              <span className="ml-1.5 hidden text-base font-medium md:inline" style={{ color: "rgba(13,13,13,0.45)" }}>
+                Subcontractor Portal
+              </span>
             </span>
-          </div>
+          </Link>
 
           <MobileMenu />
 
-          <nav className="hidden md:flex items-center gap-8">
-            {["Workflow", "Features", "Who We Serve", "Pricing"].map((item) => (
+          <nav className="hidden items-center gap-8 md:flex">
+            {[
+              ["Platform", "#platform"],
+              ["Daily Loop", "#daily-loop"],
+              ["Features", "#features"],
+              ["Pricing", "#pricing"],
+            ].map(([label, href]) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+                key={label}
+                href={href}
                 className="text-sm font-medium transition-colors hover:text-[#0D0D0D]"
                 style={{ color: "rgba(13,13,13,0.55)" }}
               >
-                {item}
+                {label}
               </a>
             ))}
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="hidden sm:block text-sm font-medium transition-colors"
-              style={{ color: "rgba(13,13,13,0.55)" }}
-            >
-              Sign in
+            <Link href="/login/sub" className="hidden text-sm font-medium transition-colors sm:block" style={{ color: "rgba(13,13,13,0.55)" }}>
+              Sub sign in
             </Link>
             <a
-              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-              className="text-sm px-5 py-2.5 rounded-xl font-bold text-white transition-colors"
-              style={{ background: "#E85D1C" }}
+              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Sub%20Portal%20Demo&body=I%27d%20like%20to%20book%20a%20demo%20of%20the%20IronTrack%20subcontractor%20portal."
+              className="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-colors"
+              style={{ background: subBlue }}
             >
               Book Demo
             </a>
@@ -61,795 +185,353 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
-          <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Daily Field Pulse For GCs And Subs
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
-              style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}
-            >
-              Run Your Job.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Don&apos;t Chase It.</em>
-            </h1>
-            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-                className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
-                style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
-              >
-                <Calendar className="w-5 h-5" />
-                Book a Demo
-                <ArrowRight className="w-5 h-5" />
-              </a>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
-              >
-                <HardHat className="w-5 h-5" />
-                GC Signup
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/signup/sub"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
-              >
-                <Briefcase className="w-5 h-5" />
-                Sub Signup
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-            <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
-              {[
-                {
-                  label: "6:15 AM",
-                  title: "Morning huddle locked in",
-                  body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
-                  icon: Truck,
-                  color: "#E85D1C",
-                },
-                {
-                  label: "11:40 AM",
-                  title: "Blocker raised before it costs a day",
-                  body: "Field notes, photos, and caveats are captured while the problem is still fresh.",
-                  icon: AlertTriangle,
-                  color: "#DC2626",
-                },
-                {
-                  label: "3:55 PM",
-                  title: "Next crew gets the handoff",
-                  body: "What is ready, what is missing, and where to start is already waiting for them.",
-                  icon: ArrowRightLeft,
-                  color: "#3B82F6",
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl p-5 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>{item.label}</span>
-                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
-                  </div>
-                  <h3 className="text-base font-extrabold mb-2" style={{ color: "#0D0D0D" }}>{item.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="workflow" className="py-12 md:py-16 border-y" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0D0D0D" }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-12 items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-                The Problem We Are Built For
+      <main>
+        <section id="platform" className="relative overflow-hidden">
+          <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full blur-3xl" style={{ background: "rgba(59,130,246,0.16)" }} />
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pb-14 pt-16 md:grid-cols-[1.02fr_0.98fr] md:pb-24 md:pt-24 lg:gap-16">
+            <div className="flex flex-col justify-center">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: subBlue, fontFamily: "monospace" }}>
+                Subcontractor Field Portal
               </p>
-              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5 text-white" style={{ letterSpacing: "-0.03em" }}>
-                Stop making every crew start from zero.
-              </h2>
-              <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.68)" }}>
-                Duct rough-in leaves. Piping walks in. Trim follows. Startup finishes. Too often, nobody hands off what changed, what is missing, or what the GC needs to know. IronTrack turns that chaos into a daily field rhythm.
+              <h1 className="mb-6 text-4xl font-extrabold leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl" style={{ color: ink, letterSpacing: "-0.04em" }}>
+                Run every crew from <em className="font-medium" style={{ color: accent }}>dispatch to handoff.</em>
+              </h1>
+              <p className="mb-8 max-w-2xl text-lg leading-relaxed md:text-xl" style={{ color: "rgba(13,13,13,0.62)" }}>
+                IronTrack Pulse is the subcontractor command center for morning dispatch, field check-ins, production, blockers, SOPs, and crew-to-crew handoffs. Your team gets a daily operating rhythm, and the GC gets cleaner visibility.
               </p>
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
-                style={{ background: "#E85D1C" }}
-              >
-                See the workflow
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {[
-                ["Dispatch", "Who is going where, with what scope, material notes, and safety focus."],
-                ["Check-In", "Foremen confirm arrival, manpower, site conditions, and plan for the day."],
-                ["Production", "Quantities, photos, progress notes, and work completed while it is still fresh."],
-                ["Blockers", "Caveats, delays, missing material, access issues, and GC-facing risk history."],
-                ["Handoffs", "Department-to-department readiness so the next crew does not walk in blind."],
-                ["GC Pulse", "A clean view of what is happening without burying the field in paperwork."],
-              ].map(([title, body]) => (
-                <div key={title} className="rounded-2xl p-5 border" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)" }}>
-                  <h3 className="text-base font-extrabold mb-2 text-white">{title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.62)" }}>{body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ INTEGRATIONS BAR ═══ */}
-      <section id="integrations" className="py-10 md:py-14 border-y" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-center text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
-            Works With Your Schedule Software
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {[
-              { name: "Microsoft Project", ext: ".mpp", icon: "/icons/ms-project.svg" },
-              { name: "Primavera P6", ext: ".xer", icon: "/icons/primavera-p6.svg" },
-              { name: "Excel", ext: ".xlsx", icon: "/icons/excel.svg" },
-              { name: "XML / MSPDI", ext: ".xml", icon: "/icons/xml.svg" },
-              { name: "CSV", ext: ".csv", icon: "/icons/csv.svg" },
-            ].map((fmt) => (
-              <div
-                key={fmt.name}
-                className="flex items-center gap-3 px-5 py-3 rounded-xl border shadow-sm"
-                style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={fmt.icon} alt={fmt.name} className="w-8 h-8 rounded-lg" />
-                <div>
-                  <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>{fmt.name}</div>
-                  <div className="text-[10px] font-mono" style={{ color: "rgba(13,13,13,0.4)" }}>{fmt.ext}</div>
-                </div>
-                <CheckCircle className="w-4 h-4 ml-1" style={{ color: "#22C55E" }} />
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/signup/sub"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl px-7 py-4 text-base font-bold text-white shadow-lg transition-all"
+                  style={{ background: subBlue, boxShadow: "0 12px 28px rgba(59,130,246,0.22)" }}
+                >
+                  Start Sub Portal
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+                <a
+                  href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Sub%20Portal%20Walkthrough&body=I%27d%20like%20to%20walk%20through%20IronTrack%20for%20our%20subcontractor%20field%20workflow."
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border px-7 py-4 text-base font-bold transition-all"
+                  style={{ color: ink, background: "white", borderColor: "rgba(13,13,13,0.12)" }}
+                >
+                  <Calendar className="h-5 w-5" />
+                  Book a Walkthrough
+                </a>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="mt-7 flex flex-wrap items-center gap-3 text-sm" style={{ color: "rgba(13,13,13,0.5)" }}>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle className="h-4 w-4" style={{ color: "#22C55E" }} />
+                  $10/mo beta sub plan
+                </span>
+                <span className="hidden h-1 w-1 rounded-full sm:inline-block" style={{ background: "rgba(13,13,13,0.25)" }} />
+                <span>Mobile-first for foremen and crews</span>
+                <span className="hidden h-1 w-1 rounded-full sm:inline-block" style={{ background: "rgba(13,13,13,0.25)" }} />
+                <span>GC coordination layer available</span>
+              </div>
+            </div>
 
-      {/* ═══ FEATURES ═══ */}
-      <section id="features" className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Everything You Need
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Built for the field.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>Not the office.</em>
-            </h2>
-          </div>
+            <div className="rounded-[2rem] border p-4 shadow-2xl" style={{ background: ink, borderColor: "rgba(13,13,13,0.1)", boxShadow: "0 26px 80px rgba(13,13,13,0.18)" }}>
+              <div className="rounded-[1.4rem] border p-4" style={{ background: "linear-gradient(145deg, rgba(59,130,246,0.16), rgba(255,255,255,0.06))", borderColor: "rgba(255,255,255,0.1)" }}>
+                <div className="mb-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em]" style={{ color: "#93C5FD" }}>Today&apos;s Loop</p>
+                    <h2 className="mt-1 text-2xl font-black text-white">Summit Electrical</h2>
+                  </div>
+                  <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ background: "rgba(34,197,94,0.14)", color: "#86EFAC" }}>
+                    Live
+                  </span>
+                </div>
 
-          <div className="space-y-16 md:space-y-24">
-
-            {/* ── [01] Schedule Intelligence ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[01]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Schedule Intelligence
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Upload your schedule once. Instantly see today, tomorrow, and three weeks out - grouped by day, filterable by trade. Update progress in the field and the reforecast engine recalculates your entire critical path in seconds. Float, forecast finish date, risk flags, milestones, and MSPDI export. Pure math, zero AI. Results you can trust and defend.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Day Plan", "Week View", "Trade Filters", "Critical Path", "Float Calc", "MSPDI Export"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
+                <div className="space-y-3">
+                  {heroUpdates.map(({ time, title, body, icon: Icon, color }) => (
+                    <div key={title} className="rounded-2xl border p-4" style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.1)" }}>
+                      <div className="flex items-start gap-3">
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl" style={{ background: `${color}22`, color }}>
+                          <Icon className="h-5 w-5" />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="font-bold text-white">{title}</h3>
+                            <span className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.42)" }}>{time}</span>
+                          </div>
+                          <p className="mt-1 text-sm leading-6" style={{ color: "rgba(255,255,255,0.65)" }}>{body}</p>
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-2 mb-4">
+
+                <div className="mt-4 grid grid-cols-3 gap-3">
                   {[
-                    { task: "Install Structural Steel - Bldg A", pct: "85%", color: "#E85D1C" },
-                    { task: "Rough-In Electrical - Tower 2", pct: "60%", color: "#3B82F6" },
-                    { task: "Pour Foundation North Wing", pct: "100%", color: "#22C55E" },
-                    { task: "Fire Sprinkler Rough-In - Bldg B", pct: "0%", color: "var(--text-muted)" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
-                      <span className="text-sm flex-1 truncate" style={{ color: "#0D0D0D" }}>{item.task}</span>
-                      <span className="text-xs font-bold" style={{ color: item.color }}>{item.pct}</span>
+                    ["6", "Crews out"],
+                    ["340 LF", "Installed"],
+                    ["1", "GC decision"],
+                  ].map(([value, label]) => (
+                    <div key={label} className="rounded-2xl border p-3 text-center" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
+                      <p className="text-xl font-black text-white">{value}</p>
+                      <p className="mt-1 text-[10px] uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.45)" }}>{label}</p>
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 gap-3 mb-3">
-                  <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Forecast Delta</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>+5d Late</div>
-                  </div>
-                  <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Critical Path</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>8 tasks</div>
-                  </div>
-                </div>
-                <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.04)" }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase" style={{ color: "#E85D1C" }}>Recovery Action</span>
-                  </div>
-                  <p className="text-xs" style={{ color: "rgba(13,13,13,0.6)" }}>
-                    Increase crew size on &quot;Structural Steel&quot; to recover 3 days on critical path
-                  </p>
-                </div>
               </div>
             </div>
-
-            {/* ── [02] Field Ops ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#1e3a5f" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Daily Log</span>
-                    <span className="text-[10px] ml-2" style={{ color: "#93c5fd" }}>Apr 25, 2026</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Sun className="w-3.5 h-3.5" style={{ color: "#EAB308" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>72°F - Clear, wind 8mph</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>34 workers on-site · 6 trades active</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Camera className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>12 photos attached</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#DC2626" }}>High</span>
-                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Missing backing for grab bars - Corridor 2</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#22C55E" }}>Done</span>
-                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Punch item: Drywall patch Room 204</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-3 pt-3 border-t" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <FileText className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Export as PDF · Share via link</span>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[02]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Field Ops
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Daily logs with weather, crew counts, delays, and photos. Photo-first field reports. Formal walkthrough observations with professional PDF export. Inspections tied to a jurisdiction database. Punch lists that actually close out. Everything from your phone, saved to project history.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Daily Logs", "Field Reports", "Inspections", "Punch List", "Photo Capture", "PDF Export"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [03] Safety & Compliance ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Safety & Compliance
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run toolbox talks with 20 built-in OSHA templates or create your own. Track attendance with digital sign-in. Generate company-branded PDF reports for your safety files. Custom templates let you match your company&apos;s safety program exactly.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Toolbox Talks", "OSHA Templates", "Attendance", "Custom Templates", "PDF Reports"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#DC2626" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Toolbox Talk</span>
-                    <span className="text-[10px] ml-2 text-red-200">OSHA Template</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>Fall Protection - Scaffolding</div>
-                    <div className="flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs" style={{ color: "rgba(13,13,13,0.55)" }}>OSHA 1926.451 - Scaffolds</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>18 attendees signed in</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "var(--text-muted)" : "#E85D1C" }}>
-                        {i === 4 ? "+14" : ["JR", "MS", "DT"][i - 1]}
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>All crews signed in</span>
-                </div>
-              </div>
-            </div>
-
-            {/* ── [04] Trade Coordination ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#0D0D0D" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Coordination Meeting</span>
-                    <span className="text-[10px] ml-2" style={{ color: "rgba(255,255,255,0.5)" }}>Week 17 · Auto-Agenda</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs font-bold" style={{ color: "#DC2626" }}>Conflict: Electrical + HVAC - Level 3 ceiling</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Re-sequence HVAC rough-in - Owner: AMS Mechanical</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Confirm conduit routing - Owner: ATS Electric</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Handshake className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Agenda auto-populated from schedule data</span>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[04]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Trade Coordination
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Run coordination meetings with agendas auto-populated from your schedule. The system detects trade conflicts before they happen in the field. Track action items with owners and due dates. Stop running meetings off a legal pad.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Meeting Management", "Conflict Detection", "Action Items", "Auto-Agenda"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [05] Documents ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[05]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Documents
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Manage submittals with full approval workflows. Draft RFIs with AI assistance - describe the issue and get a professional RFI ready to send. Organize drawings by discipline with version control. Everything searchable, everything tracked.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Submittals", "RFIs", "AI Drafting", "Drawing Management"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <FileText className="w-4 h-4" style={{ color: "#3B82F6" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>RFI-042: Beam Connection Detail</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>AI-drafted · Awaiting response</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Open</span>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <ClipboardList className="w-4 h-4" style={{ color: "#22C55E" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>SUB-118: Fire Damper Shop Dwgs</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rev 2 · Approved</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Approved</span>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Search className="w-4 h-4" style={{ color: "#E85D1C" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>DWG: Mechanical - Level 3</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rev C · 4 sheets</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#3B82F6", background: "rgba(59,130,246,0.1)" }}>Current</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── [06] Ready Check & Sub Portal ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-3 mb-4">
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>ATS Electric</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Confirmed ✓</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rough-In Electrical - Mon Apr 21</span>
-                  </div>
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Buildtek Framing</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Awaiting</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Exterior Framing Bldg B - Tue Apr 22</span>
-                  </div>
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.03)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>AMS Fire Protection</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EF4444", background: "rgba(239,68,68,0.1)" }}>Issue Flagged</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sprinkler install delayed - material lead time</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center mb-3">
-                  <div className="w-24 h-24 rounded-xl flex items-center justify-center" style={{ background: "#E85D1C" }}>
-                    <QrCode className="w-12 h-12 text-white" />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>
-                    Subs see their scope only · No float or predecessors exposed
-                  </p>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[06]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Ready Check & Sub Portal
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Tap any activity, send a ready-check via SMS or email. Subs confirm they&apos;re mobilizing - or flag an issue before it becomes a problem. Share any week via QR code - subs scan and see only their scope. Schedule logic is protected: no float, no predecessors, no critical path data exposed. Zero friction, zero risk.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["SMS/Email", "QR Sharing", "Trade Filtering", "Protected Schedule Data"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [07] Sub Ops - FEATURED ── */}
-            <div className="relative">
-              <div className="absolute -inset-4 md:-inset-8 rounded-3xl" style={{ background: "rgba(232,93,28,0.04)", border: "2px solid rgba(232,93,28,0.15)" }} />
-              <div className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.12)" }}>
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>New - The Sub Differentiator</span>
-                  </div>
-                  <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[07]</div>
-                  <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                    Sub Ops
-                  </h3>
-                  <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    The full subcontractor management platform. Digitize your morning huddle with the Dispatch Board - assign crews to jobs with scope, safety focus, and materials. Track foremen, journeymen, and apprentices with a real crew roster. Log production quantities with photos. Maintain an SOP library with read-tracking for compliance.
-                  </p>
-                  <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Field crews flag blockers in real-time. Multi-department subs get a Kanban handoff board - sheet metal to piping to controls - with checklists and handoff photos. This isn&apos;t a viewer. It&apos;s how you run your company.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {["Morning Dispatch", "Foreman Tracking", "Production Logs", "SOP Library", "Handoff Board", "Blocker Reports"].map((tag) => (
-                      <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(232,93,28,0.2)" }}>
-                  {/* Dispatch Board Mock */}
-                  <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="px-4 py-2.5" style={{ background: "#E85D1C" }}>
-                      <span className="text-xs font-bold text-white uppercase tracking-wider">Morning Dispatch Board</span>
-                      <span className="text-[10px] ml-2 text-orange-200">Today · 6 Crews Out</span>
-                    </div>
-                    <div className="px-4 py-3 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                        <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Crew A → Riverside Medical</span>
-                        <span className="text-[10px] ml-auto" style={{ color: "rgba(13,13,13,0.4)" }}>Ductwork L3</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                        <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Crew B → Central Office Tower</span>
-                        <span className="text-[10px] ml-auto" style={{ color: "rgba(13,13,13,0.4)" }}>Piping L1</span>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Production + Handoff Mock */}
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Production Today</div>
-                      <div className="text-lg font-extrabold" style={{ color: "#22C55E" }}>340 LF</div>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Ductwork installed</div>
-                    </div>
-                    <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Handoffs</div>
-                      <div className="text-lg font-extrabold" style={{ color: "#3B82F6" }}>3 Ready</div>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sheet metal → piping</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                    <span className="text-xs font-bold" style={{ color: "#DC2626" }}>1 Blocker: Material delay - flex duct, ETA Wed</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── [08] Platform Features ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)", background: "#F5F3EE" }}>
-                    <Sun className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Light Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center" style={{ background: "#1a1a1a" }}>
-                    <Moon className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold text-white">Dark Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Globe className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Español</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Settings className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Settings</span>
-                  </div>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[08]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Platform Features
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Light and dark themes so you can read the screen at 6 AM or midnight. Full Spanish localization for bilingual crews. Mobile-first design that works on any device - because nobody&apos;s carrying a laptop through a construction site.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Dark Mode", "Light Mode", "Español", "Mobile-First"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ WHO WE SERVE ═══ */}
-      <section id="who-we-serve" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Who We Serve
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Built by <em className="font-medium" style={{ color: "#E85D1C" }}>field operators</em>.<br />
-              For field operators.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="border-y py-10 md:py-14" style={{ borderColor: "rgba(13,13,13,0.08)", background: "white" }}>
+          <div className="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-4">
             {[
-              {
-                icon: HardHat,
-                title: "Superintendents",
-                desc: "You run the job. Daily logs, field reports, coordination meetings, and toolbox talks - all from your phone. Know what's happening today, what's at risk, and what's about to blow up before it does.",
-              },
-              {
-                icon: Briefcase,
-                title: "Project Managers",
-                desc: "You own the schedule and the client relationship. Reforecast engine, milestone tracking, sub portal, document management - executive snapshots and risk detection without digging through spreadsheets.",
-              },
-              {
-                icon: Building2,
-                title: "General Contractors",
-                desc: "Full platform visibility across every project. Trade coordination, conflict detection, sub management, safety compliance. Your entire team on one shared operating picture - upload once, everyone's aligned.",
-              },
-              {
-                icon: Users,
-                title: "Subcontractors",
-                desc: "This isn't just a schedule viewer. Sub Ops gives you a morning dispatch board, foreman and crew management, production tracking, SOP library, and department handoff boards. Run your entire operation - not just see when you're up.",
-              },
-            ].map((persona) => (
-              <div
-                key={persona.title}
-                className="rounded-2xl p-6 md:p-8 border transition-all"
-                style={{ background: "white", borderColor: persona.title === "Subcontractors" ? "rgba(232,93,28,0.3)" : "rgba(13,13,13,0.08)" }}
-              >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "rgba(232,93,28,0.08)" }}>
-                  <persona.icon className="w-6 h-6" style={{ color: "#E85D1C" }} />
-                </div>
-                <h3 className="text-xl font-extrabold mb-3" style={{ color: "#0D0D0D" }}>{persona.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{persona.desc}</p>
+              ["Built for subs", "Dispatch, manpower, SOPs, blockers, and handoffs are first-class workflows."],
+              ["Field-friendly", "Large touch targets, fast updates, photos, Spanish support, and light/dark modes."],
+              ["GC-useful", "Give the GC clear status and blockers without handing over internal noise."],
+              ["Schedule-aware", "Tie updates to real activities and lookaheads when a GC schedule is connected."],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-2xl border p-5" style={{ borderColor: "rgba(13,13,13,0.08)", background: paper }}>
+                <h3 className="font-extrabold" style={{ color: ink }}>{title}</h3>
+                <p className="mt-2 text-sm leading-6" style={{ color: "rgba(13,13,13,0.55)" }}>{body}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Founder Pricing
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Simple pricing while we build with early crews.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Subcontractor Plan */}
-            <div className="rounded-2xl p-8 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(59,130,246,0.1)" }}>
-                  <Briefcase className="w-6 h-6" style={{ color: "#3B82F6" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Subcontractor</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  $10<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Beta pricing per company</p>
-              </div>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  "Sub Ops dashboard",
-                  "Morning Dispatch Board",
-                  "Foreman & Crew management",
-                  "Daily Check-In with photos",
-                  "Production tracking",
-                  "Blocker reporting",
-                  "SOP Library",
-                  "Handoff Tracker",
-                  "Light/dark + Spanish",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
-                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup/sub"
-                className="block w-full text-center px-6 py-3 text-white rounded-xl text-sm font-bold transition-all"
-                style={{ background: "#3B82F6" }}
-              >
-                Get Started
-              </Link>
-            </div>
-
-            {/* GC Plan — Featured */}
-            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#E85D1C" }}>
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E85D1C" }}>Most Popular</span>
-              </div>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(232,93,28,0.1)" }}>
-                  <HardHat className="w-6 h-6" style={{ color: "#E85D1C" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>General Contractor</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  $19.99<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Founder beta pricing</p>
-              </div>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  "Everything in Subcontractor, plus:",
-                  "All schedule formats (MPP, XER, XLSX, CSV, XML)",
-                  "3-week lookahead + reforecast engine",
-                  "Field ops: daily logs, reports, inspections",
-                  "Safety: toolbox talks, templates",
-                  "Documents: submittals, RFIs with AI, drawings",
-                  "Sub management + Ready Check + QR sharing",
-                  "Punch list + T&M tracking",
-                  "Unlimited invited subs and foremen",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
-                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup"
-                className="block w-full text-center px-8 py-4 text-white rounded-xl text-lg font-bold transition-all"
-                style={{ background: "#E85D1C" }}
-              >
-                Start Founder Plan
-              </Link>
-            </div>
-            {/* Enterprise Plan */}
-            <div className="rounded-2xl p-8 border flex flex-col" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
-                  <Building2 className="w-6 h-6" style={{ color: "#0D0D0D" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Enterprise</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  Custom
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>For firms with 5+ active projects</p>
-              </div>
-              <ul className="space-y-2.5 mb-6 flex-1">
-                {[
-                  "Everything in GC, plus:",
-                  "Unlimited projects",
-                  "Multi-user team accounts",
-                  "Custom onboarding + training",
-                  "Priority support",
-                  "API access",
-                  "Custom report templates",
-                  "Dedicated account manager",
-                  "Volume pricing",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(13,13,13,0.25)" }} />
-                    <span className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=Enterprise%20Demo%20Request&body=I%27d%20like%20to%20schedule%20a%20demo%20of%20IronTrack%20Pulse%20for%20our%20team."
-                className="block w-full text-center px-6 py-3 rounded-xl text-sm font-bold transition-all border-2"
-                style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
-              >
-                Book a Demo
-              </a>
-              <p className="text-center text-xs mt-3" style={{ color: "rgba(13,13,13,0.35)" }}>
-                We will walk your real workflow
+        <section id="daily-loop" className="py-16 md:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mx-auto mb-14 max-w-3xl text-center">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "monospace" }}>
+                The Daily Loop
+              </p>
+              <h2 className="text-3xl font-extrabold md:text-5xl" style={{ color: ink, letterSpacing: "-0.03em" }}>
+                One rhythm for every crew, foreman, and handoff.
+              </h2>
+              <p className="mt-5 text-base leading-7 md:text-lg" style={{ color: "rgba(13,13,13,0.58)" }}>
+                IronTrack replaces scattered texts, legal pads, and end-of-day memory with a repeatable loop that keeps field context moving.
               </p>
             </div>
+            <div className="grid gap-4 md:grid-cols-5">
+              {dailyLoop.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <div key={step.title} className="relative rounded-2xl border p-5 shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+                    <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: index === 3 ? "rgba(232,93,28,0.1)" : "rgba(59,130,246,0.1)", color: index === 3 ? accent : subBlue }}>
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div className="mb-2 text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
+                      0{index + 1}
+                    </div>
+                    <h3 className="text-lg font-extrabold" style={{ color: ink }}>{step.title}</h3>
+                    <p className="mt-3 text-sm leading-6" style={{ color: "rgba(13,13,13,0.55)" }}>{step.body}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="py-8 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <section id="features" className="border-y py-16 md:py-24" style={{ background: ink, borderColor: "rgba(13,13,13,0.08)" }}>
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: "#93C5FD", fontFamily: "monospace" }}>
+                  Portal Features
+                </p>
+                <h2 className="text-3xl font-extrabold leading-tight text-white md:text-5xl" style={{ letterSpacing: "-0.03em" }}>
+                  The subcontractor side is the product, not an afterthought.
+                </h2>
+                <p className="mt-5 text-base leading-7 md:text-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  Most platforms invite subs into someone else&apos;s system. IronTrack gives subs their own operating layer first, then turns the cleanest field signal into GC-ready intelligence.
+                </p>
+                <Link
+                  href="/sub/preview"
+                  className="mt-7 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white"
+                  style={{ background: accent }}
+                >
+                  Preview the portal
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {portalFeatures.map((feature) => {
+                  const Icon = feature.icon;
+                  return (
+                    <div key={feature.title} className="rounded-2xl border p-5" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
+                      <Icon className="mb-4 h-6 w-6" style={{ color: subBlue }} />
+                      <h3 className="font-extrabold text-white">{feature.title}</h3>
+                      <p className="mt-3 text-sm leading-6" style={{ color: "rgba(255,255,255,0.62)" }}>{feature.body}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="gc-layer" className="py-16 md:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-center">
+            <div className="rounded-[1.75rem] border p-6 shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+              <div className="mb-5 flex items-center justify-between rounded-2xl p-4" style={{ background: paper }}>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.38)", fontFamily: "monospace" }}>GC View</p>
+                  <h3 className="mt-1 text-xl font-black" style={{ color: ink }}>Clean field signal</h3>
+                </div>
+                <QrCode className="h-9 w-9" style={{ color: accent }} />
+              </div>
+              <div className="space-y-3">
+                {[
+                  ["Ready", "AMS Mechanical confirmed 6 workers for Monday."],
+                  ["Blocked", "ATS Electric needs ceiling grid released before trim."],
+                  ["Complete", "Buildtek uploaded 14 handoff photos for Area C."],
+                ].map(([status, body]) => (
+                  <div key={status} className="flex items-start gap-3 rounded-2xl border p-4" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
+                    <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: status === "Blocked" ? accent : "#22C55E" }} />
+                    <div>
+                      <p className="font-bold" style={{ color: ink }}>{status}</p>
+                      <p className="mt-1 text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "monospace" }}>
+                Still GC-Useful
+              </p>
+              <h2 className="text-3xl font-extrabold md:text-5xl" style={{ color: ink, letterSpacing: "-0.03em" }}>
+                Subs get control. GCs get fewer surprises.
+              </h2>
+              <p className="mt-5 text-base leading-7 md:text-lg" style={{ color: "rgba(13,13,13,0.58)" }}>
+                IronTrack can still serve general contractors with schedule intelligence, ready checks, QR links, and project documentation. The difference is that the subcontractor portal now leads the workflow.
+              </p>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {gcLayer.map((item) => (
+                  <div key={item} className="flex items-start gap-2 rounded-xl border p-3" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#22C55E" }} />
+                    <span className="text-sm font-medium" style={{ color: ink }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="who-we-serve" className="border-y py-16 md:py-24" style={{ borderColor: "rgba(13,13,13,0.08)", background: "white" }}>
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "monospace" }}>
+                Who It Is For
+              </p>
+              <h2 className="text-3xl font-extrabold md:text-5xl" style={{ color: ink, letterSpacing: "-0.03em" }}>
+                Built around subcontractor operations.
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  icon: Briefcase,
+                  title: "Subcontractor owners",
+                  body: "See where crews are, what got done, what is blocked, and what handoffs need attention across every job.",
+                },
+                {
+                  icon: HardHat,
+                  title: "Foremen and field leaders",
+                  body: "Update check-ins, production, photos, and blockers from a phone without digging through office software.",
+                },
+                {
+                  icon: Building2,
+                  title: "GC partners",
+                  body: "Receive cleaner readiness, blocker, and production signals from subs without forcing them into a heavy process.",
+                },
+              ].map((persona) => {
+                const Icon = persona.icon;
+                return (
+                  <div key={persona.title} className="rounded-2xl border p-7" style={{ background: paper, borderColor: persona.title.startsWith("Subcontractor") ? "rgba(59,130,246,0.25)" : "rgba(13,13,13,0.08)" }}>
+                    <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: persona.title.startsWith("Subcontractor") ? "rgba(59,130,246,0.1)" : "rgba(232,93,28,0.1)", color: persona.title.startsWith("Subcontractor") ? subBlue : accent }}>
+                      <Icon className="h-6 w-6" />
+                    </span>
+                    <h3 className="text-xl font-extrabold" style={{ color: ink }}>{persona.title}</h3>
+                    <p className="mt-3 text-sm leading-6" style={{ color: "rgba(13,13,13,0.55)" }}>{persona.body}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="py-16 md:py-24">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mb-10 text-center">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest" style={{ color: accent, fontFamily: "monospace" }}>
+                Founder Pricing
+              </p>
+              <h2 className="text-3xl font-extrabold md:text-4xl" style={{ color: ink, letterSpacing: "-0.03em" }}>
+                Start with the subcontractor portal.
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-7" style={{ color: "rgba(13,13,13,0.55)" }}>
+                Keep the sub product simple. Add the GC coordination layer when you need schedule imports, documentation, and broader project controls.
+              </p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              <PricingCard
+                title="Subcontractor"
+                price="$10"
+                note="Beta pricing per company"
+                icon={Briefcase}
+                iconColor={subBlue}
+                borderColor={subBlue}
+                featured
+                features={subPlanFeatures}
+                ctaHref="/signup/sub"
+                ctaLabel="Start Sub Portal"
+              />
+              <PricingCard
+                title="General Contractor"
+                price="$19.99"
+                note="Founder beta pricing"
+                icon={HardHat}
+                iconColor={accent}
+                borderColor="rgba(13,13,13,0.12)"
+                features={gcPlanFeatures}
+                ctaHref="/signup"
+                ctaLabel="Start GC Plan"
+              />
+              <div className="flex flex-col rounded-2xl border p-8" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
+                <div className="mb-6 text-center">
+                  <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: "rgba(13,13,13,0.05)", color: ink }}>
+                    <Building2 className="h-6 w-6" />
+                  </span>
+                  <h3 className="text-lg font-extrabold" style={{ color: ink }}>Enterprise</h3>
+                  <div className="mt-1 text-3xl font-extrabold" style={{ color: ink }}>Custom</div>
+                  <p className="mt-1 text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>For multi-crew and multi-project firms</p>
+                </div>
+                <ul className="mb-6 flex-1 space-y-2.5">
+                  {["Multi-company rollouts", "Custom onboarding and training", "Priority support", "Custom report templates", "Volume pricing"].map((feature) => (
+                    <li key={feature} className="flex items-start gap-2">
+                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "rgba(13,13,13,0.25)" }} />
+                      <span className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Enterprise%20Portal%20Demo&body=I%27d%20like%20to%20schedule%20a%20demo%20of%20IronTrack%20Pulse%20for%20our%20field%20team."
+                  className="block rounded-xl border-2 px-6 py-3 text-center text-sm font-bold transition-all"
+                  style={{ color: ink, borderColor: "rgba(13,13,13,0.15)" }}
+                >
+                  Book a Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t py-8" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
           <div className="flex items-center gap-2">
-            <img src="/irontrack-app-icon.svg" alt="" className="w-5 h-5" />
+            <img src="/irontrack-app-icon.svg" alt="" className="h-5 w-5" />
             <span className="text-sm" style={{ color: "rgba(13,13,13,0.4)" }}>© 2026 IronTrack Development LLC</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-xs md:text-sm">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs md:gap-4 md:text-sm">
             <Link href="/terms" style={{ color: "rgba(13,13,13,0.4)" }}>Terms</Link>
             <span style={{ color: "rgba(13,13,13,0.15)" }}>·</span>
             <Link href="/privacy" style={{ color: "rgba(13,13,13,0.4)" }}>Privacy</Link>
@@ -862,6 +544,65 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function PricingCard({
+  title,
+  price,
+  note,
+  icon: Icon,
+  iconColor,
+  borderColor,
+  featured = false,
+  features,
+  ctaHref,
+  ctaLabel,
+}: {
+  title: string;
+  price: string;
+  note: string;
+  icon: LucideIcon;
+  iconColor: string;
+  borderColor: string;
+  featured?: boolean;
+  features: string[];
+  ctaHref: string;
+  ctaLabel: string;
+}) {
+  return (
+    <div className="relative rounded-2xl border p-8" style={{ background: "white", borderColor, borderWidth: featured ? 2 : 1 }}>
+      {featured && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span className="rounded-full px-3 py-1 text-xs font-bold text-white" style={{ background: subBlue }}>Sub Portal First</span>
+        </div>
+      )}
+      <div className="mb-6 text-center">
+        <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: `${iconColor}1A`, color: iconColor }}>
+          <Icon className="h-6 w-6" />
+        </span>
+        <h3 className="text-lg font-extrabold" style={{ color: ink }}>{title}</h3>
+        <div className="mt-1 text-3xl font-extrabold" style={{ color: ink }}>
+          {price}<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
+        </div>
+        <p className="mt-1 text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>{note}</p>
+      </div>
+      <ul className="mb-6 space-y-2.5">
+        {features.map((feature) => (
+          <li key={feature} className="flex items-start gap-2">
+            <CheckCircle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#22C55E" }} />
+            <span className="text-sm" style={{ color: ink }}>{feature}</span>
+          </li>
+        ))}
+      </ul>
+      <Link
+        href={ctaHref}
+        className="block rounded-xl px-6 py-3 text-center text-sm font-bold text-white transition-all"
+        style={{ background: featured ? subBlue : accent }}
+      >
+        {ctaLabel}
+      </Link>
     </div>
   );
 }

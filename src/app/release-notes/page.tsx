@@ -16,6 +16,18 @@ interface ReleaseNote {
 
 const releases: ReleaseNote[] = [
   {
+    version: "v1.7.0",
+    date: "May 10, 2026",
+    platform: "Web",
+    title: "Subcontractor Portal Positioning",
+    changes: [
+      "Rebuilt the public website around the subcontractor daily loop: dispatch, check-in, production, blockers, and handoffs",
+      "Updated homepage pricing and calls to action to lead with the $10/month Sub Portal plan",
+      "Aligned site metadata, navigation, and portal entry copy with subcontractor field operations",
+      "Kept the GC coordination layer visible for ready checks, QR schedule views, reporting, and schedule intelligence",
+    ],
+  },
+  {
     version: "v1.6.0",
     date: "April 16, 2026",
     platform: "Web",
@@ -157,7 +169,7 @@ export default function ReleaseNotesPage() {
               />
             </div>
             <span className="text-lg md:text-xl font-bold text-[color:var(--text-primary)]">
-              IronTrack<span className="hidden md:inline"> Project Pulse</span>
+              IronTrack<span className="hidden md:inline"> Pulse</span>
             </span>
           </Link>
           <Link href="/" className="text-sm text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors">
@@ -170,7 +182,7 @@ export default function ReleaseNotesPage() {
         {/* Page Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">Release Notes</h1>
-          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Project Pulse</p>
+          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Pulse</p>
         </div>
 
         {/* Filter Tabs */}

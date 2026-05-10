@@ -21,7 +21,7 @@ export default function PrivacyPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-6 h-6 text-[#F97316]" />
-          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
+          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Pulse</span>
         </div>
 
         <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">Privacy Policy</h1>
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           {/* Introduction */}
           <section>
             <p>
-              IronTrack Development LLC ("we," "us," "our") operates IronTrack Project Pulse. This Privacy Policy explains how we collect, use, store, and protect your personal information.
+              IronTrack Development LLC ("we," "us," "our") operates IronTrack Pulse. This Privacy Policy explains how we collect, use, store, and protect your personal information.
             </p>
             <p className="mt-4">
               We take your privacy seriously. This policy is written in plain language — no legal jargon unless necessary.
@@ -42,12 +42,13 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">1. What Data We Collect</h2>
             <p>
-              When you use IronTrack Project Pulse, we collect:
+              When you use IronTrack Pulse, we collect:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li><strong className="text-[color:var(--text-primary)]">Email address</strong> — for your account and login</li>
               <li><strong className="text-[color:var(--text-primary)]">Password (hashed)</strong> — we never store your actual password, only a secure hash</li>
               <li><strong className="text-[color:var(--text-primary)]">Uploaded schedule files</strong> — .mpp, .xlsx, .csv, .xml, .xer files you upload</li>
+              <li><strong className="text-[color:var(--text-primary)]">Subcontractor portal records</strong> — dispatches, check-ins, production notes, blockers, SOP acknowledgements, crew records, handoffs, and photos you submit</li>
               <li><strong className="text-[color:var(--text-primary)]">Usage data</strong> — when you log in, which features you use, error logs</li>
               <li><strong className="text-[color:var(--text-primary)]">Payment information</strong> — handled entirely by Stripe; we never see your credit card number</li>
             </ul>
@@ -60,7 +61,7 @@ export default function PrivacyPage() {
               We use your data to:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
-              <li><strong className="text-[color:var(--text-primary)]">Provide the Service</strong> — parse your schedules, display lookaheads, track milestones</li>
+              <li><strong className="text-[color:var(--text-primary)]">Provide the Service</strong> — run subcontractor portal workflows, parse schedules, display lookaheads, and track milestones</li>
               <li><strong className="text-[color:var(--text-primary)]">Manage your account</strong> — authentication, subscription, session management</li>
               <li><strong className="text-[color:var(--text-primary)]">Process billing</strong> — charge your subscription via Stripe</li>
               <li><strong className="text-[color:var(--text-primary)]">Improve the platform</strong> — analyze anonymized, aggregate data (see below)</li>
@@ -114,7 +115,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">5. Third-Party Services</h2>
             <p>
-              We use these third-party services to operate IronTrack Project Pulse:
+              We use these third-party services to operate IronTrack Pulse:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li><strong className="text-[color:var(--text-primary)]">Supabase</strong> — database and authentication</li>
@@ -191,7 +192,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">10. Children</h2>
             <p>
-              IronTrack Project Pulse is not intended for users under 18. We do not knowingly collect data from children. If you believe we have collected data from a child, contact us and we will delete it.
+              IronTrack Pulse is not intended for users under 18. We do not knowingly collect data from children. If you believe we have collected data from a child, contact us and we will delete it.
             </p>
           </section>
 

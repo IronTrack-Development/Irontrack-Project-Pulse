@@ -17,33 +17,33 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
-  title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-  description: "Upload your schedule. Get critical path intelligence, inspection tracking, risk detection, and executive snapshots — instantly. Built for superintendents and PMs who need answers, not spreadsheets.",
+  title: "IronTrack Pulse — Subcontractor Field Portal",
+  description: "Run subcontractor crews from dispatch to handoff. IronTrack Pulse brings morning dispatch, field check-ins, production, blockers, SOPs, bilingual updates, and GC-ready visibility into one mobile portal.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Upload your schedule and know what matters today.",
+    title: "IronTrack Pulse — Subcontractor Field Portal",
+    description: "Dispatch crews, capture check-ins, track production, raise blockers, manage SOPs, and hand off clean field context from one subcontractor portal.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Pulse subcontractor field portal",
       },
     ],
     type: "website",
-    siteName: "IronTrack Project Pulse",
+    siteName: "IronTrack Pulse",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IronTrack Project Pulse — Feel The Pulse Of Your Project",
-    description: "Critical path intelligence. Inspection tracking. Risk detection. Executive snapshots. Built for construction field teams.",
+    title: "IronTrack Pulse — Subcontractor Field Portal",
+    description: "Morning dispatch, check-ins, production, blockers, SOPs, handoffs, and GC-ready visibility for subcontractor field teams.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Pulse subcontractor field portal",
       },
     ],
   },
