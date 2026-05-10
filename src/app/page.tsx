@@ -1,873 +1,402 @@
 import Link from "next/link";
 import {
-  ArrowRight, CheckCircle, HardHat, Briefcase, Building2,
-  Calendar, QrCode, ClipboardList,
-  Camera, FileText, Shield, Zap, Users,
-  Handshake, ArrowRightLeft, Sun, Moon, Globe,
-  AlertTriangle, Truck, Search, Clipboard, Settings
+  AlertTriangle,
+  ArrowRight,
+  BarChart3,
+  Briefcase,
+  Building2,
+  CalendarDays,
+  Camera,
+  CheckCircle,
+  ClipboardList,
+  FileText,
+  FolderOpen,
+  HardHat,
+  Mail,
+  MessageSquare,
+  Phone,
+  ShieldCheck,
+  Users,
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 
+const sources = [
+  "Procore",
+  "Autodesk / ACC",
+  "Fieldwire",
+  "Email",
+  "PDFs",
+  "Screenshots",
+  "Lookaheads",
+  "Spreadsheets",
+  "Meeting notes",
+  "Verbal changes",
+];
+
+const workflow = [
+  {
+    title: "Job Inbox",
+    body: "Capture GC requests from email, PDFs, screenshots, lookaheads, meetings, calls, and manual notes.",
+    icon: FolderOpen,
+  },
+  {
+    title: "Work Cards",
+    body: "Turn scope into clear cards with date, location, trade, crew, blockers, proof, and status.",
+    icon: ClipboardList,
+  },
+  {
+    title: "Readiness Board",
+    body: "See ready, not ready, missing material, missing access, missing drawings, and waiting on GC.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Proof Log",
+    body: "Collect photos, notes, manpower, delays, timestamps, and GC-notified records.",
+    icon: Camera,
+  },
+  {
+    title: "GC Response",
+    body: "Create clean text, email, and PDF responses without requiring the GC to log in.",
+    icon: MessageSquare,
+  },
+  {
+    title: "Owner Snapshot",
+    body: "Show what is ready, at risk, missing proof, unanswered, or needing a call today.",
+    icon: BarChart3,
+  },
+];
+
+const roles = [
+  {
+    title: "Subcontractor Owner",
+    body: "See the jobs at risk, proof gaps, and calls that need leadership attention.",
+    icon: Building2,
+  },
+  {
+    title: "Operations Manager",
+    body: "Triage GC noise and keep foremen aligned without living in five portals.",
+    icon: Briefcase,
+  },
+  {
+    title: "Project Manager",
+    body: "Send professional responses with proof attached instead of rebuilding the story.",
+    icon: Mail,
+  },
+  {
+    title: "Foreman",
+    body: "Open the job, tap the work card, add proof, flag blockers, and move on.",
+    icon: HardHat,
+  },
+  {
+    title: "Field Crew",
+    body: "Know where to go, what is ready, and what proof needs to be captured.",
+    icon: Users,
+  },
+];
+
+const fieldTools = [
+  ["Schedule", "5"],
+  ["Job Inbox", "3"],
+  ["Work Cards", ""],
+  ["Readiness", ""],
+  ["Blockers", "1"],
+  ["Proof Log", "2"],
+  ["GC Response", ""],
+];
+
+function DemoRequestLink({ children, className }: { children: React.ReactNode; className: string }) {
+  return (
+    <a
+      href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Field%20Pulse%20Demo%20Request&body=I%27d%20like%20to%20see%20how%20IronTrack%20Field%20Pulse%20helps%20subcontractors%20control%20GC%20communication%2C%20proof%2C%20readiness%2C%20and%20responses."
+      className={className}
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#F5F3EE" }}>
-      {/* ═══ HEADER ═══ */}
-      <header className="sticky top-0 z-50 border-b" style={{ background: "#F5F3EE", borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
+    <div className="min-h-screen overflow-x-hidden bg-[#08090B] text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090B]/92 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+          <Link href="/" className="flex items-center">
             <img
-              src="/irontrack-field-pulse-logo.svg"
+              src="/irontrack-field-pulse-logo-dark.svg"
               alt="IronTrack Field Pulse"
-              className="h-10 md:h-14 w-auto"
+              className="h-11 w-auto md:h-14"
             />
-          </div>
+          </Link>
 
           <MobileMenu />
 
-          <nav className="hidden md:flex items-center gap-8">
-            {["Workflow", "Features", "Who We Serve", "Pricing"].map((item) => (
+          <nav className="hidden items-center gap-8 md:flex">
+            {["Workflow", "Product", "Teams", "Pricing"].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                className="text-sm font-medium transition-colors hover:text-[#0D0D0D]"
-                style={{ color: "rgba(13,13,13,0.55)" }}
+                href={`#${item.toLowerCase()}`}
+                className="text-sm font-semibold text-white/55 transition-colors hover:text-white"
               >
                 {item}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login/sub"
-              className="hidden sm:block text-sm font-medium transition-colors"
-              style={{ color: "rgba(13,13,13,0.55)" }}
-            >
+          <div className="hidden items-center gap-3 sm:flex">
+            <Link href="/login/sub" className="text-sm font-semibold text-white/60 transition-colors hover:text-white">
               Sign in
             </Link>
-            <a
-              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-              className="text-sm px-5 py-2.5 rounded-xl font-bold text-white transition-colors"
-              style={{ background: "#E85D1C" }}
+            <Link
+              href="/signup/sub"
+              className="rounded-xl bg-[#F97316] px-5 py-2.5 text-sm font-black text-white shadow-[0_14px_34px_rgba(249,115,22,0.24)] transition-transform hover:-translate-y-0.5"
             >
-              Book Demo
-            </a>
+              Start beta
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
-          <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Job Inbox → Work Cards → Readiness Board → Proof Log → GC Response → Owner Snapshot
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
-              style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}
-            >
-              Control GC chaos<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>without asking GC to change.</em>
-            </h1>
-            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(13,13,13,0.55)" }}>
-              IronTrack helps subcontractors control requests, schedule noise, proof, and responses across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.
-            </p>
-            <div className="mx-auto mb-8 grid max-w-4xl grid-cols-2 gap-2 rounded-2xl border p-2 text-left sm:grid-cols-3 lg:grid-cols-6" style={{ background: "rgba(255,255,255,0.72)", borderColor: "rgba(13,13,13,0.08)" }}>
-              {["Job Inbox", "Work Cards", "Readiness", "Proof Log", "GC Response", "Owner Snapshot"].map((step, index) => (
-                <div key={step} className="rounded-xl px-3 py-3" style={{ background: index === 0 ? "rgba(232,93,28,0.08)" : "white" }}>
-                  <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
-                    0{index + 1}
-                  </div>
-                  <div className="mt-1 text-sm font-extrabold" style={{ color: "#0D0D0D" }}>{step}</div>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
-                style={{ background: "#E85D1C", boxShadow: "0 8px 24px rgba(232,93,28,0.25)" }}
-              >
-                <Calendar className="w-5 h-5" />
-                Book a sub workflow demo
-                <ArrowRight className="w-5 h-5" />
-              </a>
-              <Link
-                href="/signup/sub"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0D0D0D", background: "white", borderColor: "rgba(13,13,13,0.12)" }}
-              >
-                <Briefcase className="w-5 h-5" />
-                Start as Subcontractor
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold" style={{ color: "rgba(13,13,13,0.45)" }}>
-              <span>Public beta</span>
-              <span>•</span>
-              <span>Subcontractor-first workflow</span>
-              <span>Support: irontrackdevelopment@outlook.com</span>
-            </div>
-            <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
-              {[
-                {
-                  label: "6:15 AM",
-                  title: "GC requests land in one inbox",
-                  body: "Email, screenshots, texts, PDFs, and portal notes become work cards your team can act on.",
-                  icon: Truck,
-                  color: "#E85D1C",
-                },
-                {
-                  label: "11:40 AM",
-                  title: "Blockers get proof, not rumors",
-                  body: "Foremen attach photos, notes, and readiness status while the facts are still fresh.",
-                  icon: AlertTriangle,
-                  color: "#DC2626",
-                },
-                {
-                  label: "3:55 PM",
-                  title: "GC response is ready to send",
-                  body: "Operations can send a clean answer and roll the proof into an owner-friendly snapshot.",
-                  icon: ArrowRightLeft,
-                  color: "#3B82F6",
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl p-5 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>{item.label}</span>
-                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
-                  </div>
-                  <h3 className="text-base font-extrabold mb-2" style={{ color: "#0D0D0D" }}>{item.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="workflow" className="py-12 md:py-16 border-y" style={{ borderColor: "rgba(13,13,13,0.08)", background: "#0D0D0D" }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-12 items-center">
+      <main>
+        <section className="relative overflow-hidden border-b border-white/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(249,115,22,0.18),transparent_34%),linear-gradient(135deg,#08090B_0%,#121418_48%,#050506_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/70 to-transparent" />
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-                The Problem We Are Built For
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#FDBA74]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F97316]" />
+                Subcontractor-owned field command center
+              </div>
+              <h1 className="max-w-4xl text-4xl font-black leading-[0.94] tracking-[-0.045em] text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                Turn scattered GC communication into organized job control.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
+                IronTrack Field Pulse helps subcontractors know what is coming, what is ready, what is blocked,
+                what needs proof, and what needs a clean response back to the GC.
               </p>
-              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5 text-white" style={{ letterSpacing: "-0.03em" }}>
-                Stop letting GC noise run your company.
-              </h2>
-              <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.68)" }}>
-                Every GC works differently: Procore on one job, Autodesk on another, Fieldwire on a third, plus email, PDFs, screenshots, texts, calls, and spreadsheets. IronTrack gives subcontractors one operating layer for what needs action today.
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/signup/sub"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl bg-[#F97316] px-7 py-4 text-base font-black text-white shadow-[0_18px_45px_rgba(249,115,22,0.28)] transition-transform hover:-translate-y-0.5"
+                >
+                  Start subcontractor beta
+                  <ArrowRight size={18} />
+                </Link>
+                <DemoRequestLink className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 text-base font-bold text-white transition-colors hover:bg-white/10">
+                  Book workflow demo
+                  <CalendarDays size={18} />
+                </DemoRequestLink>
+              </div>
+              <p className="mt-5 text-sm font-semibold text-slate-500">
+                GC does not need an account. Your team owns the workspace.
               </p>
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Workflow%20Demo&body=I%27d%20like%20to%20see%20the%20IronTrack%20handoff%20and%20field%20pulse%20workflow."
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
-                style={{ background: "#E85D1C" }}
-              >
-                See the sub workflow
-                <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {[
-                ["Job Inbox", "All GC asks, portal exports, screenshots, emails, calls, and texts routed into one daily queue."],
-                ["Work Cards", "Each request becomes a clear scope card with project, location, due date, owner, and next action."],
-                ["Readiness Board", "Foremen and operations see what is ready, not ready, blocked, or waiting on the GC."],
-                ["Proof Log", "Photos, notes, quantities, and field context stay tied to the work instead of scattered in phones."],
-                ["GC Response", "Turn field facts into a clean reply back to the GC without rewriting the story twice."],
-                ["Owner Snapshot", "Roll up proof, blockers, and responses into a leadership view for subcontractor owners."],
-              ].map(([title, body]) => (
-                <div key={title} className="rounded-2xl p-5 border" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)" }}>
-                  <h3 className="text-base font-extrabold mb-2 text-white">{title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.62)" }}>{body}</p>
+
+            <div className="relative">
+              <div className="absolute -inset-6 rounded-[2rem] bg-[#F97316]/10 blur-3xl" />
+              <div className="relative rounded-[2rem] border border-white/12 bg-[#0D0F12] p-4 shadow-[0_32px_100px_rgba(0,0,0,0.42)]">
+                <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F97316]">Job Control</p>
+                    <h2 className="mt-1 text-2xl font-black">Avondale Medical Office</h2>
+                  </div>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-slate-300">
+                    Today
+                  </span>
                 </div>
+                <div className="mb-4 flex flex-wrap gap-2 text-xs font-bold">
+                  <span className="rounded-full bg-red-500/15 px-3 py-1 text-red-300">1 blocked</span>
+                  <span className="rounded-full bg-amber-500/15 px-3 py-1 text-amber-300">2 proof missing</span>
+                  <span className="rounded-full bg-sky-500/15 px-3 py-1 text-sky-300">1 RFI open</span>
+                </div>
+                <div className="rounded-2xl border border-[#F97316]/20 bg-black/30 p-3">
+                  <p className="mb-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#F97316]">Today</p>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {fieldTools.map(([label, count]) => (
+                      <div key={label} className="relative min-h-[86px] rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-3">
+                        {count && (
+                          <span className="absolute right-2 top-2 grid h-6 min-w-6 place-items-center rounded-full bg-[#F97316] px-1.5 text-xs font-black">
+                            {count}
+                          </span>
+                        )}
+                        <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-[#F97316]/12 text-[#F97316]">
+                          <ClipboardList size={18} />
+                        </div>
+                        <p className="text-sm font-black">{label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-3">
+                  {[
+                    ["Field Work", "Production, photos, equipment, materials"],
+                    ["Project Docs", "Drawings, RFIs, submittals, reports"],
+                    ["Coordination", "Meetings, crew, owner snapshot"],
+                  ].map(([title, body]) => (
+                    <div key={title} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                      <p className="font-black">{title}</p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">{body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-white/10 bg-[#0B0D10] py-10">
+          <div className="mx-auto max-w-7xl px-6">
+            <p className="mb-5 text-center text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">
+              Works alongside the tools GCs already use
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {sources.map((source) => (
+                <span key={source} className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-300">
+                  {source}
+                </span>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ INTEGRATIONS BAR ═══ */}
-      <section id="integrations" className="py-10 md:py-14 border-y" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-center text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: "rgba(13,13,13,0.35)", fontFamily: "monospace" }}>
-            Works Around The Tools GCs Already Use
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {[
-              { name: "Procore", ext: "GC portal" },
-              { name: "Autodesk", ext: "ACC / Build" },
-              { name: "Fieldwire", ext: "Field tasks" },
-              { name: "Email + Texts", ext: "Daily noise" },
-              { name: "Calls", ext: "Manual notes" },
-              { name: "PDFs + Screenshots", ext: "Proof trails" },
-              { name: "Spreadsheets", ext: "Work logs" },
-            ].map((source) => (
-              <div
-                key={source.name}
-                className="flex items-center gap-3 px-5 py-3 rounded-xl border shadow-sm"
-                style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}
-              >
-                <div className="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style={{ background: "#0D0D0D" }}>
-                  {source.name.slice(0, 1)}
-                </div>
-                <div>
-                  <div className="text-sm font-bold" style={{ color: "#0D0D0D" }}>{source.name}</div>
-                  <div className="text-[10px] font-mono" style={{ color: "rgba(13,13,13,0.4)" }}>{source.ext}</div>
-                </div>
-                <CheckCircle className="w-4 h-4 ml-1" style={{ color: "#22C55E" }} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FEATURES ═══ */}
-      <section id="features" className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Subcontractor Workflow
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              One operating layer.<br />
-              <em className="font-medium" style={{ color: "#E85D1C" }}>No GC rollout required.</em>
-            </h2>
-          </div>
-
-          <div className="space-y-16 md:space-y-24">
-
-            {/* ── [01] Job Inbox ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[01]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Job Inbox
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Pull the chaos into one queue: portal tasks, schedule exports, PDFs, screenshots, texts, calls, emails, spreadsheet trackers, and GC asks. Operations can triage what needs action today without forcing the GC into another login.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["GC Requests", "Portal Exports", "Email Intake", "PDF Notes", "Screenshot Tasks", "Today Queue"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-2 mb-4">
-                  {[
-                    { task: "Procore RFI follow-up - Level 3 ceiling", pct: "Due today", color: "#E85D1C" },
-                    { task: "Fieldwire task screenshot - Room 204", pct: "New", color: "#3B82F6" },
-                    { task: "Email: missing access at loading dock", pct: "Blocked", color: "#DC2626" },
-                    { task: "PDF markup: duct reroute sketch", pct: "Review", color: "var(--text-muted)" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
-                      <span className="text-sm flex-1 truncate" style={{ color: "#0D0D0D" }}>{item.task}</span>
-                      <span className="text-xs font-bold" style={{ color: item.color }}>{item.pct}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 gap-3 mb-3">
-                  <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Needs Action</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#DC2626" }}>4 items</div>
-                  </div>
-                  <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Waiting on GC</div>
-                    <div className="text-lg font-extrabold" style={{ color: "#EAB308" }}>2 asks</div>
-                  </div>
-                </div>
-                <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.04)" }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase" style={{ color: "#E85D1C" }}>Next Action</span>
-                  </div>
-                  <p className="text-xs" style={{ color: "rgba(13,13,13,0.6)" }}>
-                    Assign the loading dock blocker to the PM and send the GC the proof package.
-                  </p>
-                </div>
-              </div>
+        <section id="workflow" className="bg-[#08090B] py-16 md:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 max-w-3xl">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Core workflow</p>
+              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">
+                The subcontractor command center for field readiness, proof, and GC response.
+              </h2>
             </div>
-
-            {/* ── [02] Work Cards & Proof Log ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#1e3a5f" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Daily Log</span>
-                    <span className="text-[10px] ml-2" style={{ color: "#93c5fd" }}>Apr 25, 2026</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Sun className="w-3.5 h-3.5" style={{ color: "#EAB308" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>72°F - Clear, wind 8mph</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>34 workers on-site · 6 trades active</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Camera className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>12 photos attached</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#DC2626" }}>High</span>
-                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Missing backing for grab bars - Corridor 2</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded text-white" style={{ background: "#22C55E" }}>Done</span>
-                    <span className="text-xs" style={{ color: "#0D0D0D" }}>Punch item: Drywall patch Room 204</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 mt-3 pt-3 border-t" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <FileText className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Export as PDF · Share via link</span>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[02]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Work Cards & Proof Log
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Convert scattered GC requests into work cards that carry location, scope, owner, readiness, blockers, photos, quantities, and field notes. Foremen update the card once; operations gets proof without chasing texts.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Work Cards", "Photo Proof", "Quantities", "Blockers", "Foreman Notes", "Response History"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [03] Readiness Board ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[03]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Readiness Board
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Show owners, PMs, and foremen what is ready, what is not ready, what is blocked, and what is waiting on a GC answer. The board is deterministic and status-driven so crews know where to go next.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Ready", "Not Ready", "Blocked", "Waiting on GC", "Needs Proof", "Next Crew"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#0D0D0D" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Readiness Board</span>
-                    <span className="text-[10px] ml-2" style={{ color: "rgba(255,255,255,0.55)" }}>Tomorrow · 6 Cards</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5" style={{ color: "#22C55E" }} />
-                      <span className="text-xs font-bold" style={{ color: "#22C55E" }}>Ready: Level 2 rough-in · crew assigned</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Blocked: loading dock access still locked</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FileText className="w-3.5 h-3.5" style={{ color: "#EAB308" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Waiting: revised drawing SK-18</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: i === 4 ? "var(--text-muted)" : "#E85D1C" }}>
-                        {i === 4 ? "+14" : ["JR", "MS", "DT"][i - 1]}
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Foremen can update status from the phone</span>
-                </div>
-              </div>
-            </div>
-
-            {/* ── [04] GC Response ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                  <div className="px-4 py-2.5" style={{ background: "#0D0D0D" }}>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Coordination Meeting</span>
-                    <span className="text-[10px] ml-2" style={{ color: "rgba(255,255,255,0.5)" }}>Week 17 · Auto-Agenda</span>
-                  </div>
-                  <div className="px-4 py-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                      <span className="text-xs font-bold" style={{ color: "#DC2626" }}>Conflict: Electrical + HVAC - Level 3 ceiling</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Re-sequence HVAC rough-in - Owner: AMS Mechanical</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clipboard className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                      <span className="text-xs" style={{ color: "#0D0D0D" }}>Action: Confirm conduit routing - Owner: ATS Electric</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Handshake className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                  <span className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>Agenda auto-populated from schedule data</span>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[04]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  GC Response
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Turn field facts into clean responses for Procore comments, email threads, meeting asks, and delay notices. IronTrack keeps the source proof attached so your PM is not rebuilding the story from memory.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Reply Draft", "Proof Attached", "Delay Context", "Owner Review", "Response Log"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [05] Owner Snapshot ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div>
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[05]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Owner Snapshot
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Give subcontractor owners and operations leaders a fast read on what needs action today: open GC requests, blocked crews, missing proof, unsent responses, and work that is ready for the next crew.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Today's Actions", "Blocked Work", "Proof Gaps", "GC Responses", "Crew Readiness"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <FileText className="w-4 h-4" style={{ color: "#3B82F6" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>RFI-042: Beam Connection Detail</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Draft ready · Awaiting response</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Open</span>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <ClipboardList className="w-4 h-4" style={{ color: "#22C55E" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>SUB-118: Fire Damper Shop Dwgs</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rev 2 · Approved</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Approved</span>
-                  </div>
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Search className="w-4 h-4" style={{ color: "#E85D1C" }} />
-                    <div className="flex-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>DWG: Mechanical - Level 3</span>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rev C · 4 sheets</div>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#3B82F6", background: "rgba(59,130,246,0.1)" }}>Current</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── [06] GC-Compatible Access ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="space-y-3 mb-4">
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>ATS Electric</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>Confirmed ✓</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Rough-In Electrical - Mon Apr 21</span>
-                  </div>
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Buildtek Framing</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EAB308", background: "rgba(234,179,8,0.1)" }}>Awaiting</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Exterior Framing Bldg B - Tue Apr 22</span>
-                  </div>
-                  <div className="rounded-xl px-4 py-3 border" style={{ borderColor: "rgba(232,93,28,0.2)", background: "rgba(232,93,28,0.03)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>AMS Fire Protection</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: "#EF4444", background: "rgba(239,68,68,0.1)" }}>Issue Flagged</span>
-                    </div>
-                    <span className="text-[11px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sprinkler install delayed - material lead time</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center mb-3">
-                  <div className="w-24 h-24 rounded-xl flex items-center justify-center" style={{ background: "#E85D1C" }}>
-                    <QrCode className="w-12 h-12 text-white" />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs" style={{ color: "rgba(13,13,13,0.4)" }}>
-                    Subs see their scope only · No float or predecessors exposed
-                  </p>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[06]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  GC-Compatible Access
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  The GC side still exists when a project needs shared schedules, QR links, or scoped views. But the subcontractor can get value first by organizing requests and proof internally before asking anyone else to adopt IronTrack.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Scoped Views", "QR Links", "Schedule Imports", "No GC Rollout", "Protected Data"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ── [07] Sub Ops - FEATURED ── */}
-            <div className="relative">
-              <div className="absolute -inset-4 md:-inset-8 rounded-3xl" style={{ background: "rgba(232,93,28,0.04)", border: "2px solid rgba(232,93,28,0.15)" }} />
-              <div className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3" style={{ background: "rgba(232,93,28,0.12)" }}>
-                    <Zap className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#E85D1C" }}>Subcontractor Wedge</span>
-                  </div>
-                  <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[07]</div>
-                  <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                    Sub Ops
-                  </h3>
-                  <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Sub Ops gives owners, operations managers, PMs, foremen, and field crews a focused way to see GC requests, upcoming work cards, readiness, blockers, proof photos, and response status. It is a field loop, not another bloated back-office system.
-                  </p>
-                  <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                    Multi-department subs can track handoffs - sheet metal to piping to controls - with checklists and photos so the next crew knows what is ready, what is missing, and what needs an answer from the GC.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {["Job Inbox", "Work Cards", "Readiness Board", "Proof Log", "GC Response", "Owner Snapshot"].map((tag) => (
-                      <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                        {tag}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {workflow.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="rounded-2xl border border-white/10 bg-[#111318] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
+                    <div className="mb-5 flex items-center justify-between">
+                      <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#F97316]/12 text-[#F97316]">
+                        <Icon size={22} />
                       </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(232,93,28,0.2)" }}>
-                  {/* Work Card Mock */}
-                  <div className="rounded-xl overflow-hidden border mb-3" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <div className="px-4 py-2.5" style={{ background: "#E85D1C" }}>
-                      <span className="text-xs font-bold text-white uppercase tracking-wider">Work Cards</span>
-                      <span className="text-[10px] ml-2 text-orange-200">Today · 6 Active</span>
+                      <span className="font-mono text-xs font-black text-white/20">0{index + 1}</span>
                     </div>
-                    <div className="px-4 py-3 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5" style={{ color: "#E85D1C" }} />
-                        <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Crew A → Riverside Medical</span>
-                        <span className="text-[10px] ml-auto" style={{ color: "rgba(13,13,13,0.4)" }}>Ductwork L3</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5" style={{ color: "#3B82F6" }} />
-                        <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Crew B → Central Office Tower</span>
-                        <span className="text-[10px] ml-auto" style={{ color: "rgba(13,13,13,0.4)" }}>Piping L1</span>
-                      </div>
-                    </div>
+                    <h3 className="text-xl font-black">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-400">{item.body}</p>
                   </div>
-                  {/* Production + Handoff Mock */}
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Production Today</div>
-                      <div className="text-lg font-extrabold" style={{ color: "#22C55E" }}>340 LF</div>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Ductwork installed</div>
-                    </div>
-                    <div className="rounded-xl p-3 border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                      <div className="text-[10px] uppercase tracking-wide mb-1" style={{ color: "rgba(13,13,13,0.35)" }}>Readiness</div>
-                      <div className="text-lg font-extrabold" style={{ color: "#3B82F6" }}>3 Ready</div>
-                      <div className="text-[10px]" style={{ color: "rgba(13,13,13,0.4)" }}>Sheet metal → piping</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-3.5 h-3.5" style={{ color: "#DC2626" }} />
-                    <span className="text-xs font-bold" style={{ color: "#DC2626" }}>1 Blocker: Material delay - flex duct, ETA Wed</span>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
-
-            {/* ── [08] Platform Features ── */}
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              <div className="order-2 md:order-1 rounded-2xl p-6 border" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)", background: "#F5F3EE" }}>
-                    <Sun className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Light Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center" style={{ background: "#1a1a1a" }}>
-                    <Moon className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold text-white">Dark Mode</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Globe className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Español</span>
-                  </div>
-                  <div className="rounded-xl p-4 flex flex-col items-center justify-center border" style={{ borderColor: "rgba(13,13,13,0.06)" }}>
-                    <Settings className="w-6 h-6 mb-2" style={{ color: "#E85D1C" }} />
-                    <span className="text-xs font-bold" style={{ color: "#0D0D0D" }}>Settings</span>
-                  </div>
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="text-sm font-bold mb-2" style={{ color: "#E85D1C", fontFamily: "monospace" }}>[08]</div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>
-                  Platform Features
-                </h3>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(13,13,13,0.55)" }}>
-                  Light and dark themes so you can read the screen at 6 AM or midnight. Full Spanish localization for bilingual crews. Mobile-first design that works on any device - because nobody&apos;s carrying a laptop through a construction site.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Dark Mode", "Light Mode", "Español", "Mobile-First"].map((tag) => (
-                    <span key={tag} className="text-xs font-semibold px-3 py-1 rounded-full border" style={{ color: "#E85D1C", borderColor: "rgba(232,93,28,0.3)", background: "rgba(232,93,28,0.06)" }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ WHO WE SERVE ═══ */}
-      <section id="who-we-serve" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Who We Serve
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Built for <em className="font-medium" style={{ color: "#E85D1C" }}>subcontractor teams</em>.<br />
-              Clear enough for the jobsite.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {[
-              {
-                icon: Building2,
-                title: "Subcontractor Owners",
-                desc: "See which GC requests, blockers, responses, and proof gaps need leadership attention today.",
-              },
-              {
-                icon: Settings,
-                title: "Operations Managers",
-                desc: "Triage work across jobs and crews without bouncing between portals, spreadsheets, texts, and screenshots.",
-              },
-              {
-                icon: Briefcase,
-                title: "Project Managers",
-                desc: "Turn scattered GC asks and field proof into clean responses with the context still attached.",
-              },
-              {
-                icon: HardHat,
-                title: "Foremen",
-                desc: "Open the phone and know what work card needs action, what is ready, and what proof to capture.",
-              },
-              {
-                icon: Users,
-                title: "Field Crews",
-                desc: "Get clear scope, location, materials, blockers, and handoff notes without reading a full project-management system.",
-              },
-            ].map((persona) => (
-              <div
-                key={persona.title}
-                className="rounded-2xl p-6 md:p-8 border transition-all"
-                style={{ background: "white", borderColor: persona.title === "Subcontractor Owners" ? "rgba(232,93,28,0.3)" : "rgba(13,13,13,0.08)" }}
-              >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "rgba(232,93,28,0.08)" }}>
-                  <persona.icon className="w-6 h-6" style={{ color: "#E85D1C" }} />
-                </div>
-                <h3 className="text-xl font-extrabold mb-3" style={{ color: "#0D0D0D" }}>{persona.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(13,13,13,0.55)" }}>{persona.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-16 md:py-24 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#E85D1C", fontFamily: "monospace" }}>
-              Founder Pricing
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-              Simple pricing while we build with early crews.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Subcontractor Plan */}
-            <div className="rounded-2xl p-8 border-2 relative" style={{ background: "white", borderColor: "#E85D1C" }}>
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E85D1C" }}>Primary Focus</span>
-              </div>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(232,93,28,0.1)" }}>
-                  <Briefcase className="w-6 h-6" style={{ color: "#E85D1C" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Subcontractor</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  $10<span className="text-lg font-medium" style={{ color: "rgba(13,13,13,0.35)" }}>/mo</span>
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>Beta pricing per company</p>
-              </div>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  "Job Inbox",
-                  "Work Cards",
-                  "Readiness Board",
-                  "Proof Log with photos",
-                  "GC Response workflow",
-                  "Owner Snapshot",
-                  "Foreman-friendly mobile tools",
-                  "Handoff Tracker for crews",
-                  "Light/dark + Spanish",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
-                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup/sub"
-                className="block w-full text-center px-6 py-3 text-white rounded-xl text-sm font-bold transition-all"
-                style={{ background: "#E85D1C" }}
-              >
-                Start Subcontractor Beta
-              </Link>
-            </div>
-
-            <div className="rounded-2xl p-8 border relative" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
-                  <HardHat className="w-6 h-6" style={{ color: "#0D0D0D" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Operations Team</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  Included
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>For owners, PMs, foremen, and crews</p>
-              </div>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  "Owner Snapshot",
-                  "Job Inbox triage",
-                  "Work card assignment",
-                  "Readiness and blocker review",
-                  "Proof log review",
-                  "GC response and proof packets",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#22C55E" }} />
-                    <span className="text-sm" style={{ color: "#0D0D0D" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup/sub"
-                className="block w-full text-center px-8 py-4 rounded-xl text-lg font-bold transition-all border-2"
-                style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
-              >
-                Set up your team
-              </Link>
-            </div>
-            {/* Enterprise Plan */}
-            <div className="rounded-2xl p-8 border flex flex-col" style={{ background: "white", borderColor: "rgba(13,13,13,0.12)" }}>
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: "rgba(13,13,13,0.05)" }}>
-                  <Building2 className="w-6 h-6" style={{ color: "#0D0D0D" }} />
-                </div>
-                <h3 className="text-lg font-extrabold mb-1" style={{ color: "#0D0D0D" }}>Enterprise</h3>
-                <div className="text-3xl font-extrabold" style={{ color: "#0D0D0D" }}>
-                  Custom
-                </div>
-                <p className="text-xs mt-1" style={{ color: "rgba(13,13,13,0.4)" }}>For firms with 5+ active projects</p>
-              </div>
-              <ul className="space-y-2.5 mb-6 flex-1">
-                {[
-                  "Everything in Subcontractor, plus:",
-                  "Unlimited projects",
-                  "Multi-user team accounts",
-                  "Custom onboarding + training",
-                  "Priority support",
-                  "API access",
-                  "Custom report templates",
-                  "Dedicated account manager",
-                  "Volume pricing",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(13,13,13,0.25)" }} />
-                    <span className="text-sm" style={{ color: "rgba(13,13,13,0.55)" }}>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=Enterprise%20Demo%20Request&body=I%27d%20like%20to%20schedule%20a%20demo%20of%20IronTrack%20Pulse%20for%20our%20team."
-                className="block w-full text-center px-6 py-3 rounded-xl text-sm font-bold transition-all border-2"
-                style={{ color: "#0D0D0D", borderColor: "rgba(13,13,13,0.15)" }}
-              >
-                Book a Demo
-              </a>
-              <p className="text-center text-xs mt-3" style={{ color: "rgba(13,13,13,0.35)" }}>
-                We will walk your real workflow
+        <section id="product" className="border-y border-white/10 bg-[#101216] py-16 md:py-24">
+          <div className="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Product feel</p>
+              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">
+                One work card carries the whole job conversation.
+              </h2>
+              <p className="mt-5 text-base leading-8 text-slate-400">
+                Inbox items, readiness, proof, blockers, handoffs, and GC responses stay connected. No one has to rebuild the story from texts, folders, and memory.
               </p>
             </div>
+            <div className="rounded-[1.75rem] border border-white/10 bg-[#08090B] p-4">
+              <div className="rounded-2xl border border-[#F97316]/25 bg-gradient-to-br from-[#F97316]/12 via-white/[0.03] to-[#3B82F6]/10 p-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F97316]">Work Card</p>
+                <h3 className="mt-2 text-2xl font-black">Rough-in branch conduit</h3>
+                <p className="mt-1 text-sm text-slate-500">Avondale Medical Office · Level 2 · Corridor B</p>
+                <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                  {[
+                    ["Material", "Ready", "text-green-300"],
+                    ["Access", "Blocked", "text-red-300"],
+                    ["Drawings", "Waiting SK-18", "text-amber-300"],
+                    ["Proof", "2 photos · manpower missing", "text-sky-300"],
+                  ].map(([label, value, tone]) => (
+                    <div key={label} className="rounded-xl border border-white/10 bg-black/30 p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">{label}</p>
+                      <p className={`mt-1 text-sm font-black ${tone}`}>{value}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                  <button className="rounded-xl bg-[#F97316] px-4 py-3 text-sm font-black text-white">Add Proof</button>
+                  <button className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold text-white">Prepare Response</button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="py-8 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <img src="/irontrack-field-pulse-icon.svg" alt="" className="w-5 h-5" />
-            <span className="text-sm" style={{ color: "rgba(13,13,13,0.4)" }}>© 2026 IronTrack Development LLC</span>
+        <section id="teams" className="bg-[#08090B] py-16 md:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-12 text-center">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Built for subcontractor teams</p>
+              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">Owners, ops, PMs, foremen, and crews stay aligned.</h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-5">
+              {roles.map((role) => {
+                const Icon = role.icon;
+                return (
+                  <div key={role.title} className="rounded-2xl border border-white/10 bg-[#111318] p-5">
+                    <Icon className="text-[#F97316]" size={24} />
+                    <h3 className="mt-4 text-base font-black">{role.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-500">{role.body}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-xs md:text-sm">
-            <Link href="/terms" style={{ color: "rgba(13,13,13,0.4)" }}>Terms</Link>
-            <span style={{ color: "rgba(13,13,13,0.15)" }}>·</span>
-            <Link href="/privacy" style={{ color: "rgba(13,13,13,0.4)" }}>Privacy</Link>
-            <span style={{ color: "rgba(13,13,13,0.15)" }}>·</span>
-            <Link href="/status" style={{ color: "rgba(13,13,13,0.4)" }}>Status</Link>
-            <span style={{ color: "rgba(13,13,13,0.15)" }}>·</span>
-            <Link href="/release-notes" style={{ color: "rgba(13,13,13,0.4)" }}>Release Notes</Link>
-            <span style={{ color: "rgba(13,13,13,0.15)" }}>·</span>
-            <a href="mailto:irontrackdevelopment@outlook.com" style={{ color: "rgba(13,13,13,0.4)" }}>Contact</a>
+        </section>
+
+        <section id="pricing" className="border-t border-white/10 bg-[#101216] py-16 md:py-24">
+          <div className="mx-auto max-w-5xl px-6">
+            <div className="mb-10 text-center">
+              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Public beta</p>
+              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">Start with the subcontractor workspace.</h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-[1.5rem] border-2 border-[#F97316] bg-white p-8 text-[#0D0D0D] shadow-[0_28px_100px_rgba(249,115,22,0.16)]">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#F97316]">Primary plan</p>
+                <h3 className="mt-3 text-2xl font-black">Subcontractor Beta</h3>
+                <div className="mt-4 text-4xl font-black">
+                  $10<span className="text-lg text-black/35">/mo</span>
+                </div>
+                <ul className="mt-6 space-y-3">
+                  {["Job Inbox", "Work Cards", "Readiness Board", "Proof Log", "GC Response", "Owner Snapshot", "Foreman mobile tools"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm font-semibold">
+                      <CheckCircle size={16} className="text-green-600" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/signup/sub" className="mt-8 block rounded-xl bg-[#F97316] px-6 py-4 text-center text-base font-black text-white">
+                  Start beta
+                </Link>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-[#08090B] p-8">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Team-ready</p>
+                <h3 className="mt-3 text-2xl font-black">Operations + Field</h3>
+                <p className="mt-4 leading-7 text-slate-400">
+                  Give owners, operations, PMs, foremen, and crews one place to control daily readiness, proof, blockers, and responses.
+                </p>
+                <DemoRequestLink className="mt-8 inline-flex rounded-xl border border-white/10 bg-white/5 px-6 py-4 text-center text-base font-black text-white hover:bg-white/10">
+                  Walk through your workflow
+                </DemoRequestLink>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 bg-[#08090B] py-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
+          <div className="flex items-center gap-3">
+            <img src="/irontrack-field-pulse-icon.svg" alt="" className="h-7 w-7" />
+            <span className="text-sm text-slate-500">© 2026 IronTrack Development LLC</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+            <Link href="/terms" className="text-slate-500 transition-colors hover:text-white">Terms</Link>
+            <Link href="/privacy" className="text-slate-500 transition-colors hover:text-white">Privacy</Link>
+            <Link href="/status" className="text-slate-500 transition-colors hover:text-white">Status</Link>
+            <Link href="/release-notes" className="text-slate-500 transition-colors hover:text-white">Release Notes</Link>
+            <a href="mailto:irontrackdevelopment@outlook.com" className="text-slate-500 transition-colors hover:text-white">Contact</a>
           </div>
         </div>
       </footer>
