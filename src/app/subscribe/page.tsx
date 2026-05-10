@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2, Loader2, CheckCircle } from "lucide-react";
+import { Loader2, CheckCircle } from "lucide-react";
 
 export default function SubscribePage() {
   const router = useRouter();
@@ -42,13 +42,16 @@ export default function SubscribePage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
-          <Building2 className="w-8 h-8 text-[#F97316] mr-2" />
-          <span className="text-2xl font-bold text-[color:var(--text-primary)]">IronTrack Project Pulse</span>
+          <img
+            src="/irontrack-field-pulse-logo-dark.svg"
+            alt="IronTrack Field Pulse"
+            className="h-12 w-auto"
+          />
         </div>
 
         {/* Subscription Card */}
         <div className="bg-[var(--bg-tertiary)] border border-[#2A2A30] rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] mb-2">Subscribe to Project Pulse</h1>
+          <h1 className="text-2xl font-bold text-[color:var(--text-primary)] mb-2">Subscribe to Field Pulse</h1>
           <p className="text-[color:var(--text-secondary)] mb-6">
             Get instant schedule intelligence for your construction projects.
           </p>

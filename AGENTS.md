@@ -38,7 +38,7 @@ Revenue target: $3,500/month (~175 GC accounts, or mixed GC + Sub).
 
 The GC side can still exist as infrastructure or legacy capability, but it should not be the main product promise, main website pitch, or primary build priority unless explicitly requested.
 
-**Brand/demo rule:** Every app demo, website demo, pitch mockup, screenshot, and generated design concept must use the IronTrack Project Pulse logo lockup. Use `/public/irontrack-project-pulse-logo.svg` on light backgrounds and `/public/irontrack-project-pulse-logo-dark.svg` on dark backgrounds. Do not replace the logo subtitle with "Subcontractor Pulse"; keep subcontractor-first positioning in the surrounding copy.
+**Brand/demo rule:** Every app demo, website demo, pitch mockup, screenshot, and generated design concept must use the IronTrack Field Pulse logo lockup. Use `/public/irontrack-field-pulse-logo.svg` on light backgrounds and `/public/irontrack-field-pulse-logo-dark.svg` on dark backgrounds. Do not replace the logo subtitle with "Subcontractor Pulse"; keep subcontractor-first positioning in the surrounding copy.
 
 ---
 

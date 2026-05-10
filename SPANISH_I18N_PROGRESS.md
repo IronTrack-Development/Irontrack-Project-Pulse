@@ -226,7 +226,7 @@ All changes made so far compile successfully. The i18n system is working correct
 
 ## 📝 NOTES
 
-- Brand names (IronTrack, Pulse, Project Pulse) kept in English as specified
+- Brand names (IronTrack, Pulse, Field Pulse) kept in English as specified
 - Using Latin American Spanish, "usted" form
 - Construction industry terminology used (cronograma, capataz, lista de pendientes, etc.)
 - All translation keys use dot notation for organization

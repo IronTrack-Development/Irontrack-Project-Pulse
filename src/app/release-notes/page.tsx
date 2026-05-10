@@ -105,7 +105,7 @@ const releases: ReleaseNote[] = [
     platform: "Web",
     title: "Initial Launch",
     changes: [
-      "IronTrack Project Pulse beta launch",
+      "IronTrack Field Pulse beta launch",
       "Single project upload and view",
       "Basic activity list and search",
       "Supabase backend with RLS policies",
@@ -149,8 +149,8 @@ export default function ReleaseNotesPage() {
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 md:gap-3">
             <img
-              src="/irontrack-project-pulse-logo-dark.svg"
-              alt="IronTrack Project Pulse"
+              src="/irontrack-field-pulse-logo-dark.svg"
+              alt="IronTrack Field Pulse"
               className="h-10 md:h-12 w-auto object-contain"
             />
           </Link>
@@ -164,7 +164,7 @@ export default function ReleaseNotesPage() {
         {/* Page Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">Release Notes</h1>
-          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Project Pulse</p>
+          <p className="text-[color:var(--text-secondary)]">What&apos;s new in IronTrack Field Pulse</p>
         </div>
 
         {/* Filter Tabs */}

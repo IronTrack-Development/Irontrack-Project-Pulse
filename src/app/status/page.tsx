@@ -68,8 +68,8 @@ export default function StatusPage() {
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 md:gap-3">
             <img
-              src="/irontrack-project-pulse-logo-dark.svg"
-              alt="IronTrack Project Pulse"
+              src="/irontrack-field-pulse-logo-dark.svg"
+              alt="IronTrack Field Pulse"
               className="h-10 md:h-12 w-auto object-contain"
             />
           </Link>
@@ -83,7 +83,7 @@ export default function StatusPage() {
         {/* Page Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-[color:var(--text-primary)] mb-2">System Status</h1>
-            <p className="text-[color:var(--text-secondary)]">Current public-beta health of IronTrack Project Pulse services</p>
+            <p className="text-[color:var(--text-secondary)]">Current public-beta health of IronTrack Field Pulse services</p>
         </div>
 
         {/* Overall Status Banner */}

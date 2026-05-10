@@ -2,7 +2,7 @@
 
 ## Overview
 
-IronTrack Project Pulse uses a two-step upload flow to bypass Vercel's 4.5MB serverless function body size limit.
+IronTrack Field Pulse uses a two-step upload flow to bypass Vercel's 4.5MB serverless function body size limit.
 
 ## How It Works
 

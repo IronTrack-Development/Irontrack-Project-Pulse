@@ -21,7 +21,7 @@ export default function TermsPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-6 h-6 text-[#F97316]" />
-          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
+          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Field Pulse</span>
         </div>
 
         <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">Terms of Service</h1>
@@ -32,7 +32,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">1. Acceptance of Terms</h2>
             <p>
-              By creating an account or using IronTrack Project Pulse ("the Service"), you agree to these Terms of Service. If you don&apos;t agree, don&apos;t use the Service.
+              By creating an account or using IronTrack Field Pulse ("the Service"), you agree to these Terms of Service. If you don&apos;t agree, don&apos;t use the Service.
             </p>
             <p className="mt-4">
               These terms are a legal agreement between you and IronTrack Development LLC, an Arizona limited liability company.
@@ -43,7 +43,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">2. Description of Service</h2>
             <p>
-              IronTrack Project Pulse is a web application that helps construction professionals turn project schedules and field updates into daily operating views. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
+              IronTrack Field Pulse is a web application that helps construction professionals turn project schedules and field updates into daily operating views. You upload schedule files (Microsoft Project .mpp, Excel .xlsx, CSV, XML, or Primavera P6 .xer formats), and the Service parses them to display:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li>3-week lookahead of upcoming activities</li>
@@ -79,7 +79,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">4. Subscription and Billing</h2>
             <p>
-              IronTrack Project Pulse is a subscription service billed automatically via Stripe. Current public beta pricing is shown on the pricing page and may include separate General Contractor and Subcontractor tiers.
+              IronTrack Field Pulse is a subscription service billed automatically via Stripe. Current public beta pricing is shown on the pricing page and may include separate General Contractor and Subcontractor tiers.
             </p>
             <p className="mt-4">
               <strong className="text-[color:var(--text-primary)]">Cancellation:</strong> You may cancel at any time. Your access will continue until the end of your current billing period. We do not offer refunds for partial months.
@@ -162,7 +162,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">9. Limitation of Liability</h2>
             <p>
-              IronTrack Project Pulse is a tool to help you track schedules. It is <strong className="text-[color:var(--text-primary)]">not a substitute for professional judgment</strong>. You are responsible for verifying all schedule data and making project decisions.
+              IronTrack Field Pulse is a tool to help you track schedules. It is <strong className="text-[color:var(--text-primary)]">not a substitute for professional judgment</strong>. You are responsible for verifying all schedule data and making project decisions.
             </p>
             <p className="mt-4">
               To the maximum extent permitted by law, IronTrack Development LLC is not liable for:

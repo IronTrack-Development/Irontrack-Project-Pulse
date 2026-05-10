@@ -13,7 +13,7 @@ export async function GET(
   const manifest = {
     name: "IronTrack Pulse",
     short_name: "Pulse",
-    description: "Your project schedule — IronTrack Project Pulse",
+    description: "Your project schedule — IronTrack Field Pulse",
     start_url: `${baseUrl}/view/${token}`,
     scope: `${baseUrl}/view/${token}`,
     display: "standalone",

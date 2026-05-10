@@ -109,7 +109,7 @@ export default async function PublicWeekView({ params }: PageProps) {
         <div className="max-w-2xl mx-auto px-4 py-5">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2 h-2 rounded-full bg-[#F97316]" />
-            <span className="text-xs text-[#F97316] font-bold uppercase tracking-wider">IronTrack Project Pulse</span>
+            <span className="text-xs text-[#F97316] font-bold uppercase tracking-wider">IronTrack Field Pulse</span>
           </div>
           <h1 className="text-[color:var(--text-primary)] font-bold text-xl">{project.name}</h1>
           {(project.client_name || project.location) && (
@@ -205,7 +205,7 @@ export default async function PublicWeekView({ params }: PageProps) {
       <div className="max-w-2xl mx-auto px-4 pb-8 text-center">
         <div className="h-px bg-gradient-to-r from-transparent via-[#F97316]/30 to-transparent mb-4" />
         <p className="text-[10px] text-gray-600">
-          Powered by IronTrack Project Pulse · Generated {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+          Powered by IronTrack Field Pulse · Generated {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
         </p>
       </div>
     </div>

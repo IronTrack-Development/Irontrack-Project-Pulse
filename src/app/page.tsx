@@ -16,8 +16,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-3">
             <img
-              src="/irontrack-project-pulse-logo.svg"
-              alt="IronTrack Project Pulse"
+              src="/irontrack-field-pulse-logo.svg"
+              alt="IronTrack Field Pulse"
               className="h-10 md:h-14 w-auto"
             />
           </div>
@@ -859,7 +859,7 @@ export default function LandingPage() {
       <footer className="py-8 border-t" style={{ borderColor: "rgba(13,13,13,0.08)" }}>
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/irontrack-app-icon.svg" alt="" className="w-5 h-5" />
+            <img src="/irontrack-field-pulse-icon.svg" alt="" className="w-5 h-5" />
             <span className="text-sm" style={{ color: "rgba(13,13,13,0.4)" }}>© 2026 IronTrack Development LLC</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-xs md:text-sm">

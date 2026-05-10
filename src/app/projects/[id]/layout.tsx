@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `${projectName} — IronTrack Pulse`;
   const description = clientName
-    ? `${projectName} by ${clientName} • ${statusWord} • Managed with IronTrack Project Pulse`
-    : `${projectName} • ${statusWord} • Managed with IronTrack Project Pulse`;
+    ? `${projectName} by ${clientName} • ${statusWord} • Managed with IronTrack Field Pulse`
+    : `${projectName} • ${statusWord} • Managed with IronTrack Field Pulse`;
 
   return {
     title,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
       type: "website",
-      siteName: "IronTrack Project Pulse",
+      siteName: "IronTrack Field Pulse",
     },
     twitter: {
       card: "summary_large_image",

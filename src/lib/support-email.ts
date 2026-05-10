@@ -1,5 +1,5 @@
 export function openSupportEmail(context?: string) {
-  const subject = encodeURIComponent('Project Pulse Support Request');
+  const subject = encodeURIComponent('Field Pulse Support Request');
   const browser = typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown';
   
   const body = encodeURIComponent(`Describe the issue:

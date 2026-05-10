@@ -66,13 +66,10 @@ function LoginForm() {
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <img
-            src="/irontrack-app-icon.svg"
-            alt="IronTrack"
-            className="h-10 w-auto mr-3"
+            src="/irontrack-field-pulse-logo.svg"
+            alt="IronTrack Field Pulse"
+            className="h-12 w-auto"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
-          </span>
         </Link>
 
         {/* Role Toggle */}

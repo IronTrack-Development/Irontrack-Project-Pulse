@@ -21,7 +21,7 @@ export default function PrivacyPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-6 h-6 text-[#F97316]" />
-          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Project Pulse</span>
+          <span className="text-sm text-[color:var(--text-muted)]">IronTrack Field Pulse</span>
         </div>
 
         <h1 className="text-4xl font-bold text-[color:var(--text-primary)] mb-4">Privacy Policy</h1>
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           {/* Introduction */}
           <section>
             <p>
-              IronTrack Development LLC ("we," "us," "our") operates IronTrack Project Pulse. This Privacy Policy explains how we collect, use, store, and protect your personal information.
+              IronTrack Development LLC ("we," "us," "our") operates IronTrack Field Pulse. This Privacy Policy explains how we collect, use, store, and protect your personal information.
             </p>
             <p className="mt-4">
               We take your privacy seriously. This policy is written in plain language — no legal jargon unless necessary.
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">1. What Data We Collect</h2>
             <p>
-              When you use IronTrack Project Pulse, we collect:
+              When you use IronTrack Field Pulse, we collect:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li><strong className="text-[color:var(--text-primary)]">Email address</strong> — for your account and login</li>
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">5. Third-Party Services</h2>
             <p>
-              We use these third-party services to operate IronTrack Project Pulse:
+              We use these third-party services to operate IronTrack Field Pulse:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2 ml-4">
               <li><strong className="text-[color:var(--text-primary)]">Supabase</strong> — database and authentication</li>
@@ -191,7 +191,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-bold text-[color:var(--text-primary)] mb-4">10. Children</h2>
             <p>
-              IronTrack Project Pulse is not intended for users under 18. We do not knowingly collect data from children. If you believe we have collected data from a child, contact us and we will delete it.
+              IronTrack Field Pulse is not intended for users under 18. We do not knowingly collect data from children. If you believe we have collected data from a child, contact us and we will delete it.
             </p>
           </section>
 

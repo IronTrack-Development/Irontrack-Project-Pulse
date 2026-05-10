@@ -129,20 +129,17 @@ export default function SubSignupPage() {
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <img
-            src="/irontrack-app-icon.svg"
-            alt="IronTrack"
-            className="h-10 w-auto mr-3"
+            src="/irontrack-field-pulse-logo.svg"
+            alt="IronTrack Field Pulse"
+            className="h-12 w-auto"
           />
-          <span className="text-2xl font-extrabold tracking-tight group-hover:opacity-80 transition-opacity" style={{ color: "#0D0D0D", letterSpacing: "-0.03em" }}>
-            Iron<span style={{ color: "#E85D1C" }}>Track</span>
-          </span>
         </Link>
 
         {/* Signup Card */}
         <div className="rounded-2xl p-8 border shadow-sm" style={{ background: "white", borderColor: "rgba(13,13,13,0.08)" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(59,130,246,0.1)" }}>
-              <img src="/irontrack-app-icon.svg" alt="" className="w-7 h-7" />
+              <img src="/irontrack-field-pulse-icon.svg" alt="" className="w-7 h-7" />
             </div>
             <div>
               <h1 className="text-2xl font-extrabold" style={{ color: "#0D0D0D", letterSpacing: "-0.02em" }}>

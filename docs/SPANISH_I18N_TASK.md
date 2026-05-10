@@ -58,7 +58,7 @@ Follow the existing pattern:
 - Use Latin American Spanish (not Castilian)
 - Use "usted" form, not "tú" — this is professional/field context
 - Construction terms: "schedule" = "cronograma", "foreman" = "capataz" or "maestro de obra", "punch list" = "lista de pendientes", "RFI" = "RFI" (keep as-is, it's industry standard), "submittal" = "entregable" or "sometimiento"
-- Keep brand names in English: "IronTrack", "Pulse", "Project Pulse"
+- Keep brand names in English: "IronTrack", "Pulse", "Field Pulse"
 
 ### Build Requirements
 - Must compile with `npx tsc --noEmit` (zero errors)

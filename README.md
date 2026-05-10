@@ -138,11 +138,11 @@ src/
 | Red (at risk) | `#EF4444` |
 
 Primary logo assets:
-- Light backgrounds: `/irontrack-project-pulse-logo.svg`
-- Dark backgrounds: `/irontrack-project-pulse-logo-dark.svg`
-- Compact app icon: `/irontrack-app-icon.svg`
+- Light backgrounds: `/irontrack-field-pulse-logo.svg`
+- Dark backgrounds: `/irontrack-field-pulse-logo-dark.svg`
+- Compact app icon: `/irontrack-field-pulse-icon.svg`
 
-Use the full **IronTrack Project Pulse** lockup in app demos, website demos, screenshots, and marketing mockups.
+Use the full **IronTrack Field Pulse** lockup in app demos, website demos, screenshots, and marketing mockups.
 
 ---
 

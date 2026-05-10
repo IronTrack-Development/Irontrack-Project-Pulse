@@ -111,8 +111,8 @@ function TitleCard() {
       <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/irontrack-project-pulse-logo-dark.svg"
-          alt="IronTrack Project Pulse"
+          src="/irontrack-field-pulse-logo-dark.svg"
+          alt="IronTrack Field Pulse"
           style={{ width: 300, maxWidth: "80%", display: "block" }}
         />
       </motion.div>

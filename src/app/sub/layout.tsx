@@ -56,8 +56,8 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
         <div className="border-b border-white/10 px-5 py-5">
           <Link href="/sub/dashboard" className="flex items-center gap-3">
             <img
-              src="/irontrack-project-pulse-logo-dark.svg"
-              alt="IronTrack Project Pulse"
+              src="/irontrack-field-pulse-logo-dark.svg"
+              alt="IronTrack Field Pulse"
               className="h-12 w-auto"
             />
           </Link>
@@ -153,8 +153,8 @@ export default function SubLayout({ children }: { children: React.ReactNode }) {
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/sub/dashboard" className="flex items-center gap-2">
             <img
-              src="/irontrack-project-pulse-logo-dark.svg"
-              alt="IronTrack Project Pulse"
+              src="/irontrack-field-pulse-logo-dark.svg"
+              alt="IronTrack Field Pulse"
               className="h-9 w-auto"
             />
           </Link>

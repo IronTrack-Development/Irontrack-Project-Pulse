@@ -17,33 +17,33 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://irontrackpulse.com"),
-  title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+  title: "IronTrack Field Pulse — Subcontractor Job Inbox and Proof Log",
   description: "Control GC chaos across Procore, Autodesk, Fieldwire, email, PDFs, screenshots, texts, calls, and spreadsheets without requiring the GC to adopt another tool.",
   // manifest removed from metadata — loaded conditionally by ManifestLoader
   openGraph: {
-    title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+    title: "IronTrack Field Pulse — Subcontractor Job Inbox and Proof Log",
     description: "Job Inbox, Work Cards, Readiness Board, Proof Log, GC Response, and Owner Snapshot for subcontractor teams.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Field Pulse",
       },
     ],
     type: "website",
-    siteName: "IronTrack Project Pulse",
+    siteName: "IronTrack Field Pulse",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IronTrack — Subcontractor Job Inbox and Proof Log",
+    title: "IronTrack Field Pulse — Subcontractor Job Inbox and Proof Log",
     description: "Control GC chaos across portals, email, PDFs, screenshots, texts, calls, and spreadsheets without a GC rollout.",
     images: [
       {
         url: "/og-share-card.png",
         width: 1536,
         height: 1024,
-        alt: "IronTrack Project Pulse",
+        alt: "IronTrack Field Pulse",
       },
     ],
   },
@@ -59,12 +59,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png?v=3" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=3" />
+        <link rel="icon" type="image/svg+xml" href="/irontrack-field-pulse-icon.svg?v=4" />
+        <link rel="apple-touch-icon" href="/irontrack-field-pulse-icon.svg?v=4" />
       </head>
       <body className="bg-[var(--bg-primary)] text-gray-100 min-h-screen overflow-x-hidden">
         <ManifestLoader />

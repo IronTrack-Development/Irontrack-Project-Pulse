@@ -2,7 +2,7 @@
 
 ## Summary
 
-Added comprehensive upload limits and storage quotas to IronTrack Project Pulse to prevent abuse and manage resource usage.
+Added comprehensive upload limits and storage quotas to IronTrack Field Pulse to prevent abuse and manage resource usage.
 
 ## Changes Made
 
