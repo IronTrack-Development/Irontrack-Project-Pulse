@@ -117,7 +117,7 @@ export default function SubmittalsTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -142,7 +142,7 @@ export default function SubmittalsTab({ projectId }: Props) {
             </button>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
               <span className="hidden sm:inline">{t('submittals.newSubmittal')}</span>
@@ -186,7 +186,7 @@ export default function SubmittalsTab({ projectId }: Props) {
                   onClick={() => setFilter(opt.value)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === opt.value
-                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      ? "bg-accent text-[color:var(--text-primary)]"
                       : "bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
@@ -210,7 +210,7 @@ export default function SubmittalsTab({ projectId }: Props) {
             </p>
             <button
               onClick={() => { setEditSubmittal(null); setShowForm(true); }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <Plus size={14} />
               {t('submittals.newSubmittal')}

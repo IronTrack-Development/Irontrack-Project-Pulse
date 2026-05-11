@@ -55,7 +55,7 @@ function ActivityCard({ activity, getActivityName }: { activity: ParsedActivity;
         <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{getActivityName(activity.activity_name)}</div>
         <div className="flex items-center gap-3 mt-1">
           {activity.trade && (
-            <span className="text-xs text-[#F97316]">{activity.trade}</span>
+            <span className="text-xs text-accent">{activity.trade}</span>
           )}
           {activity.area && (
             <span className="text-xs text-[color:var(--text-muted)]">{activity.area}</span>
@@ -93,7 +93,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={20} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -117,7 +117,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
   const impactLabel = (impact: string) => {
     switch (impact) {
       case "full_stop": return { text: t('today.fullStop'), color: "text-[#EF4444]" };
-      case "partial_stop": return { text: t('today.partialStop'), color: "text-[#F97316]" };
+      case "partial_stop": return { text: t('today.partialStop'), color: "text-accent" };
       case "minor_slowdown": return { text: t('today.minorSlowdown'), color: "text-[#EAB308]" };
       default: return { text: t('today.noImpact'), color: "text-[#22C55E]" };
     }
@@ -132,7 +132,7 @@ export default function TodayTab({ projectId }: { projectId: string }) {
           <div className="grid grid-cols-2 gap-3">
             {/* Crew */}
             <div className="flex items-center gap-2">
-              <Users size={14} className="text-[#F97316] shrink-0" />
+              <Users size={14} className="text-accent shrink-0" />
               <span className="text-sm text-[color:var(--text-secondary)]">
                 {data.yesterdayRecap.totalWorkers} workers · {data.yesterdayRecap.totalCrewHours} crew-hours
               </span>
@@ -197,18 +197,18 @@ export default function TodayTab({ projectId }: { projectId: string }) {
 
       {/* Action items */}
       {data.actionItems.length > 0 && (
-        <div className="bg-[#F97316]/10 border border-[#F97316]/20 rounded-2xl p-5">
+        <div className="bg-accent/10 border border-accent/20 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">
-            <Zap size={16} className="text-[#F97316]" />
+            <Zap size={16} className="text-accent" />
             <h3 className="font-bold text-[color:var(--text-primary)]">{t('today.actionItems')}</h3>
-            <span className="bg-[#F97316] text-[color:var(--text-primary)] text-xs font-bold px-1.5 py-0.5 rounded-full">
+            <span className="bg-accent text-[color:var(--text-primary)] text-xs font-bold px-1.5 py-0.5 rounded-full">
               {data.actionItems.length}
             </span>
           </div>
           <ul className="space-y-2">
             {data.actionItems.slice(0, 5).map((action, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-[color:var(--text-secondary)]">
-                <ChevronRight size={14} className="text-[#F97316] shrink-0 mt-0.5" />
+                <ChevronRight size={14} className="text-accent shrink-0 mt-0.5" />
                 {action}
               </li>
             ))}

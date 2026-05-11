@@ -115,7 +115,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
 
   const SortIcon = ({ col }: { col: string }) => {
     if (sort !== col) return <ChevronUp size={12} className="text-gray-700" />;
-    return sortDir === "asc" ? <ChevronUp size={12} className="text-[#F97316]" /> : <ChevronDown size={12} className="text-[#F97316]" />;
+    return sortDir === "asc" ? <ChevronUp size={12} className="text-accent" /> : <ChevronDown size={12} className="text-accent" />;
   };
 
   const hasHierarchy = buildings.length > 0 || phases.length > 0;
@@ -190,7 +190,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
-            <RefreshCw size={18} className="text-[#F97316] animate-spin" />
+            <RefreshCw size={18} className="text-accent animate-spin" />
           </div>
         ) : activities.length === 0 ? (
           <div className="text-center py-12 text-gray-600 text-sm">
@@ -238,7 +238,7 @@ export default function ActivitiesTab({ projectId }: { projectId: string }) {
                     <td className="px-4 py-3 text-xs text-[color:var(--text-muted)] font-mono">{a.activity_id || "—"}</td>
                     <td className="px-4 py-3">
                       <div className="font-medium text-[color:var(--text-primary)] max-w-xs truncate">{getActivityName(a.activity_name)}</div>
-                      {a.milestone && <span className="text-[10px] text-[#F97316] font-bold">MILESTONE</span>}
+                      {a.milestone && <span className="text-[10px] text-accent font-bold">MILESTONE</span>}
                     </td>
                     {/* Building column — only rendered when hierarchy data exists */}
                     {hasHierarchy && (

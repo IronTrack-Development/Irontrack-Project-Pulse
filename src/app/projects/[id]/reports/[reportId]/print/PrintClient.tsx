@@ -173,7 +173,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
             display: "inline-flex", alignItems: "center", gap: "4px",
             padding: "6px 12px", borderRadius: "6px", fontSize: "12px",
             fontWeight: 600, color: "white", cursor: "pointer",
-            background: "#F97316", border: "none",
+            background: "#F37021", border: "none",
           }}
         >
           🖨 Print PDF
@@ -538,7 +538,7 @@ export default function PrintClient({ report, issues, projectId }: Props) {
         <div
           style={{
             height: "3px",
-            background: "linear-gradient(to right, #F97316, #1e3a5f)",
+            background: "linear-gradient(to right, #F37021, #1e3a5f)",
             marginBottom: "12px",
             borderRadius: "2px",
           }}

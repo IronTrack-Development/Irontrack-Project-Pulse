@@ -354,7 +354,7 @@ export default function DailyLogWizard({
                 onClick={() => goToScreen(i)}
                 className={`flex-1 py-2.5 text-xs font-medium border-b-2 transition-all min-h-[40px]
                   ${screen === i
-                    ? "border-[#F97316] text-[#F97316]"
+                    ? "border-accent text-accent"
                     : "border-transparent text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                   }`}
               >
@@ -426,7 +426,7 @@ export default function DailyLogWizard({
               type="button"
               onClick={() => goToScreen(screen + 1)}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl
-                bg-[#F97316] text-[color:var(--text-primary)] hover:bg-[#ea6c10] transition-colors min-h-[48px] font-medium"
+                bg-accent text-[color:var(--text-primary)] hover:bg-accent-hover transition-colors min-h-[48px] font-medium"
             >
               Next
               <ArrowRight size={16} />

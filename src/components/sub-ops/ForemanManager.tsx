@@ -130,7 +130,7 @@ export default function ForemanManager({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function ForemanManager({ projectId }: Props) {
 
         {detailLoading ? (
           <div className="flex items-center justify-center h-40">
-            <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -190,7 +190,7 @@ export default function ForemanManager({ projectId }: Props) {
               {f.certifications && f.certifications.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {f.certifications.map((c) => (
-                    <span key={c} className="flex items-center gap-1 text-[10px] bg-[#F97316]/15 text-[#F97316] px-2 py-0.5 rounded font-medium">
+                    <span key={c} className="flex items-center gap-1 text-[10px] bg-accent/15 text-accent px-2 py-0.5 rounded font-medium">
                       <Award size={10} /> {c}
                     </span>
                   ))}
@@ -213,7 +213,7 @@ export default function ForemanManager({ projectId }: Props) {
             {/* Recent Dispatches */}
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-                <Send size={14} className="text-[#F97316]" /> Recent Dispatches
+                <Send size={14} className="text-accent" /> Recent Dispatches
               </h3>
               {(f.recent_dispatches?.length ?? 0) === 0 ? (
                 <p className="text-xs text-gray-600">No dispatches yet</p>
@@ -238,7 +238,7 @@ export default function ForemanManager({ projectId }: Props) {
             {/* Recent Check-ins */}
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-                <CheckCircle size={14} className="text-[#F97316]" /> Recent Check-Ins
+                <CheckCircle size={14} className="text-accent" /> Recent Check-Ins
               </h3>
               {(f.recent_checkins?.length ?? 0) === 0 ? (
                 <p className="text-xs text-gray-600">No check-ins yet</p>
@@ -260,7 +260,7 @@ export default function ForemanManager({ projectId }: Props) {
             {/* SOP Compliance */}
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
               <h3 className="text-sm font-semibold text-[color:var(--text-primary)] flex items-center gap-2">
-                <FileText size={14} className="text-[#F97316]" /> SOP Compliance
+                <FileText size={14} className="text-accent" /> SOP Compliance
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 <div>
@@ -309,7 +309,7 @@ export default function ForemanManager({ projectId }: Props) {
         </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
-          className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+          className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
         >
           {showAdd ? <><X size={14} /> Cancel</> : <><UserPlus size={14} /> Add Foreman</>}
         </button>
@@ -326,7 +326,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g., Mike Rodriguez"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -335,7 +335,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.trade}
                 onChange={(e) => setForm({ ...form, trade: e.target.value })}
                 placeholder="e.g., Electrical"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -344,7 +344,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 placeholder="602-555-1234"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -353,7 +353,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="mike@company.com"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -362,7 +362,7 @@ export default function ForemanManager({ projectId }: Props) {
                 value={form.certifications}
                 onChange={(e) => setForm({ ...form, certifications: e.target.value })}
                 placeholder="OSHA 30, First Aid (comma separated)"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 min-h-[44px]"
               />
             </div>
             <div>
@@ -371,7 +371,7 @@ export default function ForemanManager({ projectId }: Props) {
                 type="date"
                 value={form.hire_date}
                 onChange={(e) => setForm({ ...form, hire_date: e.target.value })}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 min-h-[44px]"
               />
             </div>
           </div>
@@ -381,7 +381,7 @@ export default function ForemanManager({ projectId }: Props) {
           <button
             onClick={handleAdd}
             disabled={adding}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             <Plus size={14} />
             {adding ? "Adding..." : "Add Foreman"}
@@ -404,7 +404,7 @@ export default function ForemanManager({ projectId }: Props) {
               <div
                 key={f.id}
                 onClick={() => fetchDetail(f.id)}
-                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-[#F97316]/30 transition-colors cursor-pointer space-y-2"
+                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 hover:border-accent/30 transition-colors cursor-pointer space-y-2"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{f.name}</span>

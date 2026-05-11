@@ -43,7 +43,7 @@ export default async function SettingsPage() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] p-8">
       <div className="max-w-2xl mx-auto">
-        <Link href="/dashboard" className="text-[#F97316] hover:text-[#EA580C] flex items-center gap-2 mb-6">
+        <Link href="/dashboard" className="text-accent hover:text-[#EA580C] flex items-center gap-2 mb-6">
           <ArrowLeft size={16} />
           Back to Dashboard
         </Link>
@@ -53,7 +53,7 @@ export default async function SettingsPage() {
         {/* Storage Quota Section */}
         <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
-            <HardDrive size={20} className="text-[#F97316]" />
+            <HardDrive size={20} className="text-accent" />
             Storage Usage
           </h2>
 
@@ -104,7 +104,7 @@ export default async function SettingsPage() {
         {/* Appearance — Theme & Language */}
         <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
-            <span className="text-[#F97316]">🎨</span>
+            <span className="text-accent">🎨</span>
             Appearance
           </h2>
           <AppearanceSettings />
@@ -112,7 +112,7 @@ export default async function SettingsPage() {
         {/* Push Notifications Section */}
         <div className="bg-[color:var(--bg-secondary)] border border-[color:var(--border-primary)] rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-[color:var(--text-primary)] mb-4 flex items-center gap-2">
-            <Bell size={20} className="text-[#F97316]" />
+            <Bell size={20} className="text-accent" />
             Notifications
           </h2>
           <NotificationToggle />

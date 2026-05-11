@@ -50,7 +50,7 @@ function ActivityProgressCard({
           </div>
           <div className="flex items-center gap-2 mt-0.5">
             {activity.trade && (
-              <span className="text-xs text-[#F97316]">{activity.trade}</span>
+              <span className="text-xs text-accent">{activity.trade}</span>
             )}
             <span className="text-xs text-[color:var(--text-muted)]">{pctBefore}%</span>
             {delta !== 0 && (
@@ -84,7 +84,7 @@ function ActivityProgressCard({
               }
               className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full appearance-none cursor-pointer
                 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6
-                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#F97316]
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent
                 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
             />
             <div className="flex justify-between text-[10px] text-gray-600 mt-1">
@@ -230,7 +230,7 @@ export default function WorkIssuesScreen({
             onChange={(e) => onLostCrewHoursChange(parseFloat(e.target.value) || 0)}
             placeholder="0"
             className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-              focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+              focus:outline-none focus:border-accent/50 min-h-[44px]"
           />
         </div>
       </div>

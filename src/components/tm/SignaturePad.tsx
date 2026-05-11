@@ -28,7 +28,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     ctx.scale(dpr, dpr);
     ctx.fillStyle = "#1A1A22";
     ctx.fillRect(0, 0, rect.width, rect.height);
-    ctx.strokeStyle = "#F97316";
+    ctx.strokeStyle = "#F37021";
     ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -57,7 +57,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     if (ctx) {
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, 1.25, 0, Math.PI * 2);
-      ctx.fillStyle = "#F97316";
+      ctx.fillStyle = "#F37021";
       ctx.fill();
     }
   }, []);
@@ -94,7 +94,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
     ctx.fillStyle = "#1A1A22";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.strokeStyle = "#F97316";
+    ctx.strokeStyle = "#F37021";
     ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -155,7 +155,7 @@ export default function SignaturePad({ onDone, onCancel, label = "Sign Here" }: 
           <button
             onClick={done}
             disabled={isEmpty}
-            className="flex items-center gap-1.5 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex-1 justify-center"
+            className="flex items-center gap-1.5 px-4 py-3 bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex-1 justify-center"
           >
             <Check size={15} />
             Done

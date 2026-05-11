@@ -82,7 +82,7 @@ const STATUS_CONFIG: Record<string, { label: string; abbrev: string; color: stri
   not_started: { label: "Not Started", abbrev: "NS", color: "var(--text-muted)", bg: "rgba(107,114,128,0.2)" },
   in_progress: { label: "In Progress", abbrev: "IP", color: "#3B82F6", bg: "rgba(59,130,246,0.2)" },
   ready_for_handoff: { label: "Ready", abbrev: "RDY", color: "#EAB308", bg: "rgba(234,179,8,0.2)" },
-  handed_off: { label: "Handed Off", abbrev: "HO", color: "#F97316", bg: "rgba(249,115,22,0.2)" },
+  handed_off: { label: "Handed Off", abbrev: "HO", color: "#F37021", bg: "rgba(249,115,22,0.2)" },
   accepted: { label: "Accepted", abbrev: "OK", color: "#22C55E", bg: "rgba(34,197,94,0.2)" },
   issue_flagged: { label: "Issue", abbrev: "!", color: "#EF4444", bg: "rgba(239,68,68,0.2)" },
 };
@@ -110,7 +110,7 @@ export default function HandoffTracker({ projectId }: Props) {
   const [showAddDept, setShowAddDept] = useState(false);
   const [deptName, setDeptName] = useState("");
   const [deptTrade, setDeptTrade] = useState("");
-  const [deptColor, setDeptColor] = useState("#F97316");
+  const [deptColor, setDeptColor] = useState("#F37021");
 
   // Checklist add
   const [newItemText, setNewItemText] = useState("");
@@ -296,7 +296,7 @@ export default function HandoffTracker({ projectId }: Props) {
       if (res.ok) {
         setDeptName("");
         setDeptTrade("");
-        setDeptColor("#F97316");
+        setDeptColor("#F37021");
         setShowAddDept(false);
         fetchBoard();
         fetchDepartments();
@@ -359,7 +359,7 @@ export default function HandoffTracker({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -387,7 +387,7 @@ export default function HandoffTracker({ projectId }: Props) {
             <>
               <button
                 onClick={() => setShowAddArea(!showAddArea)}
-                className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 rounded-lg text-xs font-semibold transition-colors min-h-[40px]"
+                className="flex items-center gap-1.5 px-3 py-2 bg-accent/10 text-accent hover:bg-accent/20 rounded-lg text-xs font-semibold transition-colors min-h-[40px]"
               >
                 <Plus size={14} /> Add Area
               </button>
@@ -438,7 +438,7 @@ export default function HandoffTracker({ projectId }: Props) {
             />
           </div>
           <div className="flex gap-2">
-            <button onClick={addArea} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px]">
+            <button onClick={addArea} className="px-4 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[40px]">
               Add Area
             </button>
             <button onClick={() => setShowAddArea(false)} className="px-4 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg text-xs min-h-[40px]">
@@ -636,7 +636,7 @@ export default function HandoffTracker({ projectId }: Props) {
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             {detailLoading ? (
               <div className="flex items-center justify-center h-40">
-                <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+                <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
               </div>
             ) : selectedHandoff && (
               <div className="p-5 space-y-5">
@@ -644,7 +644,7 @@ export default function HandoffTracker({ projectId }: Props) {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2 text-sm font-medium text-[color:var(--text-primary)]">
-                      <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.from_department_color || "#F97316", color: "#fff" }}>
+                      <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: selectedHandoff.from_department_color || "#F37021", color: "#fff" }}>
                         {selectedHandoff.from_department_name}
                       </span>
                       <ArrowRightLeft size={14} className="text-[color:var(--text-muted)]" />
@@ -720,7 +720,7 @@ export default function HandoffTracker({ projectId }: Props) {
                           type="checkbox"
                           checked={item.completed}
                           onChange={() => toggleChecklistItem(item)}
-                          className="mt-0.5 w-4 h-4 rounded border-gray-600 text-[#F97316] bg-[var(--bg-tertiary)] focus:ring-0 cursor-pointer"
+                          className="mt-0.5 w-4 h-4 rounded border-gray-600 text-accent bg-[var(--bg-tertiary)] focus:ring-0 cursor-pointer"
                         />
                         <span className={`text-sm ${item.completed ? "text-[color:var(--text-muted)] line-through" : "text-[color:var(--text-secondary)]"}`}>
                           {item.item_text}
@@ -739,7 +739,7 @@ export default function HandoffTracker({ projectId }: Props) {
                     <button
                       onClick={addChecklistItem}
                       disabled={!newItemText.trim()}
-                      className="px-3 py-1.5 bg-[#F97316]/10 text-[#F97316] rounded-lg text-xs font-medium disabled:opacity-40 min-h-[36px]"
+                      className="px-3 py-1.5 bg-accent/10 text-accent rounded-lg text-xs font-medium disabled:opacity-40 min-h-[36px]"
                     >
                       Add
                     </button>

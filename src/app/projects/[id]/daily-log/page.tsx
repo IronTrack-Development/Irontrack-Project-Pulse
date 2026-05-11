@@ -32,7 +32,7 @@ function DailyLogInner({ projectId }: { projectId: string }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -56,7 +56,7 @@ export default function DailyLogPage({ params }: { params: Promise<{ id: string 
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-64">
-          <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={24} className="text-accent animate-spin" />
         </div>
       }
     >

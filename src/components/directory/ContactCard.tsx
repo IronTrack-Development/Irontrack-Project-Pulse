@@ -46,7 +46,7 @@ const ROLE_COLORS: Record<string, string> = {
   owner: "bg-emerald-500/15 text-emerald-300",
   owners_rep: "bg-green-500/15 text-green-300",
   inspector: "bg-red-500/15 text-red-300",
-  internal: "bg-[#F97316]/15 text-[#F97316]",
+  internal: "bg-accent/15 text-accent",
   other: "bg-gray-700 text-[color:var(--text-secondary)]",
 };
 
@@ -91,7 +91,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
           )}
 
           {contact.joined_at && (
-            <p className="text-[10px] text-[#F97316] mb-2">✓ Joined via QR</p>
+            <p className="text-[10px] text-accent mb-2">✓ Joined via QR</p>
           )}
 
           {/* Action buttons */}
@@ -102,7 +102,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
                 className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors min-h-[36px]"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Mail size={12} className="text-[#F97316]" />
+                <Mail size={12} className="text-accent" />
                 <span className="hidden sm:inline truncate max-w-[120px]">{cc.email}</span>
                 <span className="sm:hidden">Email</span>
               </a>
@@ -113,7 +113,7 @@ export default function ContactCard({ contact, onEdit, onRemove }: Props) {
                 className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors min-h-[36px]"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Phone size={12} className="text-[#F97316]" />
+                <Phone size={12} className="text-accent" />
                 <span className="hidden sm:inline">{cc.phone}</span>
                 <span className="sm:hidden">Call</span>
               </a>

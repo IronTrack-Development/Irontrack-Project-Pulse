@@ -57,7 +57,7 @@ const PIN_COLORS: Record<string, string> = {
 };
 
 const DISCIPLINE_COLORS: Record<string, string> = {
-  architectural: "#F97316",
+  architectural: "#0EA5E9",
   structural: "#EF4444",
   mechanical: "#3B82F6",
   electrical: "#EAB308",
@@ -272,7 +272,7 @@ export default function SheetViewer({
           onClick={() => setAddPinMode((v) => !v)}
           className={`p-2 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors shrink-0 ${
             addPinMode
-              ? "bg-[#F97316] text-[color:var(--text-primary)]"
+              ? "bg-accent text-[color:var(--text-primary)]"
               : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] bg-[var(--bg-tertiary)]"
           }`}
           title="Add Pin"
@@ -302,12 +302,12 @@ export default function SheetViewer({
 
       {/* Add pin mode banner */}
       {addPinMode && (
-        <div className="flex items-center justify-center gap-2 px-4 py-2 bg-[#F97316]/15 border-b border-[#F97316]/30 shrink-0">
-          <MapPin size={14} className="text-[#F97316]" />
-          <span className="text-[#F97316] text-sm">Tap on the drawing to place a pin</span>
+        <div className="flex items-center justify-center gap-2 px-4 py-2 bg-accent/15 border-b border-accent/30 shrink-0">
+          <MapPin size={14} className="text-accent" />
+          <span className="text-accent text-sm">Tap on the drawing to place a pin</span>
           <button
             onClick={() => setAddPinMode(false)}
-            className="ml-auto text-[#F97316] hover:text-[color:var(--text-primary)] text-sm underline"
+            className="ml-auto text-accent hover:text-[color:var(--text-primary)] text-sm underline"
           >
             Cancel
           </button>
@@ -366,7 +366,7 @@ export default function SheetViewer({
                   style={{
                     left: `${pin.x_percent}%`,
                     top: `${pin.y_percent}%`,
-                    backgroundColor: PIN_COLORS[pin.pin_type] || "#F97316",
+                    backgroundColor: PIN_COLORS[pin.pin_type] || "#F37021",
                     width: "28px",
                     height: "28px",
                   }}

@@ -181,7 +181,7 @@ export default function ReleaseNotesPage() {
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === tab
-                  ? "text-[#F97316] border-[#F97316]"
+                  ? "text-accent border-accent"
                   : "text-[color:var(--text-secondary)] border-transparent hover:text-[color:var(--text-primary)]"
               }`}
             >
@@ -240,15 +240,15 @@ export default function ReleaseNotesPage() {
       <footer className="border-t border-[var(--border-primary)] py-6 mt-12">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-[#F97316]" />
+            <Building2 className="w-4 h-4 text-accent" />
             <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Terms</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Privacy</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/status" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Status</Link>
+            <Link href="/status" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Status</Link>
           </div>
         </div>
       </footer>

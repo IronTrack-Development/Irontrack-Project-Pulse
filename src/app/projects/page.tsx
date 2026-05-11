@@ -59,7 +59,7 @@ export default function ProjectsPage() {
           </div>
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
           >
             <Plus size={16} />
             Add Project
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
           <div className="text-center py-20">
             <Building2 size={40} className="mx-auto text-gray-700 mb-3" />
             <p className="text-[color:var(--text-muted)]">No projects yet.</p>
-            <button onClick={() => setShowAdd(true)} className="mt-4 px-5 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
+            <button onClick={() => setShowAdd(true)} className="mt-4 px-5 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
               Create First Project
             </button>
           </div>
@@ -84,11 +84,11 @@ export default function ProjectsPage() {
               <Link
                 key={p.id}
                 href={`/projects/${p.id}`}
-                className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-5 py-4 hover:border-[#F97316]/30 transition-all group"
+                className="flex items-center bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-5 py-4 hover:border-accent/30 transition-all group"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-bold text-[color:var(--text-primary)] group-hover:text-[#F97316] transition-colors">{p.name}</h3>
+                    <h3 className="font-bold text-[color:var(--text-primary)] group-hover:text-accent transition-colors">{p.name}</h3>
                     <span className={`text-xs px-2 py-0.5 rounded border font-semibold ${healthColor(p.health_score)}`}>
                       {bandLabel(p.health_score)}
                     </span>
@@ -127,7 +127,7 @@ export default function ProjectsPage() {
                     <div className="text-[10px] text-gray-600">Activities</div>
                   </div>
                 </div>
-                <ChevronRight size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors shrink-0" />
+                <ChevronRight size={16} className="text-gray-600 group-hover:text-accent transition-colors shrink-0" />
               </Link>
             ))}
           </div>

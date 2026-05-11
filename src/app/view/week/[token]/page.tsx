@@ -108,8 +108,8 @@ export default async function PublicWeekView({ params }: PageProps) {
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-primary)]">
         <div className="max-w-2xl mx-auto px-4 py-5">
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full bg-[#F97316]" />
-            <span className="text-xs text-[#F97316] font-bold uppercase tracking-wider">IronTrack Project Pulse</span>
+            <div className="w-2 h-2 rounded-full bg-accent" />
+            <span className="text-xs text-accent font-bold uppercase tracking-wider">IronTrack Project Pulse</span>
           </div>
           <h1 className="text-[color:var(--text-primary)] font-bold text-xl">{project.name}</h1>
           {(project.client_name || project.location) && (
@@ -118,7 +118,7 @@ export default async function PublicWeekView({ params }: PageProps) {
             </p>
           )}
           <div className="mt-3 flex items-center gap-3">
-            <span className="text-xs bg-[#F97316]/15 text-[#F97316] px-3 py-1 rounded-full font-bold">
+            <span className="text-xs bg-accent/15 text-accent px-3 py-1 rounded-full font-bold">
               Week {weekNumber} Lookahead
             </span>
             <span className="text-xs text-[color:var(--text-muted)]">
@@ -162,7 +162,7 @@ export default async function PublicWeekView({ params }: PageProps) {
                           </div>
                           <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1">
                             {task.trade && (
-                              <span className="text-[10px] text-[#F97316] font-medium">{task.trade}</span>
+                              <span className="text-[10px] text-accent font-medium">{task.trade}</span>
                             )}
                             <span className="text-[10px] text-[color:var(--text-muted)]">
                               {fmt(task.start_date)} → {fmt(task.finish_date)}
@@ -203,7 +203,7 @@ export default async function PublicWeekView({ params }: PageProps) {
 
       {/* Footer */}
       <div className="max-w-2xl mx-auto px-4 pb-8 text-center">
-        <div className="h-px bg-gradient-to-r from-transparent via-[#F97316]/30 to-transparent mb-4" />
+        <div className="h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent mb-4" />
         <p className="text-[10px] text-gray-600">
           Powered by IronTrack Project Pulse · Generated {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
         </p>

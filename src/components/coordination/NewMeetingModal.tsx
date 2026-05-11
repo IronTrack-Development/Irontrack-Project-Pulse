@@ -63,7 +63,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2">
-            <CalendarDays size={18} className="text-[#F97316]" />
+            <CalendarDays size={18} className="text-accent" />
             <h3 className="text-[color:var(--text-primary)] font-semibold">{t('coordination.newMeeting')}</h3>
           </div>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
@@ -83,7 +83,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                   onClick={() => handleTypeChange(mt.name)}
                   className="px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[44px]"
                   style={{
-                    background: selectedType === mt.name ? "#F97316" : "var(--bg-tertiary)",
+                    background: selectedType === mt.name ? "#F37021" : "var(--bg-tertiary)",
                     color: selectedType === mt.name ? "#fff" : "var(--text-secondary)",
                   }}
                 >
@@ -101,7 +101,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
               placeholder={t('coordination.meetingTitle')}
             />
           </div>
@@ -113,7 +113,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
               type="date"
               value={meetingDate}
               onChange={(e) => setMeetingDate(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
             />
           </div>
 
@@ -125,7 +125,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={facilitator}
                 onChange={(e) => setFacilitator(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
                 placeholder={t('coordination.optional')}
               />
             </div>
@@ -135,7 +135,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
                 placeholder={t('coordination.optional')}
               />
             </div>
@@ -149,7 +149,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
             </div>
             <button
               onClick={() => setAutoPopulate(!autoPopulate)}
-              className={`relative w-11 h-6 rounded-full transition-colors ${autoPopulate ? "bg-[#F97316]" : "bg-[var(--bg-tertiary)]"}`}
+              className={`relative w-11 h-6 rounded-full transition-colors ${autoPopulate ? "bg-accent" : "bg-[var(--bg-tertiary)]"}`}
             >
               <span
                 className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${autoPopulate ? "left-[22px]" : "left-0.5"}`}
@@ -169,7 +169,7 @@ export default function NewMeetingModal({ projectId, onClose, onCreated }: NewMe
           <button
             onClick={handleSubmit}
             disabled={saving || !title.trim()}
-            className="flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
+            className="flex items-center gap-2 px-6 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors min-h-[44px]"
           >
             {saving && <Loader2 size={14} className="animate-spin" />}
             {t('coordination.createMeeting')}

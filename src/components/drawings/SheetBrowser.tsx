@@ -70,7 +70,7 @@ const DISCIPLINE_LABEL: Record<Discipline, string> = {
 
 const DISCIPLINE_COLOR: Record<Discipline, string> = {
   architectural: "#3B82F6",   // blue
-  structural: "#F97316",      // orange-red
+  structural: "#F37021",      // orange-red
   mechanical: "#8B5CF6",      // purple
   electrical: "#EAB308",      // yellow
   plumbing: "#22D3EE",        // cyan
@@ -237,14 +237,14 @@ export default function SheetBrowser({
         <>
           {/* Unorganized banner */}
           {allUnclassified && (
-            <div className="mb-4 p-3 bg-[var(--bg-tertiary)] border border-[#F97316]/30 rounded-xl flex items-center gap-3">
-              <ClipboardList size={16} className="text-[#F97316] shrink-0" />
+            <div className="mb-4 p-3 bg-[var(--bg-tertiary)] border border-accent/30 rounded-xl flex items-center gap-3">
+              <ClipboardList size={16} className="text-accent shrink-0" />
               <p className="text-[color:var(--text-secondary)] text-sm flex-1">
                 Sheets haven&apos;t been organized yet.
               </p>
               <button
                 onClick={() => setShowOrganizer(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px] transition-colors shrink-0"
               >
                 <ClipboardList size={12} /> Organize Sheets
               </button>

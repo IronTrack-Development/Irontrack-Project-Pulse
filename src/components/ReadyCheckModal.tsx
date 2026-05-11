@@ -212,7 +212,7 @@ export default function ReadyCheckModal({
       <div className="flex flex-wrap gap-3 text-xs text-[color:var(--text-secondary)]">
         {trade && (
           <span className="flex items-center gap-1">
-            <User size={11} className="text-[#F97316]" />
+            <User size={11} className="text-accent" />
             {trade}
           </span>
         )}
@@ -246,8 +246,8 @@ export default function ReadyCheckModal({
 
         {/* Follow-up notice */}
         {isFollowUp && (
-          <div className="bg-[#F97316]/10 border border-[#F97316]/30 rounded-xl px-3 py-2">
-            <div className="text-xs font-semibold text-[#F97316]">
+          <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2">
+            <div className="text-xs font-semibold text-accent">
               Follow-up #{(existingCheck?.follow_up_count ?? 0) + 1}
             </div>
             <div className="text-xs text-[color:var(--text-secondary)] mt-0.5">
@@ -279,13 +279,13 @@ export default function ReadyCheckModal({
                     onClick={() => setCheckType(ct.value)}
                     className={`w-full flex items-start gap-3 px-3 py-3 rounded-xl border transition-all text-left ${
                       isActive
-                        ? "bg-[#F97316]/10 border-[#F97316]/50 text-[color:var(--text-primary)]"
+                        ? "bg-accent/10 border-accent/50 text-[color:var(--text-primary)]"
                         : "bg-[var(--bg-primary)] border-[var(--border-primary)] text-[color:var(--text-secondary)] hover:border-gray-600"
                     }`}
                   >
                     <span
                       className={`w-4 h-4 rounded-full border-2 flex items-center justify-center mt-0.5 shrink-0 transition-all ${
-                        isActive ? "border-[#F97316] bg-[#F97316]" : "border-gray-600"
+                        isActive ? "border-accent bg-accent" : "border-gray-600"
                       }`}
                     >
                       {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -296,7 +296,7 @@ export default function ReadyCheckModal({
                       </div>
                       <div className="text-[11px] text-[color:var(--text-muted)] mt-0.5">{ct.description}</div>
                     </div>
-                    <span className={isActive ? "text-[#F97316]" : "text-gray-700"}>
+                    <span className={isActive ? "text-accent" : "text-gray-700"}>
                       {ct.icon}
                     </span>
                   </button>
@@ -317,7 +317,7 @@ export default function ReadyCheckModal({
                 if (!isEditingMessage) setCustomMessage(generatedMessage);
                 setIsEditingMessage(!isEditingMessage);
               }}
-              className="text-xs text-[#F97316] hover:text-[#ea6c10] transition-colors"
+              className="text-xs text-accent hover:text-accent-hover transition-colors"
             >
               {isEditingMessage ? "Use Template" : "Edit"}
             </button>
@@ -328,7 +328,7 @@ export default function ReadyCheckModal({
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
               rows={6}
-              className="w-full bg-[var(--bg-primary)] border border-[#F97316]/30 rounded-xl p-4 text-sm text-[color:var(--text-secondary)] font-mono leading-relaxed focus:outline-none focus:border-[#F97316]/60 resize-none transition-colors"
+              className="w-full bg-[var(--bg-primary)] border border-accent/30 rounded-xl p-4 text-sm text-[color:var(--text-secondary)] font-mono leading-relaxed focus:outline-none focus:border-accent/60 resize-none transition-colors"
             />
           ) : (
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4 text-sm text-[color:var(--text-secondary)] font-mono leading-relaxed whitespace-pre-wrap">
@@ -342,7 +342,7 @@ export default function ReadyCheckModal({
       <div className="absolute bottom-0 left-0 right-0 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom)+64px)] sm:pb-6 pt-4 bg-gradient-to-t from-[#121217] via-[#121217]/95 to-transparent">
         <button
           onClick={() => setStep("send_method")}
-          className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-bold rounded-xl py-3.5 text-sm transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-bold rounded-xl py-3.5 text-sm transition-colors"
         >
           <Send size={16} />
           {isFollowUp ? "Send Follow-Up" : "Send Ready Check"}
@@ -375,11 +375,11 @@ export default function ReadyCheckModal({
             disabled={sending}
             className="w-full flex items-center gap-4 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-60 rounded-xl py-4 px-5 transition-colors text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#F97316]/15 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
               {copied ? (
                 <Check size={20} className="text-[#22C55E]" />
               ) : (
-                <Copy size={20} className="text-[#F97316]" />
+                <Copy size={20} className="text-accent" />
               )}
             </div>
             <div>
@@ -501,7 +501,7 @@ export default function ReadyCheckModal({
                   : "Ready Check"}
               </div>
               {trade && step !== "confirmation" && (
-                <span className="text-[10px] font-semibold bg-[#F97316]/15 text-[#F97316] px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-semibold bg-accent/15 text-accent px-2 py-0.5 rounded-full">
                   {trade}
                 </span>
               )}

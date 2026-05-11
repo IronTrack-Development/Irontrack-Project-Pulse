@@ -110,7 +110,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
   if (step === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 size={32} className="animate-spin text-[#F97316]" />
+        <Loader2 size={32} className="animate-spin text-accent" />
       </div>
     );
   }
@@ -155,20 +155,20 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
 
           {/* Info */}
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-3">
-            <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
+            <p className="text-xs font-semibold text-accent uppercase tracking-wider">
               What&apos;s Next
             </p>
             <ul className="space-y-2 text-xs text-[color:var(--text-secondary)]">
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
+                <span className="text-accent flex-none mt-0.5">→</span>
                 Your contact info is now in the project directory
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
+                <span className="text-accent flex-none mt-0.5">→</span>
                 The project team can reach you directly from the directory
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#F97316] flex-none mt-0.5">→</span>
+                <span className="text-accent flex-none mt-0.5">→</span>
                 You can close this page — you&apos;re all set
               </li>
             </ul>
@@ -223,7 +223,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               placeholder="Full name"
               required
               autoComplete="name"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
             />
           </div>
 
@@ -238,7 +238,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setCompany(e.target.value)}
               placeholder="Company name"
               autoComplete="organization"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
             />
           </div>
 
@@ -251,7 +251,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               value={role}
               onChange={(e) => { setRole(e.target.value); setTrade(""); setDiscipline(""); }}
               required
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
             >
               <option value="" disabled>Select your role…</option>
               {ROLE_OPTIONS.map((r) => (
@@ -271,7 +271,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={trade}
                 onChange={(e) => setTrade(e.target.value)}
                 placeholder="e.g., Electrical, Plumbing, HVAC"
-                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
               />
             </div>
           )}
@@ -287,7 +287,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
                 value={discipline}
                 onChange={(e) => setDiscipline(e.target.value)}
                 placeholder="e.g., Structural, MEP, Civil"
-                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
               />
             </div>
           )}
@@ -303,7 +303,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               autoComplete="email"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
             />
           </div>
 
@@ -318,7 +318,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
               onChange={(e) => setPhone(e.target.value)}
               placeholder="602-555-1234"
               autoComplete="tel"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition min-h-[52px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-4 text-[color:var(--text-primary)] text-base placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition min-h-[52px]"
             />
           </div>
 
@@ -331,7 +331,7 @@ export default function DirectoryJoinPage({ params }: { params: Promise<{ projec
           <button
             type="submit"
             disabled={submitting || !name.trim() || !role}
-            className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-[#F97316]/20"
+            className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-xl text-base transition-colors min-h-[56px] shadow-lg shadow-accent/20"
           >
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />

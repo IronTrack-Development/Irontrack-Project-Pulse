@@ -68,7 +68,7 @@ function RiskCard({ risk, onResolve, onSnooze }: RiskCardProps) {
       {activity?.activity_name && (
         <div className="text-xs text-gray-600 mb-3">
           Source: <span className="text-[color:var(--text-secondary)]">{activity.activity_name}</span>
-          {activity.trade && <span className="ml-2 text-[#F97316]">{activity.trade}</span>}
+          {activity.trade && <span className="ml-2 text-accent">{activity.trade}</span>}
         </div>
       )}
 
@@ -150,7 +150,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
               key={f}
               onClick={() => setFilter(f)}
               className={`px-3 py-1 rounded text-xs font-semibold capitalize transition-colors ${
-                filter === f ? "bg-[#F97316] text-[color:var(--text-primary)]" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
+                filter === f ? "bg-accent text-[color:var(--text-primary)]" : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               {f === "all" ? "All Open" : f}
@@ -165,7 +165,7 @@ export default function RisksTab({ projectId, onUpdate }: { projectId: string; o
       {/* Risk cards */}
       {loading ? (
         <div className="flex justify-center py-12">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-12">

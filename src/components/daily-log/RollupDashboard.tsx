@@ -32,7 +32,7 @@ export default function RollupDashboard({ projectId }: RollupDashboardProps) {
             onClick={() => setView(v.id)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors min-h-[36px] ${
               view === v.id
-                ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                ? "bg-accent text-[color:var(--text-primary)]"
                 : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
             }`}
           >

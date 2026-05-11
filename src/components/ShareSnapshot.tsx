@@ -93,7 +93,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)]">
               <div className="flex items-center gap-2">
-                <Share2 size={15} className="text-[#F97316]" />
+                <Share2 size={15} className="text-accent" />
                 <span className="text-sm font-semibold text-[color:var(--text-primary)]">Executive Snapshot</span>
               </div>
               <button
@@ -108,7 +108,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
             <div className="px-5 py-4 flex-1">
               {loading && (
                 <div className="flex items-center justify-center py-10 gap-2 text-[color:var(--text-muted)]">
-                  <Loader2 size={18} className="animate-spin text-[#F97316]" />
+                  <Loader2 size={18} className="animate-spin text-accent" />
                   <span className="text-sm">Generating snapshot…</span>
                 </div>
               )}
@@ -148,7 +148,7 @@ export default function ShareSnapshot({ projectId }: ShareSnapshotProps) {
               <button
                 onClick={handleCopy}
                 disabled={!snapshotText || loading}
-                className="flex items-center gap-1.5 px-4 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
+                className="flex items-center gap-1.5 px-4 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
               >
                 {copied ? (
                   <>

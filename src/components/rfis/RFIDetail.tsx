@@ -60,7 +60,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
 
 const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   critical: { color: "#EF4444", bg: "bg-red-500/20" },
-  high:     { color: "#F97316", bg: "bg-orange-500/20" },
+  high:     { color: "#F37021", bg: "bg-orange-500/20" },
   normal:   { color: "#3B82F6", bg: "bg-blue-500/20" },
   low:      { color: "var(--text-muted)", bg: "bg-gray-700/30" },
 };
@@ -269,7 +269,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 {rfi.rfi_responses.map((resp) => (
                   <div key={resp.id} className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
                     {resp.responded_by_name && (
-                      <p className="text-xs font-medium text-[#F97316] mb-1">{resp.responded_by_name}</p>
+                      <p className="text-xs font-medium text-accent mb-1">{resp.responded_by_name}</p>
                     )}
                     <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">{resp.response_text}</p>
                     <p className="text-xs text-gray-600 mt-1.5">
@@ -291,7 +291,7 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 onChange={(e) => setRespondedByName(e.target.value)}
                 placeholder="Respondent name (optional)"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-2.5 text-sm text-[color:var(--text-primary)]
-                  placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 mb-2 min-h-[44px]"
+                  placeholder-gray-600 focus:outline-none focus:border-accent/50 mb-2 min-h-[44px]"
               />
               <textarea
                 value={responseText}
@@ -299,13 +299,13 @@ export default function RFIDetail({ rfi, projectId, onClose, onUpdated, supabase
                 placeholder="Enter response..."
                 rows={3}
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)]
-                  placeholder-gray-600 resize-none focus:outline-none focus:border-[#F97316]/50 mb-2"
+                  placeholder-gray-600 resize-none focus:outline-none focus:border-accent/50 mb-2"
               />
               <button
                 onClick={submitResponse}
                 disabled={!responseText.trim() || isSubmitting}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl
-                  bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] font-semibold text-sm
+                  bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] font-semibold text-sm
                   disabled:opacity-50 transition-all min-h-[44px]"
               >
                 {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}

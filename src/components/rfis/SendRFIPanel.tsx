@@ -82,7 +82,7 @@ export default function SendRFIPanel({
     <div>
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-[#F97316]/40 hover:border-[#F97316] text-[#F97316] font-semibold text-sm transition-all min-h-[44px]"
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-accent/40 hover:border-accent text-accent font-semibold text-sm transition-all min-h-[44px]"
       >
         <Mail size={14} />
         Send RFI to Architect / Engineer
@@ -99,14 +99,14 @@ export default function SendRFIPanel({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="architect@example.com"
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-500 focus:outline-none focus:border-[#F97316]/50 min-h-[44px]"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-500 focus:outline-none focus:border-accent/50 min-h-[44px]"
             />
           </div>
           <div className="flex gap-2">
             <button
               onClick={handleSendEmail}
               disabled={!email.includes("@")}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#F97316] hover:bg-[#ea6c10] text-white font-semibold text-sm disabled:opacity-40 transition-all min-h-[44px]"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold text-sm disabled:opacity-40 transition-all min-h-[44px]"
             >
               <Mail size={14} />
               Send via Email

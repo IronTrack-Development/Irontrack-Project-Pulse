@@ -82,12 +82,12 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
         <h3 className="text-sm font-bold text-[color:var(--text-primary)] mb-3">Daily Crew Size</h3>
         <div className="bg-[var(--bg-secondary)] rounded-xl p-3 overflow-x-auto">
           <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ maxHeight: 160 }}>
-            <polygon points={areaPoints} fill="#F97316" opacity="0.1" />
-            <polyline points={points.join(" ")} fill="none" stroke="#F97316" strokeWidth="2" />
+            <polygon points={areaPoints} fill="#F37021" opacity="0.1" />
+            <polyline points={points.join(" ")} fill="none" stroke="#F37021" strokeWidth="2" />
             {trend.map((d, i) => {
               const x = padding + (i / (trend.length - 1)) * chartW;
               const y = padding + chartH - (d.headcount / maxHC) * chartH;
-              return <circle key={i} cx={x} cy={y} r="3" fill="#F97316" />;
+              return <circle key={i} cx={x} cy={y} r="3" fill="#F37021" />;
             })}
             {/* Y-axis labels */}
             <text x={padding - 4} y={padding + 4} fill="#666" fontSize="10" textAnchor="end">{maxHC}</text>
@@ -132,7 +132,7 @@ export default function MonthlyRollup({ projectId }: { projectId: string }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
         <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">

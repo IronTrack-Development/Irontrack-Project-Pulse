@@ -71,7 +71,7 @@ export default function InspectionsTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -94,7 +94,7 @@ export default function InspectionsTab({ projectId }: Props) {
       {/* Locked jurisdiction header */}
       <div className="flex items-center justify-between bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
         <div className="flex items-center gap-3 min-w-0">
-          <Lock size={16} className="text-[#F97316] shrink-0" />
+          <Lock size={16} className="text-accent shrink-0" />
           <div className="min-w-0">
             <span className="text-sm font-medium text-[color:var(--text-primary)]">{jurisdiction.name}</span>
             {jurisdiction.phone && (

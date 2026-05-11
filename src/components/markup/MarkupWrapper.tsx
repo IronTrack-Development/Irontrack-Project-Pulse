@@ -98,7 +98,7 @@ export default function MarkupWrapper({
       {capturing && (
         <div className="fixed inset-0 z-[9998] bg-black/60 flex items-center justify-center">
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl px-6 py-5 flex items-center gap-3">
-            <div className="w-5 h-5 rounded-full border-2 border-[#F97316] border-t-transparent animate-spin" />
+            <div className="w-5 h-5 rounded-full border-2 border-accent border-t-transparent animate-spin" />
             <span className="text-[color:var(--text-primary)] text-sm font-semibold">Preparing markup…</span>
           </div>
         </div>

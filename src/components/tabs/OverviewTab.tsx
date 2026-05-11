@@ -82,7 +82,7 @@ export default function OverviewTab({ project }: { project: Project }) {
           </div>
           <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#F97316] to-[#22C55E]"
+              className="h-full rounded-full bg-gradient-to-r from-accent to-emerald-500"
               style={{ width: `${stats.completionPercent}%`, transition: "width 0.5s ease" }}
             />
           </div>
@@ -91,7 +91,7 @@ export default function OverviewTab({ project }: { project: Project }) {
         {/* Next milestone */}
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Flag size={16} className="text-[#F97316]" />
+            <Flag size={16} className="text-accent" />
             <span className="text-sm font-semibold text-[color:var(--text-secondary)]">{t('overview.nextMilestone')}</span>
           </div>
           {stats.nextMilestone ? (

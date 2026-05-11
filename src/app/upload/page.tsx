@@ -320,10 +320,10 @@ function UploadContent() {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder="New project name"
-                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50"
                     onKeyDown={(e) => e.key === "Enter" && createProject()}
                   />
-                  <button onClick={createProject} className="px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
+                  <button onClick={createProject} className="px-4 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-sm font-semibold">
                     Create
                   </button>
                   <button onClick={() => setShowNewProject(false)} className="px-3 py-2 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] rounded-lg">
@@ -335,7 +335,7 @@ function UploadContent() {
                   <select
                     value={selectedProjectId}
                     onChange={(e) => setSelectedProjectId(e.target.value)}
-                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50"
                   >
                     <option value="">— Select a project —</option>
                     {projects.map((p) => (
@@ -359,7 +359,7 @@ function UploadContent() {
               onDrop={handleFileDrop}
               onClick={() => fileRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl ${isMobile ? 'p-8' : 'p-12'} text-center cursor-pointer transition-colors group active:scale-[0.99] ${
-                file ? "border-[#22C55E]/40 bg-[#22C55E]/5" : "border-[var(--border-primary)] hover:border-[#F97316]/40 active:border-[#F97316]/60"
+                file ? "border-[#22C55E]/40 bg-[#22C55E]/5" : "border-[var(--border-primary)] hover:border-accent/40 active:border-accent/60"
               }`}
             >
               {file ? (
@@ -372,13 +372,13 @@ function UploadContent() {
                 <>
                   {isMobile ? (
                     <>
-                      <Upload size={36} className="mx-auto text-[#F97316]/70 mb-3" />
+                      <Upload size={36} className="mx-auto text-accent/70 mb-3" />
                       <div className="text-[color:var(--text-primary)] font-semibold mb-1">Tap to Select Schedule</div>
                       <div className="text-sm text-[color:var(--text-muted)] mb-3">Browse files on your device</div>
                     </>
                   ) : (
                     <>
-                      <FileSpreadsheet size={40} className="mx-auto text-gray-700 group-hover:text-[#F97316]/60 mb-4 transition-colors" />
+                      <FileSpreadsheet size={40} className="mx-auto text-gray-700 group-hover:text-accent/60 mb-4 transition-colors" />
                       <div className="text-[color:var(--text-primary)] font-semibold mb-1">Drop your schedule file here</div>
                       <div className="text-sm text-[color:var(--text-muted)] mb-4">or click to browse</div>
                     </>
@@ -426,7 +426,7 @@ function UploadContent() {
             <button
               onClick={handleUpload}
               disabled={!file || !selectedProjectId}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
             >
               <Upload size={16} />
               Parse Schedule
@@ -437,7 +437,7 @@ function UploadContent() {
         {/* Uploading state */}
         {step === "uploading" && (
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 md:p-12 text-center">
-            <Loader2 size={isMobile ? 36 : 48} className="mx-auto text-[#F97316] animate-spin mb-4" />
+            <Loader2 size={isMobile ? 36 : 48} className="mx-auto text-accent animate-spin mb-4" />
             <h2 className="text-lg md:text-xl font-bold text-[color:var(--text-primary)] mb-2">Analyzing Schedule...</h2>
             <p className="text-[color:var(--text-muted)] text-sm">
               {uploadProgress < 10 ? "Preparing upload..." :
@@ -449,7 +449,7 @@ function UploadContent() {
             <div className="mt-4">
               <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-2.5 overflow-hidden">
                 <div 
-                  className="bg-[#F97316] h-2.5 transition-all duration-500 ease-out"
+                  className="bg-accent h-2.5 transition-all duration-500 ease-out"
                   style={{ width: `${Math.max(uploadProgress, 5)}%` }}
                 />
               </div>
@@ -474,14 +474,14 @@ function UploadContent() {
                 <div className="text-xs text-[color:var(--text-muted)]">Activities</div>
               </div>
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4">
-                <div className="text-2xl font-bold text-[#F97316]">{result.milestones_found}</div>
+                <div className="text-2xl font-bold text-accent">{result.milestones_found}</div>
                 <div className="text-xs text-[color:var(--text-muted)]">Milestones</div>
               </div>
             </div>
 
             <button
               onClick={() => router.push(`/projects/${result.project_id}`)}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-xl font-semibold transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl font-semibold transition-colors"
             >
               View Project
               <ArrowRight size={16} />

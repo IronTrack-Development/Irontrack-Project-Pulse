@@ -80,7 +80,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -96,8 +96,8 @@ export default function SubOpsDashboard({ projectId }: Props) {
       {/* Company Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center">
-            <HardHat size={20} className="text-[#F97316]" />
+          <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+            <HardHat size={20} className="text-accent" />
           </div>
           <div>
             <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{company?.company_name ?? "Sub Ops"}</h2>
@@ -115,7 +115,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Send size={14} className="text-[#F97316]" />
+              <Send size={14} className="text-accent" />
               <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Today&apos;s Dispatches</span>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
               <p className="text-[10px] text-[color:var(--text-muted)]">Pending</p>
             </div>
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
+          <button className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors w-full justify-center min-h-[44px]">
             <Plus size={14} />
             Create Dispatch
           </button>
@@ -142,7 +142,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         {/* Open Blockers */}
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle size={14} className="text-[#F97316]" />
+            <AlertTriangle size={14} className="text-accent" />
             <span className="text-xs font-semibold text-[color:var(--text-secondary)]">Open Blockers</span>
           </div>
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{blockers.open_count}</p>
@@ -158,7 +158,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         {/* This Week's Production */}
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <TrendingUp size={14} className="text-[#F97316]" />
+            <TrendingUp size={14} className="text-accent" />
             <span className="text-xs font-semibold text-[color:var(--text-secondary)]">This Week&apos;s Production</span>
           </div>
           <div className="flex items-center gap-4">
@@ -176,7 +176,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
         {/* SOP Compliance */}
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <FileText size={14} className="text-[#F97316]" />
+            <FileText size={14} className="text-accent" />
             <span className="text-xs font-semibold text-[color:var(--text-secondary)]">SOP Compliance</span>
           </div>
           <p className="text-sm text-[color:var(--text-secondary)]">
@@ -190,7 +190,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users size={14} className="text-[#F97316]" />
+            <Users size={14} className="text-accent" />
             <span className="text-sm font-semibold text-[color:var(--text-primary)]">Foreman Status</span>
           </div>
           <span className="text-xs text-[color:var(--text-muted)]">{foremen.length} foremen</span>
@@ -207,7 +207,7 @@ export default function SubOpsDashboard({ projectId }: Props) {
             {foremen.map((f) => (
               <div
                 key={f.id}
-                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 hover:border-[#F97316]/30 transition-colors cursor-pointer"
+                className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 hover:border-accent/30 transition-colors cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-semibold text-[color:var(--text-primary)] truncate">{f.name}</span>

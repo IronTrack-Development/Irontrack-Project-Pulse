@@ -48,7 +48,7 @@ export default function EditableTalkingPoints({
             key={idx}
             className="flex gap-2.5 text-sm text-[color:var(--text-secondary)] leading-relaxed"
           >
-            <span className="text-[#F97316] font-medium shrink-0 w-5 text-right">
+            <span className="text-accent font-medium shrink-0 w-5 text-right">
               {idx + 1}.
             </span>
             <span>{point}</span>
@@ -112,7 +112,7 @@ export default function EditableTalkingPoints({
 
       <button
         onClick={addPoint}
-        className="flex items-center gap-1.5 text-xs text-[#F97316] hover:text-[#ea6c10] transition-colors py-1.5 px-1 min-h-[32px]"
+        className="flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors py-1.5 px-1 min-h-[32px]"
       >
         <Plus size={12} />
         Add talking point

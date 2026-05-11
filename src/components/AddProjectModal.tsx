@@ -38,7 +38,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2">
-            <Building2 size={18} className="text-[#F97316]" />
+            <Building2 size={18} className="text-accent" />
             <h2 className="font-bold text-[color:var(--text-primary)]">New Project</h2>
           </div>
           <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors">
@@ -63,7 +63,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter project name"
               autoFocus
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
             />
           </div>
 
@@ -78,7 +78,7 @@ export default function AddProjectModal({ onClose, onCreated }: Props) {
             <button
               type="submit"
               disabled={saving || !name.trim()}
-              className="flex-1 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-40 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
+              className="flex-1 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-40 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               {saving ? "Creating..." : "Create Project"}
             </button>

@@ -103,7 +103,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div>
                 <span className="text-gray-600">Trade:</span>{" "}
-                <span className="text-[#F97316] font-medium">{task.trade || "General"}</span>
+                <span className="text-accent font-medium">{task.trade || "General"}</span>
               </div>
               <div>
                 <span className="text-gray-600">Duration:</span>{" "}
@@ -139,7 +139,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               step={5}
               value={percentComplete}
               onChange={(e) => handlePercentChange(parseInt(e.target.value))}
-              className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full appearance-none cursor-pointer accent-[#F97316]"
+              className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full appearance-none cursor-pointer accent-[color:var(--accent)]"
             />
             <div className="flex gap-2 mt-2">
               {quickButtons.map((val) => (
@@ -148,7 +148,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   onClick={() => handlePercentChange(val)}
                   className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
                     percentComplete === val
-                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      ? "bg-accent text-[color:var(--text-primary)]"
                       : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
@@ -168,7 +168,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 onClick={() => setManualOverride(!manualOverride)}
                 className={`text-[10px] px-2 py-1 rounded transition-colors ${
                   manualOverride
-                    ? "bg-[#F97316]/15 text-[#F97316] font-bold"
+                    ? "bg-accent/15 text-accent font-bold"
                     : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)]"
                 }`}
               >
@@ -185,7 +185,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   setRemainingDuration(parseInt(e.target.value) || 0);
                 }}
                 disabled={!manualOverride}
-                className="w-24 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm text-center focus:outline-none focus:border-[#F97316]/50 disabled:opacity-50"
+                className="w-24 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm text-center focus:outline-none focus:border-accent/50 disabled:opacity-50"
               />
               <span className="text-xs text-[color:var(--text-muted)]">business days</span>
             </div>
@@ -206,7 +206,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                   onClick={() => setStatus(val)}
                   className={`flex flex-col items-center gap-1 py-2.5 rounded-lg text-[10px] font-semibold transition-all ${
                     status === val
-                      ? "ring-2 ring-[#F97316] bg-[#F97316]/10 text-[color:var(--text-primary)]"
+                      ? "ring-2 ring-accent bg-accent/10 text-[color:var(--text-primary)]"
                       : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
                   }`}
                 >
@@ -225,7 +225,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 type="date"
                 value={actualStart}
                 onChange={(e) => setActualStart(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-accent/50"
               />
             </div>
             <div>
@@ -234,7 +234,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
                 type="date"
                 value={actualFinish}
                 onChange={(e) => setActualFinish(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-accent/50"
               />
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
               placeholder="e.g. Weather delay, crew size reduced..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50 resize-none"
             />
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function ProgressUpdateModal({ task, projectId, onClose, onSaved 
           <button
             onClick={handleSave}
             disabled={saving}
-            className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
+            className="w-full bg-accent hover:bg-accent-hover disabled:bg-accent/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
           >
             {saving ? "Saving & Recalculating…" : "Save & Reforecast"}
           </button>

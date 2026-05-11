@@ -53,7 +53,7 @@ function categoryColor(c: IssueCategory) {
   switch (c) {
     case "qa_qc": return "bg-[#3B82F6] text-[color:var(--text-primary)]";
     case "safety": return "bg-[#EF4444] text-[color:var(--text-primary)]";
-    case "schedule": return "bg-[#F97316] text-black";
+    case "schedule": return "bg-accent text-black";
   }
 }
 
@@ -386,7 +386,7 @@ export default function GenerateReportPage({
           </button>
           <div className="flex-1">
             <h1 className="text-[color:var(--text-primary)] font-bold flex items-center gap-2">
-              <ClipboardList size={18} className="text-[#F97316]" />
+              <ClipboardList size={18} className="text-accent" />
               New Observation
             </h1>
             <p className="text-xs text-[color:var(--text-muted)] mt-0.5">
@@ -406,7 +406,7 @@ export default function GenerateReportPage({
               style={{
                 backgroundColor:
                   step === s
-                    ? "#F97316"
+                    ? "#F37021"
                     : (["select", "issues", "done"].indexOf(step) > idx)
                     ? "#22C55E"
                     : "var(--bg-tertiary)",
@@ -427,7 +427,7 @@ export default function GenerateReportPage({
                 placeholder="Search activities, trades, locations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-10 pr-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl pl-10 pr-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent/50"
               />
             </div>
 
@@ -441,7 +441,7 @@ export default function GenerateReportPage({
                   acts.length === 0 ? null : (
                     <div key={label}>
                       <div className="text-xs font-bold text-[color:var(--text-muted)] uppercase tracking-wide mb-3 flex items-center gap-2">
-                        <Calendar size={12} className="text-[#F97316]" />
+                        <Calendar size={12} className="text-accent" />
                         {label} ({acts.length})
                       </div>
                       <div className="space-y-2">
@@ -454,8 +454,8 @@ export default function GenerateReportPage({
                             }}
                             className={`w-full text-left rounded-xl border transition-all p-4 ${
                               selectedActivity?.id === activity.id
-                                ? "bg-[#F97316]/10 border-[#F97316]/50"
-                                : "bg-[var(--bg-secondary)] border-[var(--border-primary)] hover:border-[#F97316]/30"
+                                ? "bg-accent/10 border-accent/50"
+                                : "bg-[var(--bg-secondary)] border-[var(--border-primary)] hover:border-accent/30"
                             }`}
                           >
                             <div className="flex items-start justify-between gap-3">
@@ -465,7 +465,7 @@ export default function GenerateReportPage({
                                 </div>
                                 <div className="flex flex-wrap gap-x-3 gap-y-1">
                                   {activity.trade && (
-                                    <span className="text-[11px] text-[#F97316] font-medium flex items-center gap-1">
+                                    <span className="text-[11px] text-accent font-medium flex items-center gap-1">
                                       <Wrench size={10} /> {activity.trade}
                                     </span>
                                   )}
@@ -510,7 +510,7 @@ export default function GenerateReportPage({
               </div>
               <div className="flex flex-wrap gap-3">
                 {selectedActivity.trade && (
-                  <span className="text-xs text-[#F97316] font-medium flex items-center gap-1">
+                  <span className="text-xs text-accent font-medium flex items-center gap-1">
                     <Wrench size={11} /> {selectedActivity.trade}
                   </span>
                 )}
@@ -537,7 +537,7 @@ export default function GenerateReportPage({
                 placeholder="e.g. John Smith, Superintendent"
                 value={preparedBy}
                 onChange={(e) => setPreparedBy(e.target.value)}
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-2.5 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
               />
               {showPreparedByPrompt && !preparedBy.trim() && (
                 <p className="text-xs text-[#EF4444] mt-1">Please enter your name before generating the observation.</p>
@@ -616,9 +616,9 @@ export default function GenerateReportPage({
             {/* Add issue button */}
             <button
               onClick={openNewIssue}
-              className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] border border-[var(--border-primary)] hover:border-[#F97316]/30 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-semibold transition-all mb-6"
+              className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] border border-[var(--border-primary)] hover:border-accent/30 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-semibold transition-all mb-6"
             >
-              <Plus size={18} className="text-[#F97316]" />
+              <Plus size={18} className="text-accent" />
               Add Issue
             </button>
 
@@ -626,7 +626,7 @@ export default function GenerateReportPage({
             <button
               onClick={handleGenerateReport}
               disabled={issues.length === 0 || submitting}
-              className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-bold transition-all"
+              className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover disabled:bg-accent/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-sm font-bold transition-all"
             >
               {submitting ? (
                 "Generating…"
@@ -668,7 +668,7 @@ export default function GenerateReportPage({
                 href={`/projects/${id}/reports/${doneReportId}/print`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
+                className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl py-3.5 text-sm font-bold transition-all"
               >
                 <ExternalLink size={16} />
                 Preview & Print PDF
@@ -764,9 +764,9 @@ export default function GenerateReportPage({
                 />
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full flex flex-col items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] border-2 border-dashed border-[var(--border-secondary)] hover:border-[#F97316]/40 rounded-xl py-6 transition-all"
+                  className="w-full flex flex-col items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] border-2 border-dashed border-[var(--border-secondary)] hover:border-accent/40 rounded-xl py-6 transition-all"
                 >
-                  <Camera size={28} className="text-[#F97316]" />
+                  <Camera size={28} className="text-accent" />
                   <span className="text-sm font-semibold text-[color:var(--text-secondary)]">
                     {modalIssue.photos.length > 0 ? "Add More Photos" : "Take Photo / Choose from Library"}
                   </span>
@@ -784,7 +784,7 @@ export default function GenerateReportPage({
                   placeholder="e.g. Missing backing for grab bars"
                   value={modalIssue.title}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, title: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
                 />
               </div>
 
@@ -826,7 +826,7 @@ export default function GenerateReportPage({
                             ? "bg-[#3B82F6] text-[color:var(--text-primary)]"
                             : c === "safety"
                             ? "bg-[#EF4444] text-[color:var(--text-primary)]"
-                            : "bg-[#F97316] text-black"
+                            : "bg-accent text-black"
                           : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                       }`}
                     >
@@ -844,7 +844,7 @@ export default function GenerateReportPage({
                   placeholder="e.g. Corridor 2, Room 102"
                   value={modalIssue.location}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, location: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
                 />
               </div>
 
@@ -856,7 +856,7 @@ export default function GenerateReportPage({
                   placeholder="Describe the issue in detail..."
                   value={modalIssue.note}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, note: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50 resize-none"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50 resize-none"
                 />
               </div>
 
@@ -868,7 +868,7 @@ export default function GenerateReportPage({
                   placeholder="e.g. Framing, Electrical"
                   value={modalIssue.trade}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, trade: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
                 />
               </div>
 
@@ -880,7 +880,7 @@ export default function GenerateReportPage({
                   placeholder="e.g. Delays Drywall Install"
                   value={modalIssue.potential_impact}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, potential_impact: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
                 />
               </div>
 
@@ -892,7 +892,7 @@ export default function GenerateReportPage({
                   placeholder="e.g. Install backing ASAP"
                   value={modalIssue.action_needed}
                   onChange={(e) => setModalIssue((prev) => ({ ...prev, action_needed: e.target.value }))}
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent/50"
                 />
               </div>
             </div>
@@ -902,7 +902,7 @@ export default function GenerateReportPage({
               <button
                 onClick={saveIssue}
                 disabled={!modalIssue.title.trim()}
-                className="w-full bg-[#F97316] hover:bg-[#ea6c10] disabled:bg-[#F97316]/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-base font-bold transition-all"
+                className="w-full bg-accent hover:bg-accent-hover disabled:bg-accent/40 disabled:cursor-not-allowed text-[color:var(--text-primary)] rounded-xl py-4 text-base font-bold transition-all"
               >
                 ✓ {editingIssue ? "Update Issue" : "Save Issue"}
               </button>

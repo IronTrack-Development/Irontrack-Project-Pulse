@@ -260,8 +260,8 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                   { label: "Equipment", val: ticket.total_equipment_cost },
                   { label: "Total", val: ticket.total_cost, accent: true },
                 ].map(({ label, val, accent }) => (
-                  <div key={label} className={`p-3 rounded-xl border text-center ${accent ? "bg-[#1a1208] border-[#F97316]/30" : "bg-[var(--bg-primary)] border-[var(--border-primary)]"}`}>
-                    <p className={`text-base font-bold ${accent ? "text-[#F97316]" : "text-[color:var(--text-primary)]"}`}>
+                  <div key={label} className={`p-3 rounded-xl border text-center ${accent ? "bg-[#1a1208] border-accent/30" : "bg-[var(--bg-primary)] border-[var(--border-primary)]"}`}>
+                    <p className={`text-base font-bold ${accent ? "text-accent" : "text-[color:var(--text-primary)]"}`}>
                       {fmtCurrency(val ?? 0)}
                     </p>
                     <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{label}</p>
@@ -273,7 +273,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {ticket.labor_items.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <HardHat size={14} className="text-[#F97316]" />
+                    <HardHat size={14} className="text-accent" />
                     <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Labor</h4>
                   </div>
                   <div className="space-y-1">
@@ -286,7 +286,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                             {l.rate != null ? ` @ $${l.rate}/hr` : ""}
                           </span>
                         </div>
-                        <span className="text-sm text-[#F97316] font-medium">{fmtCurrency(l.total ?? 0)}</span>
+                        <span className="text-sm text-accent font-medium">{fmtCurrency(l.total ?? 0)}</span>
                       </div>
                     ))}
                   </div>
@@ -297,7 +297,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {ticket.material_items.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Package size={14} className="text-[#F97316]" />
+                    <Package size={14} className="text-accent" />
                     <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Materials</h4>
                   </div>
                   <div className="space-y-1">
@@ -310,7 +310,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                               {m.quantity} {m.unit} @ ${m.unit_cost}/{m.unit}
                             </span>
                           </div>
-                          <span className="text-sm text-[#F97316] font-medium">{fmtCurrency(m.total ?? 0)}</span>
+                          <span className="text-sm text-accent font-medium">{fmtCurrency(m.total ?? 0)}</span>
                         </div>
                         {m.receipt_photo_path && (
                           <a
@@ -336,7 +336,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               {ticket.equipment_items.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Truck size={14} className="text-[#F97316]" />
+                    <Truck size={14} className="text-accent" />
                     <h4 className="text-sm font-semibold text-[color:var(--text-primary)]">Equipment</h4>
                   </div>
                   <div className="space-y-1">
@@ -348,7 +348,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                             {e.hours}h @ ${e.rate}/hr
                           </span>
                         </div>
-                        <span className="text-sm text-[#F97316] font-medium">{fmtCurrency(e.total ?? 0)}</span>
+                        <span className="text-sm text-accent font-medium">{fmtCurrency(e.total ?? 0)}</span>
                       </div>
                     ))}
                   </div>
@@ -548,7 +548,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
                 onKeyDown={(e) => e.key === "Enter" && proceedToSign()}
                 placeholder="Full name..."
                 autoFocus
-                className="w-full px-3 py-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                className="w-full px-3 py-3 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
               />
             </div>
             <div className="flex gap-2">
@@ -559,7 +559,7 @@ export default function TMTicketDetail({ ticket: initialTicket, onClose, onUpdat
               <button
                 onClick={proceedToSign}
                 disabled={!signedByInput.trim()}
-                className="flex-1 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-40 text-[color:var(--text-primary)] rounded-xl text-sm font-bold min-h-[44px]"
+                className="flex-1 py-3 bg-accent hover:bg-accent-hover disabled:opacity-40 text-[color:var(--text-primary)] rounded-xl text-sm font-bold min-h-[44px]"
               >Continue</button>
             </div>
           </div>

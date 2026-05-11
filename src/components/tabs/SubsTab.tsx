@@ -181,7 +181,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
         <div className="flex-none px-5 py-4 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <ListChecks size={18} className="text-[#F97316]" />
+              <ListChecks size={18} className="text-accent" />
               <h2 className="text-sm font-bold text-[color:var(--text-primary)]">Select Tasks</h2>
             </div>
             <button onClick={onClose} className="text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors">
@@ -189,7 +189,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
             </button>
           </div>
           <p className="text-xs text-[color:var(--text-muted)] mb-3">
-            <span className="text-[#F97316] font-semibold">{selected.size}</span> of{" "}
+            <span className="text-accent font-semibold">{selected.size}</span> of{" "}
             <span className="font-semibold text-[color:var(--text-secondary)]">{activities.length}</span> activities selected
           </p>
           {/* Search */}
@@ -199,7 +199,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search activities or trades..."
-              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-[#F97316]/50"
+              className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg pl-8 pr-3 py-2 text-[color:var(--text-primary)] text-xs placeholder-gray-600 focus:outline-none focus:border-accent/50"
             />
             {search && (
               <button
@@ -250,7 +250,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                       onClick={() => toggleTrade(trade, acts)}
                       className={`flex-none text-[10px] font-medium px-2 py-0.5 rounded transition-colors ${
                         allSelected
-                          ? "bg-[#F97316]/20 text-[#F97316] hover:bg-[#F97316]/10"
+                          ? "bg-accent/20 text-accent hover:bg-accent/10"
                           : someSelected
                           ? "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                           : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
@@ -269,13 +269,13 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
                           <label
                             key={act.id}
                             className={`flex items-start gap-3 px-4 py-2.5 cursor-pointer transition-colors ${
-                              checked ? "bg-[#F97316]/5 hover:bg-[#F97316]/8" : "hover:bg-[#1a1a20]"
+                              checked ? "bg-accent/5 hover:bg-accent/8" : "hover:bg-[#1a1a20]"
                             }`}
                           >
                             {/* Checkbox */}
                             <div className={`flex-none mt-0.5 w-4 h-4 rounded border transition-colors flex items-center justify-center ${
                               checked
-                                ? "bg-[#F97316] border-[#F97316]"
+                                ? "bg-accent border-accent"
                                 : "border-[#3a3a45] bg-[var(--bg-primary)]"
                             }`}>
                               {checked && <Check size={10} className="text-[color:var(--text-primary)]" strokeWidth={3} />}
@@ -319,7 +319,7 @@ function ActivityPicker({ activities, initialSelected, onSave, onClose }: Activi
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Check size={14} />
               {saving ? "Saving…" : `Save Selection (${selected.size})`}
@@ -601,7 +601,7 @@ export default function SubsTab({ projectId }: Props) {
     }
     if (status.status === "viewed") {
       return (
-        <span className="flex items-center gap-1 text-xs text-[#F97316]">
+        <span className="flex items-center gap-1 text-xs text-accent">
           <Eye size={12} /> Viewed, not acknowledged
         </span>
       );
@@ -618,7 +618,7 @@ export default function SubsTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -647,7 +647,7 @@ export default function SubsTab({ projectId }: Props) {
             </button>
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
             >
               <UserPlus size={14} />
               Add Sub
@@ -677,10 +677,10 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => { setCompanyCode(e.target.value); setCodeLookupStatus("idle"); }}
                   onBlur={e => handleCodeLookup(e.target.value)}
                   placeholder="e.g., IT-482916"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600 pr-20"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600 pr-20"
                 />
                 {codeLookupStatus === "loading" && (
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border border-accent border-t-transparent rounded-full animate-spin" />
                 )}
                 {codeLookupStatus === "found" && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-green-400 font-semibold flex items-center gap-1">
@@ -702,7 +702,7 @@ export default function SubsTab({ projectId }: Props) {
                   onChange={e => setNewName(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAddSub()}
                   placeholder="e.g., ABC Plumbing"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -711,7 +711,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newContact}
                   onChange={e => setNewContact(e.target.value)}
                   placeholder="e.g., Joe Martinez"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -720,7 +720,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newPhone}
                   onChange={e => setNewPhone(e.target.value)}
                   placeholder="602-555-1234"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -729,7 +729,7 @@ export default function SubsTab({ projectId }: Props) {
                   value={newEmail}
                   onChange={e => setNewEmail(e.target.value)}
                   placeholder="joe@abcplumbing.com"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                 />
               </div>
             </div>
@@ -747,7 +747,7 @@ export default function SubsTab({ projectId }: Props) {
             <button
               onClick={handleAddSub}
               disabled={adding}
-              className="flex items-center gap-1.5 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-sm font-semibold transition-colors"
             >
               <Plus size={14} />
               {adding ? "Adding…" : "Add Subcontractor"}
@@ -795,7 +795,7 @@ export default function SubsTab({ projectId }: Props) {
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <span className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded ${
                           activityCount > 0
-                            ? "bg-[#F97316]/15 text-[#F97316]"
+                            ? "bg-accent/15 text-accent"
                             : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)]"
                         }`}>
                           <ListChecks size={10} />
@@ -825,7 +825,7 @@ export default function SubsTab({ projectId }: Props) {
                         <button
                           onClick={(e) => handleGenerateLink(sub.id, e)}
                           disabled={generating === sub.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-[#F97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors"
                         >
                           <Send size={12} />
                           {generating === sub.id ? "…" : "Generate Link"}
@@ -863,16 +863,16 @@ export default function SubsTab({ projectId }: Props) {
                         <button
                           onClick={(e) => openActivityPicker(sub.id, e)}
                           disabled={activitiesLoading}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-50 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors border border-[var(--border-secondary)] hover:border-[#F97316]/30"
+                          className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] disabled:opacity-50 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-lg text-xs font-medium transition-colors border border-[var(--border-secondary)] hover:border-accent/30"
                         >
                           {activitiesLoading ? (
                             <div className="w-3 h-3 border border-gray-400 border-t-transparent rounded-full animate-spin" />
                           ) : (
-                            <ListChecks size={13} className="text-[#F97316]" />
+                            <ListChecks size={13} className="text-accent" />
                           )}
                           {activitiesLoading ? "Loading…" : "Select Tasks"}
                           {activityCount > 0 && (
-                            <span className="ml-0.5 bg-[#F97316]/20 text-[#F97316] text-[10px] font-bold px-1.5 py-0.5 rounded">
+                            <span className="ml-0.5 bg-accent/20 text-accent text-[10px] font-bold px-1.5 py-0.5 rounded">
                               {activityCount}
                             </span>
                           )}
@@ -898,7 +898,7 @@ export default function SubsTab({ projectId }: Props) {
                           <div className="flex items-center gap-2">
                             <Eye size={11} className="text-[color:var(--text-muted)] flex-none" />
                             <span className="text-[color:var(--text-muted)]">Last viewed:</span>
-                            <span className={status.last_viewed_at ? "text-[#F97316]" : "text-gray-600"}>
+                            <span className={status.last_viewed_at ? "text-accent" : "text-gray-600"}>
                               {status.last_viewed_at ? formatDateTime(status.last_viewed_at) : "Not yet"}
                             </span>
                           </div>
@@ -927,10 +927,10 @@ export default function SubsTab({ projectId }: Props) {
                               onClick={() => setReportsOpen(prev => ({ ...prev, [sub.id]: !isOpen }))}
                             >
                               <span className="flex items-center gap-1.5">
-                                <FileText size={12} className="text-[#F97316]" />
+                                <FileText size={12} className="text-accent" />
                                 Recent Reports
                                 {reports && reports.length > 0 && (
-                                  <span className="ml-1 bg-[#F97316]/20 text-[#F97316] text-[10px] font-bold px-1.5 py-0.5 rounded">
+                                  <span className="ml-1 bg-accent/20 text-accent text-[10px] font-bold px-1.5 py-0.5 rounded">
                                     {reports.length}
                                   </span>
                                 )}
@@ -944,7 +944,7 @@ export default function SubsTab({ projectId }: Props) {
                               <div className="border-t border-[var(--border-primary)] divide-y divide-[#1F1F25]">
                                 {isLoadingReports ? (
                                   <div className="flex items-center justify-center py-5">
-                                    <div className="w-4 h-4 border border-[#F97316] border-t-transparent rounded-full animate-spin" />
+                                    <div className="w-4 h-4 border border-accent border-t-transparent rounded-full animate-spin" />
                                   </div>
                                 ) : !reports || reports.length === 0 ? (
                                   <div className="px-3 py-4 text-center text-xs text-gray-600">No reports yet</div>
@@ -996,7 +996,7 @@ export default function SubsTab({ projectId }: Props) {
                                                 <img
                                                   src={url}
                                                   alt={`Report photo ${i + 1}`}
-                                                  className="w-14 h-14 object-cover rounded-lg border border-[var(--border-primary)] hover:border-[#F97316]/50 transition-colors"
+                                                  className="w-14 h-14 object-cover rounded-lg border border-[var(--border-primary)] hover:border-accent/50 transition-colors"
                                                   loading="lazy"
                                                 />
                                                 {ts && (
@@ -1068,7 +1068,7 @@ export default function SubsTab({ projectId }: Props) {
             {/* Modal Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)]">
               <div className="flex items-center gap-2">
-                <QrCode size={16} className="text-[#F97316]" />
+                <QrCode size={16} className="text-accent" />
                 <h3 className="text-sm font-bold text-[color:var(--text-primary)]">Sub Self-Registration QR</h3>
               </div>
               <button
@@ -1083,7 +1083,7 @@ export default function SubsTab({ projectId }: Props) {
             <div className="p-5 space-y-4">
               {qrLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <div className="w-8 h-8 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
                 </div>
               ) : qrData ? (
                 <>
@@ -1120,7 +1120,7 @@ export default function SubsTab({ projectId }: Props) {
                       className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                         qrCopied
                           ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                          : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-[#F97316]/30"
+                          : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-accent/30"
                       }`}
                     >
                       {qrCopied ? <Check size={13} /> : <ExternalLink size={13} />}
@@ -1128,7 +1128,7 @@ export default function SubsTab({ projectId }: Props) {
                     </button>
                     <button
                       onClick={() => window.print()}
-                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-[#F97316]/30 rounded-lg text-xs font-semibold transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] border border-[var(--border-secondary)] hover:border-accent/30 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <Printer size={13} />
                       Print
@@ -1140,7 +1140,7 @@ export default function SubsTab({ projectId }: Props) {
                   <p className="text-sm text-red-400">Failed to load QR code. Please try again.</p>
                   <button
                     onClick={() => { setQrData(null); handleOpenQrModal(); }}
-                    className="mt-3 text-xs text-[#F97316] underline"
+                    className="mt-3 text-xs text-accent underline"
                   >
                     Retry
                   </button>

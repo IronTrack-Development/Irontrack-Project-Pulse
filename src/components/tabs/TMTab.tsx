@@ -143,7 +143,7 @@ export default function TMTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <RefreshCw size={24} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -168,7 +168,7 @@ export default function TMTab({ projectId }: Props) {
             </button>
             <button
               onClick={() => setShowForm(true)}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors min-h-[44px]"
             >
               <Plus size={14} />
               <span className="hidden sm:inline">{t('tm.newTmTicket')}</span>
@@ -185,7 +185,7 @@ export default function TMTab({ projectId }: Props) {
               <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('tm.tickets')}</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
-              <p className="text-sm font-bold text-[#F97316]">{fmtCurrency(totalCost)}</p>
+              <p className="text-sm font-bold text-accent">{fmtCurrency(totalCost)}</p>
               <p className="text-[10px] text-[color:var(--text-muted)] mt-0.5">{t('tm.total')}</p>
             </div>
             <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 text-center">
@@ -216,7 +216,7 @@ export default function TMTab({ projectId }: Props) {
                   onClick={() => setFilter(f.value)}
                   className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                     filter === f.value
-                      ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                      ? "bg-accent text-[color:var(--text-primary)]"
                       : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   }`}
                 >
@@ -249,7 +249,7 @@ export default function TMTab({ projectId }: Props) {
             {filter === "all" && (
               <button
                 onClick={() => setShowForm(true)}
-                className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
+                className="mt-4 flex items-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
               >
                 <Plus size={15} />
                 {t('tm.newTmTicket')}
@@ -262,7 +262,7 @@ export default function TMTab({ projectId }: Props) {
               <button
                 key={t.id}
                 onClick={() => openDetail(t)}
-                className="w-full text-left p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-[#F97316]/40 transition-colors"
+                className="w-full text-left p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl hover:border-accent/40 transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
@@ -282,7 +282,7 @@ export default function TMTab({ projectId }: Props) {
                     )}
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-[#F97316] font-bold text-sm">{fmtCurrency(t.total_cost ?? 0)}</p>
+                    <p className="text-accent font-bold text-sm">{fmtCurrency(t.total_cost ?? 0)}</p>
                     <p className="text-gray-600 text-[10px] mt-0.5">{fmtDate(t.date)}</p>
                   </div>
                 </div>

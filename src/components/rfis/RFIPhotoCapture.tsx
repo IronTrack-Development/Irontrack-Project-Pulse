@@ -95,8 +95,8 @@ export default function RFIPhotoCapture({ photos, onChange, compact = false }: R
           type="button"
           onClick={() => cameraRef.current?.click()}
           className="flex flex-col items-center justify-center gap-2 py-5 rounded-2xl
-            bg-[#F97316]/10 border-2 border-dashed border-[#F97316]/40
-            text-[#F97316] hover:bg-[#F97316]/15 active:scale-[0.98] transition-all min-h-[90px]"
+            bg-accent/10 border-2 border-dashed border-accent/40
+            text-accent hover:bg-accent/15 active:scale-[0.98] transition-all min-h-[90px]"
         >
           <Camera size={24} />
           <span className="text-xs font-medium">Take Photo</span>

@@ -31,14 +31,14 @@ interface MeetingDetailProps {
 
 const STATUS_COLORS: Record<string, string> = {
   scheduled: "#3B82F6",
-  in_progress: "#F97316",
+  in_progress: "#F37021",
   completed: "#22C55E",
   cancelled: "var(--text-muted)",
 };
 
 const AGENDA_STATUS_COLORS: Record<string, string> = {
   pending: "#3B82F6",
-  discussed: "#F97316",
+  discussed: "#F37021",
   deferred: "#EAB308",
   resolved: "#22C55E",
 };
@@ -53,7 +53,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   general: "var(--text-muted)",
   rfi: "#8B5CF6",
   material_delivery: "#3B82F6",
-  manpower: "#F97316",
+  manpower: "#F37021",
   equipment: "#EAB308",
   schedule: "#22C55E",
   safety: "#EF4444",
@@ -270,7 +270,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
   if (loading) {
     return (
       <div className="flex items-center justify-center h-32">
-        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={20} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -279,7 +279,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
     return (
       <div className="text-center py-16">
         <p className="text-[color:var(--text-secondary)]">Meeting not found</p>
-        <button onClick={onBack} className="mt-4 text-[#F97316] text-sm min-h-[44px]">Go back</button>
+        <button onClick={onBack} className="mt-4 text-accent text-sm min-h-[44px]">Go back</button>
       </div>
     );
   }
@@ -361,7 +361,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           {isEditable && (
             <button
               onClick={autoPopulateAgenda}
-              className="flex items-center gap-1.5 text-xs text-[#F97316] hover:text-[color:var(--text-primary)] transition-colors min-h-[44px] px-2"
+              className="flex items-center gap-1.5 text-xs text-accent hover:text-[color:var(--text-primary)] transition-colors min-h-[44px] px-2"
             >
               <Wand2 size={12} />
               Auto-populate
@@ -414,12 +414,12 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAgendaTitle(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAgendaItem()}
               placeholder="Add agenda item..."
-              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAgendaItem}
               disabled={!newAgendaTitle.trim()}
-              className="px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
+              className="px-3 py-2 bg-accent hover:bg-accent-hover disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
             >
               <Plus size={16} />
             </button>
@@ -470,7 +470,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   onChange={(e) => updateActionStatus(item.id, e.target.value)}
                   className="text-xs rounded px-2 py-1 bg-[var(--bg-tertiary)] border-none min-h-[36px]"
                   style={{
-                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F97316" : item.status === "resolved" ? "#22C55E" : "var(--text-muted)",
+                    color: item.status === "open" ? "#3B82F6" : item.status === "in_progress" ? "#F37021" : item.status === "resolved" ? "#22C55E" : "var(--text-muted)",
                   }}
                 >
                   <option value="open">Open</option>
@@ -492,12 +492,12 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 onChange={(e) => setNewActionTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addActionItem()}
                 placeholder="Action item title..."
-                className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+                className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
               />
               <button
                 onClick={addActionItem}
                 disabled={!newActionTitle.trim()}
-                className="px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
+                className="px-3 py-2 bg-accent hover:bg-accent-hover disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
               >
                 <Plus size={16} />
               </button>
@@ -509,12 +509,12 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                   value={newActionAssignee}
                   onChange={(e) => setNewActionAssignee(e.target.value)}
                   placeholder="Assigned to..."
-                  className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-[#F97316] focus:outline-none min-h-[36px] w-36"
+                  className="px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-accent focus:outline-none min-h-[36px] w-36"
                 />
                 <select
                   value={newActionCategory}
                   onChange={(e) => setNewActionCategory(e.target.value)}
-                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
+                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-accent focus:outline-none min-h-[36px]"
                 >
                   {Object.keys(CATEGORY_COLORS).map((c) => (
                     <option key={c} value={c}>{c.replace(/_/g, " ")}</option>
@@ -523,7 +523,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
                 <select
                   value={newActionPriority}
                   onChange={(e) => setNewActionPriority(e.target.value)}
-                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-[#F97316] focus:outline-none min-h-[36px]"
+                  className="px-2 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-xs focus:border-accent focus:outline-none min-h-[36px]"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -587,7 +587,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder="Name..."
-              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="flex-1 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
             />
             <input
               type="text"
@@ -595,12 +595,12 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
               onChange={(e) => setNewAttendeeCompany(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addAttendee()}
               placeholder="Company..."
-              className="w-32 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none min-h-[44px]"
+              className="w-32 px-3 py-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none min-h-[44px]"
             />
             <button
               onClick={addAttendee}
               disabled={!newAttendeeName.trim()}
-              className="px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
+              className="px-3 py-2 bg-accent hover:bg-accent-hover disabled:opacity-30 text-[color:var(--text-primary)] rounded-lg transition-colors min-h-[44px]"
             >
               <Plus size={16} />
             </button>
@@ -618,7 +618,7 @@ export default function MeetingDetail({ projectId, meetingId, onBack }: MeetingD
           disabled={!isEditable}
           rows={6}
           placeholder="Meeting notes..."
-          className="w-full px-3 py-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-[#F97316] focus:outline-none resize-y disabled:opacity-50"
+          className="w-full px-3 py-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[color:var(--text-primary)] text-sm focus:border-accent focus:outline-none resize-y disabled:opacity-50"
         />
         {savingNotes && (
           <p className="text-xs text-[color:var(--text-muted)] mt-1 flex items-center gap-1">

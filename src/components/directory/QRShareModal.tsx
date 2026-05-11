@@ -90,7 +90,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-primary)]">
           <div className="flex items-center gap-2">
-            <QrCode size={16} className="text-[#F97316]" />
+            <QrCode size={16} className="text-accent" />
             <span className="text-sm font-bold text-[color:var(--text-primary)]">Directory QR Code</span>
           </div>
           <button
@@ -105,7 +105,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
         <div className="px-5 py-5 flex flex-col items-center">
           {loading && (
             <div className="flex flex-col items-center gap-3 py-8">
-              <Loader2 size={24} className="text-[#F97316] animate-spin" />
+              <Loader2 size={24} className="text-accent animate-spin" />
               <span className="text-sm text-[color:var(--text-muted)]">Generating QR code…</span>
             </div>
           )}
@@ -115,7 +115,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
               <p className="text-sm text-red-400 mb-4">{error}</p>
               <button
                 onClick={load}
-                className="text-xs text-[#F97316] underline"
+                className="text-xs text-accent underline"
               >
                 Try Again
               </button>
@@ -177,7 +177,7 @@ export default function QRShareModal({ projectId, onClose }: Props) {
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors min-h-[44px]"
                 >
                   <Share2 size={14} />
                   Share

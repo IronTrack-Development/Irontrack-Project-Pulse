@@ -61,7 +61,7 @@ export default function ConflictDetector({ conflicts, onCreateAction }: Conflict
                 {onCreateAction && (
                   <button
                     onClick={() => onCreateAction(conflict)}
-                    className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-[#F97316] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] text-accent transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                     title="Create action item"
                   >
                     <Plus size={14} />

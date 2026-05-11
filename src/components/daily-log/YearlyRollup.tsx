@@ -81,7 +81,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+          <RefreshCw size={20} className="text-accent animate-spin" />
         </div>
       ) : !data || data.totalLogDays === 0 ? (
         <div className="text-center py-12 text-[color:var(--text-muted)] text-sm">
@@ -144,7 +144,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                       {/* Mini bar for crew-hours relative to max quarter */}
                       <div className="h-2 bg-[var(--bg-tertiary)] rounded-full mb-3 overflow-hidden">
                         <div
-                          className="h-full bg-[#F97316] rounded-full transition-all duration-500"
+                          className="h-full bg-accent rounded-full transition-all duration-500"
                           style={{ width: `${(q.crewHours / maxQCrewHours) * 100}%` }}
                         />
                       </div>
@@ -189,7 +189,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                 {data.topDelays.map((d, i) => (
                   <div key={d.code} className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-center">
                     <div className="text-lg font-bold text-[color:var(--text-primary)]">#{i + 1}</div>
-                    <div className="text-sm text-[#F97316] font-medium">{d.code}</div>
+                    <div className="text-sm text-accent font-medium">{d.code}</div>
                     <div className="text-xs text-[color:var(--text-muted)]">{d.count} occurrences</div>
                   </div>
                 ))}
@@ -211,7 +211,7 @@ export default function YearlyRollup({ projectId }: { projectId: string }) {
                         <div className="w-24 text-xs text-[color:var(--text-secondary)] text-right truncate shrink-0">{trade}</div>
                         <div className="flex-1 h-6 bg-[var(--bg-tertiary)] rounded-md overflow-hidden">
                           <div
-                            className="h-full bg-[#F97316] rounded-md transition-all duration-500"
+                            className="h-full bg-accent rounded-md transition-all duration-500"
                             style={{ width: `${Math.max((hours / maxTrade) * 100, 2)}%` }}
                           />
                         </div>

@@ -57,7 +57,7 @@ const DISCIPLINE_COLORS: Record<string, string> = {
   civil: "#A16207",
   landscape: "#22C55E",
   architectural: "#3B82F6",
-  structural: "#F97316",
+  structural: "#F37021",
   mechanical: "#8B5CF6",
   electrical: "#EAB308",
   plumbing: "#22D3EE",
@@ -459,7 +459,7 @@ export default function SheetOrganizer({
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {/* Add Category button */}
         {showAddCategory ? (
-          <div className="bg-[var(--bg-secondary)] border border-[#F97316]/40 rounded-xl p-3 flex gap-2">
+          <div className="bg-[var(--bg-secondary)] border border-accent/40 rounded-xl p-3 flex gap-2">
             <input
               autoFocus
               type="text"
@@ -474,7 +474,7 @@ export default function SheetOrganizer({
             />
             <button
               onClick={handleAddCategory}
-              className="px-3 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px]"
+              className="px-3 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px]"
             >
               <Check size={16} />
             </button>
@@ -488,7 +488,7 @@ export default function SheetOrganizer({
         ) : (
           <button
             onClick={() => setShowAddCategory(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-[#F97316]/40 text-[color:var(--text-secondary)] hover:text-[#F97316] rounded-xl text-sm min-h-[44px] transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-secondary)] border border-[var(--border-primary)] hover:border-accent/40 text-[color:var(--text-secondary)] hover:text-accent rounded-xl text-sm min-h-[44px] transition-colors"
           >
             <Plus size={15} />
             Add Custom Category
@@ -506,7 +506,7 @@ export default function SheetOrganizer({
             <div
               key={cat.id}
               className={`bg-[var(--bg-secondary)] border rounded-xl overflow-hidden transition-colors ${
-                isDragOver ? "border-[#F97316]/60" : "border-[var(--border-primary)]"
+                isDragOver ? "border-accent/60" : "border-[var(--border-primary)]"
               }`}
               onDragOver={(e) => { e.preventDefault(); setDragOverId(cat.id); }}
               onDrop={() => handleDragEnd(cat.id)}
@@ -588,7 +588,7 @@ export default function SheetOrganizer({
                     <div className="flex flex-col gap-2 shrink-0">
                       <button
                         onClick={() => handleSetPages(cat.id)}
-                        className="px-3 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px] flex items-center justify-center"
+                        className="px-3 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-sm font-semibold min-h-[44px] min-w-[44px] flex items-center justify-center"
                       >
                         <Check size={15} />
                       </button>
@@ -623,7 +623,7 @@ export default function SheetOrganizer({
                               autoFocus
                               value={editSheetNumber}
                               onChange={(e) => setEditSheetNumber(e.target.value)}
-                              className="w-20 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs font-mono min-h-[36px]"
+                              className="w-20 bg-[var(--bg-primary)] border border-accent/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs font-mono min-h-[36px]"
                               placeholder="A-1"
                             />
                             <input
@@ -633,12 +633,12 @@ export default function SheetOrganizer({
                                 if (e.key === "Enter") saveSheetEdit(sheet.id);
                                 if (e.key === "Escape") setEditingSheet(null);
                               }}
-                              className="flex-1 bg-[var(--bg-primary)] border border-[#F97316]/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs min-h-[36px]"
+                              className="flex-1 bg-[var(--bg-primary)] border border-accent/40 rounded px-2 py-1 text-[color:var(--text-primary)] text-xs min-h-[36px]"
                               placeholder="Sheet title"
                             />
                             <button
                               onClick={() => saveSheetEdit(sheet.id)}
-                              className="p-1.5 text-[#F97316] hover:text-[color:var(--text-primary)] min-w-[36px] min-h-[36px] flex items-center justify-center"
+                              className="p-1.5 text-accent hover:text-[color:var(--text-primary)] min-w-[36px] min-h-[36px] flex items-center justify-center"
                             >
                               <Check size={14} />
                             </button>
@@ -700,7 +700,7 @@ export default function SheetOrganizer({
                 <div className="relative shrink-0">
                   <button
                     onClick={() => setShowMoveMenu((v) => !v)}
-                    className="px-2.5 py-1.5 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px]"
+                    className="px-2.5 py-1.5 bg-accent text-[color:var(--text-primary)] rounded-lg text-xs font-semibold min-h-[36px]"
                   >
                     Move {selectedUncategorized.size} →
                   </button>
@@ -743,7 +743,7 @@ export default function SheetOrganizer({
                         }}
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-mono min-w-[44px] min-h-[36px] transition-colors ${
                           isSelected
-                            ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                            ? "bg-accent text-[color:var(--text-primary)]"
                             : "bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                         }`}
                       >
@@ -785,7 +785,7 @@ export default function SheetOrganizer({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[48px] transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl font-semibold text-sm min-h-[48px] transition-colors"
           >
             {saving ? (
               <>Saving...</>

@@ -96,7 +96,7 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
   }
 
   return (
-    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 border-l-[#F97316] rounded-xl p-5 space-y-4">
+    <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] border-l-4 border-l-accent rounded-xl p-5 space-y-4">
       {/* Current critical activity */}
       <div
         className="cursor-pointer"
@@ -105,12 +105,12 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
         <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-0.5">
           {t('priority.currentCriticalActivity')}
         </div>
-        <div className="text-[color:var(--text-primary)] font-bold text-sm hover:text-[#F97316] transition-colors">{data.currentActivity.activity_name}</div>
+        <div className="text-[color:var(--text-primary)] font-bold text-sm hover:text-accent transition-colors">{data.currentActivity.activity_name}</div>
         <div className="flex items-center gap-3 mt-1">
           <span className="text-xs text-[color:var(--text-muted)]">
             {formatDate(data.currentActivity.start_date)} → {formatDate(data.currentActivity.finish_date)}
           </span>
-          <span className="text-xs text-[#F97316] font-semibold">
+          <span className="text-xs text-accent font-semibold">
             {data.currentActivity.percent_complete}% complete
           </span>
         </div>
@@ -149,9 +149,9 @@ function CriticalPathSection({ data, onOpenDrawer }: { data: CriticalPathData | 
       {/* Days until impact */}
       {data.daysUntilImpact !== null && (
         <div className="flex items-center gap-2">
-          <Clock size={13} className="text-[#F97316]" />
+          <Clock size={13} className="text-accent" />
           <span className="text-xs text-[color:var(--text-secondary)]">
-            <span className="text-[#F97316] font-bold">{data.daysUntilImpact} day{data.daysUntilImpact !== 1 ? "s" : ""}</span>
+            <span className="text-accent font-bold">{data.daysUntilImpact} day{data.daysUntilImpact !== 1 ? "s" : ""}</span>
             {" "}{t('priority.untilFinishDeadline')}
           </span>
         </div>
@@ -230,7 +230,7 @@ function InspectionsSection({
             return (
               <button
                 onClick={(e) => { e.stopPropagation(); onReadyCheck(insp.id); }}
-                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-accent transition-colors"
               >
                 <Send size={10} />
                 {t('action.readyCheck')}
@@ -301,7 +301,7 @@ function LateTasksSection({
             return (
               <button
                 onClick={(e) => { e.stopPropagation(); onReadyCheck(task.id); }}
-                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-[#F97316] transition-colors"
+                className="flex items-center gap-1 text-[10px] text-gray-600 hover:text-accent transition-colors"
               >
                 <Send size={10} />
                 {t('action.readyCheck')}
@@ -376,7 +376,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <RefreshCw size={22} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={22} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -430,7 +430,7 @@ export default function PriorityTab({ projectId }: { projectId: string }) {
       {/* Section 1: Critical Path Ahead */}
       <section>
         <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle size={16} className="text-[#F97316]" />
+          <AlertTriangle size={16} className="text-accent" />
           <h3 className="text-[color:var(--text-primary)] font-bold text-sm uppercase tracking-wide">{t('priority.criticalPathAhead')}</h3>
         </div>
         <CriticalPathSection data={criticalPath} onOpenDrawer={openDrawer} />

@@ -86,7 +86,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
     return (
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <CalendarDays size={16} className="text-[#F97316]" />
+          <CalendarDays size={16} className="text-accent" />
           <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('reports.weeklyLogReport')}</h3>
         </div>
         <p className="text-xs text-[color:var(--text-muted)] mb-4">
@@ -95,7 +95,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
         <button
           onClick={generate}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
         >
           {loading ? <RefreshCw size={14} className="animate-spin" /> : <CalendarDays size={14} />}
           {t('reports.generateWeekly')}
@@ -113,7 +113,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <CalendarDays size={16} className="text-[#F97316]" />
+            <CalendarDays size={16} className="text-accent" />
             <h3 className="text-sm font-bold text-[color:var(--text-primary)]">{t('reports.weeklyLogReport')}</h3>
           </div>
           <div className="text-xs text-[color:var(--text-muted)]">{weekLabel} - {data.logCount} {data.logCount === 1 ? t('dailylog.dailyLog') : t('dailylog.dailyLogs')}</div>
@@ -128,7 +128,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
           </button>
           <button
             onClick={exportPdf}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <Printer size={12} />
             {t('reports.exportPdf')}
@@ -138,7 +138,7 @@ function WeeklyLogReport({ projectId }: { projectId: string }) {
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg p-3 text-center">
-          <Users size={14} className="mx-auto text-[#F97316] mb-1" />
+          <Users size={14} className="mx-auto text-accent mb-1" />
           <div className="text-lg font-bold text-[color:var(--text-primary)]">{data.totalCrewHours}</div>
           <div className="text-[10px] text-[color:var(--text-muted)]">{t('reports.crewHours')}</div>
         </div>
@@ -198,7 +198,7 @@ export default function ReportsTab({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+        <RefreshCw size={20} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -212,7 +212,7 @@ export default function ReportsTab({ projectId }: Props) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-[color:var(--text-primary)] font-bold text-lg flex items-center gap-2">
-            <ClipboardList size={18} className="text-[#F97316]" />
+            <ClipboardList size={18} className="text-accent" />
             {t('reports.observations')}
           </h2>
           <p className="text-[color:var(--text-muted)] text-sm mt-0.5">
@@ -228,7 +228,7 @@ export default function ReportsTab({ projectId }: Props) {
           </button>
           <Link
             href={`/projects/${projectId}/report`}
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-lg text-xs font-bold transition-colors"
           >
             <ClipboardList size={14} />
             {t('reports.newObservation')}
@@ -247,7 +247,7 @@ export default function ReportsTab({ projectId }: Props) {
           </p>
           <Link
             href={`/projects/${projectId}/report`}
-            className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
+            className="flex items-center gap-2 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <ClipboardList size={16} />
             {t('reports.newObservation')}
@@ -279,7 +279,7 @@ export default function ReportsTab({ projectId }: Props) {
                           href={`/projects/${projectId}/reports/${report.id}/print`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-[#F97316] transition-colors"
+                          className="p-1.5 rounded-lg bg-[var(--bg-tertiary)] text-[color:var(--text-secondary)] hover:text-accent transition-colors"
                           title="View PDF"
                         >
                           <ExternalLink size={14} />
@@ -322,7 +322,7 @@ export default function ReportsTab({ projectId }: Props) {
                   href={`/projects/${projectId}/reports/${report.id}/print`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-[#F97316] hover:bg-[#F97316]/5 transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 border-t border-[var(--border-primary)] text-xs text-[color:var(--text-muted)] hover:text-accent hover:bg-accent/5 transition-all"
                 >
                   {t('reports.viewObservation')}
                   <ChevronRight size={12} />

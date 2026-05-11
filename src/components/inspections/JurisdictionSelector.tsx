@@ -91,7 +91,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -113,7 +113,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
           placeholder="Search Arizona cities, towns, counties..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+          className="w-full pl-10 pr-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-500 focus:outline-none focus:border-accent min-h-[44px]"
         />
       </div>
 
@@ -145,7 +145,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
                 {j.county} County{j.phone ? ` · ${j.phone}` : ""}
               </p>
             </div>
-            <Lock size={14} className="text-gray-600 group-hover:text-[#F97316] transition-colors shrink-0 ml-2" />
+            <Lock size={14} className="text-gray-600 group-hover:text-accent transition-colors shrink-0 ml-2" />
           </button>
         ))}
         {filtered.length === 0 && (
@@ -165,7 +165,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
             </div>
             <div className="bg-[var(--bg-primary)] rounded-xl p-4 mb-4">
               <div className="flex items-center gap-2">
-                <Lock size={16} className="text-[#F97316]" />
+                <Lock size={16} className="text-accent" />
                 <span className="text-[color:var(--text-primary)] font-medium">{confirming.name}</span>
               </div>
               <p className="text-xs text-[color:var(--text-muted)] mt-1 ml-6">
@@ -186,7 +186,7 @@ export default function JurisdictionSelector({ projectId, onLocked }: Props) {
               <button
                 onClick={handleConfirm}
                 disabled={saving}
-                className="flex-1 px-4 py-3 bg-[#F97316] text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-[#ea6c10] transition-colors disabled:opacity-50 min-h-[44px]"
+                className="flex-1 px-4 py-3 bg-accent text-[color:var(--text-primary)] rounded-xl text-sm font-bold hover:bg-accent-hover transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 {saving ? "Locking..." : "Lock Jurisdiction"}
               </button>

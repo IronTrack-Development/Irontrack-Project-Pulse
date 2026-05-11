@@ -199,7 +199,7 @@ export default function AddContactModal({
               onClick={() => setMode("search")}
               className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
                 mode === "search"
-                  ? "text-[#F97316] border-b-2 border-[#F97316]"
+                  ? "text-accent border-b-2 border-accent"
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
             >
@@ -209,7 +209,7 @@ export default function AddContactModal({
               onClick={() => setMode("new")}
               className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
                 mode === "new"
-                  ? "text-[#F97316] border-b-2 border-[#F97316]"
+                  ? "text-accent border-b-2 border-accent"
                   : "text-[color:var(--text-muted)] hover:text-[color:var(--text-secondary)]"
               }`}
             >
@@ -229,13 +229,13 @@ export default function AddContactModal({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by name or email…"
                   autoFocus
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl pl-9 pr-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                 />
               </div>
 
               {searching && (
                 <div className="flex items-center justify-center py-6">
-                  <Loader2 size={20} className="animate-spin text-[#F97316]" />
+                  <Loader2 size={20} className="animate-spin text-accent" />
                 </div>
               )}
 
@@ -244,7 +244,7 @@ export default function AddContactModal({
                   <p className="text-sm text-[color:var(--text-muted)] mb-3">No contacts found</p>
                   <button
                     onClick={() => setMode("new")}
-                    className="flex items-center gap-1.5 mx-auto px-4 py-2 bg-[#F97316] text-[color:var(--text-primary)] rounded-lg text-xs font-semibold"
+                    className="flex items-center gap-1.5 mx-auto px-4 py-2 bg-accent text-[color:var(--text-primary)] rounded-lg text-xs font-semibold"
                   >
                     <Plus size={13} />
                     Create New Contact
@@ -273,7 +273,7 @@ export default function AddContactModal({
                         <button
                           onClick={() => handleAddExisting(c.id)}
                           disabled={saving}
-                          className="ml-3 flex-none px-3 py-1.5 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
+                          className="ml-3 flex-none px-3 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-lg text-xs font-semibold transition-colors"
                         >
                           Add
                         </button>
@@ -302,7 +302,7 @@ export default function AddContactModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full name"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -313,7 +313,7 @@ export default function AddContactModal({
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     placeholder="Company name"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -323,7 +323,7 @@ export default function AddContactModal({
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50"
                   >
                     <option value="" disabled>Select role…</option>
                     {ROLE_OPTIONS.map((r) => (
@@ -340,7 +340,7 @@ export default function AddContactModal({
                       value={trade}
                       onChange={(e) => setTrade(e.target.value)}
                       placeholder="e.g., Electrical, Plumbing, HVAC"
-                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -353,7 +353,7 @@ export default function AddContactModal({
                       value={discipline}
                       onChange={(e) => setDiscipline(e.target.value)}
                       placeholder="e.g., Structural, MEP, Civil"
-                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                      className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                     />
                   </div>
                 )}
@@ -366,7 +366,7 @@ export default function AddContactModal({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="email@example.com"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                   />
                 </div>
 
@@ -378,7 +378,7 @@ export default function AddContactModal({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="602-555-1234"
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316]/50 placeholder-gray-600"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent/50 placeholder-gray-600"
                   />
                 </div>
               </div>
@@ -405,7 +405,7 @@ export default function AddContactModal({
               <button
                 onClick={handleSave}
                 disabled={saving || !name.trim() || !role}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-semibold transition-colors"
               >
                 {saving ? (
                   <Loader2 size={15} className="animate-spin" />

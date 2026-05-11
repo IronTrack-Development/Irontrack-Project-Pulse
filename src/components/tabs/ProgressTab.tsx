@@ -48,7 +48,7 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium text-[color:var(--text-primary)] truncate">{activity.activityName}</div>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-xs text-[#F97316]">{activity.trade}</span>
+              <span className="text-xs text-accent">{activity.trade}</span>
               <DeltaBadge delta={activity.delta} />
             </div>
           </div>
@@ -74,11 +74,11 @@ function ActivityProgressCard({ activity }: { activity: ActivityActual }) {
             <span className="text-[10px] text-gray-600 w-14 shrink-0">{t('progress.actual')}</span>
             <div className="flex-1 bg-[var(--bg-primary)] rounded-full h-2 overflow-hidden">
               <div
-                className="h-full rounded-full bg-[#F97316] transition-all duration-500"
+                className="h-full rounded-full bg-accent transition-all duration-500"
                 style={{ width: `${actualClamped}%` }}
               />
             </div>
-            <span className="text-[10px] font-mono text-[#F97316] w-8 text-right">{activity.actualPercent}%</span>
+            <span className="text-[10px] font-mono text-accent w-8 text-right">{activity.actualPercent}%</span>
           </div>
         </div>
       </button>
@@ -137,7 +137,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 size={24} className="text-[#F97316] animate-spin" />
+        <Loader2 size={24} className="text-accent animate-spin" />
       </div>
     );
   }
@@ -153,7 +153,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
   const progressColor = data.percentComplete >= 75 
     ? "#22C55E" 
     : data.percentComplete >= 50 
-    ? "#F97316" 
+    ? "#F37021" 
     : "#EF4444";
 
   return (
@@ -161,7 +161,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       {/* Large percent complete display */}
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-8 text-center">
         <div className="mb-4">
-          <TrendingUp size={40} className="mx-auto text-[#F97316]" />
+          <TrendingUp size={40} className="mx-auto text-accent" />
         </div>
         <div className="text-6xl font-bold mb-2" style={{ color: progressColor }}>
           {data.percentComplete}%
@@ -205,7 +205,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       {data.activityActuals && data.activityActuals.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <TrendingUp size={15} className="text-[#F97316]" />
+            <TrendingUp size={15} className="text-accent" />
             <h3 className="font-semibold text-[color:var(--text-primary)]">{t('progress.actualVsPlanned')}</h3>
             <span className="text-xs text-[color:var(--text-muted)]">({data.activityActuals.length} {t('progress.tracked')})</span>
           </div>
@@ -214,7 +214,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
               <div className="w-3 h-1.5 rounded-full bg-gray-600" /> {t('progress.planned')}
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-1.5 rounded-full bg-[#F97316]" /> {t('progress.actual')} ({t('progress.fromLogs')})
+              <div className="w-3 h-1.5 rounded-full bg-accent" /> {t('progress.actual')} ({t('progress.fromLogs')})
             </div>
           </div>
           <div className="space-y-2">
@@ -239,7 +239,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-[color:var(--text-secondary)]">{t('progress.inProgress')}</span>
-            <span className="font-semibold text-[#F97316]">{data.totalActivities - data.completeActivities}</span>
+            <span className="font-semibold text-accent">{data.totalActivities - data.completeActivities}</span>
           </div>
         </div>
       </div>
@@ -248,7 +248,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
       {data.targetFinishDate && (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
-            <Calendar size={20} className="text-[#F97316]" />
+            <Calendar size={20} className="text-accent" />
             <div className="text-sm font-semibold text-[color:var(--text-primary)]">{t('progress.targetCompletion')}</div>
           </div>
           <div className="text-2xl font-bold text-[color:var(--text-primary)] mb-1">
@@ -263,7 +263,7 @@ export default function ProgressTab({ projectId }: ProgressTabProps) {
               data.daysRemaining < 0 
                 ? "text-[#EF4444]" 
                 : data.daysRemaining < 30 
-                ? "text-[#F97316]" 
+                ? "text-accent" 
                 : "text-[#22C55E]"
             }`}>
               {data.daysRemaining < 0 

@@ -138,10 +138,10 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
   };
 
   const inputClass =
-    "w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]";
+    "w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent transition-colors min-h-[44px]";
   const labelClass = "block text-xs font-medium text-[color:var(--text-secondary)] mb-1.5";
   const numInputClass =
-    "w-full px-2.5 py-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-[color:var(--text-primary)] text-sm text-right focus:outline-none focus:border-[#F97316] transition-colors min-h-[44px]";
+    "w-full px-2.5 py-2 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg text-[color:var(--text-primary)] text-sm text-right focus:outline-none focus:border-accent transition-colors min-h-[44px]";
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 overflow-y-auto">
@@ -194,14 +194,14 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
                 placeholder="Brief description of work performed..."
-                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
+                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent transition-colors resize-none"
               />
             </div>
 
             {/* ── LABOR ── */}
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <HardHat size={16} className="text-[#F97316]" />
+                <HardHat size={16} className="text-accent" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Labor</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(laborTotal)}</span>
@@ -261,7 +261,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Delete */}
                     <div className="col-span-12 sm:col-span-1 flex sm:flex-col items-center justify-between sm:justify-end">
-                      <span className="text-xs text-[#F97316] font-semibold sm:mb-1">
+                      <span className="text-xs text-accent font-semibold sm:mb-1">
                         {fmtCurrency(row.workers * row.hours * row.rate)}
                       </span>
                       {laborRows.length > 1 && (
@@ -279,7 +279,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
 
               <button
                 onClick={addLabor}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-accent border border-dashed border-[var(--border-primary)] hover:border-accent/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
                 <Plus size={13} />
                 Add Labor
@@ -289,7 +289,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             {/* ── MATERIALS ── */}
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <Package size={16} className="text-[#F97316]" />
+                <Package size={16} className="text-accent" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Materials</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(materialTotal)}</span>
@@ -348,7 +348,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Total + delete */}
                     <div className="col-span-12 sm:col-span-1 flex sm:flex-col items-center justify-between sm:justify-end">
-                      <span className="text-xs text-[#F97316] font-semibold sm:mb-1">
+                      <span className="text-xs text-accent font-semibold sm:mb-1">
                         {fmtCurrency(row.quantity * row.unit_cost)}
                       </span>
                       <button
@@ -364,7 +364,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
 
               <button
                 onClick={addMaterial}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-accent border border-dashed border-[var(--border-primary)] hover:border-accent/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
                 <Plus size={13} />
                 Add Material
@@ -374,7 +374,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
             {/* ── EQUIPMENT ── */}
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <Truck size={16} className="text-[#F97316]" />
+                <Truck size={16} className="text-accent" />
                 <h3 className="text-[color:var(--text-primary)] font-semibold text-sm">Equipment</h3>
                 <div className="flex-1 h-px bg-[var(--bg-tertiary)]" />
                 <span className="text-xs text-[color:var(--text-secondary)]">{fmtCurrency(equipmentTotal)}</span>
@@ -420,7 +420,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                     </div>
                     {/* Total + delete */}
                     <div className="col-span-4 sm:col-span-2 flex sm:flex-col items-center justify-between sm:justify-end">
-                      <span className="text-xs text-[#F97316] font-semibold sm:mb-1">
+                      <span className="text-xs text-accent font-semibold sm:mb-1">
                         {fmtCurrency(row.hours * row.rate)}
                       </span>
                       <button
@@ -436,7 +436,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
 
               <button
                 onClick={addEquipment}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-[#F97316] border border-dashed border-[var(--border-primary)] hover:border-[#F97316]/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs text-[color:var(--text-secondary)] hover:text-accent border border-dashed border-[var(--border-primary)] hover:border-accent/50 rounded-xl transition-colors w-full justify-center min-h-[44px]"
               >
                 <Plus size={13} />
                 Add Equipment
@@ -451,14 +451,14 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
                 placeholder="Any additional notes..."
-                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-[#F97316] transition-colors resize-none"
+                className="w-full px-3 py-2.5 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl text-[color:var(--text-primary)] text-sm placeholder-gray-600 focus:outline-none focus:border-accent transition-colors resize-none"
               />
             </div>
 
             {/* Grand total */}
             <div className="flex items-center justify-between p-4 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl">
               <span className="text-[color:var(--text-secondary)] font-medium text-sm">Grand Total</span>
-              <span className="text-2xl font-bold text-[#F97316]">{fmtCurrency(grandTotal)}</span>
+              <span className="text-2xl font-bold text-accent">{fmtCurrency(grandTotal)}</span>
             </div>
 
             {error && (
@@ -476,7 +476,7 @@ export default function TMTicketForm({ projectId, contacts, onCreated, onCancel 
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex-1 py-3 px-4 bg-[#F97316] hover:bg-[#ea6c10] disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex items-center justify-center gap-2"
+                className="flex-1 py-3 px-4 bg-accent hover:bg-accent-hover disabled:opacity-50 text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px] flex items-center justify-center gap-2"
               >
                 {saving && <Loader2 size={15} className="animate-spin" />}
                 {saving ? "Saving..." : "Save Ticket"}

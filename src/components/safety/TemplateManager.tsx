@@ -159,7 +159,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <h3 className="text-base font-bold text-[color:var(--text-primary)] flex items-center gap-2">
-            <BookOpen size={16} className="text-[#F97316]" />
+            <BookOpen size={16} className="text-accent" />
             {showForm
               ? editingId
                 ? "Edit Template"
@@ -185,7 +185,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formTitle}
                   onChange={(e) => setFormTitle(e.target.value)}
                   placeholder="Template title"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
                 />
               </div>
 
@@ -195,7 +195,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   <select
                     value={formCategory}
                     onChange={(e) => setFormCategory(e.target.value as ToolboxTalkCategory)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-accent min-h-[44px]"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -210,7 +210,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                     onChange={(e) => setFormDuration(parseInt(e.target.value) || 15)}
                     min={5}
                     max={120}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] focus:outline-none focus:border-accent min-h-[44px]"
                   />
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                   value={formOsha}
                   onChange={(e) => setFormOsha(e.target.value)}
                   placeholder="e.g. 29 CFR 1926.501"
-                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] min-h-[44px]"
+                  className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2.5 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent min-h-[44px]"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
             </div>
           ) : loading ? (
             <div className="flex items-center justify-center py-8">
-              <RefreshCw size={20} className="text-[#F97316] animate-spin" />
+              <RefreshCw size={20} className="text-accent animate-spin" />
             </div>
           ) : templates.length === 0 ? (
             <div className="text-center py-8 text-[color:var(--text-muted)] text-sm">
@@ -260,7 +260,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
                                 System
                               </span>
                             ) : (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#F97316]/10 text-[#F97316] shrink-0">
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-accent/10 text-accent shrink-0">
                                 Custom
                               </span>
                             )}
@@ -311,7 +311,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               <button
                 onClick={handleSave}
                 disabled={saving || !formTitle.trim()}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 <Save size={14} />
                 {saving ? "Saving..." : editingId ? "Update Template" : "Create Template"}
@@ -327,7 +327,7 @@ export default function TemplateManager({ projectId, onClose }: TemplateManagerP
               </button>
               <button
                 onClick={() => setShowCreate(true)}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
+                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[44px]"
               >
                 <Plus size={14} />
                 Create New Template

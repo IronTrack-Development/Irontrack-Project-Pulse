@@ -80,7 +80,7 @@ export default function ProductionTracker({ projectId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
-        <div className="w-6 h-6 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -95,12 +95,12 @@ export default function ProductionTracker({ projectId }: Props) {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
-          <TrendingUp size={16} className="text-[#F97316] mx-auto mb-1" />
+          <TrendingUp size={16} className="text-accent mx-auto mb-1" />
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_entries}</p>
           <p className="text-xs text-[color:var(--text-muted)]">Entries This Period</p>
         </div>
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-4 text-center">
-          <Clock size={16} className="text-[#F97316] mx-auto mb-1" />
+          <Clock size={16} className="text-accent mx-auto mb-1" />
           <p className="text-2xl font-bold text-[color:var(--text-primary)]">{summary.total_crew_hours}</p>
           <p className="text-xs text-[color:var(--text-muted)]">Crew Hours</p>
         </div>
@@ -172,7 +172,7 @@ export default function ProductionTracker({ projectId }: Props) {
                 </div>
                 <div className="flex items-center gap-3 text-xs text-[color:var(--text-secondary)]">
                   <span>{e.foreman_name}</span>
-                  <span className="text-[#F97316] font-medium">{e.quantity} {e.unit}</span>
+                  <span className="text-accent font-medium">{e.quantity} {e.unit}</span>
                   {e.area && <span>{e.area}</span>}
                 </div>
               </div>
@@ -181,7 +181,7 @@ export default function ProductionTracker({ projectId }: Props) {
                 <div className="col-span-2 text-[color:var(--text-secondary)]">{new Date(e.date).toLocaleDateString()}</div>
                 <div className="col-span-2 text-[color:var(--text-secondary)]">{e.foreman_name}</div>
                 <div className="col-span-3 text-[color:var(--text-primary)] truncate">{e.description}</div>
-                <div className="col-span-2 text-[#F97316] font-medium">{e.quantity} {e.unit}</div>
+                <div className="col-span-2 text-accent font-medium">{e.quantity} {e.unit}</div>
                 <div className="col-span-3 text-[color:var(--text-secondary)]">{e.area || "—"}</div>
               </div>
             </div>

@@ -394,12 +394,12 @@ function ReportPreviewCard({
       {/* Header */}
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-5 space-y-4">
         <div className="space-y-1">
-          <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider">
+          <p className="text-xs font-semibold text-accent uppercase tracking-wider">
             📋 Daily Report Preview
           </p>
           <h2 className="text-lg font-bold text-[color:var(--text-primary)]">{formatDate(reportDate)}</h2>
           <p className="text-sm text-[color:var(--text-secondary)]">{projectName}</p>
-          <p className="text-sm text-[#F97316]">{subName}</p>
+          <p className="text-sm text-accent">{subName}</p>
           <p className="text-xs text-[color:var(--text-muted)]">Submitted by: {submittedBy}</p>
         </div>
 
@@ -446,13 +446,13 @@ function ReportPreviewCard({
         {/* Manpower */}
         <div className="flex gap-4">
           <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
-            <Users size={15} className="text-[#F97316]" />
+            <Users size={15} className="text-accent" />
             <span>
               <span className="font-bold text-[color:var(--text-primary)]">{manpowerCount}</span> workers
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[color:var(--text-secondary)]">
-            <Timer size={15} className="text-[#F97316]" />
+            <Timer size={15} className="text-accent" />
             <span>
               <span className="font-bold text-[color:var(--text-primary)]">{totalHours}</span>h total
             </span>
@@ -635,7 +635,7 @@ function ActivityCard({
         </div>
         <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-[#F97316] transition-all"
+            className="h-full rounded-full bg-accent transition-all"
             style={{ width: `${Math.min(trendPct != null ? trendPct : pct, 100)}%` }}
           />
         </div>
@@ -661,7 +661,7 @@ function StatCard({
     <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-3 flex flex-col items-center text-center">
       <span
         className={`text-2xl font-bold ${
-          danger ? "text-red-400" : accent ? "text-[#F97316]" : "text-gray-100"
+          danger ? "text-red-400" : accent ? "text-accent" : "text-gray-100"
         }`}
       >
         {value}
@@ -993,13 +993,13 @@ function PastReportsSection({
               <div className="flex gap-4 text-xs text-[color:var(--text-secondary)]">
                 {report.manpower_count != null && (
                   <span className="flex items-center gap-1">
-                    <Users size={11} className="text-[#F97316]" />
+                    <Users size={11} className="text-accent" />
                     {report.manpower_count} workers
                   </span>
                 )}
                 {report.total_hours != null && (
                   <span className="flex items-center gap-1">
-                    <Timer size={11} className="text-[#F97316]" />
+                    <Timer size={11} className="text-accent" />
                     {report.total_hours}h total
                   </span>
                 )}
@@ -1058,7 +1058,7 @@ function PastReportsSection({
               {/* View full report */}
               <button
                 onClick={() => setFullReportId(report.id)}
-                className="w-full text-xs text-[#F97316] border border-[#F97316]/30 rounded-xl py-2 hover:bg-[#F97316]/10 transition-colors"
+                className="w-full text-xs text-accent border border-accent/30 rounded-xl py-2 hover:bg-accent/10 transition-colors"
               >
                 View Full Report →
               </button>
@@ -1343,7 +1343,7 @@ function ProgressReportTab({
             setPhotos([]);
             setSubmitError(null);
           }}
-          className="mt-4 text-sm text-[#F97316] underline underline-offset-2"
+          className="mt-4 text-sm text-accent underline underline-offset-2"
         >
           Submit another report
         </button>
@@ -1428,7 +1428,7 @@ function ProgressReportTab({
                     onClick={() => toggleActivity(act.id)}
                     className={`w-full text-left rounded-xl p-4 border transition-all ${
                       selected
-                        ? "bg-[#F97316]/10 border-[#F97316]/50"
+                        ? "bg-accent/10 border-accent/50"
                         : "bg-[var(--bg-secondary)] border-[var(--border-primary)]"
                     }`}
                   >
@@ -1439,7 +1439,7 @@ function ProgressReportTab({
                       <div
                         className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
                           selected
-                            ? "bg-[#F97316] border-[#F97316]"
+                            ? "bg-accent border-accent"
                             : "border-[#3a3a45] bg-transparent"
                         }`}
                       >
@@ -1501,7 +1501,7 @@ function ProgressReportTab({
       {/* Section 2: Manpower */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-          <Users size={15} className="text-[#F97316]" />
+          <Users size={15} className="text-accent" />
           Manpower
         </h3>
         <div className="grid grid-cols-2 gap-3">
@@ -1513,7 +1513,7 @@ function ProgressReportTab({
               max={999}
               value={report.manpowerCount}
               onChange={(e) => setManpower(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
             />
           </div>
           <div className="space-y-1.5">
@@ -1532,7 +1532,7 @@ function ProgressReportTab({
                   totalHours: Math.max(0, parseFloat(e.target.value) || 0),
                 }))
               }
-              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+              className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-[color:var(--text-primary)] text-base font-semibold text-center focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
             />
           </div>
         </div>
@@ -1571,7 +1571,7 @@ function ProgressReportTab({
           onChange={(e) => setReport((prev) => ({ ...prev, notes: e.target.value }))}
           placeholder="Additional notes… (optional)"
           rows={3}
-          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition resize-none"
+          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
         />
       </div>
 
@@ -1581,10 +1581,10 @@ function ProgressReportTab({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-            <Camera size={15} className="text-[#F97316]" />
+            <Camera size={15} className="text-accent" />
             Photos
             {photos.length > 0 && (
-              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#F97316]/20 border border-[#F97316]/30 text-[#F97316]">
+              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent/20 border border-accent/30 text-accent">
                 {photos.length}
               </span>
             )}
@@ -1606,9 +1606,9 @@ function ProgressReportTab({
         {photos.length < MAX_PHOTOS && (
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full flex items-center justify-center gap-3 bg-[var(--bg-secondary)] border-2 border-dashed border-[var(--border-secondary)] hover:border-[#F97316]/50 hover:bg-[#F97316]/5 rounded-2xl py-5 transition-colors group"
+            className="w-full flex items-center justify-center gap-3 bg-[var(--bg-secondary)] border-2 border-dashed border-[var(--border-secondary)] hover:border-accent/50 hover:bg-accent/5 rounded-2xl py-5 transition-colors group"
           >
-            <Camera size={22} className="text-[color:var(--text-muted)] group-hover:text-[#F97316] transition-colors" />
+            <Camera size={22} className="text-[color:var(--text-muted)] group-hover:text-accent transition-colors" />
             <span className="text-sm text-[color:var(--text-secondary)] group-hover:text-gray-200 font-medium transition-colors">
               Add Photo
             </span>
@@ -1651,9 +1651,9 @@ function ProgressReportTab({
             {photos.length < MAX_PHOTOS && (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[var(--border-secondary)] hover:border-[#F97316]/50 flex flex-col items-center justify-center gap-1 transition-colors group"
+                className="flex-shrink-0 w-20 h-20 rounded-xl border-2 border-dashed border-[var(--border-secondary)] hover:border-accent/50 flex flex-col items-center justify-center gap-1 transition-colors group"
               >
-                <Camera size={16} className="text-gray-600 group-hover:text-[#F97316] transition-colors" />
+                <Camera size={16} className="text-gray-600 group-hover:text-accent transition-colors" />
                 <span className="text-[10px] text-gray-600 group-hover:text-[color:var(--text-secondary)] transition-colors">Add</span>
               </button>
             )}
@@ -1681,7 +1681,7 @@ function ProgressReportTab({
             value={report.submittedBy}
             onChange={(e) => setReport((prev) => ({ ...prev, submittedBy: e.target.value }))}
             placeholder="Your name"
-            className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+            className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 text-sm text-[color:var(--text-primary)] placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
           />
         </div>
 
@@ -1689,7 +1689,7 @@ function ProgressReportTab({
         <button
           onClick={() => setMode("preview")}
           disabled={!report.submittedBy.trim()}
-          className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-900/30"
+          className="w-full bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-bold px-4 py-4 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-accent/25"
         >
           <Send size={18} />
           Review Report
@@ -1853,7 +1853,7 @@ export default function SubScheduleViewPage() {
     return (
       <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-[color:var(--text-secondary)]">
-          <Loader2 className="animate-spin text-[#F97316]" size={32} />
+          <Loader2 className="animate-spin text-accent" size={32} />
           <p className="text-sm">Loading your schedule…</p>
         </div>
       </div>
@@ -1897,13 +1897,13 @@ export default function SubScheduleViewPage() {
 
           <div className="text-center space-y-1">
             <h1 className="text-xl font-bold text-[color:var(--text-primary)]">{project.name}</h1>
-            <p className="text-[#F97316] font-medium">{sub.name}</p>
+            <p className="text-accent font-medium">{sub.name}</p>
             <p className="text-xs text-[color:var(--text-muted)]">{sub.trades.join(", ")}</p>
           </div>
 
           <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 space-y-4">
             <div className="text-center">
-              <CalendarDays size={28} className="mx-auto text-[#F97316] mb-2" />
+              <CalendarDays size={28} className="mx-auto text-accent mb-2" />
               <p className="text-sm text-[color:var(--text-secondary)] leading-relaxed">
                 You&apos;ve been shared a filtered schedule view for your trades on this project.
               </p>
@@ -1916,7 +1916,7 @@ export default function SubScheduleViewPage() {
                 value={ackName}
                 onChange={(e) => setAckName(e.target.value)}
                 placeholder="e.g., Joe Martinez"
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]/30 transition"
+                className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-4 py-3 text-[color:var(--text-primary)] text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 onKeyDown={(e) => { if (e.key === "Enter") handleAcknowledge(); }}
                 autoFocus
               />
@@ -1933,7 +1933,7 @@ export default function SubScheduleViewPage() {
             <button
               onClick={handleAcknowledge}
               disabled={!ackName.trim() || ackSubmitting}
-              className="w-full bg-[#F97316] hover:bg-[#ea6c0f] disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed text-[color:var(--text-primary)] font-semibold px-4 py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
             >
               {ackSubmitting ? (
                 <Loader2 size={16} className="animate-spin" />
@@ -1971,7 +1971,7 @@ export default function SubScheduleViewPage() {
             {project.name}
           </h1>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
-            <span className="text-sm text-[#F97316] font-medium">{sub.name}</span>
+            <span className="text-sm text-accent font-medium">{sub.name}</span>
             {sub.trades.length > 0 && (
               <span className="text-xs text-[color:var(--text-muted)]">{sub.trades.join(", ")}</span>
             )}
@@ -2001,7 +2001,7 @@ export default function SubScheduleViewPage() {
               onClick={() => setActiveTab(tab.key)}
               className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.key
-                  ? "bg-[#F97316] text-[color:var(--text-primary)]"
+                  ? "bg-accent text-[color:var(--text-primary)]"
                   : "bg-[var(--bg-secondary)] text-[color:var(--text-secondary)] border border-[var(--border-primary)] hover:text-gray-200"
               }`}
             >

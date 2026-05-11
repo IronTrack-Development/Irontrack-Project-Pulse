@@ -140,7 +140,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
                     type="text"
                     value={photo.title}
                     onChange={(e) => updateTitle(idx, e.target.value)}
-                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded px-2 py-1.5 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-[#F97316] transition-colors"
+                    className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded px-2 py-1.5 text-[color:var(--text-primary)] text-xs focus:outline-none focus:border-accent transition-colors"
                   />
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default function MultiAddFlow({ projectId, onBack }: Props) {
           <button
             onClick={handleCreateAll}
             disabled={creating}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[48px] disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[48px] disabled:opacity-50"
           >
             {creating ? (
               <>

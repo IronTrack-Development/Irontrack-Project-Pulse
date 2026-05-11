@@ -163,7 +163,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 <span className="text-xs text-[color:var(--text-muted)] font-mono">{activity.activity_id}</span>
               )}
               {activity.milestone && (
-                <span className="text-[10px] bg-[#F97316]/20 text-[#F97316] px-2 py-0.5 rounded font-bold uppercase">Milestone</span>
+                <span className="text-[10px] bg-accent/20 text-accent px-2 py-0.5 rounded font-bold uppercase">Milestone</span>
               )}
               <span className={`text-xs px-2 py-0.5 rounded border font-semibold ${statusStyle(activity.status)}`}>
                 {statusLabel(activity.status)}
@@ -184,7 +184,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
               <div className="text-[10px] text-gray-600 uppercase tracking-wide mb-1">{t('drawer.trade')}</div>
-              <div className="text-sm font-semibold text-[#F97316]">{activity.trade || t('drawer.general')}</div>
+              <div className="text-sm font-semibold text-accent">{activity.trade || t('drawer.general')}</div>
             </div>
             {activity.area && (
               <div className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-3">
@@ -320,7 +320,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           <div>
             <div className="h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full transition-all"
+                className="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full transition-all"
                 style={{ width: `${activity.percent_complete}%` }}
               />
             </div>
@@ -349,7 +349,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* ── RELATIONSHIPS ── */}
           {relLoading ? (
             <div className="flex items-center gap-2 text-xs text-gray-600">
-              <div className="w-3 h-3 border border-gray-600 border-t-[#F97316] rounded-full animate-spin" />
+              <div className="w-3 h-3 border border-gray-600 border-t-accent rounded-full animate-spin" />
               {t('drawer.loadingRelationships')}
             </div>
           ) : (
@@ -361,7 +361,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                   {predecessors.length} predecessor{predecessors.length !== 1 ? "s" : ""}
                 </span>
                 <span className="text-gray-700">→</span>
-                <span className="text-[#F97316] font-semibold truncate max-w-[140px]">
+                <span className="text-accent font-semibold truncate max-w-[140px]">
                   {getActivityName(activity.activity_name)}
                 </span>
                 <span className="text-gray-700">→</span>
@@ -405,7 +405,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                         <div className="mb-1.5">
                           <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
+                              className="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full"
                               style={{ width: `${pred.percent_complete}%` }}
                             />
                           </div>
@@ -462,7 +462,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                         <div className="mb-1.5">
                           <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-gradient-to-r from-[#F97316] to-[#3B82F6] rounded-full"
+                              className="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full"
                               style={{ width: `${succ.percent_complete}%` }}
                             />
                           </div>
@@ -489,7 +489,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Generate Report */}
           <div>
             <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
-              <ClipboardList size={12} className="inline mr-1.5 text-[#F97316]" />
+              <ClipboardList size={12} className="inline mr-1.5 text-accent" />
               {t('drawer.observation')}
             </div>
             <button
@@ -497,9 +497,9 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                 onClose();
                 router.push(`/projects/${projectId}/report?activity=${activity.id}`);
               }}
-              className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
+              className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-accent/30"
             >
-              <ClipboardList size={14} className="text-[#F97316]" />
+              <ClipboardList size={14} className="text-accent" />
               {t('action.newObservation')}
             </button>
           </div>
@@ -507,7 +507,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
           {/* Ready Check Section */}
           <div>
             <div className="text-xs font-semibold text-[color:var(--text-muted)] uppercase tracking-wide mb-3">
-              <Send size={12} className="inline mr-1.5 text-[#F97316]" />
+              <Send size={12} className="inline mr-1.5 text-accent" />
               {t('drawer.readyCheck')}
             </div>
             {rcLoading ? (
@@ -549,9 +549,9 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
             ) : (
               <button
                 onClick={() => { setIsFollowUp(false); setShowReadyCheckModal(true); }}
-                className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-[#F97316]/30"
+                className="w-full flex items-center justify-center gap-2 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-hover)] text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] rounded-xl py-3 text-sm font-semibold transition-colors border border-[var(--border-primary)] hover:border-accent/30"
               >
-                <Send size={14} className="text-[#F97316]" />
+                <Send size={14} className="text-accent" />
                 {t('action.sendReadyCheck')}
               </button>
             )}
@@ -571,7 +571,7 @@ export default function ActivityDrawer({ activity, projectId, onClose, onActivit
                     <div className="text-xs text-[color:var(--text-secondary)]">{risk.description}</div>
                     {risk.suggested_action && (
                       <div className="flex items-start gap-1.5 mt-2">
-                        <ChevronRight size={12} className="text-[#F97316] shrink-0 mt-0.5" />
+                        <ChevronRight size={12} className="text-accent shrink-0 mt-0.5" />
                         <div className="text-xs text-[color:var(--text-secondary)]">{risk.suggested_action}</div>
                       </div>
                     )}

@@ -138,15 +138,15 @@ export default function StatusPage() {
       <footer className="border-t border-[var(--border-primary)] py-6 mt-12">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-[#F97316]" />
+            <Building2 className="w-4 h-4 text-accent" />
             <span className="text-sm text-[color:var(--text-muted)]">© 2026 IronTrack Development LLC. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Terms</Link>
+            <Link href="/terms" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Terms</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Privacy</Link>
+            <Link href="/privacy" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Privacy</Link>
             <span className="text-gray-700">•</span>
-            <Link href="/release-notes" className="text-[color:var(--text-muted)] hover:text-[#F97316] transition-colors">Release Notes</Link>
+            <Link href="/release-notes" className="text-[color:var(--text-muted)] hover:text-accent transition-colors">Release Notes</Link>
           </div>
         </div>
       </footer>

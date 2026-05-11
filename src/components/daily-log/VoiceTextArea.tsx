@@ -56,7 +56,7 @@ export default function VoiceTextArea({
           rows={rows}
           className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-4 py-3 pr-14
             text-sm text-[color:var(--text-primary)] placeholder-gray-600 resize-none
-            focus:outline-none focus:border-[#F97316]/50 focus:ring-1 focus:ring-[#F97316]/20
+            focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20
             transition-colors"
         />
         {/* Interim text preview */}

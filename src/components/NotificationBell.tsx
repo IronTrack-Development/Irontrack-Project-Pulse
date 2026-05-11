@@ -61,7 +61,7 @@ export default function NotificationBell({ projectId }: { projectId: string }) {
       title={enabled ? 'Notifications on' : 'Turn on notifications'}
       className={`p-2.5 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center ${
         enabled
-          ? 'bg-[var(--bg-tertiary)] text-[#F97316] hover:bg-[var(--bg-hover)]'
+          ? 'bg-[var(--bg-tertiary)] text-accent hover:bg-[var(--bg-hover)]'
           : 'bg-[var(--bg-tertiary)] text-gray-600 hover:bg-[var(--bg-hover)] hover:text-[color:var(--text-secondary)]'
       }`}
     >

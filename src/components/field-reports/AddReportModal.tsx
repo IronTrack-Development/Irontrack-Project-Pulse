@@ -69,7 +69,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
 
         {uploading ? (
           <div className="flex flex-col items-center justify-center py-10">
-            <div className="w-8 h-8 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin mb-3" />
+            <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mb-3" />
             <p className="text-[color:var(--text-secondary)] text-sm">{t('reports.creatingReport')}</p>
           </div>
         ) : (
@@ -89,7 +89,7 @@ export default function AddReportModal({ projectId, onClose, onCreated }: Props)
                   fileRef.current.click();
                 }
               }}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#F97316] hover:bg-[#ea6c10] text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[56px]"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-accent hover:bg-accent-hover text-[color:var(--text-primary)] rounded-xl text-sm font-bold transition-colors min-h-[56px]"
             >
               <Camera size={18} />
               {t('reports.takePhoto')}

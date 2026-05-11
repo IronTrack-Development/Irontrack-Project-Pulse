@@ -36,7 +36,7 @@ export default function VoiceButton({
         transition-all duration-200 shrink-0
         ${isListening
           ? "bg-red-500/20 text-red-400 ring-2 ring-red-500/50 animate-pulse"
-          : "bg-[#F97316]/10 text-[#F97316] hover:bg-[#F97316]/20 active:scale-95"
+          : "bg-accent/10 text-accent hover:bg-accent/20 active:scale-95"
         }
         ${className}
       `}

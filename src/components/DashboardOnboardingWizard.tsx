@@ -100,9 +100,9 @@ export default function DashboardOnboardingWizard({
           setStepIndex(0);
           setOpen(true);
         }}
-        className="fixed bottom-5 right-5 z-30 inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[var(--bg-secondary)] px-4 py-3 text-sm font-semibold text-[color:var(--text-primary)] shadow-lg shadow-black/20 transition-colors hover:border-[#F97316]/60"
+        className="fixed bottom-5 right-5 z-30 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-[var(--bg-secondary)] px-4 py-3 text-sm font-semibold text-[color:var(--text-primary)] shadow-lg shadow-black/20 transition-colors hover:border-accent/60"
       >
-        <ClipboardList size={16} className="text-[#F97316]" />
+        <ClipboardList size={16} className="text-accent" />
         <span className="hidden sm:inline">Setup Guide</span>
         <span className="sm:hidden">Guide</span>
       </button>
@@ -112,7 +112,7 @@ export default function DashboardOnboardingWizard({
           <div className="w-full max-w-3xl rounded-t-2xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] shadow-2xl sm:rounded-2xl">
             <div className="flex items-start justify-between gap-4 border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
               <div>
-                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#F97316]">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-accent">
                   <CheckCircle2 size={14} />
                   First Run Setup
                 </div>
@@ -137,7 +137,7 @@ export default function DashboardOnboardingWizard({
               <div className="border-b border-[var(--border-primary)] p-4 md:border-b-0 md:border-r">
                 <div className="mb-4 h-2 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
                   <div
-                    className="h-full rounded-full bg-[#F97316] transition-all"
+                    className="h-full rounded-full bg-accent transition-all"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -153,13 +153,13 @@ export default function DashboardOnboardingWizard({
                         onClick={() => setStepIndex(index)}
                         className={`flex w-full items-center gap-3 rounded-lg border px-3 py-3 text-left transition-colors ${
                           active
-                            ? "border-[#F97316]/40 bg-[#F97316]/10"
+                            ? "border-accent/40 bg-accent/10"
                             : "border-transparent hover:border-[var(--border-primary)] hover:bg-[var(--bg-tertiary)]"
                         }`}
                       >
                         <span
                           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                            active || complete ? "bg-[#F97316] text-white" : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)]"
+                            active || complete ? "bg-accent text-white" : "bg-[var(--bg-tertiary)] text-[color:var(--text-muted)]"
                           }`}
                         >
                           {complete ? <CheckCircle2 size={16} /> : <StepIcon size={16} />}
@@ -179,10 +179,10 @@ export default function DashboardOnboardingWizard({
               </div>
 
               <div className="p-5 sm:p-6">
-                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#F97316]/25 bg-[#F97316]/10 text-[#F97316]">
+                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/25 bg-accent/10 text-accent">
                   <Icon size={26} />
                 </div>
-                <div className="text-sm font-bold uppercase tracking-wide text-[#F97316]">
+                <div className="text-sm font-bold uppercase tracking-wide text-accent">
                   Step {stepIndex + 1} of {steps.length}
                 </div>
                 <h3 className="mt-2 text-2xl font-bold text-[color:var(--text-primary)]">
@@ -223,7 +223,7 @@ export default function DashboardOnboardingWizard({
                       <button
                         type="button"
                         onClick={() => setStepIndex((current) => current + 1)}
-                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#F97316] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ea6c0a]"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-accent-hover"
                       >
                         Next
                         <ArrowRight size={16} />
@@ -232,7 +232,7 @@ export default function DashboardOnboardingWizard({
                       <button
                         type="button"
                         onClick={startProject}
-                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#F97316] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ea6c0a]"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-accent-hover"
                       >
                         <Plus size={16} />
                         Create First Project
