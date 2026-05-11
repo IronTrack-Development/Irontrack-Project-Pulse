@@ -5,135 +5,178 @@ import {
   Download, Share2, Camera, FileText, Shield, Zap, Users,
   Handshake, Send, ArrowRightLeft, Sun, Moon, Globe,
   AlertTriangle, BookOpen, Wrench, MessageSquare, Eye,
-  BarChart3, Columns3, Truck, Search, Clipboard, Settings
+  BarChart3, Columns3, Truck, Search, Clipboard, Settings,
+  ChevronDown,
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 import IronTrackFieldPulseWordmark from "@/components/branding/IronTrackFieldPulseWordmark";
+import LandingProductPreview from "@/components/landing/LandingProductPreview";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "#f0f4f8" }}>
       {/* ═══ HEADER ═══ */}
-      <header className="sticky top-0 z-50 border-b" style={{ background: "#f0f4f8", borderColor: "rgba(15,23,42,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          <Link href="/" aria-label="IronTrack Field Pulse home" className="flex items-center gap-2 md:gap-3 min-w-0 hover:opacity-90 transition-opacity">
-            <IronTrackFieldPulseWordmark className="min-w-0" />
+      <header className="sticky top-0 z-50 border-b backdrop-blur-md" style={{ background: "rgba(248,250,252,0.92)", borderColor: "rgba(15,23,42,0.08)" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
+          <Link href="/" aria-label="IronTrack Field Pulse home" className="min-w-0 shrink hover:opacity-90 transition-opacity">
+            <IronTrackFieldPulseWordmark className="min-w-0 scale-[0.92] sm:scale-100 origin-left" />
           </Link>
 
-          <MobileMenu />
-
-          <nav className="hidden md:flex items-center gap-8">
-            {["Workflow", "Features", "Who We Serve", "Pricing"].map((item) => (
+          <nav className="hidden lg:flex flex-1 justify-center items-center gap-1 max-w-2xl">
+            {[
+              { label: "Product", href: "#features" },
+              { label: "Solutions", href: "#workflow" },
+              { label: "Who we serve", href: "#who-we-serve" },
+              { label: "Pricing", href: "#pricing" },
+              { label: "Resources", href: "/release-notes" },
+            ].map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                className="text-sm font-medium transition-colors hover:text-[#0f172a]"
-                style={{ color: "rgba(15,23,42,0.55)" }}
+                key={item.label}
+                href={item.href}
+                className="group flex items-center gap-0.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-white/80 hover:text-slate-900"
               >
-                {item}
+                {item.label}
+                <ChevronDown className="h-3.5 w-3.5 opacity-40 transition-opacity group-hover:opacity-70" aria-hidden />
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Link
               href="/login"
-              className="hidden sm:block text-sm font-medium transition-colors"
-              style={{ color: "rgba(15,23,42,0.55)" }}
+              className="hidden sm:inline text-sm font-medium text-slate-500 transition-colors hover:text-slate-900"
             >
-              Sign in
+              Log in
             </Link>
             <a
-              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-              className="text-sm px-5 py-2.5 rounded-xl font-bold text-white transition-colors"
-              style={{ background: "#F37021" }}
+              href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Field%20Pulse%20Demo&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Field%20Pulse."
+              className="hidden sm:inline-flex items-center rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-95"
+              style={{ background: "#F37021", boxShadow: "0 6px 20px rgba(243,112,33,0.22)" }}
             >
-              Book Demo
+              Get a demo
             </a>
+            <MobileMenu />
           </div>
         </div>
       </header>
 
-      {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 md:pt-28 md:pb-20">
-          <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#F37021", fontFamily: "monospace" }}>
-              Daily Field Pulse For GCs And Subs
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[0.95]"
-              style={{ color: "#0f172a", letterSpacing: "-0.03em" }}
-            >
-              Run Your Job.<br />
-              <em className="font-medium" style={{ color: "#F37021" }}>Don&apos;t Chase It.</em>
-            </h1>
-            <p className="text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: "rgba(15,23,42,0.55)" }}>
-              Morning huddles, blockers, production, and crew handoffs in one simple field workflow. Know what happened today, what is at risk tomorrow, and what the next crew needs before they show up.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Demo%20Request&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Project%20Pulse."
-                className="inline-flex items-center gap-2 px-7 py-4 text-white rounded-xl text-base font-bold transition-all shadow-lg"
-                style={{ background: "#F37021", boxShadow: "0 8px 24px rgba(243,112,33,0.25)" }}
+      {/* ═══ HERO (Fieldwire-style split + IronTrack brand) ═══ */}
+      <section className="relative overflow-hidden border-b" style={{ borderColor: "rgba(15,23,42,0.06)", background: "linear-gradient(180deg, #ffffff 0%, #f0f4f8 55%)" }}>
+        <div className="max-w-7xl mx-auto px-6 pt-10 pb-14 md:pt-14 md:pb-20">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44%)] lg:gap-16">
+            <div>
+              <h1
+                className="text-[2rem] font-extrabold leading-[1.08] tracking-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]"
               >
-                <Calendar className="w-5 h-5" />
-                Book a Demo
-                <ArrowRight className="w-5 h-5" />
-              </a>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0f172a", background: "white", borderColor: "rgba(15,23,42,0.12)" }}
-              >
-                <HardHat className="w-5 h-5" />
-                GC Signup
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/signup/sub"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-base font-bold transition-all border"
-                style={{ color: "#0f172a", background: "white", borderColor: "rgba(15,23,42,0.12)" }}
-              >
-                <Briefcase className="w-5 h-5" />
-                Sub Signup
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+                Jobsite management for construction teams—built on your field pulse.
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                Connect the trailer and the trade floor: schedule intelligence, daily logs, coordination, and sub handoffs in one calm system—without burying crews in paperwork.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="mailto:irontrackdevelopment@outlook.com?subject=IronTrack%20Field%20Pulse%20Demo&body=I%27d%20like%20to%20book%20a%20demo%20of%20IronTrack%20Field%20Pulse."
+                  className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white shadow-md transition-opacity hover:opacity-95 sm:px-7 sm:text-base"
+                  style={{ background: "#F37021", boxShadow: "0 10px 28px rgba(243,112,33,0.28)" }}
+                >
+                  Get a demo
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                </a>
+                <Link
+                  href="#features"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border-2 bg-white px-6 py-3.5 text-sm font-bold text-[#F37021] transition-colors hover:bg-orange-50/80 sm:px-7 sm:text-base"
+                  style={{ borderColor: "#F37021" }}
+                >
+                  Take a tour
+                </Link>
+              </div>
+              <ul className="mt-10 max-w-lg space-y-3">
+                {[
+                  "Plan, track, and coordinate work in one place—from lookahead to handoff.",
+                  "Real-time updates from the field before they go cold.",
+                  "Reduce rework with a daily rhythm subs and supers can trust.",
+                ].map((line) => (
+                  <li key={line} className="flex gap-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#F37021]" strokeWidth={2} />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 flex flex-wrap gap-2">
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-800 shadow-sm transition-colors hover:border-slate-300"
+                >
+                  <HardHat className="h-3.5 w-3.5 text-[#F37021]" />
+                  GC signup
+                </Link>
+                <Link
+                  href="/signup/sub"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-800 shadow-sm transition-colors hover:border-slate-300"
+                >
+                  <Briefcase className="h-3.5 w-3.5 text-[#3B82F6]" />
+                  Sub signup
+                </Link>
+              </div>
             </div>
-            <div className="mt-12 grid md:grid-cols-3 gap-3 text-left">
-              {[
-                {
-                  label: "6:15 AM",
-                  title: "Morning huddle locked in",
-                  body: "Crew, scope, safety focus, materials, and today's must-knows leave the shop together.",
-                  icon: Truck,
-                  color: "#F37021",
-                },
-                {
-                  label: "11:40 AM",
-                  title: "Blocker raised before it costs a day",
-                  body: "Field notes, photos, and caveats are captured while the problem is still fresh.",
-                  icon: AlertTriangle,
-                  color: "#DC2626",
-                },
-                {
-                  label: "3:55 PM",
-                  title: "Next crew gets the handoff",
-                  body: "What is ready, what is missing, and where to start is already waiting for them.",
-                  icon: ArrowRightLeft,
-                  color: "#3B82F6",
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl p-5 border shadow-sm" style={{ background: "white", borderColor: "rgba(15,23,42,0.08)" }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(15,23,42,0.35)", fontFamily: "monospace" }}>{item.label}</span>
-                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
-                  </div>
-                  <h3 className="text-base font-extrabold mb-2" style={{ color: "#0f172a" }}>{item.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(15,23,42,0.55)" }}>{item.body}</p>
-                </div>
-              ))}
+            <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
+              <LandingProductPreview />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FEATURE PILLARS (reference-style row) ═══ */}
+      <section className="border-b bg-white" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
+        <div className="max-w-7xl mx-auto px-6 py-14 md:py-16">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: ClipboardList,
+                title: "Task & lookahead clarity",
+                body: "Today, tomorrow, and three weeks out—by day and by trade—with critical path context you can defend.",
+              },
+              {
+                icon: Camera,
+                title: "Photo documentation",
+                body: "Capture conditions, punch, and progress while context is still on-site—not reconstructed later.",
+              },
+              {
+                icon: FileText,
+                title: "Formal field reporting",
+                body: "Daily logs, inspections, RFIs, and submittals flow into one project record executives can scan.",
+              },
+              {
+                icon: Users,
+                title: "Built for teams",
+                body: "GC pulse for the office, Sub Ops for the field company, and token views that protect schedule logic.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="rounded-2xl border border-slate-100 bg-slate-50/50 p-6 shadow-sm transition-shadow hover:shadow-md"
+              >
+                <card.icon className="mb-4 h-8 w-8 text-[#F37021]" strokeWidth={1.5} />
+                <h3 className="text-base font-bold text-slate-900">{card.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ TRUST STRIP (no third-party marks) ═══ */}
+      <section className="border-b bg-[#f8fafc]" style={{ borderColor: "rgba(15,23,42,0.06)" }}>
+        <div className="max-w-7xl mx-auto px-6 py-10 md:py-12">
+          <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+            Trusted by field-led construction teams
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-semibold text-slate-400">
+            {["General contractors", "Mechanical & HVAC", "Electrical", "Specialty trades"].map((label) => (
+              <span key={label} className="whitespace-nowrap">
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </section>
