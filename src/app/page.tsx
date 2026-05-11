@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  AlertTriangle,
   ArrowRight,
   BarChart3,
   Briefcase,
@@ -14,93 +13,45 @@ import {
   HardHat,
   Mail,
   MessageSquare,
+  Phone,
   ShieldCheck,
   Users,
 } from "lucide-react";
 import MobileMenu from "@/components/MobileMenu";
 
-const sources = [
-  "Procore",
-  "Autodesk / ACC",
-  "Fieldwire",
-  "Email",
-  "PDFs",
-  "Screenshots",
-  "Lookaheads",
-  "Spreadsheets",
-  "Meeting notes",
-  "Verbal changes",
+const sources = ["Procore", "Autodesk", "Fieldwire", "Email", "PDF", "Text", "Call"];
+
+const queueTools = [
+  { title: "Job Inbox", desc: "All updates from across your projects.", icon: FolderOpen },
+  { title: "Work Cards", desc: "Actionable items for your team.", icon: ClipboardList },
+  { title: "Readiness", desc: "Track what's ready and what's not.", icon: HardHat },
+  { title: "Proof Log", desc: "Photos, docs, and notes in one place.", icon: Camera },
+  { title: "GC Response", desc: "Track responses and follow-ups.", icon: MessageSquare },
+  { title: "Owner Snapshot", desc: "Share progress with confidence.", icon: BarChart3 },
 ];
 
 const workflow = [
-  {
-    title: "Job Inbox",
-    body: "Capture GC requests from email, PDFs, screenshots, lookaheads, meetings, calls, and manual notes.",
-    icon: FolderOpen,
-  },
-  {
-    title: "Work Cards",
-    body: "Turn scope into clear cards with date, location, trade, crew, blockers, proof, and status.",
-    icon: ClipboardList,
-  },
-  {
-    title: "Readiness Board",
-    body: "See ready, not ready, missing material, missing access, missing drawings, and waiting on GC.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Proof Log",
-    body: "Collect photos, notes, manpower, delays, timestamps, and GC-notified records.",
-    icon: Camera,
-  },
-  {
-    title: "GC Response",
-    body: "Create clean text, email, and PDF responses without requiring the GC to log in.",
-    icon: MessageSquare,
-  },
-  {
-    title: "Owner Snapshot",
-    body: "Show what is ready, at risk, missing proof, unanswered, or needing a call today.",
-    icon: BarChart3,
-  },
+  ["01", "Job Inbox", "Capture GC emails, PDFs, screenshots, portal updates, meeting notes, calls, and manual notes."],
+  ["02", "Work Cards", "Turn each scope item into a clear card with date, location, trade, crew, blockers, proof, and status."],
+  ["03", "Readiness Board", "Know what is ready, missing material, missing access, missing drawings, waiting on predecessor, or waiting on GC."],
+  ["04", "Proof Log", "Collect photos, notes, manpower, delays, timestamps, and GC-notified records."],
+  ["05", "GC Response", "Create clean text, email, and PDF responses back to the GC without requiring a GC login."],
+  ["06", "Owner Snapshot", "See ready jobs, at-risk jobs, proof gaps, unanswered items, and calls needed today."],
+];
+
+const outcomes = [
+  { title: "End control gaps", body: "See everything. Act on what matters.", icon: CalendarDays },
+  { title: "Keep projects moving", body: "Clear next steps. Fewer delays.", icon: CheckCircle },
+  { title: "Protect your time", body: "One queue. Less chaos.", icon: Users },
+  { title: "Your data stays yours", body: "The GC does not need an account.", icon: ShieldCheck },
 ];
 
 const roles = [
-  {
-    title: "Subcontractor Owner",
-    body: "See the jobs at risk, proof gaps, and calls that need leadership attention.",
-    icon: Building2,
-  },
-  {
-    title: "Operations Manager",
-    body: "Triage GC noise and keep foremen aligned without living in five portals.",
-    icon: Briefcase,
-  },
-  {
-    title: "Project Manager",
-    body: "Send professional responses with proof attached instead of rebuilding the story.",
-    icon: Mail,
-  },
-  {
-    title: "Foreman",
-    body: "Open the job, tap the work card, add proof, flag blockers, and move on.",
-    icon: HardHat,
-  },
-  {
-    title: "Field Crew",
-    body: "Know where to go, what is ready, and what proof needs to be captured.",
-    icon: Users,
-  },
-];
-
-const fieldTools = [
-  ["Schedule", "5"],
-  ["Job Inbox", "3"],
-  ["Work Cards", ""],
-  ["Readiness", ""],
-  ["Blockers", "1"],
-  ["Proof Log", "2"],
-  ["GC Response", ""],
+  ["Owner", "What needs my attention today?"],
+  ["Operations", "Which jobs are ready or blocked?"],
+  ["PM", "What do we need to send back?"],
+  ["Foreman", "What am I doing today?"],
+  ["Crew", "What proof do I need?"],
 ];
 
 function DemoRequestLink({ children, className }: { children: React.ReactNode; className: string }) {
@@ -116,202 +67,186 @@ function DemoRequestLink({ children, className }: { children: React.ReactNode; c
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#08090B] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090B]/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-[92px] max-w-7xl items-center justify-between px-4 md:px-6">
+    <div className="min-h-screen overflow-x-hidden bg-[#F6F2EA] text-[#111827]">
+      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#F6F2EA]/92 backdrop-blur-xl">
+        <div className="mx-auto flex h-[86px] max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href="/" className="flex items-center">
-            <img
-              src="/irontrack-field-pulse-logo.svg"
-              alt="IronTrack Field Pulse"
-              className="h-12 w-auto rounded bg-white shadow-[0_14px_35px_rgba(0,0,0,0.28)] md:h-16"
-            />
+            <img src="/irontrack-field-pulse-logo.svg" alt="IronTrack Field Pulse" className="h-14 w-auto md:h-16" />
           </Link>
 
           <MobileMenu />
 
-          <nav className="hidden items-center gap-8 md:flex">
-            {["Workflow", "Product", "Teams", "Pricing"].map((item) => (
+          <nav className="hidden items-center gap-9 md:flex">
+            {["How It Works", "Workflow", "For Subs", "Pricing", "Resources"].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-sm font-semibold text-white/55 transition-colors hover:text-white"
+                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+                className="text-sm font-bold text-[#111827]/70 transition-colors hover:text-[#111827]"
               >
                 {item}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 sm:flex">
-            <Link href="/login/sub" className="text-sm font-semibold text-white/60 transition-colors hover:text-white">
-              Sign in
+          <div className="hidden items-center gap-4 sm:flex">
+            <Link href="/login/sub" className="text-sm font-bold text-[#111827]/75 hover:text-[#111827]">
+              Log in
             </Link>
             <Link
               href="/signup/sub"
-              className="rounded-xl bg-[#F97316] px-5 py-2.5 text-sm font-black text-white shadow-[0_14px_34px_rgba(249,115,22,0.24)] transition-transform hover:-translate-y-0.5"
+              className="rounded-lg bg-[#F45A00] px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(244,90,0,0.22)] transition-transform hover:-translate-y-0.5"
             >
-              Start beta
+              Start Subcontractor Beta
             </Link>
           </div>
         </div>
       </header>
 
       <main>
-        <section className="relative overflow-hidden border-b border-white/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(249,115,22,0.14),transparent_34%),linear-gradient(135deg,#08090B_0%,#111418_54%,#07080A_100%)]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/60 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-48 opacity-30" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)", backgroundSize: "56px 56px" }} />
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/70 to-transparent" />
-          <div className="relative mx-auto grid min-h-[720px] max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
+        <section className="relative overflow-hidden border-b border-black/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(244,90,0,0.12),transparent_28%),linear-gradient(90deg,rgba(255,255,255,0.92),rgba(246,242,234,0.88)_54%,rgba(246,242,234,0.45))]" />
+          <div className="absolute right-0 top-0 hidden h-full w-[38%] opacity-45 lg:block">
+            <div className="absolute inset-y-0 right-0 w-full bg-[linear-gradient(90deg,rgba(246,242,234,0),rgba(246,242,234,0.16)),radial-gradient(circle_at_80%_55%,rgba(17,24,39,0.16),transparent_36%)]" />
+            <div className="absolute bottom-0 right-0 h-[72%] w-[76%] border-l border-t border-[#111827]/10 bg-[linear-gradient(180deg,rgba(17,24,39,0.08),rgba(244,90,0,0.05))]" />
+            <div className="absolute right-24 top-16 h-72 w-px bg-[#111827]/20" />
+            <div className="absolute right-20 top-16 h-px w-64 bg-[#111827]/20" />
+            <div className="absolute right-44 top-16 h-24 w-px rotate-[52deg] bg-[#111827]/20" />
+            <div className="absolute bottom-0 right-10 h-56 w-28 rounded-t-full bg-[#111827]/12" />
+            <div className="absolute bottom-8 right-16 h-24 w-24 rounded-full bg-white/40" />
+          </div>
+
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:px-8 md:py-24 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#FDBA74]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#F97316]" />
-                Subcontractor-owned field command center
-              </div>
-              <h1 className="max-w-4xl text-4xl font-black leading-[0.95] tracking-[-0.045em] text-white sm:text-5xl md:text-6xl">
-                The field command center for subcontractors.
+              <h1 className="max-w-3xl text-5xl font-black leading-[0.98] tracking-[-0.055em] text-[#111827] md:text-7xl">
+                Control GC chaos without asking GC to change.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                Turn GC emails, PDFs, screenshots, lookaheads, portal updates, calls, and field notes into one organized work queue your team controls.
+              <div className="mt-6 h-1 w-28 rounded-full bg-[#F45A00]" />
+              <p className="mt-7 max-w-2xl text-xl leading-8 text-[#4B5563]">
+                Turn Procore, Autodesk, Fieldwire, emails, PDFs, screenshots, texts, calls, and spreadsheets into one daily work queue.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <Link
                   href="/signup/sub"
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl bg-[#F97316] px-7 py-4 text-base font-black text-white shadow-[0_18px_45px_rgba(249,115,22,0.28)] transition-transform hover:-translate-y-0.5"
+                  className="inline-flex min-h-[58px] items-center justify-center gap-3 rounded-lg bg-[#F45A00] px-7 py-4 text-base font-black text-white shadow-[0_18px_38px_rgba(244,90,0,0.24)] transition-transform hover:-translate-y-0.5"
                 >
-                  Start subcontractor beta
-                  <ArrowRight size={18} />
+                  Start Subcontractor Beta
+                  <ArrowRight size={19} />
                 </Link>
-                <DemoRequestLink className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 text-base font-bold text-white transition-colors hover:bg-white/10">
-                  Book workflow demo
-                  <CalendarDays size={18} />
+                <DemoRequestLink className="inline-flex min-h-[58px] items-center justify-center gap-3 border-b-2 border-[#F45A00] px-2 py-4 text-base font-black text-[#111827]">
+                  See workflow
+                  <ArrowRight size={18} />
                 </DemoRequestLink>
               </div>
-              <p className="mt-5 text-sm font-semibold text-slate-500">
-                GC does not need an account. Your subcontractor team owns the workspace.
-              </p>
-              <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
-                {[
-                  ["Ready", "7 jobs"],
-                  ["Blocked", "2 items"],
-                  ["Proof", "23 logs"],
-                ].map(([label, value]) => (
-                  <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{label}</p>
-                    <p className="mt-2 text-xl font-black text-white">{value}</p>
-                  </div>
-                ))}
+              <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold text-[#4B5563]">
+                <span className="inline-flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-[#F45A00]" />
+                  Built for subcontractors.
+                </span>
+                <span>Your data is your data.</span>
               </div>
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-8 rounded-[2rem] bg-[#F97316]/10 blur-3xl" />
-              <div className="relative rounded-[2rem] border border-white/12 bg-[#0D0F12]/95 p-4 shadow-[0_32px_100px_rgba(0,0,0,0.42)] backdrop-blur">
-                <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="rounded-2xl border border-black/10 bg-white/90 p-5 shadow-[0_24px_70px_rgba(17,24,39,0.16)] backdrop-blur">
+                <div className="mb-5 flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F97316]">Job Control</p>
-                    <h2 className="mt-1 text-2xl font-black">Avondale Medical Office</h2>
+                    <h2 className="text-2xl font-black text-[#111827]">Today&apos;s Work Queue</h2>
+                    <p className="mt-1 text-sm text-[#6B7280]">All your updates. One daily plan.</p>
                   </div>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-slate-300">
-                    Today
+                  <span className="inline-flex items-center gap-2 text-xs font-bold text-[#4B5563]">
+                    May 16, 2026
+                    <CalendarDays size={15} />
                   </span>
                 </div>
-                <div className="mb-4 flex flex-wrap gap-2 text-xs font-bold">
-                  <span className="rounded-full bg-red-500/15 px-3 py-1 text-red-300">1 blocked</span>
-                  <span className="rounded-full bg-amber-500/15 px-3 py-1 text-amber-300">2 proof missing</span>
-                  <span className="rounded-full bg-sky-500/15 px-3 py-1 text-sky-300">1 RFI open</span>
-                </div>
-                <div className="rounded-2xl border border-[#F97316]/20 bg-black/30 p-3">
-                  <p className="mb-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#F97316]">Today</p>
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    {fieldTools.map(([label, count]) => (
-                      <div key={label} className="relative min-h-[86px] rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-3">
-                        {count && (
-                          <span className="absolute right-2 top-2 grid h-6 min-w-6 place-items-center rounded-full bg-[#F97316] px-1.5 text-xs font-black">
-                            {count}
-                          </span>
-                        )}
-                        <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-[#F97316]/12 text-[#F97316]">
-                          <ClipboardList size={18} />
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {queueTools.map((tool) => {
+                    const Icon = tool.icon;
+                    return (
+                      <Link
+                        key={tool.title}
+                        href="/signup/sub"
+                        className="group min-h-[150px] rounded-xl border border-black/10 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#F45A00]/40 hover:shadow-[0_12px_30px_rgba(17,24,39,0.08)]"
+                      >
+                        <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-[#F45A00]/10 text-[#F45A00]">
+                          <Icon size={25} />
                         </div>
-                        <p className="text-sm font-black">{label}</p>
-                      </div>
+                        <h3 className="mt-4 text-center text-base font-black text-[#111827]">{tool.title}</h3>
+                        <p className="mt-2 text-center text-xs leading-5 text-[#6B7280]">{tool.desc}</p>
+                        <ArrowRight size={15} className="ml-auto mt-3 text-[#4B5563] transition-transform group-hover:translate-x-1 group-hover:text-[#F45A00]" />
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-5 border-t border-black/10 pt-4">
+                  <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#6B7280]">Sources</p>
+                  <div className="flex flex-wrap gap-2">
+                    {sources.map((source) => (
+                      <span key={source} className="rounded-md border border-black/10 bg-white px-3 py-2 text-xs font-bold text-[#4B5563]">
+                        {source}
+                      </span>
                     ))}
                   </div>
-                </div>
-                <div className="mt-4 grid gap-3 md:grid-cols-3">
-                  {[
-                    ["Field Work", "Production, photos, equipment, materials"],
-                    ["Project Docs", "Drawings, RFIs, submittals, reports"],
-                    ["Coordination", "Meetings, crew, owner snapshot"],
-                  ].map(([title, body]) => (
-                    <div key={title} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <p className="font-black">{title}</p>
-                      <p className="mt-1 text-xs leading-5 text-slate-500">{body}</p>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="border-b border-white/10 bg-[#0B0D10] py-8">
-          <div className="mx-auto max-w-7xl px-6">
-            <p className="mb-5 text-center text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">
-              Works alongside the tools GCs already use
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {sources.map((source) => (
-                <span key={source} className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-300">
-                  {source}
-                </span>
+        <section className="border-b border-black/10 bg-white py-8">
+          <div className="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-4 md:px-8">
+            {outcomes.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="flex gap-4 border-black/10 md:border-r md:pr-6 last:md:border-r-0">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-[#F45A00] text-[#F45A00]">
+                    <Icon size={20} />
+                  </span>
+                  <div>
+                    <h3 className="text-sm font-black text-[#111827]">{item.title}</h3>
+                    <p className="mt-1 text-xs leading-5 text-[#6B7280]">{item.body}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="how-it-works" className="bg-[#F6F2EA] py-16 md:py-24">
+          <div className="mx-auto max-w-7xl px-6 md:px-8">
+            <div className="mb-12 max-w-3xl">
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#F45A00]">How it works</p>
+              <h2 className="text-4xl font-black tracking-[-0.04em] text-[#111827] md:text-5xl">
+                A command center for readiness, proof, and response.
+              </h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {workflow.map(([number, title, body]) => (
+                <div key={title} className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
+                  <p className="font-mono text-sm font-black text-[#F45A00]">{number}</p>
+                  <h3 className="mt-4 text-xl font-black text-[#111827]">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#6B7280]">{body}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="workflow" className="bg-[#08090B] py-16 md:py-24">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="mb-12 max-w-3xl">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Core workflow</p>
-              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">
-                The subcontractor command center for field readiness, proof, and GC response.
-              </h2>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {workflow.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="rounded-2xl border border-white/10 bg-[#111318] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
-                    <div className="mb-5 flex items-center justify-between">
-                      <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#F97316]/12 text-[#F97316]">
-                        <Icon size={22} />
-                      </span>
-                      <span className="font-mono text-xs font-black text-white/20">0{index + 1}</span>
-                    </div>
-                    <h3 className="text-xl font-black">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-400">{item.body}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section id="product" className="border-y border-white/10 bg-[#101216] py-16 md:py-24">
-          <div className="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <section id="workflow" className="bg-[#08090B] py-16 text-white md:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 px-6 md:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
-              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Product feel</p>
-              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#F45A00]">Workflow</p>
+              <h2 className="text-4xl font-black tracking-[-0.04em] md:text-5xl">
                 One work card carries the whole job conversation.
               </h2>
-              <p className="mt-5 text-base leading-8 text-slate-400">
-                Inbox items, readiness, proof, blockers, handoffs, and GC responses stay connected. No one has to rebuild the story from texts, folders, and memory.
+              <p className="mt-5 max-w-xl text-base leading-8 text-slate-400">
+                Inbox items, readiness, proof, blockers, handoffs, and responses stay connected. No one has to rebuild the story from texts, folders, and memory.
               </p>
             </div>
-            <div className="rounded-[1.75rem] border border-white/10 bg-[#08090B] p-4">
-              <div className="rounded-2xl border border-[#F97316]/25 bg-gradient-to-br from-[#F97316]/12 via-white/[0.03] to-[#3B82F6]/10 p-5">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F97316]">Work Card</p>
+            <div className="rounded-3xl border border-white/10 bg-[#111318] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
+              <div className="rounded-2xl border border-[#F45A00]/25 bg-gradient-to-br from-[#F45A00]/12 via-white/[0.03] to-sky-500/10 p-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F45A00]">Work Card</p>
                 <h3 className="mt-2 text-2xl font-black">Rough-in branch conduit</h3>
                 <p className="mt-1 text-sm text-slate-500">Avondale Medical Office · Level 2 · Corridor B</p>
                 <div className="mt-5 grid gap-2 sm:grid-cols-2">
@@ -328,7 +263,7 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-                  <button className="rounded-xl bg-[#F97316] px-4 py-3 text-sm font-black text-white">Add Proof</button>
+                  <button className="rounded-xl bg-[#F45A00] px-4 py-3 text-sm font-black text-white">Add Proof</button>
                   <button className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold text-white">Prepare Response</button>
                 </div>
               </div>
@@ -336,55 +271,52 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="teams" className="bg-[#08090B] py-16 md:py-24">
-          <div className="mx-auto max-w-7xl px-6">
+        <section id="for-subs" className="bg-white py-16 md:py-24">
+          <div className="mx-auto max-w-7xl px-6 md:px-8">
             <div className="mb-12 text-center">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Built for subcontractor teams</p>
-              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">Owners, ops, PMs, foremen, and crews stay aligned.</h2>
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#F45A00]">For subs</p>
+              <h2 className="text-4xl font-black tracking-[-0.04em] text-[#111827] md:text-5xl">
+                Built for every role in the subcontractor workflow.
+              </h2>
             </div>
             <div className="grid gap-4 md:grid-cols-5">
-              {roles.map((role) => {
-                const Icon = role.icon;
-                return (
-                  <div key={role.title} className="rounded-2xl border border-white/10 bg-[#111318] p-5">
-                    <Icon className="text-[#F97316]" size={24} />
-                    <h3 className="mt-4 text-base font-black">{role.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-500">{role.body}</p>
-                  </div>
-                );
-              })}
+              {roles.map(([role, body]) => (
+                <div key={role} className="rounded-2xl border border-black/10 bg-[#F6F2EA] p-5">
+                  <h3 className="text-base font-black text-[#111827]">{role}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#6B7280]">{body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        <section id="pricing" className="border-t border-white/10 bg-[#101216] py-16 md:py-24">
-          <div className="mx-auto max-w-5xl px-6">
+        <section id="pricing" className="bg-[#F6F2EA] py-16 md:py-24">
+          <div className="mx-auto max-w-5xl px-6 md:px-8">
             <div className="mb-10 text-center">
-              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#F97316]">Public beta</p>
-              <h2 className="text-3xl font-black tracking-[-0.035em] md:text-5xl">Start with the subcontractor workspace.</h2>
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#F45A00]">Pricing</p>
+              <h2 className="text-4xl font-black tracking-[-0.04em] text-[#111827]">Start with the subcontractor workspace.</h2>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-[1.5rem] border-2 border-[#F97316] bg-white p-8 text-[#0D0D0D] shadow-[0_28px_100px_rgba(249,115,22,0.16)]">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#F97316]">Primary plan</p>
-                <h3 className="mt-3 text-2xl font-black">Subcontractor Beta</h3>
-                <div className="mt-4 text-4xl font-black">
+              <div className="rounded-3xl border-2 border-[#F45A00] bg-white p-8 shadow-[0_28px_90px_rgba(17,24,39,0.08)]">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#F45A00]">Subcontractor Beta</p>
+                <div className="mt-4 text-5xl font-black text-[#111827]">
                   $10<span className="text-lg text-black/35">/mo</span>
                 </div>
                 <ul className="mt-6 space-y-3">
                   {["Job Inbox", "Work Cards", "Readiness Board", "Proof Log", "GC Response", "Owner Snapshot", "Foreman mobile tools"].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm font-semibold">
+                    <li key={item} className="flex items-center gap-2 text-sm font-semibold text-[#111827]">
                       <CheckCircle size={16} className="text-green-600" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <Link href="/signup/sub" className="mt-8 block rounded-xl bg-[#F97316] px-6 py-4 text-center text-base font-black text-white">
-                  Start beta
+                <Link href="/signup/sub" className="mt-8 block rounded-xl bg-[#F45A00] px-6 py-4 text-center text-base font-black text-white">
+                  Start Subcontractor Beta
                 </Link>
               </div>
-              <div className="rounded-[1.5rem] border border-white/10 bg-[#08090B] p-8">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Team-ready</p>
-                <h3 className="mt-3 text-2xl font-black">Operations + Field</h3>
+              <div className="rounded-3xl border border-black/10 bg-[#111827] p-8 text-white">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#F45A00]">Team-ready</p>
+                <h3 className="mt-4 text-2xl font-black">Operations + Field</h3>
                 <p className="mt-4 leading-7 text-slate-400">
                   Give owners, operations, PMs, foremen, and crews one place to control daily readiness, proof, blockers, and responses.
                 </p>
@@ -395,23 +327,23 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-      </main>
 
-      <footer className="border-t border-white/10 bg-[#08090B] py-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-          <div className="flex items-center gap-3">
-            <img src="/irontrack-field-pulse-icon.svg" alt="" className="h-7 w-7" />
-            <span className="text-sm text-slate-500">© 2026 IronTrack Development LLC</span>
+        <footer className="border-t border-black/10 bg-white py-8">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row md:px-8">
+            <div className="flex items-center gap-3">
+              <img src="/irontrack-field-pulse-icon.svg" alt="" className="h-7 w-7" />
+              <span className="text-sm text-[#6B7280]">© 2026 IronTrack Development LLC</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <Link href="/terms" className="text-[#6B7280] transition-colors hover:text-[#111827]">Terms</Link>
+              <Link href="/privacy" className="text-[#6B7280] transition-colors hover:text-[#111827]">Privacy</Link>
+              <Link href="/status" className="text-[#6B7280] transition-colors hover:text-[#111827]">Status</Link>
+              <Link href="/release-notes" className="text-[#6B7280] transition-colors hover:text-[#111827]">Release Notes</Link>
+              <a href="mailto:irontrackdevelopment@outlook.com" className="text-[#6B7280] transition-colors hover:text-[#111827]">Contact</a>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-            <Link href="/terms" className="text-slate-500 transition-colors hover:text-white">Terms</Link>
-            <Link href="/privacy" className="text-slate-500 transition-colors hover:text-white">Privacy</Link>
-            <Link href="/status" className="text-slate-500 transition-colors hover:text-white">Status</Link>
-            <Link href="/release-notes" className="text-slate-500 transition-colors hover:text-white">Release Notes</Link>
-            <a href="mailto:irontrackdevelopment@outlook.com" className="text-slate-500 transition-colors hover:text-white">Contact</a>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </div>
   );
 }
